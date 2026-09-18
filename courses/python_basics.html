@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Cơ Bản - CodeHub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3b82f6',
+                        secondary: '#10b981',
+                        dark: '#1f2937',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles/main.css">
+</head>
+
+<body class="bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-100 font-sans antialiased">
+
+    <!-- Navigation -->
+    <nav class="bg-white dark:bg-gray-800 shadow-sm fixed w-full z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="../index.html" class="flex-shrink-0 flex items-center">
+                        <svg class="h-8 w-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                        </svg>
+                        <span
+                            class="ml-2 text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">CodeHub</span>
+                    </a>
+                    <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+                        <a href="../index.html"
+                            class="border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">Trang
+                            Chủ</a>
+                        <a href="#"
+                            class="border-primary text-gray-900 dark:text-gray-100 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">Khóa
+                            Học</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Course Content Layout -->
+    <div class="pt-16 min-h-screen flex">
+        <!-- Sidebar -->
+        <aside
+            class="w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 fixed h-full overflow-y-auto hidden md:block">
+            <div class="p-6">
+                <h2 class="text-lg font-bold text-gray-900 dark:text-white mb-4">Mục Lục</h2>
+                <nav class="space-y-1">
+                    <a href="#intro"
+                        class="bg-blue-50 text-primary group flex items-center px-3 py-2 text-sm font-medium rounded-md">
+                        1. Giới thiệu Python
+                    </a>
+                    <a href="#variables"
+                        class="text-gray-600 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700 group flex items-center px-3 py-2 text-sm font-medium rounded-md">
+                        2. Biến và Kiểu dữ liệu
+                    </a>
+                    <a href="#loops"
+                        class="text-gray-600 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700 group flex items-center px-3 py-2 text-sm font-medium rounded-md">
+                        3. Vòng lặp
+                    </a>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 md:ml-64 p-8">
+            <div class="max-w-3xl mx-auto">
+                <div class="prose dark:prose-invert max-w-none">
+                    <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">Python Cơ Bản</h1>
+
+                    <section id="intro" class="mb-12">
+                        <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4">1. Ngôn ngữ lập trình là
+                            gì?</h2>
+
+                        <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">1.1. Ngôn ngữ bậc cao
+                            (High-level Language)</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">
+                            Ngôn ngữ lập trình bậc cao là những ngôn ngữ được thiết kế để gần gũi với ngôn ngữ tự nhiên
+                            của con người hơn là mã máy (machine code).
+                            Đặc điểm chính:
+                        </p>
+                        <ul class="list-disc pl-5 text-gray-600 dark:text-gray-300 mb-4 space-y-1">
+                            <li><strong>Dễ đọc, dễ viết:</strong> Cú pháp giống tiếng Anh.</li>
+                            <li><strong>Trừu tượng hóa phần cứng:</strong> Lập trình viên không cần lo lắng về quản lý
+                                bộ nhớ hay thanh ghi CPU.</li>
+                            <li><strong>Đa năng:</strong> Dùng để viết web, app, xử lý dữ liệu, AI...</li>
+                        </ul>
+
+                        <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2 mt-6">1.2. Giới thiệu về
+                            Python</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">
+                            Python là một ví dụ điển hình của ngôn ngữ bậc cao. Nó được Guido van Rossum ra mắt năm 1991
+                            với triết lý: "Code phải dễ đọc".
+                        </p>
+                        <div class="bg-gray-800 rounded-lg p-4 mb-4">
+                            <pre class="text-green-400 font-mono text-sm">
+# Python dễ đọc như tiếng Anh
+print("Xin chào, thế giới!")</pre>
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-300">
+                            Python được dùng rộng rãi trong:
+                            <span class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded mx-1">Trí tuệ
+                                nhân tạo (AI)</span>
+                            <span class="inline-block bg-green-100 text-green-800 text-xs px-2 py-1 rounded mx-1">Phát
+                                triển Web</span>
+                            <span class="inline-block bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded mx-1">Phân
+                                tích dữ liệu</span>
+                        </p>
+                    </section>
+
+                    <section id="variables" class="mb-12">
+                        <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4">2. Biến và Lệnh Gán</h2>
+
+                        <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">2.1. Biến là gì?</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">
+                            Hãy tưởng tượng <strong>biến</strong> giống như một chiếc hộp có dán nhãn để chứa dữ liệu.
+                            Bạn có thể cất dữ liệu vào đó và lấy ra sử dụng sau này thông qua tên nhãn.
+                        </p>
+
+                        <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">2.2. Lệnh Gán
+                            (Assignment Statement)</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">
+                            Trong Python, chúng ta dùng dấu bằng <code>=</code> để gán giá trị cho biến.
+                            <br>
+                            <strong>Cú pháp:</strong> <code>tên_biến = giá_trị</code>
+                        </p>
+                        <div class="bg-gray-800 rounded-lg p-4 mb-4">
+                            <pre class="text-green-400 font-mono text-sm">
+ten = "CodeHub"       # Gán chuỗi "CodeHub" cho biến 'ten'
+tuoi = 20             # Gán số 20 cho biến 'tuoi'
+diem_so = 8.5         # Gán số thực 8.5 cho biến 'diem_so'
+
+# In giá trị ra màn hình
+print(ten)            # Kết quả: CodeHub</pre>
+                        </div>
+
+                        <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">2.3. Quy tắc đặt tên
+                            biến</h3>
+                        <ul class="list-disc pl-5 text-gray-600 dark:text-gray-300 mb-4 space-y-1">
+                            <li>Chỉ chứa chữ cái (a-z, A-Z), số (0-9) và dấu gạch dưới (_).</li>
+                            <li>Không được bắt đầu bằng số. (Ví dụ: <code>1ten</code> là sai).</li>
+                            <li>Phân biệt chữ hoa chữ thường (<code>age</code> khác <code>Age</code>).</li>
+                            <li>Nên dùng <strong>snake_case</strong> (viết thường, nối bằng gạch dưới) cho dễ đọc. Ví
+                                dụ: <code>ho_va_ten</code>.</li>
+                        </ul>
+
+                        <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">2.4. Kiểu dữ liệu động
+                            (Dynamic Typing)</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">
+                            Khác với C++ hay Java, trong Python bạn <strong>không cần khai báo kiểu dữ liệu</strong>.
+                            Python tự hiểu kiểu dữ liệu dựa trên giá trị bạn gán.
+                        </p>
+                    </section>
+
+                    <section id="io" class="mb-12">
+                        <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4">3. Các lệnh Vào/Ra đơn giản
+                        </h2>
+
+                        <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">3.1. Lệnh Xuất (Output)
+                            - print()</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">
+                            Hàm `print()` dùng để in thông tin ra màn hình. Bạn có thể in chuỗi, số, hoặc giá trị của
+                            biến.
+                        </p>
+                        <div class="bg-gray-800 rounded-lg p-4 mb-4">
+                            <pre class="text-green-400 font-mono text-sm">
+print("Xin chào!")        # In chuỗi
+print(123)                # In số
+print(ten_bien)           # In giá trị biến
+print("Tuổi:", 20)        # In nhiều giá trị (cách nhau bởi dấu phẩy)</pre>
+                        </div>
+
+                        <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">3.2. Lệnh Nhập (Input) -
+                            input()</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">
+                            Hàm `input()` dùng để lấy dữ liệu từ bàn phím. Nó luôn trả về dữ liệu kiểu <strong>chuỗi
+                                (string)</strong>.
+                            <br>
+                            Mẹo: Nếu muốn nhập số, bạn cần chuyển đổi kiểu dữ liệu (ép kiểu).
+                        </p>
+                        <div class="bg-gray-800 rounded-lg p-4 mb-4">
+                            <pre class="text-green-400 font-mono text-sm">
+# Nhập tên (Chuỗi)
+ten = input("Nhập tên của bạn: ")
+print("Xin chào " + ten)
+
+# Nhập tuổi (Chuyển sang số nguyên)
+tuoi = int(input("Nhập tuổi: ")) 
+print("Năm sau bạn sẽ", tuoi + 1, "tuổi")</pre>
+                        </div>
+                    </section>
+
+                    <section id="conditionals" class="mb-12">
+                        <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4">4. Câu lệnh rẽ nhánh
+                            (Conditionals)</h2>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">
+                            Câu lệnh <code>if</code> giúp chương trình đưa ra quyết định dựa trên điều kiện đúng (True)
+                            hoặc sai (False).
+                        </p>
+
+                        <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">4.1. Cấu trúc if - else
+                        </h3>
+                        <div class="bg-gray-800 rounded-lg p-4 mb-4">
+                            <pre class="text-green-400 font-mono text-sm">
+diem = 8
+if diem >= 5:
+    print("Đậu")
+else:
+    print("Rớt")</pre>
+                        </div>
+
+                        <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">4.2. Cấu trúc if - elif
+                            - else</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">
+                            Sử dụng <code>elif</code> (viết tắt của else if) khi có nhiều hơn 2 trường hợp.
+                        </p>
+                        <div class="bg-gray-800 rounded-lg p-4 mb-4">
+                            <pre class="text-green-400 font-mono text-sm">
+diem = 7.5
+if diem >= 9:
+    print("Xuất sắc")
+elif diem >= 7:
+    print("Khá")
+elif diem >= 5:
+    print("Trung bình")
+else:
+    print("Yếu")</pre>
+                        </div>
+                    </section>
+
+                    <section id="loops" class="mb-12">
+                        <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4">5. Vòng lặp For (For Loop)
+                        </h2>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">
+                            Vòng lặp <code>for</code> dùng để lặp qua một tập hợp dữ liệu (như danh sách) hoặc một
+                            khoảng số nhất định.
+                        </p>
+
+                        <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">5.1. Hàm range()</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">
+                            Hàm <code>range(n)</code> tạo ra một dãy số từ 0 đến n-1.
+                        </p>
+                        <div class="bg-gray-800 rounded-lg p-4 mb-4">
+                            <pre class="text-green-400 font-mono text-sm">
+# In các số từ 0 đến 4
+for i in range(5):
+    print(i)</pre>
+                        </div>
+
+                        <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">5.2. Lặp qua danh sách
+                        </h3>
+                        <div class="bg-gray-800 rounded-lg p-4 mb-4">
+                            <pre class="text-green-400 font-mono text-sm">
+trai_cay = ["Táo", "Chuối", "Cam"]
+
+for qua in trai_cay:
+    print("Tôi thích ăn " + qua)</pre>
+                        </div>
+                    </section>
+
+                    <section id="while-loops" class="mb-12">
+                        <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4">6. Vòng lặp While (While
+                            Loop)</h2>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">
+                            Vòng lặp <code>while</code> sẽ tiếp tục chạy miễn là điều kiện còn đúng (True).
+                        </p>
+                        <div class="bg-gray-800 rounded-lg p-4 mb-4">
+                            <pre class="text-green-400 font-mono text-sm">
+dem = 0
+while dem < 3:
+    print("Đang chạy lần thứ", dem)
+    dem = dem + 1  # Tăng biến đếm để tránh lặp vô hạn</pre>
+                        </div>
+                        <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4" role="alert">
+                            <p class="font-bold">Lưu ý:</p>
+                            <p>Luôn đảm bảo điều kiện sẽ trở thành False tại một thời điểm nào đó, nếu không chương
+                                trình sẽ bị treo (Lặp vô hạn).</p>
+                        </div>
+                    </section>
+
+                    <section id="lists" class="mb-12">
+                        <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4">7. Danh sách (List)</h2>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">
+                            List là một kiểu dữ liệu dùng để lưu trữ nhiều giá trị trong một biến duy nhất. Các phần tử
+                            trong list được sắp xếp theo thứ tự và có thể thay đổi được.
+                        </p>
+
+                        <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">7.1. Khởi tạo List</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">
+                            Sử dụng cặp ngoặc vuông <code>[]</code> để tạo list.
+                        </p>
+                        <div class="bg-gray-800 rounded-lg p-4 mb-4">
+                            <pre class="text-green-400 font-mono text-sm">
+ds_so = [1, 2, 3, 4, 5]
+ds_ten = ["An", "Bình", "Chi"]
+ds_hon_hop = [1, "An", True, 3.14]</pre>
+                        </div>
+
+                        <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">7.2. Truy cập phần tử
+                        </h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">
+                            Các phần tử được đánh chỉ số từ 0.
+                        </p>
+                        <div class="bg-gray-800 rounded-lg p-4 mb-4">
+                            <pre class="text-green-400 font-mono text-sm">
+trai_cay = ["Táo", "Cam", "Xoài"]
+print(trai_cay[0])  # In ra "Táo"
+print(trai_cay[2])  # In ra "Xoài"</pre>
+                        </div>
+
+                        <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">7.3. Các thao tác cơ bản
+                        </h3>
+                        <ul class="list-disc pl-5 text-gray-600 dark:text-gray-300 mb-4 space-y-1">
+                            <li><strong>Thêm phần tử:</strong> <code>list.append(giá_trị)</code></li>
+                            <li><strong>Sửa phần tử:</strong> <code>list[chỉ_số] = giá_trị_mới</code></li>
+                            <li><strong>Độ dài list:</strong> <code>len(list)</code></li>
+                        </ul>
+                        <div class="bg-gray-800 rounded-lg p-4 mb-4">
+                            <pre class="text-green-400 font-mono text-sm">
+ds_mon = ["Toán", "Lý"]
+ds_mon.append("Hóa")      # Danh sách giờ là ["Toán", "Lý", "Hóa"]
+ds_mon[0] = "Văn"         # Danh sách giờ là ["Văn", "Lý", "Hóa"]
+print(len(ds_mon))        # In ra 3</pre>
+                        </div>
+
+                        <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">7.4. Các phương thức phổ
+                            biến khác</h3>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse mb-4 text-gray-600 dark:text-gray-300">
+                                <thead>
+                                    <tr class="bg-gray-200 dark:bg-gray-700">
+                                        <th class="p-2 border dark:border-gray-600">Lệnh</th>
+                                        <th class="p-2 border dark:border-gray-600">Mô tả</th>
+                                        <th class="p-2 border dark:border-gray-600">Ví dụ</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="p-2 border dark:border-gray-600"><code>insert(i, x)</code></td>
+                                        <td class="p-2 border dark:border-gray-600">Chèn x vào vị trí i</td>
+                                        <td class="p-2 border dark:border-gray-600"><code>list.insert(1, "Sử")</code>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-2 border dark:border-gray-600"><code>remove(x)</code></td>
+                                        <td class="p-2 border dark:border-gray-600">Xóa phần tử mang giá trị x</td>
+                                        <td class="p-2 border dark:border-gray-600"><code>list.remove("Lý")</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-2 border dark:border-gray-600"><code>pop(i)</code></td>
+                                        <td class="p-2 border dark:border-gray-600">Xóa và lấy phần tử ở vị trí i</td>
+                                        <td class="p-2 border dark:border-gray-600"><code>list.pop(0)</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-2 border dark:border-gray-600"><code>sort()</code></td>
+                                        <td class="p-2 border dark:border-gray-600">Sắp xếp danh sách</td>
+                                        <td class="p-2 border dark:border-gray-600"><code>list.sort()</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-2 border dark:border-gray-600"><code>in</code></td>
+                                        <td class="p-2 border dark:border-gray-600">Kiểm tra tồn tại</td>
+                                        <td class="p-2 border dark:border-gray-600"><code>if "Toán" in list:</code></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <section id="strings" class="mb-12">
+                        <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4">8. Xâu ký tự (String)</h2>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">
+                            String là một chuỗi các ký tự được bao quanh bởi dấu ngoặc đơn <code>'</code> hoặc ngoặc kép
+                            <code>"</code>.
+                        </p>
+
+                        <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">8.1. Khai báo và Truy
+                            cập</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">
+                            Tương tự như List, bạn có thể truy cập từng ký tự trong chuỗi bằng chỉ số (index).
+                        </p>
+                        <div class="bg-gray-800 rounded-lg p-4 mb-4">
+                            <pre class="text-green-400 font-mono text-sm">
+chuoi = "Hello Python"
+print(chuoi[0])      # In ra "H"
+print(chuoi[6])      # In ra "P"
+print(len(chuoi))    # Độ dài chuỗi là 12</pre>
+                        </div>
+
+                        <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">8.2. Các phương thức phổ
+                            biến</h3>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse mb-4 text-gray-600 dark:text-gray-300">
+                                <thead>
+                                    <tr class="bg-gray-200 dark:bg-gray-700">
+                                        <th class="p-2 border dark:border-gray-600">Lệnh</th>
+                                        <th class="p-2 border dark:border-gray-600">Mô tả</th>
+                                        <th class="p-2 border dark:border-gray-600">Ví dụ (s = " Hello ")</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="p-2 border dark:border-gray-600"><code>lower()</code></td>
+                                        <td class="p-2 border dark:border-gray-600">Chữ thường</td>
+                                        <td class="p-2 border dark:border-gray-600"><code>s.lower()</code> -> " hello "
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-2 border dark:border-gray-600"><code>upper()</code></td>
+                                        <td class="p-2 border dark:border-gray-600">Chữ hoa</td>
+                                        <td class="p-2 border dark:border-gray-600"><code>s.upper()</code> -> " HELLO "
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-2 border dark:border-gray-600"><code>strip()</code></td>
+                                        <td class="p-2 border dark:border-gray-600">Xóa khoảng trắng đầu/cuối</td>
+                                        <td class="p-2 border dark:border-gray-600"><code>s.strip()</code> -> "Hello"
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-2 border dark:border-gray-600"><code>replace(old, new)</code></td>
+                                        <td class="p-2 border dark:border-gray-600">Thay thế chuỗi</td>
+                                        <td class="p-2 border dark:border-gray-600"><code>s.replace("e", "a")</code> ->
+                                            " Hallo "</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-2 border dark:border-gray-600"><code>split(sep)</code></td>
+                                        <td class="p-2 border dark:border-gray-600">Tách chuỗi thành List</td>
+                                        <td class="p-2 border dark:border-gray-600"><code>"a,b".split(",")</code> ->
+                                            ["a", "b"]</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-2 border dark:border-gray-600"><code>join(list)</code></td>
+                                        <td class="p-2 border dark:border-gray-600">Nối List thành chuỗi</td>
+                                        <td class="p-2 border dark:border-gray-600"><code>"-".join(["a", "b"])</code> ->
+                                            "a-b"</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-2 border dark:border-gray-600"><code>find(x)</code></td>
+                                        <td class="p-2 border dark:border-gray-600">Tìm vị trí đầu tiên của x</td>
+                                        <td class="p-2 border dark:border-gray-600"><code>s.find("lo")</code> -> 3</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-2 border dark:border-gray-600"><code>count(x)</code></td>
+                                        <td class="p-2 border dark:border-gray-600">Đếm số lần xuất hiện của x</td>
+                                        <td class="p-2 border dark:border-gray-600"><code>s.count("l")</code> -> 2</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">8.3. Cắt chuỗi (Slicing)
+                        </h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">
+                            Bạn có thể lấy một phần của chuỗi bằng cú pháp <code>[start:end:step]</code>.
+                        </p>
+                        <div class="bg-gray-800 rounded-lg p-4 mb-4">
+                            <pre class="text-green-400 font-mono text-sm">
+s = "Hello Python"
+print(s[0:5])    # Lấy từ 0 đến sát 5 -> "Hello"
+print(s[6:])     # Lấy từ 6 đến hết -> "Python"
+print(s[::-1])   # Đảo ngược chuỗi -> "nohtyP olleH"</pre>
+                        </div>
+                    </section>
+
+                    <section id="functions" class="mb-12">
+                        <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4">9. Hàm (Functions)</h2>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">
+                            Hàm là một khối mã lệnh được đặt tên, dùng để thực hiện một tác vụ cụ thể. Hàm giúp tái sử
+                            dụng mã và làm chương trình gọn gàng hơn.
+                        </p>
+
+                        <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">9.1. Định nghĩa và Gọi
+                            hàm</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">
+                            Sử dụng từ khóa <code>def</code> để định nghĩa hàm.
+                        </p>
+                        <div class="bg-gray-800 rounded-lg p-4 mb-4">
+                            <pre class="text-green-400 font-mono text-sm">
+def xin_chao():
+    print("Xin chào các bạn!")
+
+# Gọi hàm
+xin_chao()</pre>
+                        </div>
+
+                        <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">9.2. Tham số và Đối số
+                        </h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">
+                            Bạn có thể truyền giá trị vào hàm thông qua tham số.
+                        </p>
+                        <div class="bg-gray-800 rounded-lg p-4 mb-4">
+                            <pre class="text-green-400 font-mono text-sm">
+def chao_ten(ten):
+    print("Xin chào " + ten)
+
+chao_ten("An")   # In ra "Xin chào An"
+chao_ten("Bình") # In ra "Xin chào Bình"</pre>
+                        </div>
+
+                        <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">9.3. Giá trị trả về
+                            (Return)</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">
+                            Sử dụng <code>return</code> để trả về kết quả từ hàm.
+                        </p>
+
+                        <div class="bg-gray-800 rounded-lg p-4 mb-4">
+                            <pre class="text-green-400 font-mono text-sm">
+def tinh_tong(a, b):
+    ket_qua = a + b
+    return ket_qua
+
+tong = tinh_tong(5, 3)
+print(tong)  # In ra 8</pre>
+                        </div>
+
+                        <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">9.4. Tham số mặc định
+                            (Default Parameters)</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">
+                            Bạn có thể gán giá trị mặc định cho tham số. Nếu người dùng không truyền giá trị, giá trị
+                            mặc định sẽ được sử dụng.
+                        </p>
+                        <div class="bg-gray-800 rounded-lg p-4 mb-4">
+                            <pre class="text-green-400 font-mono text-sm">
+def chao(ten="Bạn"):
+    print("Chào " + ten)
+
+chao()        # In ra "Chào Bạn"
+chao("Hùng")  # In ra "Chào Hùng"</pre>
+                        </div>
+
+                        <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">9.5. Tham số từ khóa
+                            (Keyword Arguments)</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">
+                            Khi gọi hàm, bạn có thể chỉ định rõ tên tham số để không cần quan tâm đến thứ tự.
+                        </p>
+
+                        <div class="bg-gray-800 rounded-lg p-4 mb-4">
+                            <pre class="text-green-400 font-mono text-sm">
+def mo_ta_pet(loai, ten):
+    print(f"Tôi có một con {loai} tên là {ten}")
+
+# Gọi theo thứ tự
+mo_ta_pet("chó", "Mực")
+
+# Gọi theo từ khóa (thứ tự không quan trọng)
+mo_ta_pet(ten="Miu", loai="mèo")</pre>
+                        </div>
+
+                        <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">9.6. Phạm vi của biến
+                            (Variable Scope)</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">
+                            Biến được tạo ra trong hàm chỉ có thể được sử dụng bên trong hàm đó (Local). Biến tạo bên
+                            ngoài hàm có thể được sử dụng ở mọi nơi (Global).
+                        </p>
+                        <div class="bg-gray-800 rounded-lg p-4 mb-4">
+                            <pre class="text-green-400 font-mono text-sm">
+x = "Global"  # Biến toàn cục
+
+def my_func():
+    y = "Local"  # Biến cục bộ
+    print(x)     # Có thể truy cập biến Global
+    print(y)     # Có thể truy cập biến Local
+
+my_func()
+print(x)  # OK
+# print(y)  # Lỗi! Không thể truy cập y ở ngoài hàm</pre>
+                        </div>
+                    </section>
+
+                    <section id="errors" class="mb-12">
+                        <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4">10. Lỗi chương trình và Gỡ
+                            lỗi</h2>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">
+                            Việc gặp lỗi là một phần tự nhiên của lập trình. Hiểu các loại lỗi sẽ giúp bạn sửa chúng
+                            nhanh hơn.
+                        </p>
+
+                        <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">10.1. Lỗi cú pháp
+                            (Syntax Errors)</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">
+                            Xảy ra khi bạn viết sai quy tắc ngôn ngữ. Python sẽ không chạy chương trình.
+                        </p>
+                        <div class="bg-gray-800 rounded-lg p-4 mb-4">
+                            <pre class="text-red-400 font-mono text-sm">
+# Thiếu dấu hai chấm :
+if 5 > 3
+    print("Lớn hơn")
+
+# SyntaxError: expected ':'</pre>
+                        </div>
+
+                        <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">10.2. Ngoại lệ
+                            (Exceptions / Runtime Errors)</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">
+                            Xảy ra khi chương trình đang chạy nhưng gặp một lệnh không thể thực thi.
+                        </p>
+                        <div class="bg-gray-800 rounded-lg p-4 mb-4">
+                            <pre class="text-red-400 font-mono text-sm">
+print(10 / 0)    # ZeroDivisionError: division by zero
+print(bien_la)   # NameError: name 'bien_la' is not defined
+int("abc")       # ValueError: invalid literal for int()</pre>
+                        </div>
+
+                        <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">10.3. Lỗi logic (Logical
+                            Errors)</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">
+                            Chương trình chạy bình thường nhưng ra kết quả sai. Đây là loại lỗi khó tìm nhất.
+                        </p>
+                        <div class="bg-gray-800 rounded-lg p-4 mb-4">
+                            <pre class="text-green-400 font-mono text-sm">
+# Muốn tính trung bình của 2 và 4 (kết quả phải là 3)
+tb = 2 + 4 / 2
+print(tb)  # In ra 4.0 -> Sai quy tắc toán học!
+# Sửa: tb = (2 + 4) / 2</pre>
+                        </div>
+
+                        <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">10.4. Cách đọc thông báo
+                            lỗi</h3>
+                        <ul class="list-disc pl-5 text-gray-600 dark:text-gray-300 mb-4 space-y-1">
+                            <li>Đọc dòng cuối cùng trước: Nó cho biết loại lỗi (vd: <code>ZeroDivisionError</code>).
+                            </li>
+                            <li>Đọc thông báo chi tiết ngay sau loại lỗi.</li>
+                            <li>Quan sát số dòng (Line number) để biết lỗi ở đâu.</li>
+                        </ul>
+                        <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">10.5. Kỹ thuật Gỡ lỗi
+                            (Debugging Tips)</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">
+                            Khi gặp lỗi logic, hãy sử dụng <code>print()</code> để kiểm tra giá trị của biến tại các
+                            bước quan trọng.
+                        </p>
+                        <div class="bg-gray-800 rounded-lg p-4 mb-4">
+                            <pre class="text-green-400 font-mono text-sm">
+def tinh_dien_tich(a, b):
+    print(f"Kiểm tra: a={a}, b={b}")  # Dòng này giúp gỡ lỗi
+    return a * b
+
+print(tinh_dien_tich(5, 10))</pre>
+                        </div>
+
+                        <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">10.6. Kiểm thử cơ bản
+                            (Basic Testing)</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">
+                            Bạn có thể dùng từ khóa <code>assert</code> để tự động kiểm tra xem hàm có hoạt động đúng
+                            không. Nếu điều kiện sai, chương trình sẽ báo lỗi.
+                        </p>
+                        <div class="bg-gray-800 rounded-lg p-4 mb-4">
+                            <pre class="text-green-400 font-mono text-sm">
+def cong(a, b):
+    return a + b
+
+# Test cases
+assert cong(1, 1) == 2   # Đúng, không có gì xảy ra
+assert cong(2, 3) == 5   # Đúng
+# assert cong(2, 2) == 5 # Sai -> AssertionError
+print("Tất cả các test đều đúng!")</pre>
+                        </div>
+                    </section>
+
+                    <section id="practice" class="mb-12">
+                        <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4">11. Thực hành: Viết chương
+                            trình đơn giản</h2>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">
+                            Hãy áp dụng kiến thức đã học để viết các ứng dụng nhỏ sau đây.
+                        </p>
+
+                        <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">11.1. Tính chỉ số BMI
+                        </h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">
+                            Chương trình yêu cầu nhập cân nặng (kg) và chiều cao (m), sau đó tính BMI và đánh giá.
+                        </p>
+                        <div class="bg-gray-800 rounded-lg p-4 mb-4">
+                            <pre class="text-green-400 font-mono text-sm">
+def tinh_bmi(can_nang, chieu_cao):
+    bmi = can_nang / (chieu_cao ** 2)
+    return bmi
+
+# Nhập dữ liệu
+w = float(input("Nhập cân nặng (kg): "))
+h = float(input("Nhập chiều cao (m): "))
+
+bmi = tinh_bmi(w, h)
+print(f"Chỉ số BMI của bạn là: {bmi:.2f}")
+
+if bmi < 18.5:
+    print("Bạn bị thiếu cân")
+elif bmi < 25:
+    print("Bạn bình thường")
+else:
+    print("Bạn bị thừa cân")</pre>
+                        </div>
+
+                        <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">11.2. Tính tổng dãy số
+                        </h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">
+                            Tính tổng các số từ 1 đến N (do người dùng nhập).
+                        </p>
+                        <div class="bg-gray-800 rounded-lg p-4 mb-4">
+                            <pre class="text-green-400 font-mono text-sm">
+n = int(input("Nhập số N: "))
+tong = 0
+
+for i in range(1, n + 1):
+    tong += i
+
+print(f"Tổng từ 1 đến {n} là: {tong}")</pre>
+                        </div>
+
+                        <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">11.3. Trò chơi đoán số
+                        </h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">
+                            Máy tính chọn một số ngẫu nhiên từ 1 đến 100. Bạn phải đoán xem đó là số nào.
+                        </p>
+                        <div class="bg-gray-800 rounded-lg p-4 mb-4">
+                            <pre class="text-green-400 font-mono text-sm">
+import random
+
+bi_mat = random.randint(1, 100)
+doan = 0
+so_lan = 0
+
+print("Chào mừng đến với trò chơi đoán số!")
+
+while doan != bi_mat:
+    doan = int(input("Nhập dự đoán của bạn: "))
+    so_lan += 1
+    
+    if doan < bi_mat:
+        print("Lớn hơn nữa đi!")
+    elif doan > bi_mat:
+        print("Nhỏ hơn chút nữa!")
+    else:
+        print(f"Chúc mừng! Bạn đã đoán đúng số {bi_mat} trong {so_lan} lần.")</pre>
+                        </div>
+                    </section>
+                    <!-- Quiz Call to action -->
+                    <div class="col-span-12 lg:col-span-9 lg:col-start-4 mt-12 mb-12 bg-indigo-50 dark:bg-indigo-900/30 rounded-xl p-8 text-center border border-indigo-100 dark:border-indigo-800">
+                        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Ôn Tập Kiến Thức</h2>
+                        <p class="text-gray-600 dark:text-gray-300 mb-6">Hãy thử sức với bài kiểm tra trắc nghiệm để củng cố lại những gì đã học nhé!</p>
+                        <a href="../quiz.html?course=python_basics" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:text-lg transition-colors">
+                            Làm bài kiểm tra ngay
+                        </a>
+                    </div>
+    
+
+                    <!-- Interactive Quiz Component Placeholder -->
+                    <div
+                        class="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-6 mt-8">
+                        <h3 class="text-lg font-semibold text-blue-800 dark:text-blue-300 mb-2">Bài tập nhanh</h3>
+                        <p class="text-gray-700 dark:text-gray-300 mb-4">Từ khóa nào dùng để định nghĩa hàm trong
+                            Python?</p>
+                        <div class="space-y-2">
+                            <label class="flex items-center space-x-3">
+                                <input type="radio" name="quiz1" class="form-radio text-primary">
+                                <span class="text-gray-700 dark:text-gray-300">function</span>
+                            </label>
+                            <label class="flex items-center space-x-3">
+                                <input type="radio" name="quiz1" class="form-radio text-primary">
+                                <span class="text-gray-700 dark:text-gray-300">def</span>
+                            </label>
+                            <label class="flex items-center space-x-3">
+                                <input type="radio" name="quiz1" class="form-radio text-primary">
+                                <span class="text-gray-700 dark:text-gray-300">define</span>
+                            </label>
+                        </div>
+                    </div>
+
+                </div>
+                </div>
+        </main>
+    </div>
+
+    <script src="../scripts/app.js"></script>
+    <script src="../scripts/chatbot.js"></script>
+</body>
+
+</html>
