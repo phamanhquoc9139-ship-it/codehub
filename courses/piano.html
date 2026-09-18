@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piano: Cơ bản đến Nâng cao - Nền Tảng Học Lập Trình & Kỹ Năng</title>
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Custom Config for Tailwind -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3b82f6',
+                        secondary: '#10b981',
+                        dark: '#1f2937',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles/main.css">
+</head>
+
+<body class="bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-100 font-sans antialiased">
+
+    <!-- Navigation -->
+    <nav class="bg-white dark:bg-gray-800 shadow-sm fixed w-full z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="../index.html" class="flex-shrink-0 flex items-center">
+                        <svg class="h-8 w-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                        </svg>
+                        <span
+                            class="ml-2 text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">CodeHub</span>
+                    </a>
+                    <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+                        <a href="../index.html"
+                            class="border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">Trang
+                            Chủ</a>
+                        <a href="../index.html#courses"
+                            class="border-primary text-gray-900 dark:text-gray-100 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">Khóa
+                            Học</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="pt-16">
+        <header class="bg-white dark:bg-gray-800 shadow">
+            <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8 text-center">
+                <h1 class="text-3xl font-extrabold text-gray-900 dark:text-white">Piano: Cơ bản đến Nâng cao</h1>
+                <p class="mt-4 text-xl text-gray-500 dark:text-gray-300">Khám phá bộ môn nghệ thuật qua phím đàn, từ
+                    nhạc lý cơ bản đến đệm hát nâng cao.</p>
+            </div>
+        </header>
+
+        <main class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+            <div class="lg:grid lg:grid-cols-12 lg:gap-8">
+                <!-- Sidebar Navigation -->
+                <div class="hidden lg:block lg:col-span-3">
+                    <nav class="sticky top-24 space-y-1" aria-label="Sidebar">
+                        <a href="#topic1"
+                            class="bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white group flex items-center px-3 py-2 text-sm font-medium rounded-md">
+                            <span class="truncate">Phần 1: Nhạc lý cơ bản & Tư thế</span>
+                        </a>
+                        <a href="#topic2"
+                            class="text-gray-600 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700 group flex items-center px-3 py-2 text-sm font-medium rounded-md">
+                            <span class="truncate">Phần 2: Luyện ngón & Hợp âm</span>
+                        </a>
+                        <a href="#topic3"
+                            class="text-gray-600 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700 group flex items-center px-3 py-2 text-sm font-medium rounded-md">
+                            <span class="truncate">Phần 3: Đệm hát cơ bản</span>
+                        </a>
+                        <a href="#topic4"
+                            class="text-gray-600 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700 group flex items-center px-3 py-2 text-sm font-medium rounded-md">
+                            <span class="truncate">Phần 4: Chắp nối hợp âm đa dạng</span>
+                        </a>
+                        <a href="#topic5"
+                            class="text-gray-600 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700 group flex items-center px-3 py-2 text-sm font-medium rounded-md">
+                            <span class="truncate">Phần 5: Kỹ thuật nâng cao & Biểu diễn</span>
+                        </a>
+                    </nav>
+                </div>
+
+                <!-- Main Content -->
+                <div class="mt-8 lg:mt-0 lg:col-span-9">
+
+                    <!-- Topic 1 -->
+                    <section id="topic1" class="mb-12">
+                        <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4">Phần 1: Nhạc lý cơ bản & Tư
+                            thế</h2>
+
+                        <!-- Virtual Piano Interactive Element -->
+                        <div
+                            class="bg-gray-900 rounded-xl p-6 mb-8 shadow-xl text-center overflow-hidden border border-gray-700">
+                            <h3 class="text-xl font-semibold text-white mb-2">Thực hành tương tác: Đàn Piano Ảo</h3>
+                            <p class="text-gray-400 text-sm mb-6">Bạn có thể dùng chuột (nhấn/chạm) hoặc bàn phím máy
+                                tính để chơi đàn (phím A, S, D, F... / W, E, T...)</p>
+
+                            <!-- Exercise UI Panel -->
+                            <div
+                                class="bg-gray-800 rounded-lg p-4 mb-6 flex flex-col md:flex-row items-center justify-between border border-gray-700 max-w-2xl mx-auto gap-4">
+                                <div class="flex items-center gap-3">
+                                    <label for="exercise-select"
+                                        class="text-sm font-medium text-gray-300 whitespace-nowrap">Bài tập:</label>
+                                    <select id="exercise-select"
+                                        class="bg-gray-700 border border-gray-600 text-white text-sm rounded-md focus:ring-indigo-500 focus:border-indigo-500 block p-2 w-full min-w-[180px]">
+                                        <option value="warmup-5">Khởi động 5 ngón</option>
+                                        <option value="c-major">Âm giai Đô Trưởng</option>
+                                        <option value="con-duong-xua">Nhạc: Con Đường Xưa Em Đi</option>
+                                        <option value="con-duong-xua-dk">Điệp Khúc: Con Đường Xưa Em Đi</option>
+                                        <option value="ve-day-mai-toc">Nhạc: Về Đây Mái Tóc Người Thương</option>
+                                        <option value="vung-la-me-bay">Nhạc: Vùng Lá Me Bay</option>
+                                        <option value="tay-du-ky">Nhạc: Tây Du Ký (Xin Hỏi Đường Ở Nơi Đâu)</option>
+                                        <option value="mong-hoa-sim">Nhạc: Mộng Hoa Sim</option>
+                                        <option value="cho-ngay-cuoi-em">Nhạc: Chờ Ngày Cưới Em</option>
+                                        <option value="cho-ngay-cuoi-em-dk">Điệp Khúc: Chờ Ngày Cưới Em</option>
+                                    </select>
+                                </div>
+                                <button id="exercise-start-btn" type="button"
+                                    class="inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 focus:ring-offset-gray-900 w-full md:w-auto transition-colors whitespace-nowrap">
+                                    Bắt đầu tập
+                                </button>
+                                <div id="exercise-status-text"
+                                    class="text-sm font-medium text-yellow-400 text-center md:text-left flex-1 break-words">
+                                    Hãy chọn bài tập và nhấn Bắt đầu
+                                </div>
+                            </div>
+
+                            <!-- Instrument Selector -->
+                            <div class="flex items-center justify-center space-x-4 mb-6">
+                                <label for="instrument-select" class="text-sm font-medium text-gray-300">Loại nhạc
+                                    cụ:</label>
+                                <select id="instrument-select"
+                                    class="bg-gray-700 border border-gray-600 text-white text-sm rounded-md focus:ring-indigo-500 focus:border-indigo-500 block p-2">
+                                    <option value="piano">Piano Cơ</option>
+                                    <option value="synth">Synth Lead</option>
+                                    <option value="organ">Classic Organ</option>
+                                </select>
+                            </div>
+
+                            <div class="piano-keyboard relative inline-flex justify-center select-none"
+                                style="min-width: 680px; height: 180px;">
+                                <!-- White Keys -->
+                                <div class="piano-key white" data-note="C4" style="left: 0;"><span>A</span></div>
+                                <div class="piano-key white" data-note="D4" style="left: 40px;"><span>S</span></div>
+                                <div class="piano-key white" data-note="E4" style="left: 80px;"><span>D</span></div>
+                                <div class="piano-key white" data-note="F4" style="left: 120px;"><span>F</span></div>
+                                <div class="piano-key white" data-note="G4" style="left: 160px;"><span>G</span></div>
+                                <div class="piano-key white" data-note="A4" style="left: 200px;"><span>H</span></div>
+                                <div class="piano-key white" data-note="B4" style="left: 240px;"><span>J</span></div>
+                                <div class="piano-key white" data-note="C5" style="left: 280px;"><span>K</span></div>
+                                <div class="piano-key white" data-note="D5" style="left: 320px;"><span>L</span></div>
+                                <div class="piano-key white" data-note="E5" style="left: 360px;"><span>;</span></div>
+
+                                <!-- Black Keys -->
+                                <div class="piano-key black" data-note="C#4" style="left: 26px;"><span>W</span></div>
+                                <div class="piano-key black" data-note="D#4" style="left: 66px;"><span>E</span></div>
+                                <!-- Gap between E & F -->
+                                <div class="piano-key black" data-note="F#4" style="left: 146px;"><span>T</span></div>
+                                <div class="piano-key black" data-note="G#4" style="left: 186px;"><span>Y</span></div>
+                                <div class="piano-key black" data-note="A#4" style="left: 226px;"><span>U</span></div>
+                                <!-- Gap between B & C -->
+                                <div class="piano-key black" data-note="C#5" style="left: 306px;"><span>O</span></div>
+                                <div class="piano-key black" data-note="D#5" style="left: 346px;"><span>P</span></div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white dark:bg-gray-800 shadow overflow-hidden sm:rounded-lg mb-6">
+                            <div class="px-4 py-5 sm:p-6">
+                                <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">Kiến thức khởi
+                                    động</h3>
+                                <div class="mt-4 text-sm text-gray-500 dark:text-gray-300 space-y-4">
+                                    <div>
+                                        <ul class="list-disc pl-5 space-y-2">
+                                            <li><strong>Làm quen phím đàn:</strong> Nhận biết nốt trắng, nốt đen. Phân
+                                                biệt khoảng cách C (Đô) - D (Rê) - E (Mi) - F (Fa) - G (Son) - A (La) -
+                                                B (Si).</li>
+                                            <li><strong>Nhạc lý căn bản:</strong> Tìm hiểu về khóa Sol, khóa Fa, trường
+                                                độ nốt nhạc (nốt tròn, nốt trắng, nốt đen, nốt móc đơn).</li>
+                                            <li><strong>Tư thế ngồi chuẩn:</strong> Ngồi thẳng lưng, giữa đàn, thả lỏng
+                                                vai và cánh tay. Độ cao ghế sao cho khuỷu tay ngang với phím đàn.</li>
+                                            <li><strong>Khuôn tay:</strong> Đặt các ngón tay khum tròn thư giãn như đang
+                                                ôm một quả bóng tennis. Không gãy đốt ngón tay khi đánh phím.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Topic 2 -->
+                    <section id="topic2" class="mb-12">
+                        <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4">Phần 2: Luyện ngón & Hợp âm
+                            cơ bản</h2>
+
+                        <div class="bg-white dark:bg-gray-800 shadow overflow-hidden sm:rounded-lg mb-6">
+                            <div class="px-4 py-5 sm:p-6">
+                                <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">Làm chủ bàn tay
+                                </h3>
+                                <div class="mt-4 text-sm text-gray-500 dark:text-gray-300 space-y-4">
+                                    <div>
+                                        <ul class="list-disc pl-5 space-y-2">
+                                            <li><strong>Bài tập Hanon cơ bản:</strong> Luyện sự độc lập, dẻo dai và bằng
+                                                đều sức mạnh của 5 ngón tay trên cả hai tay.</li>
+                                            <li><strong>Chạy scale (Âm giai):</strong> Luyện tập âm giai Đô trưởng (C
+                                                Major) và La thứ (A minor), chú ý kỹ thuật luồn ngón tay đúng nhịp.</li>
+                                            <li><strong>Cấu tạo hợp âm:</strong> Hiểu về hợp âm 3 nốt (Triad). Cách tạo
+                                                hợp âm Trưởng (Major), Thứ (Minor).</li>
+                                            <li><strong>Thực hành chuyển hợp âm:</strong> Tập bấm và di chuyển các hợp
+                                                âm cơ bản (C, Am, F, G, Dm, Em, E7) bằng tay trái và tay phải.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Topic 3 -->
+                    <section id="topic3" class="mb-12">
+                        <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4">Phần 3: Đệm hát cơ bản</h2>
+
+                        <div class="bg-white dark:bg-gray-800 shadow overflow-hidden sm:rounded-lg mb-6">
+                            <div class="px-4 py-5 sm:p-6">
+                                <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">Từng bước đệm
+                                    nhạc</h3>
+                                <div class="mt-4 text-sm text-gray-500 dark:text-gray-300 space-y-4">
+                                    <div>
+                                        <ul class="list-disc pl-5 space-y-2">
+                                            <li><strong>Đệm nhịp 4/4 (Ballad, Pop):</strong> Sử dụng cách rải hợp âm tay
+                                                trái (Bass - rải chùm nốt) và tay phải chơi nốt nhấn.</li>
+                                            <li><strong>Đệm nhịp 3/4 (Valse, Boston):</strong> Phong cách chập chờn lãng
+                                                mạn (Bass - Chập - Chập) cho các bài nhạc nhẹ nhàng.</li>
+                                            <li><strong>Tách tay:</strong> Tập kỹ năng tay trái giữ nhịp và hợp âm,
+                                                trong khi tay phải đi bè hoặc đệm giai điệu.</li>
+                                            <li><strong>Thực hành bài hát cụ thể:</strong> Đệm các bài hát có vòng hợp
+                                                âm đơn giản vòng lặp (Ví dụ: C - G - Am - F).</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Topic 4 -->
+                    <section id="topic4" class="mb-12">
+                        <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4">Phần 4: Chắp nối hợp âm đa
+                            dạng</h2>
+
+                        <div class="bg-white dark:bg-gray-800 shadow overflow-hidden sm:rounded-lg mb-6">
+                            <div class="px-4 py-5 sm:p-6">
+                                <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">Mở rộng tư duy
+                                    âm nhạc</h3>
+                                <div class="mt-4 text-sm text-gray-500 dark:text-gray-300 space-y-4">
+                                    <div>
+                                        <ul class="list-disc pl-5 space-y-2">
+                                            <li><strong>Hợp âm mở rộng (Hợp âm 7, 9):</strong> Bổ sung thêm màu sắc cho
+                                                bản nhạc với các hợp âm Maj7, Min7, Dom7...</li>
+                                            <li><strong>Thể đảo hợp âm (Inversion):</strong> Cách chặn hợp âm sao cho
+                                                quãng đường di chuyển giữa các hợp âm là gần nhất, giúp bản nhạc liền
+                                                mạch hơn.</li>
+                                            <li><strong>Fill-in (Báo trống/Câu lót tấu):</strong> Thêm các nốt chạy tay
+                                                phải (Arpeggio) trong phần giữa các đoạn để chống trống trải.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Topic 5 -->
+                    <section id="topic5" class="mb-12">
+                        <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4">Phần 5: Kỹ thuật nâng cao &
+                            Biểu diễn</h2>
+
+                        <div class="bg-white dark:bg-gray-800 shadow overflow-hidden sm:rounded-lg mb-6">
+                            <div class="px-4 py-5 sm:p-6">
+                                <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">Trở thành
+                                    pianist biểu diễn</h3>
+                                <div class="mt-4 text-sm text-gray-500 dark:text-gray-300 space-y-4">
+                                    <div>
+                                        <ul class="list-disc pl-5 space-y-2">
+                                            <li><strong>Sử dụng Pedal:</strong> Kỹ năng dậm và nhả Sustain Pedal (Pedal
+                                                bên phải) để nốt vang và kết nối hợp âm không bị đứt đoạn hoặc nhòe âm.
+                                            </li>
+                                            <li><strong>Xử lý cường độ (Dynamics):</strong> Đánh phím mạnh (forte), nhẹ
+                                                (piano), tăng dần (crescendo), giảm dần (decrescendo) để thể hiện cảm
+                                                xúc bản nhạc.</li>
+                                            <li><strong>Phong cách Jazz / R&B:</strong> Giới thiệu những vòng tiến hành
+                                                hợp âm ii-V-I phổ biến trong Jazz và cách đệm nghịch phách
+                                                (Syncopation).</li>
+                                            <li><strong>Ear Training (Kỹ năng cảm âm):</strong> Luyện khả năng nghe dò
+                                                giai điệu và xác định hợp âm cho một bản nhạc lạ chỉ bằng tai.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Quiz Call to action -->
+                    <div
+                        class="col-span-12 lg:col-span-9 lg:col-start-4 mt-12 mb-12 bg-indigo-50 dark:bg-indigo-900/30 rounded-xl p-8 text-center border border-indigo-100 dark:border-indigo-800">
+                        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Kiểm Tra Nhạc Lý</h2>
+                        <p class="text-gray-600 dark:text-gray-300 mb-6">Hãy thử sức với bài kiểm tra nhanh để xem khả
+                            năng ghi nhớ hợp âm và nhạc lý của bạn nhé!</p>
+                        <a href="../quiz.html?course=piano"
+                            class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:text-lg transition-colors">
+                            Làm bài đánh giá
+                        </a>
+                    </div>
+
+                </div>
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-100 dark:bg-gray-800 pt-12 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="col-span-1 md:col-span-1">
+                    <span class="text-xl font-bold text-gray-900 dark:text-white">CodeHub</span>
+                    <p class="mt-4 text-sm text-gray-500 dark:text-gray-400">
+                        Nền tảng học hỏi kỹ năng mới, từ lập trình phần mềm cho tới nghệ thuật sáng tạo.
+                    </p>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-400 tracking-wider uppercase">Khóa Học</h3>
+                    <ul class="mt-4 space-y-4">
+                        <li><a href="#" class="text-base text-gray-500 hover:text-gray-900 dark:hover:text-white">Lập
+                                trình</a></li>
+                        <li><a href="#" class="text-base text-gray-500 hover:text-gray-900 dark:hover:text-white">Nghệ
+                                thuật</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-400 tracking-wider uppercase">Tài Nguyên</h3>
+                    <ul class="mt-4 space-y-4">
+                        <li><a href="#"
+                                class="text-base text-gray-500 hover:text-gray-900 dark:hover:text-white">Blog</a></li>
+                        <li><a href="#" class="text-base text-gray-500 hover:text-gray-900 dark:hover:text-white">Tài
+                                liệu</a></li>
+                        <li><a href="#" class="text-base text-gray-500 hover:text-gray-900 dark:hover:text-white">Cộng
+                                đồng</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-400 tracking-wider uppercase">Liên Hệ</h3>
+                    <ul class="mt-4 space-y-4">
+                        <li><a href="#"
+                                class="text-base text-gray-500 hover:text-gray-900 dark:hover:text-white">support@codehub.com</a>
+                        </li>
+                        <li><a href="#"
+                                class="text-base text-gray-500 hover:text-gray-900 dark:hover:text-white">Facebook</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div
+                class="mt-8 border-t border-gray-200 dark:border-gray-700 pt-8 text-center text-sm text-gray-500 dark:text-gray-400">
+                &copy; 2024 CodeHub. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script src="../scripts/chatbot.js"></script>
+    <script src="../scripts/quiz_injector.js"></script>
+    <script src="../scripts/virtual_piano.js"></script>
+</body>
+
+</html>

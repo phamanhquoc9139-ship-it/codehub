@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lập Trình Web - CodeHub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3b82f6',
+                        secondary: '#10b981',
+                        dark: '#1f2937',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome for Stars -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles/main.css">
+    <style>
+        .star-rating i {
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .star-rating i.active {
+            color: #fbbf24;
+            /* yellow-400 */
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-100 font-sans antialiased">
+
+    <!-- Navigation -->
+    <nav class="bg-white dark:bg-gray-800 shadow-sm fixed w-full z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="../index.html" class="flex-shrink-0 flex items-center">
+                        <svg class="h-8 w-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                        </svg>
+                        <span
+                            class="ml-2 text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">CodeHub</span>
+                    </a>
+                    <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+                        <a href="../index.html"
+                            class="border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">Trang
+                            Chủ</a>
+                        <a href="#"
+                            class="border-primary text-gray-900 dark:text-gray-100 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">Khóa
+                            Học</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Course Content Layout -->
+    <div class="pt-16 min-h-screen flex">
+        <!-- Sidebar -->
+        <aside
+            class="w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 fixed h-full overflow-y-auto hidden md:block">
+            <div class="p-6">
+                <h2 class="text-lg font-bold text-gray-900 dark:text-white mb-4">Mục Lục</h2>
+                <nav class="space-y-1">
+                    <a href="#html-basics"
+                        class="bg-blue-50 text-primary group flex items-center px-3 py-2 text-sm font-medium rounded-md">
+                        1. HTML Cơ Bản
+                    </a>
+                    <a href="#css-basics"
+                        class="text-gray-600 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700 group flex items-center px-3 py-2 text-sm font-medium rounded-md">
+                        2. CSS Cơ Bản
+                    </a>
+                    <a href="#tables-frames"
+                        class="text-gray-600 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700 group flex items-center px-3 py-2 text-sm font-medium rounded-md">
+                        3. Bảng & Khung
+                    </a>
+                    <a href="#multimedia"
+                        class="text-gray-600 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700 group flex items-center px-3 py-2 text-sm font-medium rounded-md">
+                        4. Đa Phương Tiện
+                    </a>
+                    <a href="#forms"
+                        class="text-gray-600 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700 group flex items-center px-3 py-2 text-sm font-medium rounded-md">
+                        5. Biểu Mẫu (Forms)
+                    </a>
+                    <a href="#project"
+                        class="text-gray-600 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700 group flex items-center px-3 py-2 text-sm font-medium rounded-md">
+                        6. Dự Án: Portfolio
+                    </a>
+                    <a href="#star-pattern"
+                        class="text-gray-600 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700 group flex items-center px-3 py-2 text-sm font-medium rounded-md">
+                        7. Bài Tập: Vẽ Sao (Logic)
+                    </a>
+                    <a href="#star-rating"
+                        class="text-gray-600 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700 group flex items-center px-3 py-2 text-sm font-medium rounded-md">
+                        8. Bài Tập: Đánh Giá Sao (UI)
+                    </a>
+                    <a href="#yearbook"
+                        class="text-gray-600 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700 group flex items-center px-3 py-2 text-sm font-medium rounded-md">
+                        9. Dự Án: Kỷ Yếu Lớp 12A
+                    </a>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 md:ml-64 p-8">
+            <div class="max-w-3xl mx-auto">
+                <div class="prose dark:prose-invert max-w-none">
+                    <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">Lập Trình Web HTML/CSS</h1>
+
+                    <section id="html-basics" class="mb-12">
+                        <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4">1. HTML Cơ Bản (Cấu Trúc)
+                        </h2>
+
+                        <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">1.1. Cấu Trúc Trang Web
+                        </h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">
+                            Mọi trang web đều bắt đầu bằng bộ khung HTML chuẩn.
+                        </p>
+                        <div class="bg-gray-800 rounded-lg p-4 mb-6 overflow-x-auto">
+                            <pre class="text-blue-300 font-mono text-sm">
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Tiêu đề xuất hiện trên tab trình duyệt&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Tiêu đề lớn nhất&lt;/h1&gt;
+    &lt;p&gt;Đây là một đoạn văn bản (paragraph).&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</pre>
+                        </div>
+                    </section>
+
+                    <section id="css-basics" class="mb-12">
+                        <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4">2. CSS Cơ Bản (Trang Trí)
+                        </h2>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">
+                            CSS (Cascading Style Sheets) giống như "lớp trang điểm" cho trang web, giúp định dạng màu
+                            sắc, bố cục và phông chữ.
+                        </p>
+
+                        <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">2.1. Cú Pháp CSS</h3>
+                        <div class="bg-gray-800 rounded-lg p-4 mb-4 overflow-x-auto">
+                            <pre class="text-pink-300 font-mono text-sm">
+h1 {
+  color: blue;       /* Thuộc tính: Giá trị */
+  font-size: 20px;
+}</pre>
+                        </div>
+
+                        <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">2.2. Các Loại Selector
+                            (Bộ Chọn)</h3>
+                        <ul class="list-disc pl-5 text-gray-600 dark:text-gray-300 mb-4 space-y-2">
+                            <li><strong>Cơ bản:</strong>
+                                <ul class="list-circle pl-5 mt-1">
+                                    <li><code>p { color: red; }</code> (Thẻ: mọi thẻ p)</li>
+                                    <li><code>.box { background: #eee; }</code> (Class: class="box")</li>
+                                    <li><code>#header { height: 50px; }</code> (ID: id="header")</li>
+                                </ul>
+                            </li>
+                            <li><strong>Nâng cao (Mối quan hệ):</strong>
+                                <ul class="list-circle pl-5 mt-1">
+                                    <li><code>div p { ... }</code> (Hậu duệ: mọi thẻ p nằm trong div)</li>
+                                    <li><code>ul > li { ... }</code> (Con trực tiếp: chỉ li là con trực tiếp của ul)
+                                    </li>
+                                    <li><code>h1, h2, h3 { ... }</code> (Nhóm: áp dụng cho cả h1, h2, h3)</li>
+                                </ul>
+                            </li>
+                            <li><strong>Pseudo-class (Trạng thái):</strong>
+                                <ul class="list-circle pl-5 mt-1">
+                                    <li><code>a:hover { color: orange; }</code> (Khi di chuột vào thẻ a)</li>
+                                    <li><code>input:focus { border: blue; }</code> (Khi đang nhập liệu)</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                        <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">2.3. Cách Chèn CSS</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">
+                            Phổ biến nhất là dùng thẻ <code>&lt;style&gt;</code> trong <code>&lt;head&gt;</code> hoặc
+                            file <code>.css</code> riêng.
+                        </p>
+                        <div class="bg-gray-800 rounded-lg p-4 mb-4 overflow-x-auto">
+                            <pre class="text-pink-300 font-mono text-sm">
+&lt;style&gt;
+  body { font-family: Arial, sans-serif; }
+  .highlight { color: orange; font-weight: bold; }
+&lt;/style&gt;</pre>
+                        </div>
+
+                        <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">2.4. Định Kiểu Liên Kết
+                            & Danh Sách</h3>
+
+                        <h4 class="font-bold text-gray-700 dark:text-gray-300 mt-2">a. Liên Kết (Links)</h4>
+                        <p class="text-gray-600 dark:text-gray-300 mb-2">Thường dùng <code>text-decoration</code> để bỏ
+                            gạch chân và <code>:hover</code> để tạo hiệu ứng.</p>
+                        <div class="bg-gray-800 rounded-lg p-4 mb-4 overflow-x-auto">
+                            <pre class="text-pink-300 font-mono text-sm">
+a {
+  text-decoration: none; /* Bỏ gạch chân */
+  color: #3b82f6;
+}
+a:hover {
+  text-decoration: underline; /* Gạch chân khi di chuột */
+  color: #1d4ed8;
+}</pre>
+                        </div>
+
+                        <h4 class="font-bold text-gray-700 dark:text-gray-300 mt-2">b. Danh Sách (Lists)</h4>
+                        <p class="text-gray-600 dark:text-gray-300 mb-2">Dùng <code>list-style-type</code> để đổi kiểu
+                            dấu đầu dòng.</p>
+                        <div class="bg-gray-800 rounded-lg p-4 mb-4 overflow-x-auto">
+                            <pre class="text-pink-300 font-mono text-sm">
+ul {
+  list-style-type: square; /* Hình vuông */
+  /* Các giá trị khác: circle, none (bỏ dấu) */
+}</pre>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">2.5. Định Kiểu Bảng &
+                            Box Model (Div)</h3>
+
+                        <h4 class="font-bold text-gray-700 dark:text-gray-300 mt-2">a. Box Model (Mô hình hộp)</h4>
+                        <p class="text-gray-600 dark:text-gray-300 mb-2">Mọi phần tử HTML (như <code>&lt;div&gt;</code>)
+                            đều là một cái hộp. Các thành phần chính:</p>
+                        <ul class="list-disc pl-5 text-gray-600 dark:text-gray-300 mb-4 space-y-1">
+                            <li><strong>Content</strong>: Nội dung bên trong.</li>
+                            <li><strong>Padding</strong>: Khoảng cách từ nội dung đến viền.</li>
+                            <li><strong>Border</strong>: Đường viền bao quanh.</li>
+                            <li><strong>Margin</strong>: Khoảng cách giữa các hộp.</li>
+                        </ul>
+                        <div class="bg-gray-800 rounded-lg p-4 mb-4 overflow-x-auto">
+                            <pre class="text-pink-300 font-mono text-sm">
+.box {
+  width: 200px;
+  padding: 20px; /* Đệm trong */
+  border: 2px solid black; /* Viền */
+  margin: 10px; /* Lề ngoài */
+}</pre>
+                        </div>
+
+                        <h4 class="font-bold text-gray-700 dark:text-gray-300 mt-2">b. Định Kiểu Bảng (Tables)</h4>
+                        <p class="text-gray-600 dark:text-gray-300 mb-2">Dùng <code>border-collapse</code> để gộp viền
+                            và <code>padding</code> để tạo không gian.</p>
+                        <div class="bg-gray-800 rounded-lg p-4 mb-4 overflow-x-auto">
+                            <pre class="text-pink-300 font-mono text-sm">
+table {
+  width: 100%;
+  border-collapse: collapse; /* Gộp 2 viền thành 1 */
+}
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px; /* Khoảng cách nội dung */
+  text-align: left;
+}
+/* Hiệu ứng sọc ngựa vằn */
+tr:nth-child(even) { background-color: #f2f2f2; }</pre>
+                        </div>
+
+                        <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">2.6. Định Kiểu Biểu Mẫu
+                            (Forms)</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-2">Làm đẹp ô nhập liệu và nút bấm để tăng trải
+                            nghiệm người dùng.</p>
+                        <div class="bg-gray-800 rounded-lg p-4 mb-4 overflow-x-auto">
+                            <pre class="text-pink-300 font-mono text-sm">
+input[type="text"], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px; /* Bo góc */
+  box-sizing: border-box; /* Tính cả padding vào width */
+}
+
+button {
+  width: 100%;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}</pre>
+                        </div>
+                    </section>
+
+                    <section id="tables-frames" class="mb-12">
+                        <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4">3. Bảng và Khung (Tables &
+                            Frames)</h2>
+
+                        <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">3.1. Tạo Bảng (HTML
+                            Tables)</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">
+                            Sử dụng thẻ <code>&lt;table&gt;</code> để hiển thị dữ liệu dạng lưới.
+                        </p>
+                        <div class="bg-gray-800 rounded-lg p-4 mb-4 overflow-x-auto">
+                            <pre class="text-pink-300 font-mono text-sm">
+&lt;table border="1"&gt;
+  &lt;tr&gt; &lt;!-- Hàng --&gt;
+    &lt;th&gt;Tên&lt;/th&gt; &lt;!-- Tiêu đề cột --&gt;
+    &lt;th&gt;Tuổi&lt;/th&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;An&lt;/td&gt; &lt;!-- Ô dữ liệu --&gt;
+    &lt;td&gt;20&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;</pre>
+                        </div>
+
+                        <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">3.2. Khung
+                            (Frames/Borders)</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">
+                            Bạn có thể tạo "khung" nhúng trang web khác bằng <code>&lt;iframe&gt;</code> hoặc tạo khung
+                            viền trang trí bằng CSS <code>border</code>.
+                        </p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="p-4 border-4 border-dashed border-blue-500 rounded-lg">
+                                <p class="text-center font-bold text-blue-500">Khung viền CSS (border)</p>
+                            </div>
+                            <div class="bg-gray-200 p-2 rounded">
+                                <p class="text-xs text-center mb-1">Thẻ iframe (Nhúng bản đồ/video)</p>
+                                <div
+                                    class="w-full h-24 bg-white flex items-center justify-center text-gray-400 text-sm border">
+                                    [Nội dung iframe]
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="multimedia" class="mb-12">
+                        <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4">4. Đa Phương Tiện
+                            (Multimedia)</h2>
+
+                        <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">4.1. Hình Ảnh (Images)
+                        </h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">
+                            Sử dụng thẻ <code>&lt;img&gt;</code> để chèn ảnh. Lưu ý thẻ này không có thẻ đóng.
+                        </p>
+                        <div class="bg-gray-800 rounded-lg p-4 mb-4 overflow-x-auto">
+                            <pre
+                                class="text-green-300 font-mono text-sm">&lt;img src="hinh-anh.jpg" alt="Mô tả ảnh" width="300"&gt;</pre>
+                        </div>
+
+                        <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">4.2. Âm Thanh (Audio)
+                        </h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">
+                            Sử dụng thẻ <code>&lt;audio&gt;</code> để phát nhạc.
+                        </p>
+                        <div class="bg-gray-800 rounded-lg p-4 mb-4 overflow-x-auto">
+                            <pre class="text-green-300 font-mono text-sm">
+&lt;audio controls&gt;
+  &lt;source src="nhac.mp3" type="audio/mpeg"&gt;
+  Trình duyệt của bạn không hỗ trợ thẻ audio.
+&lt;/audio&gt;</pre>
+                        </div>
+
+                        <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">4.3. Video</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">
+                            Sử dụng thẻ <code>&lt;video&gt;</code> để phát video.
+                        </p>
+                        <div class="bg-gray-800 rounded-lg p-4 mb-4 overflow-x-auto">
+                            <pre class="text-green-300 font-mono text-sm">
+&lt;video width="320" height="240" controls&gt;
+  &lt;source src="video.mp4" type="video/mp4"&gt;
+  Trình duyệt của bạn không hỗ trợ thẻ video.
+&lt;/video&gt;</pre>
+                        </div>
+                    </section>
+
+                    <section id="forms" class="mb-12">
+                        <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4">5. Biểu Mẫu (Forms)</h2>
+
+                        <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">5.1. Thẻ Form & Input
+                        </h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">
+                            Biểu mẫu giúp thu thập dữ liệu từ người dùng.
+                        </p>
+                        <ul class="list-disc pl-5 text-gray-600 dark:text-gray-300 mb-4 space-y-2">
+                            <li><code>&lt;form&gt;</code>: Bao quanh các phần tử biểu mẫu.</li>
+                            <li><code>&lt;input&gt;</code>: Ô nhập liệu (text, password, number...).</li>
+                            <li><code>&lt;button&gt;</code>: Nút bấm.</li>
+                        </ul>
+
+                        <div
+                            class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6">
+                            <h4 class="font-bold mb-4">Ví dụ Form Đăng Nhập:</h4>
+                            <form onsubmit="event.preventDefault(); alert('Đã gửi form!');" class="space-y-4 max-w-sm">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Tên đăng
+                                        nhập</label>
+                                    <input type="text" placeholder="user123"
+                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 p-2 border">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Mật
+                                        khẩu</label>
+                                    <input type="password" placeholder="******"
+                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 p-2 border">
+                                </div>
+                                <button type="submit"
+                                    class="bg-primary text-white px-4 py-2 rounded hover:bg-blue-600 transition">Đăng
+                                    Nhập</button>
+                            </form>
+                        </div>
+                    </section>
+
+                    <section id="project" class="mb-12">
+                        <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4">6. Dự Án: Trang Hồ Sơ Cá
+                            Nhân</h2>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">
+                            Hãy kết hợp tất cả kiến thức để tạo một trang "Portfolio" giới thiệu bản thân.
+                        </p>
+
+                        <div class="bg-gray-800 rounded-lg p-4 mb-4 overflow-x-auto">
+                            <pre class="text-blue-300 font-mono text-sm max-h-96 overflow-y-auto">
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;Hồ Sơ Của Tôi&lt;/title&gt;
+  &lt;style&gt;
+    body { font-family: sans-serif; margin: 0; background: #f4f4f4; color: #333; }
+    
+    /* Header & Nav */
+    header { background: #3b82f6; color: white; padding: 20px; text-align: center; }
+    nav a { color: white; margin: 0 10px; text-decoration: none; font-weight: bold; }
+    nav a:hover { text-decoration: underline; color: #fbbf24; }
+    
+    /* Main Layout */
+    .container { max-width: 800px; margin: 20px auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    
+    section { margin-bottom: 30px; }
+    h2 { border-bottom: 2px solid #3b82f6; padding-bottom: 10px; color: #1e3a8a; }
+    
+    /* Elements */
+    img { border-radius: 50%; border: 4px solid #3b82f6; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+    th { background: #eff6ff; }
+    
+    form input, form textarea { width: 100%; padding: 10px; margin: 5px 0; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+    button { background: #3b82f6; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; }
+    button:hover { background: #2563eb; }
+    
+    footer { text-align: center; padding: 20px; color: #666; font-size: 0.9em; border-top: 1px solid #ddd; margin-top: 20px; }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+  &lt;header&gt;
+    &lt;img src="https://via.placeholder.com/100" alt="Avatar"&gt;
+    &lt;h1&gt;Nguyễn Văn A&lt;/h1&gt;
+    &lt;nav&gt;
+      &lt;a href="#about"&gt;Giới Thiệu&lt;/a&gt;
+      &lt;a href="#skills"&gt;Kỹ Năng&lt;/a&gt;
+      &lt;a href="#contact"&gt;Liên Hệ&lt;/a&gt;
+    &lt;/nav&gt;
+  &lt;/header&gt;
+
+  &lt;div class="container"&gt;
+    &lt;section id="about"&gt;
+      &lt;h2&gt;Giới Thiệu&lt;/h2&gt;
+      &lt;p&gt;Xin chào! Tôi là một lập trình viên web đầy nhiệt huyết. Tôi thích tạo ra những trang web đẹp và hữu ích.&lt;/p&gt;
+    &lt;/section&gt;
+
+    &lt;section id="skills"&gt;
+      &lt;h2&gt;Kỹ Năng&lt;/h2&gt;
+      &lt;table&gt;
+        &lt;tr&gt;&lt;th&gt;Kỹ Năng&lt;/th&gt;&lt;th&gt;Đánh Giá&lt;/th&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;HTML & CSS&lt;/td&gt;&lt;td&gt;⭐⭐⭐⭐⭐&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;JavaScript&lt;/td&gt;&lt;td&gt;⭐⭐⭐⭐&lt;/td&gt;&lt;/tr&gt;
+      &lt;/table&gt;
+    &lt;/section&gt;
+
+    &lt;section id="contact"&gt;
+      &lt;h2&gt;Liên Hệ&lt;/h2&gt;
+      &lt;form&gt;
+        &lt;label&gt;Email của bạn:&lt;/label&gt;
+        &lt;input type="email" placeholder="example@gmail.com"&gt;
+        &lt;label&gt;Lời nhắn:&lt;/label&gt;
+        &lt;input type="text" placeholder="Xin chào..."&gt;
+        &lt;button&gt;Gửi Tin Nhắn&lt;/button&gt;
+      &lt;/form&gt;
+    &lt;/section&gt;
+  &lt;/div&gt;
+
+  &lt;footer&gt;
+    &lt;p&gt;&copy; 2024 Nguyễn Văn A. All rights reserved.&lt;/p&gt;
+  &lt;/footer&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+                        </div>
+                    </section>
+
+                    <section id="star-pattern" class="mb-12">
+                        <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4">7. Bài Tập: Vẽ Hình Sao
+                            (Logic)</h2>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">
+                            Sử dụng vòng lặp (loop) trong JavaScript để in ra một tam giác sao. Đây là bài tập kinh điển
+                            để luyện tư duy logic.
+                        </p>
+                        <div
+                            class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4">
+                            <h3 class="font-bold mb-2">Đề bài: In ra màn hình console hình sau:</h3>
+                            <pre class="font-mono text-sm bg-gray-100 dark:bg-gray-900 p-2 rounded mb-4">
+*
+**
+***
+****
+*****</pre>
+                            <button id="run-star-logic"
+                                class="bg-secondary hover:bg-green-600 text-white px-4 py-2 rounded text-sm transition">
+                                Chạy thử Code mẫu (Xem Console)
+                            </button>
+                            <div id="star-logic-output"
+                                class="mt-4 font-mono text-sm whitespace-pre bg-black text-green-400 p-2 rounded hidden">
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="star-rating" class="mb-12">
+                        <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4">8. Bài Tập: Giao Diện Đánh
+                            Giá Sao (UI)</h2>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">
+                            Tạo một component đánh giá 5 sao tương tác được. Khi di chuột hoặc click, các ngôi sao sẽ
+                            sáng lên.
+                        </p>
+
+                        <div
+                            class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6 flex flex-col items-center">
+                            <div class="star-rating text-3xl text-gray-300 mb-2">
+                                <i class="fas fa-star" data-rating="1"></i>
+                                <i class="fas fa-star" data-rating="2"></i>
+                                <i class="fas fa-star" data-rating="3"></i>
+                                <i class="fas fa-star" data-rating="4"></i>
+                                <i class="fas fa-star" data-rating="5"></i>
+                            </div>
+                            <p id="rating-value" class="text-gray-600 dark:text-gray-400 text-sm">Hãy đánh giá khóa học
+                                này!</p>
+                        </div>
+                    </section>
+
+                    <section id="yearbook" class="mb-12">
+                        <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4">9. Dự Án: Kỷ Yếu Lớp 12A
+                        </h2>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">
+                            Xây dựng trang kỷ yếu trực tuyến lưu giữ những khoảnh khắc đáng nhớ của lớp. Sử dụng
+                            <strong>CSS Grid</strong> hoặc <strong>Flexbox</strong> để tạo bố cục lưới ảnh đẹp mắt.
+                        </p>
+
+                        <div class="bg-gray-800 rounded-lg p-4 mb-4 overflow-x-auto">
+                            <pre class="text-blue-300 font-mono text-sm">
+&lt;!-- HTML Structure --&gt;
+&lt;div class="gallery"&gt;
+  &lt;div class="card"&gt;
+    &lt;img src="student1.jpg" alt="Student 1"&gt;
+    &lt;h3&gt;Nguyễn Văn A&lt;/h3&gt;
+    &lt;p&gt;"Học hết sức, chơi hết mình!"&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;!-- More cards... --&gt;
+&lt;/div&gt;
+
+&lt;!-- CSS --&gt;
+&lt;style&gt;
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+.card {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+  border-radius: 8px;
+  transition: transform 0.3s;
+}
+.card:hover {
+  transform: scale(1.05); /* Phóng to khi di chuột */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+.card img {
+  width: 100%;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+&lt;/style&gt;</pre>
+                        </div>
+
+                        <div
+                            class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6">
+                            <h3 class="font-bold text-xl mb-6 text-center text-primary">Demo: Kỷ Yếu Lớp 12A</h3>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                                <!-- Card 1 -->
+                                <div
+                                    class="border dark:border-gray-600 rounded-lg p-6 text-center shadow-sm hover:shadow-xl transition transform hover:-translate-y-2 bg-white dark:bg-gray-700 cursor-pointer">
+                                    <div
+                                        class="w-24 h-24 bg-blue-100 dark:bg-blue-900 rounded-full mx-auto mb-4 flex items-center justify-center text-4xl shadow-inner">
+                                        👨‍🎓
+                                    </div>
+                                    <h4 class="font-bold text-lg text-gray-800 dark:text-gray-100">Nam Khánh</h4>
+                                    <p class="text-gray-500 dark:text-gray-400 text-sm italic mt-2">"Coder tương lai"
+                                    </p>
+                                </div>
+                                <!-- Card 2 -->
+                                <div
+                                    class="border dark:border-gray-600 rounded-lg p-6 text-center shadow-sm hover:shadow-xl transition transform hover:-translate-y-2 bg-white dark:bg-gray-700 cursor-pointer">
+                                    <div
+                                        class="w-24 h-24 bg-pink-100 dark:bg-pink-900 rounded-full mx-auto mb-4 flex items-center justify-center text-4xl shadow-inner">
+                                        👩‍🎓
+                                    </div>
+                                    <h4 class="font-bold text-lg text-gray-800 dark:text-gray-100">Minh Anh</h4>
+                                    <p class="text-gray-500 dark:text-gray-400 text-sm italic mt-2">"Designer tài ba"
+                                    </p>
+                                </div>
+                                <!-- Card 3 -->
+                                <div
+                                    class="border dark:border-gray-600 rounded-lg p-6 text-center shadow-sm hover:shadow-xl transition transform hover:-translate-y-2 bg-white dark:bg-gray-700 cursor-pointer">
+                                    <div
+                                        class="w-24 h-24 bg-green-100 dark:bg-green-900 rounded-full mx-auto mb-4 flex items-center justify-center text-4xl shadow-inner">
+                                        🏆
+                                    </div>
+                                    <h4 class="font-bold text-lg text-gray-800 dark:text-gray-100">Hoàng Long</h4>
+                                    <p class="text-gray-500 dark:text-gray-400 text-sm italic mt-2">"Vận động viên"</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <!-- Quiz Call to action -->
+                    <div class="col-span-12 lg:col-span-9 lg:col-start-4 mt-12 mb-12 bg-indigo-50 dark:bg-indigo-900/30 rounded-xl p-8 text-center border border-indigo-100 dark:border-indigo-800">
+                        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Ôn Tập Kiến Thức</h2>
+                        <p class="text-gray-600 dark:text-gray-300 mb-6">Hãy thử sức với bài kiểm tra trắc nghiệm để củng cố lại những gì đã học nhé!</p>
+                        <a href="../quiz.html?course=web_dev" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:text-lg transition-colors">
+                            Làm bài kiểm tra ngay
+                        </a>
+                    </div>
+    
+                </div>
+                </div>
+        </main>
+    </div>
+
+    <script>
+        // Inline script for Star Logic
+        document.getElementById('run-star-logic').addEventListener('click', function () {
+            const outputDiv = document.getElementById('star-logic-output');
+            outputDiv.classList.remove('hidden');
+            let result = '';
+            for (let i = 1; i <= 5; i++) {
+                let row = '';
+                for (let j = 1; j <= i; j++) {
+                    row += '*';
+                }
+                result += row + '\n';
+                console.log(row);
+            }
+            outputDiv.textContent = result;
+        });
+
+        // Inline script for Star Rating UI
+        const stars = document.querySelectorAll('.star-rating i');
+        const ratingText = document.getElementById('rating-value');
+
+        stars.forEach(star => {
+            star.addEventListener('click', () => {
+                const rating = star.getAttribute('data-rating');
+                ratingText.textContent = `Bạn đã đánh giá ${rating} sao!`;
+
+                // Reset all
+                stars.forEach(s => s.classList.remove('active'));
+                // Active current and previous
+                stars.forEach(s => {
+                    if (s.getAttribute('data-rating') <= rating) {
+                        s.classList.add('active');
+                    }
+                });
+            });
+        });
+    </script>
+    <script src="../scripts/chatbot.js"></script>
+</body>
+
+</html>
