@@ -192,55 +192,123 @@ const quizzesData = {
     // -----------------------------------------
     // THPT
     // -----------------------------------------
-    "grade_10": {
-        title: "Bài Kiểm Tra Trắc Nghiệm: Tin Học 10",
+        "grade_10": {
+        title: "Bài Kiểm Tra Trắc Nghiệm: Tin Học 10 (Kết Nối Tri Thức)",
         questions: [
             {
                 id: 1,
-                question: "Thiết bị thông minh (Smart device) khác thiết bị điện tử thường ở điểm nào?",
-                options: ["Dùng điện 220V", "Có khả năng nhận biết môi trường, xử lý thông tin tự động và kết nối mạng", "Có khối lượng nặng hơn", "Làm bằng kim loại"],
+                question: "Trong biểu diễn dữ liệu số nhị phân, kết quả của phép cộng nhị phân 101(2) + 011(2) là bao nhiêu?",
+                options: ["110(2)", "1000(2)", "111(2)", "1001(2)"],
                 correctAnswer: 1,
-                explanation: "Thiết bị thông minh thường được tích hợp cảm biến (sensor), chip xử lý và có Wi-Fi/Bluetooth."
+                explanation: "101(2) tương ứng với 5 ở hệ thập phân, 011(2) tương ứng với 3. 5 + 3 = 8, và 8 đổi sang nhị phân là 1000(2)."
             },
             {
                 id: 2,
-                question: "Hệ điều hành Windows thuộc loại phần mềm nào?",
-                options: ["Phần mềm ứng dụng", "Phần mềm độc hại", "Phần mềm hệ thống", "Phần mềm đồ họa"],
+                question: "Hành vi nào sau đây vi phạm bản quyền và quy định pháp luật về an toàn thông tin trên môi trường số?",
+                options: [
+                    "Sử dụng phần mềm mã nguồn mở miễn phí theo giấy phép GNU GPL",
+                    "Trích dẫn bài viết khoa học có ghi rõ họ tên tác giả và nguồn gốc tài liệu",
+                    "Tải phần mềm bẻ khóa (crack) từ các trang web lậu và chia sẻ lên mạng xã hội",
+                    "Đặt mật khẩu tài khoản gồm chữ hoa, chữ thường, chữ số và ký tự đặc biệt"
+                ],
                 correctAnswer: 2,
-                explanation: "Hệ điều hành (OS) là phần mềm nền tảng, quản lý phần cứng và làm cầu nối cho phần mềm ứng dụng."
+                explanation: "Sử dụng và phân tán phần mềm bẻ khóa (crack) là hành vi xâm phạm quyền tác giả và tiềm ẩn nguy cơ lây nhiễm mã độc cao."
             },
             {
                 id: 3,
-                question: "Trí tuệ nhân tạo (AI) giúp máy tính có khả năng gì?",
-                options: ["Chống nước", "Hành động và tư duy mô phỏng con người", "Bật nguồn nhanh", "Thay thế hoàn toàn con người"],
+                question: "Đặc điểm nổi bật nhất của ảnh đồ họa vectơ (Vector) so với ảnh điểm ảnh (Raster) trong phần mềm Inkscape là gì?",
+                options: [
+                    "Được cấu tạo từ ma trận các điểm ảnh (Pixel)",
+                    "Khi phóng to tùy ý hình ảnh không bao giờ bị vỡ hạt hay giảm độ sắc nét",
+                    "Dung lượng file luôn lớn hơn rất nhiều so với file ảnh raster",
+                    "Không thể chỉnh sửa được màu sắc và đường nét sau khi vẽ"
+                ],
                 correctAnswer: 1,
-                explanation: "AI là nhánh khoa học máy tính hướng tới việc tự động hóa tư duy học máy, nhận diện."
+                explanation: "Đồ họa vectơ được tính toán dựa trên các công thức toán học và đối tượng hình học, cho phép thu phóng vô hạn mà không suy giảm chất lượng hiển thị."
+            },
+            {
+                id: 4,
+                question: "Trong ngôn ngữ lập trình Python, đoạn mã sau in ra kết quả gì?\n\na = [10, 20, 30, 40]\nprint(a[1] + a[-1])",
+                options: ["40", "50", "60", "30"],
+                correctAnswer: 2,
+                explanation: "Trong Python, chỉ số đánh từ 0 nên a[1] = 20, và a[-1] là phần tử cuối cùng a[-1] = 40. Tổng 20 + 40 = 60."
+            },
+            {
+                id: 5,
+                question: "Điều kiện tiên quyết bắt buộc để áp dụng thuật toán tìm kiếm nhị phân (Binary Search) trên một danh sách là gì?",
+                options: [
+                    "Danh sách phải có số lượng phần tử là số chẵn",
+                    "Danh sách đã được sắp xếp theo một thứ tự xác định (tăng dần hoặc giảm dần)",
+                    "Các phần tử trong danh sách bắt buộc phải là số nguyên dương",
+                    "Danh sách phải chứa không quá 100 phần tử"
+                ],
+                correctAnswer: 1,
+                explanation: "Thuật toán tìm kiếm nhị phân chia đôi phạm vi tìm kiếm ở mỗi bước nên bắt buộc danh sách dữ liệu phải được sắp xếp trước."
             }
         ]
     },
-    "grade_11": {
-        title: "Bài Kiểm Tra Trắc Nghiệm: Tin Học 11",
+        "grade_11": {
+        title: "Bài Kiểm Tra Trắc Nghiệm: Tin Học 11 (KNTT - ICT)",
         questions: [
             {
                 id: 1,
-                question: "Vì sao phải thiết kế cơ sở dữ liệu (Database)?",
-                options: ["Để máy chiếu sáng hơn", "Để lưu trữ dữ liệu có cấu trúc, tránh dư thừa, chống mất chuẩn", "Để vẽ đồ họa 3D", "Để lướt web nhanh hơn"],
+                question: "Vì sao các hệ thống phần mềm cần phải thiết kế và sử dụng Cơ sở dữ liệu (Database) thay vì lưu trữ tệp rời rạc?",
+                options: [
+                    "Để máy tính tiêu tốn ít điện năng hơn",
+                    "Để lưu trữ dữ liệu có cấu trúc, tránh dư thừa dữ liệu, đảm bảo tính nhất quán và toàn vẹn",
+                    "Để hiển thị đồ họa 3D đẹp hơn trên màn hình",
+                    "Để tăng tốc độ kết nối cáp quang Internet"
+                ],
                 correctAnswer: 1,
-                explanation: "CSDL giúp chuẩn hóa dữ liệu, đảm bảo tính nhất quán và toàn vẹn khi hệ quản trị truy vấn."
+                explanation: "CSDL giúp chuẩn hóa dữ liệu, loại bỏ trùng lặp dư thừa, đảm bảo tính toàn vẹn và cho phép nhiều người dùng truy xuất đồng thời an toàn."
             },
             {
                 id: 2,
-                question: "Khóa chính (Primary Key) trong bảng (Table) có đặc điểm gì?",
-                options: ["Các giá trị có thể trùng nhau", "Luôn là kiểu số", "Định danh duy nhất một bản ghi (row) và không được NULL", "Chỉ chứa 1 kí tự"],
+                question: "Khóa chính (Primary Key) trong một bảng CSDL quan hệ có đặc điểm quan trọng nào sau đây?",
+                options: [
+                    "Các giá trị trong cột khóa chính có thể trùng lặp nhau",
+                    "Bắt buộc phải là kiểu dữ liệu văn bản dài (TEXT)",
+                    "Định danh duy nhất mỗi bản ghi (dòng dữ liệu) trong bảng và giá trị không được để trống (NOT NULL)",
+                    "Chỉ được phép chứa tối đa 1 ký tự duy nhất"
+                ],
                 correctAnswer: 2,
-                explanation: "Khóa chính dùng để phân biệt các dòng với nhau (VD: Mã số sinh viên, CCCD)."
+                explanation: "Khóa chính đóng vai trò nhận diện duy nhất từng bản ghi trong bảng và không bao giờ được phép mang giá trị rỗng (NULL)."
             },
             {
                 id: 3,
-                question: "Nghề Quản trị cơ sở dữ liệu (DBA) có nhiệm vụ gì?",
-                options: ["Cài hệ điều hành", "Cấu hình mạng LAN", "Thiết kế, bảo mật, sao lưu và khôi phục hệ thống cơ sở dữ liệu", "Thiết kế logo"],
+                question: "Nghề Quản trị Cơ sở dữ liệu (Database Administrator - DBA) chịu trách nhiệm chính về công việc gì?",
+                options: [
+                    "Cài đặt hệ điều hành và sửa chữa phần cứng máy in văn phòng",
+                    "Cấu hình và bấm dây cáp mạng LAN cho trường học",
+                    "Thiết kế, cấp quyền bảo mật, theo dõi hiệu năng, sao lưu (Backup) và phục hồi (Restore) hệ thống CSDL",
+                    "Vẽ minh họa banner và thiết kế logo thương hiệu cho website"
+                ],
                 correctAnswer: 2,
-                explanation: "DBA chịu trách nhiệm hiệu năng, cấp quyền và đảm bảo CSDL công ty luôn an toàn."
+                explanation: "DBA chịu trách nhiệm đảm bảo hệ thống CSDL vận hành liên tục, an toàn dữ liệu tuyệt đối, hiệu năng truy vấn tối ưu và có phương án phục hồi sau sự cố."
+            },
+            {
+                id: 4,
+                question: "Trong ngôn ngữ SQL, câu lệnh nào sau đây được sử dụng để truy xuất và lấy dữ liệu từ một hoặc nhiều bảng?",
+                options: [
+                    "INSERT INTO",
+                    "SELECT",
+                    "UPDATE",
+                    "DELETE"
+                ],
+                correctAnswer: 1,
+                explanation: "Câu lệnh SELECT (thường kết hợp với FROM, WHERE, JOIN...) là cú pháp chuẩn để lọc và truy xuất các bản ghi từ các bảng trong CSDL quan hệ."
+            },
+            {
+                id: 5,
+                question: "Trong kỹ thuật xử lý hình ảnh và video (GIMP, VideoPad), một đoạn ảnh động GIF hoặc clip hoạt hình được cấu thành từ yếu tố nào?",
+                options: [
+                    "Chuỗi liên tiếp nhiều khung hình tĩnh (layers/frames) được hiển thị nối tiếp nhau theo trục thời gian",
+                    "Chỉ một bức ảnh tĩnh duy nhất được phóng to kích thước liên tục",
+                    "Một tập tin văn bản mã hóa không chứa hình ảnh",
+                    "Một file nhạc nền MP3 không cần hình ảnh hiển thị"
+                ],
+                correctAnswer: 0,
+                explanation: "Ảnh động và hoạt hình thực chất là sự nối tiếp của các khung hình tĩnh (frame) phát với tần số đủ nhanh theo thời gian để tạo ra ảo giác chuyển động liên tục cho mắt người xem."
             }
         ]
     },
@@ -270,7 +338,6 @@ const quizzesData = {
             }
         ]
     },
-
     // -----------------------------------------
     // ACTIVITIES & EXTRA COURSES
     // -----------------------------------------
@@ -301,40 +368,197 @@ const quizzesData = {
         ]
     },
     "hdtnhn_10": {
-        title: "Bài Kiểm Tra: HĐTN & HN 10",
+        title: "Bài Kiểm Tra Trắc Nghiệm: HĐTN & HN 10 (Kết Nối Tri Thức)",
         questions: [
             {
                 id: 1,
-                question: "Trong hoạt động hướng nghiệp, yếu tố nào bên trong cá nhân là quan trọng nhất khi chọn nghề?",
-                options: ["Ý kiến của bạn bè", "Mức lương", "Sự phù hợp giữa sở thích, sở trường và đam mê", "Nghề đó đang hot"],
-                correctAnswer: 2,
-                explanation: "Đam mê và năng lực cá nhân mới quyết định em có thể gắn bó và phát triển bền vững hay không."
+                question: "Hành động nào sau đây thể hiện rõ nhất ý thức phát huy truyền thống nhà trường và thực hiện nghiêm túc nội quy?",
+                options: [
+                    "Chỉ thực hiện nội quy khi có giám thị hoặc thầy cô nhắc nhở trực tiếp",
+                    "Chủ động đi học đúng giờ, mặc đúng đồng phục, tích cực tham gia các phong trào Đoàn và giữ gìn danh dự nhà trường",
+                    "Đến lớp chỉ chú ý học cá nhân, không quan tâm đến các hoạt động tập thể hay truyền thống của trường",
+                    "Chỉ tham gia các hoạt động ngoại khóa có trao thưởng tiền mặt"
+                ],
+                correctAnswer: 1,
+                explanation: "Tự giác chấp hành nội quy, tích cực học tập, tham gia phong trào tập thể và tự hào gìn giữ danh dự trường là biểu hiện cốt lõi của việc phát huy truyền thống nhà trường."
             },
             {
                 id: 2,
-                question: "Lập kế hoạch tài chính cá nhân mang lại lợi ích gì?",
-                options: ["Có nhiều tiền ngay lập tức", "Biết cách quản lý thu - chi hợp lý, chuẩn bị cho tương lai", "Không bao giờ gặp rủi ro", "Chỉ để làm vui"],
+                question: "Khi nhận kết quả kiểm tra không như mong đợi, biểu hiện nào thể hiện tư duy điều chỉnh theo hướng tích cực?",
+                options: [
+                    "Chán nản, cho rằng bản thân không có năng khiếu và quyết định bỏ học môn đó",
+                    "Đổ lỗi cho đề thi quá khó hoặc thầy cô chấm khắt khe",
+                    "Bình tĩnh xem lại các câu làm sai để nhận diện lỗ hổng kiến thức và lập kế hoạch ôn tập, hỏi lại thầy cô",
+                    "Giấu giếm kết quả với gia đình để không bị mắng"
+                ],
+                correctAnswer: 2,
+                explanation: "Tư duy tích cực (Growth Mindset) xem thất bại tạm thời là cơ hội học hỏi, chủ động phân tích nguyên nhân và tìm giải pháp cải thiện."
+            },
+            {
+                id: 3,
+                question: "Nguyên tắc cơ bản và hiệu quả trong việc lập kế hoạch tài chính cá nhân dành cho học sinh THPT là gì?",
+                options: [
+                    "Có bao nhiêu chi tiêu hết bấy nhiêu để tận hưởng cuộc sống",
+                    "Phân bổ nguồn tiền hợp lý (ví dụ: Thiết yếu - Sở thích - Tiết kiệm) và phân biệt rõ giữa nhu cầu 'Cần' và mong muốn 'Muốn'",
+                    "Vay mượn bạn bè để mua sắm các món đồ theo xu hướng thời trang",
+                    "Chỉ tiết kiệm khi nào có số tiền thật lớn"
+                ],
                 correctAnswer: 1,
-                explanation: "Quản lý tài chính giúp kiểm soát được thói quen tiêu xài, đảm bảo mục tiêu lâu dài."
+                explanation: "Quản lý tài chính cá nhân khoa học bắt đầu từ việc kiểm soát các khoản chi, ưu tiên nhu cầu thiết yếu và duy trì thói quen tiết kiệm đều đặn."
+            },
+            {
+                id: 4,
+                question: "Để thể hiện sự tự tin và thân thiện trong giao tiếp với thầy cô và bạn bè tại trường THPT, học sinh nên làm gì?",
+                options: [
+                    "Tránh giao tiếp bằng mắt và nói lí nhí khi trao đổi",
+                    "Nói thật to, ngắt lời người khác để thể hiện sự nổi trội",
+                    "Giao tiếp bằng ánh mắt chân thành, nụ cười hòa nhã, nói năng mạch lạc và tôn trọng sự khác biệt của mọi người",
+                    "Chỉ giao tiếp với các bạn học giỏi trong lớp"
+                ],
+                correctAnswer: 2,
+                explanation: "Giao tiếp tự tin và thân thiện đòi hỏi thái độ cởi mở, lắng nghe tôn trọng, ánh mắt ấm áp và phong thái lịch thiệp."
+            },
+            {
+                id: 5,
+                question: "Theo mô hình hướng nghiệp tam giác bền vững, một nghề nghiệp lý tưởng được lựa chọn dựa trên sự giao thoa của 3 yếu tố nào?",
+                options: [
+                    "Sở thích của bạn thân - Ý kiến người quen - Xu hướng mạng xã hội",
+                    "Đam mê/sở thích cá nhân - Năng lực/sở trường bản thân - Nhu cầu thực tế của xã hội/thị trường lao động",
+                    "Mức lương khởi điểm cao - Công việc nhàn hạ - Gần nhà",
+                    "Truyền thống nghề nghiệp của gia đình mà không cần xét năng lực bản thân"
+                ],
+                correctAnswer: 1,
+                explanation: "Chọn nghề bền vững phải dựa trên sự kết hợp hài hòa giữa điều em thích (Đam mê), điều em làm tốt (Năng lực) và điều xã hội cần (Cơ hội việc làm)."
             }
         ]
     },
     "hdtnhn_11": {
-        title: "Bài Kiểm Tra: HĐTN & HN 11",
+        title: "Bài Kiểm Tra Trắc Nghiệm: HĐTN & HN 11 (Kết Nối Tri Thức)",
         questions: [
             {
                 id: 1,
-                question: "Cách tốt nhất để tự bảo vệ bản thân khi sử dụng mạng xã hội?",
-                options: ["Công khai mọi số điện thoại, địa chỉ", "Chấp nhận tất cả lời mời kết bạn", "Cài đặt bảo mật (Private), suy nghĩ trước khi đăng bài (Think before you post)", "Tham gia mọi hội nhóm nhóm bóc phốt"],
-                correctAnswer: 2,
-                explanation: "Kỹ năng tự phản vệ trên không gian số yêu cầu ý thức bảo mật dữ liệu cá nhân cao."
+                question: "Hành vi nào sau đây thể hiện việc làm chủ và kiểm soát tốt các mối quan hệ trên mạng xã hội?",
+                options: [
+                    "Bình luận công kích hoặc lập nhóm để giải quyết mâu thuẫn trực tuyến",
+                    "Áp dụng quy tắc 'Think before you post', giữ bí mật thông tin cá nhân và giải quyết bất đồng bằng đối thoại trực tiếp",
+                    "Chia sẻ ngay mọi cảm xúc bực bội, tức giận lên trang cá nhân",
+                    "Chấp nhận kết bạn với tất cả mọi người mà không cần xác minh danh tính"
+                ],
+                correctAnswer: 1,
+                explanation: "Làm chủ mối quan hệ trên mạng xã hội đòi hỏi kỹ năng bảo vệ quyền riêng tư, suy nghĩ chín chắn trước khi đăng tải và đối thoại văn minh khi có bất đồng."
             },
             {
                 id: 2,
-                question: "Trong bối cảnh hướng nghiệp lớp 11, em nên làm gì để đánh giá trường Đại học/Cao đẳng mục tiêu?",
-                options: ["Chỉ nghe theo phong trào", "Chờ đến lớp 12 mới suy nghĩ", "Tham gia ngày hội tư vấn tuyển sinh, so sánh điểm chuẩn, chương trình đào tạo", "Chọn đại một trường"],
+                question: "Để xây dựng và phát triển mối quan hệ tốt đẹp với thầy cô giáo, học sinh cần có thái độ và hành động nào?",
+                options: [
+                    "Chỉ chào hỏi khi thầy cô là giáo viên chủ nhiệm hoặc dạy lớp mình",
+                    "Kính trọng, lễ phép, chủ động trao đổi bài học và chân thành lắng nghe lời chỉ bảo",
+                    "E ngại, tránh né tiếp xúc với thầy cô ngoài giờ lên lớp",
+                    "Chỉ nghe lời khi được thầy cô khen thưởng"
+                ],
+                correctAnswer: 1,
+                explanation: "Sự tôn trọng, cởi mở, cầu thị và lắng nghe chân thành là nền tảng cốt lõi tạo nên mối quan hệ tốt đẹp, ý nghĩa giữa học sinh và thầy cô giáo."
+            },
+            {
+                id: 3,
+                question: "Khi đối mặt với sự thay đổi (như môi trường học mới, phương pháp học mới), cách điều chỉnh bản thân tích cực nhất là gì?",
+                options: [
+                    "Than phiền và mong mọi thứ quay lại như cũ",
+                    "Giữ nguyên phương pháp cũ dù không còn hiệu quả",
+                    "Chủ động tìm hiểu, rèn luyện tư duy mở (Growth Mindset) và lập kế hoạch thích nghi từng bước",
+                    "Buông xuôi và phó mặc cho hoàn cảnh"
+                ],
                 correctAnswer: 2,
-                explanation: "Việc thu thập thông tin và đối chiếu sớm vào năm lớp 11 giúp tạo động lực học tập."
+                explanation: "Tư duy mở và tinh thần chủ động giúp bản thân nhanh chóng thích ứng với những thay đổi và biến thách thức thành cơ hội phát triển."
+            },
+            {
+                id: 4,
+                question: "Phương pháp hiệu quả nhất để hóa giải mâu thuẫn, bất đồng quan điểm giữa học sinh và cha mẹ là gì?",
+                options: [
+                    "Tranh cãi gay gắt để bảo vệ quan điểm đến cùng",
+                    "Chiến tranh lạnh, im lặng và không giao tiếp",
+                    "Bình tĩnh lắng nghe góc nhìn của cha mẹ, thấu hiểu sự lo lắng và đối thoại chân thành, logic",
+                    "Rời khỏi nhà để phản đối"
+                ],
+                correctAnswer: 2,
+                explanation: "Lắng nghe tích cực, thấu hiểu khoảng cách thế hệ và chọn thời điểm thích hợp để đối thoại cởi mở là chìa khóa giải quyết xung đột gia đình."
+            },
+            {
+                id: 5,
+                question: "Trong việc chọn nghề và định hướng học tập ở năm lớp 11, yếu tố nào quan trọng hàng đầu?",
+                options: [
+                    "Chỉ chọn nghề theo trào lưu của bạn bè xung quanh",
+                    "Chọn ngành có điểm chuẩn thấp nhất để dễ đỗ",
+                    "Đối chiếu năng lực, sở trường, phẩm chất cá nhân với yêu cầu thực tế của nghề và xu hướng thị trường lao động",
+                    "Để đến kỳ thi tốt nghiệp lớp 12 mới bắt đầu tìm hiểu"
+                ],
+                correctAnswer: 2,
+                explanation: "Sự phù hợp giữa phẩm chất, năng lực cá nhân với yêu cầu nghề nghiệp và xu thế thị trường là yếu tố quyết định thành công lâu dài."
+            }
+        ]
+    },
+    "hdtnhn_12": {
+        title: "Bài Kiểm Tra Trắc Nghiệm: HĐTN & HN 12 (Kết Nối Tri Thức)",
+        questions: [
+            {
+                id: 1,
+                question: "Để nuôi dưỡng và mở rộng các mối quan hệ tốt đẹp với thầy cô giáo và bạn bè trong năm học lớp 12, học sinh cần thể hiện hành vi nào sau đây?",
+                options: [
+                    "Chỉ tập trung học tập cá nhân, hạn chế giao tiếp để tránh mất thời gian",
+                    "Chân thành tri ân thầy cô, chủ động giúp đỡ bạn bè cùng tiến bộ và tích cực hợp tác trong các hoạt động tập thể",
+                    "Chỉ thân thiện với những bạn có điểm số cao hơn mình",
+                    "Tranh luận gay gắt trên mạng xã hội để thể hiện cái tôi cá nhân"
+                ],
+                correctAnswer: 1,
+                explanation: "Sự chân thành, lòng biết ơn đối với thầy cô và tinh thần tương trợ, hợp tác học tập cùng bạn bè là nền tảng cốt lõi phát triển các mối quan hệ tích cực."
+            },
+            {
+                id: 2,
+                question: "Biểu hiện nào sau đây thể hiện rõ nhất sự trưởng thành và phẩm chất ý chí của một thanh niên tuổi 18?",
+                options: [
+                    "Dễ dàng nản lòng và từ bỏ mục tiêu khi kết quả thi thử ban đầu chưa tốt",
+                    "Phụ thuộc hoàn toàn vào quyết định và sự nhắc nhở của cha mẹ",
+                    "Có tính kiên định, tự chủ kiểm soát thói quen xấu, có trách nhiệm với lời nói và hành động của bản thân",
+                    "Luôn làm theo ý kiến của đám đông dù nhận thấy có điểm chưa đúng"
+                ],
+                correctAnswer: 2,
+                explanation: "Người trưởng thành có năng lực tự chủ, kiên định vượt qua thử thách và dám chịu trách nhiệm hoàn toàn về cuộc sống của chính mình."
+            },
+            {
+                id: 3,
+                question: "Theo quy tắc quản lý tài chính cá nhân 50/30/20, phần 50% thu nhập hoặc tiền tiêu vặt nên được ưu tiên phân bổ cho khoản mục nào?",
+                options: [
+                    "Nhu cầu thiết yếu (ăn uống, đi lại, đồ dùng học tập, sách vở cơ bản)",
+                    "Sở thích cá nhân, mua sắm đồ công nghệ giải trí",
+                    "Tiết kiệm đầu tư mạo hiểm",
+                    "Đi du lịch cùng bạn bè"
+                ],
+                correctAnswer: 0,
+                explanation: "Quy tắc 50/30/20 quy định 50% dành cho các nhu cầu thiết yếu duy trì cuộc sống và học tập, 30% cho mong muốn cá nhân và 20% dành cho tích lũy tiết kiệm."
+            },
+            {
+                id: 4,
+                question: "Khi gia đình gặp khó khăn về tài chính hoặc người thân đau ốm, người con tuổi 18 nên thể hiện trách nhiệm bằng cách nào?",
+                options: [
+                    "Phàn nàn vì mức chi tiêu cá nhân bị cắt giảm",
+                    "Chủ động chia sẻ việc nhà, chăm sóc người thân ốm đau và cùng bàn bạc tiết kiệm chi tiêu hợp lý",
+                    "Tránh mặt khỏi gia đình để không bị ảnh hưởng tâm lý thi cử",
+                    "Yêu cầu cha mẹ vay mượn tiền để duy trì mức sống cũ"
+                ],
+                correctAnswer: 1,
+                explanation: "Chủ động san sẻ gánh nặng, chăm sóc chu đáo người thân và cùng gia đình vượt qua biến cố là trách nhiệm đạo đức cao đẹp của người con trưởng thành."
+            },
+            {
+                id: 5,
+                question: "Để chuẩn bị tâm lý và kỹ năng thích ứng tốt nhất khi bước vào môi trường học tập hoặc làm việc mới sau tốt nghiệp THPT (Đại học, Cao đẳng hoặc Nơi làm việc), học sinh cần làm gì?",
+                options: [
+                    "Chỉ đợi đến ngày nhập học mới bắt đầu tìm hiểu về trường và phương pháp học",
+                    "Lo lắng quá mức và ngại giao tiếp với bạn bè, giảng viên mới",
+                    "Chủ động rèn luyện kỹ năng sống tự lập, nâng cao năng lực tự học, tìm hiểu quy chế đào tạo và xây dựng tư duy cầu tiến",
+                    "Duy trì phương pháp học thụ động như ở bậc phổ thông"
+                ],
+                correctAnswer: 2,
+                explanation: "Sự chủ động trang bị kỹ năng sống tự lập, năng lực tự nghiên cứu và tâm thế mở sẵn sàng học hỏi là chìa khóa vàng giúp tân sinh viên/người đi làm nhanh chóng hòa nhập và thành công."
             }
         ]
     }
