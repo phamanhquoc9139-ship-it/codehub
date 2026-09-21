@@ -9,123 +9,6 @@
   <script src="scripts/supabase-config.js"></script>
 
   <style>
-    function openStudentModal() {
-  document.getElementById("studentModal").style.display = "flex";
-}
-
-function closeStudentModal() {
-  document.getElementById("studentModal").style.display = "none";
-}
-
-async function saveStudent() {
-
-  const client = window.supabaseClient;
-
-  const id = document.getElementById("newStudentId").value.trim();
-  const fullName = document.getElementById("newFullName").value.trim();
-  const studentCode = document.getElementById("newStudentCode").value.trim();
-  const className = document.getElementById("newClassName").value.trim();
-
-  const message = document.getElementById("studentMessage");
-
-  if (!id || !fullName || !studentCode || !className) {
-    message.textContent = "⚠️ Vui lòng nhập đầy đủ thông tin.";
-    return;
-  }
-
-  message.textContent = "Đang thêm học sinh...";
-
-  const { error } = await client
-    .from("profiles")
-    .upsert({
-      id: id,
-      full_name: fullName,
-      student_code: studentCode,
-      class_name: className,
-      role: "student"
-    }, {
-      onConflict: "id"
-    });
-
-  if (error) {
-    console.error(error);
-    message.textContent = "❌ " + error.message;
-    return;
-  }
-
-  message.textContent = "✅ Thêm học sinh thành công.";
-
-  setTimeout(() => {
-    closeStudentModal();
-    location.reload();
-  }, 800);
-}
-    .modal {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(15, 23, 42, .55);
-  z-index: 9999;
-  align-items: center;
-  justify-content: center;
-}
-
-.modal-box {
-  width: min(520px, 92%);
-  background: white;
-  border-radius: 18px;
-  padding: 28px;
-  box-shadow: 0 20px 60px rgba(0,0,0,.2);
-}
-
-.modal-box h2 {
-  margin-bottom: 22px;
-}
-
-.modal-box label {
-  display: block;
-  margin-top: 15px;
-  margin-bottom: 6px;
-  font-weight: 600;
-}
-
-.modal-box input {
-  width: 100%;
-  padding: 12px 14px;
-  border: 1px solid #cbd5e1;
-  border-radius: 9px;
-  font-size: 16px;
-}
-
-.modal-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-  margin-top: 24px;
-}
-
-.btn-save,
-.btn-cancel {
-  border: 0;
-  padding: 11px 18px;
-  border-radius: 9px;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-.btn-save {
-  background: #3182f6;
-  color: white;
-}
-
-.btn-cancel {
-  background: #e2e8f0;
-  color: #334155;
-}
-
-#studentMessage {
-  margin-top: 15px;
-}
     * {
       box-sizing: border-box;
       margin: 0;
@@ -164,6 +47,10 @@ async function saveStudent() {
       margin-left: 5px;
     }
 
+    .btn:hover {
+      background: #2563eb;
+    }
+
     .container {
       max-width: 1200px;
       margin: 40px auto;
@@ -180,6 +67,19 @@ async function saveStudent() {
       margin-bottom: 30px;
     }
 
+    .toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      gap: 15px;
+    }
+
+    .count {
+      color: #64748b;
+      font-size: 16px;
+    }
+
     .box {
       background: white;
       border-radius: 16px;
@@ -187,9 +87,6 @@ async function saveStudent() {
       box-shadow: 0 5px 20px rgba(0,0,0,.06);
       overflow-x: auto;
     }
-    <button class="btn" onclick="openStudentModal()">
-  + Thêm học sinh
-</button>
 
     table {
       width: 100%;
@@ -233,9 +130,97 @@ async function saveStudent() {
       display: none;
     }
 
-    .count {
-      margin-bottom: 15px;
-      color: #64748b;
+    /* MODAL */
+
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, .55);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-box {
+      width: min(520px, 92%);
+      background: white;
+      border-radius: 18px;
+      padding: 28px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.2);
+    }
+
+    .modal-box h2 {
+      margin-bottom: 22px;
+    }
+
+    .modal-box label {
+      display: block;
+      margin-top: 15px;
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+
+    .modal-box input {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid #cbd5e1;
+      border-radius: 9px;
+      font-size: 16px;
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .btn-save,
+    .btn-cancel {
+      border: 0;
+      padding: 11px 18px;
+      border-radius: 9px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .btn-save {
+      background: #3182f6;
+      color: white;
+    }
+
+    .btn-save:hover {
+      background: #2563eb;
+    }
+
+    .btn-cancel {
+      background: #e2e8f0;
+      color: #334155;
+    }
+
+    #studentMessage {
+      margin-top: 15px;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 700px) {
+      header {
+        padding: 15px;
+      }
+
+      .logo {
+        font-size: 22px;
+      }
+
+      .toolbar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .btn {
+        padding: 10px;
+      }
     }
   </style>
 </head>
@@ -262,7 +247,15 @@ async function saveStudent() {
 
   <div class="box">
 
-    <div id="studentCount" class="count"></div>
+    <div class="toolbar">
+
+      <div id="studentCount" class="count"></div>
+
+      <button class="btn" onclick="openStudentModal()">
+        + Thêm học sinh
+      </button>
+
+    </div>
 
     <div id="loading">
       Đang tải danh sách học sinh...
@@ -288,7 +281,81 @@ async function saveStudent() {
 
 </main>
 
+
+<!-- MODAL THÊM HỌC SINH -->
+
+<div id="studentModal" class="modal">
+
+  <div class="modal-box">
+
+    <h2>👨‍🎓 Thêm học sinh</h2>
+
+    <label for="newFullName">Họ và tên</label>
+    <input
+      id="newFullName"
+      type="text"
+      placeholder="Ví dụ: Nguyễn Văn Bình"
+    >
+
+    <label for="newStudentCode">Mã học sinh</label>
+    <input
+      id="newStudentCode"
+      type="text"
+      placeholder="Ví dụ: HS002"
+    >
+
+    <label for="newClassName">Lớp</label>
+    <input
+      id="newClassName"
+      type="text"
+      placeholder="Ví dụ: 10A2"
+    >
+
+    <label for="newStudentId">
+      UID tài khoản Supabase
+    </label>
+
+    <input
+      id="newStudentId"
+      type="text"
+      placeholder="Dán UID từ Authentication → Users"
+    >
+
+    <div class="modal-actions">
+
+      <button
+        type="button"
+        onclick="closeStudentModal()"
+        class="btn-cancel"
+      >
+        Hủy
+      </button>
+
+      <button
+        type="button"
+        onclick="saveStudent()"
+        class="btn-save"
+      >
+        Thêm học sinh
+      </button>
+
+    </div>
+
+    <p id="studentMessage"></p>
+
+  </div>
+
+</div>
+
+
 <script>
+
+let currentTeacher = null;
+
+
+/* ==========================
+   KHỞI ĐỘNG TRANG
+========================== */
 
 document.addEventListener("DOMContentLoaded", async () => {
 
@@ -299,60 +366,111 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
 
-  // Kiểm tra đăng nhập
+  /* Kiểm tra đăng nhập */
+
   const {
-    data: { user }
+    data: { user },
+    error: userError
   } = await client.auth.getUser();
 
-  if (!user) {
+  if (userError || !user) {
     window.location.href = "login.html";
     return;
   }
 
-  // Kiểm tra tài khoản có phải giáo viên không
-  const { data: teacherProfile, error: teacherError } =
-    await client
-      .from("profiles")
-      .select("id, full_name, role")
-      .eq("id", user.id)
-      .single();
+  /* Kiểm tra quyền giáo viên */
+
+  const {
+    data: teacherProfile,
+    error: teacherError
+  } = await client
+    .from("profiles")
+    .select("id, full_name, role")
+    .eq("id", user.id)
+    .single();
 
   if (
     teacherError ||
     !teacherProfile ||
     teacherProfile.role !== "teacher"
   ) {
-    showError("Bạn không có quyền truy cập trang quản lý học sinh.");
+    showError(
+      "Bạn không có quyền truy cập trang quản lý học sinh."
+    );
     return;
   }
 
-  // Lấy danh sách học sinh
-  const { data: students, error } =
-    await client
-      .from("profiles")
-      .select("id, full_name, student_code, class_name, role")
-      .eq("role", "student")
-      .order("class_name", { ascending: true })
-      .order("full_name", { ascending: true });
+  currentTeacher = teacherProfile;
+
+  await loadStudents();
+
+});
+
+
+/* ==========================
+   TẢI DANH SÁCH HỌC SINH
+========================== */
+
+async function loadStudents() {
+
+  const client = window.supabaseClient;
+
+  document.getElementById("loading").style.display = "block";
+  document.getElementById("error").style.display = "none";
+
+  const {
+    data: students,
+    error
+  } = await client
+    .from("profiles")
+    .select(
+      "id, full_name, student_code, class_name, role"
+    )
+    .eq("role", "student")
+    .order("class_name", { ascending: true })
+    .order("full_name", { ascending: true });
 
   document.getElementById("loading").style.display = "none";
 
   if (error) {
-    console.error(error);
-    showError("Không tải được danh sách học sinh: " + error.message);
+
+    console.error("LOAD STUDENTS:", error);
+
+    showError(
+      "Không tải được danh sách học sinh: " +
+      error.message
+    );
+
     return;
   }
 
-  const tbody = document.getElementById("studentList");
+  renderStudents(students || []);
+}
+
+
+/* ==========================
+   HIỂN THỊ DANH SÁCH
+========================== */
+
+function renderStudents(students) {
+
+  const tbody =
+    document.getElementById("studentList");
+
+  const table =
+    document.getElementById("studentTable");
+
+  const count =
+    document.getElementById("studentCount");
 
   tbody.innerHTML = "";
 
-  if (!students || students.length === 0) {
+  if (students.length === 0) {
 
-    document.getElementById("studentCount").textContent =
+    count.textContent =
       "Hiện chưa có học sinh trong hệ thống.";
 
-    document.getElementById("studentTable").style.display = "none";
+    table.style.display = "none";
 
     return;
   }
@@ -363,23 +481,206 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     row.innerHTML = `
       <td>${index + 1}</td>
-      <td>${escapeHTML(student.full_name || "")}</td>
-      <td>${escapeHTML(student.student_code || "")}</td>
-      <td>${escapeHTML(student.class_name || "")}</td>
+
       <td>
-        <span class="badge">Học sinh</span>
+        ${escapeHTML(student.full_name || "")}
+      </td>
+
+      <td>
+        ${escapeHTML(student.student_code || "")}
+      </td>
+
+      <td>
+        ${escapeHTML(student.class_name || "")}
+      </td>
+
+      <td>
+        <span class="badge">
+          Học sinh
+        </span>
       </td>
     `;
 
     tbody.appendChild(row);
+
   });
 
-  document.getElementById("studentCount").textContent =
+  count.textContent =
     `Tổng số học sinh: ${students.length}`;
 
-  document.getElementById("studentTable").style.display = "table";
+  table.style.display = "table";
+}
 
-});
+
+/* ==========================
+   MỞ FORM THÊM HỌC SINH
+========================== */
+
+function openStudentModal() {
+
+  document.getElementById("newFullName").value = "";
+  document.getElementById("newStudentCode").value = "";
+  document.getElementById("newClassName").value = "";
+  document.getElementById("newStudentId").value = "";
+
+  document.getElementById("studentMessage").textContent = "";
+
+  document.getElementById("studentModal").style.display =
+    "flex";
+
+}
+
+
+/* ==========================
+   ĐÓNG FORM
+========================== */
+
+function closeStudentModal() {
+
+  document.getElementById("studentModal").style.display =
+    "none";
+
+}
+
+
+/* ==========================
+   LƯU HỌC SINH
+========================== */
+
+async function saveStudent() {
+
+  const client = window.supabaseClient;
+
+  const id =
+    document.getElementById("newStudentId")
+      .value.trim();
+
+  const fullName =
+    document.getElementById("newFullName")
+      .value.trim();
+
+  const studentCode =
+    document.getElementById("newStudentCode")
+      .value.trim();
+
+  const className =
+    document.getElementById("newClassName")
+      .value.trim();
+
+  const message =
+    document.getElementById("studentMessage");
+
+  if (
+    !id ||
+    !fullName ||
+    !studentCode ||
+    !className
+  ) {
+
+    message.textContent =
+      "⚠️ Vui lòng nhập đầy đủ thông tin.";
+
+    return;
+  }
+
+
+  /* Kiểm tra UID */
+
+  const uuidRegex =
+    /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
+  if (!uuidRegex.test(id)) {
+
+    message.textContent =
+      "⚠️ UID Supabase không đúng định dạng.";
+
+    return;
+  }
+
+
+  message.textContent =
+    "Đang thêm học sinh...";
+
+
+  /* Kiểm tra mã học sinh */
+
+  const {
+    data: existingStudent,
+    error: checkError
+  } = await client
+    .from("profiles")
+    .select("id, student_code")
+    .eq("student_code", studentCode)
+    .maybeSingle();
+
+  if (checkError) {
+
+    console.error(checkError);
+
+    message.textContent =
+      "❌ Không kiểm tra được mã học sinh: " +
+      checkError.message;
+
+    return;
+  }
+
+  if (existingStudent && existingStudent.id !== id) {
+
+    message.textContent =
+      "⚠️ Mã học sinh này đã tồn tại.";
+
+    return;
+  }
+
+
+  /* Thêm/cập nhật profile */
+
+  const {
+    error
+  } = await client
+    .from("profiles")
+    .upsert(
+      {
+        id: id,
+        full_name: fullName,
+        student_code: studentCode,
+        class_name: className,
+        role: "student"
+      },
+      {
+        onConflict: "id"
+      }
+    );
+
+
+  if (error) {
+
+    console.error("SAVE STUDENT:", error);
+
+    message.textContent =
+      "❌ " + error.message;
+
+    return;
+  }
+
+
+  message.textContent =
+    "✅ Thêm học sinh thành công.";
+
+  await loadStudents();
+
+  setTimeout(() => {
+
+    closeStudentModal();
+
+  }, 700);
+
+}
+
+
+/* ==========================
+   ESCAPE HTML
+========================== */
 
 function escapeHTML(value = "") {
 
@@ -392,67 +693,67 @@ function escapeHTML(value = "") {
 
 }
 
+
+/* ==========================
+   THÔNG BÁO LỖI
+========================== */
+
 function showError(message) {
 
-  document.getElementById("loading").style.display = "none";
+  document.getElementById("loading").style.display =
+    "none";
 
-  const error = document.getElementById("error");
+  const error =
+    document.getElementById("error");
 
   error.textContent = message;
+
   error.style.display = "block";
 
 }
 
+
+/* ==========================
+   ĐIỀU HƯỚNG
+========================== */
+
 function goTeacher() {
-  window.location.href = "teacher.html";
+
+  window.location.href =
+    "teacher.html";
+
 }
 
 function goHome() {
-  window.location.href = "index.html";
+
+  window.location.href =
+    "index.html";
+
 }
 
 async function logout() {
 
   await window.supabaseClient.auth.signOut();
 
-  window.location.href = "login.html";
+  window.location.href =
+    "login.html";
+
 }
 
+
+/* Đóng modal khi click ra ngoài */
+
+document
+  .getElementById("studentModal")
+  .addEventListener("click", function(event) {
+
+    if (event.target === this) {
+      closeStudentModal();
+    }
+
+  });
+
 </script>
-<div id="studentModal" class="modal">
-  <div class="modal-box">
 
-    <h2>👨‍🎓 Thêm học sinh</h2>
-
-    <label>Họ và tên</label>
-    <input id="newFullName" type="text"
-           placeholder="Ví dụ: Nguyễn Văn Bình">
-
-    <label>Mã học sinh</label>
-    <input id="newStudentCode" type="text"
-           placeholder="Ví dụ: HS002">
-
-    <label>Lớp</label>
-    <input id="newClassName" type="text"
-           placeholder="Ví dụ: 10A2">
-
-    <label>UID tài khoản Supabase</label>
-    <input id="newStudentId" type="text"
-           placeholder="Dán UID từ Authentication → Users">
-
-    <div class="modal-actions">
-      <button onclick="closeStudentModal()" class="btn-cancel">
-        Hủy
-      </button>
-
-      <button onclick="saveStudent()" class="btn-save">
-        Thêm học sinh
-      </button>
-    </div>
-
-    <p id="studentMessage"></p>
-
-  </div>
-</div>
 </body>
 </html>
