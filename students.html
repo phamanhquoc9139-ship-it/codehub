@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quản lý Học sinh | CodeHub</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="scripts/supabase-config.js"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f7fb;
+      color: #172033;
+    }
+
+    header {
+      background: white;
+      padding: 18px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .logo {
+      font-size: 28px;
+      font-weight: bold;
+      color: #3182f6;
+      text-decoration: none;
+    }
+
+    .user {
+      text-align: right;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 30px auto;
+      padding: 0 20px;
+    }
+
+    .breadcrumb {
+      margin-bottom: 20px;
+      font-size: 14px;
+      color: #64748b;
+    }
+
+    .breadcrumb a {
+      color: #3182f6;
+      text-decoration: none;
+    }
+
+    .breadcrumb a:hover {
+      text-decoration: underline;
+    }
+
+    .header-section {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    h1 {
+      font-size: 32px;
+    }
+
+    .btn {
+      border: 0;
+      background: #3182f6;
+      color: white;
+      padding: 10px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 14px;
+      text-decoration: none;
+      display: inline-block;
+      transition: background 0.2s;
+    }
+
+    .btn:hover {
+      background: #2563eb;
+    }
+
+    .btn-secondary {
+      background: #e2e8f0;
+      color: #334155;
+    }
+
+    .btn-secondary:hover {
+      background: #cbd5e1;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .stat-card {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .stat-icon {
+      font-size: 32px;
+      background: #eff6ff;
+      width: 54px;
+      height: 54px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+    }
+
+    .stat-info h3 {
+      font-size: 24px;
+      color: #1e293b;
+    }
+
+    .stat-info p {
+      font-size: 13px;
+      color: #64748b;
+    }
+
+    .toolbar {
+      background: white;
+      padding: 18px 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .search-box {
+      flex: 1;
+      min-width: 250px;
+      position: relative;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 10px 14px 10px 38px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 14px;
+      outline: none;
+    }
+
+    .search-box input:focus {
+      border-color: #3182f6;
+    }
+
+    .search-box::before {
+      content: "🔍";
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 14px;
+    }
+
+    .filter-select {
+      padding: 10px 14px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 14px;
+      background: white;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .filter-select:focus {
+      border-color: #3182f6;
+    }
+
+    .table-container {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 14px;
+    }
+
+    th {
+      background: #f8fafc;
+      padding: 14px 18px;
+      color: #475569;
+      font-weight: 600;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    td {
+      padding: 14px 18px;
+      border-bottom: 1px solid #f1f5f9;
+      color: #334155;
+    }
+
+    tr:hover td {
+      background: #f8fafc;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .badge-class {
+      background: #eff6ff;
+      color: #2563eb;
+    }
+
+    .badge-student {
+      background: #f0fdf4;
+      color: #16a34a;
+    }
+
+    .badge-empty {
+      background: #f1f5f9;
+      color: #64748b;
+    }
+
+    #loading {
+      text-align: center;
+      margin-top: 100px;
+      font-size: 20px;
+    }
+
+    #content {
+      display: none;
+    }
+
+    #error {
+      display: none;
+      max-width: 600px;
+      margin: 100px auto;
+      background: white;
+      padding: 35px;
+      border-radius: 16px;
+      text-align: center;
+    }
+
+    .empty-state {
+      padding: 50px 20px;
+      text-align: center;
+      color: #64748b;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <a href="index.html" class="logo">&lt;/&gt; CodeHub</a>
+
+  <div class="user">
+    <strong id="teacherName">Giáo viên</strong><br>
+    <button class="btn btn-secondary" onclick="goTeacherDashboard()">Bàn làm việc</button>
+    <button class="btn btn-secondary" onclick="goHome()">Trang chủ</button>
+    <button class="btn" onclick="logout()">Đăng xuất</button>
+  </div>
+</header>
+
+<div id="loading">
+  Đang kiểm tra quyền truy cập...
+</div>
+
+<div id="error">
+  <h2>⛔ Không có quyền truy cập</h2>
+  <br>
+  <p>Trang này chỉ dành cho tài khoản giáo viên.</p>
+  <br>
+  <button class="btn" onclick="goHome()">Quay về trang chủ</button>
+</div>
+
+<main id="content" class="container">
+
+  <div class="breadcrumb">
+    <a href="index.html">Trang chủ</a> &gt; 
+    <a href="teacher.html">Quản trị Giáo viên</a> &gt; 
+    <span>Quản lý Học sinh</span>
+  </div>
+
+  <div class="header-section">
+    <div>
+      <h1>👨‍🎓 Quản lý Học sinh</h1>
+      <p style="color: #64748b; margin-top: 5px;">Xem danh sách học sinh, lớp học và thông tin tài khoản đăng ký trên hệ thống</p>
+    </div>
+    <div>
+      <button class="btn" onclick="refreshData()">🔄 Làm mới</button>
+    </div>
+  </div>
+
+  <!-- Thẻ thống kê -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-icon">👥</div>
+      <div class="stat-info">
+        <h3 id="totalStudentsCount">0</h3>
+        <p>Tổng số học sinh</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">🏫</div>
+      <div class="stat-info">
+        <h3 id="totalClassesCount">0</h3>
+        <p>Số lớp học</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">🆔</div>
+      <div class="stat-info">
+        <h3 id="hasStudentCodeCount">0</h3>
+        <p>Đã cấp Mã học sinh</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bộ lọc và tìm kiếm -->
+  <div class="toolbar">
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Tìm theo tên học sinh, email hoặc mã HS..." oninput="filterStudents()">
+    </div>
+    <select id="classFilter" class="filter-select" onchange="filterStudents()">
+      <option value="ALL">Tất cả các lớp</option>
+    </select>
+  </div>
+
+  <!-- Bảng danh sách học sinh -->
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 60px;">STT</th>
+          <th>Họ và Tên</th>
+          <th>Mã Học Sinh</th>
+          <th>Lớp</th>
+          <th>Email</th>
+          <th>Vai trò</th>
+        </tr>
+      </thead>
+      <tbody id="studentTableBody">
+        <tr>
+          <td colspan="6" class="empty-state">Đang tải danh sách học sinh...</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</main>
+
+<script>
+let allStudents = [];
+
+document.addEventListener("DOMContentLoaded", async () => {
+  const client = window.supabaseClient;
+
+  if (!client) {
+    document.getElementById("loading").innerText = "Không kết nối được Supabase.";
+    return;
+  }
+
+  // 1. Kiểm tra đăng nhập
+  const { data: { user } } = await client.auth.getUser();
+
+  if (!user) {
+    window.location.href = "login.html";
+    return;
+  }
+
+  // 2. Kiểm tra vai trò giáo viên
+  const { data: profile, error } = await client
+    .from("profiles")
+    .select("full_name, role")
+    .eq("id", user.id)
+    .single();
+
+  document.getElementById("loading").style.display = "none";
+
+  if (error || !profile || profile.role !== "teacher") {
+    document.getElementById("error").style.display = "block";
+    return;
+  }
+
+  document.getElementById("teacherName").textContent = profile.full_name || "Giáo viên";
+  document.getElementById("content").style.display = "block";
+
+  // 3. Tải danh sách học sinh
+  await fetchStudents();
+});
+
+// Lấy dữ liệu học sinh từ Supabase
+async function fetchStudents() {
+  const client = window.supabaseClient;
+  const tbody = document.getElementById("studentTableBody");
+  tbody.innerHTML = `<tr><td colspan="6" class="empty-state">Đang tải dữ liệu từ máy chủ...</td></tr>`;
+
+  try {
+    // Lấy tất cả tài khoản học sinh (role != teacher hoặc role == student)
+    const { data, error } = await client
+      .from("profiles")
+      .select("id, full_name, student_code, class_name, email, role, created_at")
+      .order("class_name", { ascending: true });
+
+    if (error) throw error;
+
+    // Lọc chỉ giữ học sinh
+    allStudents = (data || []).filter(item => item.role !== "teacher");
+
+    updateStats();
+    populateClassFilter();
+    renderStudentTable(allStudents);
+  } catch (err) {
+    console.error("Lỗi tải học sinh:", err);
+    tbody.innerHTML = `<tr><td colspan="6" class="empty-state" style="color: #ef4444;">Lỗi khi tải dữ liệu: ${err.message || "Vui lòng thử lại sau."}</td></tr>`;
+  }
+}
+
+// Cập nhật thẻ thống kê
+function updateStats() {
+  document.getElementById("totalStudentsCount").textContent = allStudents.length;
+
+  const classes = new Set(allStudents.map(s => s.class_name).filter(Boolean));
+  document.getElementById("totalClassesCount").textContent = classes.size;
+
+  const withCode = allStudents.filter(s => s.student_code && s.student_code.trim() !== "");
+  document.getElementById("hasStudentCodeCount").textContent = withCode.length;
+}
+
+// Điền các lớp vào menu chọn lọc
+function populateClassFilter() {
+  const select = document.getElementById("classFilter");
+  const currentVal = select.value;
+  const classes = Array.from(new Set(allStudents.map(s => s.class_name).filter(Boolean))).sort();
+
+  select.innerHTML = `<option value="ALL">Tất cả các lớp (${allStudents.length})</option>`;
+  classes.forEach(cls => {
+    const count = allStudents.filter(s => s.class_name === cls).length;
+    select.innerHTML += `<option value="${cls}">Lớp ${cls} (${count})</option>`;
+  });
+
+  if (classes.includes(currentVal)) {
+    select.value = currentVal;
+  }
+}
+
+// Hiển thị danh sách học sinh ra bảng
+function renderStudentTable(students) {
+  const tbody = document.getElementById("studentTableBody");
+
+  if (!students || students.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="6" class="empty-state">Không có học sinh nào phù hợp với bộ lọc.</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = students.map((s, index) => {
+    const name = s.full_name || "Chưa cập nhật";
+    const code = s.student_code ? `<code>${escapeHTML(s.student_code)}</code>` : `<span class="badge badge-empty">Chưa có</span>`;
+    const className = s.class_name ? `<span class="badge badge-class">Lớp ${escapeHTML(s.class_name)}</span>` : `<span class="badge badge-empty">Chưa xếp lớp</span>`;
+    const email = s.email || "—";
+    const roleBadge = `<span class="badge badge-student">Học sinh</span>`;
+
+    return `
+      <tr>
+        <td style="font-weight: bold; color: #64748b;">${index + 1}</td>
+        <td><strong>${escapeHTML(name)}</strong></td>
+        <td>${code}</td>
+        <td>${className}</td>
+        <td>${escapeHTML(email)}</td>
+        <td>${roleBadge}</td>
+      </tr>
+    `;
+  }).join("");
+}
+
+// Lọc học sinh theo từ khóa và lớp
+function filterStudents() {
+  const query = document.getElementById("searchInput").value.toLowerCase().trim();
+  const selectedClass = document.getElementById("classFilter").value;
+
+  const filtered = allStudents.filter(s => {
+    const matchClass = (selectedClass === "ALL") || (s.class_name === selectedClass);
+    
+    const name = (s.full_name || "").toLowerCase();
+    const email = (s.email || "").toLowerCase();
+    const code = (s.student_code || "").toLowerCase();
+
+    const matchQuery = !query || name.includes(query) || email.includes(query) || code.includes(query);
+
+    return matchClass && matchQuery;
+  });
+
+  renderStudentTable(filtered);
+}
+
+function refreshData() {
+  fetchStudents();
+}
+
+function goTeacherDashboard() {
+  window.location.href = "teacher.html";
+}
+
+function goHome() {
+  window.location.href = "index.html";
+}
+
+async function logout() {
+  await window.supabaseClient.auth.signOut();
+  window.location.href = "login.html";
+}
+
+function escapeHTML(str) {
+  if (!str) return "";
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+</script>
+
+</body>
+</html>
