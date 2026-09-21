@@ -12,16 +12,27 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   async function showUser(user) {
-    const { data: profile, error } = await client
-      .from('profiles')
-      .select('full_name, student_code, class_name, role')
-      .eq('id', user.id)
-      .maybeSingle();
+   const { data: profile, error } = await client
+  .from('profiles')
+  .select('id, full_name, student_code, class_name, role')
+  .eq('id', user.id)
+  .single();
 
-    if (error) console.warn('Không đọc được hồ sơ:', error.message);
+console.log('AUTH USER ID:', user.id);
+console.log('PROFILE:', profile);
+console.log('PROFILE ERROR:', error);
+
+if (error) {
+  console.error('Không đọc được hồ sơ:', error);
+}
 
     const name = profile?.full_name || user.user_metadata?.full_name || user.email || 'Tài khoản';
-    const sub = profile?.role === 'teacher' ? 'Giáo viên' : (profile?.class_name || 'Học sinh');
+    const role = String(profile?.role || '').trim().toLowerCase();
+
+const sub =
+  role === 'teacher'
+    ? 'Giáo viên'
+    : profile?.class_name || 'Học sinh';
 
     area.innerHTML = `
       <div class="relative" id="codehub-user-menu">
@@ -40,7 +51,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             <div class="font-semibold text-gray-900 dark:text-white truncate">${escapeHTML(name)}</div>
             <div class="text-xs text-gray-500 dark:text-gray-400 truncate">${escapeHTML(user.email || '')}</div>
           </div>
-          ${profile?.role === 'teacher' ? `
+          ${role === 'teacher' ? `
           <a href="teacher.html"
             class="block px-4 py-3 text-sm text-primary font-medium hover:bg-blue-50 dark:hover:bg-gray-700 border-b border-gray-100 dark:border-gray-700">
             👨‍🏫 Quản trị Giáo viên
