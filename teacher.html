@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quản trị Giáo viên | CodeHub</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="scripts/supabase-config.js"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f7fb;
+      color: #172033;
+    }
+
+    header {
+      background: white;
+      padding: 18px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .logo {
+      font-size: 28px;
+      font-weight: bold;
+      color: #3182f6;
+    }
+
+    .user {
+      text-align: right;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    h1 {
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      color: #64748b;
+      margin-bottom: 35px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 28px;
+      box-shadow: 0 5px 20px rgba(0,0,0,.06);
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 30px rgba(0,0,0,.10);
+    }
+
+    .icon {
+      font-size: 38px;
+      margin-bottom: 18px;
+    }
+
+    .card h2 {
+      margin-bottom: 10px;
+      font-size: 20px;
+    }
+
+    .card p {
+      color: #64748b;
+      line-height: 1.5;
+    }
+
+    .btn {
+      border: 0;
+      background: #3182f6;
+      color: white;
+      padding: 11px 18px;
+      border-radius: 9px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    #loading {
+      text-align: center;
+      margin-top: 100px;
+      font-size: 20px;
+    }
+
+    #dashboard {
+      display: none;
+    }
+
+    #error {
+      display: none;
+      max-width: 600px;
+      margin: 100px auto;
+      background: white;
+      padding: 35px;
+      border-radius: 16px;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">&lt;/&gt; CodeHub</div>
+
+  <div class="user">
+    <strong id="teacherName">Giáo viên</strong><br>
+    <button class="btn" onclick="goHome()">Trang chủ</button>
+    <button class="btn" onclick="logout()">Đăng xuất</button>
+  </div>
+</header>
+
+<div id="loading">
+  Đang kiểm tra quyền truy cập...
+</div>
+
+<div id="error">
+  <h2>⛔ Không có quyền truy cập</h2>
+  <br>
+  <p>Trang này chỉ dành cho tài khoản giáo viên.</p>
+  <br>
+  <button class="btn" onclick="goHome()">Quay về trang chủ</button>
+</div>
+
+<main id="dashboard" class="container">
+
+  <h1>👨‍🏫 Quản trị Giáo viên</h1>
+
+  <p class="subtitle">
+    Quản lý hoạt động học tập trên CodeHub
+  </p>
+
+  <div class="grid">
+
+    <div class="card">
+      <div class="icon">👨‍🎓</div>
+      <h2>Quản lý học sinh</h2>
+      <p>
+        Xem danh sách học sinh, lớp học và thông tin tài khoản.
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="icon">📚</div>
+      <h2>Quản lý khóa học</h2>
+      <p>
+        Tạo và quản lý nội dung các khóa học Tin học.
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="icon">📝</div>
+      <h2>Bài tập & Quiz</h2>
+      <p>
+        Tạo bài tập, câu hỏi trắc nghiệm và bài kiểm tra.
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="icon">📊</div>
+      <h2>Kết quả học tập</h2>
+      <p>
+        Theo dõi điểm số và tiến độ học tập của học sinh.
+      </p>
+    </div>
+
+  </div>
+
+</main>
+
+<script>
+document.addEventListener("DOMContentLoaded", async () => {
+
+  const client = window.supabaseClient;
+
+  if (!client) {
+    document.getElementById("loading").innerText =
+      "Không kết nối được Supabase.";
+    return;
+  }
+
+  const {
+    data: { user }
+  } = await client.auth.getUser();
+
+  if (!user) {
+    window.location.href = "login.html";
+    return;
+  }
+
+  const { data: profile, error } = await client
+    .from("profiles")
+    .select("full_name, role")
+    .eq("id", user.id)
+    .single();
+
+  document.getElementById("loading").style.display = "none";
+
+  if (error || !profile || profile.role !== "teacher") {
+    document.getElementById("error").style.display = "block";
+    return;
+  }
+
+  document.getElementById("teacherName").textContent =
+    profile.full_name || "Giáo viên";
+
+  document.getElementById("dashboard").style.display = "block";
+});
+
+function goHome() {
+  window.location.href = "index.html";
+}
+
+async function logout() {
+  await window.supabaseClient.auth.signOut();
+  window.location.href = "login.html";
+}
+</script>
+
+</body>
+</html>
