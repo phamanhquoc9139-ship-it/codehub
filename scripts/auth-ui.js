@@ -40,6 +40,11 @@ document.addEventListener('DOMContentLoaded', async () => {
             <div class="font-semibold text-gray-900 dark:text-white truncate">${escapeHTML(name)}</div>
             <div class="text-xs text-gray-500 dark:text-gray-400 truncate">${escapeHTML(user.email || '')}</div>
           </div>
+          ${profile?.role === 'teacher' ? `
+          <a href="teacher.html"
+            class="block px-4 py-3 text-sm text-primary font-medium hover:bg-blue-50 dark:hover:bg-gray-700 border-b border-gray-100 dark:border-gray-700">
+            👨‍🏫 Quản trị Giáo viên
+          </a>` : ''}
           <button id="codehub-logout" type="button"
             class="w-full text-left px-4 py-3 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700">Đăng xuất</button>
         </div>
