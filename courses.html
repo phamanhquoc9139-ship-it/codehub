@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quản lý khóa học | CodeHub</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="scripts/supabase-config.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#f5f7fb;color:#172033}
+header{background:#fff;padding:18px 32px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #e5e7eb}
+.logo{font-size:28px;font-weight:700;color:#3182f6}.header-actions{display:flex;gap:8px;flex-wrap:wrap}
+.btn{border:0;background:#3182f6;color:#fff;padding:11px 18px;border-radius:9px;cursor:pointer;font-weight:700}
+.btn:hover{opacity:.9}.btn-green{background:#16a34a}.btn-gray{background:#64748b}.btn-red{background:#dc2626}
+.container{max-width:1200px;margin:40px auto;padding:0 20px}h1{font-size:36px;margin-bottom:8px}.subtitle{color:#64748b;margin-bottom:28px}
+.summary{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:24px}
+.summary-card{background:#fff;padding:22px;border-radius:16px;box-shadow:0 5px 20px rgba(0,0,0,.05)}
+.summary-label{color:#64748b;margin-bottom:8px}.summary-number{font-size:32px;font-weight:700;color:#2563eb}
+.toolbar{background:#fff;padding:18px;border-radius:16px;box-shadow:0 5px 20px rgba(0,0,0,.05);display:flex;gap:12px;margin-bottom:24px}
+.toolbar input,.toolbar select{padding:13px 15px;border:1px solid #cbd5e1;border-radius:9px;font-size:16px;background:#fff}
+.toolbar input{flex:1}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px}
+.card{background:#fff;padding:25px;border-radius:17px;border:1px solid #edf2f7;box-shadow:0 5px 20px rgba(0,0,0,.06)}
+.course-icon{font-size:38px;margin-bottom:12px}.course-title{font-size:23px;font-weight:700;margin-bottom:10px}
+.meta{color:#64748b;line-height:1.7}.classes{margin:14px 0;line-height:1.8}.chip{display:inline-block;background:#e8f1ff;color:#2563eb;padding:5px 10px;border-radius:16px;margin:2px;font-size:13px;font-weight:700}
+.status{display:inline-block;padding:6px 11px;border-radius:16px;font-weight:700;font-size:13px;margin-bottom:15px}
+.published{background:#dcfce7;color:#15803d}.draft{background:#f1f5f9;color:#475569}
+.actions{display:flex;gap:7px;flex-wrap:wrap}.actions button{flex:1;min-width:75px;border:0;padding:10px 8px;border-radius:8px;cursor:pointer;font-weight:700}
+.lesson-btn{background:#3182f6;color:#fff}.edit-btn{background:#f59e0b;color:#fff}.delete-btn{background:#ef4444;color:#fff}
+.empty,#loading{background:#fff;padding:40px;border-radius:16px;text-align:center;color:#64748b;grid-column:1/-1}
+.modal{display:none;position:fixed;inset:0;background:rgba(15,23,42,.55);z-index:9999;align-items:center;justify-content:center;padding:20px}
+.modal-box{background:#fff;width:min(650px,96%);max-height:92vh;overflow-y:auto;border-radius:18px;padding:27px}
+.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}.modal-title{font-size:25px;font-weight:700}
+.close-btn{width:38px;height:38px;border:0;border-radius:9px;background:#e2e8f0;cursor:pointer;font-size:20px}
+.form-group{margin-bottom:16px}.form-group label{display:block;font-weight:700;margin-bottom:7px}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:12px 13px;border:1px solid #cbd5e1;border-radius:9px;font-size:16px;font-family:inherit}
+.form-group textarea{min-height:100px;resize:vertical}.class-list{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}
+.class-check{border:1px solid #e2e8f0;border-radius:9px;padding:10px;background:#f8fafc}.class-check input{width:auto;margin-right:7px}
+.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:20px}.message{margin-top:12px;min-height:20px;font-weight:700}
+@media(max-width:750px){header{flex-direction:column;gap:12px}.summary{grid-template-columns:1fr}.toolbar{flex-direction:column}.class-list{grid-template-columns:1fr}h1{font-size:29px}}
+</style>
+</head>
+<body>
+<header>
+<div class="logo">&lt;/&gt; CodeHub</div>
+<div class="header-actions">
+<button class="btn" onclick="location.href='teacher.html'">← Quản trị</button>
+<button class="btn" onclick="location.href='classes.html'">🏫 Lớp học</button>
+<button class="btn" onclick="location.href='index.html'">Trang chủ</button>
+<button class="btn" onclick="logout()">Đăng xuất</button>
+</div>
+</header>
+
+<main class="container">
+<h1>📚 Quản lý khóa học</h1>
+<p class="subtitle">Tạo khóa học Tin học và giao cho các lớp trên CodeHub</p>
+
+<div class="summary">
+<div class="summary-card"><div class="summary-label">Tổng khóa học</div><div class="summary-number" id="totalCourses">0</div></div>
+<div class="summary-card"><div class="summary-label">Đã xuất bản</div><div class="summary-number" id="publishedCourses">0</div></div>
+<div class="summary-card"><div class="summary-label">Bản nháp</div><div class="summary-number" id="draftCourses">0</div></div>
+</div>
+
+<div class="toolbar">
+<input id="searchInput" placeholder="🔎 Tìm khóa học...">
+<select id="gradeFilter">
+<option value="">Tất cả khối</option><option value="10">Khối 10</option><option value="11">Khối 11</option><option value="12">Khối 12</option>
+</select>
+<button class="btn btn-green" onclick="openCreateModal()">➕ Tạo khóa học</button>
+</div>
+
+<div id="loading">Đang tải khóa học...</div>
+<div id="courseGrid" class="grid"></div>
+</main>
+
+<div id="courseModal" class="modal">
+<div class="modal-box">
+<div class="modal-header"><div class="modal-title" id="modalTitle">➕ Tạo khóa học</div><button class="close-btn" onclick="closeModal()">×</button></div>
+<input type="hidden" id="courseId">
+
+<div class="form-group"><label>Tên khóa học</label><input id="courseTitle" placeholder="Ví dụ: Tin học 10"></div>
+<div class="form-group"><label>Môn học</label><input id="subject" value="Tin học"></div>
+<div class="form-group"><label>Khối</label>
+<select id="grade"><option value="">-- Chọn khối --</option><option value="10">10</option><option value="11">11</option><option value="12">12</option></select>
+</div>
+<div class="form-group"><label>Mô tả</label><textarea id="description" placeholder="Mô tả ngắn về khóa học..."></textarea></div>
+<div class="form-group"><label>Giao cho lớp</label><div id="classChecklist" class="class-list"></div></div>
+<div class="form-group"><label>Trạng thái</label>
+<select id="published"><option value="false">Bản nháp</option><option value="true">Xuất bản</option></select>
+</div>
+<div id="formMessage" class="message"></div>
+<div class="modal-actions"><button class="btn btn-gray" onclick="closeModal()">Hủy</button><button class="btn btn-green" id="saveButton" onclick="saveCourse()">Tạo khóa học</button></div>
+</div>
+</div>
+
+<script>
+let currentUser=null, courses=[], classes=[], links=[];
+
+document.addEventListener("DOMContentLoaded",async()=>{
+ const client=window.supabaseClient;
+ if(!client){alert("Không kết nối được Supabase.");return;}
+ const {data:{user},error}=await client.auth.getUser();
+ if(error||!user){location.href="login.html";return;}
+ currentUser=user;
+ const {data:profile}=await client.from("profiles").select("role").eq("id",user.id).single();
+ if(!profile||profile.role!=="teacher"){alert("Bạn không có quyền truy cập.");location.href="index.html";return;}
+ document.getElementById("searchInput").addEventListener("input",renderCourses);
+ document.getElementById("gradeFilter").addEventListener("change",renderCourses);
+ await loadData();
+});
+
+async function loadData(){
+ document.getElementById("loading").style.display="block";
+ const client=window.supabaseClient;
+ const [cr,cl,ln]=await Promise.all([
+   client.from("courses").select("*").eq("teacher_id",currentUser.id).order("created_at",{ascending:false}),
+   client.from("classes").select("id,class_name,school_year").eq("teacher_id",currentUser.id).order("class_name"),
+   client.from("course_classes").select("id,course_id,class_id")
+ ]);
+ document.getElementById("loading").style.display="none";
+ if(cr.error){alert("Không tải được khóa học: "+cr.error.message);return;}
+ if(cl.error){alert("Không tải được lớp: "+cl.error.message);return;}
+ if(ln.error){alert("Không tải được liên kết lớp: "+ln.error.message);return;}
+ courses=cr.data||[]; classes=cl.data||[]; links=ln.data||[];
+ updateStats(); renderCourses();
+}
+
+function updateStats(){
+ document.getElementById("totalCourses").textContent=courses.length;
+ document.getElementById("publishedCourses").textContent=courses.filter(x=>x.is_published).length;
+ document.getElementById("draftCourses").textContent=courses.filter(x=>!x.is_published).length;
+}
+
+function courseClasses(courseId){
+ const ids=links.filter(x=>x.course_id===courseId).map(x=>x.class_id);
+ return classes.filter(x=>ids.includes(x.id));
+}
+
+function renderCourses(){
+ const q=document.getElementById("searchInput").value.trim().toLocaleLowerCase("vi-VN");
+ const grade=document.getElementById("gradeFilter").value;
+ const grid=document.getElementById("courseGrid"); grid.innerHTML="";
+ const list=courses.filter(c=>{
+   const hay=(String(c.title||"")+" "+String(c.subject||"")+" "+String(c.description||"")).toLocaleLowerCase("vi-VN");
+   return (!q||hay.includes(q))&&(!grade||String(c.grade)===grade);
+ });
+ if(!list.length){grid.innerHTML='<div class="empty">Chưa có khóa học phù hợp.</div>';return;}
+ list.forEach(c=>{
+   const card=document.createElement("div"); card.className="card";
+   const assigned=courseClasses(c.id);
+   card.innerHTML=`
+    <div class="course-icon">📘</div>
+    <div class="course-title"></div>
+    <div class="meta">📖 Môn: <b class="subject"></b><br>🎓 Khối: <b class="grade"></b></div>
+    <div class="classes"></div>
+    <div class="status ${c.is_published?'published':'draft'}">${c.is_published?'🟢 Đã xuất bản':'⚪ Bản nháp'}</div>
+    <div class="actions"></div>`;
+   card.querySelector(".course-title").textContent=c.title;
+   card.querySelector(".subject").textContent=c.subject;
+   card.querySelector(".grade").textContent=c.grade;
+   const classBox=card.querySelector(".classes");
+   if(assigned.length){assigned.forEach(x=>{const s=document.createElement("span");s.className="chip";s.textContent="🏫 "+x.class_name;classBox.appendChild(s);});}
+   else classBox.textContent="Chưa giao cho lớp nào";
+   const actions=card.querySelector(".actions");
+   const lesson=document.createElement("button");lesson.className="lesson-btn";lesson.textContent="📖 Bài học";lesson.onclick=()=>openLessons(c);
+   const edit=document.createElement("button");edit.className="edit-btn";edit.textContent="✏️ Sửa";edit.onclick=()=>openEditModal(c);
+   const del=document.createElement("button");del.className="delete-btn";del.textContent="🗑️ Xóa";del.onclick=()=>deleteCourse(c);
+   actions.append(lesson,edit,del); grid.appendChild(card);
+ });
+}
+
+function renderClassChecklist(selected=[]){
+ const box=document.getElementById("classChecklist");box.innerHTML="";
+ if(!classes.length){box.textContent="Chưa có lớp học.";return;}
+ classes.forEach(c=>{
+  const label=document.createElement("label");label.className="class-check";
+  const input=document.createElement("input");input.type="checkbox";input.value=c.id;input.checked=selected.includes(c.id);
+  label.append(input,document.createTextNode(c.class_name+" ("+(c.school_year||"")+")"));box.appendChild(label);
+ });
+}
+
+function openCreateModal(){
+ document.getElementById("modalTitle").textContent="➕ Tạo khóa học";
+ document.getElementById("saveButton").textContent="Tạo khóa học";
+ document.getElementById("courseId").value="";
+ document.getElementById("courseTitle").value="";
+ document.getElementById("subject").value="Tin học";
+ document.getElementById("grade").value="";
+ document.getElementById("description").value="";
+ document.getElementById("published").value="false";
+ document.getElementById("formMessage").textContent="";
+ renderClassChecklist([]);
+ document.getElementById("courseModal").style.display="flex";
+}
+
+function openEditModal(c){
+ document.getElementById("modalTitle").textContent="✏️ Sửa khóa học";
+ document.getElementById("saveButton").textContent="Lưu thay đổi";
+ document.getElementById("courseId").value=c.id;
+ document.getElementById("courseTitle").value=c.title||"";
+ document.getElementById("subject").value=c.subject||"Tin học";
+ document.getElementById("grade").value=String(c.grade||"");
+ document.getElementById("description").value=c.description||"";
+ document.getElementById("published").value=String(!!c.is_published);
+ document.getElementById("formMessage").textContent="";
+ renderClassChecklist(courseClasses(c.id).map(x=>x.id));
+ document.getElementById("courseModal").style.display="flex";
+}
+
+function closeModal(){document.getElementById("courseModal").style.display="none";}
+
+async function saveCourse(){
+ const msg=document.getElementById("formMessage");
+ const id=document.getElementById("courseId").value;
+ const title=document.getElementById("courseTitle").value.trim();
+ const subject=document.getElementById("subject").value.trim();
+ const grade=document.getElementById("grade").value;
+ const description=document.getElementById("description").value.trim();
+ const is_published=document.getElementById("published").value==="true";
+ const classIds=[...document.querySelectorAll("#classChecklist input:checked")].map(x=>x.value);
+ if(!title||!subject||!grade){msg.style.color="#dc2626";msg.textContent="⚠️ Vui lòng nhập tên khóa học, môn và khối.";return;}
+ msg.style.color="#2563eb";msg.textContent="Đang lưu...";
+ const client=window.supabaseClient;
+ let courseId=id;
+ if(id){
+   const {error}=await client.from("courses").update({title,subject,grade,description,is_published,updated_at:new Date().toISOString()}).eq("id",id).eq("teacher_id",currentUser.id);
+   if(error){msg.style.color="#dc2626";msg.textContent="❌ "+error.message;return;}
+ }else{
+   const {data,error}=await client.from("courses").insert({title,subject,grade,description,is_published,teacher_id:currentUser.id}).select("id").single();
+   if(error){msg.style.color="#dc2626";msg.textContent="❌ "+error.message;return;}
+   courseId=data.id;
+ }
+ const {error:delError}=await client.from("course_classes").delete().eq("course_id",courseId);
+ if(delError){msg.style.color="#dc2626";msg.textContent="❌ Không cập nhật được lớp: "+delError.message;return;}
+ if(classIds.length){
+   const rows=classIds.map(class_id=>({course_id:courseId,class_id}));
+   const {error:linkError}=await client.from("course_classes").insert(rows);
+   if(linkError){msg.style.color="#dc2626";msg.textContent="❌ Không giao được lớp: "+linkError.message;return;}
+ }
+ closeModal(); await loadData();
+}
+
+async function deleteCourse(c){
+ if(!confirm(`Xóa khóa học "${c.title}"?`))return;
+ const {error}=await window.supabaseClient.from("courses").delete().eq("id",c.id).eq("teacher_id",currentUser.id);
+ if(error){alert("❌ Không xóa được khóa học: "+error.message);return;}
+ await loadData();
+}
+
+function openLessons(c){
+ alert(`📖 Phần Bài học của "${c.title}" sẽ được nối ở bước tiếp theo.`);
+}
+
+async function logout(){await window.supabaseClient.auth.signOut();location.href="login.html";}
+
+document.getElementById("courseModal").addEventListener("click",e=>{if(e.target.id==="courseModal")closeModal();});
+</script>
+</body>
+</html>
