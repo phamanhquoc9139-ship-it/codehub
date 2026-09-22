@@ -214,6 +214,7 @@
     .filters input { flex:1; min-width:240px; }
     .action-btn { border:0; border-radius:8px; padding:7px 10px; cursor:pointer; font-weight:600; margin-right:5px; }
     .edit-btn { background:#e8f1ff; color:#2563eb; }
+    .password-btn { background:#fef3c7; color:#92400e; }
     .delete-btn { background:#fee2e2; color:#dc2626; }
     @media (max-width: 700px) {
       header {
@@ -525,6 +526,7 @@ function renderStudents(students) {
       </td>
       <td>
         <button class="action-btn edit-btn" onclick="editStudent('${student.id}')">✏️ Sửa</button>
+        <button class="action-btn password-btn" onclick="resetStudentPassword('${student.id}', '${escapeJS(student.full_name || '')}')">🔑 Mật khẩu</button>
         <button class="action-btn delete-btn" onclick="deleteStudent('${student.id}', '${escapeJS(student.full_name || '')}')">🗑️ Xóa</button>
       </td>
     `;
@@ -562,27 +564,96 @@ function applyStudentFilters() {
   }
 }
 
+async function invokeManageStudent(body) {
+  const client = window.supabaseClient;
+  const { data: { session }, error: sessionError } = await client.auth.getSession();
+
+  if (sessionError || !session?.access_token) {
+    throw new Error("Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.");
+  }
+
+  const { data, error } = await client.functions.invoke("manage-student", {
+    body,
+    headers: { Authorization: `Bearer ${session.access_token}` }
+  });
+
+  if (error) {
+    let detail = "";
+    try {
+      if (error.context && typeof error.context.json === "function") {
+        const errorBody = await error.context.json();
+        detail = errorBody?.error || errorBody?.message || "";
+      }
+    } catch (_) {}
+    throw new Error(detail || error.message || "Không thực hiện được thao tác.");
+  }
+
+  if (data?.success === false) {
+    throw new Error(data?.error || "Không thực hiện được thao tác.");
+  }
+  return data;
+}
+
 async function editStudent(id) {
   const student = allStudents.find(s => s.id === id);
   if (!student) return;
+
   const fullName = prompt("Họ và tên:", student.full_name || "");
   if (fullName === null) return;
   const studentCode = prompt("Mã học sinh:", student.student_code || "");
   if (studentCode === null) return;
   const className = prompt("Lớp:", student.class_name || "");
   if (className === null) return;
-  const { error } = await window.supabaseClient.from("profiles").update({
-    full_name: fullName.trim(), student_code: studentCode.trim().toUpperCase(), class_name: className.trim().toUpperCase()
-  }).eq("id", id);
-  if (error) { alert("Không sửa được học sinh: " + error.message); return; }
-  await loadStudents();
+
+  const cleanName = fullName.trim();
+  const cleanCode = studentCode.trim().toUpperCase();
+  const cleanClass = className.trim().toUpperCase();
+
+  if (!cleanName || !cleanCode || !cleanClass) {
+    alert("Vui lòng nhập đầy đủ họ tên, mã học sinh và lớp.");
+    return;
+  }
+
+  try {
+    await invokeManageStudent({
+      action: "update", id,
+      full_name: cleanName,
+      student_code: cleanCode,
+      class_name: cleanClass
+    });
+    alert("✅ Đã cập nhật học sinh.");
+    await loadStudents();
+  } catch (error) {
+    alert("❌ Không sửa được học sinh: " + (error?.message || "Lỗi không xác định."));
+  }
+}
+
+async function resetStudentPassword(id, name) {
+  const password = prompt(`Nhập mật khẩu mới cho ${name}:\n(Tối thiểu 6 ký tự)`);
+  if (password === null) return;
+  if (password.length < 6) {
+    alert("Mật khẩu phải có ít nhất 6 ký tự.");
+    return;
+  }
+
+  try {
+    await invokeManageStudent({ action: "reset_password", id, password });
+    alert("✅ Đã đổi mật khẩu cho học sinh.");
+  } catch (error) {
+    alert("❌ Không đổi được mật khẩu: " + (error?.message || "Lỗi không xác định."));
+  }
 }
 
 async function deleteStudent(id, name) {
-  if (!confirm(`Xóa học sinh ${name} khỏi danh sách?\n\nLưu ý: thao tác này hiện chỉ xóa hồ sơ profiles, chưa xóa tài khoản Authentication.`)) return;
-  const { error } = await window.supabaseClient.from("profiles").delete().eq("id", id);
-  if (error) { alert("Không xóa được học sinh: " + error.message); return; }
-  await loadStudents();
+  if (!confirm(`Xóa học sinh ${name}?\n\nThao tác này sẽ yêu cầu máy chủ xóa cả tài khoản Authentication và hồ sơ học sinh.`)) return;
+
+  try {
+    await invokeManageStudent({ action: "delete", id });
+    alert("✅ Đã xóa học sinh.");
+    await loadStudents();
+  } catch (error) {
+    alert("❌ Không xóa được học sinh: " + (error?.message || "Lỗi không xác định."));
+  }
 }
 
 function escapeJS(value = "") {
