@@ -194,6 +194,11 @@
       background: #2563eb;
     }
 
+    .btn-save:disabled {
+      opacity: .65;
+      cursor: not-allowed;
+    }
+
     .btn-cancel {
       background: #e2e8f0;
       color: #334155;
@@ -311,14 +316,20 @@
       placeholder="Ví dụ: 10A2"
     >
 
-    <label for="newStudentId">
-      UID tài khoản Supabase
-    </label>
-
+    <label for="newEmail">Email đăng nhập</label>
     <input
-      id="newStudentId"
-      type="text"
-      placeholder="Dán UID từ Authentication → Users"
+      id="newEmail"
+      type="email"
+      placeholder="Ví dụ: hocsinh02@codehub.vn"
+      autocomplete="off"
+    >
+
+    <label for="newPassword">Mật khẩu</label>
+    <input
+      id="newPassword"
+      type="password"
+      placeholder="Tối thiểu 6 ký tự"
+      autocomplete="new-password"
     >
 
     <div class="modal-actions">
@@ -336,7 +347,7 @@
         onclick="saveStudent()"
         class="btn-save"
       >
-        Thêm học sinh
+        Tạo tài khoản
       </button>
 
     </div>
@@ -521,7 +532,8 @@ function openStudentModal() {
   document.getElementById("newFullName").value = "";
   document.getElementById("newStudentCode").value = "";
   document.getElementById("newClassName").value = "";
-  document.getElementById("newStudentId").value = "";
+  document.getElementById("newEmail").value = "";
+  document.getElementById("newPassword").value = "";
 
   document.getElementById("studentMessage").textContent = "";
 
@@ -550,131 +562,90 @@ function closeStudentModal() {
 async function saveStudent() {
 
   const client = window.supabaseClient;
+  const message = document.getElementById("studentMessage");
+  const saveButton = document.querySelector(".btn-save");
 
-  const id =
-    document.getElementById("newStudentId")
-      .value.trim();
+  const fullName = document.getElementById("newFullName").value.trim();
+  const studentCode = document.getElementById("newStudentCode").value.trim().toUpperCase();
+  const className = document.getElementById("newClassName").value.trim().toUpperCase();
+  const email = document.getElementById("newEmail").value.trim().toLowerCase();
+  const password = document.getElementById("newPassword").value;
 
-  const fullName =
-    document.getElementById("newFullName")
-      .value.trim();
-
-  const studentCode =
-    document.getElementById("newStudentCode")
-      .value.trim();
-
-  const className =
-    document.getElementById("newClassName")
-      .value.trim();
-
-  const message =
-    document.getElementById("studentMessage");
-
-  if (
-    !id ||
-    !fullName ||
-    !studentCode ||
-    !className
-  ) {
-
-    message.textContent =
-      "⚠️ Vui lòng nhập đầy đủ thông tin.";
-
+  if (!fullName || !studentCode || !className || !email || !password) {
+    message.textContent = "⚠️ Vui lòng nhập đầy đủ thông tin.";
     return;
   }
 
-
-  /* Kiểm tra UID */
-
-  const uuidRegex =
-    /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-
-  if (!uuidRegex.test(id)) {
-
-    message.textContent =
-      "⚠️ UID Supabase không đúng định dạng.";
-
+  if (!/^\S+@\S+\.\S+$/.test(email)) {
+    message.textContent = "⚠️ Email không đúng định dạng.";
     return;
   }
 
-
-  message.textContent =
-    "Đang thêm học sinh...";
-
-
-  /* Kiểm tra mã học sinh */
-
-  const {
-    data: existingStudent,
-    error: checkError
-  } = await client
-    .from("profiles")
-    .select("id, student_code")
-    .eq("student_code", studentCode)
-    .maybeSingle();
-
-  if (checkError) {
-
-    console.error(checkError);
-
-    message.textContent =
-      "❌ Không kiểm tra được mã học sinh: " +
-      checkError.message;
-
+  if (password.length < 6) {
+    message.textContent = "⚠️ Mật khẩu phải có ít nhất 6 ký tự.";
     return;
   }
 
-  if (existingStudent && existingStudent.id !== id) {
+  saveButton.disabled = true;
+  saveButton.textContent = "Đang tạo...";
+  message.textContent = "Đang tạo tài khoản học sinh...";
 
-    message.textContent =
-      "⚠️ Mã học sinh này đã tồn tại.";
+  try {
+    // Lấy access token của giáo viên đang đăng nhập để Edge Function tự xác thực quyền.
+    const {
+      data: { session },
+      error: sessionError
+    } = await client.auth.getSession();
 
-    return;
-  }
+    if (sessionError || !session?.access_token) {
+      throw new Error("Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.");
+    }
 
-
-  /* Thêm/cập nhật profile */
-
-  const {
-    error
-  } = await client
-    .from("profiles")
-    .upsert(
-      {
-        id: id,
+    const { data, error } = await client.functions.invoke("create-student", {
+      body: {
         full_name: fullName,
         student_code: studentCode,
         class_name: className,
-        role: "student"
+        email: email,
+        password: password
       },
-      {
-        onConflict: "id"
+      headers: {
+        Authorization: `Bearer ${session.access_token}`
       }
-    );
+    });
 
+    if (error) {
+      // Cố gắng đọc nội dung lỗi do Edge Function trả về.
+      let detail = "";
+      try {
+        if (error.context && typeof error.context.json === "function") {
+          const errorBody = await error.context.json();
+          detail = errorBody?.error || errorBody?.message || "";
+        }
+      } catch (_) {}
 
-  if (error) {
+      throw new Error(detail || error.message || "Không tạo được học sinh.");
+    }
 
-    console.error("SAVE STUDENT:", error);
+    if (!data?.success) {
+      throw new Error(data?.error || "Không tạo được học sinh.");
+    }
 
-    message.textContent =
-      "❌ " + error.message;
+    message.textContent = "✅ Tạo tài khoản học sinh thành công.";
 
-    return;
+    await loadStudents();
+
+    setTimeout(() => {
+      closeStudentModal();
+    }, 800);
+
+  } catch (error) {
+    console.error("CREATE STUDENT:", error);
+    message.textContent = "❌ " + (error?.message || "Có lỗi xảy ra khi tạo học sinh.");
+  } finally {
+    saveButton.disabled = false;
+    saveButton.textContent = "Tạo tài khoản";
   }
-
-
-  message.textContent =
-    "✅ Thêm học sinh thành công.";
-
-  await loadStudents();
-
-  setTimeout(() => {
-
-    closeStudentModal();
-
-  }, 700);
-
 }
 
 
