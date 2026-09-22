@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Quản lý môn học | CodeHub</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="scripts/supabase-config.js"></script>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f5f7fb;color:#172033}
+header{background:#fff;padding:18px 30px;border-bottom:1px solid #e5e7eb;display:flex;justify-content:space-between;align-items:center}.logo{font-size:28px;font-weight:800;color:#3182f6}
+.btn{border:0;border-radius:9px;padding:11px 16px;font-weight:700;cursor:pointer;background:#3182f6;color:#fff}.green{background:#16a34a}.orange{background:#f59e0b}.red{background:#dc2626}.gray{background:#64748b}
+main{max-width:1100px;margin:38px auto;padding:0 20px}h1{font-size:35px;margin-bottom:7px}.sub{color:#64748b}.stat{margin:23px 0;background:#fff;padding:20px;border-radius:15px;box-shadow:0 5px 18px #0000000d;width:260px}.num{font-size:31px;font-weight:800;color:#2563eb;margin-top:6px}
+.toolbar{display:flex;gap:10px;background:#fff;padding:16px;border-radius:14px;margin-bottom:20px}.toolbar input{flex:1;padding:12px;border:1px solid #cbd5e1;border-radius:9px;font-size:16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:16px}.card{background:#fff;border-radius:15px;padding:22px;box-shadow:0 5px 18px #0000000d}.name{font-size:21px;font-weight:800;margin-bottom:9px}.meta,.desc{color:#64748b;line-height:1.5}.desc{margin:10px 0 16px}.actions{display:flex;gap:8px}.actions button{flex:1}
+.empty{grid-column:1/-1;text-align:center;background:#fff;padding:40px;border-radius:15px;color:#64748b}
+.modal{display:none;position:fixed;inset:0;background:#0008;z-index:50;align-items:center;justify-content:center;padding:18px}.box{background:#fff;border-radius:17px;width:min(560px,96%);padding:25px}.mh{display:flex;justify-content:space-between;align-items:center}.close{border:0;background:#e2e8f0;border-radius:8px;width:37px;height:37px;font-size:20px;cursor:pointer}.fg{margin:15px 0}.fg label{display:block;font-weight:700;margin-bottom:6px}.fg input,.fg textarea{width:100%;padding:11px;border:1px solid #cbd5e1;border-radius:8px;font:inherit}.fg textarea{min-height:90px}.ma{display:flex;justify-content:flex-end;gap:8px}.msg{min-height:20px;font-weight:700}
+@media(max-width:700px){header{flex-direction:column;gap:10px}.toolbar{flex-direction:column}.stat{width:100%}}
+</style>
+</head>
+<body>
+<header><div class="logo">&lt;/&gt; CodeHub</div><div><button class="btn" onclick="location.href='teacher.html'">← Quản trị</button> <button class="btn" onclick="location.href='courses.html'">📚 Khóa học</button> <button class="btn" onclick="logout()">Đăng xuất</button></div></header>
+<main>
+<h1>📚 Quản lý môn học</h1><div class="sub">Tạo danh mục môn học dùng cho các khóa học trên CodeHub</div>
+<div class="stat">Tổng môn học<div class="num" id="total">0</div></div>
+<div class="toolbar"><input id="search" placeholder="🔎 Tìm môn học..."><button class="btn green" onclick="openCreate()">➕ Thêm môn</button></div>
+<div class="grid" id="grid"></div>
+</main>
+<div class="modal" id="modal"><div class="box">
+<div class="mh"><h2 id="mt">➕ Thêm môn học</h2><button class="close" onclick="closeModal()">×</button></div>
+<input type="hidden" id="subjectId">
+<div class="fg"><label>Tên môn học</label><input id="subjectName" placeholder="Ví dụ: Tin học"></div>
+<div class="fg"><label>Mã môn</label><input id="subjectCode" placeholder="Ví dụ: TIN"></div>
+<div class="fg"><label>Mô tả</label><textarea id="description" placeholder="Mô tả ngắn..."></textarea></div>
+<div class="msg" id="msg"></div>
+<div class="ma"><button class="btn gray" onclick="closeModal()">Hủy</button><button class="btn green" onclick="saveSubject()">Lưu</button></div>
+</div></div>
+<script>
+let currentUser=null,subjects=[];
+document.addEventListener("DOMContentLoaded",async()=>{
+ const s=window.supabaseClient;if(!s){alert("Không kết nối được Supabase.");return}
+ const {data:{user}}=await s.auth.getUser();if(!user){location.href="login.html";return}currentUser=user;
+ const {data:p}=await s.from("profiles").select("role").eq("id",user.id).single();if(!p||p.role!=="teacher"){location.href="index.html";return}
+ document.getElementById("search").addEventListener("input",render);await load();
+});
+async function load(){const {data,error}=await window.supabaseClient.from("subjects").select("*").eq("teacher_id",currentUser.id).order("subject_name");if(error){alert("Không tải được môn học: "+error.message);return}subjects=data||[];render()}
+function render(){
+ document.getElementById("total").textContent=subjects.length;const q=document.getElementById("search").value.trim().toLocaleLowerCase("vi-VN"),g=document.getElementById("grid");g.innerHTML="";
+ const a=subjects.filter(x=>(x.subject_name+" "+(x.subject_code||"")+" "+(x.description||"")).toLocaleLowerCase("vi-VN").includes(q));
+ if(!a.length){g.innerHTML='<div class="empty">Chưa có môn học. Bấm <b>➕ Thêm môn</b> để bắt đầu.</div>';return}
+ a.forEach(x=>{const c=document.createElement("div");c.className="card";c.innerHTML='<div class="name"></div><div class="meta"></div><div class="desc"></div><div class="actions"></div>';c.querySelector(".name").textContent="📘 "+x.subject_name;c.querySelector(".meta").textContent="Mã: "+(x.subject_code||"—");c.querySelector(".desc").textContent=x.description||"";
+ const a=c.querySelector(".actions"),e=document.createElement("button"),d=document.createElement("button");e.className="btn orange";e.textContent="✏️ Sửa";e.onclick=()=>openEdit(x);d.className="btn red";d.textContent="🗑️ Xóa";d.onclick=()=>removeSubject(x);a.append(e,d);g.appendChild(c)});
+}
+function openCreate(){document.getElementById("mt").textContent="➕ Thêm môn học";document.getElementById("subjectId").value="";document.getElementById("subjectName").value="";document.getElementById("subjectCode").value="";document.getElementById("description").value="";document.getElementById("msg").textContent="";document.getElementById("modal").style.display="flex"}
+function openEdit(x){document.getElementById("mt").textContent="✏️ Sửa môn học";document.getElementById("subjectId").value=x.id;document.getElementById("subjectName").value=x.subject_name||"";document.getElementById("subjectCode").value=x.subject_code||"";document.getElementById("description").value=x.description||"";document.getElementById("msg").textContent="";document.getElementById("modal").style.display="flex"}
+function closeModal(){document.getElementById("modal").style.display="none"}
+async function saveSubject(){const id=document.getElementById("subjectId").value,name=document.getElementById("subjectName").value.trim(),code=document.getElementById("subjectCode").value.trim().toUpperCase(),description=document.getElementById("description").value.trim(),msg=document.getElementById("msg");if(!name){msg.style.color="#dc2626";msg.textContent="⚠️ Nhập tên môn học.";return}
+ const row={subject_name:name,subject_code:code||null,description,teacher_id:currentUser.id};const r=id?await window.supabaseClient.from("subjects").update(row).eq("id",id):await window.supabaseClient.from("subjects").insert(row);if(r.error){msg.style.color="#dc2626";msg.textContent="❌ "+r.error.message;return}closeModal();await load()}
+async function removeSubject(x){if(!confirm(`Xóa môn "${x.subject_name}"?`))return;const {error}=await window.supabaseClient.from("subjects").delete().eq("id",x.id);if(error){alert("❌ "+error.message);return}await load()}
+async function logout(){await window.supabaseClient.auth.signOut();location.href="login.html"}
+document.getElementById("modal").addEventListener("click",e=>{if(e.target.id==="modal")closeModal()});
+</script></body></html>
