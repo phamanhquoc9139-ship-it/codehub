@@ -209,6 +209,12 @@
       line-height: 1.5;
     }
 
+    .filters { display:flex; gap:12px; margin-bottom:18px; flex-wrap:wrap; }
+    .filters input, .filters select { padding:11px 13px; border:1px solid #cbd5e1; border-radius:9px; font-size:15px; }
+    .filters input { flex:1; min-width:240px; }
+    .action-btn { border:0; border-radius:8px; padding:7px 10px; cursor:pointer; font-weight:600; margin-right:5px; }
+    .edit-btn { background:#e8f1ff; color:#2563eb; }
+    .delete-btn { background:#fee2e2; color:#dc2626; }
     @media (max-width: 700px) {
       header {
         padding: 15px;
@@ -262,6 +268,11 @@
 
     </div>
 
+    <div class="filters">
+      <input id="studentSearch" type="search" placeholder="🔎 Tìm theo họ tên hoặc mã học sinh...">
+      <select id="classFilter"><option value="">Tất cả lớp</option></select>
+    </div>
+
     <div id="loading">
       Đang tải danh sách học sinh...
     </div>
@@ -276,6 +287,7 @@
           <th>Mã học sinh</th>
           <th>Lớp</th>
           <th>Vai trò</th>
+          <th>Thao tác</th>
         </tr>
       </thead>
 
@@ -362,6 +374,7 @@
 <script>
 
 let currentTeacher = null;
+let allStudents = [];
 
 
 /* ==========================
@@ -455,7 +468,9 @@ async function loadStudents() {
     return;
   }
 
-  renderStudents(students || []);
+  allStudents = students || [];
+  populateClassFilter(allStudents);
+  applyStudentFilters();
 }
 
 
@@ -506,9 +521,11 @@ function renderStudents(students) {
       </td>
 
       <td>
-        <span class="badge">
-          Học sinh
-        </span>
+        <span class="badge">Học sinh</span>
+      </td>
+      <td>
+        <button class="action-btn edit-btn" onclick="editStudent('${student.id}')">✏️ Sửa</button>
+        <button class="action-btn delete-btn" onclick="deleteStudent('${student.id}', '${escapeJS(student.full_name || '')}')">🗑️ Xóa</button>
       </td>
     `;
 
@@ -522,6 +539,58 @@ function renderStudents(students) {
   table.style.display = "table";
 }
 
+
+function populateClassFilter(students) {
+  const select = document.getElementById("classFilter");
+  const current = select.value;
+  const classes = [...new Set(students.map(s => (s.class_name || "").trim()).filter(Boolean))].sort();
+  select.innerHTML = '<option value="">Tất cả lớp</option>' + classes.map(c => `<option value="${escapeHTML(c)}">${escapeHTML(c)}</option>`).join("");
+  if (classes.includes(current)) select.value = current;
+}
+
+function applyStudentFilters() {
+  const q = (document.getElementById("studentSearch")?.value || "").trim().toLowerCase();
+  const cls = document.getElementById("classFilter")?.value || "";
+  const filtered = allStudents.filter(s => {
+    const matchesText = !q || (s.full_name || "").toLowerCase().includes(q) || (s.student_code || "").toLowerCase().includes(q);
+    const matchesClass = !cls || s.class_name === cls;
+    return matchesText && matchesClass;
+  });
+  renderStudents(filtered);
+  if (filtered.length !== allStudents.length) {
+    document.getElementById("studentCount").textContent = `Hiển thị ${filtered.length}/${allStudents.length} học sinh`;
+  }
+}
+
+async function editStudent(id) {
+  const student = allStudents.find(s => s.id === id);
+  if (!student) return;
+  const fullName = prompt("Họ và tên:", student.full_name || "");
+  if (fullName === null) return;
+  const studentCode = prompt("Mã học sinh:", student.student_code || "");
+  if (studentCode === null) return;
+  const className = prompt("Lớp:", student.class_name || "");
+  if (className === null) return;
+  const { error } = await window.supabaseClient.from("profiles").update({
+    full_name: fullName.trim(), student_code: studentCode.trim().toUpperCase(), class_name: className.trim().toUpperCase()
+  }).eq("id", id);
+  if (error) { alert("Không sửa được học sinh: " + error.message); return; }
+  await loadStudents();
+}
+
+async function deleteStudent(id, name) {
+  if (!confirm(`Xóa học sinh ${name} khỏi danh sách?\n\nLưu ý: thao tác này hiện chỉ xóa hồ sơ profiles, chưa xóa tài khoản Authentication.`)) return;
+  const { error } = await window.supabaseClient.from("profiles").delete().eq("id", id);
+  if (error) { alert("Không xóa được học sinh: " + error.message); return; }
+  await loadStudents();
+}
+
+function escapeJS(value = "") {
+  return String(value).replaceAll("\\", "\\\\").replaceAll("'", "\\'").replaceAll("\n", " ").replaceAll("\r", " ");
+}
+
+document.addEventListener("input", e => { if (e.target.id === "studentSearch") applyStudentFilters(); });
+document.addEventListener("change", e => { if (e.target.id === "classFilter") applyStudentFilters(); });
 
 /* ==========================
    MỞ FORM THÊM HỌC SINH
