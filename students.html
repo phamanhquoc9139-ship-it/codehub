@@ -9,11 +9,7 @@
   <script src="scripts/supabase-config.js"></script>
 
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       font-family: Arial, sans-serif;
@@ -32,55 +28,47 @@
 
     .logo {
       font-size: 28px;
-      font-weight: bold;
+      font-weight: 700;
       color: #3182f6;
-    }
-
-    .header-actions {
-      display: flex;
-      gap: 10px;
     }
 
     .btn {
       border: 0;
       background: #3182f6;
       color: white;
-      padding: 12px 20px;
-      border-radius: 10px;
+      padding: 11px 18px;
+      border-radius: 9px;
       cursor: pointer;
-      font-weight: bold;
-      font-size: 15px;
-    }
-
-    .btn:hover {
-      opacity: .9;
+      font-weight: 700;
+      margin-left: 5px;
     }
 
     .container {
-      max-width: 1500px;
-      margin: 55px auto;
-      padding: 0 30px;
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 0 20px;
     }
 
     h1 {
-      font-size: 42px;
-      margin-bottom: 10px;
+      font-size: 38px;
+      margin-bottom: 8px;
     }
 
     .subtitle {
       color: #64748b;
-      font-size: 20px;
-      margin-bottom: 38px;
+      margin-bottom: 30px;
+      font-size: 18px;
     }
 
     .box {
       background: white;
-      border-radius: 20px;
-      padding: 30px;
-      box-shadow: 0 8px 25px rgba(0,0,0,.06);
+      border-radius: 18px;
+      padding: 28px;
+      box-shadow: 0 5px 20px rgba(0,0,0,.06);
+      overflow-x: auto;
     }
 
-    .box-top {
+    .top-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -90,32 +78,26 @@
 
     .count {
       color: #64748b;
-      font-size: 19px;
+      font-size: 18px;
     }
 
-    .tools {
+    .search-row {
       display: flex;
-      gap: 14px;
-      margin-bottom: 22px;
+      gap: 12px;
+      margin-bottom: 18px;
     }
 
-    .search {
-      flex: 1;
-      padding: 14px 18px;
-      border: 1px solid #cbd5e1;
-      border-radius: 10px;
-      font-size: 17px;
-      outline: none;
-    }
-
-    .filter {
-      min-width: 160px;
-      padding: 12px;
+    .search-row input,
+    .search-row select {
+      padding: 13px 16px;
       border: 1px solid #cbd5e1;
       border-radius: 10px;
       font-size: 16px;
       background: white;
     }
+
+    #searchInput { flex: 1; }
+    #classFilter { min-width: 160px; }
 
     table {
       width: 100%;
@@ -125,19 +107,15 @@
     th {
       background: #eef5ff;
       text-align: left;
-      padding: 17px;
-      font-size: 17px;
+      padding: 16px;
     }
 
     td {
-      padding: 17px;
+      padding: 16px;
       border-bottom: 1px solid #e5e7eb;
-      font-size: 16px;
     }
 
-    tr:hover {
-      background: #f8fafc;
-    }
+    tr:hover { background: #f8fafc; }
 
     .badge {
       display: inline-block;
@@ -147,48 +125,29 @@
       border-radius: 20px;
     }
 
-    .action-group {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .btn-edit,
-    .btn-password,
-    .btn-delete {
+    .action-btn {
       border: 0;
-      padding: 9px 13px;
+      padding: 9px 12px;
       border-radius: 9px;
       cursor: pointer;
-      font-weight: bold;
-      font-size: 14px;
+      font-weight: 700;
+      margin: 3px;
     }
 
-    .btn-edit {
-      background: #e8f1ff;
-      color: #2563eb;
-    }
-
-    .btn-password {
-      background: #fff2c7;
-      color: #92400e;
-    }
-
-    .btn-delete {
-      background: #fee2e2;
-      color: #dc2626;
-    }
+    .edit-btn { background: #e8f1ff; color: #2563eb; }
+    .password-btn { background: #fff0bd; color: #a54b00; }
+    .delete-btn { background: #ffe0e0; color: #dc2626; }
 
     #loading {
-      padding: 30px;
       text-align: center;
+      padding: 30px;
       color: #64748b;
     }
 
     #error {
       display: none;
       color: #dc2626;
-      padding: 20px;
+      padding: 15px 0;
     }
 
     .modal {
@@ -204,28 +163,28 @@
 
     .modal-box {
       width: min(560px, 95%);
+      max-height: 92vh;
+      overflow-y: auto;
       background: white;
       border-radius: 20px;
-      padding: 32px;
+      padding: 30px;
       box-shadow: 0 20px 60px rgba(0,0,0,.25);
     }
 
-    .modal-box h2 {
-      margin-bottom: 24px;
-      font-size: 27px;
-    }
+    .modal-box h2 { margin-bottom: 20px; }
 
     .modal-box label {
       display: block;
-      font-weight: bold;
-      margin: 15px 0 7px;
+      margin-top: 14px;
+      margin-bottom: 6px;
+      font-weight: 700;
     }
 
     .modal-box input {
       width: 100%;
       padding: 13px 15px;
       border: 1px solid #cbd5e1;
-      border-radius: 10px;
+      border-radius: 9px;
       font-size: 16px;
     }
 
@@ -233,59 +192,31 @@
       display: flex;
       justify-content: flex-end;
       gap: 10px;
-      margin-top: 25px;
+      margin-top: 24px;
     }
 
-    .btn-cancel {
+    .btn-save, .btn-cancel {
       border: 0;
-      background: #e2e8f0;
-      color: #334155;
       padding: 11px 18px;
       border-radius: 9px;
       cursor: pointer;
-      font-weight: bold;
+      font-weight: 700;
     }
 
-    .btn-save {
-      border: 0;
-      background: #3182f6;
-      color: white;
-      padding: 11px 18px;
-      border-radius: 9px;
-      cursor: pointer;
-      font-weight: bold;
-    }
+    .btn-save { background: #3182f6; color: white; }
+    .btn-cancel { background: #e2e8f0; color: #334155; }
 
     .message {
       margin-top: 15px;
       min-height: 20px;
     }
 
-    @media (max-width: 800px) {
-      header {
-        padding: 15px;
-        flex-direction: column;
-        gap: 15px;
-      }
-
-      .container {
-        margin-top: 30px;
-        padding: 0 15px;
-      }
-
-      h1 {
-        font-size: 32px;
-      }
-
-      .tools,
-      .box-top {
-        flex-direction: column;
-        align-items: stretch;
-      }
-
-      .header-actions {
-        flex-wrap: wrap;
-      }
+    @media(max-width: 750px) {
+      header { padding: 15px; }
+      header { flex-direction: column; gap: 12px; }
+      .container { margin-top: 25px; }
+      .search-row { flex-direction: column; }
+      .top-row { align-items: flex-start; flex-direction: column; }
     }
   </style>
 </head>
@@ -295,7 +226,7 @@
 <header>
   <div class="logo">&lt;/&gt; CodeHub</div>
 
-  <div class="header-actions">
+  <div>
     <button class="btn" onclick="goTeacher()">← Quản trị</button>
     <button class="btn" onclick="goHome()">Trang chủ</button>
     <button class="btn" onclick="logout()">Đăng xuất</button>
@@ -309,36 +240,24 @@
 
   <div class="box">
 
-    <div class="box-top">
-      <div id="studentCount" class="count">
-        Đang tải...
-      </div>
-
-      <button class="btn" onclick="openAddModal()">
-        + Thêm học sinh
-      </button>
+    <div class="top-row">
+      <div id="studentCount" class="count"></div>
+      <button class="btn" onclick="openAddModal()">+ Thêm học sinh</button>
     </div>
 
-    <div class="tools">
-      <input
-        id="searchInput"
-        class="search"
-        type="text"
-        placeholder="🔎 Tìm theo họ tên hoặc mã học sinh..."
-      >
+    <div class="search-row">
+      <input id="searchInput"
+             placeholder="🔎 Tìm theo họ tên hoặc mã học sinh...">
 
-      <select id="classFilter" class="filter">
+      <select id="classFilter">
         <option value="">Tất cả lớp</option>
       </select>
     </div>
 
-    <div id="loading">
-      Đang tải danh sách học sinh...
-    </div>
-
+    <div id="loading">Đang tải danh sách học sinh...</div>
     <div id="error"></div>
 
-    <table id="studentTable" style="display:none;">
+    <table id="studentTable" style="display:none">
       <thead>
         <tr>
           <th>STT</th>
@@ -349,71 +268,49 @@
           <th>Thao tác</th>
         </tr>
       </thead>
-
       <tbody id="studentList"></tbody>
     </table>
 
   </div>
-
 </main>
 
-
-<!-- ================= THÊM HỌC SINH ================= -->
-
+<!-- THÊM HỌC SINH -->
 <div id="addModal" class="modal">
   <div class="modal-box">
-
     <h2>👨‍🎓 Thêm học sinh</h2>
 
     <label>Họ và tên</label>
-    <input id="addFullName"
-           placeholder="Ví dụ: Nguyễn Văn Bình">
+    <input id="addFullName" placeholder="Ví dụ: Nguyễn Văn Bình">
 
     <label>Mã học sinh</label>
-    <input id="addStudentCode"
-           placeholder="Ví dụ: HS002">
+    <input id="addStudentCode" placeholder="Ví dụ: HS002">
 
     <label>Lớp</label>
-    <input id="addClassName"
-           placeholder="Ví dụ: 10A2">
+    <input id="addClassName" placeholder="Ví dụ: 10A2">
 
     <label>Email đăng nhập</label>
-    <input id="addEmail"
-           type="email"
+    <input id="addEmail" type="email"
            placeholder="Ví dụ: hocsinh02@codehub.vn">
 
     <label>Mật khẩu</label>
-    <input id="addPassword"
-           type="password"
+    <input id="addPassword" type="password"
            placeholder="Tối thiểu 6 ký tự">
 
     <div class="modal-actions">
-      <button class="btn-cancel"
-              onclick="closeAddModal()">
-        Hủy
-      </button>
-
-      <button class="btn-save"
-              onclick="createStudent()">
-        Tạo tài khoản
-      </button>
+      <button class="btn-cancel" onclick="closeModal('addModal')">Hủy</button>
+      <button class="btn-save" onclick="createStudent()">Tạo tài khoản</button>
     </div>
 
     <div id="addMessage" class="message"></div>
-
   </div>
 </div>
 
-
-<!-- ================= SỬA HỌC SINH ================= -->
-
+<!-- SỬA -->
 <div id="editModal" class="modal">
   <div class="modal-box">
-
     <h2>✏️ Sửa học sinh</h2>
 
-    <!-- ID thật của profiles -->
-    <input id="editId" type="hidden">
+    <input id="editStudentId" type="hidden">
 
     <label>Họ và tên</label>
     <input id="editFullName">
@@ -425,39 +322,87 @@
     <input id="editClassName">
 
     <div class="modal-actions">
-
-      <button class="btn-cancel"
-              onclick="closeEditModal()">
-        Hủy
-      </button>
-
-      <button class="btn-save"
-              onclick="saveEditStudent()">
-        Lưu thay đổi
-      </button>
-
+      <button class="btn-cancel" onclick="closeModal('editModal')">Hủy</button>
+      <button class="btn-save" onclick="updateStudent()">Lưu thay đổi</button>
     </div>
 
     <div id="editMessage" class="message"></div>
-
   </div>
 </div>
 
+<!-- PASSWORD -->
+<div id="passwordModal" class="modal">
+  <div class="modal-box">
+    <h2>🔑 Đổi mật khẩu</h2>
+
+    <input id="passwordStudentId" type="hidden">
+
+    <p id="passwordStudentName" style="margin-bottom:15px"></p>
+
+    <label>Mật khẩu mới</label>
+    <input id="newPassword" type="password"
+           placeholder="Tối thiểu 6 ký tự">
+
+    <div class="modal-actions">
+      <button class="btn-cancel"
+              onclick="closeModal('passwordModal')">Hủy</button>
+      <button class="btn-save"
+              onclick="resetPassword()">Đổi mật khẩu</button>
+    </div>
+
+    <div id="passwordMessage" class="message"></div>
+  </div>
+</div>
 
 <script>
+const CREATE_FUNCTION =
+  "https://drfcejvmyhzorwepndta.supabase.co/functions/v1/create-student";
 
-const FUNCTION_BASE =
-  "https://drfcejvmyhzorwepndta.supabase.co/functions/v1";
+const MANAGE_FUNCTION =
+  "https://drfcejvmyhzorwepndta.supabase.co/functions/v1/manage-student";
 
-let allStudents = [];
+let students = [];
 
+/* ================================
+   CHUẨN HÓA DỮ LIỆU
+================================ */
 
-/* =====================================================
-   KHỞI ĐỘNG
-===================================================== */
+function normalizeSpaces(text) {
+  return String(text || "").trim().replace(/\s+/g, " ");
+}
+
+function normalizeName(name) {
+  return normalizeSpaces(name)
+    .toLocaleLowerCase("vi-VN")
+    .split(" ")
+    .map(word =>
+      word ? word.charAt(0).toLocaleUpperCase("vi-VN") + word.slice(1) : ""
+    )
+    .join(" ");
+}
+
+function normalizeCode(code) {
+  return normalizeSpaces(code).toUpperCase();
+}
+
+function normalizeClass(className) {
+  return normalizeSpaces(className).toUpperCase();
+}
+
+function escapeHTML(value = "") {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+/* ================================
+   LOAD
+================================ */
 
 document.addEventListener("DOMContentLoaded", async () => {
-
   const client = window.supabaseClient;
 
   if (!client) {
@@ -465,62 +410,37 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
 
-  const {
-    data: { user }
-  } = await client.auth.getUser();
+  const { data: { user } } = await client.auth.getUser();
 
   if (!user) {
     location.href = "login.html";
     return;
   }
 
-
-  /* KIỂM TRA GIÁO VIÊN */
-
-  const {
-    data: profile,
-    error
-  } = await client
+  const { data: profile } = await client
     .from("profiles")
-    .select("id, full_name, role")
+    .select("role")
     .eq("id", user.id)
     .single();
 
-  if (
-    error ||
-    !profile ||
-    profile.role !== "teacher"
-  ) {
-    showError(
-      "Bạn không có quyền truy cập trang quản lý học sinh."
-    );
+  if (!profile || profile.role !== "teacher") {
+    showError("Bạn không có quyền truy cập.");
     return;
   }
 
-
   await loadStudents();
 
+  document.getElementById("searchInput")
+    .addEventListener("input", renderStudents);
+
+  document.getElementById("classFilter")
+    .addEventListener("change", renderStudents);
 });
 
-
-/* =====================================================
-   LOAD DANH SÁCH
-===================================================== */
-
 async function loadStudents() {
-
-  const client = window.supabaseClient;
-
-  document.getElementById("loading").style.display = "block";
-
-  const {
-    data,
-    error
-  } = await client
+  const { data, error } = await window.supabaseClient
     .from("profiles")
-    .select(
-      "id, full_name, student_code, class_name, role"
-    )
+    .select("id, full_name, student_code, class_name, role")
     .eq("role", "student")
     .order("class_name")
     .order("full_name");
@@ -528,328 +448,236 @@ async function loadStudents() {
   document.getElementById("loading").style.display = "none";
 
   if (error) {
-    showError(
-      "Không tải được danh sách: " +
-      error.message
-    );
+    showError(error.message);
     return;
   }
 
-  allStudents = data || [];
+  students = data || [];
 
   buildClassFilter();
   renderStudents();
-
 }
 
+function buildClassFilter() {
+  const select = document.getElementById("classFilter");
+  const oldValue = select.value;
 
-/* =====================================================
-   HIỂN THỊ
-===================================================== */
+  const classes = [...new Set(
+    students
+      .map(s => normalizeClass(s.class_name))
+      .filter(Boolean)
+  )].sort();
+
+  select.innerHTML = '<option value="">Tất cả lớp</option>';
+
+  classes.forEach(cls => {
+    const option = document.createElement("option");
+    option.value = cls;
+    option.textContent = cls;
+    select.appendChild(option);
+  });
+
+  if (classes.includes(oldValue)) select.value = oldValue;
+}
 
 function renderStudents() {
-
   const search =
-    document
-      .getElementById("searchInput")
-      .value
-      .trim()
-      .toLowerCase();
+    normalizeSpaces(document.getElementById("searchInput").value)
+      .toLocaleLowerCase("vi-VN");
 
   const classValue =
     document.getElementById("classFilter").value;
 
-  const filtered = allStudents.filter(student => {
-
+  const filtered = students.filter(student => {
     const name =
-      (student.full_name || "").toLowerCase();
+      normalizeSpaces(student.full_name)
+        .toLocaleLowerCase("vi-VN");
 
     const code =
-      (student.student_code || "").toLowerCase();
+      normalizeCode(student.student_code)
+        .toLocaleLowerCase("vi-VN");
 
-    const matchSearch =
-      !search ||
-      name.includes(search) ||
-      code.includes(search);
+    const cls = normalizeClass(student.class_name);
 
-    const matchClass =
-      !classValue ||
-      student.class_name === classValue;
+    const matchesSearch =
+      !search || name.includes(search) || code.includes(search);
 
-    return matchSearch && matchClass;
+    const matchesClass =
+      !classValue || cls === classValue;
 
+    return matchesSearch && matchesClass;
   });
 
+  document.getElementById("studentCount").textContent =
+    `Tổng số học sinh: ${students.length}`;
 
-  const tbody =
-    document.getElementById("studentList");
-
+  const tbody = document.getElementById("studentList");
   tbody.innerHTML = "";
 
-
   filtered.forEach((student, index) => {
-
     const tr = document.createElement("tr");
 
     tr.innerHTML = `
-
       <td>${index + 1}</td>
+      <td>${escapeHTML(student.full_name || "")}</td>
+      <td>${escapeHTML(student.student_code || "")}</td>
+      <td>${escapeHTML(student.class_name || "")}</td>
 
       <td>
-        ${escapeHTML(student.full_name || "")}
+        <span class="badge">Học sinh</span>
       </td>
 
       <td>
-        ${escapeHTML(student.student_code || "")}
+        <button class="action-btn edit-btn"
+                onclick="openEditModal('${student.id}')">
+          ✏️ Sửa
+        </button>
+
+        <button class="action-btn password-btn"
+                onclick="openPasswordModal('${student.id}')">
+          🔑 Mật khẩu
+        </button>
+
+        <button class="action-btn delete-btn"
+                onclick="deleteStudent('${student.id}')">
+          🗑️ Xóa
+        </button>
       </td>
-
-      <td>
-        ${escapeHTML(student.class_name || "")}
-      </td>
-
-      <td>
-        <span class="badge">
-          Học sinh
-        </span>
-      </td>
-
-      <td>
-
-        <div class="action-group">
-
-          <button
-            class="btn-edit"
-            onclick="openEditModal('${student.id}')">
-            ✏️ Sửa
-          </button>
-
-          <button
-            class="btn-password"
-            onclick="changePassword('${student.id}')">
-            🔑 Mật khẩu
-          </button>
-
-          <button
-            class="btn-delete"
-            onclick="deleteStudent('${student.id}')">
-            🗑️ Xóa
-          </button>
-
-        </div>
-
-      </td>
-
     `;
 
     tbody.appendChild(tr);
-
   });
 
-
-  document.getElementById("studentCount").textContent =
-    `Tổng số học sinh: ${allStudents.length}`;
-
-
-  document.getElementById("studentTable").style.display =
-    filtered.length ? "table" : "none";
-
+  document.getElementById("studentTable").style.display = "table";
 }
 
-
-/* =====================================================
-   LỌC LỚP
-===================================================== */
-
-function buildClassFilter() {
-
-  const select =
-    document.getElementById("classFilter");
-
-  const oldValue = select.value;
-
-  const classes =
-    [...new Set(
-      allStudents
-        .map(x => x.class_name)
-        .filter(Boolean)
-    )].sort();
-
-  select.innerHTML =
-    `<option value="">Tất cả lớp</option>`;
-
-  classes.forEach(className => {
-
-    const option =
-      document.createElement("option");
-
-    option.value = className;
-    option.textContent = className;
-
-    select.appendChild(option);
-
-  });
-
-  select.value = oldValue;
-
-}
-
-
-document
-  .getElementById("searchInput")
-  .addEventListener("input", renderStudents);
-
-
-document
-  .getElementById("classFilter")
-  .addEventListener("change", renderStudents);
-
-
-/* =====================================================
-   THÊM HỌC SINH
-===================================================== */
+/* ================================
+   MODAL
+================================ */
 
 function openAddModal() {
-
   document.getElementById("addMessage").textContent = "";
-
-  document.getElementById("addModal").style.display =
-    "flex";
-
+  document.getElementById("addModal").style.display = "flex";
 }
 
-
-function closeAddModal() {
-
-  document.getElementById("addModal").style.display =
-    "none";
-
+function closeModal(id) {
+  document.getElementById(id).style.display = "none";
 }
 
+/* ================================
+   TOKEN
+================================ */
+
+async function getAccessToken() {
+  const { data, error } =
+    await window.supabaseClient.auth.getSession();
+
+  if (error || !data.session) {
+    throw new Error("Phiên đăng nhập đã hết hạn.");
+  }
+
+  return data.session.access_token;
+}
+
+/* ================================
+   THÊM
+================================ */
 
 async function createStudent() {
+  const message = document.getElementById("addMessage");
 
-  const full_name =
-    document.getElementById("addFullName").value.trim();
+  const fullName =
+    normalizeName(document.getElementById("addFullName").value);
 
-  const student_code =
-    document.getElementById("addStudentCode").value.trim();
+  const studentCode =
+    normalizeCode(document.getElementById("addStudentCode").value);
 
-  const class_name =
-    document.getElementById("addClassName").value.trim();
+  const className =
+    normalizeClass(document.getElementById("addClassName").value);
 
   const email =
-    document.getElementById("addEmail").value.trim();
+    document.getElementById("addEmail").value.trim().toLowerCase();
 
   const password =
     document.getElementById("addPassword").value;
 
-  const message =
-    document.getElementById("addMessage");
-
-
-  if (
-    !full_name ||
-    !student_code ||
-    !class_name ||
-    !email ||
-    !password
-  ) {
-    message.textContent =
-      "⚠️ Vui lòng nhập đầy đủ thông tin.";
+  if (!fullName || !studentCode || !className || !email || !password) {
+    message.textContent = "⚠️ Vui lòng nhập đầy đủ thông tin.";
     return;
   }
-
 
   if (password.length < 6) {
-    message.textContent =
-      "⚠️ Mật khẩu phải có ít nhất 6 ký tự.";
+    message.textContent = "⚠️ Mật khẩu phải có ít nhất 6 ký tự.";
     return;
   }
 
-
-  message.textContent =
-    "Đang tạo tài khoản...";
-
+  // Kiểm tra mã HS đang có trên danh sách hiện tại
+  if (students.some(s =>
+      normalizeCode(s.student_code) === studentCode)) {
+    message.textContent = "❌ Mã học sinh đã tồn tại.";
+    return;
+  }
 
   try {
+    message.textContent = "Đang tạo tài khoản...";
 
-    const result = await callFunction(
-      "create-student",
-      {
-        full_name,
-        student_code,
-        class_name,
+    const token = await getAccessToken();
+
+    const response = await fetch(CREATE_FUNCTION, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        fullName,
+        studentCode,
+        className,
         email,
         password
-      }
-    );
+      })
+    });
 
+    const result = await response.json();
 
-    if (!result.ok) {
-      throw new Error(
-        result.data?.error ||
-        result.data?.message ||
-        "Không tạo được học sinh."
-      );
+    if (!response.ok) {
+      throw new Error(result.error || "Không tạo được học sinh.");
     }
 
-
-    message.textContent =
-      "✅ Tạo học sinh thành công.";
-
+    message.textContent = "✅ Tạo học sinh thành công.";
 
     await loadStudents();
 
-
     setTimeout(() => {
+      closeModal("addModal");
 
-      closeAddModal();
-
-      clearAddForm();
-
-    }, 700);
-
+      document.getElementById("addFullName").value = "";
+      document.getElementById("addStudentCode").value = "";
+      document.getElementById("addClassName").value = "";
+      document.getElementById("addEmail").value = "";
+      document.getElementById("addPassword").value = "";
+    }, 600);
 
   } catch (error) {
-
-    console.error(error);
-
-    message.textContent =
-      "❌ " + error.message;
-
+    message.textContent = "❌ " + error.message;
   }
-
 }
 
+/* ================================
+   SỬA
+================================ */
 
-function clearAddForm() {
-
-  document.getElementById("addFullName").value = "";
-  document.getElementById("addStudentCode").value = "";
-  document.getElementById("addClassName").value = "";
-  document.getElementById("addEmail").value = "";
-  document.getElementById("addPassword").value = "";
-
-}
-
-
-/* =====================================================
-   SỬA HỌC SINH
-===================================================== */
-
-function openEditModal(id) {
-
-  const student =
-    allStudents.find(x => x.id === id);
+function openEditModal(studentId) {
+  const student = students.find(s => s.id === studentId);
 
   if (!student) {
     alert("Không tìm thấy học sinh.");
     return;
   }
 
-
-  document.getElementById("editId").value =
-    student.id;
+  // Đây là phần quan trọng:
+  // lưu UUID thật vào hidden input
+  document.getElementById("editStudentId").value = student.id;
 
   document.getElementById("editFullName").value =
     student.full_name || "";
@@ -860,387 +688,240 @@ function openEditModal(id) {
   document.getElementById("editClassName").value =
     student.class_name || "";
 
-  document.getElementById("editMessage").textContent =
-    "";
+  document.getElementById("editMessage").textContent = "";
 
-  document.getElementById("editModal").style.display =
-    "flex";
-
+  document.getElementById("editModal").style.display = "flex";
 }
 
+async function updateStudent() {
+  const studentId =
+    document.getElementById("editStudentId").value.trim();
 
-function closeEditModal() {
+  const fullName =
+    normalizeName(document.getElementById("editFullName").value);
 
-  document.getElementById("editModal").style.display =
-    "none";
+  const studentCode =
+    normalizeCode(document.getElementById("editStudentCode").value);
 
-}
+  const className =
+    normalizeClass(document.getElementById("editClassName").value);
 
+  const message = document.getElementById("editMessage");
 
-async function saveEditStudent() {
-
-  const id =
-    document.getElementById("editId").value;
-
-  const full_name =
-    document.getElementById("editFullName")
-      .value.trim();
-
-  const student_code =
-    document.getElementById("editStudentCode")
-      .value.trim();
-
-  const class_name =
-    document.getElementById("editClassName")
-      .value.trim();
-
-  const message =
-    document.getElementById("editMessage");
-
-
-  if (!id) {
-    message.textContent =
-      "❌ Thiếu ID học sinh.";
+  if (!studentId) {
+    message.textContent = "❌ Thiếu ID học sinh.";
     return;
   }
 
-
-  if (
-    !full_name ||
-    !student_code ||
-    !class_name
-  ) {
-    message.textContent =
-      "⚠️ Vui lòng nhập đầy đủ thông tin.";
+  if (!fullName || !studentCode || !className) {
+    message.textContent = "⚠️ Vui lòng nhập đầy đủ thông tin.";
     return;
   }
 
+  // Kiểm tra trùng mã nhưng bỏ qua chính HS đang sửa
+  const duplicate = students.some(s =>
+    s.id !== studentId &&
+    normalizeCode(s.student_code) === studentCode
+  );
 
-  message.textContent =
-    "Đang lưu thay đổi...";
-
+  if (duplicate) {
+    message.textContent = "❌ Mã học sinh đã được sử dụng.";
+    return;
+  }
 
   try {
+    message.textContent = "Đang lưu...";
 
-    /*
-       Gửi cả id và studentId để tương thích
-       với Edge Function hiện tại.
-    */
+    const token = await getAccessToken();
 
-    const result = await callFunction(
-      "manage-student",
-      {
+    const response = await fetch(MANAGE_FUNCTION, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
+      body: JSON.stringify({
         action: "update",
-        id: id,
-        studentId: id,
-        student_id: id,
+        studentId: studentId,
+        fullName: fullName,
+        studentCode: studentCode,
+        className: className
+      })
+    });
 
-        full_name: full_name,
-        student_code: student_code,
-        class_name: class_name
-      }
-    );
+    const result = await response.json();
 
-
-    if (!result.ok) {
-
-      throw new Error(
-        result.data?.error ||
-        result.data?.message ||
-        "Không cập nhật được học sinh."
-      );
-
+    if (!response.ok) {
+      throw new Error(result.error || "Không sửa được học sinh.");
     }
 
-
-    message.textContent =
-      "✅ Đã cập nhật học sinh.";
-
+    message.textContent = "✅ Đã cập nhật học sinh.";
 
     await loadStudents();
 
+    setTimeout(() => {
+      closeModal("editModal");
+    }, 500);
+
+  } catch (error) {
+    message.textContent = "❌ " + error.message;
+  }
+}
+
+/* ================================
+   PASSWORD
+================================ */
+
+function openPasswordModal(studentId) {
+  const student = students.find(s => s.id === studentId);
+
+  if (!student) return;
+
+  document.getElementById("passwordStudentId").value = student.id;
+
+  document.getElementById("passwordStudentName").textContent =
+    `Học sinh: ${student.full_name}`;
+
+  document.getElementById("newPassword").value = "";
+  document.getElementById("passwordMessage").textContent = "";
+
+  document.getElementById("passwordModal").style.display = "flex";
+}
+
+async function resetPassword() {
+  const studentId =
+    document.getElementById("passwordStudentId").value.trim();
+
+  const newPassword =
+    document.getElementById("newPassword").value;
+
+  const message =
+    document.getElementById("passwordMessage");
+
+  if (!studentId) {
+    message.textContent = "❌ Thiếu ID học sinh.";
+    return;
+  }
+
+  if (newPassword.length < 6) {
+    message.textContent = "⚠️ Mật khẩu phải có ít nhất 6 ký tự.";
+    return;
+  }
+
+  try {
+    message.textContent = "Đang đổi mật khẩu...";
+
+    const token = await getAccessToken();
+
+    const response = await fetch(MANAGE_FUNCTION, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        action: "reset-password",
+        studentId,
+        newPassword
+      })
+    });
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      throw new Error(result.error || "Không đổi được mật khẩu.");
+    }
+
+    message.textContent = "✅ Đổi mật khẩu thành công.";
 
     setTimeout(() => {
-      closeEditModal();
+      closeModal("passwordModal");
     }, 600);
 
-
   } catch (error) {
-
-    console.error(error);
-
-    message.textContent =
-      "❌ " + error.message;
-
+    message.textContent = "❌ " + error.message;
   }
-
 }
 
+/* ================================
+   XÓA
+================================ */
 
-/* =====================================================
-   ĐỔI MẬT KHẨU
-===================================================== */
+async function deleteStudent(studentId) {
+  const student = students.find(s => s.id === studentId);
 
-async function changePassword(id) {
-
-  const password =
-    prompt(
-      "Nhập mật khẩu mới cho học sinh:\n" +
-      "(Tối thiểu 6 ký tự)"
-    );
-
-
-  if (password === null)
-    return;
-
-
-  if (password.length < 6) {
-
-    alert(
-      "Mật khẩu phải có ít nhất 6 ký tự."
-    );
-
-    return;
-
-  }
-
-
-  try {
-
-    const result = await callFunction(
-      "manage-student",
-      {
-        action: "password",
-
-        id: id,
-        studentId: id,
-        student_id: id,
-
-        password: password
-      }
-    );
-
-
-    if (!result.ok) {
-
-      throw new Error(
-        result.data?.error ||
-        result.data?.message ||
-        "Không đổi được mật khẩu."
-      );
-
-    }
-
-
-    alert("✅ Đổi mật khẩu thành công.");
-
-
-  } catch (error) {
-
-    console.error(error);
-
-    alert(
-      "❌ Không đổi được mật khẩu: " +
-      error.message
-    );
-
-  }
-
-}
-
-
-/* =====================================================
-   XÓA HỌC SINH
-===================================================== */
-
-async function deleteStudent(id) {
-
-  const student =
-    allStudents.find(x => x.id === id);
-
-
-  if (!student)
-    return;
-
+  if (!student) return;
 
   const ok = confirm(
-    `Bạn có chắc muốn xóa học sinh:\n\n` +
-    `${student.full_name}\n` +
-    `${student.student_code}\n\n` +
-    `Thao tác này không thể hoàn tác.`
+    `Bạn chắc chắn muốn xóa học sinh "${student.full_name}"?\n\n` +
+    `Tài khoản đăng nhập của học sinh cũng sẽ bị xóa.`
   );
 
-
-  if (!ok)
-    return;
-
+  if (!ok) return;
 
   try {
+    const token = await getAccessToken();
 
-    const result = await callFunction(
-      "manage-student",
-      {
+    const response = await fetch(MANAGE_FUNCTION, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
+      body: JSON.stringify({
         action: "delete",
+        studentId: student.id
+      })
+    });
 
-        id: id,
-        studentId: id,
-        student_id: id
-      }
-    );
+    const result = await response.json();
 
-
-    if (!result.ok) {
-
-      throw new Error(
-        result.data?.error ||
-        result.data?.message ||
-        "Không xóa được học sinh."
-      );
-
+    if (!response.ok) {
+      throw new Error(result.error || "Không xóa được học sinh.");
     }
-
 
     alert("✅ Đã xóa học sinh.");
 
     await loadStudents();
 
-
   } catch (error) {
-
-    console.error(error);
-
-    alert(
-      "❌ Không xóa được học sinh: " +
-      error.message
-    );
-
+    alert("❌ " + error.message);
   }
-
 }
 
-
-/* =====================================================
-   GỌI EDGE FUNCTION
-===================================================== */
-
-async function callFunction(functionName, body) {
-
-  const client =
-    window.supabaseClient;
-
-
-  const {
-    data: { session }
-  } = await client.auth.getSession();
-
-
-  if (!session) {
-
-    location.href = "login.html";
-
-    throw new Error(
-      "Phiên đăng nhập đã hết hạn."
-    );
-
-  }
-
-
-  const response = await fetch(
-    `${FUNCTION_BASE}/${functionName}`,
-    {
-      method: "POST",
-
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization":
-          `Bearer ${session.access_token}`
-      },
-
-      body: JSON.stringify(body)
-    }
-  );
-
-
-  let data = {};
-
-  try {
-    data = await response.json();
-  }
-  catch {
-    data = {};
-  }
-
-
-  return {
-    ok: response.ok,
-    status: response.status,
-    data
-  };
-
-}
-
-
-/* =====================================================
-   TIỆN ÍCH
-===================================================== */
-
-function escapeHTML(value = "") {
-
-  return String(value)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
-
-}
-
+/* ================================
+   KHÁC
+================================ */
 
 function showError(message) {
+  document.getElementById("loading").style.display = "none";
 
-  document.getElementById("loading").style.display =
-    "none";
-
-  const el =
-    document.getElementById("error");
-
-  el.textContent = message;
-  el.style.display = "block";
-
+  const box = document.getElementById("error");
+  box.textContent = message;
+  box.style.display = "block";
 }
-
 
 function goTeacher() {
   location.href = "teacher.html";
 }
 
-
 function goHome() {
   location.href = "index.html";
 }
 
-
 async function logout() {
-
   await window.supabaseClient.auth.signOut();
-
   location.href = "login.html";
-
 }
 
-
-/* Đóng modal khi bấm ra ngoài */
-
-window.addEventListener("click", event => {
-
-  if (event.target.id === "addModal")
-    closeAddModal();
-
-  if (event.target.id === "editModal")
-    closeEditModal();
-
+// Click nền ngoài modal để đóng
+document.querySelectorAll(".modal").forEach(modal => {
+  modal.addEventListener("click", e => {
+    if (e.target === modal) {
+      modal.style.display = "none";
+    }
+  });
 });
-
 </script>
 
 </body>
