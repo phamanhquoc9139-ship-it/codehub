@@ -180,7 +180,8 @@
       font-weight: 700;
     }
 
-    .modal-box input {
+    .modal-box input,
+    .modal-box select {
       width: 100%;
       padding: 13px 15px;
       border: 1px solid #cbd5e1;
@@ -286,7 +287,7 @@
     <input id="addStudentCode" placeholder="Ví dụ: HS002">
 
     <label>Lớp</label>
-    <input id="addClassName" placeholder="Ví dụ: 10A2">
+    <select id="addClassName"><option value="">-- Chọn lớp --</option></select>
 
     <label>Email đăng nhập</label>
     <input id="addEmail" type="email"
@@ -319,7 +320,7 @@
     <input id="editStudentCode">
 
     <label>Lớp</label>
-    <input id="editClassName">
+    <select id="editClassName"><option value="">-- Chọn lớp --</option></select>
 
     <div class="modal-actions">
       <button class="btn-cancel" onclick="closeModal('editModal')">Hủy</button>
@@ -362,6 +363,7 @@ const MANAGE_FUNCTION =
   "https://drfcejvmyhzorwepndta.supabase.co/functions/v1/manage-student";
 
 let students = [];
+let availableClasses = [];
 
 /* ================================
    CHUẨN HÓA DỮ LIỆU
@@ -428,6 +430,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
 
+  await loadClasses();
   await loadStudents();
 
   document.getElementById("searchInput")
@@ -436,6 +439,42 @@ document.addEventListener("DOMContentLoaded", async () => {
   document.getElementById("classFilter")
     .addEventListener("change", renderStudents);
 });
+
+
+async function loadClasses() {
+  const { data, error } = await window.supabaseClient
+    .from("classes")
+    .select("id, class_name, school_year")
+    .order("class_name");
+
+  if (error) {
+    showError("Không tải được danh sách lớp: " + error.message);
+    return;
+  }
+
+  availableClasses = (data || [])
+    .map(item => ({ ...item, class_name: normalizeClass(item.class_name) }))
+    .filter(item => item.class_name);
+
+  fillClassSelect("addClassName");
+  fillClassSelect("editClassName");
+}
+
+function fillClassSelect(selectId, selectedValue = "") {
+  const select = document.getElementById(selectId);
+  if (!select) return;
+
+  const selected = normalizeClass(selectedValue);
+  select.innerHTML = '<option value="">-- Chọn lớp --</option>';
+
+  availableClasses.forEach(item => {
+    const option = document.createElement("option");
+    option.value = item.class_name;
+    option.textContent = item.class_name + (item.school_year ? ` (${item.school_year})` : "");
+    option.selected = item.class_name === selected;
+    select.appendChild(option);
+  });
+}
 
 async function loadStudents() {
   const { data, error } = await window.supabaseClient
@@ -462,22 +501,20 @@ function buildClassFilter() {
   const select = document.getElementById("classFilter");
   const oldValue = select.value;
 
-  const classes = [...new Set(
-    students
-      .map(s => normalizeClass(s.class_name))
-      .filter(Boolean)
-  )].sort();
+  const classNames = availableClasses.length
+    ? availableClasses.map(item => item.class_name)
+    : [...new Set(students.map(s => normalizeClass(s.class_name)).filter(Boolean))].sort();
 
   select.innerHTML = '<option value="">Tất cả lớp</option>';
 
-  classes.forEach(cls => {
+  classNames.forEach(cls => {
     const option = document.createElement("option");
     option.value = cls;
     option.textContent = cls;
     select.appendChild(option);
   });
 
-  if (classes.includes(oldValue)) select.value = oldValue;
+  if (classNames.includes(oldValue)) select.value = oldValue;
 }
 
 function renderStudents() {
@@ -557,6 +594,11 @@ function renderStudents() {
 
 function openAddModal() {
   document.getElementById("addMessage").textContent = "";
+  document.getElementById("addFullName").value = "";
+  document.getElementById("addStudentCode").value = "";
+  document.getElementById("addEmail").value = "";
+  document.getElementById("addPassword").value = "";
+  fillClassSelect("addClassName");
   document.getElementById("addModal").style.display = "flex";
 }
 
@@ -638,9 +680,21 @@ async function createStudent() {
       })
     });
 
-    const result = await response.json();
+    const rawText = await response.text();
+    let result = {};
+
+    try {
+      result = rawText ? JSON.parse(rawText) : {};
+    } catch {
+      throw new Error("Edge Function create-student trả về dữ liệu không hợp lệ.");
+    }
 
     if (!response.ok) {
+      if (result.error === "Thiếu ID học sinh.") {
+        throw new Error(
+          "Edge Function create-student đang dùng nhầm mã quản lý học sinh. Cần sửa function create-student trên Supabase."
+        );
+      }
       throw new Error(result.error || "Không tạo được học sinh.");
     }
 
@@ -653,7 +707,7 @@ async function createStudent() {
 
       document.getElementById("addFullName").value = "";
       document.getElementById("addStudentCode").value = "";
-      document.getElementById("addClassName").value = "";
+      fillClassSelect("addClassName");
       document.getElementById("addEmail").value = "";
       document.getElementById("addPassword").value = "";
     }, 600);
@@ -685,8 +739,7 @@ function openEditModal(studentId) {
   document.getElementById("editStudentCode").value =
     student.student_code || "";
 
-  document.getElementById("editClassName").value =
-    student.class_name || "";
+  fillClassSelect("editClassName", student.class_name || "");
 
   document.getElementById("editMessage").textContent = "";
 
