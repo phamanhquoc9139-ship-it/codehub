@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quản lý bài học | CodeHub</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="scripts/supabase-config.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}body{font-family:Arial,sans-serif;background:#f5f7fb;color:#172033}
+header{background:#fff;padding:18px 30px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #e5e7eb}
+.logo{font-size:28px;font-weight:800;color:#3182f6}.btn{border:0;border-radius:9px;padding:11px 16px;font-weight:700;cursor:pointer;background:#3182f6;color:#fff}.green{background:#16a34a}.gray{background:#64748b}.orange{background:#f59e0b}.red{background:#dc2626}
+main{max-width:1100px;margin:35px auto;padding:0 20px}.back{color:#2563eb;font-weight:700;cursor:pointer;margin-bottom:16px}h1{font-size:34px;margin-bottom:7px}.sub{color:#64748b}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:24px 0}.stat{background:#fff;padding:20px;border-radius:15px;box-shadow:0 5px 18px #0000000d}.num{font-size:30px;font-weight:800;color:#2563eb;margin-top:7px}
+.toolbar{background:#fff;padding:16px;border-radius:14px;display:flex;gap:10px;margin-bottom:20px;box-shadow:0 5px 18px #0000000d}.toolbar input{flex:1;padding:12px;border:1px solid #cbd5e1;border-radius:9px;font-size:16px}
+.lesson{background:#fff;padding:20px;border-radius:15px;margin-bottom:13px;display:grid;grid-template-columns:58px 1fr auto;gap:15px;align-items:center;box-shadow:0 4px 16px #0000000c}
+.order{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;background:#e8f1ff;color:#2563eb;font-weight:800}.ltitle{font-size:20px;font-weight:800}.desc{color:#64748b;margin-top:6px;line-height:1.45}.badge{display:inline-block;margin:9px 5px 0 0;padding:5px 9px;border-radius:15px;font-size:12px;font-weight:700}.pub{background:#dcfce7;color:#15803d}.draft{background:#f1f5f9;color:#475569}.resource{background:#eff6ff;color:#1d4ed8}.actions{display:flex;gap:6px}.actions button{border:0;border-radius:8px;padding:9px;color:#fff;font-weight:700;cursor:pointer}.empty{text-align:center;background:#fff;padding:40px;border-radius:15px;color:#64748b}
+.modal{display:none;position:fixed;inset:0;background:#0008;z-index:99;align-items:center;justify-content:center;padding:18px}.box{background:#fff;width:min(700px,96%);max-height:92vh;overflow:auto;border-radius:17px;padding:25px}.mh{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}.close{border:0;background:#e2e8f0;width:37px;height:37px;border-radius:8px;font-size:20px;cursor:pointer}
+.fg{margin:14px 0}.fg label{display:block;font-weight:700;margin-bottom:6px}.fg input,.fg textarea,.fg select{width:100%;padding:11px;border:1px solid #cbd5e1;border-radius:8px;font:inherit}.fg textarea{min-height:120px;resize:vertical}.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}.ma{display:flex;justify-content:flex-end;gap:8px;margin-top:18px}.msg{min-height:20px;font-weight:700}
+@media(max-width:700px){header{flex-direction:column;gap:10px}.stats{grid-template-columns:1fr}.toolbar{flex-direction:column}.lesson{grid-template-columns:50px 1fr}.actions{grid-column:1/-1}.row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header><div class="logo">&lt;/&gt; CodeHub</div><div><button class="btn" onclick="location.href='courses.html'">📚 Khóa học</button> <button class="btn" onclick="logout()">Đăng xuất</button></div></header>
+<main>
+<div class="back" onclick="location.href='courses.html'">← Quay lại khóa học</div>
+<h1 id="courseName">📖 Quản lý bài học</h1><div class="sub" id="courseInfo">Đang tải...</div>
+<div class="stats"><div class="stat">Tổng bài học<div class="num" id="total">0</div></div><div class="stat">Đã xuất bản<div class="num" id="publishedCount">0</div></div><div class="stat">Bản nháp<div class="num" id="draftCount">0</div></div></div>
+<div class="toolbar"><input id="search" placeholder="🔎 Tìm bài học..."><button class="btn green" onclick="openCreate()">➕ Thêm bài học</button></div>
+<div id="lessonList"></div>
+</main>
+
+<div class="modal" id="modal"><div class="box">
+<div class="mh"><h2 id="modalTitle">➕ Thêm bài học</h2><button class="close" onclick="closeModal()">×</button></div>
+<input type="hidden" id="lessonId">
+<div class="fg"><label>Tên bài học</label><input id="title" placeholder="Ví dụ: Bài 1. Thông tin và xử lí thông tin"></div>
+<div class="fg"><label>Mô tả ngắn</label><textarea id="description" style="min-height:75px"></textarea></div>
+<div class="fg"><label>Nội dung bài học</label><textarea id="content" placeholder="Nhập nội dung bài học..."></textarea></div>
+<div class="row"><div class="fg"><label>URL video</label><input id="videoUrl" placeholder="https://..."></div><div class="fg"><label>URL tài liệu</label><input id="documentUrl" placeholder="https://..."></div></div>
+<div class="row"><div class="fg"><label>Thứ tự bài</label><input id="lessonOrder" type="number" min="1" value="1"></div><div class="fg"><label>Trạng thái</label><select id="isPublished"><option value="false">Bản nháp</option><option value="true">Xuất bản</option></select></div></div>
+<div id="message" class="msg"></div>
+<div class="ma"><button class="btn gray" onclick="closeModal()">Hủy</button><button class="btn green" onclick="saveLesson()">Lưu bài học</button></div>
+</div></div>
+
+<script>
+let currentUser=null, currentCourse=null, lessons=[];
+const courseId=new URLSearchParams(window.location.search).get("course");
+
+document.addEventListener("DOMContentLoaded",async()=>{
+ const s=window.supabaseClient;
+ if(!s){alert("Không kết nối được Supabase.");return}
+ if(!courseId){alert("Thiếu ID khóa học.");location.href="courses.html";return}
+ const {data:{user},error}=await s.auth.getUser();
+ if(error||!user){location.href="login.html";return}
+ currentUser=user;
+ const {data:profile}=await s.from("profiles").select("role").eq("id",user.id).single();
+ if(!profile||profile.role!=="teacher"){alert("Bạn không có quyền truy cập.");location.href="index.html";return}
+ const {data:course,error:courseError}=await s.from("courses").select("*").eq("id",courseId).eq("teacher_id",user.id).single();
+ if(courseError||!course){alert("Không tìm thấy khóa học.");location.href="courses.html";return}
+ currentCourse=course;
+ document.getElementById("courseName").textContent="📖 "+course.title;
+ document.getElementById("courseInfo").textContent=(course.subject||"Tin học")+" • Khối "+course.grade;
+ document.getElementById("search").addEventListener("input",render);
+ await loadLessons();
+});
+
+async function loadLessons(){
+ const {data,error}=await window.supabaseClient.from("lessons").select("*").eq("course_id",courseId).order("lesson_order",{ascending:true}).order("created_at",{ascending:true});
+ if(error){alert("Không tải được bài học: "+error.message);return}
+ lessons=data||[];render();
+}
+function render(){
+ document.getElementById("total").textContent=lessons.length;
+ document.getElementById("publishedCount").textContent=lessons.filter(x=>x.is_published).length;
+ document.getElementById("draftCount").textContent=lessons.filter(x=>!x.is_published).length;
+ const q=document.getElementById("search").value.trim().toLocaleLowerCase("vi-VN");
+ const arr=lessons.filter(x=>(String(x.title||"")+" "+String(x.description||"")).toLocaleLowerCase("vi-VN").includes(q));
+ const box=document.getElementById("lessonList");box.innerHTML="";
+ if(!arr.length){box.innerHTML='<div class="empty">Chưa có bài học. Bấm <b>➕ Thêm bài học</b> để bắt đầu.</div>';return}
+ arr.forEach(l=>{
+   const el=document.createElement("div");el.className="lesson";
+   el.innerHTML=`<div class="order">${String(l.lesson_order).padStart(2,"0")}</div>
+   <div><div class="ltitle"></div><div class="desc"></div><div class="badges"><span class="badge ${l.is_published?"pub":"draft"}">${l.is_published?"🟢 Đã xuất bản":"⚪ Bản nháp"}</span></div></div>
+   <div class="actions"></div>`;
+   el.querySelector(".ltitle").textContent=l.title;
+   el.querySelector(".desc").textContent=l.description||"";
+   const badges=el.querySelector(".badges");
+   if(l.video_url){const b=document.createElement("span");b.className="badge resource";b.textContent="🎬 Video";badges.appendChild(b)}
+   if(l.document_url){const b=document.createElement("span");b.className="badge resource";b.textContent="📄 Tài liệu";badges.appendChild(b)}
+   const a=el.querySelector(".actions");
+   const edit=document.createElement("button");edit.className="orange";edit.textContent="✏️ Sửa";edit.onclick=()=>openEdit(l);
+   const del=document.createElement("button");del.className="red";del.textContent="🗑️ Xóa";del.onclick=()=>deleteLesson(l);
+   a.append(edit,del);box.appendChild(el);
+ });
+}
+function openCreate(){
+ document.getElementById("modalTitle").textContent="➕ Thêm bài học";
+ document.getElementById("lessonId").value="";document.getElementById("title").value="";document.getElementById("description").value="";document.getElementById("content").value="";document.getElementById("videoUrl").value="";document.getElementById("documentUrl").value="";document.getElementById("lessonOrder").value=lessons.length+1;document.getElementById("isPublished").value="false";document.getElementById("message").textContent="";document.getElementById("modal").style.display="flex";
+}
+function openEdit(l){
+ document.getElementById("modalTitle").textContent="✏️ Sửa bài học";document.getElementById("lessonId").value=l.id;document.getElementById("title").value=l.title||"";document.getElementById("description").value=l.description||"";document.getElementById("content").value=l.content||"";document.getElementById("videoUrl").value=l.video_url||"";document.getElementById("documentUrl").value=l.document_url||"";document.getElementById("lessonOrder").value=l.lesson_order||1;document.getElementById("isPublished").value=String(!!l.is_published);document.getElementById("message").textContent="";document.getElementById("modal").style.display="flex";
+}
+function closeModal(){document.getElementById("modal").style.display="none"}
+async function saveLesson(){
+ const id=document.getElementById("lessonId").value,title=document.getElementById("title").value.trim(),msg=document.getElementById("message");
+ if(!title){msg.style.color="#dc2626";msg.textContent="⚠️ Vui lòng nhập tên bài học.";return}
+ const row={course_id:courseId,title,description:document.getElementById("description").value.trim(),content:document.getElementById("content").value.trim(),video_url:document.getElementById("videoUrl").value.trim()||null,document_url:document.getElementById("documentUrl").value.trim()||null,lesson_order:Math.max(1,parseInt(document.getElementById("lessonOrder").value)||1),is_published:document.getElementById("isPublished").value==="true",updated_at:new Date().toISOString()};
+ const result=id?await window.supabaseClient.from("lessons").update(row).eq("id",id):await window.supabaseClient.from("lessons").insert(row);
+ if(result.error){msg.style.color="#dc2626";msg.textContent="❌ "+result.error.message;return}
+ closeModal();await loadLessons();
+}
+async function deleteLesson(l){
+ if(!confirm(`Xóa bài học "${l.title}"?`))return;
+ const {error}=await window.supabaseClient.from("lessons").delete().eq("id",l.id);
+ if(error){alert("❌ Không xóa được: "+error.message);return}
+ await loadLessons();
+}
+async function logout(){await window.supabaseClient.auth.signOut();location.href="login.html"}
+document.getElementById("modal").addEventListener("click",e=>{if(e.target.id==="modal")closeModal()});
+</script>
+</body>
+</html>
