@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Quản lý lớp học | CodeHub</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="scripts/supabase-config.js"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f7fb;
+      color: #172033;
+    }
+
+    header {
+      background: white;
+      padding: 18px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .logo {
+      font-size: 28px;
+      font-weight: 700;
+      color: #3182f6;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn {
+      border: 0;
+      background: #3182f6;
+      color: white;
+      padding: 11px 18px;
+      border-radius: 9px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 15px;
+    }
+
+    .btn:hover {
+      opacity: .9;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    h1 {
+      font-size: 38px;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      color: #64748b;
+      font-size: 18px;
+      margin-bottom: 30px;
+    }
+
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-bottom: 28px;
+    }
+
+    .summary-card {
+      background: white;
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow: 0 5px 20px rgba(0,0,0,.05);
+    }
+
+    .summary-title {
+      color: #64748b;
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+
+    .summary-number {
+      font-size: 32px;
+      font-weight: 700;
+      color: #2563eb;
+    }
+
+    .toolbar {
+      background: white;
+      padding: 20px;
+      border-radius: 16px;
+      margin-bottom: 25px;
+      box-shadow: 0 5px 20px rgba(0,0,0,.05);
+    }
+
+    .toolbar input {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      font-size: 16px;
+    }
+
+    .class-grid {
+      display: grid;
+      grid-template-columns:
+        repeat(auto-fill, minmax(270px, 1fr));
+      gap: 22px;
+    }
+
+    .class-card {
+      background: white;
+      border-radius: 18px;
+      padding: 25px;
+      box-shadow: 0 5px 20px rgba(0,0,0,.06);
+      transition: .2s;
+      border: 1px solid #edf2f7;
+    }
+
+    .class-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 28px rgba(0,0,0,.10);
+    }
+
+    .class-icon {
+      width: 55px;
+      height: 55px;
+      border-radius: 14px;
+      background: #eaf2ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      margin-bottom: 18px;
+    }
+
+    .class-name {
+      font-size: 26px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .student-count {
+      color: #64748b;
+      margin-bottom: 20px;
+    }
+
+    .view-btn {
+      width: 100%;
+      border: none;
+      padding: 12px;
+      border-radius: 10px;
+      background: #3182f6;
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .view-btn:hover {
+      background: #2563eb;
+    }
+
+    .empty {
+      background: white;
+      padding: 40px;
+      text-align: center;
+      border-radius: 18px;
+      color: #64748b;
+      grid-column: 1 / -1;
+    }
+
+    #loading {
+      background: white;
+      padding: 35px;
+      border-radius: 18px;
+      text-align: center;
+      color: #64748b;
+    }
+
+    /* MODAL */
+
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15,23,42,.55);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-box {
+      width: min(850px, 96%);
+      max-height: 90vh;
+      overflow-y: auto;
+      background: white;
+      border-radius: 20px;
+      padding: 28px;
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 22px;
+    }
+
+    .modal-title {
+      font-size: 28px;
+      font-weight: 700;
+    }
+
+    .close-btn {
+      border: none;
+      background: #e2e8f0;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th {
+      background: #eef5ff;
+      padding: 14px;
+      text-align: left;
+    }
+
+    td {
+      padding: 14px;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .student-code {
+      color: #2563eb;
+      font-weight: 700;
+    }
+
+    .modal-footer {
+      margin-top: 22px;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .manage-btn {
+      background: #3182f6;
+      color: white;
+      border: none;
+      padding: 12px 18px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    @media(max-width: 750px) {
+      header {
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .summary {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 30px;
+      }
+
+      .header-actions {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+
+  <div class="logo">
+    &lt;/&gt; CodeHub
+  </div>
+
+  <div class="header-actions">
+
+    <button class="btn"
+            onclick="location.href='teacher.html'">
+      ← Quản trị
+    </button>
+
+    <button class="btn"
+            onclick="location.href='students.html'">
+      👨‍🎓 Học sinh
+    </button>
+
+    <button class="btn"
+            onclick="location.href='index.html'">
+      Trang chủ
+    </button>
+
+    <button class="btn"
+            onclick="logout()">
+      Đăng xuất
+    </button>
+
+  </div>
+
+</header>
+
+
+<main class="container">
+
+  <h1>🏫 Quản lý lớp học</h1>
+
+  <p class="subtitle">
+    Danh sách các lớp và học sinh trên hệ thống CodeHub
+  </p>
+
+
+  <!-- THỐNG KÊ -->
+
+  <div class="summary">
+
+    <div class="summary-card">
+
+      <div class="summary-title">
+        Tổng số lớp
+      </div>
+
+      <div class="summary-number"
+           id="totalClasses">
+        0
+      </div>
+
+    </div>
+
+
+    <div class="summary-card">
+
+      <div class="summary-title">
+        Tổng số học sinh
+      </div>
+
+      <div class="summary-number"
+           id="totalStudents">
+        0
+      </div>
+
+    </div>
+
+
+    <div class="summary-card">
+
+      <div class="summary-title">
+        Trung bình học sinh / lớp
+      </div>
+
+      <div class="summary-number"
+           id="averageStudents">
+        0
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- TÌM KIẾM -->
+
+  <div class="toolbar">
+
+    <input
+      id="searchClass"
+      placeholder="🔎 Tìm lớp học..."
+    >
+
+  </div>
+
+
+  <div id="loading">
+    Đang tải danh sách lớp...
+  </div>
+
+
+  <div id="classGrid"
+       class="class-grid"
+       style="display:none">
+  </div>
+
+</main>
+
+
+<!-- MODAL DANH SÁCH HỌC SINH -->
+
+<div id="classModal"
+     class="modal">
+
+  <div class="modal-box">
+
+    <div class="modal-header">
+
+      <div>
+
+        <div class="modal-title"
+             id="modalClassName">
+          Lớp
+        </div>
+
+        <div id="modalClassCount"
+             style="color:#64748b;margin-top:5px">
+        </div>
+
+      </div>
+
+      <button class="close-btn"
+              onclick="closeClassModal()">
+        ×
+      </button>
+
+    </div>
+
+
+    <table>
+
+      <thead>
+
+        <tr>
+          <th>STT</th>
+          <th>Họ và tên</th>
+          <th>Mã học sinh</th>
+          <th>Lớp</th>
+        </tr>
+
+      </thead>
+
+      <tbody id="classStudentList">
+      </tbody>
+
+    </table>
+
+
+    <div class="modal-footer">
+
+      <button class="manage-btn"
+              onclick="goStudents()">
+
+        👨‍🎓 Quản lý học sinh
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<script>
+
+let allStudents = [];
+let classData = [];
+
+
+/* ================================
+   CHUẨN HÓA
+================================ */
+
+function normalizeClass(value) {
+
+  return String(value || "")
+    .trim()
+    .replace(/\s+/g, "")
+    .toUpperCase();
+
+}
+
+
+function escapeHTML(value = "") {
+
+  return String(value)
+
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+
+}
+
+
+/* ================================
+   KHỞI ĐỘNG
+================================ */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  async () => {
+
+    const client =
+      window.supabaseClient;
+
+
+    if (!client) {
+
+      alert(
+        "Không kết nối được Supabase."
+      );
+
+      return;
+
+    }
+
+
+    /* KIỂM TRA LOGIN */
+
+    const {
+      data: { user }
+    } =
+      await client.auth.getUser();
+
+
+    if (!user) {
+
+      location.href =
+        "login.html";
+
+      return;
+
+    }
+
+
+    /* KIỂM TRA GIÁO VIÊN */
+
+    const {
+      data: profile,
+      error: profileError
+    } =
+      await client
+        .from("profiles")
+        .select("role")
+        .eq("id", user.id)
+        .single();
+
+
+    if (
+      profileError ||
+      !profile ||
+      profile.role !== "teacher"
+    ) {
+
+      alert(
+        "Bạn không có quyền truy cập trang này."
+      );
+
+      location.href =
+        "index.html";
+
+      return;
+
+    }
+
+
+    await loadClasses();
+
+
+    document
+      .getElementById("searchClass")
+      .addEventListener(
+        "input",
+        renderClasses
+      );
+
+  }
+);
+
+
+/* ================================
+   LOAD HỌC SINH
+================================ */
+
+async function loadClasses() {
+
+  const client =
+    window.supabaseClient;
+
+
+  const {
+    data,
+    error
+  } =
+    await client
+      .from("profiles")
+      .select(
+        "id, full_name, student_code, class_name, role"
+      )
+      .eq(
+        "role",
+        "student"
+      )
+      .order(
+        "class_name"
+      )
+      .order(
+        "full_name"
+      );
+
+
+  document
+    .getElementById("loading")
+    .style.display =
+      "none";
+
+
+  if (error) {
+
+    alert(
+      "Không tải được danh sách học sinh: " +
+      error.message
+    );
+
+    return;
+
+  }
+
+
+  allStudents =
+    data || [];
+
+
+  buildClassData();
+
+  updateStatistics();
+
+  renderClasses();
+
+}
+
+
+/* ================================
+   TẠO DANH SÁCH LỚP
+================================ */
+
+function buildClassData() {
+
+  const map = {};
+
+
+  allStudents.forEach(
+    student => {
+
+      const className =
+        normalizeClass(
+          student.class_name
+        );
+
+
+      if (!className) {
+        return;
+      }
+
+
+      if (!map[className]) {
+
+        map[className] = [];
+
+      }
+
+
+      map[className]
+        .push(student);
+
+    }
+  );
+
+
+  classData =
+    Object
+      .keys(map)
+      .sort(
+        (a, b) =>
+          a.localeCompare(
+            b,
+            "vi",
+            {
+              numeric: true
+            }
+          )
+      )
+      .map(
+        className => ({
+          className,
+          students:
+            map[className]
+        })
+      );
+
+}
+
+
+/* ================================
+   THỐNG KÊ
+================================ */
+
+function updateStatistics() {
+
+  const totalClasses =
+    classData.length;
+
+
+  const totalStudents =
+    allStudents.length;
+
+
+  const average =
+    totalClasses > 0
+      ? (
+          totalStudents /
+          totalClasses
+        ).toFixed(1)
+      : 0;
+
+
+  document
+    .getElementById(
+      "totalClasses"
+    )
+    .textContent =
+      totalClasses;
+
+
+  document
+    .getElementById(
+      "totalStudents"
+    )
+    .textContent =
+      totalStudents;
+
+
+  document
+    .getElementById(
+      "averageStudents"
+    )
+    .textContent =
+      average;
+
+}
+
+
+/* ================================
+   HIỂN THỊ LỚP
+================================ */
+
+function renderClasses() {
+
+  const search =
+    document
+      .getElementById(
+        "searchClass"
+      )
+      .value
+      .trim()
+      .toUpperCase();
+
+
+  const grid =
+    document
+      .getElementById(
+        "classGrid"
+      );
+
+
+  grid.innerHTML = "";
+
+
+  const filtered =
+    classData.filter(
+      item =>
+        item.className
+          .includes(search)
+    );
+
+
+  if (
+    filtered.length === 0
+  ) {
+
+    grid.innerHTML = `
+
+      <div class="empty">
+
+        Không tìm thấy lớp học.
+
+      </div>
+
+    `;
+
+    grid.style.display =
+      "grid";
+
+    return;
+
+  }
+
+
+  filtered.forEach(
+    item => {
+
+      const card =
+        document.createElement(
+          "div"
+        );
+
+
+      card.className =
+        "class-card";
+
+
+      card.innerHTML = `
+
+        <div class="class-icon">
+          🏫
+        </div>
+
+        <div class="class-name">
+          ${escapeHTML(
+            item.className
+          )}
+        </div>
+
+        <div class="student-count">
+
+          👨‍🎓
+          ${item.students.length}
+          học sinh
+
+        </div>
+
+        <button
+          class="view-btn"
+          onclick="openClass('${escapeHTML(
+            item.className
+          )}')">
+
+          Xem danh sách →
+
+        </button>
+
+      `;
+
+
+      grid.appendChild(
+        card
+      );
+
+    }
+  );
+
+
+  grid.style.display =
+    "grid";
+
+}
+
+
+/* ================================
+   XEM LỚP
+================================ */
+
+function openClass(
+  className
+) {
+
+  const selected =
+    classData.find(
+      item =>
+        item.className ===
+        className
+    );
+
+
+  if (!selected) {
+    return;
+  }
+
+
+  document
+    .getElementById(
+      "modalClassName"
+    )
+    .textContent =
+      "🏫 Lớp " +
+      selected.className;
+
+
+  document
+    .getElementById(
+      "modalClassCount"
+    )
+    .textContent =
+      selected.students.length +
+      " học sinh";
+
+
+  const tbody =
+    document
+      .getElementById(
+        "classStudentList"
+      );
+
+
+  tbody.innerHTML = "";
+
+
+  selected.students
+    .forEach(
+      (student, index) => {
+
+        const tr =
+          document
+            .createElement(
+              "tr"
+            );
+
+
+        tr.innerHTML = `
+
+          <td>
+            ${index + 1}
+          </td>
+
+          <td>
+            ${escapeHTML(
+              student.full_name || ""
+            )}
+          </td>
+
+          <td class="student-code">
+
+            ${escapeHTML(
+              student.student_code || ""
+            )}
+
+          </td>
+
+          <td>
+
+            ${escapeHTML(
+              normalizeClass(
+                student.class_name
+              )
+            )}
+
+          </td>
+
+        `;
+
+
+        tbody.appendChild(
+          tr
+        );
+
+      }
+    );
+
+
+  document
+    .getElementById(
+      "classModal"
+    )
+    .style.display =
+      "flex";
+
+}
+
+
+/* ================================
+   ĐÓNG MODAL
+================================ */
+
+function closeClassModal() {
+
+  document
+    .getElementById(
+      "classModal"
+    )
+    .style.display =
+      "none";
+
+}
+
+
+/* ================================
+   QUẢN LÝ HS
+================================ */
+
+function goStudents() {
+
+  location.href =
+    "students.html";
+
+}
+
+
+/* ================================
+   LOGOUT
+================================ */
+
+async function logout() {
+
+  await window
+    .supabaseClient
+    .auth
+    .signOut();
+
+
+  location.href =
+    "login.html";
+
+}
+
+
+/* CLICK NGOÀI MODAL */
+
+document
+  .getElementById(
+    "classModal"
+  )
+  .addEventListener(
+    "click",
+    event => {
+
+      if (
+        event.target.id ===
+        "classModal"
+      ) {
+
+        closeClassModal();
+
+      }
+
+    }
+  );
+
+</script>
+
+</body>
+</html>
