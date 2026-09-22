@@ -1,14 +1,20 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
   <title>Quản trị Giáo viên | CodeHub</title>
 
+  <!-- SUPABASE -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="scripts/supabase-config.js"></script>
 
   <style>
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -21,12 +27,18 @@
       color: #172033;
     }
 
+    /* =========================
+       HEADER
+    ========================= */
+
     header {
       background: white;
       padding: 18px 32px;
+
       display: flex;
       justify-content: space-between;
       align-items: center;
+
       border-bottom: 1px solid #e5e7eb;
     }
 
@@ -39,6 +51,16 @@
     .user {
       text-align: right;
     }
+
+    #teacherName {
+      display: inline-block;
+      margin-bottom: 8px;
+      font-size: 16px;
+    }
+
+    /* =========================
+       CONTAINER
+    ========================= */
 
     .container {
       max-width: 1200px;
@@ -54,26 +76,51 @@
     .subtitle {
       color: #64748b;
       margin-bottom: 35px;
+      font-size: 17px;
     }
+
+    /* =========================
+       GRID
+    ========================= */
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+
+      grid-template-columns:
+        repeat(auto-fit, minmax(240px, 1fr));
+
       gap: 20px;
     }
 
+    /* =========================
+       CARD
+    ========================= */
+
     .card {
       background: white;
+
       border-radius: 16px;
+
       padding: 28px;
-      box-shadow: 0 5px 20px rgba(0,0,0,.06);
+
+      box-shadow:
+        0 5px 20px rgba(0,0,0,.06);
+
       cursor: pointer;
-      transition: .2s;
+
+      transition:
+        transform .2s,
+        box-shadow .2s;
+
+      border:
+        1px solid #edf2f7;
     }
 
     .card:hover {
       transform: translateY(-4px);
-      box-shadow: 0 10px 30px rgba(0,0,0,.10);
+
+      box-shadow:
+        0 10px 30px rgba(0,0,0,.10);
     }
 
     .icon {
@@ -91,163 +138,584 @@
       line-height: 1.5;
     }
 
+    /* =========================
+       BUTTON
+    ========================= */
+
     .btn {
       border: 0;
+
       background: #3182f6;
+
       color: white;
+
       padding: 11px 18px;
+
       border-radius: 9px;
+
       cursor: pointer;
+
       font-weight: bold;
+
+      margin-left: 5px;
+
+      transition: .2s;
     }
+
+    .btn:hover {
+      background: #2563eb;
+    }
+
+    /* =========================
+       LOADING
+    ========================= */
 
     #loading {
       text-align: center;
+
       margin-top: 100px;
+
       font-size: 20px;
+
+      color: #64748b;
     }
+
+    /* =========================
+       DASHBOARD
+    ========================= */
 
     #dashboard {
       display: none;
     }
 
+    /* =========================
+       ERROR
+    ========================= */
+
     #error {
       display: none;
+
       max-width: 600px;
+
       margin: 100px auto;
+
       background: white;
+
       padding: 35px;
+
       border-radius: 16px;
+
       text-align: center;
+
+      box-shadow:
+        0 5px 20px rgba(0,0,0,.06);
     }
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media(max-width: 700px) {
+
+      header {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .user {
+        text-align: center;
+      }
+
+      h1 {
+        font-size: 30px;
+      }
+
+      .btn {
+        margin-top: 5px;
+      }
+
+    }
+
   </style>
+
 </head>
+
 
 <body>
 
+
+<!-- =========================
+     HEADER
+========================= -->
+
 <header>
-  <div class="logo">&lt;/&gt; CodeHub</div>
+
+  <div class="logo">
+    &lt;/&gt; CodeHub
+  </div>
+
 
   <div class="user">
-    <strong id="teacherName">Giáo viên</strong><br>
-    <button class="btn" onclick="goHome()">Trang chủ</button>
-    <button class="btn" onclick="logout()">Đăng xuất</button>
+
+    <strong id="teacherName">
+      Giáo viên
+    </strong>
+
+    <br>
+
+    <button
+      class="btn"
+      onclick="goHome()">
+
+      Trang chủ
+
+    </button>
+
+
+    <button
+      class="btn"
+      onclick="logout()">
+
+      Đăng xuất
+
+    </button>
+
   </div>
+
 </header>
 
+
+
+<!-- =========================
+     LOADING
+========================= -->
+
 <div id="loading">
+
   Đang kiểm tra quyền truy cập...
+
 </div>
+
+
+
+<!-- =========================
+     ERROR
+========================= -->
 
 <div id="error">
-  <h2>⛔ Không có quyền truy cập</h2>
+
+  <h2>
+    ⛔ Không có quyền truy cập
+  </h2>
+
   <br>
-  <p>Trang này chỉ dành cho tài khoản giáo viên.</p>
+
+  <p>
+    Trang này chỉ dành cho tài khoản giáo viên.
+  </p>
+
   <br>
-  <button class="btn" onclick="goHome()">Quay về trang chủ</button>
+
+  <button
+    class="btn"
+    onclick="goHome()">
+
+    Quay về trang chủ
+
+  </button>
+
 </div>
 
-<main id="dashboard" class="container">
 
-  <h1>👨‍🏫 Quản trị Giáo viên</h1>
+
+<!-- =========================
+     DASHBOARD
+========================= -->
+
+<main
+  id="dashboard"
+  class="container">
+
+
+  <h1>
+    👨‍🏫 Quản trị Giáo viên
+  </h1>
+
 
   <p class="subtitle">
-    Quản lý hoạt động học tập trên CodeHub
+
+    Quản lý hoạt động học tập
+    trên hệ thống CodeHub
+
   </p>
+
+
 
   <div class="grid">
 
-    <div class="card" onclick="window.location.href='students.html'">
-      <div class="icon">👨‍🎓</div>
-      <h2>Quản lý học sinh</h2>
-      <p>
-        Xem danh sách học sinh, lớp học và thông tin tài khoản.
-      </p>
-    </div>
-    <div class="card" onclick="window.location.href='classes.html'">
-  <div class="icon">🏫</div>
-  <h2>Quản lý lớp học</h2>
-  <p>
-    Xem các lớp học, sĩ số và danh sách học sinh theo từng lớp.
-  </p>
-</div>
 
-    <div class="card">
-      <div class="icon">📚</div>
-      <h2>Quản lý khóa học</h2>
-      <p>
-        Tạo và quản lý nội dung các khóa học Tin học.
-      </p>
-    </div>
+    <!-- =====================
+         HỌC SINH
+    ====================== -->
 
-    <div class="card">
-      <div class="icon">📝</div>
-      <h2>Bài tập & Quiz</h2>
+    <div
+      class="card"
+      onclick="goStudents()">
+
+      <div class="icon">
+        👨‍🎓
+      </div>
+
+      <h2>
+        Quản lý học sinh
+      </h2>
+
       <p>
-        Tạo bài tập, câu hỏi trắc nghiệm và bài kiểm tra.
+        Thêm, sửa, xóa học sinh
+        và quản lý tài khoản đăng nhập.
       </p>
+
     </div>
 
-    <div class="card">
-      <div class="icon">📊</div>
-      <h2>Kết quả học tập</h2>
+
+
+    <!-- =====================
+         LỚP HỌC
+    ====================== -->
+
+    <div
+      class="card"
+      onclick="goClasses()">
+
+      <div class="icon">
+        🏫
+      </div>
+
+      <h2>
+        Quản lý lớp học
+      </h2>
+
       <p>
-        Theo dõi điểm số và tiến độ học tập của học sinh.
+        Xem các lớp học, sĩ số
+        và danh sách học sinh
+        theo từng lớp.
       </p>
+
     </div>
+
+
+
+    <!-- =====================
+         KHÓA HỌC
+    ====================== -->
+
+    <div
+      class="card"
+      onclick="comingSoon('Quản lý khóa học')">
+
+      <div class="icon">
+        📚
+      </div>
+
+      <h2>
+        Quản lý khóa học
+      </h2>
+
+      <p>
+        Tạo và quản lý nội dung
+        các khóa học Tin học.
+      </p>
+
+    </div>
+
+
+
+    <!-- =====================
+         BÀI TẬP & QUIZ
+    ====================== -->
+
+    <div
+      class="card"
+      onclick="comingSoon('Bài tập & Quiz')">
+
+      <div class="icon">
+        📝
+      </div>
+
+      <h2>
+        Bài tập & Quiz
+      </h2>
+
+      <p>
+        Tạo bài tập,
+        câu hỏi trắc nghiệm
+        và bài kiểm tra.
+      </p>
+
+    </div>
+
+
+
+    <!-- =====================
+         KẾT QUẢ
+    ====================== -->
+
+    <div
+      class="card"
+      onclick="comingSoon('Kết quả học tập')">
+
+      <div class="icon">
+        📊
+      </div>
+
+      <h2>
+        Kết quả học tập
+      </h2>
+
+      <p>
+        Theo dõi điểm số
+        và tiến độ học tập
+        của học sinh.
+      </p>
+
+    </div>
+
 
   </div>
 
 </main>
 
+
+
 <script>
-document.addEventListener("DOMContentLoaded", async () => {
 
-  const client = window.supabaseClient;
+/* ==========================================
+   KIỂM TRA ĐĂNG NHẬP + QUYỀN GIÁO VIÊN
+========================================== */
 
-  if (!client) {
-    document.getElementById("loading").innerText =
-      "Không kết nối được Supabase.";
-    return;
+document.addEventListener(
+  "DOMContentLoaded",
+  async () => {
+
+    const client =
+      window.supabaseClient;
+
+
+    /* =========================
+       KIỂM TRA SUPABASE
+    ========================= */
+
+    if (!client) {
+
+      document
+        .getElementById("loading")
+        .innerText =
+          "Không kết nối được Supabase.";
+
+      return;
+
+    }
+
+
+    try {
+
+
+      /* =========================
+         LẤY USER
+      ========================= */
+
+      const {
+        data: { user },
+        error: userError
+      } =
+        await client
+          .auth
+          .getUser();
+
+
+      if (
+        userError ||
+        !user
+      ) {
+
+        window.location.href =
+          "login.html";
+
+        return;
+
+      }
+
+
+      /* =========================
+         LẤY PROFILE
+      ========================= */
+
+      const {
+        data: profile,
+        error: profileError
+      } =
+        await client
+
+          .from("profiles")
+
+          .select(
+            "full_name, role"
+          )
+
+          .eq(
+            "id",
+            user.id
+          )
+
+          .single();
+
+
+
+      document
+        .getElementById("loading")
+        .style.display =
+          "none";
+
+
+      /* =========================
+         KIỂM TRA ROLE
+      ========================= */
+
+      if (
+        profileError ||
+        !profile ||
+        profile.role !== "teacher"
+      ) {
+
+        document
+          .getElementById("error")
+          .style.display =
+            "block";
+
+        return;
+
+      }
+
+
+      /* =========================
+         TÊN GIÁO VIÊN
+      ========================= */
+
+      document
+        .getElementById(
+          "teacherName"
+        )
+        .textContent =
+
+          profile.full_name ||
+          "Giáo viên";
+
+
+      /* =========================
+         HIỆN DASHBOARD
+      ========================= */
+
+      document
+        .getElementById(
+          "dashboard"
+        )
+        .style.display =
+          "block";
+
+
+    }
+
+    catch(error) {
+
+      console.error(error);
+
+
+      document
+        .getElementById("loading")
+        .style.display =
+          "none";
+
+
+      document
+        .getElementById("error")
+        .style.display =
+          "block";
+
+    }
+
   }
+);
 
-  const {
-    data: { user }
-  } = await client.auth.getUser();
 
-  if (!user) {
-    window.location.href = "login.html";
-    return;
-  }
-
-  const { data: profile, error } = await client
-    .from("profiles")
-    .select("full_name, role")
-    .eq("id", user.id)
-    .single();
-
-  document.getElementById("loading").style.display = "none";
-
-  if (error || !profile || profile.role !== "teacher") {
-    document.getElementById("error").style.display = "block";
-    return;
-  }
-
-  document.getElementById("teacherName").textContent =
-    profile.full_name || "Giáo viên";
-
-  document.getElementById("dashboard").style.display = "block";
-});
+/* ==========================================
+   ĐIỀU HƯỚNG
+========================================== */
 
 function goHome() {
-  window.location.href = "index.html";
+
+  window.location.href =
+    "index.html";
+
 }
 
-async function logout() {
-  await window.supabaseClient.auth.signOut();
-  window.location.href = "login.html";
+
+function goStudents() {
+
+  window.location.href =
+    "students.html";
+
 }
+
+
+function goClasses() {
+
+  window.location.href =
+    "classes.html";
+
+}
+
+
+/* ==========================================
+   CHỨC NĂNG ĐANG PHÁT TRIỂN
+========================================== */
+
+function comingSoon(feature) {
+
+  alert(
+    "🚧 " +
+    feature +
+    " đang được xây dựng."
+  );
+
+}
+
+
+/* ==========================================
+   ĐĂNG XUẤT
+========================================== */
+
+async function logout() {
+
+  try {
+
+    await window
+      .supabaseClient
+      .auth
+      .signOut();
+
+  }
+
+  finally {
+
+    window.location.href =
+      "login.html";
+
+  }
+
+}
+
 </script>
+
 
 </body>
 </html>
