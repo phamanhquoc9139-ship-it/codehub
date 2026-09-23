@@ -166,8 +166,8 @@
                         <p id="currentUserEmail" class="text-sm text-gray-500 dark:text-gray-400 mt-1"></p>
                     </div>
                     <div class="flex gap-3 pt-2">
-                        <a href="index.html" class="flex-1 py-2.5 px-4 bg-primary hover:bg-blue-600 text-white font-medium rounded-lg text-center transition">
-                            Vào Học Ngay
+                        <a id="btnEnterApp" href="#" class="flex-1 py-2.5 px-4 bg-primary hover:bg-blue-600 text-white font-medium rounded-lg text-center transition">
+                            Vào CodeHub
                         </a>
                         <button id="btnLogout" type="button" class="py-2.5 px-4 border border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 font-medium rounded-lg transition">
                             Đăng Xuất
@@ -214,6 +214,7 @@
             const loggedInState = document.getElementById('loggedInState');
             const currentUserEmail = document.getElementById('currentUserEmail');
             const btnLogout = document.getElementById('btnLogout');
+            const btnEnterApp = document.getElementById('btnEnterApp');
 
             // Kiểm tra Supabase client
             function checkSupabaseClient() {
@@ -299,6 +300,31 @@
                 }
             });
 
+            // Điều hướng theo vai trò trong bảng profiles
+            async function redirectByRole(userId) {
+                const { data: profile, error } = await window.supabaseClient
+                    .from('profiles')
+                    .select('role')
+                    .eq('id', userId)
+                    .single();
+
+                if (error || !profile) {
+                    throw new Error('Không tìm thấy hồ sơ người dùng trong bảng profiles.');
+                }
+
+                if (profile.role === 'teacher') {
+                    window.location.href = 'teacher.html';
+                    return;
+                }
+
+                if (profile.role === 'student') {
+                    window.location.href = 'student-dashboard.html';
+                    return;
+                }
+
+                window.location.href = 'index.html';
+            }
+
             // Kiểm tra xem người dùng đã đăng nhập từ trước chưa
             if (window.supabaseClient) {
                 try {
@@ -309,6 +335,16 @@
                         currentUserEmail.textContent = session.user.email;
                         authTitle.textContent = 'Đã Đăng Nhập';
                         authSubtitle.textContent = 'Chào mừng bạn trở lại với CodeHub!';
+                        if (btnEnterApp) {
+                            btnEnterApp.onclick = async (ev) => {
+                                ev.preventDefault();
+                                try {
+                                    await redirectByRole(session.user.id);
+                                } catch (err) {
+                                    showAlert(err.message || 'Không xác định được quyền tài khoản.', 'error');
+                                }
+                            };
+                        }
                     }
                 } catch (e) {
                     console.log('Chưa có phiên đăng nhập trước đó');
@@ -348,10 +384,8 @@
                             throw error;
                         }
 
-                        showAlert('Đăng nhập thành công! Đang chuyển hướng về Trang Chủ...', 'success');
-                        setTimeout(() => {
-                            window.location.href = 'index.html';
-                        }, 1200);
+                        showAlert('Đăng nhập thành công! Đang mở CodeHub...', 'success');
+                        await redirectByRole(data.user.id);
 
                     } else {
                         // Đăng Ký
@@ -375,7 +409,11 @@
                             showAlert('Đăng ký tài khoản thành công! Vui lòng kiểm tra hộp thư email để xác thực tài khoản nếu có.', 'success');
                             setTimeout(() => {
                                 if (data.session) {
-                                    window.location.href = 'index.html';
+                                    try {
+                                        await redirectByRole(data.user.id);
+                                    } catch (err) {
+                                        showAlert(err.message || 'Tài khoản đã tạo nhưng chưa có hồ sơ phân quyền.', 'error');
+                                    }
                                 } else {
                                     switchModeToLogin();
                                     emailInput.value = email;
