@@ -5,11 +5,11 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/mammoth@1.8.0/mammoth.browser.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/docx@9.1.1/dist/index.iife.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/docx@9.7.2/dist/index.iife.js"></script>
 <script src="scripts/supabase-config.js"></script>
 <style>.drop.drag{border-color:#7c3aed;background:#f5f3ff}.busy{opacity:.6;pointer-events:none}</style></head>
 <body class="bg-slate-50 text-slate-900"><main class="max-w-7xl mx-auto p-5">
-<div class="flex justify-between gap-4 mb-5"><div><h1 class="text-3xl font-bold">✨ AI Quiz Generator V4.4.6 STABLE</h1><p class="text-slate-500">Supabase ổn định • PDF tối đa 50 trang • OCR thông minh • Xuất Word</p></div><a href="quizzes.html" class="border bg-white rounded-xl px-4 py-2 h-fit">← Quiz</a></div>
+<div class="flex justify-between gap-4 mb-5"><div><h1 class="text-3xl font-bold">✨ AI Quiz Generator V4.4.7 WORD FIX</h1><p class="text-slate-500">Supabase ổn định • PDF tối đa 50 trang • OCR thông minh • Xuất Word</p></div><a href="quizzes.html" class="border bg-white rounded-xl px-4 py-2 h-fit">← Quiz</a></div>
 <div id="msg" class="hidden mb-4 p-3 rounded-xl"></div>
 <div class="grid lg:grid-cols-4 gap-5">
 <aside class="bg-white rounded-2xl shadow p-5 space-y-3">
@@ -95,6 +95,47 @@ $("all").onclick=()=>document.querySelectorAll(".pick").forEach(x=>x.checked=tru
 $("preview").onclick=()=>{syncAll();let picks=[...document.querySelectorAll(".pick:checked")].map(x=>+x.dataset.i);if(!picks.length)return show("Chưa chọn câu nào để xem trước.");$("previewInfo").textContent=`${picks.length} câu • chế độ học sinh không hiển thị đáp án`;$("previewList").innerHTML=picks.map((i,n)=>{let q=generated[i];return`<div class="border rounded-2xl p-5"><div class="font-bold mb-3">Câu ${n+1}. ${esc(q.question_text)}</div>${["A","B","C","D"].map(k=>`<label class="block border rounded-xl p-3 mb-2"><input type="radio" name="pv${n}"> <b>${k}.</b> ${esc(q["option_"+k.toLowerCase()])}</label>`).join("")}</div>`}).join("");$("modal").classList.remove("hidden")};$("closeModal").onclick=()=>$("modal").classList.add("hidden");$("modal").onclick=e=>{if(e.target===$("modal"))$("modal").classList.add("hidden")};
 $("save").onclick=async()=>{if(!$("quiz").value)return show("Chọn Quiz đích.");syncAll();let ps=[...document.querySelectorAll(".pick:checked")];if(!ps.length)return show("Chưa chọn câu nào.");let ex=await s.from("quiz_questions").select("question_order").eq("quiz_id",$("quiz").value).order("question_order",{ascending:false}).limit(1),st=(ex.data?.[0]?.question_order||0)+1;let rows=ps.map((p,n)=>{let q=generated[+p.dataset.i];return{quiz_id:$("quiz").value,question_text:q.question_text,option_a:q.option_a,option_b:q.option_b,option_c:q.option_c,option_d:q.option_d,correct_answer:q.correct_answer,explanation:q.explanation,question_order:st+n}});let z=await s.from("quiz_questions").insert(rows);if(z.error)return show(z.error.message);show(`Đã lưu ${rows.length} câu vào Quiz.`,true)};
 
-$("exportWord").onclick=async()=>{syncAll();let chosen=generated.filter((_,i)=>selected.has(i));if(!chosen.length)return show("Hãy chọn ít nhất 1 câu để xuất Word.");try{const{Document,Packer,Paragraph,TextRun,AlignmentType,PageBreak}=window.docx;let title=$("quiz").selectedOptions[0]?.textContent?.trim()||"ĐỀ KIỂM TRA",course=$("course").selectedOptions[0]?.textContent?.trim()||"";let ch=[new Paragraph({alignment:AlignmentType.CENTER,children:[new TextRun({text:"TRƯỜNG THPT PHÚ HÒA",bold:true,size:26})]}),new Paragraph({alignment:AlignmentType.CENTER,children:[new TextRun({text:title.toUpperCase(),bold:true,size:30})]}),new Paragraph({alignment:AlignmentType.CENTER,children:[new TextRun({text:course,size:23})]}),new Paragraph({children:[new TextRun({text:"Họ và tên: ............................................................   Lớp: ...............",size:23})]})];chosen.forEach((q,i)=>{ch.push(new Paragraph({spacing:{before:160},children:[new TextRun({text:`Câu ${i+1}. `,bold:true,size:23}),new TextRun({text:q.question_text,size:23})]}));["A","B","C","D"].forEach(k=>ch.push(new Paragraph({indent:{left:360},children:[new TextRun({text:`${k}. `,bold:true,size:22}),new TextRun({text:q["option_"+k.toLowerCase()],size:22})]})))});ch.push(new Paragraph({children:[new PageBreak()]}),new Paragraph({alignment:AlignmentType.CENTER,children:[new TextRun({text:"ĐÁP ÁN VÀ HƯỚNG DẪN",bold:true,size:28})]}));chosen.forEach((q,i)=>{ch.push(new Paragraph({children:[new TextRun({text:`Câu ${i+1}: ${q.correct_answer}`,bold:true,size:22}),new TextRun({text:q.level?`  (${q.level})`:"",italic:true,size:20})]}));if(q.explanation)ch.push(new Paragraph({indent:{left:360},children:[new TextRun({text:"Giải thích: ",bold:true,size:20}),new TextRun({text:q.explanation,size:20})]}))});let doc=new Document({sections:[{children:ch}]}),blob=await Packer.toBlob(doc),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=title.replace(/[\\/:*?"<>|]+/g,"_")+".docx";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);show("Đã xuất file Word.",true)}catch(e){show("Lỗi xuất Word: "+e.message)}};
+$("exportWord").onclick=async()=>{
+  syncAll();
+  const chosen=generated.filter((_,i)=>selected.has(i));
+  if(!chosen.length)return show("Hãy chọn ít nhất 1 câu để xuất Word.");
+  const title=$("quiz").selectedOptions[0]?.textContent?.trim()||"ĐỀ KIỂM TRA";
+  const course=$("course").selectedOptions[0]?.textContent?.trim()||"";
+  const safeName=title.replace(/[\\/:*?"<>|]+/g,"_");
+  const downloadBlob=(blob,name)=>{const url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download=name;a.style.display="none";document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(url);a.remove()},3000)};
+  try{
+    if(!window.docx||!window.docx.Packer)throw new Error("Thư viện DOCX chưa tải được");
+    const{Document,Packer,Paragraph,TextRun,AlignmentType,PageBreak}=window.docx;
+    const ch=[
+      new Paragraph({alignment:AlignmentType.CENTER,children:[new TextRun({text:"TRƯỜNG THPT PHÚ HÒA",bold:true,size:26})]}),
+      new Paragraph({alignment:AlignmentType.CENTER,children:[new TextRun({text:title.toUpperCase(),bold:true,size:30})]}),
+      new Paragraph({alignment:AlignmentType.CENTER,children:[new TextRun({text:course,size:23})]}),
+      new Paragraph({children:[new TextRun({text:"Họ và tên: ............................................................   Lớp: ...............",size:23})]})
+    ];
+    chosen.forEach((q,i)=>{
+      ch.push(new Paragraph({spacing:{before:160},children:[new TextRun({text:`Câu ${i+1}. `,bold:true,size:23}),new TextRun({text:String(q.question_text||""),size:23})]}));
+      ["A","B","C","D"].forEach(k=>ch.push(new Paragraph({indent:{left:360},children:[new TextRun({text:`${k}. `,bold:true,size:22}),new TextRun({text:String(q["option_"+k.toLowerCase()]||""),size:22})]})));
+    });
+    ch.push(new Paragraph({children:[new PageBreak()]}),new Paragraph({alignment:AlignmentType.CENTER,children:[new TextRun({text:"ĐÁP ÁN VÀ HƯỚNG DẪN",bold:true,size:28})]}));
+    chosen.forEach((q,i)=>{
+      ch.push(new Paragraph({children:[new TextRun({text:`Câu ${i+1}: ${q.correct_answer||""}`,bold:true,size:22}),new TextRun({text:q.level?`  (${q.level})`:"",italics:true,size:20})]}));
+      if(q.explanation)ch.push(new Paragraph({indent:{left:360},children:[new TextRun({text:"Giải thích: ",bold:true,size:20}),new TextRun({text:String(q.explanation),size:20})]}));
+    });
+    const doc=new Document({sections:[{properties:{},children:ch}]});
+    const blob=await Packer.toBlob(doc);
+    downloadBlob(blob,safeName+".docx");
+    show("Đã xuất file Word .docx.",true);
+  }catch(e){
+    console.error("DOCX export failed, using Word HTML fallback",e);
+    const esc=x=>String(x??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+    let body=`<h3 style="text-align:center">TRƯỜNG THPT PHÚ HÒA</h3><h2 style="text-align:center">${esc(title.toUpperCase())}</h2><p style="text-align:center">${esc(course)}</p><p>Họ và tên: ............................................................ &nbsp;&nbsp; Lớp: ...............</p>`;
+    chosen.forEach((q,i)=>{body+=`<p><b>Câu ${i+1}.</b> ${esc(q.question_text)}</p>`;["A","B","C","D"].forEach(k=>body+=`<p style="margin-left:28px"><b>${k}.</b> ${esc(q["option_"+k.toLowerCase()])}</p>`)});
+    body+=`<br clear="all" style="page-break-before:always"><h2 style="text-align:center">ĐÁP ÁN VÀ HƯỚNG DẪN</h2>`;
+    chosen.forEach((q,i)=>{body+=`<p><b>Câu ${i+1}: ${esc(q.correct_answer)}</b>${q.level?` <i>(${esc(q.level)})</i>`:""}</p>${q.explanation?`<p style="margin-left:28px"><b>Giải thích:</b> ${esc(q.explanation)}</p>`:""}`});
+    const html=`<!doctype html><html><head><meta charset="utf-8"><style>body{font-family:'Times New Roman';font-size:13pt;line-height:1.35}</style></head><body>${body}</body></html>`;
+    downloadBlob(new Blob(["\\ufeff",html],{type:"application/msword;charset=utf-8"}),safeName+".doc");
+    show("Đã xuất Word dạng .doc (chế độ dự phòng). Mở được bằng Microsoft Word.",true);
+  }
+};
 init();
 </script></body></html>
