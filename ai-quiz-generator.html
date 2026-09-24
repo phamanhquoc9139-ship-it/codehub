@@ -5,6 +5,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/mammoth@1.8.0/mammoth.browser.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/docx@9.1.1/dist/index.iife.js"></script>
 <script src="scripts/supabase-config.js"></script>
 <style>.drop.drag{border-color:#7c3aed;background:#f5f3ff}.busy{opacity:.6;pointer-events:none}</style></head>
 <body class="bg-slate-50 text-slate-900"><main class="max-w-7xl mx-auto p-5">
@@ -153,5 +154,53 @@ async function regenerateOne(i){syncAll();let old=generated[i],ratios={remember:
 $("all").onclick=()=>document.querySelectorAll(".pick").forEach(x=>x.checked=true);$("none").onclick=()=>document.querySelectorAll(".pick").forEach(x=>x.checked=false);$("shuffleAll").onclick=()=>{syncAll();for(let i=0;i<generated.length;i++){let q=generated[i],correct=q["option_"+q.correct_answer.toLowerCase()],vals=[q.option_a,q.option_b,q.option_c,q.option_d];for(let j=3;j>0;j--){let k=Math.floor(Math.random()*(j+1));[vals[j],vals[k]]=[vals[k],vals[j]]}[q.option_a,q.option_b,q.option_c,q.option_d]=vals;q.correct_answer=["A","B","C","D"][vals.indexOf(correct)]}render();show("Đã xáo trộn thứ tự đáp án và giữ đúng đáp án chính xác.",true)};
 $("preview").onclick=()=>{syncAll();let picks=[...document.querySelectorAll(".pick:checked")].map(x=>+x.dataset.i);if(!picks.length)return show("Chưa chọn câu nào để xem trước.");$("previewInfo").textContent=`${picks.length} câu • chế độ học sinh không hiển thị đáp án`;$("previewList").innerHTML=picks.map((i,n)=>{let q=generated[i];return`<div class="border rounded-2xl p-5"><div class="font-bold mb-3">Câu ${n+1}. ${esc(q.question_text)}</div>${["A","B","C","D"].map(k=>`<label class="block border rounded-xl p-3 mb-2"><input type="radio" name="pv${n}"> <b>${k}.</b> ${esc(q["option_"+k.toLowerCase()])}</label>`).join("")}</div>`}).join("");$("modal").classList.remove("hidden")};$("closeModal").onclick=()=>$("modal").classList.add("hidden");$("modal").onclick=e=>{if(e.target===$("modal"))$("modal").classList.add("hidden")};
 $("save").onclick=async()=>{if(!$("quiz").value)return show("Chọn Quiz đích.");syncAll();let ps=[...document.querySelectorAll(".pick:checked")];if(!ps.length)return show("Chưa chọn câu nào.");let ex=await s.from("quiz_questions").select("question_order").eq("quiz_id",$("quiz").value).order("question_order",{ascending:false}).limit(1),st=(ex.data?.[0]?.question_order||0)+1;let rows=ps.map((p,n)=>{let q=generated[+p.dataset.i];return{quiz_id:$("quiz").value,question_text:q.question_text,option_a:q.option_a,option_b:q.option_b,option_c:q.option_c,option_d:q.option_d,correct_answer:q.correct_answer,explanation:q.explanation,question_order:st+n}});let z=await s.from("quiz_questions").insert(rows);if(z.error)return show(z.error.message);show(`Đã lưu ${rows.length} câu vào Quiz.`,true)};
+
+async function exportQuizWord(){
+  const chosen=generated.filter((q,i)=>selected.has(i));
+  if(!chosen.length){show("Hãy chọn ít nhất 1 câu để xuất Word.");return}
+  if(!window.docx){show("Không tải được thư viện Word. Hãy kiểm tra Internet rồi tải lại trang.");return}
+  const {Document,Packer,Paragraph,TextRun,AlignmentType,PageBreak}=window.docx;
+  const quizTitle=$("quiz").selectedOptions[0]?.textContent?.trim()||"ĐỀ KIỂM TRA";
+  const courseTitle=$("course").selectedOptions[0]?.textContent?.trim()||"";
+  const duration=quizTitle.toLowerCase().includes("45")?"45":quizTitle.toLowerCase().includes("15")?"15":"____";
+  const children=[
+    new Paragraph({alignment:AlignmentType.CENTER,children:[new TextRun({text:"TRƯỜNG THPT PHÚ HÒA",bold:true,size:26})]}),
+    new Paragraph({alignment:AlignmentType.CENTER,children:[new TextRun({text:quizTitle.toUpperCase(),bold:true,size:32})]}),
+    new Paragraph({alignment:AlignmentType.CENTER,children:[new TextRun({text:courseTitle,size:24}),new TextRun({text:`   •   Thời gian: ${duration} phút`,size:24})]}),
+    new Paragraph({children:[new TextRun({text:"Họ và tên: ............................................................    Lớp: ....................",size:24})]}),
+    new Paragraph({children:[new TextRun({text:`Số câu: ${chosen.length}`,italic:true,size:22})]})
+  ];
+  chosen.forEach((q,i)=>{
+    children.push(new Paragraph({spacing:{before:180,after:80},children:[
+      new TextRun({text:`Câu ${i+1}. `,bold:true,size:24}),
+      new TextRun({text:q.question_text||"",size:24})
+    ]}));
+    ["A","B","C","D"].forEach(k=>children.push(new Paragraph({indent:{left:360},children:[
+      new TextRun({text:`${k}. `,bold:true,size:23}),
+      new TextRun({text:q["option_"+k.toLowerCase()]||"",size:23})
+    ]})));
+  });
+  children.push(new Paragraph({children:[new PageBreak()]}));
+  children.push(new Paragraph({alignment:AlignmentType.CENTER,children:[new TextRun({text:"ĐÁP ÁN VÀ HƯỚNG DẪN",bold:true,size:30})]}));
+  chosen.forEach((q,i)=>{
+    children.push(new Paragraph({spacing:{before:120},children:[
+      new TextRun({text:`Câu ${i+1}: ${q.correct_answer||""}`,bold:true,size:23}),
+      new TextRun({text:q.level?`   (${q.level})`:"",italic:true,size:21})
+    ]}));
+    if(q.explanation)children.push(new Paragraph({indent:{left:360},children:[
+      new TextRun({text:"Giải thích: ",bold:true,size:21}),
+      new TextRun({text:q.explanation,size:21})
+    ]}));
+  });
+  const doc=new Document({sections:[{properties:{page:{margin:{top:900,right:900,bottom:900,left:900}}},children}]});
+  const blob=await Packer.toBlob(doc);
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(blob);
+  a.download=(quizTitle.replace(/[\\/:*?"<>|]+/g,"_")||"De_kiem_tra")+".docx";
+  document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1500);
+  show(`Đã xuất Word: ${chosen.length} câu + đáp án/hướng dẫn.`,true)
+}
+$("exportWord").onclick=exportQuizWord;
+
 init();
 </script></body></html>
