@@ -9,7 +9,7 @@
 <script src="scripts/supabase-config.js"></script>
 <style>.drop.drag{border-color:#7c3aed;background:#f5f3ff}.busy{opacity:.6;pointer-events:none}</style></head>
 <body class="bg-slate-50 text-slate-900"><main class="max-w-7xl mx-auto p-5">
-<div class="flex justify-between gap-4 mb-5"><div><h1 class="text-3xl font-bold">✨ AI Quiz Generator V4.4.9 SMART CONTENT + SAFE SAVE + WORD FIX</h1><p class="text-slate-500">Supabase ổn định • PDF tối đa 50 trang • OCR thông minh • Xuất Word</p></div><a href="quizzes.html" class="border bg-white rounded-xl px-4 py-2 h-fit">← Quiz</a></div>
+<div class="flex justify-between gap-4 mb-5"><div><h1 class="text-3xl font-bold">✨ AI Quiz Generator V4.5.0 PUBLISH QUIZ + SAFE SAVE + SMART CONTENT</h1><p class="text-slate-500">Supabase ổn định • PDF tối đa 50 trang • OCR thông minh • Xuất Word</p></div><a href="quizzes.html" class="border bg-white rounded-xl px-4 py-2 h-fit">← Quiz</a></div>
 <div id="msg" class="hidden mb-4 p-3 rounded-xl"></div>
 <div class="grid lg:grid-cols-4 gap-5">
 <aside class="bg-white rounded-2xl shadow p-5 space-y-3">
@@ -34,7 +34,7 @@
 <label class="font-bold block">Hoặc dán văn bản</label><textarea id="extra" rows="5" class="w-full border rounded-xl p-3" placeholder="Ctrl + V nội dung văn bản vào đây..."></textarea>
 <button id="generate" class="w-full bg-violet-600 text-white font-bold p-3 rounded-xl">✨ Tạo câu hỏi</button>
 </aside>
-<section class="lg:col-span-3"><div class="flex flex-wrap justify-between items-center gap-2 mb-3"><div><h2 class="text-xl font-bold">Câu hỏi AI đề xuất</h2><div id="stats" class="text-sm text-slate-600"></div></div><div id="tools" class="hidden flex flex-wrap gap-2"><button id="all" class="border bg-white px-3 py-2 rounded-xl">☑ Chọn tất cả</button><button id="none" class="border bg-white px-3 py-2 rounded-xl">☐ Bỏ tất cả</button><button id="shuffleAll" class="border bg-white px-3 py-2 rounded-xl">🔀 Xáo đáp án</button><button id="preview" class="border bg-white px-3 py-2 rounded-xl">👁 Xem trước</button><button id="exportWord" class="border border-blue-600 text-blue-700 bg-white px-3 py-2 rounded-xl font-bold">📄 Xuất Word</button><button id="save" class="bg-emerald-600 text-white font-bold px-4 py-2 rounded-xl">💾 Lưu vào Quiz</button></div></div><div id="list" class="space-y-4"><div class="bg-white p-8 rounded-2xl text-center text-slate-400">Chọn bài học, tài liệu hoặc dán văn bản để bắt đầu.</div></div></section>
+<section class="lg:col-span-3"><div class="flex flex-wrap justify-between items-center gap-2 mb-3"><div><h2 class="text-xl font-bold">Câu hỏi AI đề xuất</h2><div id="stats" class="text-sm text-slate-600"></div></div><div id="tools" class="hidden flex flex-wrap gap-2"><button id="all" class="border bg-white px-3 py-2 rounded-xl">☑ Chọn tất cả</button><button id="none" class="border bg-white px-3 py-2 rounded-xl">☐ Bỏ tất cả</button><button id="shuffleAll" class="border bg-white px-3 py-2 rounded-xl">🔀 Xáo đáp án</button><button id="preview" class="border bg-white px-3 py-2 rounded-xl">👁 Xem trước</button><button id="exportWord" class="border border-blue-600 text-blue-700 bg-white px-3 py-2 rounded-xl font-bold">📄 Xuất Word</button><button id="save" class="bg-emerald-600 text-white font-bold px-4 py-2 rounded-xl">💾 Lưu vào Quiz</button><button id="publishQuiz" type="button" class="bg-orange-500 text-white font-bold px-4 py-2 rounded-xl">🚀 Xuất bản Quiz</button></div></div><div id="list" class="space-y-4"><div class="bg-white p-8 rounded-2xl text-center text-slate-400">Chọn bài học, tài liệu hoặc dán văn bản để bắt đầu.</div></div></section>
 </div></main>
 <div id="quizModal" class="hidden fixed inset-0 bg-black/50 z-50 p-4 overflow-auto">
 <div class="max-w-lg mx-auto bg-white rounded-2xl p-6 my-16 shadow-xl">
@@ -68,7 +68,7 @@ $("newQuiz").onclick=()=>{if(!$("course").value)return show("Hãy chọn Khóa h
 $("quizPreset").onchange=()=>{if($("quizPreset").value!=="custom")$("quizTitle").value=$("quizPreset").value;else{$("quizTitle").value="";$("quizTitle").focus()}};
 function closeQuizCreate(){$("quizModal").classList.add("hidden")}
 $("closeQuizModal").onclick=closeQuizCreate;$("cancelQuiz").onclick=closeQuizCreate;$("quizModal").onclick=e=>{if(e.target===$("quizModal"))closeQuizCreate()};
-$("createQuiz").onclick=async()=>{let courseId=$("course").value,title=$("quizTitle").value.trim();if(!courseId)return show("Hãy chọn Khóa học.");if(!title)return show("Nhập tên Quiz.");$("createQuiz").disabled=true;$("createQuiz").textContent="Đang tạo...";try{let z=await s.from("quizzes").insert({course_id:courseId,teacher_id:me.id,title}).select("id,title").single();if(z.error)throw z.error;await loadCourseData(courseId,z.data.id);closeQuizCreate();show(`Đã tạo "${title}" và tự chọn làm Quiz đích.`,true)}catch(e){show("Không tạo được Quiz: "+e.message)}finally{$("createQuiz").disabled=false;$("createQuiz").textContent="Tạo và chọn Quiz"}};
+$("createQuiz").onclick=async()=>{let courseId=$("course").value,title=$("quizTitle").value.trim();if(!courseId)return show("Hãy chọn Khóa học.");if(!title)return show("Nhập tên Quiz.");$("createQuiz").disabled=true;$("createQuiz").textContent="Đang tạo...";try{let z=await s.from("quizzes").insert({course_id:courseId,teacher_id:me.id,title,is_published:!!$("publishNow")?.checked}).select("id,title").single();if(z.error)throw z.error;await loadCourseData(courseId,z.data.id);closeQuizCreate();show(`Đã tạo "${title}" và tự chọn làm Quiz đích.`,true)}catch(e){show("Không tạo được Quiz: "+e.message)}finally{$("createQuiz").disabled=false;$("createQuiz").textContent="Tạo và chọn Quiz"}};
 const drop=$("drop"),inp=$("files");let pendingPdf=null,pdfStop=false;
 drop.onclick=()=>inp.click();
 ["dragenter","dragover"].forEach(e=>drop.addEventListener(e,x=>{x.preventDefault();drop.classList.add("drag")}));
@@ -158,6 +158,22 @@ Cancel = Hủy, không lưu gì.`
     :`✓ Đã thêm ${rows.length} câu. Quiz hiện có ${oldCount+rows.length} câu.`,true);
 };
 
+
+$("publishQuiz").onclick=async()=>{
+  const quizId=$("quiz").value;
+  if(!quizId)return show("Hãy chọn Quiz đích trước khi xuất bản.");
+  const qcount=await s.from("quiz_questions").select("id",{count:"exact",head:true}).eq("quiz_id",quizId);
+  if(qcount.error)return show("Không kiểm tra được Quiz: "+qcount.error.message);
+  if(!(qcount.count||0))return show("Quiz chưa có câu hỏi. Hãy lưu câu hỏi trước khi xuất bản.");
+  const quizName=$("quiz").selectedOptions[0]?.textContent?.trim()||"Quiz";
+  if(!confirm(`🚀 XUẤT BẢN QUIZ\n\n"${quizName}" hiện có ${qcount.count} câu.\n\nSau khi xuất bản, Quiz có thể được giao cho học sinh.\n\nBấm OK để xuất bản.`))return;
+  const r=await s.from("quizzes").update({is_published:true}).eq("id",quizId);
+  if(r.error)return show("Không thể xuất bản Quiz: "+r.error.message);
+  show(`✓ Đã xuất bản "${quizName}" (${qcount.count} câu). Bây giờ có thể Giao lớp.`,true);
+  $("publishQuiz").textContent="✅ Đã xuất bản";
+  $("publishQuiz").classList.remove("bg-orange-500");
+  $("publishQuiz").classList.add("bg-emerald-600");
+};
 $("exportWord").onclick=()=>{try{
   syncAll();
   const picks=[...document.querySelectorAll(".pick:checked")].map(x=>+x.dataset.i);
@@ -174,5 +190,19 @@ $("exportWord").onclick=()=>{try{
   const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=title.replace(/[\\/:*?"<>|]+/g,"_")+".doc";document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1500);
   show("Đã xuất file Word (.doc). Mở trực tiếp bằng Microsoft Word.",true);
 }catch(e){show("Lỗi xuất Word: "+e.message)}};
+
+$("quiz").addEventListener("change",async()=>{
+  const id=$("quiz").value;
+  $("publishQuiz").textContent="🚀 Xuất bản Quiz";
+  $("publishQuiz").classList.remove("bg-emerald-600");
+  $("publishQuiz").classList.add("bg-orange-500");
+  if(!id)return;
+  const r=await s.from("quizzes").select("is_published").eq("id",id).maybeSingle();
+  if(r.data?.is_published){
+    $("publishQuiz").textContent="✅ Đã xuất bản";
+    $("publishQuiz").classList.remove("bg-orange-500");
+    $("publishQuiz").classList.add("bg-emerald-600");
+  }
+});
 init();
 </script></body></html>
