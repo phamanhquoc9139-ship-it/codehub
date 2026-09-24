@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>AI Quiz Generator V4.4.1 PDF Reader - CodeHub</title>
+<title>AI Quiz Generator V4.4.3 PDF Reader - CodeHub</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/mammoth@1.8.0/mammoth.browser.min.js"></script>
@@ -9,7 +9,7 @@
 <script src="scripts/supabase-config.js"></script>
 <style>.drop.drag{border-color:#7c3aed;background:#f5f3ff}.busy{opacity:.6;pointer-events:none}</style></head>
 <body class="bg-slate-50 text-slate-900"><main class="max-w-7xl mx-auto p-5">
-<div class="flex justify-between gap-4 mb-5"><div><h1 class="text-3xl font-bold">✨ AI Quiz Generator V4.4.1</h1><p class="text-slate-500">PDF Reader • chọn trang • OCR PDF scan • nhiều nguồn • chống trùng • xem trước đề</p></div><a href="quizzes.html" class="border bg-white rounded-xl px-4 py-2 h-fit">← Quiz</a></div>
+<div class="flex justify-between gap-4 mb-5"><div><h1 class="text-3xl font-bold">✨ AI Quiz Generator V4.4.3</h1><p class="text-slate-500">PDF Reader chủ động • chọn trang • dừng đọc • OCR PDF scan • Xuất Word</p></div><a href="quizzes.html" class="border bg-white rounded-xl px-4 py-2 h-fit">← Quiz</a></div>
 <div id="msg" class="hidden mb-4 p-3 rounded-xl"></div>
 <div class="grid lg:grid-cols-4 gap-5">
 <aside class="bg-white rounded-2xl shadow p-5 space-y-3">
@@ -25,12 +25,17 @@
 <div class="pt-2 border-t"><label class="font-bold block mb-2">📎 Tài liệu bổ sung</label><div id="drop" class="drop border-2 border-dashed rounded-xl p-4 text-center cursor-pointer"><div class="font-semibold">Chọn hoặc kéo-thả file</div><div class="text-xs text-slate-500 mt-1">PDF • DOCX • TXT — PDF có thể chọn trang và OCR bản scan</div><input id="files" type="file" multiple accept=".pdf,.docx,.txt,text/plain,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document" class="hidden"></div><div id="fileList" class="space-y-1 mt-2 text-xs"></div>
 <div class="mt-3 border rounded-xl p-3 bg-slate-50 space-y-2">
   <div class="font-bold text-sm">📖 PDF Reader</div>
+  <div id="pdfPicked" class="text-xs text-slate-500">Chưa chọn PDF.</div>
   <div class="grid grid-cols-2 gap-2">
     <label class="text-xs">Từ trang<input id="pdfFrom" type="number" min="1" value="1" class="mt-1 w-full border rounded-lg p-2 bg-white"></label>
-    <label class="text-xs">Đến trang<input id="pdfTo" type="number" min="1" placeholder="để trống = trang cuối" class="mt-1 w-full border rounded-lg p-2 bg-white"></label>
+    <label class="text-xs">Đến trang<input id="pdfTo" type="number" min="1" placeholder="Nhập trang cuối" class="mt-1 w-full border rounded-lg p-2 bg-white"></label>
   </div>
-  <label class="flex items-center gap-2 text-xs"><input id="ocrScan" type="checkbox" checked> Tự OCR các trang scan/ít chữ</label>
-  <div id="pdfStatus" class="text-xs text-slate-500">Có thể nhập phạm vi trang trước khi chọn PDF.</div>
+  <label class="flex items-center gap-2 text-xs"><input id="ocrScan" type="checkbox" checked> OCR trang scan/ít chữ</label>
+  <div class="flex gap-2">
+    <button id="readPdfBtn" type="button" class="flex-1 bg-blue-600 text-white rounded-lg px-3 py-2 font-bold disabled:opacity-40" disabled>📖 Đọc PDF</button>
+    <button id="stopPdfBtn" type="button" class="border border-red-400 text-red-600 rounded-lg px-3 py-2 font-bold disabled:opacity-40" disabled>⏹ Dừng</button>
+  </div>
+  <div id="pdfStatus" class="text-xs text-slate-500">Chọn PDF → nhập phạm vi trang → bấm Đọc PDF.</div>
 </div></div>
 <label class="font-bold block">Hoặc dán văn bản</label><textarea id="extra" rows="5" class="w-full border rounded-xl p-3" placeholder="Ctrl + V nội dung văn bản vào đây..."></textarea>
 <button id="generate" class="w-full bg-violet-600 text-white font-bold p-3 rounded-xl">✨ Tạo câu hỏi</button>
@@ -109,7 +114,7 @@ async function ocrPdfPage(page,pageNo,total){
 async function pdfText(file){
   const pdf=await loadPdf(file),range=pageRange(pdf.numPages),parts=[],useOCR=$("ocrScan").checked;
   $("pdfStatus").textContent=`PDF ${pdf.numPages} trang • đang đọc ${range.from}–${range.to}`;
-  for(let i=range.from;i<=range.to;i++){
+  for(let i=range.from;i<=range.to;i++){ if(pdfStopRequested) throw new Error("Đã dừng đọc PDF.");
     let page=await pdf.getPage(i),text=await textFromPdfPage(page),method="text";
     if(useOCR && text.replace(/\s/g,"").length<80){
       try{let ocr=await ocrPdfPage(page,i,range.to);if(ocr.length>text.length){text=ocr;method="OCR"}}catch(e){console.warn("OCR trang",i,e)}
@@ -143,6 +148,32 @@ function renderFiles(){
   $("fileList").innerHTML=fileSources.map((f,i)=>`<div class="flex justify-between gap-2 bg-slate-50 p-2 rounded"><span>✓ ${esc(f.name)} <span class="text-slate-400">(${Math.round(f.text.length/1000)}k ký tự)</span></span><button data-rm="${i}" class="text-red-600">Xóa</button></div>`).join("");
   document.querySelectorAll("[data-rm]").forEach(b=>b.onclick=()=>{fileSources.splice(+b.dataset.rm,1);renderFiles()})
 }
+
+$("readPdfBtn").onclick=async()=>{
+  if(!pendingPdf){show("Hãy chọn file PDF trước.");return}
+  const from=parseInt($("pdfFrom").value||"1",10);
+  const to=parseInt($("pdfTo").value||"",10);
+  if(!Number.isFinite(to)){show("Hãy nhập trang cuối để tránh đọc cả cuốn.");return}
+  if(to<from){show("Trang cuối phải lớn hơn hoặc bằng trang đầu.");return}
+  if(to-from+1>30 && !confirm(`Bạn đang chọn ${to-from+1} trang. Đọc/OCR nhiều trang có thể lâu. Tiếp tục?`))return;
+  pdfStopRequested=false;
+  $("readPdfBtn").disabled=true;$("stopPdfBtn").disabled=false;
+  try{
+    show("Đang đọc PDF...",true);
+    let r=await readOne(pendingPdf), text=r.text||"";
+    if(text.trim().length<20)throw Error("Nguồn PDF quá ngắn. Hãy bật OCR hoặc chọn trang có nội dung.");
+    fileSources.push({name:pendingPdf.name+(r.meta?` • ${r.meta}`:""),text:text.slice(0,90000)});
+    renderFiles();
+    show(`Đã đọc PDF thành công. Có thể tạo câu hỏi.`,true);
+  }catch(e){show(e.message||String(e))}
+  finally{$("readPdfBtn").disabled=false;$("stopPdfBtn").disabled=true;pdfStopRequested=false}
+};
+$("stopPdfBtn").onclick=()=>{
+  pdfStopRequested=true;
+  $("pdfStatus").textContent="Đang dừng sau trang hiện tại...";
+  $("stopPdfBtn").disabled=true;
+};
+
 function sourcePayload(count,ratios){return{lessonIds:[...document.querySelectorAll(".lp:checked")].map(x=>x.value),fileSources,extraText:$("extra").value,count,ratios}}
 async function callAI(payload){let{data:{session}}=await s.auth.getSession();let res=await fetch(ENDPOINT,{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+session.access_token},body:JSON.stringify(payload)});let x=await res.json();if(!res.ok)throw Error(x.error||"Lỗi AI");return x}
 $("generate").onclick=async()=>{let sum=+$("r").value + +$("u").value + +$("a").value,p=sourcePayload(+$("count").value,{remember:+$("r").value,understand:+$("u").value,apply:+$("a").value});if(sum!==100)return show("Tổng NB + TH + VD phải bằng 100%.");if(!p.lessonIds.length&&!fileSources.length&&!p.extraText.trim())return show("Chọn bài học, tài liệu hoặc dán văn bản nguồn.");$("generate").disabled=true;$("generate").textContent="AI đang phân tích nguồn...";try{let x=await callAI(p),raw=x.questions||[];generated=dedupe(raw);render();let removed=raw.length-generated.length;show(`AI đã tạo ${generated.length} câu bằng ${x.model||"Gemini"}${removed?` • đã loại ${removed} câu gần trùng`:""}. Hãy duyệt trước khi lưu.`,true)}catch(e){show(e.message)}finally{$("generate").disabled=false;$("generate").textContent="✨ Tạo câu hỏi"}};
