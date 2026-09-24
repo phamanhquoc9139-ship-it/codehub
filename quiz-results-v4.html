@@ -1,2 +1,118 @@
-<!doctype html><html lang="vi"><head><meta charset="utf-8"><title>Kết quả V4</title><script src="https://cdn.tailwindcss.com"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="scripts/supabase-config.js"></script><script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script></head><body class="bg-slate-50"><main class="max-w-7xl mx-auto p-6"><div class="flex justify-between mb-6"><div><h1 id="h" class="text-3xl font-bold">📊 Kết quả</h1><p id="stat" class="text-slate-500"></p></div><div><button id="excel" class="bg-emerald-600 text-white p-2 rounded-xl">⬇ Xuất Excel</button> <a href="quizzes.html" class="border p-2 rounded-xl">← Quiz</a></div></div><div class="bg-white rounded-2xl shadow overflow-auto"><table class="w-full"><thead><tr class="bg-slate-100"><th class="p-3">Học sinh</th><th>Mã HS</th><th>Lớp</th><th>Điểm</th><th>Đúng</th><th>Nộp lúc</th></tr></thead><tbody id="rows"></tbody></table></div></main><script>
-const s=window.supabaseClient,qid=new URLSearchParams(location.search).get("quiz");let dataExport=[],titleQuiz="Quiz";async function init(){let u=(await s.auth.getUser()).data.user;if(!u)return location.href="login.html";let q=await s.from("quizzes").select("title,teacher_id").eq("id",qid).single();if(q.error||q.data.teacher_id!==u.id)return location.href="quizzes.html";titleQuiz=q.data.title;h.textContent="📊 "+titleQuiz;let r=await s.from("quiz_attempts").select("*").eq("quiz_id",qid).order("submitted_at",{ascending:false});let a=r.data||[],ids=[...new Set(a.map(x=>x.student_id))],mp={};if(ids.length){let p=await s.from("profiles").select("id,full_name,student_code,class_name").in("id",ids);(p.data||[]).forEach(x=>mp[x.id]=x)}dataExport=a.map(x=>{let p=mp[x.student_id]||{};return{"Học sinh":p.full_name||"—","Mã HS":p.student_code||"—","Lớp":p.class_name||"—","Điểm":x.score,"Đúng":`${x.correct_count}/${x.total_questions}`,"Nộp lúc":new Date(x.submitted_at).toLocaleString("vi-VN")}});rows.innerHTML=dataExport.map(x=>`<tr class="border-t text-center"><td class="p-3 text-left">${x["Học sinh"]}</td><td>${x["Mã HS"]}</td><td>${x["Lớp"]}</td><td class="font-bold">${x["Điểm"]}</td><td>${x["Đúng"]}</td><td>${x["Nộp lúc"]}</td></tr>`).join("")||'<tr><td colspan="6" class="p-6 text-center">Chưa có học sinh nộp bài.</td></tr>';let avg=a.length?a.reduce((z,x)=>z+(+x.score||0),0)/a.length:0;stat.textContent=`${a.length} lượt nộp • Điểm TB ${avg.toFixed(2)}`}excel.onclick=()=>{if(!dataExport.length)return alert("Chưa có dữ liệu.");let ws=XLSX.utils.json_to_sheet(dataExport),wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,"Ket qua");XLSX.writeFile(wb,"Ket_qua_Quiz.xlsx")};init();</script></body></html>
+<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kết quả Quiz V4.3 | CodeHub</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="scripts/supabase-config.js"></script></head>
+<body class="bg-slate-50 text-slate-900"><main class="max-w-7xl mx-auto p-5">
+<div class="flex flex-wrap justify-between gap-3 mb-5"><div><h1 id="h" class="text-3xl font-bold">📊 Kết quả V4.3</h1><p id="sub" class="text-slate-500">Thống kê theo lớp và phân tích câu hỏi</p></div>
+<div class="flex gap-2"><button id="excel" class="bg-emerald-600 text-white px-4 py-2 rounded-xl font-bold">⬇ Xuất Excel</button><a href="quizzes.html" class="border bg-white px-4 py-2 rounded-xl">← Quiz</a></div></div>
+
+<div id="msg" class="hidden mb-4 p-3 rounded-xl bg-red-50 text-red-700"></div>
+<div class="bg-white rounded-2xl shadow p-4 mb-5 flex flex-wrap gap-3 items-end">
+<label class="font-bold">Lớp đã giao<select id="classFilter" class="block mt-1 border rounded-xl p-2 min-w-48"></select></label>
+<label class="font-bold">Lượt hiển thị<select id="attemptMode" class="block mt-1 border rounded-xl p-2"><option value="latest">Lần nộp gần nhất/HS</option><option value="all">Tất cả lượt nộp</option></select></label>
+<button id="reload" class="bg-blue-600 text-white px-4 py-2 rounded-xl font-bold">Làm mới</button>
+</div>
+
+<div class="grid grid-cols-2 lg:grid-cols-6 gap-3 mb-5">
+<div class="bg-white rounded-2xl shadow p-4"><div class="text-slate-500 text-sm">Sĩ số</div><div id="totalStudents" class="text-3xl font-bold">0</div></div>
+<div class="bg-white rounded-2xl shadow p-4"><div class="text-slate-500 text-sm">Đã làm</div><div id="doneStudents" class="text-3xl font-bold text-emerald-600">0</div></div>
+<div class="bg-white rounded-2xl shadow p-4"><div class="text-slate-500 text-sm">Chưa làm</div><div id="notDoneStudents" class="text-3xl font-bold text-orange-600">0</div></div>
+<div class="bg-white rounded-2xl shadow p-4"><div class="text-slate-500 text-sm">Điểm TB</div><div id="avgScore" class="text-3xl font-bold">—</div></div>
+<div class="bg-white rounded-2xl shadow p-4"><div class="text-slate-500 text-sm">Cao nhất</div><div id="maxScore" class="text-3xl font-bold">—</div></div>
+<div class="bg-white rounded-2xl shadow p-4"><div class="text-slate-500 text-sm">Thấp nhất</div><div id="minScore" class="text-3xl font-bold">—</div></div>
+</div>
+
+<div class="grid lg:grid-cols-3 gap-5">
+<section class="lg:col-span-2 bg-white rounded-2xl shadow overflow-hidden">
+<div class="p-4 border-b flex justify-between"><h2 class="font-bold text-xl">👨‍🎓 Bảng điểm</h2><span id="rate" class="text-sm text-slate-500"></span></div>
+<div class="overflow-auto"><table class="w-full text-sm"><thead class="bg-slate-100"><tr><th class="p-3 text-left">Học sinh</th><th class="p-3">Mã HS</th><th class="p-3">Lớp</th><th class="p-3">Trạng thái</th><th class="p-3">Điểm</th><th class="p-3">Đúng</th><th class="p-3">Nộp lúc</th><th class="p-3">Chi tiết</th></tr></thead><tbody id="rows"></tbody></table></div>
+</section>
+<section class="bg-white rounded-2xl shadow p-4"><h2 class="font-bold text-xl mb-3">🎯 Phân bố điểm</h2><div id="dist" class="space-y-3"></div></section>
+</div>
+
+<section class="bg-white rounded-2xl shadow p-4 mt-5"><div class="flex justify-between gap-2"><div><h2 class="font-bold text-xl">🧠 Phân tích câu hỏi</h2><p class="text-sm text-slate-500">Xếp theo tỷ lệ trả lời sai cao nhất.</p></div></div><div id="questions" class="mt-4 space-y-3"></div></section>
+
+<div id="modal" class="hidden fixed inset-0 bg-black/40 z-50 p-4 overflow-auto"><div class="max-w-3xl mx-auto bg-white rounded-2xl shadow-xl p-5 mt-8"><div class="flex justify-between gap-3 mb-4"><div><h2 id="mh" class="text-2xl font-bold">Chi tiết học sinh</h2><p id="ms" class="text-slate-500"></p></div><button id="close" class="border rounded-xl px-4 h-10">Đóng</button></div><div id="md" class="space-y-3"></div></div></div>
+
+</main><script>
+const s=window.supabaseClient,$=x=>document.getElementById(x),qid=new URLSearchParams(location.search).get("quiz");
+let me,quiz,assignments=[],questionsData=[],attempts=[],profiles=[],currentRows=[],currentClassId="";
+const esc=v=>String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
+function err(t){msg.classList.remove("hidden");msg.textContent=t}
+function fmt(v){return v?new Date(v).toLocaleString("vi-VN"):"—"}
+async function init(){
+ me=(await s.auth.getUser()).data.user;if(!me)return location.href="login.html";
+ let qr=await s.from("quizzes").select("id,title,teacher_id").eq("id",qid).single();
+ if(qr.error||!qr.data||qr.data.teacher_id!==me.id)return location.href="quizzes.html";
+ quiz=qr.data;h.textContent="📊 "+quiz.title+" — V4.3";
+ let [ar,qq,at]=await Promise.all([
+  s.from("quiz_assignments").select("id,class_id,classes(class_name)").eq("quiz_id",qid).eq("teacher_id",me.id),
+  s.from("quiz_questions").select("id,question_text,correct_answer,question_order").eq("quiz_id",qid).order("question_order"),
+  s.from("quiz_attempts").select("*").eq("quiz_id",qid).order("submitted_at",{ascending:false})
+ ]);
+ if(ar.error)return err(ar.error.message);if(qq.error)return err(qq.error.message);if(at.error)return err(at.error.message);
+ assignments=ar.data||[];questionsData=qq.data||[];attempts=at.data||[];
+ classFilter.innerHTML='<option value="">Tất cả lớp đã giao</option>'+assignments.map(a=>`<option value="${a.class_id}">${esc(a.classes?.class_name||"Lớp")}</option>`).join("");
+ await render();
+}
+async function getStudents(classId){
+ let classNames=assignments.filter(a=>!classId||a.class_id===classId).map(a=>a.classes?.class_name).filter(Boolean);
+ classNames=[...new Set(classNames)];
+ if(!classNames.length)return [];
+ let all=[];
+ for(const n of classNames){let r=await s.from("profiles").select("id,full_name,student_code,class_name").eq("role","student").ilike("class_name",n);if(!r.error)all.push(...(r.data||[]))}
+ let mp={};all.forEach(x=>mp[x.id]=x);return Object.values(mp);
+}
+function latestByStudent(arr){let mp={};for(const a of arr)if(!mp[a.student_id])mp[a.student_id]=a;return mp}
+async function render(){
+ currentClassId=classFilter.value;profiles=await getStudents(currentClassId);
+ let allowedAssignmentIds=assignments.filter(a=>!currentClassId||a.class_id===currentClassId).map(a=>a.id);
+ let arr=attempts.filter(a=>!a.assignment_id||allowedAssignmentIds.includes(a.assignment_id));
+ let latest=latestByStudent(arr),display=attemptMode.value==="all"?arr:Object.values(latest);
+ let pmap={};profiles.forEach(p=>pmap[p.id]=p);
+ let doneIds=new Set(arr.map(a=>a.student_id)),doneCount=profiles.filter(p=>doneIds.has(p.id)).length;
+ totalStudents.textContent=profiles.length;doneStudents.textContent=doneCount;notDoneStudents.textContent=Math.max(0,profiles.length-doneCount);
+ let scores=Object.values(latest).map(x=>+x.score).filter(Number.isFinite);
+ avgScore.textContent=scores.length?(scores.reduce((a,b)=>a+b,0)/scores.length).toFixed(2):"—";
+ maxScore.textContent=scores.length?Math.max(...scores).toFixed(2):"—";minScore.textContent=scores.length?Math.min(...scores).toFixed(2):"—";
+ let passed=scores.filter(x=>x>=5).length;rate.textContent=scores.length?`Tỷ lệ đạt ≥5: ${(passed/scores.length*100).toFixed(1)}%`:"";
+ currentRows=[];
+ if(attemptMode.value==="latest"){
+   for(const p of profiles){let a=latest[p.id];currentRows.push({p,a})}
+ }else{
+   for(const a of display){currentRows.push({p:pmap[a.student_id]||{id:a.student_id,full_name:"—",student_code:"—",class_name:"—"},a})}
+ }
+ rows.innerHTML=currentRows.map(({p,a})=>`<tr class="border-t"><td class="p-3 font-semibold">${esc(p.full_name||"—")}</td><td class="p-3 text-center">${esc(p.student_code||"—")}</td><td class="p-3 text-center">${esc(p.class_name||"—")}</td><td class="p-3 text-center">${a?'<span class="text-emerald-700 font-bold">Đã làm</span>':'<span class="text-orange-600 font-bold">Chưa làm</span>'}</td><td class="p-3 text-center font-bold">${a?a.score:"—"}</td><td class="p-3 text-center">${a?`${a.correct_count}/${a.total_questions}`:"—"}</td><td class="p-3 text-center">${a?fmt(a.submitted_at):"—"}</td><td class="p-3 text-center">${a?`<button class="text-blue-600 font-bold" onclick="detail('${a.id}')">Xem</button>`:"—"}</td></tr>`).join("")||'<tr><td colspan="8" class="p-6 text-center text-slate-500">Không có dữ liệu.</td></tr>';
+ renderDist(scores);renderQuestions(arr);
+}
+function renderDist(scores){
+ let bands=[["8–10",8,10],["6.5–<8",6.5,8],["5–<6.5",5,6.5],["<5",0,5]];
+ dist.innerHTML=bands.map(([n,a,b])=>{let c=scores.filter(x=>x>=a&&(b===10?x<=b:x<b)).length,p=scores.length?c/scores.length*100:0;return`<div><div class="flex justify-between text-sm"><b>${n}</b><span>${c} HS (${p.toFixed(1)}%)</span></div><div class="h-3 bg-slate-100 rounded-full overflow-hidden"><div class="h-full bg-blue-500" style="width:${p}%"></div></div></div>`}).join("");
+}
+function renderQuestions(arr){
+ let submitted=arr.filter(a=>a.answers&&typeof a.answers==="object");
+ let stats=questionsData.map((q,i)=>{let answered=0,wrong=0;for(const a of submitted){let v=a.answers?.[q.id];if(v){answered++;if(v!==q.correct_answer)wrong++}}return{q,i,answered,wrong,rate:answered?wrong/answered*100:0}}).sort((a,b)=>b.rate-a.rate);
+ questions.innerHTML=stats.map(x=>`<div class="border rounded-xl p-4"><div class="flex flex-wrap justify-between gap-2"><b>Câu ${x.i+1}. ${esc(x.q.question_text)}</b><span class="${x.rate>=50?"text-red-600":"text-slate-600"} font-bold">Sai ${x.wrong}/${x.answered} (${x.rate.toFixed(1)}%)</span></div><div class="mt-2 h-2 bg-slate-100 rounded-full overflow-hidden"><div class="h-full bg-red-500" style="width:${x.rate}%"></div></div></div>`).join("")||'<p class="text-slate-500">Chưa có dữ liệu câu hỏi.</p>';
+}
+async function detail(id){
+ let a=attempts.find(x=>x.id===id);if(!a)return;let p=profiles.find(x=>x.id===a.student_id)||{};
+ mh.textContent=p.full_name||"Học sinh";ms.textContent=`${p.student_code||"—"} • ${p.class_name||"—"} • Điểm ${a.score}/10 • ${a.correct_count}/${a.total_questions}`;
+ let ans=a.answers||{};
+ md.innerHTML=questionsData.map((q,i)=>{let mine=ans[q.id]||"—",ok=mine===q.correct_answer;return`<div class="border rounded-xl p-3 ${ok?"border-emerald-300":"border-red-300"}"><b>Câu ${i+1}. ${esc(q.question_text)}</b><div class="mt-1 ${ok?"text-emerald-700":"text-red-600"}">${ok?"✓ Đúng":"✗ Sai"} • Chọn ${mine} • Đáp án ${q.correct_answer}</div></div>`}).join("");
+ modal.classList.remove("hidden");
+}
+close.onclick=()=>modal.classList.add("hidden");modal.onclick=e=>{if(e.target===modal)modal.classList.add("hidden")};
+classFilter.onchange=render;attemptMode.onchange=render;reload.onclick=async()=>{location.reload()};
+excel.onclick=()=>{
+ if(!currentRows.length)return alert("Không có dữ liệu để xuất.");
+ let scoreRows=currentRows.map(({p,a})=>({"Học sinh":p.full_name||"—","Mã HS":p.student_code||"—","Lớp":p.class_name||"—","Trạng thái":a?"Đã làm":"Chưa làm","Điểm":a?a.score:"","Số câu đúng":a?a.correct_count:"","Tổng câu":a?a.total_questions:"","Nộp lúc":a?fmt(a.submitted_at):""}));
+ let wb=XLSX.utils.book_new(),ws=XLSX.utils.json_to_sheet(scoreRows);XLSX.utils.book_append_sheet(wb,ws,"Bang diem");
+ let allowed=assignments.filter(a=>!currentClassId||a.class_id===currentClassId).map(a=>a.id),arr=attempts.filter(a=>!a.assignment_id||allowed.includes(a.assignment_id)).filter(a=>a.answers);
+ let qs=questionsData.map((q,i)=>{let answered=0,wrong=0;for(const a of arr){let v=a.answers?.[q.id];if(v){answered++;if(v!==q.correct_answer)wrong++}}return{"Câu":i+1,"Nội dung":q.question_text,"Đáp án":q.correct_answer,"Số trả lời":answered,"Số sai":wrong,"Tỷ lệ sai %":answered?+(wrong/answered*100).toFixed(1):0}});
+ XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(qs),"Phan tich cau");
+ XLSX.writeFile(wb,`Ket_qua_${quiz.title.replace(/[^\p{L}\p{N}]+/gu,"_")}.xlsx`);
+};
+init();
+</script></body></html>
