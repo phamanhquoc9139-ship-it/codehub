@@ -9,13 +9,17 @@
 <script src="scripts/supabase-config.js"></script>
 <style>.drop.drag{border-color:#7c3aed;background:#f5f3ff}.busy{opacity:.6;pointer-events:none}</style></head>
 <body class="bg-slate-50 text-slate-900"><main class="max-w-7xl mx-auto p-5">
-<div class="flex justify-between gap-4 mb-5"><div><h1 class="text-3xl font-bold">✨ AI Quiz Generator V4.4.5 STABLE</h1><p class="text-slate-500">Supabase ổn định • PDF tối đa 50 trang • OCR thông minh • Xuất Word</p></div><a href="quizzes.html" class="border bg-white rounded-xl px-4 py-2 h-fit">← Quiz</a></div>
+<div class="flex justify-between gap-4 mb-5"><div><h1 class="text-3xl font-bold">✨ AI Quiz Generator V4.4.6 STABLE</h1><p class="text-slate-500">Supabase ổn định • PDF tối đa 50 trang • OCR thông minh • Xuất Word</p></div><a href="quizzes.html" class="border bg-white rounded-xl px-4 py-2 h-fit">← Quiz</a></div>
 <div id="msg" class="hidden mb-4 p-3 rounded-xl"></div>
 <div class="grid lg:grid-cols-4 gap-5">
 <aside class="bg-white rounded-2xl shadow p-5 space-y-3">
 <label class="font-bold block">Khóa học</label><select id="course" class="w-full border rounded-xl p-3"></select>
 <label class="font-bold block">Bài học nguồn (chọn nhiều)</label><div id="lessons" class="border rounded-xl p-3 max-h-48 overflow-auto text-sm">Chọn khóa học trước.</div>
-<label class="font-bold block">Quiz đích</label><select id="quiz" class="w-full border rounded-xl p-3"></select>
+<label class="font-bold block">Quiz đích</label>
+<div class="flex gap-2">
+<select id="quiz" class="flex-1 min-w-0 border rounded-xl p-3"></select>
+<button id="newQuiz" type="button" class="border border-emerald-600 text-emerald-700 font-bold px-3 rounded-xl whitespace-nowrap">＋ Tạo Quiz</button>
+</div>
 <label class="font-bold block">Số câu</label><select id="count" class="w-full border rounded-xl p-3"><option>5</option><option>10</option><option selected>20</option><option>30</option><option>40</option></select>
 <div class="font-bold">Ma trận (%)</div><div class="grid grid-cols-3 gap-2 text-xs"><label>NB<input id="r" type="number" value="40" class="w-full border p-2 rounded"></label><label>TH<input id="u" type="number" value="40" class="w-full border p-2 rounded"></label><label>VD<input id="a" type="number" value="20" class="w-full border p-2 rounded"></label></div>
 <div class="pt-2 border-t"><label class="font-bold block mb-2">📎 Tài liệu bổ sung</label><div id="drop" class="drop border-2 border-dashed rounded-xl p-4 text-center cursor-pointer"><div class="font-semibold">Chọn hoặc kéo-thả file</div><div class="text-xs text-slate-500 mt-1">PDF • DOCX • TXT — tối đa 8 file</div><input id="files" type="file" multiple accept=".pdf,.docx,.txt,text/plain,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document" class="hidden"></div><div id="fileList" class="space-y-1 mt-2 text-xs"></div>
@@ -32,6 +36,14 @@
 </aside>
 <section class="lg:col-span-3"><div class="flex flex-wrap justify-between items-center gap-2 mb-3"><div><h2 class="text-xl font-bold">Câu hỏi AI đề xuất</h2><div id="stats" class="text-sm text-slate-600"></div></div><div id="tools" class="hidden flex flex-wrap gap-2"><button id="all" class="border bg-white px-3 py-2 rounded-xl">☑ Chọn tất cả</button><button id="none" class="border bg-white px-3 py-2 rounded-xl">☐ Bỏ tất cả</button><button id="shuffleAll" class="border bg-white px-3 py-2 rounded-xl">🔀 Xáo đáp án</button><button id="preview" class="border bg-white px-3 py-2 rounded-xl">👁 Xem trước</button><button id="exportWord" class="border border-blue-600 text-blue-700 bg-white px-3 py-2 rounded-xl font-bold">📄 Xuất Word</button><button id="save" class="bg-emerald-600 text-white font-bold px-4 py-2 rounded-xl">💾 Lưu vào Quiz</button></div></div><div id="list" class="space-y-4"><div class="bg-white p-8 rounded-2xl text-center text-slate-400">Chọn bài học, tài liệu hoặc dán văn bản để bắt đầu.</div></div></section>
 </div></main>
+<div id="quizModal" class="hidden fixed inset-0 bg-black/50 z-50 p-4 overflow-auto">
+<div class="max-w-lg mx-auto bg-white rounded-2xl p-6 my-16 shadow-xl">
+<div class="flex justify-between items-center mb-5"><div><h2 class="text-2xl font-bold">➕ Tạo Quiz đích</h2><p class="text-sm text-slate-500">Quiz sẽ được tạo cho khóa học đang chọn.</p></div><button id="closeQuizModal" type="button" class="text-2xl px-2">✕</button></div>
+<label class="font-bold block mb-2">Loại bài kiểm tra</label>
+<select id="quizPreset" class="w-full border rounded-xl p-3 mb-4"><option value="Kiểm tra 15 phút">Kiểm tra 15 phút</option><option value="Kiểm tra 45 phút">Kiểm tra 45 phút</option><option value="Kiểm tra giữa kỳ">Kiểm tra giữa kỳ</option><option value="Kiểm tra cuối kỳ">Kiểm tra cuối kỳ</option><option value="custom">Tùy chỉnh...</option></select>
+<label class="font-bold block mb-2">Tên Quiz</label><input id="quizTitle" class="w-full border rounded-xl p-3 mb-5" value="Kiểm tra 15 phút" placeholder="Nhập tên Quiz">
+<div class="flex justify-end gap-2"><button id="cancelQuiz" type="button" class="border px-4 py-2 rounded-xl">Hủy</button><button id="createQuiz" type="button" class="bg-emerald-600 text-white font-bold px-5 py-2 rounded-xl">Tạo và chọn Quiz</button></div>
+</div></div>
 <div id="modal" class="hidden fixed inset-0 bg-black/50 z-50 p-4 overflow-auto"><div class="max-w-4xl mx-auto bg-white rounded-2xl p-6 my-6"><div class="flex justify-between items-center mb-4"><div><h2 class="text-2xl font-bold">👁 Xem trước đề học sinh</h2><p id="previewInfo" class="text-slate-500"></p></div><button id="closeModal" class="text-2xl px-3">✕</button></div><div id="previewList" class="space-y-5"></div></div></div>
 <script type="module">
 const s=window.supabaseClient,$=id=>document.getElementById(id);let me,generated=[],fileSources=[];
@@ -44,7 +56,19 @@ function norm(v){return String(v||"").toLowerCase().normalize("NFD").replace(/[\
 function similarity(a,b){a=new Set(norm(a).split(" ").filter(x=>x.length>2));b=new Set(norm(b).split(" ").filter(x=>x.length>2));if(!a.size||!b.size)return 0;let n=[...a].filter(x=>b.has(x)).length;return n/Math.max(a.size,b.size)}
 function dedupe(arr){let out=[];for(const q of arr){q.question_text=cleanQuestion(q.question_text);q.source_title=cleanTitle(q.source_title);if(!out.some(x=>similarity(x.question_text,q.question_text)>.82))out.push(q)}return out}
 async function init(){me=(await s.auth.getUser()).data.user;if(!me)return location.href="login.html";let p=await s.from("profiles").select("role").eq("id",me.id).single();if(p.data?.role!=="teacher")return location.href="student-dashboard.html";let c=await s.from("courses").select("id,title").eq("teacher_id",me.id).order("title");$("course").innerHTML='<option value="">-- Chọn khóa học --</option>'+(c.data||[]).map(x=>`<option value="${x.id}">${esc(x.title)}</option>`).join("")}
-$("course").onchange=async()=>{let id=$("course").value;if(!id)return;let[l,q]=await Promise.all([s.from("lessons").select("id,title").eq("course_id",id).order("lesson_order"),s.from("quizzes").select("id,title").eq("course_id",id).eq("teacher_id",me.id)]);$("lessons").innerHTML=(l.data||[]).map(x=>`<label class="block py-1"><input class="lp" type="checkbox" value="${x.id}"> ${esc(x.title)}</label>`).join("")||"Chưa có bài học.";$("quiz").innerHTML='<option value="">-- Chọn Quiz --</option>'+(q.data||[]).map(x=>`<option value="${x.id}">${esc(x.title)}</option>`).join("")};
+async function loadCourseData(id,selectQuizId=""){
+ if(!id){$("lessons").innerHTML="Chọn khóa học trước.";$("quiz").innerHTML='<option value="">-- Chọn Quiz --</option>';return}
+ let[l,q]=await Promise.all([s.from("lessons").select("id,title").eq("course_id",id).order("lesson_order"),s.from("quizzes").select("id,title").eq("course_id",id).eq("teacher_id",me.id).order("title")]);
+ $("lessons").innerHTML=(l.data||[]).map(x=>`<label class="block py-1"><input class="lp" type="checkbox" value="${x.id}"> ${esc(x.title)}</label>`).join("")||"Chưa có bài học.";
+ $("quiz").innerHTML='<option value="">-- Chọn Quiz --</option>'+(q.data||[]).map(x=>`<option value="${x.id}">${esc(x.title)}</option>`).join("");
+ if(selectQuizId)$("quiz").value=selectQuizId;
+}
+$("course").onchange=()=>loadCourseData($("course").value);
+$("newQuiz").onclick=()=>{if(!$("course").value)return show("Hãy chọn Khóa học trước khi tạo Quiz.");$("quizPreset").value="Kiểm tra 15 phút";$("quizTitle").value="Kiểm tra 15 phút";$("quizModal").classList.remove("hidden")};
+$("quizPreset").onchange=()=>{if($("quizPreset").value!=="custom")$("quizTitle").value=$("quizPreset").value;else{$("quizTitle").value="";$("quizTitle").focus()}};
+function closeQuizCreate(){$("quizModal").classList.add("hidden")}
+$("closeQuizModal").onclick=closeQuizCreate;$("cancelQuiz").onclick=closeQuizCreate;$("quizModal").onclick=e=>{if(e.target===$("quizModal"))closeQuizCreate()};
+$("createQuiz").onclick=async()=>{let courseId=$("course").value,title=$("quizTitle").value.trim();if(!courseId)return show("Hãy chọn Khóa học.");if(!title)return show("Nhập tên Quiz.");$("createQuiz").disabled=true;$("createQuiz").textContent="Đang tạo...";try{let z=await s.from("quizzes").insert({course_id:courseId,teacher_id:me.id,title}).select("id,title").single();if(z.error)throw z.error;await loadCourseData(courseId,z.data.id);closeQuizCreate();show(`Đã tạo "${title}" và tự chọn làm Quiz đích.`,true)}catch(e){show("Không tạo được Quiz: "+e.message)}finally{$("createQuiz").disabled=false;$("createQuiz").textContent="Tạo và chọn Quiz"}};
 const drop=$("drop"),inp=$("files");let pendingPdf=null,pdfStop=false;
 drop.onclick=()=>inp.click();
 ["dragenter","dragover"].forEach(e=>drop.addEventListener(e,x=>{x.preventDefault();drop.classList.add("drag")}));
