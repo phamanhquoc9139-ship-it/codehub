@@ -9,7 +9,7 @@
 <script src="scripts/supabase-config.js"></script>
 <style>.drop.drag{border-color:#7c3aed;background:#f5f3ff}.busy{opacity:.6;pointer-events:none}</style></head>
 <body class="bg-slate-50 text-slate-900"><main class="max-w-7xl mx-auto p-5">
-<div class="flex justify-between gap-4 mb-5"><div><h1 class="text-3xl font-bold">✨ AI Quiz Generator V4.4.8 SMART CONTENT + WORD FIX</h1><p class="text-slate-500">Supabase ổn định • PDF tối đa 50 trang • OCR thông minh • Xuất Word</p></div><a href="quizzes.html" class="border bg-white rounded-xl px-4 py-2 h-fit">← Quiz</a></div>
+<div class="flex justify-between gap-4 mb-5"><div><h1 class="text-3xl font-bold">✨ AI Quiz Generator V4.4.9 SMART CONTENT + SAFE SAVE + WORD FIX</h1><p class="text-slate-500">Supabase ổn định • PDF tối đa 50 trang • OCR thông minh • Xuất Word</p></div><a href="quizzes.html" class="border bg-white rounded-xl px-4 py-2 h-fit">← Quiz</a></div>
 <div id="msg" class="hidden mb-4 p-3 rounded-xl"></div>
 <div class="grid lg:grid-cols-4 gap-5">
 <aside class="bg-white rounded-2xl shadow p-5 space-y-3">
@@ -105,7 +105,58 @@ function render(){let c={};generated.forEach(x=>c[x.level]=(c[x.level]||0)+1);$(
 async function regenerateOne(i){syncAll();let old=generated[i],ratios={remember:old.level==="Nhận biết"?100:0,understand:old.level==="Thông hiểu"?100:0,apply:old.level==="Vận dụng"?100:0},card=document.querySelector(`[data-card="${i}"]`);card?.classList.add("busy");try{let x=await callAI(sourcePayload(1,ratios)),q=x.questions?.[0];if(!q)throw Error("AI chưa tạo được câu thay thế.");q.question_text=cleanQuestion(q.question_text);q.source_title=cleanTitle(q.source_title);let tries=0;while(generated.some((z,n)=>n!==i&&similarity(z.question_text,q.question_text)>.82)&&tries<2){x=await callAI(sourcePayload(1,ratios));q=x.questions?.[0];if(!q)break;q.question_text=cleanQuestion(q.question_text);tries++}if(!q)throw Error("Không tạo được câu thay thế.");generated[i]=q;render();show(`Đã tạo lại câu ${i+1}.`,true)}catch(e){show(e.message)}finally{card?.classList.remove("busy")}}
 $("all").onclick=()=>document.querySelectorAll(".pick").forEach(x=>x.checked=true);$("none").onclick=()=>document.querySelectorAll(".pick").forEach(x=>x.checked=false);$("shuffleAll").onclick=()=>{syncAll();for(let i=0;i<generated.length;i++){let q=generated[i],correct=q["option_"+q.correct_answer.toLowerCase()],vals=[q.option_a,q.option_b,q.option_c,q.option_d];for(let j=3;j>0;j--){let k=Math.floor(Math.random()*(j+1));[vals[j],vals[k]]=[vals[k],vals[j]]}[q.option_a,q.option_b,q.option_c,q.option_d]=vals;q.correct_answer=["A","B","C","D"][vals.indexOf(correct)]}render();show("Đã xáo trộn thứ tự đáp án và giữ đúng đáp án chính xác.",true)};
 $("preview").onclick=()=>{syncAll();let picks=[...document.querySelectorAll(".pick:checked")].map(x=>+x.dataset.i);if(!picks.length)return show("Chưa chọn câu nào để xem trước.");$("previewInfo").textContent=`${picks.length} câu • chế độ học sinh không hiển thị đáp án`;$("previewList").innerHTML=picks.map((i,n)=>{let q=generated[i];return`<div class="border rounded-2xl p-5"><div class="font-bold mb-3">Câu ${n+1}. ${esc(q.question_text)}</div>${["A","B","C","D"].map(k=>`<label class="block border rounded-xl p-3 mb-2"><input type="radio" name="pv${n}"> <b>${k}.</b> ${esc(q["option_"+k.toLowerCase()])}</label>`).join("")}</div>`}).join("");$("modal").classList.remove("hidden")};$("closeModal").onclick=()=>$("modal").classList.add("hidden");$("modal").onclick=e=>{if(e.target===$("modal"))$("modal").classList.add("hidden")};
-$("save").onclick=async()=>{if(!$("quiz").value)return show("Chọn Quiz đích.");syncAll();let ps=[...document.querySelectorAll(".pick:checked")];if(!ps.length)return show("Chưa chọn câu nào.");let ex=await s.from("quiz_questions").select("question_order").eq("quiz_id",$("quiz").value).order("question_order",{ascending:false}).limit(1),st=(ex.data?.[0]?.question_order||0)+1;let rows=ps.map((p,n)=>{let q=generated[+p.dataset.i];return{quiz_id:$("quiz").value,question_text:q.question_text,option_a:q.option_a,option_b:q.option_b,option_c:q.option_c,option_d:q.option_d,correct_answer:q.correct_answer,explanation:q.explanation,question_order:st+n}});let z=await s.from("quiz_questions").insert(rows);if(z.error)return show(z.error.message);show(`Đã lưu ${rows.length} câu vào Quiz.`,true)};
+$("save").onclick=async()=>{
+  if(!$("quiz").value)return show("Chọn Quiz đích.");
+  syncAll();
+  const ps=[...document.querySelectorAll(".pick:checked")];
+  if(!ps.length)return show("Chưa chọn câu nào.");
+  const quizId=$("quiz").value;
+  const quizName=$("quiz").selectedOptions[0]?.textContent?.trim()||"Quiz";
+  const countRes=await s.from("quiz_questions").select("id",{count:"exact",head:true}).eq("quiz_id",quizId);
+  if(countRes.error)return show("Không kiểm tra được câu hỏi hiện có: "+countRes.error.message);
+  const oldCount=countRes.count||0;
+  let mode="replace";
+  if(oldCount>0){
+    const replace=confirm(
+`⚠️ SAFE SAVE
+
+Quiz "${quizName}" hiện đã có ${oldCount} câu.
+Bạn đang chọn ${ps.length} câu mới.
+
+OK = THAY THẾ toàn bộ ${oldCount} câu cũ bằng ${ps.length} câu mới (khuyên dùng).
+Cancel = chọn tiếp giữa THÊM câu hoặc HỦY.`
+    );
+    if(!replace){
+      const add=confirm(
+`Bạn có muốn THÊM ${ps.length} câu vào ${oldCount} câu hiện có không?
+
+Sau khi thêm: ${oldCount+ps.length} câu.
+OK = Thêm vào đề
+Cancel = Hủy, không lưu gì.`
+      );
+      if(!add){show("Đã hủy lưu. Không có câu hỏi nào bị thay đổi.",true);return}
+      mode="append";
+    }
+  }
+  const rows=ps.map((p,n)=>{
+    const q=generated[+p.dataset.i];
+    return{quiz_id:quizId,question_text:q.question_text,option_a:q.option_a,option_b:q.option_b,option_c:q.option_c,option_d:q.option_d,correct_answer:q.correct_answer,explanation:q.explanation,question_order:n+1}
+  });
+  if(mode==="replace"){
+    const del=await s.from("quiz_questions").delete().eq("quiz_id",quizId);
+    if(del.error)return show("Không thể xóa câu cũ: "+del.error.message);
+  }else{
+    const ex=await s.from("quiz_questions").select("question_order").eq("quiz_id",quizId).order("question_order",{ascending:false}).limit(1);
+    if(ex.error)return show(ex.error.message);
+    const st=(ex.data?.[0]?.question_order||0)+1;
+    rows.forEach((r,n)=>r.question_order=st+n);
+  }
+  const z=await s.from("quiz_questions").insert(rows);
+  if(z.error)return show("Lỗi lưu câu hỏi: "+z.error.message);
+  show(mode==="replace"
+    ?`✓ SAFE SAVE: Đã thay ${oldCount} câu cũ bằng ${rows.length} câu mới. Quiz hiện có ${rows.length} câu.`
+    :`✓ Đã thêm ${rows.length} câu. Quiz hiện có ${oldCount+rows.length} câu.`,true);
+};
 
 $("exportWord").onclick=()=>{try{
   syncAll();
