@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Quản lý tài khoản | CodeHub</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="scripts/supabase-config.js"></script>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f4f7fb;color:#0f172a}
+header{background:#fff;border-bottom:1px solid #e5e7eb;padding:20px 4%;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+h1{margin:0;font-size:32px}.sub{color:#64748b;margin-top:6px}.btn{border:0;border-radius:12px;padding:13px 18px;font-weight:700;cursor:pointer;font-size:16px}
+.blue{background:#2563eb;color:#fff}.green{background:#059669;color:#fff}.white{background:#fff;border:1px solid #dbe2ea}
+main{width:min(1500px,94%);margin:28px auto}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{background:#fff;border-radius:18px;padding:22px;box-shadow:0 2px 10px #0000000b}.num{font-size:38px;font-weight:800;margin-top:8px}
+.toolbar{margin-top:20px;display:flex;gap:12px;flex-wrap:wrap}.toolbar input,.toolbar select{padding:14px;border:1px solid #cbd5e1;border-radius:12px;font-size:16px;background:#fff}.toolbar input{flex:1;min-width:260px}
+.tablebox{margin-top:18px;background:#fff;border-radius:18px;overflow:auto;box-shadow:0 2px 10px #0000000b}
+table{width:100%;border-collapse:collapse;min-width:900px}th,td{padding:15px;border-bottom:1px solid #e5e7eb;text-align:left}th{background:#eef3f9}
+.badge{padding:6px 10px;border-radius:999px;font-weight:700;font-size:13px}.admin{background:#ede9fe;color:#6d28d9}.teacher{background:#dbeafe;color:#1d4ed8}.student{background:#dcfce7;color:#15803d}
+#msg{margin-top:15px;padding:14px;border-radius:12px;display:none}.err{display:block!important;background:#fee2e2;color:#991b1b}.ok{display:block!important;background:#dcfce7;color:#166534}
+@media(max-width:700px){.cards{grid-template-columns:1fr}h1{font-size:25px}}
+</style>
+</head>
+<body>
+<header><div><h1>👥 Quản lý tài khoản</h1><div class="sub">Dành riêng cho quản trị viên CodeHub</div></div>
+<div><button class="btn white" onclick="location.href='teacher.html'">← Quản trị</button> <button class="btn blue" id="logout">Đăng xuất</button></div></header>
+<main>
+<div class="cards"><div class="card">Tổng tài khoản<div class="num" id="total">—</div></div><div class="card">👨‍🏫 Giáo viên<div class="num" id="teachers">—</div></div><div class="card">👨‍🎓 Học sinh<div class="num" id="students">—</div></div></div>
+<div class="toolbar"><input id="search" placeholder="🔎 Tìm họ tên, email, mã HS/GV, lớp..."><select id="role"><option value="">Tất cả vai trò</option><option value="admin">Admin</option><option value="teacher">Giáo viên</option><option value="student">Học sinh</option></select><button class="btn green" id="export">⬇ Xuất CSV</button><button class="btn blue" id="reload">↻ Làm mới</button></div>
+<div id="msg"></div>
+<div class="tablebox"><table><thead><tr><th>STT</th><th>Họ tên</th><th>Email</th><th>Mã</th><th>Lớp</th><th>Vai trò</th></tr></thead><tbody id="rows"><tr><td colspan="6">Đang tải...</td></tr></tbody></table></div>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+let accounts=[];
+function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function show(t,bad=false){$("msg").className=bad?"err":"ok";$("msg").textContent=t}
+function roleName(r){return r==="admin"?"Admin":r==="teacher"?"Giáo viên":"Học sinh"}
+function normalize(raw){
+ const a=Array.isArray(raw)?raw:(raw.accounts||raw.users||raw.data||[]);
+ return a.map(x=>({
+  id:x.id||x.user_id||"", email:x.email||x.user_email||"",
+  full_name:x.full_name||x.name||"", student_code:x.student_code||x.code||"",
+  class_name:x.class_name||"", role:x.role||"student"
+ }));
+}
+function filtered(){let q=$("search").value.trim().toLowerCase(),r=$("role").value;return accounts.filter(x=>(!r||x.role===r)&&(!q||[x.full_name,x.email,x.student_code,x.class_name,x.role].join(" ").toLowerCase().includes(q)))}
+function render(){
+ const a=filtered();$("rows").innerHTML=a.length?a.map((x,i)=>`<tr><td>${i+1}</td><td><b>${esc(x.full_name||"—")}</b></td><td>${esc(x.email||"—")}</td><td>${esc(x.student_code||"—")}</td><td>${esc(x.class_name||"—")}</td><td><span class="badge ${esc(x.role)}">${roleName(x.role)}</span></td></tr>`).join(""):`<tr><td colspan="6">Không có tài khoản phù hợp.</td></tr>`;
+ $("total").textContent=accounts.length;$("teachers").textContent=accounts.filter(x=>x.role==="teacher").length;$("students").textContent=accounts.filter(x=>x.role==="student").length;
+}
+async function load(){
+ try{
+  if(!window.supabaseClient) throw Error("Không tìm thấy supabaseClient.");
+  const {data:{session}}=await window.supabaseClient.auth.getSession();
+  if(!session){location.href="login.html";return}
+  const {data:p,error:pe}=await window.supabaseClient.from("profiles").select("role").eq("id",session.user.id).maybeSingle();
+  if(pe)throw pe;if(p?.role!=="admin"){alert("Chỉ Admin được truy cập trang này.");location.href="teacher.html";return}
+  $("rows").innerHTML='<tr><td colspan="6">Đang tải tài khoản...</td></tr>';
+  const res=await fetch("https://drfcejvmyhzorwepndta.supabase.co/functions/v1/admin-accounts",{method:"GET",headers:{Authorization:`Bearer ${session.access_token}`,apikey:window.SUPABASE_ANON_KEY||""}});
+  let raw={};try{raw=await res.json()}catch{}
+  if(!res.ok)throw Error(raw.error||raw.message||("HTTP "+res.status));
+  accounts=normalize(raw);render();
+ }catch(e){$("rows").innerHTML='<tr><td colspan="6">Không tải được dữ liệu.</td></tr>';show("Lỗi: "+e.message,true)}
+}
+$("search").oninput=render;$("role").onchange=render;$("reload").onclick=load;
+$("logout").onclick=async()=>{await window.supabaseClient.auth.signOut();location.href="login.html"};
+$("export").onclick=()=>{
+ const a=filtered();if(!a.length)return alert("Không có dữ liệu để xuất.");
+ const csv="\ufeff"+[["STT","Họ tên","Email","Mã","Lớp","Vai trò"],...a.map((x,i)=>[i+1,x.full_name,x.email,x.student_code,x.class_name,roleName(x.role)])].map(row=>row.map(v=>'"'+String(v??"").replaceAll('"','""')+'"').join(",")).join("\r\n");
+ const blob=new Blob([csv],{type:"text/csv;charset=utf-8"}),u=URL.createObjectURL(blob),a1=document.createElement("a");a1.href=u;a1.download="CodeHub_Danh_sach_tai_khoan.csv";a1.click();URL.revokeObjectURL(u);
+};
+load();
+</script></body></html>
