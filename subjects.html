@@ -39,10 +39,10 @@ let currentUser=null,subjects=[];
 document.addEventListener("DOMContentLoaded",async()=>{
  const s=window.supabaseClient;if(!s){alert("Không kết nối được Supabase.");return}
  const {data:{user}}=await s.auth.getUser();if(!user){location.href="login.html";return}currentUser=user;
- const {data:p}=await s.from("profiles").select("role").eq("id",user.id).single();if(!p||p.role!=="teacher"){location.href="index.html";return}
+ const {data:p}=await s.from("profiles").select("role").eq("id",user.id).single();const currentRole=String(p?.role||"").trim().toLowerCase();if(!p||!["teacher","admin"].includes(currentRole)){location.href="index.html";return}window.currentRole=currentRole
  document.getElementById("search").addEventListener("input",render);await load();
 });
-async function load(){const {data,error}=await window.supabaseClient.from("subjects").select("*").eq("teacher_id",currentUser.id).order("subject_name");if(error){alert("Không tải được môn học: "+error.message);return}subjects=data||[];render()}
+async function load(){const s=window.supabaseClient;let q=s.from("subjects").select("*").order("subject_name");if(window.currentRole!=="admin")q=q.eq("teacher_id",currentUser.id);const {data,error}=await q;if(error){alert("Không tải được môn học: "+error.message);return}subjects=data||[];render()}
 function render(){
  document.getElementById("total").textContent=subjects.length;const q=document.getElementById("search").value.trim().toLocaleLowerCase("vi-VN"),g=document.getElementById("grid");g.innerHTML="";
  const a=subjects.filter(x=>(x.subject_name+" "+(x.subject_code||"")+" "+(x.description||"")).toLocaleLowerCase("vi-VN").includes(q));
