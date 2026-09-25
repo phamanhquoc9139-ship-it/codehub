@@ -9,7 +9,7 @@
 <script src="scripts/supabase-config.js"></script>
 <style>.drop.drag{border-color:#7c3aed;background:#f5f3ff}.busy{opacity:.6;pointer-events:none}</style></head>
 <body class="bg-slate-50 text-slate-900"><main class="max-w-7xl mx-auto p-5">
-<div class="flex justify-between gap-4 mb-5"><div><h1 class="text-3xl font-bold">✨ AI Quiz Generator V4.5.0 PUBLISH QUIZ + SAFE SAVE + SMART CONTENT</h1><p class="text-slate-500">Supabase ổn định • PDF tối đa 50 trang • OCR thông minh • Xuất Word</p></div><a href="quizzes.html" class="border bg-white rounded-xl px-4 py-2 h-fit">← Quiz</a></div>
+<div class="flex justify-between gap-4 mb-5"><div><h1 class="text-3xl font-bold">✨ AI Quiz Generator V4.6 • LANGUAGE AUTO + EXACT COUNT + SAFE SAVE</h1><p class="text-slate-500">Supabase ổn định • PDF tối đa 50 trang • OCR thông minh • Xuất Word</p></div><a href="quizzes.html" class="border bg-white rounded-xl px-4 py-2 h-fit">← Quiz</a></div>
 <div id="msg" class="hidden mb-4 p-3 rounded-xl"></div>
 <div class="grid lg:grid-cols-4 gap-5">
 <aside class="bg-white rounded-2xl shadow p-5 space-y-3">
@@ -20,6 +20,12 @@
 <select id="quiz" class="flex-1 min-w-0 border rounded-xl p-3"></select>
 <button id="newQuiz" type="button" class="border border-emerald-600 text-emerald-700 font-bold px-3 rounded-xl whitespace-nowrap">＋ Tạo Quiz</button>
 </div>
+<label class="font-bold block">Ngôn ngữ đề</label>
+<select id="language" class="w-full border rounded-xl p-3">
+<option value="auto" selected>🤖 Tự động theo môn học</option>
+<option value="vi">🇻🇳 Tiếng Việt</option>
+<option value="en">🇬🇧 English</option>
+</select>
 <label class="font-bold block">Số câu</label><select id="count" class="w-full border rounded-xl p-3"><option>5</option><option>10</option><option selected>20</option><option>30</option><option>40</option></select>
 <div class="font-bold">Ma trận (%)</div><div class="grid grid-cols-3 gap-2 text-xs"><label>NB<input id="r" type="number" value="40" class="w-full border p-2 rounded"></label><label>TH<input id="u" type="number" value="40" class="w-full border p-2 rounded"></label><label>VD<input id="a" type="number" value="20" class="w-full border p-2 rounded"></label></div>
 <div class="pt-2 border-t"><label class="font-bold block mb-2">📎 Tài liệu bổ sung</label><div id="drop" class="drop border-2 border-dashed rounded-xl p-4 text-center cursor-pointer"><div class="font-semibold">Chọn hoặc kéo-thả file</div><div class="text-xs text-slate-500 mt-1">PDF • DOCX • TXT — tối đa 8 file</div><input id="files" type="file" multiple accept=".pdf,.docx,.txt,text/plain,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document" class="hidden"></div><div id="fileList" class="space-y-1 mt-2 text-xs"></div>
@@ -108,10 +114,39 @@ function sourcePayload(count,ratios){
 - Mỗi câu phải có đáp án được chứng minh trực tiếp bằng nội dung kiến thức nguồn.
 ${lessonTitles.length?`- Các bài học đang chọn: ${lessonTitles.join("; ")}. Khi dùng tài liệu PDF bổ sung, ưu tiên nội dung liên quan trực tiếp đến các bài học này.`:"- Nếu không chọn bài học CodeHub, chỉ dùng phần kiến thức học tập trong phạm vi tài liệu đã đọc."}
 - Không tự bổ sung kiến thức ngoài nguồn nếu nguồn không hỗ trợ.`;
-  return{lessonIds,fileSources,extraText:[smartRules,$("extra").value].filter(Boolean).join("\n\n"),count,ratios}
+  const courseTitle=$("course").selectedOptions[0]?.textContent?.trim()||"";
+  const language=$("language")?.value||"auto";
+  return{lessonIds,fileSources,extraText:[smartRules,$("extra").value].filter(Boolean).join("\n\n"),count,ratios,language,courseTitle}
 }
 async function callAI(payload){let{data:{session}}=await s.auth.getSession();let res=await fetch(ENDPOINT,{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+session.access_token},body:JSON.stringify(payload)});let x=await res.json();if(!res.ok)throw Error(x.error||"Lỗi AI");return x}
-$("generate").onclick=async()=>{let sum=+$("r").value + +$("u").value + +$("a").value,p=sourcePayload(+$("count").value,{remember:+$("r").value,understand:+$("u").value,apply:+$("a").value});if(sum!==100)return show("Tổng NB + TH + VD phải bằng 100%.");if(!p.lessonIds.length&&!fileSources.length&&!p.extraText.trim())return show("Chọn bài học, tài liệu hoặc dán văn bản nguồn.");$("generate").disabled=true;$("generate").textContent="AI đang phân tích nguồn...";try{let x=await callAI(p),raw=x.questions||[];generated=dedupe(raw);render();let removed=raw.length-generated.length;show(`AI đã tạo ${generated.length} câu bằng ${x.model||"Gemini"}${removed?` • đã loại ${removed} câu gần trùng`:""}. Hãy duyệt trước khi lưu.`,true)}catch(e){show(e.message)}finally{$("generate").disabled=false;$("generate").textContent="✨ Tạo câu hỏi"}};
+$("generate").onclick=async()=>{
+ let sum=+$("r").value + +$("u").value + +$("a").value;
+ const wanted=+$("count").value;
+ let p=sourcePayload(wanted,{remember:+$("r").value,understand:+$("u").value,apply:+$("a").value});
+ if(sum!==100)return show("Tổng NB + TH + VD phải bằng 100%.");
+ if(!p.lessonIds.length&&!fileSources.length&&!p.extraText.trim())return show("Chọn bài học, tài liệu hoặc dán văn bản nguồn.");
+ $("generate").disabled=true;$("generate").textContent="AI đang phân tích nguồn...";
+ try{
+   let x=await callAI(p),raw=x.questions||[];
+   generated=dedupe(raw);
+   let attempts=0;
+   while(generated.length<wanted && attempts<3){
+     const missing=wanted-generated.length;
+     $("generate").textContent=`AI đang bổ sung ${missing} câu còn thiếu...`;
+     const existing=generated.map((q,i)=>`${i+1}. ${q.question_text}`).join("\n");
+     let morePayload=sourcePayload(missing,{remember:+$("r").value,understand:+$("u").value,apply:+$("a").value});
+     morePayload.extraText += `\n\nCÁC CÂU ĐÃ CÓ - TUYỆT ĐỐI KHÔNG TẠO CÂU TRÙNG HOẶC GẦN TRÙNG:\n${existing}`;
+     let y=await callAI(morePayload);
+     raw=raw.concat(y.questions||[]);
+     generated=dedupe(raw).slice(0,wanted);
+     attempts++;
+   }
+   render();
+   const lang=$("language").value==="auto"?"Tự động":($("language").value==="en"?"English":"Tiếng Việt");
+   show(`AI đã tạo ${generated.length}/${wanted} câu • Ngôn ngữ: ${lang} • ${x.model||"Gemini"}. Hãy duyệt trước khi lưu.`,generated.length>0);
+ }catch(e){show(e.message)}
+ finally{$("generate").disabled=false;$("generate").textContent="✨ Tạo câu hỏi"}
+};
 function syncOne(i){let q=generated[i];if(!q)return;q.question_text=document.querySelector(`.q[data-i="${i}"]`)?.value||q.question_text;for(const k of ["a","b","c","d"])q["option_"+k]=document.querySelector(`.op[data-i="${i}"][data-k="${k}"]`)?.value||q["option_"+k];q.correct_answer=document.querySelector(`.ans[data-i="${i}"]`)?.value||q.correct_answer;q.explanation=document.querySelector(`.exp[data-i="${i}"]`)?.value||q.explanation}
 function syncAll(){generated.forEach((_,i)=>syncOne(i))}
 function shuffleOne(i){syncOne(i);let q=generated[i],correct=q["option_"+q.correct_answer.toLowerCase()],vals=[q.option_a,q.option_b,q.option_c,q.option_d];for(let j=vals.length-1;j>0;j--){let k=Math.floor(Math.random()*(j+1));[vals[j],vals[k]]=[vals[k],vals[j]]}[q.option_a,q.option_b,q.option_c,q.option_d]=vals;q.correct_answer=["A","B","C","D"][vals.indexOf(correct)];render()}
