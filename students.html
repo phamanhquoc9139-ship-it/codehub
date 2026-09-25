@@ -425,7 +425,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     .eq("id", user.id)
     .single();
 
-  if (!profile || profile.role !== "teacher") {
+  const currentRole = String(profile?.role || "").trim().toLowerCase();
+
+  if (!profile || !["teacher", "admin"].includes(currentRole)) {
     showError("Bạn không có quyền truy cập.");
     return;
   }
