@@ -32,48 +32,48 @@ main{max-width:1200px;margin:38px auto;padding:0 20px}h1{font-size:35px;margin-b
 <div class="msg" id="msg"></div><div class="ma"><button class="btn gray" onclick="closeModal()">Hủy</button><button class="btn green" onclick="saveCourse()">Lưu khóa học</button></div>
 </div></div>
 <script>
-let user=null,courses=[],classes=[],links=[],subjects=[];
+let user=null,currentRole="",courses=[],classes=[],links=[],subjects=[],assignments=[];
+const norm=v=>String(v||"").trim().toLocaleLowerCase("vi-VN");
 document.addEventListener("DOMContentLoaded",async()=>{
  const s=window.supabaseClient;if(!s){alert("Không kết nối được Supabase.");return}
  const {data:{user:u}}=await s.auth.getUser();if(!u){location.href="login.html";return}user=u;
- const {data:p}=await s.from("profiles").select("role").eq("id",u.id).single();const currentRole=String(p?.role||"").trim().toLowerCase();if(!p||!["teacher","admin"].includes(currentRole)){location.href="index.html";return}
- document.getElementById("search").addEventListener("input",render);document.getElementById("subjectFilter").addEventListener("change",render);document.getElementById("gradeFilter").addEventListener("change",render);await load();
+ const {data:p}=await s.from("profiles").select("role").eq("id",u.id).single();currentRole=norm(p?.role);
+ if(!p||!["teacher","admin"].includes(currentRole)){location.href="index.html";return}
+ search.addEventListener("input",render);subjectFilter.addEventListener("change",render);gradeFilter.addEventListener("change",render);
+ subject.addEventListener("change",()=>classChecks([]));await load();
 });
 async function load(){
  const s=window.supabaseClient;
- const roleResult=await s.from("profiles").select("role").eq("id",user.id).single();
- const isAdmin=String(roleResult.data?.role||"").trim().toLowerCase()==="admin";
  let courseQuery=s.from("courses").select("*").order("created_at",{ascending:false});
  let classQuery=s.from("classes").select("*").order("class_name");
- if(!isAdmin){
+ let subjectQuery=s.from("subjects").select("*").order("subject_name");
+ if(currentRole==="teacher"){
+   const ar=await s.from("teacher_class_subjects").select("teacher_id,subject_id,class_id").eq("teacher_id",user.id);
+   if(ar.error){alert("Lỗi tải phân công V2.4: "+ar.error.message);return} assignments=ar.data||[];
+   const classIds=[...new Set(assignments.map(x=>x.class_id).filter(Boolean))], subjectIds=[...new Set(assignments.map(x=>x.subject_id).filter(Boolean))];
    courseQuery=courseQuery.eq("teacher_id",user.id);
-   classQuery=classQuery.eq("teacher_id",user.id);
+   if(classIds.length) classQuery=classQuery.in("id",classIds); else classes=[];
+   if(subjectIds.length) subjectQuery=subjectQuery.in("id",subjectIds); else subjects=[];
  }
- const [a,b,c,d]=await Promise.all([courseQuery,classQuery,s.from("course_classes").select("*"),s.from("subjects").select("*").order("subject_name")]);
+ const [a,b,c,d]=await Promise.all([courseQuery,classQuery,s.from("course_classes").select("*"),subjectQuery]);
  for(const r of [a,b,c,d])if(r.error){alert("Lỗi tải dữ liệu: "+r.error.message);return}
- courses=a.data||[];classes=b.data||[];links=c.data||[];subjects=[...new Map((d.data||[]).filter(x=>x.subject_name&&x.subject_name.trim()).map(x=>[x.subject_name.trim().toLocaleLowerCase("vi-VN"),{...x,subject_name:x.subject_name.trim()}])).values()];fillSubjects();render();
+ courses=a.data||[];classes=b.data||[];links=c.data||[];
+ subjects=[...new Map((d.data||[]).filter(x=>x.subject_name&&x.subject_name.trim()).map(x=>[norm(x.subject_name),{...x,subject_name:x.subject_name.trim()}])).values()];
+ if(currentRole==="teacher"&&!assignments.length){classes=[];subjects=[]}
+ fillSubjects();render();
 }
-function fillSubjects(){
- const f=document.getElementById("subjectFilter"),s=document.getElementById("subject"),fv=f.value,sv=s.value;f.innerHTML='<option value="">Tất cả môn</option>';s.innerHTML='<option value="">-- Chọn môn học --</option>';
- subjects.forEach(x=>{const o=document.createElement("option");o.value=x.subject_name;o.textContent=x.subject_name;f.appendChild(o);const p=o.cloneNode(true);s.appendChild(p)});f.value=fv;s.value=sv;
-}
+function fillSubjects(){const f=subject,sf=subjectFilter,fv=sf.value,sv=f.value;sf.innerHTML='<option value="">Tất cả môn</option>';f.innerHTML='<option value="">-- Chọn môn học --</option>';subjects.forEach(x=>{let o=new Option(x.subject_name,x.subject_name);sf.add(o);f.add(o.cloneNode(true))});sf.value=fv;f.value=sv}
 function assigned(id){const ids=links.filter(x=>x.course_id===id).map(x=>x.class_id);return classes.filter(x=>ids.includes(x.id))}
-function render(){
- document.getElementById("total").textContent=courses.length;document.getElementById("pub").textContent=courses.filter(x=>x.is_published).length;document.getElementById("draft").textContent=courses.filter(x=>!x.is_published).length;
- const q=document.getElementById("search").value.trim().toLocaleLowerCase("vi-VN"),sf=document.getElementById("subjectFilter").value,gf=document.getElementById("gradeFilter").value,g=document.getElementById("grid");g.innerHTML="";
- const arr=courses.filter(x=>(!q||(x.title+" "+x.subject+" "+(x.description||"")).toLocaleLowerCase("vi-VN").includes(q))&&(!sf||x.subject===sf)&&(!gf||String(x.grade)===gf));
- if(!arr.length){g.innerHTML='<div class="empty">Chưa có khóa học phù hợp.</div>';return}
- arr.forEach(x=>{const c=document.createElement("div");c.className="card";c.innerHTML='<div style="font-size:34px">📘</div><div class="ct"></div><div class="meta"></div><div class="classchips"></div><div class="status"></div><div class="actions"></div>';c.querySelector(".ct").textContent=x.title;c.querySelector(".meta").textContent="📚 "+x.subject+" • 🎓 Khối "+x.grade;const ch=c.querySelector(".classchips");assigned(x.id).forEach(z=>{const e=document.createElement("span");e.className="chip";e.textContent="🏫 "+z.class_name;ch.appendChild(e)});const st=c.querySelector(".status");st.className="status "+(x.is_published?"pub":"draft");st.textContent=x.is_published?"🟢 Đã xuất bản":"⚪ Bản nháp";
- const a=c.querySelector(".actions");[["📖 Bài học","",()=>location.href=`lessons.html?course=${encodeURIComponent(x.id)}`],["✏️ Sửa","orange",()=>openEdit(x)],["🗑️ Xóa","red",()=>removeCourse(x)]].forEach(v=>{const b=document.createElement("button");b.className=v[1]||"btn";b.textContent=v[0];b.onclick=v[2];a.appendChild(b)});g.appendChild(c)});
-}
-function classChecks(selected=[]){const b=document.getElementById("classList");b.innerHTML="";classes.forEach(x=>{const l=document.createElement("label");l.className="cc";const i=document.createElement("input");i.type="checkbox";i.value=x.id;i.checked=selected.includes(x.id);l.append(i,document.createTextNode(x.class_name+" ("+(x.school_year||"")+")"));b.appendChild(l)})}
-function openCreate(){if(!subjects.length){alert("Chưa có môn học. Hãy vào Quản lý môn học và thêm môn trước.");location.href="subjects.html";return}document.getElementById("mt").textContent="➕ Tạo khóa học";document.getElementById("courseId").value="";document.getElementById("title").value="";document.getElementById("subject").value="";document.getElementById("grade").value="";document.getElementById("description").value="";document.getElementById("published").value="false";document.getElementById("msg").textContent="";classChecks([]);document.getElementById("modal").style.display="flex"}
-function openEdit(x){document.getElementById("mt").textContent="✏️ Sửa khóa học";document.getElementById("courseId").value=x.id;document.getElementById("title").value=x.title||"";document.getElementById("subject").value=x.subject||"";document.getElementById("grade").value=String(x.grade||"");document.getElementById("description").value=x.description||"";document.getElementById("published").value=String(!!x.is_published);document.getElementById("msg").textContent="";classChecks(assigned(x.id).map(z=>z.id));document.getElementById("modal").style.display="flex"}
-function closeModal(){document.getElementById("modal").style.display="none"}
-async function saveCourse(){const id=document.getElementById("courseId").value,title=document.getElementById("title").value.trim(),subject=document.getElementById("subject").value,grade=document.getElementById("grade").value,description=document.getElementById("description").value.trim(),is_published=document.getElementById("published").value==="true",ids=[...document.querySelectorAll("#classList input:checked")].map(x=>x.value),msg=document.getElementById("msg");if(!title||!subject||!grade){msg.style.color="#dc2626";msg.textContent="⚠️ Chọn đầy đủ tên khóa học, môn học và khối.";return}
- const s=window.supabaseClient;let cid=id;if(id){const {error}=await s.from("courses").update({title,subject,grade,description,is_published,updated_at:new Date().toISOString()}).eq("id",id);if(error){msg.textContent="❌ "+error.message;return}}else{const {data,error}=await s.from("courses").insert({title,subject,grade,description,is_published,teacher_id:user.id}).select("id").single();if(error){msg.textContent="❌ "+error.message;return}cid=data.id}
- let r=await s.from("course_classes").delete().eq("course_id",cid);if(r.error){msg.textContent="❌ "+r.error.message;return}if(ids.length){r=await s.from("course_classes").insert(ids.map(class_id=>({course_id:cid,class_id})));if(r.error){msg.textContent="❌ "+r.error.message;return}}closeModal();await load()}
-async function removeCourse(x){if(!confirm(`Xóa khóa học "${x.title}"?`))return;const {error}=await window.supabaseClient.from("courses").delete().eq("id",x.id);if(error){alert("❌ "+error.message);return}await load()}
+function allowedClassesForSubject(subjectName){if(currentRole==="admin")return classes;const sub=subjects.find(x=>norm(x.subject_name)===norm(subjectName));if(!sub)return[];const ids=new Set(assignments.filter(x=>String(x.subject_id)===String(sub.id)).map(x=>String(x.class_id)));return classes.filter(x=>ids.has(String(x.id)))}
+function render(){total.textContent=courses.length;pub.textContent=courses.filter(x=>x.is_published).length;draft.textContent=courses.filter(x=>!x.is_published).length;const q=norm(search.value),sf=subjectFilter.value,gf=gradeFilter.value;grid.innerHTML="";const arr=courses.filter(x=>(!q||norm(x.title+" "+x.subject+" "+(x.description||"")).includes(q))&&(!sf||x.subject===sf)&&(!gf||String(x.grade)===gf));if(!arr.length){grid.innerHTML='<div class="empty">Chưa có khóa học phù hợp.</div>';return}arr.forEach(x=>{const c=document.createElement("div");c.className="card";c.innerHTML='<div style="font-size:34px">📘</div><div class="ct"></div><div class="meta"></div><div class="classchips"></div><div class="status"></div><div class="actions"></div>';c.querySelector(".ct").textContent=x.title;c.querySelector(".meta").textContent="📚 "+x.subject+" • 🎓 Khối "+x.grade;assigned(x.id).forEach(z=>{let e=document.createElement("span");e.className="chip";e.textContent="🏫 "+z.class_name;c.querySelector(".classchips").appendChild(e)});let st=c.querySelector(".status");st.className="status "+(x.is_published?"pub":"draft");st.textContent=x.is_published?"🟢 Đã xuất bản":"⚪ Bản nháp";[["📖 Bài học","",()=>location.href=`lessons.html?course=${encodeURIComponent(x.id)}`],["✏️ Sửa","orange",()=>openEdit(x)],["🗑️ Xóa","red",()=>removeCourse(x)]].forEach(v=>{let b=document.createElement("button");b.className=v[1]||"btn";b.textContent=v[0];b.onclick=v[2];c.querySelector(".actions").appendChild(b)});grid.appendChild(c)})}
+function classChecks(selected=[]){classList.innerHTML="";const arr=allowedClassesForSubject(subject.value);if(!subject.value){classList.innerHTML='<div style="color:#64748b">Chọn môn học trước.</div>';return}if(!arr.length){classList.innerHTML='<div style="color:#dc2626">Chưa được phân lớp cho môn này.</div>';return}arr.forEach(x=>{let l=document.createElement("label");l.className="cc";let i=document.createElement("input");i.type="checkbox";i.value=x.id;i.checked=selected.includes(x.id);l.append(i,document.createTextNode(x.class_name+" ("+(x.school_year||"")+")"));classList.appendChild(l)})}
+function openCreate(){if(!subjects.length){alert(currentRole==="teacher"?"Bạn chưa được Admin phân công Môn + Lớp.":"Chưa có môn học.");return}mt.textContent="➕ Tạo khóa học";courseId.value="";title.value="";subject.value="";grade.value="";description.value="";published.value="false";msg.textContent="";classChecks([]);modal.style.display="flex"}
+function openEdit(x){mt.textContent="✏️ Sửa khóa học";courseId.value=x.id;title.value=x.title||"";subject.value=x.subject||"";grade.value=String(x.grade||"");description.value=x.description||"";published.value=String(!!x.is_published);msg.textContent="";classChecks(assigned(x.id).map(z=>z.id));modal.style.display="flex"}
+function closeModal(){modal.style.display="none"}
+async function saveCourse(){const id=courseId.value,t=title.value.trim(),sub=subject.value,g=grade.value,des=description.value.trim(),is_published=published.value==="true",ids=[...document.querySelectorAll("#classList input:checked")].map(x=>x.value);if(!t||!sub||!g){msg.textContent="⚠️ Chọn đầy đủ tên khóa học, môn học và khối.";return}if(!ids.length){msg.textContent="⚠️ Chọn ít nhất 1 lớp được phân công cho môn này.";return}if(currentRole==="teacher"){const ok=new Set(allowedClassesForSubject(sub).map(x=>String(x.id)));if(ids.some(id=>!ok.has(String(id)))){msg.textContent="❌ Có lớp không thuộc phân công Môn + Lớp của bạn.";return}}
+ const s=window.supabaseClient;let cid=id;if(id){let q=s.from("courses").update({title:t,subject:sub,grade:g,description:des,is_published,updated_at:new Date().toISOString()}).eq("id",id);if(currentRole==="teacher")q=q.eq("teacher_id",user.id);const {error}=await q;if(error){msg.textContent="❌ "+error.message;return}}else{const {data,error}=await s.from("courses").insert({title:t,subject:sub,grade:g,description:des,is_published,teacher_id:user.id}).select("id").single();if(error){msg.textContent="❌ "+error.message;return}cid=data.id}
+ let r=await s.from("course_classes").delete().eq("course_id",cid);if(r.error){msg.textContent="❌ "+r.error.message;return}r=await s.from("course_classes").insert(ids.map(class_id=>({course_id:cid,class_id})));if(r.error){msg.textContent="❌ "+r.error.message;return}closeModal();await load()}
+async function removeCourse(x){if(!confirm(`Xóa khóa học "${x.title}"?`))return;let q=window.supabaseClient.from("courses").delete().eq("id",x.id);if(currentRole==="teacher")q=q.eq("teacher_id",user.id);const {error}=await q;if(error){alert("❌ "+error.message);return}await load()}
 async function logout(){await window.supabaseClient.auth.signOut();location.href="login.html"}
-document.getElementById("modal").addEventListener("click",e=>{if(e.target.id==="modal")closeModal()});
+modal.addEventListener("click",e=>{if(e.target.id==="modal")closeModal()});
 </script></body></html>
