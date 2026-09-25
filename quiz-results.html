@@ -1,27 +1,7 @@
 <!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Kết quả Quiz V4.5.5 | CodeHub</title>
+<title>Kết quả Quiz V4.5.6 | CodeHub</title>
 <script src="https://cdn.tailwindcss.com">
-function normalizeAnalysisLabels(){
-  const root=document.body;
-  const nodes=[...root.querySelectorAll("*")].filter(el=>el.children.length===0 && /^\s*Sai\s+0\/\d+\s+\(0(?:\.0)?%\)\s*$/.test(el.textContent||""));
-  nodes.forEach(el=>{
-    const m=(el.textContent||"").match(/Sai\s+0\/(\d+)/);
-    if(!m)return;
-    el.textContent=`Đúng ${m[1]}/${m[1]} (100.0%)`;
-    el.classList.add("analysis-ok");
-    el.classList.remove("text-red-600","text-red-500");
-    const card=el.closest(".rounded-2xl,.rounded-xl,.border")||el.parentElement;
-    if(card){
-      const bars=[...card.querySelectorAll("div")].filter(x=>{
-        const st=getComputedStyle(x); return x!==card && (st.backgroundColor.includes("239, 68, 68")||x.className.includes("bg-red"));
-      });
-      bars.forEach(b=>{b.classList.add("analysis-bar-ok");b.classList.remove("bg-red-500","bg-red-600")});
-    }
-  });
-}
-const __analysisObserver=new MutationObserver(()=>normalizeAnalysisLabels());
-__analysisObserver.observe(document.body,{childList:true,subtree:true});
-window.addEventListener("load",()=>setTimeout(normalizeAnalysisLabels,200));
+
 </script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
@@ -32,7 +12,7 @@ window.addEventListener("load",()=>setTimeout(normalizeAnalysisLabels,200));
 .analysis-bar-bad{background:#ef4444!important}
 </style></head>
 <body class="bg-slate-50 text-slate-900"><main class="max-w-7xl mx-auto p-5">
-<div class="flex flex-wrap justify-between gap-3 mb-5"><div><h1 id="h" class="text-3xl font-bold">📊 Kết quả V4.5.5</h1><p id="sub" class="text-slate-500">Thống kê theo lớp và phân tích câu hỏi</p></div>
+<div class="flex flex-wrap justify-between gap-3 mb-5"><div><h1 id="h" class="text-3xl font-bold">📊 Kết quả V4.5.6</h1><p id="sub" class="text-slate-500">Thống kê theo lớp và phân tích câu hỏi</p></div>
 <div class="flex gap-2"><button id="excel" class="bg-emerald-600 text-white px-4 py-2 rounded-xl font-bold">⬇ Xuất Excel</button><a href="quizzes.html" class="border bg-white px-4 py-2 rounded-xl">← Quiz</a></div></div>
 
 <div id="msg" class="hidden mb-4 p-3 rounded-xl bg-red-50 text-red-700"></div>
@@ -73,7 +53,7 @@ async function init(){
  me=(await s.auth.getUser()).data.user;if(!me)return location.href="login.html";
  let qr=await s.from("quizzes").select("id,title,teacher_id").eq("id",qid).single();
  if(qr.error||!qr.data||qr.data.teacher_id!==me.id)return location.href="quizzes.html";
- quiz=qr.data;h.textContent="📊 "+quiz.title+" — V4.5.5";
+ quiz=qr.data;h.textContent="📊 "+quiz.title+" — V4.5.6";
  let [ar,qq,at]=await Promise.all([
   s.from("quiz_assignments").select("id,class_id,classes(class_name)").eq("quiz_id",qid).eq("teacher_id",me.id),
   s.from("quiz_questions").select("id,question_text,correct_answer,question_order").eq("quiz_id",qid).order("question_order"),
@@ -120,8 +100,42 @@ function renderDist(scores){
 }
 function renderQuestions(arr){
  let submitted=arr.filter(a=>a.answers&&typeof a.answers==="object");
- let stats=questionsData.map((q,i)=>{let answered=0,wrong=0;for(const a of submitted){let v=a.answers?.[q.id];if(v){answered++;if(v!==q.correct_answer)wrong++}}return{q,i,answered,wrong,rate:answered?wrong/answered*100:0}}).sort((a,b)=>b.rate-a.rate);
- questions.innerHTML=stats.map(x=>`<div class="border rounded-xl p-4"><div class="flex flex-wrap justify-between gap-2"><b>Câu ${x.i+1}. ${esc(x.q.question_text)}</b><span class="${x.rate>=50?"text-red-600":"text-slate-600"} font-bold">Sai ${x.wrong}/${x.answered} (${x.rate.toFixed(1)}%)</span></div><div class="mt-2 h-2 bg-slate-100 rounded-full overflow-hidden"><div class="h-full bg-red-500" style="width:${x.rate}%"></div></div></div>`).join("")||'<p class="text-slate-500">Chưa có dữ liệu câu hỏi.</p>';
+ let stats=questionsData.map((q,i)=>{
+   let answered=0,wrong=0;
+   for(const a of submitted){
+     let v=a.answers?.[q.id];
+     if(v){answered++;if(v!==q.correct_answer)wrong++}
+   }
+   let correct=answered-wrong;
+   let wrongRate=answered?wrong/answered*100:0;
+   let correctRate=answered?correct/answered*100:0;
+   return{q,i,answered,wrong,correct,wrongRate,correctRate};
+ }).sort((a,b)=>b.wrongRate-a.wrongRate || a.i-b.i);
+
+ questions.innerHTML=stats.map(x=>{
+   if(x.answered===0){
+     return `<div class="border rounded-xl p-4">
+       <div class="flex flex-wrap justify-between gap-2">
+         <b>Câu ${x.i+1}. ${esc(x.q.question_text)}</b>
+         <span class="text-slate-500 font-bold">Chưa có lượt trả lời</span>
+       </div>
+       <div class="mt-2 h-2 bg-slate-100 rounded-full"></div>
+     </div>`;
+   }
+   return `<div class="border rounded-xl p-4">
+     <div class="flex flex-wrap justify-between gap-3">
+       <b class="flex-1">Câu ${x.i+1}. ${esc(x.q.question_text)}</b>
+       <div class="flex flex-wrap gap-3 text-sm font-bold">
+         <span class="text-emerald-600">✓ Đúng ${x.correct}/${x.answered} (${x.correctRate.toFixed(1)}%)</span>
+         <span class="text-red-600">✗ Sai ${x.wrong}/${x.answered} (${x.wrongRate.toFixed(1)}%)</span>
+       </div>
+     </div>
+     <div class="mt-3 h-3 bg-slate-100 rounded-full overflow-hidden flex">
+       <div class="h-full bg-emerald-500" style="width:${x.correctRate}%" title="Đúng ${x.correctRate.toFixed(1)}%"></div>
+       <div class="h-full bg-red-500" style="width:${x.wrongRate}%" title="Sai ${x.wrongRate.toFixed(1)}%"></div>
+     </div>
+   </div>`;
+ }).join("")||'<p class="text-slate-500">Chưa có dữ liệu câu hỏi.</p>';
 }
 async function detail(id){
  let a=attempts.find(x=>x.id===id);if(!a)return;let p=profiles.find(x=>x.id===a.student_id)||{};
