@@ -437,7 +437,7 @@
       placeholder="🔎 Tìm lớp..."
     >
 
-    <button class="btn btn-green" onclick="openAddModal()">
+    <button id="createClassBtn" class="btn btn-green" onclick="openAddModal()">
       ➕ Tạo lớp mới
     </button>
 
@@ -632,6 +632,7 @@
 <script>
 
 let currentUser = null;
+let currentRole = "";
 let classes = [];
 let students = [];
 let currentOpenClass = "";
@@ -717,7 +718,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     .single();
 
 
-  const currentRole = String(profile?.role || "").trim().toLowerCase();
+  currentRole = String(profile?.role || "").trim().toLowerCase();
 
   if (
     profileError ||
@@ -733,6 +734,13 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   }
 
+
+  if (currentRole === "teacher") {
+    const createBtn = document.getElementById("createClassBtn");
+    if (createBtn) createBtn.style.display = "none";
+    const subtitle = document.querySelector(".subtitle");
+    if (subtitle) subtitle.textContent = "Các lớp được Quản trị viên phân công cho giáo viên";
+  }
 
   document
     .getElementById("searchInput")
@@ -754,68 +762,75 @@ document.addEventListener("DOMContentLoaded", async () => {
 async function loadData() {
 
   const client = window.supabaseClient;
-
-
   document.getElementById("loading").style.display = "block";
 
+  try {
+    let classData = [];
 
-  const [
-    classResult,
-    studentResult
-  ] = await Promise.all([
+    if (currentRole === "admin") {
+      const classResult = await client
+        .from("classes")
+        .select("id, class_name, school_year, teacher_id, created_at")
+        .order("class_name");
 
-    client
-      .from("classes")
-      .select("id, class_name, school_year, teacher_id, created_at")
-      .eq("teacher_id", currentUser.id)
-      .order("class_name"),
+      if (classResult.error) throw classResult.error;
+      classData = classResult.data || [];
 
-    client
+    } else {
+      // V2.3: Giáo viên xem lớp qua bảng phân công teacher_class_subjects.
+      const assignmentResult = await client
+        .from("teacher_class_subjects")
+        .select("class_id")
+        .eq("teacher_id", currentUser.id);
+
+      if (assignmentResult.error) throw assignmentResult.error;
+
+      const classIds = [...new Set(
+        (assignmentResult.data || [])
+          .map(row => row.class_id)
+          .filter(Boolean)
+      )];
+
+      if (classIds.length > 0) {
+        const classResult = await client
+          .from("classes")
+          .select("id, class_name, school_year, teacher_id, created_at")
+          .in("id", classIds)
+          .order("class_name");
+
+        if (classResult.error) throw classResult.error;
+        classData = classResult.data || [];
+      }
+    }
+
+    // Chỉ lấy học sinh thuộc những lớp đang được phép xem.
+    const allowedClassNames = new Set(
+      classData.map(c => normalizeClass(c.class_name))
+    );
+
+    const studentResult = await client
       .from("profiles")
       .select("id, full_name, student_code, class_name, role")
       .eq("role", "student")
       .order("class_name")
-      .order("full_name")
+      .order("full_name");
 
-  ]);
+    if (studentResult.error) throw studentResult.error;
 
-
-  document.getElementById("loading").style.display = "none";
-
-
-  if (classResult.error) {
-
-    alert(
-      "Không tải được lớp học: " +
-      classResult.error.message
+    classes = classData;
+    students = (studentResult.data || []).filter(student =>
+      allowedClassNames.has(normalizeClass(student.class_name))
     );
 
-    return;
+    updateStatistics();
+    renderClasses();
 
+  } catch (error) {
+    console.error(error);
+    alert("Không tải được dữ liệu lớp học: " + (error?.message || error));
+  } finally {
+    document.getElementById("loading").style.display = "none";
   }
-
-
-  if (studentResult.error) {
-
-    alert(
-      "Không tải được học sinh: " +
-      studentResult.error.message
-    );
-
-    return;
-
-  }
-
-
-  classes = classResult.data || [];
-
-  students = studentResult.data || [];
-
-
-  updateStatistics();
-
-  renderClasses();
-
 }
 
 
@@ -993,8 +1008,12 @@ function renderClasses() {
 
 
     actions.appendChild(viewButton);
-    actions.appendChild(editButton);
-    actions.appendChild(deleteButton);
+
+    // V2.3: chỉ Admin được sửa/xóa cấu trúc lớp.
+    if (currentRole === "admin") {
+      actions.appendChild(editButton);
+      actions.appendChild(deleteButton);
+    }
 
     card.appendChild(icon);
     card.appendChild(name);
@@ -1014,6 +1033,11 @@ function renderClasses() {
 ====================================== */
 
 function openAddModal() {
+
+  if (currentRole !== "admin") {
+    alert("Chỉ Quản trị viên được tạo lớp.");
+    return;
+  }
 
   document.getElementById("newClassName").value = "";
 
@@ -1037,6 +1061,11 @@ function closeAddModal() {
 
 
 async function createClass() {
+
+  if (currentRole !== "admin") {
+    alert("Chỉ Quản trị viên được tạo lớp.");
+    return;
+  }
 
   const className =
     normalizeClass(
@@ -1131,6 +1160,11 @@ async function createClass() {
 
 function openEditModal(item) {
 
+  if (currentRole !== "admin") {
+    alert("Chỉ Quản trị viên được sửa lớp.");
+    return;
+  }
+
   document.getElementById("editClassId").value =
     item.id;
 
@@ -1161,6 +1195,11 @@ function closeEditModal() {
 
 
 async function updateClass() {
+
+  if (currentRole !== "admin") {
+    alert("Chỉ Quản trị viên được sửa lớp.");
+    return;
+  }
 
   const id =
     document.getElementById("editClassId").value;
@@ -1281,6 +1320,11 @@ async function updateClass() {
 ====================================== */
 
 async function deleteClass(item) {
+
+  if (currentRole !== "admin") {
+    alert("Chỉ Quản trị viên được xóa lớp.");
+    return;
+  }
 
   const className =
     normalizeClass(item.class_name);
@@ -1465,6 +1509,17 @@ function renderStudentsInClass() {
     const tdMove =
       document.createElement("td");
 
+    if (currentRole !== "admin") {
+      tdMove.textContent = "Chỉ xem";
+      tr.appendChild(tdIndex);
+      tr.appendChild(tdName);
+      tr.appendChild(tdCode);
+      tr.appendChild(tdClass);
+      tr.appendChild(tdMove);
+      tbody.appendChild(tr);
+      return;
+    }
+
 
     const select =
       document.createElement("select");
@@ -1554,6 +1609,11 @@ async function moveStudent(
   student,
   targetClass
 ) {
+
+  if (currentRole !== "admin") {
+    alert("Chỉ Quản trị viên được chuyển lớp học sinh.");
+    return;
+  }
 
   targetClass =
     normalizeClass(targetClass);
