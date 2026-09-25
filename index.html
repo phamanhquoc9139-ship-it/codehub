@@ -850,6 +850,73 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="scripts/supabase-config.js"></script>
     <script src="scripts/auth-ui.js"></script>
+    <script>
+    // CodeHub role-aware navigation patch
+    document.addEventListener('DOMContentLoaded', async () => {
+      const client = window.supabaseClient;
+      const area = document.getElementById('auth-area');
+      if (!client || !area) return;
+
+      const esc = (v='') => String(v).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#039;');
+      const { data: { session } } = await client.auth.getSession();
+      if (!session?.user) return;
+
+      const { data: profile } = await client.from('profiles')
+        .select('full_name,student_code,class_name,role')
+        .eq('id', session.user.id).maybeSingle();
+      if (!profile) return;
+
+      const name = profile.full_name || session.user.email || 'Tài khoản';
+      const role = String(profile.role || '').toLowerCase();
+      const roleName = role === 'admin' ? 'Quản trị viên' : role === 'teacher' ? 'Giáo viên' : (profile.class_name || 'Học sinh');
+
+      let links = '';
+      if (role === 'admin') {
+        links = `
+          <a href="teacher.html" class="block px-4 py-3 text-sm hover:bg-gray-50 dark:hover:bg-gray-700">⚙️ Quản trị</a>
+          <a href="accounts.html" class="block px-4 py-3 text-sm hover:bg-gray-50 dark:hover:bg-gray-700">👥 Quản lý tài khoản</a>
+          <a href="courses.html" class="block px-4 py-3 text-sm hover:bg-gray-50 dark:hover:bg-gray-700">📚 Khóa học</a>
+          <a href="subjects.html" class="block px-4 py-3 text-sm hover:bg-gray-50 dark:hover:bg-gray-700">📘 Môn học</a>`;
+      } else if (role === 'teacher') {
+        links = `
+          <a href="teacher.html" class="block px-4 py-3 text-sm hover:bg-gray-50 dark:hover:bg-gray-700">👨‍🏫 Quản lý giảng dạy</a>
+          <a href="courses.html" class="block px-4 py-3 text-sm hover:bg-gray-50 dark:hover:bg-gray-700">📚 Khóa học</a>
+          <a href="subjects.html" class="block px-4 py-3 text-sm hover:bg-gray-50 dark:hover:bg-gray-700">📘 Môn học</a>`;
+      } else {
+        links = `<a href="student-dashboard.html" class="block px-4 py-3 text-sm hover:bg-gray-50 dark:hover:bg-gray-700">🎓 Khu vực học tập</a>`;
+      }
+
+      // Run after the existing auth-ui.js has had a chance to render.
+      setTimeout(() => {
+        area.innerHTML = `
+          <div class="relative" id="codehub-role-menu">
+            <button id="codehub-role-button" type="button" class="flex items-center gap-2 bg-primary hover:bg-blue-600 text-white px-3 py-2 rounded-lg text-sm font-medium transition">
+              <span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/20">👤</span>
+              <span class="hidden sm:flex flex-col items-start leading-tight">
+                <span class="max-w-40 truncate">${esc(name)}</span>
+                <span class="text-xs font-normal text-blue-100">${esc(roleName)}</span>
+              </span><span>▾</span>
+            </button>
+            <div id="codehub-role-dropdown" class="hidden absolute right-0 mt-2 w-60 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-xl overflow-hidden z-[100] text-gray-700 dark:text-gray-200">
+              <div class="px-4 py-3 border-b border-gray-100 dark:border-gray-700">
+                <div class="font-semibold text-gray-900 dark:text-white truncate">${esc(name)}</div>
+                <div class="text-xs text-gray-500 dark:text-gray-400 truncate">${esc(session.user.email || '')}</div>
+              </div>
+              ${links}
+              <button id="codehub-role-logout" type="button" class="w-full text-left px-4 py-3 text-sm border-t border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700">🚪 Đăng xuất</button>
+            </div>
+          </div>`;
+        const btn = document.getElementById('codehub-role-button');
+        const dd = document.getElementById('codehub-role-dropdown');
+        btn?.addEventListener('click', e => { e.stopPropagation(); dd?.classList.toggle('hidden'); });
+        document.addEventListener('click', () => dd?.classList.add('hidden'));
+        document.getElementById('codehub-role-logout')?.addEventListener('click', async () => {
+          await client.auth.signOut();
+          location.href = 'login.html';
+        });
+      }, 250);
+    });
+    </script>
     <script src="scripts/app.js?v=7"></script>
     <script src="scripts/chatbot.js?v=7"></script>
 </body>
