@@ -260,6 +260,7 @@
     <strong id="teacherName">
       Giáo viên
     </strong>
+    <span id="roleLabel" style="display:block;color:#64748b;font-size:13px;margin-bottom:8px"></span>
 
     <br>
 
@@ -428,6 +429,14 @@
 
     </div>
 
+
+
+    <!-- MÔN HỌC -->
+    <div class="card" onclick="window.location.href='subjects.html'">
+      <div class="icon">📘</div>
+      <h2>Quản lý môn học</h2>
+      <p>Quản lý danh mục môn học trên CodeHub.</p>
+    </div>
 
 
     <!-- =====================
@@ -619,8 +628,12 @@ document.addEventListener(
           "Giáo viên";
 
 
+      const normalizedRole = String(profile.role || "").trim().toLowerCase();
+      const roleLabel = document.getElementById("roleLabel");
+      if (roleLabel) roleLabel.textContent = normalizedRole === "admin" ? "Quản trị viên" : "Giáo viên";
+
       // Chỉ Admin mới thấy chức năng quản lý toàn bộ tài khoản
-      if (String(profile.role || "").trim().toLowerCase() === "admin") {
+      if (normalizedRole === "admin") {
         const adminCard = document.getElementById("adminAccountsCard");
         if (adminCard) adminCard.style.display = "block";
       }
