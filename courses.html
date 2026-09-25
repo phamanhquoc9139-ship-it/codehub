@@ -40,9 +40,9 @@ document.addEventListener("DOMContentLoaded",async()=>{
  document.getElementById("search").addEventListener("input",render);document.getElementById("subjectFilter").addEventListener("change",render);document.getElementById("gradeFilter").addEventListener("change",render);await load();
 });
 async function load(){
- const s=window.supabaseClient;const [a,b,c,d]=await Promise.all([s.from("courses").select("*").eq("teacher_id",user.id).order("created_at",{ascending:false}),s.from("classes").select("*").eq("teacher_id",user.id).order("class_name"),s.from("course_classes").select("*"),s.from("subjects").select("*").eq("teacher_id",user.id).order("subject_name")]);
+ const s=window.supabaseClient;const [a,b,c,d]=await Promise.all([s.from("courses").select("*").eq("teacher_id",user.id).order("created_at",{ascending:false}),s.from("classes").select("*").eq("teacher_id",user.id).order("class_name"),s.from("course_classes").select("*"),s.from("subjects").select("*").order("subject_name")]);
  for(const r of [a,b,c,d])if(r.error){alert("Lỗi tải dữ liệu: "+r.error.message);return}
- courses=a.data||[];classes=b.data||[];links=c.data||[];subjects=d.data||[];fillSubjects();render();
+ courses=a.data||[];classes=b.data||[];links=c.data||[];subjects=[...new Map((d.data||[]).filter(x=>x.subject_name&&x.subject_name.trim()).map(x=>[x.subject_name.trim().toLocaleLowerCase("vi-VN"),{...x,subject_name:x.subject_name.trim()}])).values()];fillSubjects();render();
 }
 function fillSubjects(){
  const f=document.getElementById("subjectFilter"),s=document.getElementById("subject"),fv=f.value,sv=s.value;f.innerHTML='<option value="">Tất cả môn</option>';s.innerHTML='<option value="">-- Chọn môn học --</option>';
