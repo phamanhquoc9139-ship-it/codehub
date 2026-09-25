@@ -717,10 +717,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     .single();
 
 
+  const currentRole = String(profile?.role || "").trim().toLowerCase();
+
   if (
     profileError ||
     !profile ||
-    profile.role !== "teacher"
+    !["teacher", "admin"].includes(currentRole)
   ) {
 
     alert("Bạn không có quyền truy cập trang này.");
