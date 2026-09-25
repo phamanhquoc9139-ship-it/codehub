@@ -36,11 +36,20 @@ let user=null,courses=[],classes=[],links=[],subjects=[];
 document.addEventListener("DOMContentLoaded",async()=>{
  const s=window.supabaseClient;if(!s){alert("Không kết nối được Supabase.");return}
  const {data:{user:u}}=await s.auth.getUser();if(!u){location.href="login.html";return}user=u;
- const {data:p}=await s.from("profiles").select("role").eq("id",u.id).single();if(!p||p.role!=="teacher"){location.href="index.html";return}
+ const {data:p}=await s.from("profiles").select("role").eq("id",u.id).single();const currentRole=String(p?.role||"").trim().toLowerCase();if(!p||!["teacher","admin"].includes(currentRole)){location.href="index.html";return}
  document.getElementById("search").addEventListener("input",render);document.getElementById("subjectFilter").addEventListener("change",render);document.getElementById("gradeFilter").addEventListener("change",render);await load();
 });
 async function load(){
- const s=window.supabaseClient;const [a,b,c,d]=await Promise.all([s.from("courses").select("*").eq("teacher_id",user.id).order("created_at",{ascending:false}),s.from("classes").select("*").eq("teacher_id",user.id).order("class_name"),s.from("course_classes").select("*"),s.from("subjects").select("*").order("subject_name")]);
+ const s=window.supabaseClient;
+ const roleResult=await s.from("profiles").select("role").eq("id",user.id).single();
+ const isAdmin=String(roleResult.data?.role||"").trim().toLowerCase()==="admin";
+ let courseQuery=s.from("courses").select("*").order("created_at",{ascending:false});
+ let classQuery=s.from("classes").select("*").order("class_name");
+ if(!isAdmin){
+   courseQuery=courseQuery.eq("teacher_id",user.id);
+   classQuery=classQuery.eq("teacher_id",user.id);
+ }
+ const [a,b,c,d]=await Promise.all([courseQuery,classQuery,s.from("course_classes").select("*"),s.from("subjects").select("*").order("subject_name")]);
  for(const r of [a,b,c,d])if(r.error){alert("Lỗi tải dữ liệu: "+r.error.message);return}
  courses=a.data||[];classes=b.data||[];links=c.data||[];subjects=[...new Map((d.data||[]).filter(x=>x.subject_name&&x.subject_name.trim()).map(x=>[x.subject_name.trim().toLocaleLowerCase("vi-VN"),{...x,subject_name:x.subject_name.trim()}])).values()];fillSubjects();render();
 }
