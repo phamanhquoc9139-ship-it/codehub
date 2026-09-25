@@ -894,14 +894,14 @@
       if (!profile) return;
 
       const name = profile.full_name || session.user.email || 'Tài khoản';
-      const role = String(profile.role || '').toLowerCase();
+      const role = String(profile.role || '').trim().toLowerCase();
       const roleName = role === 'admin' ? 'Quản trị viên' : role === 'teacher' ? 'Giáo viên' : (profile.class_name || 'Học sinh');
 
       let links = '';
       if (role === 'admin') {
         links = `
           <a href="teacher.html" class="block px-4 py-3 text-sm hover:bg-gray-50 dark:hover:bg-gray-700">⚙️ Quản trị</a>
-          <a href="accounts.html" class="block px-4 py-3 text-sm hover:bg-gray-50 dark:hover:bg-gray-700">👥 Quản lý tài khoản</a>
+          <a href="admin-accounts.html" class="block px-4 py-3 text-sm hover:bg-gray-50 dark:hover:bg-gray-700">👥 Quản lý tài khoản</a>
           <a href="courses.html" class="block px-4 py-3 text-sm hover:bg-gray-50 dark:hover:bg-gray-700">📚 Khóa học</a>
           <a href="subjects.html" class="block px-4 py-3 text-sm hover:bg-gray-50 dark:hover:bg-gray-700">📘 Môn học</a>`;
       } else if (role === 'teacher') {
@@ -941,7 +941,7 @@
           await client.auth.signOut();
           location.href = 'login.html';
         });
-      }, 250);
+      }, 1200);
     });
     </script>
     <script src="scripts/app.js?v=7"></script>
