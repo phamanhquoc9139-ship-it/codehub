@@ -114,7 +114,7 @@ tailwind.config={darkMode:'class',theme:{extend:{colors:{primary:'#3b82f6',secon
 
   async function goByRole(user){
     const role=await getRole(user.id);
-    if(role==='teacher'){location.replace('teacher.html');return}
+    if(role==='admin' || role==='teacher'){location.replace('teacher.html');return}
     if(role==='student'){location.replace('student-dashboard.html');return}
     throw new Error('Role "'+role+'" chưa được hỗ trợ.');
   }

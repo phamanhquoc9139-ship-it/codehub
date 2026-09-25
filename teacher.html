@@ -311,7 +311,7 @@
   <br>
 
   <p>
-    Trang này chỉ dành cho tài khoản giáo viên.
+    Trang này chỉ dành cho tài khoản giáo viên hoặc quản trị viên.
   </p>
 
   <br>
@@ -481,6 +481,14 @@
     </div>
 
 
+    <!-- QUẢN LÝ TÀI KHOẢN - CHỈ ADMIN -->
+    <div id="adminAccountsCard" class="card" style="display:none" onclick="window.location.href='admin-accounts.html'">
+      <div class="icon">👥</div>
+      <h2>Quản lý tài khoản</h2>
+      <p>Xem tài khoản học sinh, giáo viên và xuất danh sách tài khoản.</p>
+    </div>
+
+
   </div>
 
 </main>
@@ -584,7 +592,7 @@ document.addEventListener(
       if (
         profileError ||
         !profile ||
-        profile.role !== "teacher"
+        !["teacher", "admin"].includes(String(profile.role || "").trim().toLowerCase())
       ) {
 
         document
@@ -610,6 +618,12 @@ document.addEventListener(
           profile.full_name ||
           "Giáo viên";
 
+
+      // Chỉ Admin mới thấy chức năng quản lý toàn bộ tài khoản
+      if (String(profile.role || "").trim().toLowerCase() === "admin") {
+        const adminCard = document.getElementById("adminAccountsCard");
+        if (adminCard) adminCard.style.display = "block";
+      }
 
       /* =========================
          HIỆN DASHBOARD
