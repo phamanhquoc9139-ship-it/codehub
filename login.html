@@ -3,11 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Đăng nhập - CodeHub</title>
+<title>Đăng nhập V2.7 - CodeHub</title>
 <script src="https://cdn.tailwindcss.com"></script>
-<script>
-tailwind.config={darkMode:'class',theme:{extend:{colors:{primary:'#3b82f6',secondary:'#10b981'}}}}
-</script>
+<script>tailwind.config={darkMode:'class',theme:{extend:{colors:{primary:'#3b82f6',secondary:'#10b981'}}}}</script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="scripts/supabase-config.js"></script>
 </head>
@@ -15,29 +13,28 @@ tailwind.config={darkMode:'class',theme:{extend:{colors:{primary:'#3b82f6',secon
 <header class="bg-white dark:bg-gray-800 shadow-sm">
   <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
     <a href="index.html" class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-emerald-500">&lt;/&gt; CodeHub</a>
-    <a href="index.html" class="text-sm text-gray-600 dark:text-gray-300">← Quay lại Trang Chủ</a>
+    <span class="text-xs font-bold px-3 py-1 rounded-full bg-blue-50 text-blue-700">LOGIN V2.7</span>
   </div>
 </header>
 
 <main class="flex-1 flex items-center justify-center p-4">
 <div class="w-full max-w-md bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden">
   <div class="bg-gradient-to-r from-blue-500 to-blue-600 p-7 text-center text-white">
-    <div class="mx-auto mb-3 w-16 h-16 rounded-full bg-white/10 flex items-center justify-center text-3xl">🔒</div>
-    <h1 class="text-2xl font-bold">Chào Mừng Đến Với CodeHub</h1>
-    <p class="text-blue-100 mt-1">Đăng nhập để học tập và quản lý lớp học</p>
+    <div class="mx-auto mb-3 w-16 h-16 rounded-full bg-white/10 flex items-center justify-center text-3xl">🔐</div>
+    <h1 class="text-2xl font-bold">Đăng nhập CodeHub</h1>
+    <p class="text-blue-100 mt-1">Học sinh dùng Mã HS • Giáo viên/Admin dùng Email</p>
   </div>
 
-  <div class="px-7 py-4 border-b text-center font-bold text-blue-500">Đăng Nhập</div>
-
   <div class="p-7">
-    <div id="alertBox" class="hidden mb-5 p-3 rounded-lg text-sm"></div>
+    <div id="alertBox" class="hidden mb-5 p-3 rounded-lg text-sm border"></div>
 
     <form id="loginForm" novalidate>
       <div class="mb-4">
-        <label class="block text-xs font-bold uppercase mb-2">Email <span class="text-red-500">*</span></label>
-        <input id="email" type="email" autocomplete="username" required
-          placeholder="hocsinh@truong.edu.vn"
+        <label class="block text-xs font-bold uppercase mb-2">Email hoặc Mã học sinh <span class="text-red-500">*</span></label>
+        <input id="identifier" type="text" autocomplete="username" required
+          placeholder="Ví dụ: HS007 hoặc giaovien@gmail.com"
           class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 outline-none focus:ring-2 focus:ring-blue-500">
+        <p class="mt-2 text-xs text-gray-500">Học sinh: nhập HS001, HS007... • Giáo viên/Admin: nhập email.</p>
       </div>
 
       <div class="mb-5">
@@ -55,9 +52,13 @@ tailwind.config={darkMode:'class',theme:{extend:{colors:{primary:'#3b82f6',secon
 
       <button id="loginBtn" type="submit"
         class="w-full py-3 bg-blue-500 hover:bg-blue-600 disabled:opacity-60 text-white font-bold rounded-lg shadow">
-        <span id="loginText">Đăng Nhập</span>
+        <span id="loginText">Đăng nhập</span>
       </button>
     </form>
+
+    <div class="mt-5 p-4 rounded-xl bg-amber-50 text-amber-800 text-sm border border-amber-200">
+      <b>Khôi phục tài khoản:</b> Giáo viên/Admin dùng email thật có thể tự đặt lại mật khẩu. Học sinh quên mật khẩu liên hệ giáo viên/Admin để đặt lại.
+    </div>
 
     <div id="loggedBox" class="hidden text-center">
       <div class="text-5xl mb-3">✅</div>
@@ -72,8 +73,11 @@ tailwind.config={darkMode:'class',theme:{extend:{colors:{primary:'#3b82f6',secon
 
 <script>
 (function(){
+  const PROJECT_URL='https://drfcejvmyhzorwepndta.supabase.co';
+  const LOGIN_ENDPOINT=PROJECT_URL+'/functions/v1/login-identifier';
+
   const form=document.getElementById('loginForm');
-  const email=document.getElementById('email');
+  const identifier=document.getElementById('identifier');
   const password=document.getElementById('password');
   const alertBox=document.getElementById('alertBox');
   const loginBtn=document.getElementById('loginBtn');
@@ -91,7 +95,7 @@ tailwind.config={darkMode:'class',theme:{extend:{colors:{primary:'#3b82f6',secon
   function hide(){alertBox.className='hidden mb-5 p-3 rounded-lg text-sm'}
   function loading(v){
     loginBtn.disabled=v;
-    loginText.textContent=v?'Đang đăng nhập...':'Đăng Nhập';
+    loginText.textContent=v?'Đang đăng nhập...':'Đăng nhập';
   }
   function client(){
     if(!window.supabaseClient){
@@ -101,92 +105,121 @@ tailwind.config={darkMode:'class',theme:{extend:{colors:{primary:'#3b82f6',secon
     return window.supabaseClient;
   }
 
-  async function getRole(userId){
+  async function getProfile(userId){
     const s=client(); if(!s) return null;
-    const {data,error}=await s.from('profiles').select('role').eq('id',userId).single();
-    if(error){
-      console.error('PROFILE ERROR:',error);
-      throw new Error('Đăng nhập thành công nhưng không đọc được hồ sơ phân quyền: '+error.message);
-    }
-    if(!data || !data.role) throw new Error('Tài khoản chưa có role trong bảng profiles.');
-    return String(data.role).trim().toLowerCase();
+    const {data,error}=await s.from('profiles')
+      .select('role,full_name,student_code')
+      .eq('id',userId).single();
+    if(error) throw new Error('Không đọc được hồ sơ phân quyền: '+error.message);
+    if(!data?.role) throw new Error('Tài khoản chưa có role trong profiles.');
+    return data;
   }
 
   async function goByRole(user){
-    const role=await getRole(user.id);
-    if(role==='admin' || role==='teacher'){location.replace('teacher.html');return}
-    if(role==='student'){location.replace('student-dashboard.html');return}
+    const p=await getProfile(user.id);
+    const role=String(p.role||'').trim().toLowerCase();
+    try{
+      localStorage.setItem('codehub_identity_v261',JSON.stringify({
+        full_name:p.full_name||'', role, email:user.email||'', at:Date.now()
+      }));
+    }catch(e){}
+    if(role==='student') return location.replace('student-dashboard.html');
+    if(role==='teacher' || role==='admin') return location.replace('teacher.html');
     throw new Error('Role "'+role+'" chưa được hỗ trợ.');
   }
 
-  form.addEventListener('submit',async function(e){
-    e.preventDefault();
-    e.stopPropagation();
-    hide();
+  async function loginWithEmail(emailValue,pw){
+    const s=client(); if(!s) throw new Error('Không kết nối được Supabase.');
+    const {data,error}=await s.auth.signInWithPassword({email:emailValue,password:pw});
+    if(error) throw error;
+    if(!data?.user) throw new Error('Supabase không trả về người dùng.');
+    return data.user;
+  }
 
-    const s=client(); if(!s) return;
-    const em=email.value.trim();
+  async function loginWithStudentCode(code,pw){
+    const s=client(); if(!s) throw new Error('Không kết nối được Supabase.');
+    const res=await fetch(LOGIN_ENDPOINT,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({identifier:code,password:pw})
+    });
+    const body=await res.json().catch(()=>({}));
+    if(!res.ok) throw new Error(body?.error||'Không thể đăng nhập bằng mã học sinh.');
+    if(!body?.access_token || !body?.refresh_token) throw new Error('Máy chủ không trả về phiên đăng nhập.');
+    const {data,error}=await s.auth.setSession({
+      access_token:body.access_token,
+      refresh_token:body.refresh_token
+    });
+    if(error) throw error;
+    if(!data?.user) throw new Error('Không thiết lập được phiên đăng nhập.');
+    return data.user;
+  }
+
+  form.addEventListener('submit',async e=>{
+    e.preventDefault(); hide();
+    const id=identifier.value.trim();
     const pw=password.value;
-
-    if(!em || !pw){show('Vui lòng nhập Email và Mật khẩu.');return}
+    if(!id || !pw){show('Vui lòng nhập Email/Mã học sinh và Mật khẩu.');return}
     if(pw.length<6){show('Mật khẩu phải có ít nhất 6 ký tự.');return}
-
     loading(true);
     try{
-      const {data,error}=await s.auth.signInWithPassword({email:em,password:pw});
-      if(error) throw error;
-      if(!data || !data.user) throw new Error('Supabase không trả về thông tin người dùng.');
+      const isEmail=id.includes('@');
+      const user=isEmail
+        ? await loginWithEmail(id,pw)
+        : await loginWithStudentCode(id.toUpperCase(),pw);
       show('Đăng nhập thành công. Đang chuyển trang...','success');
-      await goByRole(data.user);
+      await goByRole(user);
     }catch(err){
       console.error('LOGIN ERROR:',err);
-      let msg=err && err.message ? err.message : 'Không thể đăng nhập.';
-      if(/invalid login credentials/i.test(msg)) msg='Email hoặc mật khẩu không chính xác.';
+      let msg=err?.message||'Không thể đăng nhập.';
+      if(/invalid login credentials/i.test(msg)) msg='Email/Mã học sinh hoặc mật khẩu không chính xác.';
       if(/email not confirmed/i.test(msg)) msg='Email chưa được xác nhận.';
       show(msg);
     }finally{loading(false)}
-    return false;
   });
 
-  document.getElementById('eyeBtn').addEventListener('click',function(){
+  document.getElementById('eyeBtn').onclick=function(){
     password.type=password.type==='password'?'text':'password';
     this.textContent=password.type==='password'?'👁️':'🙈';
-  });
+  };
 
-  document.getElementById('forgotBtn').addEventListener('click',async function(){
+  document.getElementById('forgotBtn').onclick=async function(){
     const s=client(); if(!s) return;
-    const em=email.value.trim();
-    if(!em){show('Nhập email trước khi yêu cầu đặt lại mật khẩu.');email.focus();return}
+    const id=identifier.value.trim();
+    if(!id){show('Nhập email của Giáo viên/Admin trước. Học sinh quên mật khẩu hãy liên hệ giáo viên/Admin.','info');identifier.focus();return}
+    if(!id.includes('@')){
+      show('Tài khoản học sinh dùng Mã HS không tự khôi phục qua email. Hãy liên hệ giáo viên/Admin để đặt lại mật khẩu.','info');
+      return;
+    }
     try{
-      const {error}=await s.auth.resetPasswordForEmail(em,{redirectTo:new URL('login.html',location.href).href});
+      const redirectTo=new URL('reset-password.html',location.href).href;
+      const {error}=await s.auth.resetPasswordForEmail(id,{redirectTo});
       if(error) throw error;
-      show('Đã gửi yêu cầu đặt lại mật khẩu. Hãy kiểm tra email.','success');
-    }catch(err){show(err.message||'Không gửi được yêu cầu đặt lại mật khẩu.')}
-  });
+      show('Đã gửi email đặt lại mật khẩu. Hãy kiểm tra hộp thư và Spam.','success');
+    }catch(err){show(err?.message||'Không gửi được email đặt lại mật khẩu.')}
+  };
 
-  document.getElementById('continueBtn').addEventListener('click',async function(){
+  document.getElementById('continueBtn').onclick=async function(){
     const s=client(); if(!s) return;
     const {data:{user}}=await s.auth.getUser();
     if(user){try{await goByRole(user)}catch(err){show(err.message)}}
-  });
-
-  document.getElementById('logoutBtn').addEventListener('click',async function(){
+  };
+  document.getElementById('logoutBtn').onclick=async function(){
     const s=client(); if(!s) return;
-    await s.auth.signOut(); location.reload();
-  });
+    await s.auth.signOut();
+    try{localStorage.removeItem('codehub_identity_v261')}catch(e){}
+    location.reload();
+  };
 
-  async function checkExisting(){
+  (async()=>{
     const s=client(); if(!s) return;
-    try{
-      const {data:{session}}=await s.auth.getSession();
-      if(session && session.user){
-        form.classList.add('hidden');
-        loggedBox.classList.remove('hidden');
-        loggedEmail.textContent=session.user.email||'';
-      }
-    }catch(err){console.error(err)}
-  }
-  checkExisting();
+    const {data:{session}}=await s.auth.getSession();
+    if(session?.user){
+      form.classList.add('hidden');
+      loggedBox.classList.remove('hidden');
+      loggedEmail.textContent=session.user.email||'';
+    }
+  })();
 })();
 </script>
 </body>
