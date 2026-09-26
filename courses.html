@@ -49,7 +49,7 @@ async function load(){
  let subjectQuery=s.from("subjects").select("*").order("subject_name");
  if(currentRole==="teacher"){
    const ar=await s.from("teacher_class_subjects").select("teacher_id,subject_id,class_id").eq("teacher_id",user.id);
-   if(ar.error){alert("Lỗi tải phân công V2.4: "+ar.error.message);return} assignments=ar.data||[];
+   if(ar.error){alert("Lỗi tải phân công V2.5: "+ar.error.message);return} assignments=ar.data||[];
    const classIds=[...new Set(assignments.map(x=>x.class_id).filter(Boolean))], subjectIds=[...new Set(assignments.map(x=>x.subject_id).filter(Boolean))];
    courseQuery=courseQuery.eq("teacher_id",user.id);
    if(classIds.length) classQuery=classQuery.in("id",classIds); else classes=[];
