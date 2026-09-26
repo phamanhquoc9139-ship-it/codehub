@@ -7,6 +7,7 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
 <script src="scripts/supabase-config.js"></script>
 <style>
   @page { size: A4; margin: 14mm 14mm 14mm 14mm; }
@@ -21,6 +22,7 @@
     a { color:#000!important; text-decoration:none!important; }
   }
   .print-only { display:none; }
+  .page-break { break-before: page; page-break-before: always; }
   .sheet { background:#fff; border-radius:18px; box-shadow:0 8px 25px rgba(15,23,42,.07); }
   .option-selected { font-weight:700; }
   .correct { color:#047857; }
@@ -42,7 +44,8 @@
         <p class="text-slate-500 mt-1">Xuất hồ sơ giấy/PDF toàn lớp và bài làm chi tiết từng học sinh.</p>
       </div>
       <div class="flex flex-wrap gap-2">
-        <button id="printBtn" class="bg-blue-600 text-white px-4 py-2 rounded-xl font-bold">🖨 In / Lưu PDF</button>
+        <button id="printBtn" class="bg-blue-600 text-white px-4 py-2 rounded-xl font-bold">🖨 In trực tiếp</button>
+<button id="pdfBtn" class="bg-violet-600 text-white px-4 py-2 rounded-xl font-bold">⬇ Tải PDF</button>
         <button id="excelBtn" class="bg-emerald-600 text-white px-4 py-2 rounded-xl font-bold">⬇ Excel tổng hợp</button>
         <a id="backLink" href="quizzes.html" class="border bg-white px-4 py-2 rounded-xl font-bold">← Kết quả</a>
       </div>
@@ -436,6 +439,38 @@ $("printBtn").onclick=()=>{
   document.title=`Ho_so_${safeFile(quiz.title)}_${safeFile(currentClassName)}`;
   window.print();
 };
+
+$("pdfBtn").onclick=async()=>{
+  if(!$("classFilter").value)return alert("Chọn lớp trước khi tải PDF.");
+  const btn=$("pdfBtn");
+  const old=btn.textContent;
+  btn.disabled=true;
+  btn.textContent="⏳ Đang tạo PDF...";
+  try{
+    const filename=`Ho_so_${safeFile(quiz.title)}_${safeFile(currentClassName)}.pdf`;
+    const opt={
+      margin:[8,8,8,8],
+      filename,
+      image:{type:"jpeg",quality:0.98},
+      html2canvas:{
+        scale:2,
+        useCORS:true,
+        logging:false,
+        backgroundColor:"#ffffff"
+      },
+      jsPDF:{unit:"mm",format:"a4",orientation:"portrait"},
+      pagebreak:{mode:["css","legacy"],before:".page-break"}
+    };
+    await html2pdf().set(opt).from($("printArea")).save();
+  }catch(e){
+    console.error(e);
+    alert("Không tạo được PDF: "+(e?.message||e));
+  }finally{
+    btn.disabled=false;
+    btn.textContent=old;
+  }
+};
+
 $("excelBtn").onclick=()=>{
   if(!printRows.length)return alert("Chưa có dữ liệu.");
   const data=printRows.map((x,i)=>({
