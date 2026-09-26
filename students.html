@@ -3,10 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quản lý học sinh | CodeHub</title>
+  <title>Quản lý học sinh V2.9 | CodeHub</title>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="scripts/supabase-config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -137,6 +138,15 @@
     .edit-btn { background: #e8f1ff; color: #2563eb; }
     .password-btn { background: #fff0bd; color: #a54b00; }
     .delete-btn { background: #ffe0e0; color: #dc2626; }
+    .import-btn { background:#059669; }
+    .export-btn { background:#7c3aed; }
+    .template-btn { background:#f97316; }
+    .hint { color:#64748b; font-size:13px; line-height:1.5; margin-top:8px; }
+    .preview-wrap { overflow:auto; max-height:320px; border:1px solid #e2e8f0; border-radius:12px; margin-top:14px; }
+    .preview-wrap table { min-width:720px; }
+    .preview-wrap th,.preview-wrap td { padding:10px; font-size:14px; }
+    .success-box { background:#ecfdf5; color:#047857; border:1px solid #a7f3d0; padding:12px; border-radius:10px; margin-top:12px; }
+    .warn-box { background:#fff7ed; color:#9a3412; border:1px solid #fed7aa; padding:12px; border-radius:10px; margin-top:12px; }
 
     #loading {
       text-align: center;
@@ -236,14 +246,19 @@
 
 <main class="container">
 
-  <h1>👨‍🎓 Quản lý học sinh</h1>
-  <p class="subtitle">Danh sách học sinh trên hệ thống CodeHub</p>
+  <h1>👨‍🎓 Quản lý học sinh <span style="font-size:16px;color:#2563eb">V2.9</span></h1>
+  <p class="subtitle">Nhập Excel hàng loạt • tự tạo tài khoản/mật khẩu • vẫn hỗ trợ thêm thủ công</p>
 
   <div class="box">
 
     <div class="top-row">
       <div id="studentCount" class="count"></div>
-      <button class="btn" onclick="openAddModal()">+ Thêm học sinh</button>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn template-btn" onclick="downloadTemplate()">📄 Tải file mẫu</button>
+        <button class="btn import-btn" onclick="openImportModal()">📥 Nhập từ Excel</button>
+        <button id="exportCredentialsBtn" class="btn export-btn" onclick="exportCredentials()" disabled style="opacity:.55">⬇ Xuất tài khoản vừa tạo</button>
+        <button class="btn" onclick="openAddModal()">+ Thêm thủ công</button>
+      </div>
     </div>
 
     <div class="search-row">
@@ -278,31 +293,50 @@
 <!-- THÊM HỌC SINH -->
 <div id="addModal" class="modal">
   <div class="modal-box">
-    <h2>👨‍🎓 Thêm học sinh</h2>
+    <h2>👨‍🎓 Thêm học sinh thủ công</h2>
 
     <label>Họ và tên</label>
     <input id="addFullName" placeholder="Ví dụ: Nguyễn Văn Bình">
 
-    <label>Mã học sinh</label>
+    <label>Mã học sinh <span style="color:#64748b;font-weight:400">(có thể để trống để hệ thống tự tạo)</span></label>
     <input id="addStudentCode" placeholder="Ví dụ: HS002">
 
     <label>Lớp</label>
     <select id="addClassName"><option value="">-- Chọn lớp --</option></select>
-
-    <label>Email đăng nhập</label>
-    <input id="addEmail" type="email"
-           placeholder="Ví dụ: hocsinh02@codehub.vn">
-
-    <label>Mật khẩu</label>
-    <input id="addPassword" type="password"
-           placeholder="Tối thiểu 6 ký tự">
-
-    <div class="modal-actions">
+    <div class="hint">Tên đăng nhập và mật khẩu sẽ được hệ thống tự tạo. Sau khi tạo xong có thể xuất Excel để in cho học sinh.</div>
+<div class="modal-actions">
       <button class="btn-cancel" onclick="closeModal('addModal')">Hủy</button>
       <button class="btn-save" onclick="createStudent()">Tạo tài khoản</button>
     </div>
 
     <div id="addMessage" class="message"></div>
+  </div>
+</div>
+
+
+<!-- NHẬP EXCEL -->
+<div id="importModal" class="modal">
+  <div class="modal-box" style="width:min(900px,96%)">
+    <h2>📥 Nhập danh sách học sinh từ Excel</h2>
+
+    <label>File Excel</label>
+    <input id="excelFile" type="file" accept=".xlsx,.xls,.csv">
+    <div class="hint">
+      Cột bắt buộc: <b>Họ và tên</b>. Có thể có thêm <b>Mã học sinh</b>, <b>Lớp</b>.
+      Nếu thiếu Mã học sinh, hệ thống tự tạo. Nếu thiếu Lớp, chọn lớp mặc định bên dưới.
+    </div>
+
+    <label>Lớp mặc định</label>
+    <select id="importDefaultClass"><option value="">-- Chọn nếu file không có cột Lớp --</option></select>
+
+    <div class="modal-actions" style="justify-content:flex-start">
+      <button class="btn-cancel" onclick="closeModal('importModal')">Hủy</button>
+      <button class="btn-save" onclick="previewExcel()">🔎 Đọc & xem trước</button>
+      <button id="importNowBtn" class="btn-save" onclick="importStudents()" disabled>🚀 Tạo tài khoản hàng loạt</button>
+    </div>
+
+    <div id="importMessage" class="message"></div>
+    <div id="excelPreview"></div>
   </div>
 </div>
 
@@ -356,14 +390,18 @@
 </div>
 
 <script>
-const CREATE_FUNCTION =
-  "https://drfcejvmyhzorwepndta.supabase.co/functions/v1/create-student";
+const STUDENT_IMPORT_FUNCTION =
+  "https://drfcejvmyhzorwepndta.supabase.co/functions/v1/student-import";
 
 const MANAGE_FUNCTION =
   "https://drfcejvmyhzorwepndta.supabase.co/functions/v1/manage-student";
 
 let students = [];
 let availableClasses = [];
+let currentRole = "";
+let currentUser = null;
+let pendingImportRows = [];
+let lastCredentials = [];
 
 /* ================================
    CHUẨN HÓA DỮ LIỆU
@@ -413,21 +451,21 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   const { data: { user } } = await client.auth.getUser();
-
   if (!user) {
     location.href = "login.html";
     return;
   }
+  currentUser = user;
 
-  const { data: profile } = await client
+  const { data: profile, error: profileError } = await client
     .from("profiles")
-    .select("role")
+    .select("role,full_name")
     .eq("id", user.id)
     .single();
 
-  const currentRole = String(profile?.role || "").trim().toLowerCase();
+  currentRole = String(profile?.role || "").trim().toLowerCase();
 
-  if (!profile || !["teacher", "admin"].includes(currentRole)) {
+  if (profileError || !["admin","teacher"].includes(currentRole)) {
     showError("Bạn không có quyền truy cập.");
     return;
   }
@@ -442,24 +480,53 @@ document.addEventListener("DOMContentLoaded", async () => {
     .addEventListener("change", renderStudents);
 });
 
-
 async function loadClasses() {
-  const { data, error } = await window.supabaseClient
-    .from("classes")
-    .select("id, class_name, school_year")
-    .order("class_name");
+  const client = window.supabaseClient;
+  let rows = [];
 
-  if (error) {
-    showError("Không tải được danh sách lớp: " + error.message);
-    return;
+  if (currentRole === "admin") {
+    const r = await client
+      .from("classes")
+      .select("id,class_name,school_year")
+      .order("class_name");
+    if (r.error) {
+      showError("Không tải được danh sách lớp: " + r.error.message);
+      return;
+    }
+    rows = r.data || [];
+  } else {
+    const a = await client
+      .from("teacher_class_subjects")
+      .select("class_id")
+      .eq("teacher_id", currentUser.id);
+
+    if (a.error) {
+      showError("Không tải được phân công lớp: " + a.error.message);
+      return;
+    }
+
+    const ids = [...new Set((a.data || []).map(x => x.class_id).filter(Boolean))];
+    if (ids.length) {
+      const r = await client
+        .from("classes")
+        .select("id,class_name,school_year")
+        .in("id", ids)
+        .order("class_name");
+      if (r.error) {
+        showError("Không tải được danh sách lớp: " + r.error.message);
+        return;
+      }
+      rows = r.data || [];
+    }
   }
 
-  availableClasses = (data || [])
+  availableClasses = rows
     .map(item => ({ ...item, class_name: normalizeClass(item.class_name) }))
     .filter(item => item.class_name);
 
   fillClassSelect("addClassName");
   fillClassSelect("editClassName");
+  fillClassSelect("importDefaultClass");
 }
 
 function fillClassSelect(selectId, selectedValue = "") {
@@ -493,7 +560,10 @@ async function loadStudents() {
     return;
   }
 
-  students = data || [];
+  const allowed = new Set(availableClasses.map(x => normalizeClass(x.class_name)));
+  students = (data || []).filter(s =>
+    currentRole === "admin" || allowed.has(normalizeClass(s.class_name))
+  );
 
   buildClassFilter();
   renderStudents();
@@ -598,8 +668,6 @@ function openAddModal() {
   document.getElementById("addMessage").textContent = "";
   document.getElementById("addFullName").value = "";
   document.getElementById("addStudentCode").value = "";
-  document.getElementById("addEmail").value = "";
-  document.getElementById("addPassword").value = "";
   fillClassSelect("addClassName");
   document.getElementById("addModal").style.display = "flex";
 }
@@ -639,84 +707,262 @@ async function createStudent() {
   const className =
     normalizeClass(document.getElementById("addClassName").value);
 
-  const email =
-    document.getElementById("addEmail").value.trim().toLowerCase();
-
-  const password =
-    document.getElementById("addPassword").value;
-
-  if (!fullName || !studentCode || !className || !email || !password) {
-    message.textContent = "⚠️ Vui lòng nhập đầy đủ thông tin.";
+  if (!fullName || !className) {
+    message.textContent = "⚠️ Vui lòng nhập Họ tên và Lớp.";
     return;
   }
 
-  if (password.length < 6) {
-    message.textContent = "⚠️ Mật khẩu phải có ít nhất 6 ký tự.";
-    return;
-  }
-
-  // Kiểm tra mã HS đang có trên danh sách hiện tại
-  if (students.some(s =>
+  if (studentCode && students.some(s =>
       normalizeCode(s.student_code) === studentCode)) {
     message.textContent = "❌ Mã học sinh đã tồn tại.";
     return;
   }
 
   try {
-    message.textContent = "Đang tạo tài khoản...";
+    message.textContent = "Đang tạo tài khoản và mật khẩu tự động...";
 
-    const token = await getAccessToken();
-
-    const response = await fetch(CREATE_FUNCTION, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
-      },
-      body: JSON.stringify({
-        fullName,
-        studentCode,
-        className,
-        email,
-        password
-      })
+    const result = await callStudentImport({
+      action: "single",
+      rows: [{ fullName, studentCode, className }]
     });
 
-    const rawText = await response.text();
-    let result = {};
-
-    try {
-      result = rawText ? JSON.parse(rawText) : {};
-    } catch {
-      throw new Error("Edge Function create-student trả về dữ liệu không hợp lệ.");
+    const created = result.created || [];
+    if (!created.length) {
+      throw new Error((result.errors || [])[0]?.error || "Không tạo được học sinh.");
     }
 
-    if (!response.ok) {
-      if (result.error === "Thiếu ID học sinh.") {
-        throw new Error(
-          "Edge Function create-student đang dùng nhầm mã quản lý học sinh. Cần sửa function create-student trên Supabase."
-        );
-      }
-      throw new Error(result.error || "Không tạo được học sinh.");
-    }
+    lastCredentials = [...lastCredentials, ...created];
+    updateCredentialButton();
 
-    message.textContent = "✅ Tạo học sinh thành công.";
+    const c = created[0];
+    message.innerHTML =
+      `<div class="success-box"><b>✅ Tạo thành công</b><br>` +
+      `Tên đăng nhập: <b>${escapeHTML(c.student_code)}</b><br>` +
+      `Mật khẩu: <b>${escapeHTML(c.password)}</b></div>`;
 
     await loadStudents();
 
-    setTimeout(() => {
-      closeModal("addModal");
-
-      document.getElementById("addFullName").value = "";
-      document.getElementById("addStudentCode").value = "";
-      fillClassSelect("addClassName");
-      document.getElementById("addEmail").value = "";
-      document.getElementById("addPassword").value = "";
-    }, 600);
+    document.getElementById("addFullName").value = "";
+    document.getElementById("addStudentCode").value = "";
+    fillClassSelect("addClassName");
 
   } catch (error) {
     message.textContent = "❌ " + error.message;
   }
+}
+
+/* ================================
+   NHẬP EXCEL + XUẤT TÀI KHOẢN
+================================ */
+
+async function callStudentImport(payload) {
+  const token = await getAccessToken();
+  const response = await fetch(STUDENT_IMPORT_FUNCTION, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`
+    },
+    body: JSON.stringify(payload)
+  });
+
+  const raw = await response.text();
+  let result = {};
+  try { result = raw ? JSON.parse(raw) : {}; }
+  catch { throw new Error("Edge Function student-import trả về dữ liệu không hợp lệ."); }
+
+  if (!response.ok) throw new Error(result.error || "Không xử lý được danh sách học sinh.");
+  return result;
+}
+
+function openImportModal() {
+  pendingImportRows = [];
+  document.getElementById("excelFile").value = "";
+  document.getElementById("importMessage").textContent = "";
+  document.getElementById("excelPreview").innerHTML = "";
+  document.getElementById("importNowBtn").disabled = true;
+  fillClassSelect("importDefaultClass");
+  document.getElementById("importModal").style.display = "flex";
+}
+
+function normalizeHeader(h) {
+  return String(h || "")
+    .trim()
+    .toLocaleLowerCase("vi-VN")
+    .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    .replace(/đ/g, "d")
+    .replace(/[^a-z0-9]/g, "");
+}
+
+function pickField(row, aliases) {
+  for (const [k,v] of Object.entries(row || {})) {
+    if (aliases.includes(normalizeHeader(k))) return v;
+  }
+  return "";
+}
+
+async function previewExcel() {
+  const file = document.getElementById("excelFile").files?.[0];
+  const msg = document.getElementById("importMessage");
+  const preview = document.getElementById("excelPreview");
+  const defaultClass = normalizeClass(document.getElementById("importDefaultClass").value);
+
+  if (!file) {
+    msg.textContent = "⚠️ Chọn file Excel trước.";
+    return;
+  }
+
+  try {
+    msg.textContent = "Đang đọc file...";
+    const buf = await file.arrayBuffer();
+    const wb = XLSX.read(buf, { type: "array" });
+    const ws = wb.Sheets[wb.SheetNames[0]];
+    const raw = XLSX.utils.sheet_to_json(ws, { defval: "" });
+
+    const rows = raw.map((r, i) => {
+      const fullName = normalizeName(pickField(r, ["hovaten","hoten","fullname","name","tenhocsinh"]));
+      const studentCode = normalizeCode(pickField(r, ["mahocsinh","mahs","mshs","studentcode","code"]));
+      const className = normalizeClass(pickField(r, ["lop","classname","class"])) || defaultClass;
+      return { rowNumber: i + 2, fullName, studentCode, className };
+    }).filter(x => x.fullName || x.studentCode || x.className);
+
+    const bad = rows.filter(x => !x.fullName || !x.className);
+    pendingImportRows = rows.filter(x => x.fullName && x.className);
+
+    if (!pendingImportRows.length) {
+      throw new Error("Không tìm thấy dòng hợp lệ. File cần có cột Họ và tên và Lớp (hoặc chọn Lớp mặc định).");
+    }
+
+    const allowed = new Set(availableClasses.map(x => normalizeClass(x.class_name)));
+    const outside = currentRole === "teacher"
+      ? pendingImportRows.filter(x => !allowed.has(x.className))
+      : [];
+
+    document.getElementById("importNowBtn").disabled = outside.length > 0;
+
+    msg.innerHTML =
+      `✅ Đọc được <b>${pendingImportRows.length}</b> học sinh.` +
+      (bad.length ? ` Bỏ qua ${bad.length} dòng thiếu Họ tên/Lớp.` : "") +
+      (outside.length ? `<br>❌ Có ${outside.length} dòng thuộc lớp chưa được phân công cho giáo viên.` : "");
+
+    const showRows = pendingImportRows.slice(0, 20);
+    preview.innerHTML = `
+      <div class="preview-wrap">
+        <table>
+          <thead><tr><th>Dòng</th><th>Họ và tên</th><th>Mã HS</th><th>Lớp</th></tr></thead>
+          <tbody>${showRows.map(x => `
+            <tr>
+              <td>${x.rowNumber}</td>
+              <td>${escapeHTML(x.fullName)}</td>
+              <td>${escapeHTML(x.studentCode || "(tự tạo)")}</td>
+              <td>${escapeHTML(x.className)}</td>
+            </tr>`).join("")}
+          </tbody>
+        </table>
+      </div>
+      ${pendingImportRows.length > 20 ? `<div class="hint">Chỉ hiển thị 20 dòng đầu. Tổng: ${pendingImportRows.length}.</div>` : ""}
+    `;
+
+  } catch (e) {
+    pendingImportRows = [];
+    document.getElementById("importNowBtn").disabled = true;
+    preview.innerHTML = "";
+    msg.textContent = "❌ " + e.message;
+  }
+}
+
+async function importStudents() {
+  const msg = document.getElementById("importMessage");
+  const btn = document.getElementById("importNowBtn");
+
+  if (!pendingImportRows.length) {
+    msg.textContent = "⚠️ Chưa có dữ liệu xem trước.";
+    return;
+  }
+
+  if (!confirm(`Tạo tài khoản cho ${pendingImportRows.length} học sinh?`)) return;
+
+  try {
+    btn.disabled = true;
+    btn.textContent = "Đang tạo tài khoản...";
+    msg.textContent = "Đang tạo tài khoản, vui lòng chờ...";
+
+    const result = await callStudentImport({
+      action: "bulk",
+      rows: pendingImportRows.map(x => ({
+        fullName: x.fullName,
+        studentCode: x.studentCode,
+        className: x.className
+      }))
+    });
+
+    const created = result.created || [];
+    const skipped = result.skipped || [];
+    const errors = result.errors || [];
+
+    lastCredentials = [...lastCredentials, ...created];
+    updateCredentialButton();
+
+    msg.innerHTML =
+      `<div class="success-box"><b>✅ Đã tạo ${created.length} tài khoản.</b><br>` +
+      `Bỏ qua: ${skipped.length} • Lỗi: ${errors.length}<br>` +
+      `Bấm <b>Xuất tài khoản vừa tạo</b> để lấy file Excel user/password.</div>` +
+      (errors.length ? `<div class="warn-box">Một số lỗi: ${escapeHTML(errors.slice(0,5).map(x => `${x.full_name || ""}: ${x.error}`).join(" | "))}</div>` : "");
+
+    await loadStudents();
+
+  } catch (e) {
+    msg.textContent = "❌ " + e.message;
+  } finally {
+    btn.disabled = false;
+    btn.textContent = "🚀 Tạo tài khoản hàng loạt";
+  }
+}
+
+function updateCredentialButton() {
+  const btn = document.getElementById("exportCredentialsBtn");
+  btn.disabled = lastCredentials.length === 0;
+  btn.style.opacity = lastCredentials.length ? "1" : ".55";
+}
+
+function exportCredentials() {
+  if (!lastCredentials.length) {
+    alert("Chưa có tài khoản mới để xuất.");
+    return;
+  }
+
+  const rows = lastCredentials.map((x, i) => ({
+    "STT": i + 1,
+    "Họ và tên": x.full_name || "",
+    "Mã học sinh / Tên đăng nhập": x.student_code || "",
+    "Lớp": x.class_name || "",
+    "Mật khẩu": x.password || "",
+    "Email nội bộ": x.email || ""
+  }));
+
+  const ws = XLSX.utils.json_to_sheet(rows);
+  ws["!cols"] = [
+    {wch:6},{wch:28},{wch:24},{wch:12},{wch:16},{wch:28}
+  ];
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "Tai khoan hoc sinh");
+
+  const d = new Date();
+  const pad = n => String(n).padStart(2,"0");
+  const name = `CodeHub_tai_khoan_hoc_sinh_${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}.xlsx`;
+  XLSX.writeFile(wb, name);
+}
+
+function downloadTemplate() {
+  const rows = [
+    {"Họ và tên":"Nguyễn Văn A","Mã học sinh":"","Lớp":"10A1"},
+    {"Họ và tên":"Trần Thị B","Mã học sinh":"HS010","Lớp":"10A1"}
+  ];
+  const ws = XLSX.utils.json_to_sheet(rows);
+  ws["!cols"] = [{wch:28},{wch:18},{wch:12}];
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "Danh sach hoc sinh");
+  XLSX.writeFile(wb, "CodeHub_Mau_Nhap_Hoc_Sinh.xlsx");
 }
 
 /* ================================
