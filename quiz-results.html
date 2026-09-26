@@ -1,160 +1,545 @@
-<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Kết quả Quiz V2.6.1 | CodeHub</title>
-<script src="https://cdn.tailwindcss.com">
-
-</script>
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Phân tích Quiz V3.2 | CodeHub</title>
+<script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-<script src="scripts/supabase-config.js"></script><style>
-.analysis-ok{color:#059669!important}
-.analysis-bad{color:#dc2626!important}
-.analysis-bar-ok{background:#10b981!important}
-.analysis-bar-bad{background:#ef4444!important}
-</style><link rel="stylesheet" href="styles/codehub-v26.css"><script src="scripts/codehub-v26-ui.js"></script></head>
-<body class="ch-shell bg-slate-50 text-slate-900"><script>document.addEventListener("DOMContentLoaded",()=>CodeHubUI.mountHeader({active:"quizzes",breadcrumbs:[{label:"Quiz",href:"quizzes.html"},{label:"Kết quả"}]}))</script><main class="max-w-7xl mx-auto p-5">
-<div class="flex flex-wrap justify-between gap-3 mb-5"><div><h1 id="h" class="text-3xl font-bold">📊 Kết quả Quiz</h1><p id="sub" class="text-slate-500">Thống kê theo lớp và phân tích câu hỏi</p></div>
-<div class="flex gap-2"><button id="excel" class="bg-emerald-600 text-white px-4 py-2 rounded-xl font-bold">⬇ Xuất Excel</button><a href="quizzes.html" class="border bg-white px-4 py-2 rounded-xl">← Quiz</a></div></div>
+<script src="scripts/supabase-config.js"></script>
+<style>
+  .bar{height:12px;border-radius:999px;overflow:hidden;background:#e2e8f0}
+  .green{background:#10b981}.red{background:#ef4444}.blue{background:#3b82f6}.orange{background:#f59e0b}
+  .chip{display:inline-block;padding:4px 9px;border-radius:999px;font-size:12px;font-weight:800}
+</style>
+</head>
+<body class="bg-slate-50 text-slate-900">
+<main class="max-w-7xl mx-auto p-4 md:p-6">
 
-<div id="msg" class="hidden mb-4 p-3 rounded-xl bg-red-50 text-red-700"></div>
-<div class="bg-white rounded-2xl shadow p-4 mb-5 flex flex-wrap gap-3 items-end">
-<label class="font-bold">Lớp đã giao<select id="classFilter" class="block mt-1 border rounded-xl p-2 min-w-48"></select></label>
-<label class="font-bold">Lượt hiển thị<select id="attemptMode" class="block mt-1 border rounded-xl p-2"><option value="latest">Lần nộp gần nhất/HS</option><option value="all">Tất cả lượt nộp</option></select></label>
-<button id="reload" class="bg-blue-600 text-white px-4 py-2 rounded-xl font-bold">Làm mới</button>
-</div>
+  <div class="flex flex-wrap justify-between gap-3 mb-5">
+    <div>
+      <div class="flex items-center gap-3">
+        <h1 id="h" class="text-3xl font-black">📊 Phân tích Quiz</h1>
+        <span class="chip bg-violet-100 text-violet-700">V3.2</span>
+      </div>
+      <p id="sub" class="text-slate-500 mt-1">Theo dõi đã làm/chưa làm, điểm số và tỷ lệ đúng từng câu</p>
+    </div>
 
-<div class="grid grid-cols-2 lg:grid-cols-6 gap-3 mb-5">
-<div class="bg-white rounded-2xl shadow p-4"><div class="text-slate-500 text-sm">Sĩ số</div><div id="totalStudents" class="text-3xl font-bold">0</div></div>
-<div class="bg-white rounded-2xl shadow p-4"><div class="text-slate-500 text-sm">Đã làm</div><div id="doneStudents" class="text-3xl font-bold text-emerald-600">0</div></div>
-<div class="bg-white rounded-2xl shadow p-4"><div class="text-slate-500 text-sm">Chưa làm</div><div id="notDoneStudents" class="text-3xl font-bold text-orange-600">0</div></div>
-<div class="bg-white rounded-2xl shadow p-4"><div class="text-slate-500 text-sm">Điểm TB</div><div id="avgScore" class="text-3xl font-bold">—</div></div>
-<div class="bg-white rounded-2xl shadow p-4"><div class="text-slate-500 text-sm">Cao nhất</div><div id="maxScore" class="text-3xl font-bold">—</div></div>
-<div class="bg-white rounded-2xl shadow p-4"><div class="text-slate-500 text-sm">Thấp nhất</div><div id="minScore" class="text-3xl font-bold">—</div></div>
-</div>
+    <div class="flex gap-2 flex-wrap">
+      <button id="excel" class="bg-emerald-600 text-white px-4 py-2 rounded-xl font-bold">⬇ Xuất Excel</button>
+      <a href="quizzes.html" class="border bg-white px-4 py-2 rounded-xl font-bold">← Quiz</a>
+    </div>
+  </div>
 
-<div class="grid lg:grid-cols-3 gap-5">
-<section class="lg:col-span-2 bg-white rounded-2xl shadow overflow-hidden">
-<div class="p-4 border-b flex justify-between"><h2 class="font-bold text-xl">👨‍🎓 Bảng điểm</h2><span id="rate" class="text-sm text-slate-500"></span></div>
-<div class="overflow-auto"><table class="w-full text-sm"><thead class="bg-slate-100"><tr><th class="p-3 text-left">Học sinh</th><th class="p-3">Mã HS</th><th class="p-3">Lớp</th><th class="p-3">Trạng thái</th><th class="p-3">Điểm</th><th class="p-3">Đúng</th><th class="p-3">Nộp lúc</th><th class="p-3">Chi tiết</th></tr></thead><tbody id="rows"></tbody></table></div>
-</section>
-<section class="bg-white rounded-2xl shadow p-4"><h2 class="font-bold text-xl mb-3">🎯 Phân bố điểm</h2><div id="dist" class="space-y-3"></div></section>
-</div>
+  <div id="msg" class="hidden mb-4 p-3 rounded-xl bg-red-50 text-red-700"></div>
 
-<section class="bg-white rounded-2xl shadow p-4 mt-5"><div class="flex justify-between gap-2"><div><h2 class="font-bold text-xl">🧠 Phân tích câu hỏi</h2><p class="text-sm text-slate-500">Xếp theo tỷ lệ trả lời sai cao nhất.</p></div></div><div id="questions" class="mt-4 space-y-3"></div></section>
+  <section class="bg-white rounded-2xl shadow p-4 mb-5">
+    <div class="grid md:grid-cols-4 gap-3 items-end">
+      <label class="font-bold">
+        Lớp
+        <select id="classFilter" class="block w-full mt-1 border rounded-xl p-2"></select>
+      </label>
 
-<div id="modal" class="hidden fixed inset-0 bg-black/40 z-50 p-4 overflow-auto"><div class="max-w-3xl mx-auto bg-white rounded-2xl shadow-xl p-5 mt-8"><div class="flex justify-between gap-3 mb-4"><div><h2 id="mh" class="text-2xl font-bold">Chi tiết học sinh</h2><p id="ms" class="text-slate-500"></p></div><button id="close" class="border rounded-xl px-4 h-10">Đóng</button></div><div id="md" class="space-y-3"></div></div></div>
+      <label class="font-bold">
+        Lượt hiển thị
+        <select id="attemptMode" class="block w-full mt-1 border rounded-xl p-2">
+          <option value="latest">Lần nộp gần nhất / HS</option>
+          <option value="all">Tất cả lượt nộp</option>
+        </select>
+      </label>
 
-</main><script>
-const s=window.supabaseClient,$=x=>document.getElementById(x),qid=new URLSearchParams(location.search).get("quiz");
-let me,role,quiz,assignments=[],questionsData=[],attempts=[],profiles=[],currentRows=[],currentClassId="";
-const esc=v=>String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
-function err(t){msg.classList.remove("hidden");msg.textContent=t}
-function fmt(v){return v?new Date(v).toLocaleString("vi-VN"):"—"}
+      <label class="font-bold">
+        Tìm học sinh
+        <input id="searchStudent" class="block w-full mt-1 border rounded-xl p-2" placeholder="Tên hoặc mã HS">
+      </label>
+
+      <button id="reload" class="bg-blue-600 text-white px-4 py-2 rounded-xl font-bold h-11">Làm mới</button>
+    </div>
+  </section>
+
+  <section class="grid grid-cols-2 lg:grid-cols-7 gap-3 mb-5">
+    <div class="bg-white rounded-2xl shadow p-4"><div class="text-slate-500 text-sm">Sĩ số</div><div id="totalStudents" class="text-3xl font-black">0</div></div>
+    <div class="bg-white rounded-2xl shadow p-4"><div class="text-slate-500 text-sm">Đã làm</div><div id="doneStudents" class="text-3xl font-black text-emerald-600">0</div></div>
+    <div class="bg-white rounded-2xl shadow p-4"><div class="text-slate-500 text-sm">Chưa làm</div><div id="notDoneStudents" class="text-3xl font-black text-orange-600">0</div></div>
+    <div class="bg-white rounded-2xl shadow p-4"><div class="text-slate-500 text-sm">Tỷ lệ làm</div><div id="completionRate" class="text-3xl font-black">—</div></div>
+    <div class="bg-white rounded-2xl shadow p-4"><div class="text-slate-500 text-sm">Điểm TB</div><div id="avgScore" class="text-3xl font-black">—</div></div>
+    <div class="bg-white rounded-2xl shadow p-4"><div class="text-slate-500 text-sm">Cao nhất</div><div id="maxScore" class="text-3xl font-black">—</div></div>
+    <div class="bg-white rounded-2xl shadow p-4"><div class="text-slate-500 text-sm">Tỷ lệ ≥5</div><div id="passRate" class="text-3xl font-black">—</div></div>
+  </section>
+
+  <section class="grid lg:grid-cols-3 gap-5">
+    <div class="lg:col-span-2 bg-white rounded-2xl shadow overflow-hidden">
+      <div class="p-4 border-b flex flex-wrap justify-between gap-2">
+        <h2 class="font-black text-xl">👨‍🎓 Bảng kết quả</h2>
+        <span id="tableInfo" class="text-sm text-slate-500"></span>
+      </div>
+
+      <div class="overflow-auto">
+        <table class="w-full text-sm">
+          <thead class="bg-slate-100">
+            <tr>
+              <th class="p-3 text-left">Học sinh</th>
+              <th class="p-3">Mã HS</th>
+              <th class="p-3">Lớp</th>
+              <th class="p-3">Trạng thái</th>
+              <th class="p-3">Lượt</th>
+              <th class="p-3">Điểm</th>
+              <th class="p-3">Đúng</th>
+              <th class="p-3">Nộp lúc</th>
+              <th class="p-3">Chi tiết</th>
+            </tr>
+          </thead>
+          <tbody id="rows"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="space-y-5">
+      <section class="bg-white rounded-2xl shadow p-4">
+        <h2 class="font-black text-xl mb-3">🎯 Phân bố điểm</h2>
+        <div id="dist" class="space-y-3"></div>
+      </section>
+
+      <section class="bg-white rounded-2xl shadow p-4">
+        <h2 class="font-black text-xl mb-3">⏳ Chưa làm</h2>
+        <div id="notDoneList" class="space-y-2 max-h-80 overflow-auto"></div>
+      </section>
+    </div>
+  </section>
+
+  <section class="bg-white rounded-2xl shadow p-4 mt-5">
+    <div class="flex flex-wrap justify-between gap-2">
+      <div>
+        <h2 class="font-black text-xl">🧠 Phân tích câu hỏi</h2>
+        <p class="text-sm text-slate-500">Xếp từ câu có tỷ lệ sai cao nhất xuống thấp nhất.</p>
+      </div>
+      <div id="questionSummary" class="text-sm text-slate-500"></div>
+    </div>
+    <div id="questions" class="mt-4 space-y-3"></div>
+  </section>
+
+  <div id="modal" class="hidden fixed inset-0 bg-black/40 z-50 p-4 overflow-auto">
+    <div class="max-w-3xl mx-auto bg-white rounded-2xl shadow-xl p-5 mt-8">
+      <div class="flex justify-between gap-3 mb-4">
+        <div>
+          <h2 id="mh" class="text-2xl font-black">Chi tiết học sinh</h2>
+          <p id="ms" class="text-slate-500"></p>
+        </div>
+        <button id="close" class="border rounded-xl px-4 h-10">Đóng</button>
+      </div>
+      <div id="md" class="space-y-3"></div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+const s=window.supabaseClient;
+const $=x=>document.getElementById(x);
+const qid=new URLSearchParams(location.search).get("quiz");
+
+let me,role,quiz;
+let assignments=[],questionsData=[],attempts=[],profiles=[],currentRows=[],currentClassId="";
+
+const esc=v=>String(v??"").replace(/[&<>"']/g,m=>({
+  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+}[m]));
+
+const fmt=v=>v?new Date(v).toLocaleString("vi-VN"):"—";
+
+function err(t){
+  $("msg").classList.remove("hidden");
+  $("msg").textContent=t;
+}
+
 async function init(){
- me=(await s.auth.getUser()).data.user;if(!me)return location.href="login.html";
- let pr=await s.from("profiles").select("role,full_name").eq("id",me.id).single();role=String(pr.data?.role||"").trim().toLowerCase();CodeHubUI.setIdentity(pr.data?.full_name||"",role,me.email||"");if(!["admin","teacher"].includes(role))return location.href="student-dashboard.html";
- let qr=await s.from("quizzes").select("id,title,teacher_id").eq("id",qid).single();
- if(qr.error||!qr.data||(role==="teacher"&&qr.data.teacher_id!==me.id))return location.href="quizzes.html";
- quiz=qr.data;h.textContent="📊 "+quiz.title+" — V2.6.1";
- let [ar,qq,at]=await Promise.all([
-  role==="teacher"?s.from("quiz_assignments").select("id,class_id,classes(class_name)").eq("quiz_id",qid).eq("teacher_id",me.id):s.from("quiz_assignments").select("id,class_id,classes(class_name)").eq("quiz_id",qid),
-  s.from("quiz_questions").select("id,question_text,correct_answer,question_order").eq("quiz_id",qid).order("question_order"),
-  s.from("quiz_attempts").select("*").eq("quiz_id",qid).order("submitted_at",{ascending:false})
- ]);
- if(ar.error)return err(ar.error.message);if(qq.error)return err(qq.error.message);if(at.error)return err(at.error.message);
- assignments=ar.data||[];questionsData=qq.data||[];attempts=at.data||[];
- classFilter.innerHTML='<option value="">Tất cả lớp đã giao</option>'+assignments.map(a=>`<option value="${a.class_id}">${esc(a.classes?.class_name||"Lớp")}</option>`).join("");
- await render();
-}
-async function getStudents(classId){
- let classNames=assignments.filter(a=>!classId||a.class_id===classId).map(a=>a.classes?.class_name).filter(Boolean);
- classNames=[...new Set(classNames)];
- if(!classNames.length)return [];
- let all=[];
- for(const n of classNames){let r=await s.from("profiles").select("id,full_name,student_code,class_name").eq("role","student").ilike("class_name",n);if(!r.error)all.push(...(r.data||[]))}
- let mp={};all.forEach(x=>mp[x.id]=x);return Object.values(mp);
-}
-function latestByStudent(arr){let mp={};for(const a of arr)if(!mp[a.student_id])mp[a.student_id]=a;return mp}
-async function render(){
- currentClassId=classFilter.value;profiles=await getStudents(currentClassId);
- let allowedAssignmentIds=assignments.filter(a=>!currentClassId||a.class_id===currentClassId).map(a=>a.id);
- let arr=attempts.filter(a=>!a.assignment_id||allowedAssignmentIds.includes(a.assignment_id));
- let latest=latestByStudent(arr),display=attemptMode.value==="all"?arr:Object.values(latest);
- let pmap={};profiles.forEach(p=>pmap[p.id]=p);
- let doneIds=new Set(arr.map(a=>a.student_id)),doneCount=profiles.filter(p=>doneIds.has(p.id)).length;
- totalStudents.textContent=profiles.length;doneStudents.textContent=doneCount;notDoneStudents.textContent=Math.max(0,profiles.length-doneCount);
- let scores=Object.values(latest).map(x=>+x.score).filter(Number.isFinite);
- avgScore.textContent=scores.length?(scores.reduce((a,b)=>a+b,0)/scores.length).toFixed(2):"—";
- maxScore.textContent=scores.length?Math.max(...scores).toFixed(2):"—";minScore.textContent=scores.length?Math.min(...scores).toFixed(2):"—";
- let passed=scores.filter(x=>x>=5).length;rate.textContent=scores.length?`Tỷ lệ đạt ≥5: ${(passed/scores.length*100).toFixed(1)}%`:"";
- currentRows=[];
- if(attemptMode.value==="latest"){
-   for(const p of profiles){let a=latest[p.id];currentRows.push({p,a})}
- }else{
-   for(const a of display){currentRows.push({p:pmap[a.student_id]||{id:a.student_id,full_name:"—",student_code:"—",class_name:"—"},a})}
- }
- rows.innerHTML=currentRows.map(({p,a})=>`<tr class="border-t"><td class="p-3 font-semibold">${esc(p.full_name||"—")}</td><td class="p-3 text-center">${esc(p.student_code||"—")}</td><td class="p-3 text-center">${esc(p.class_name||"—")}</td><td class="p-3 text-center">${a?'<span class="text-emerald-700 font-bold">Đã làm</span>':'<span class="text-orange-600 font-bold">Chưa làm</span>'}</td><td class="p-3 text-center font-bold">${a?a.score:"—"}</td><td class="p-3 text-center">${a?`${a.correct_count}/${a.total_questions}`:"—"}</td><td class="p-3 text-center">${a?fmt(a.submitted_at):"—"}</td><td class="p-3 text-center">${a?`<button class="text-blue-600 font-bold" onclick="detail('${a.id}')">Xem</button>`:"—"}</td></tr>`).join("")||'<tr><td colspan="8" class="p-6 text-center text-slate-500">Không có dữ liệu.</td></tr>';
- renderDist(scores);renderQuestions(arr);
-}
-function renderDist(scores){
- let bands=[["8–10",8,10],["6.5–<8",6.5,8],["5–<6.5",5,6.5],["<5",0,5]];
- dist.innerHTML=bands.map(([n,a,b])=>{let c=scores.filter(x=>x>=a&&(b===10?x<=b:x<b)).length,p=scores.length?c/scores.length*100:0;return`<div><div class="flex justify-between text-sm"><b>${n}</b><span>${c} HS (${p.toFixed(1)}%)</span></div><div class="h-3 bg-slate-100 rounded-full overflow-hidden"><div class="h-full bg-blue-500" style="width:${p}%"></div></div></div>`}).join("");
-}
-function renderQuestions(arr){
- let submitted=arr.filter(a=>a.answers&&typeof a.answers==="object");
- let stats=questionsData.map((q,i)=>{
-   let answered=0,wrong=0;
-   for(const a of submitted){
-     let v=a.answers?.[q.id];
-     if(v){answered++;if(v!==q.correct_answer)wrong++}
-   }
-   let correct=answered-wrong;
-   let wrongRate=answered?wrong/answered*100:0;
-   let correctRate=answered?correct/answered*100:0;
-   return{q,i,answered,wrong,correct,wrongRate,correctRate};
- }).sort((a,b)=>b.wrongRate-a.wrongRate || a.i-b.i);
+  try{
+    if(!qid)return location.href="quizzes.html";
 
- questions.innerHTML=stats.map(x=>{
-   if(x.answered===0){
-     return `<div class="border rounded-xl p-4">
-       <div class="flex flex-wrap justify-between gap-2">
-         <b>Câu ${x.i+1}. ${esc(x.q.question_text)}</b>
-         <span class="text-slate-500 font-bold">Chưa có lượt trả lời</span>
-       </div>
-       <div class="mt-2 h-2 bg-slate-100 rounded-full"></div>
-     </div>`;
-   }
-   return `<div class="border rounded-xl p-4">
-     <div class="flex flex-wrap justify-between gap-3">
-       <b class="flex-1">Câu ${x.i+1}. ${esc(x.q.question_text)}</b>
-       <div class="flex flex-wrap gap-3 text-sm font-bold">
-         <span class="text-emerald-600">✓ Đúng ${x.correct}/${x.answered} (${x.correctRate.toFixed(1)}%)</span>
-         <span class="text-red-600">✗ Sai ${x.wrong}/${x.answered} (${x.wrongRate.toFixed(1)}%)</span>
-       </div>
-     </div>
-     <div class="mt-3 h-3 bg-slate-100 rounded-full overflow-hidden flex">
-       <div class="h-full bg-emerald-500" style="width:${x.correctRate}%" title="Đúng ${x.correctRate.toFixed(1)}%"></div>
-       <div class="h-full bg-red-500" style="width:${x.wrongRate}%" title="Sai ${x.wrongRate.toFixed(1)}%"></div>
-     </div>
-   </div>`;
- }).join("")||'<p class="text-slate-500">Chưa có dữ liệu câu hỏi.</p>';
+    me=(await s.auth.getUser()).data.user;
+    if(!me)return location.href="login.html";
+
+    const pr=await s.from("profiles").select("role,full_name").eq("id",me.id).single();
+    if(pr.error)throw pr.error;
+    role=String(pr.data?.role||"").trim().toLowerCase();
+
+    if(!["admin","teacher"].includes(role))return location.href="student-dashboard.html";
+
+    const qr=await s.from("quizzes").select("id,title,teacher_id").eq("id",qid).single();
+    if(qr.error||!qr.data)return location.href="quizzes.html";
+
+    quiz=qr.data;
+
+    if(role==="teacher" && quiz.teacher_id!==me.id){
+      alert("Quiz này thuộc giáo viên khác.");
+      return location.href="quizzes.html";
+    }
+
+    $("h").textContent="📊 "+quiz.title;
+    $("sub").textContent=(role==="admin"?"Quản trị viên":"Giáo viên")+" • Phân tích kết quả V3.2";
+
+    const [ar,qq,at]=await Promise.all([
+      s.from("quiz_assignments")
+        .select("id,class_id,teacher_id,classes(class_name)")
+        .eq("quiz_id",qid),
+
+      s.from("quiz_questions")
+        .select("id,question_text,correct_answer,question_order")
+        .eq("quiz_id",qid)
+        .order("question_order"),
+
+      s.rpc("codehub_v32_quiz_attempts",{p_quiz:qid})
+    ]);
+
+    if(ar.error)throw ar.error;
+    if(qq.error)throw qq.error;
+    if(at.error)throw at.error;
+
+    assignments=ar.data||[];
+    questionsData=qq.data||[];
+    attempts=at.data||[];
+
+    const uniqueClasses=[];
+    const seen=new Set();
+    assignments.forEach(a=>{
+      if(a.class_id && !seen.has(a.class_id)){
+        seen.add(a.class_id);
+        uniqueClasses.push(a);
+      }
+    });
+
+    $("classFilter").innerHTML=
+      '<option value="">Tất cả lớp đã giao</option>'+
+      uniqueClasses.map(a=>`<option value="${a.class_id}">${esc(a.classes?.class_name||"Lớp")}</option>`).join("");
+
+    await render();
+
+  }catch(e){
+    console.error(e);
+    err(e?.message||String(e));
+  }
 }
-async function detail(id){
- let a=attempts.find(x=>x.id===id);if(!a)return;let p=profiles.find(x=>x.id===a.student_id)||{};
- mh.textContent=p.full_name||"Học sinh";ms.textContent=`${p.student_code||"—"} • ${p.class_name||"—"} • Điểm ${a.score}/10 • ${a.correct_count}/${a.total_questions}`;
- let ans=a.answers||{};
- md.innerHTML=questionsData.map((q,i)=>{let mine=ans[q.id]||"—",ok=mine===q.correct_answer;return`<div class="border rounded-xl p-3 ${ok?"border-emerald-300":"border-red-300"}"><b>Câu ${i+1}. ${esc(q.question_text)}</b><div class="mt-1 ${ok?"text-emerald-700":"text-red-600"}">${ok?"✓ Đúng":"✗ Sai"} • Chọn ${mine} • Đáp án ${q.correct_answer}</div></div>`}).join("");
- modal.classList.remove("hidden");
+
+async function getStudents(classId){
+  let classNames=assignments
+    .filter(a=>!classId||a.class_id===classId)
+    .map(a=>a.classes?.class_name)
+    .filter(Boolean);
+
+  classNames=[...new Set(classNames)];
+
+  if(!classNames.length)return [];
+
+  let all=[];
+
+  for(const n of classNames){
+    const r=await s.from("profiles")
+      .select("id,full_name,student_code,class_name")
+      .eq("role","student")
+      .ilike("class_name",n);
+
+    if(!r.error)all.push(...(r.data||[]));
+  }
+
+  const mp={};
+  all.forEach(x=>mp[x.id]=x);
+  return Object.values(mp);
 }
-close.onclick=()=>modal.classList.add("hidden");modal.onclick=e=>{if(e.target===modal)modal.classList.add("hidden")};
-classFilter.onchange=render;attemptMode.onchange=render;reload.onclick=async()=>{location.reload()};
-excel.onclick=()=>{
- if(!currentRows.length)return CodeHubUI.toast("Không có dữ liệu để xuất.","warning");
- let scoreRows=currentRows.map(({p,a})=>({"Học sinh":p.full_name||"—","Mã HS":p.student_code||"—","Lớp":p.class_name||"—","Trạng thái":a?"Đã làm":"Chưa làm","Điểm":a?a.score:"","Số câu đúng":a?a.correct_count:"","Tổng câu":a?a.total_questions:"","Nộp lúc":a?fmt(a.submitted_at):""}));
- let wb=XLSX.utils.book_new(),ws=XLSX.utils.json_to_sheet(scoreRows);XLSX.utils.book_append_sheet(wb,ws,"Bang diem");
- let allowed=assignments.filter(a=>!currentClassId||a.class_id===currentClassId).map(a=>a.id),arr=attempts.filter(a=>!a.assignment_id||allowed.includes(a.assignment_id)).filter(a=>a.answers);
- let qs=questionsData.map((q,i)=>{let answered=0,wrong=0;for(const a of arr){let v=a.answers?.[q.id];if(v){answered++;if(v!==q.correct_answer)wrong++}}return{"Câu":i+1,"Nội dung":q.question_text,"Đáp án":q.correct_answer,"Số trả lời":answered,"Số sai":wrong,"Tỷ lệ sai %":answered?+(wrong/answered*100).toFixed(1):0}});
- XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(qs),"Phan tich cau");
- XLSX.writeFile(wb,`Ket_qua_${quiz.title.replace(/[^\p{L}\p{N}]+/gu,"_")}.xlsx`);
+
+function latestByStudent(arr){
+  const mp={};
+  for(const a of arr){
+    if(!mp[a.student_id])mp[a.student_id]=a;
+  }
+  return mp;
+}
+
+function attemptsByStudent(arr){
+  const mp={};
+  arr.forEach(a=>{
+    if(!mp[a.student_id])mp[a.student_id]=[];
+    mp[a.student_id].push(a);
+  });
+  return mp;
+}
+
+async function render(){
+  currentClassId=$("classFilter").value;
+  profiles=await getStudents(currentClassId);
+
+  const allowedAssignmentIds=assignments
+    .filter(a=>!currentClassId||a.class_id===currentClassId)
+    .map(a=>a.id);
+
+  let arr=attempts.filter(a=>!a.assignment_id||allowedAssignmentIds.includes(a.assignment_id));
+
+  const latest=latestByStudent(arr);
+  const grouped=attemptsByStudent(arr);
+  const pmap={};
+  profiles.forEach(p=>pmap[p.id]=p);
+
+  const doneIds=new Set(arr.map(a=>a.student_id));
+  const doneCount=profiles.filter(p=>doneIds.has(p.id)).length;
+  const notDone=profiles.filter(p=>!doneIds.has(p.id));
+
+  $("totalStudents").textContent=profiles.length;
+  $("doneStudents").textContent=doneCount;
+  $("notDoneStudents").textContent=Math.max(0,profiles.length-doneCount);
+  $("completionRate").textContent=profiles.length?((doneCount/profiles.length)*100).toFixed(1)+"%":"—";
+
+  const scores=Object.values(latest).map(x=>Number(x.score)).filter(Number.isFinite);
+  $("avgScore").textContent=scores.length?(scores.reduce((a,b)=>a+b,0)/scores.length).toFixed(2):"—";
+  $("maxScore").textContent=scores.length?Math.max(...scores).toFixed(2):"—";
+  const passed=scores.filter(x=>x>=5).length;
+  $("passRate").textContent=scores.length?((passed/scores.length)*100).toFixed(1)+"%":"—";
+
+  let displayRows=[];
+
+  if($("attemptMode").value==="latest"){
+    for(const p of profiles){
+      displayRows.push({p,a:latest[p.id]||null,used:(grouped[p.id]||[]).length});
+    }
+  }else{
+    for(const a of arr){
+      displayRows.push({
+        p:pmap[a.student_id]||{
+          id:a.student_id,
+          full_name:a.student_name||"—",
+          student_code:a.student_code||"—",
+          class_name:a.class_name||"—"
+        },
+        a,
+        used:(grouped[a.student_id]||[]).length
+      });
+    }
+  }
+
+  const q=String($("searchStudent").value||"").trim().toLowerCase();
+
+  if(q){
+    displayRows=displayRows.filter(({p})=>
+      String(p.full_name||"").toLowerCase().includes(q) ||
+      String(p.student_code||"").toLowerCase().includes(q)
+    );
+  }
+
+  currentRows=displayRows;
+
+  $("tableInfo").textContent=`${displayRows.length} dòng • ${doneCount}/${profiles.length} học sinh đã làm`;
+
+  $("rows").innerHTML=displayRows.map(({p,a,used})=>`
+    <tr class="border-t">
+      <td class="p-3 font-semibold">${esc(p.full_name||"—")}</td>
+      <td class="p-3 text-center">${esc(p.student_code||"—")}</td>
+      <td class="p-3 text-center">${esc(p.class_name||"—")}</td>
+      <td class="p-3 text-center">
+        ${a
+          ? '<span class="chip bg-emerald-100 text-emerald-700">Đã làm</span>'
+          : '<span class="chip bg-orange-100 text-orange-700">Chưa làm</span>'}
+      </td>
+      <td class="p-3 text-center">${used||0}</td>
+      <td class="p-3 text-center font-bold">${a?esc(a.score):"—"}</td>
+      <td class="p-3 text-center">${a?`${esc(a.correct_count)}/${esc(a.total_questions)}`:"—"}</td>
+      <td class="p-3 text-center">${a?fmt(a.submitted_at):"—"}</td>
+      <td class="p-3 text-center">${a?`<button class="text-blue-600 font-bold" onclick="detail('${a.attempt_id}')">Xem</button>`:"—"}</td>
+    </tr>`).join("") ||
+    '<tr><td colspan="9" class="p-6 text-center text-slate-500">Không có dữ liệu.</td></tr>';
+
+  renderDist(scores);
+  renderNotDone(notDone);
+  renderQuestions(arr);
+}
+
+function renderDist(scores){
+  const bands=[
+    ["8–10",8,10,"green"],
+    ["6.5–<8",6.5,8,"blue"],
+    ["5–<6.5",5,6.5,"orange"],
+    ["<5",0,5,"red"]
+  ];
+
+  $("dist").innerHTML=bands.map(([n,a,b,c])=>{
+    const count=scores.filter(x=>x>=a&&(b===10?x<=b:x<b)).length;
+    const p=scores.length?count/scores.length*100:0;
+
+    return `<div>
+      <div class="flex justify-between text-sm">
+        <b>${n}</b>
+        <span>${count} HS (${p.toFixed(1)}%)</span>
+      </div>
+      <div class="bar mt-1"><div class="${c}" style="height:100%;width:${p}%"></div></div>
+    </div>`;
+  }).join("");
+}
+
+function renderNotDone(list){
+  $("notDoneList").innerHTML=list.map(p=>`
+    <div class="border rounded-xl p-3">
+      <b>${esc(p.full_name||"—")}</b>
+      <div class="text-sm text-slate-500">${esc(p.student_code||"—")} • ${esc(p.class_name||"—")}</div>
+    </div>`).join("") ||
+    '<div class="text-emerald-700 font-bold">🎉 Tất cả học sinh đã làm.</div>';
+}
+
+function renderQuestions(arr){
+  const submitted=arr.filter(a=>a.answers&&typeof a.answers==="object");
+
+  const stats=questionsData.map((q,i)=>{
+    let answered=0,wrong=0;
+
+    for(const a of submitted){
+      const v=a.answers?.[q.id];
+      if(v){
+        answered++;
+        if(v!==q.correct_answer)wrong++;
+      }
+    }
+
+    const correct=answered-wrong;
+    const wrongRate=answered?wrong/answered*100:0;
+    const correctRate=answered?correct/answered*100:0;
+
+    return {q,i,answered,wrong,correct,wrongRate,correctRate};
+  }).sort((a,b)=>b.wrongRate-a.wrongRate || a.i-b.i);
+
+  const answeredQuestions=stats.filter(x=>x.answered>0);
+  const hardest=answeredQuestions[0];
+
+  $("questionSummary").textContent=hardest
+    ? `Khó nhất: Câu ${hardest.i+1} • Sai ${hardest.wrongRate.toFixed(1)}%`
+    : "Chưa đủ dữ liệu";
+
+  $("questions").innerHTML=stats.map(x=>{
+    if(x.answered===0){
+      return `<div class="border rounded-xl p-4">
+        <div class="flex flex-wrap justify-between gap-2">
+          <b>Câu ${x.i+1}. ${esc(x.q.question_text)}</b>
+          <span class="text-slate-500 font-bold">Chưa có lượt trả lời</span>
+        </div>
+      </div>`;
+    }
+
+    return `<div class="border rounded-xl p-4">
+      <div class="flex flex-wrap justify-between gap-3">
+        <b class="flex-1">Câu ${x.i+1}. ${esc(x.q.question_text)}</b>
+        <div class="flex gap-3 text-sm font-bold">
+          <span class="text-emerald-600">✓ ${x.correct}/${x.answered} (${x.correctRate.toFixed(1)}%)</span>
+          <span class="text-red-600">✗ ${x.wrong}/${x.answered} (${x.wrongRate.toFixed(1)}%)</span>
+        </div>
+      </div>
+
+      <div class="bar mt-3 flex">
+        <div class="green" style="height:100%;width:${x.correctRate}%"></div>
+        <div class="red" style="height:100%;width:${x.wrongRate}%"></div>
+      </div>
+
+      <div class="mt-2 text-sm text-slate-500">
+        Đáp án đúng: <b>${esc(x.q.correct_answer)}</b>
+      </div>
+    </div>`;
+  }).join("") || '<p class="text-slate-500">Chưa có dữ liệu câu hỏi.</p>';
+}
+
+function detail(id){
+  const a=attempts.find(x=>x.attempt_id===id);
+  if(!a)return;
+
+  $("mh").textContent=a.student_name||"Học sinh";
+  $("ms").textContent=
+    `${a.student_code||"—"} • ${a.class_name||"—"} • Điểm ${a.score}/10 • ${a.correct_count}/${a.total_questions}`;
+
+  const ans=a.answers||{};
+
+  $("md").innerHTML=questionsData.map((q,i)=>{
+    const mine=ans[q.id]||"—";
+    const ok=mine===q.correct_answer;
+
+    return `<div class="border rounded-xl p-3 ${ok?"border-emerald-300":"border-red-300"}">
+      <b>Câu ${i+1}. ${esc(q.question_text)}</b>
+      <div class="mt-1 ${ok?"text-emerald-700":"text-red-600"}">
+        ${ok?"✓ Đúng":"✗ Sai"} • Chọn ${esc(mine)} • Đáp án ${esc(q.correct_answer)}
+      </div>
+    </div>`;
+  }).join("");
+
+  $("modal").classList.remove("hidden");
+}
+
+$("close").onclick=()=> $("modal").classList.add("hidden");
+$("modal").onclick=e=>{if(e.target===$("modal"))$("modal").classList.add("hidden")};
+
+$("classFilter").onchange=render;
+$("attemptMode").onchange=render;
+$("searchStudent").oninput=render;
+$("reload").onclick=()=>location.reload();
+
+$("excel").onclick=()=>{
+  if(!currentRows.length)return alert("Không có dữ liệu để xuất.");
+
+  const scoreRows=currentRows.map(({p,a,used})=>({
+    "Học sinh":p.full_name||"—",
+    "Mã HS":p.student_code||"—",
+    "Lớp":p.class_name||"—",
+    "Trạng thái":a?"Đã làm":"Chưa làm",
+    "Số lượt":used||0,
+    "Điểm":a?a.score:"",
+    "Số câu đúng":a?a.correct_count:"",
+    "Tổng câu":a?a.total_questions:"",
+    "Nộp lúc":a?fmt(a.submitted_at):""
+  }));
+
+  const allowed=assignments
+    .filter(a=>!currentClassId||a.class_id===currentClassId)
+    .map(a=>a.id);
+
+  const arr=attempts
+    .filter(a=>!a.assignment_id||allowed.includes(a.assignment_id))
+    .filter(a=>a.answers);
+
+  const analysisRows=questionsData.map((q,i)=>{
+    let answered=0,wrong=0;
+
+    for(const a of arr){
+      const v=a.answers?.[q.id];
+      if(v){
+        answered++;
+        if(v!==q.correct_answer)wrong++;
+      }
+    }
+
+    return {
+      "Câu":i+1,
+      "Nội dung":q.question_text,
+      "Đáp án":q.correct_answer,
+      "Số trả lời":answered,
+      "Số đúng":answered-wrong,
+      "Số sai":wrong,
+      "Tỷ lệ đúng %":answered?+((answered-wrong)/answered*100).toFixed(1):0,
+      "Tỷ lệ sai %":answered?+(wrong/answered*100).toFixed(1):0
+    };
+  });
+
+  const notDoneRows=profiles
+    .filter(p=>!attempts.some(a=>a.student_id===p.id && (!currentClassId || allowed.includes(a.assignment_id))))
+    .map(p=>({
+      "Học sinh":p.full_name||"—",
+      "Mã HS":p.student_code||"—",
+      "Lớp":p.class_name||"—"
+    }));
+
+  const wb=XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(scoreRows),"Bang diem");
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(analysisRows),"Phan tich cau");
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(notDoneRows),"Chua lam");
+
+  XLSX.writeFile(
+    wb,
+    `Ket_qua_${quiz.title.replace(/[^\p{L}\p{N}]+/gu,"_")}_V3_2.xlsx`
+  );
 };
+
 init();
-</script></body></html>
+</script>
+</body>
+</html>
