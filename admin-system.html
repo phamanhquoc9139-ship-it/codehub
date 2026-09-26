@@ -10,7 +10,7 @@
 <body class="bg-slate-50 text-slate-900">
 <header class="bg-white border-b sticky top-0 z-20">
   <div class="max-w-7xl mx-auto px-5 py-4 flex flex-wrap gap-3 justify-between items-center">
-    <div><div class="text-2xl font-black text-blue-600">&lt;/&gt; CodeHub</div><div class="text-sm text-slate-500">V2.8 • Nhật ký • Sao lưu • Khôi phục an toàn</div></div>
+    <div><div class="text-2xl font-black text-blue-600">&lt;/&gt; CodeHub</div><div class="text-sm text-slate-500">V2.8.1 • Nhật ký • Sao lưu • Khôi phục an toàn</div></div>
     <div class="flex gap-2"><a href="teacher.html" class="border bg-white px-4 py-2 rounded-xl font-bold">← Dashboard</a><button id="logout" class="bg-slate-900 text-white px-4 py-2 rounded-xl font-bold">Đăng xuất</button></div>
   </div>
 </header>
@@ -49,7 +49,7 @@
       <section class="bg-white rounded-2xl shadow p-5">
         <h2 class="text-xl font-black">💾 Sao lưu JSON</h2>
         <p class="text-sm text-slate-500 mt-1">Tải toàn bộ dữ liệu ứng dụng về máy. Không chứa mật khẩu Supabase Auth.</p>
-        <button id="backupBtn" class="mt-4 w-full bg-emerald-600 text-white p-3 rounded-xl font-bold">⬇ Tạo & tải Backup</button>
+        <button id="backupBtn" class="mt-4 w-full bg-emerald-600 text-white p-3 rounded-xl font-bold">⬇ Tạo & lưu Backup</button>
         <div id="backupInfo" class="mt-3 text-sm text-slate-600"></div>
       </section>
 
@@ -136,17 +136,68 @@ function renderLogs(){
     return `<tr class="border-t"><td class="p-3 whitespace-nowrap">${fmt(x.created_at)}</td><td class="p-3"><b>${esc(actor)}</b><div class="text-xs text-slate-400">${esc(x.actor_role||"—")}</div></td><td class="p-3 font-bold ${ac}">${esc(x.action)}</td><td class="p-3">${esc(x.entity_table)}</td><td class="p-3 font-mono text-xs">${esc(short(x.entity_id))}</td><td class="p-3 text-xs">${esc(source)}</td></tr>`
   }).join("")||'<tr><td colspan="6" class="p-8 text-center text-slate-500">Chưa có nhật ký phù hợp.</td></tr>';
 }
-function downloadJson(obj){
+async function saveBackupJson(obj){
   const d=new Date(), pad=n=>String(n).padStart(2,"0");
   const name=`CodeHub_backup_${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}_${pad(d.getHours())}-${pad(d.getMinutes())}.json`;
-  const url=URL.createObjectURL(new Blob([JSON.stringify(obj,null,2)],{type:"application/json"}));
-  const a=document.createElement("a");a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+  const text=JSON.stringify(obj,null,2);
+
+  // Edge/Chrome trên HTTPS: cho người dùng tự chọn đúng thư mục và tên file.
+  if ("showSaveFilePicker" in window) {
+    const handle=await window.showSaveFilePicker({
+      suggestedName:name,
+      types:[{
+        description:"CodeHub Backup JSON",
+        accept:{"application/json":[".json"]}
+      }]
+    });
+    const writable=await handle.createWritable();
+    await writable.write(text);
+    await writable.close();
+    return {name, mode:"save-as"};
+  }
+
+  // Fallback cho trình duyệt không hỗ trợ Save As API.
+  const blob=new Blob([text],{type:"application/json;charset=utf-8"});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a");
+  a.href=url;
+  a.download=name;
+  a.style.display="none";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),3000);
+  return {name, mode:"download"};
 }
 async function readFile(){
   const f=$("restoreFile").files?.[0];if(!f)throw new Error("Chưa chọn file backup JSON.");
   return JSON.parse(await f.text());
 }
-$("backupBtn").onclick=async()=>{try{$("backupBtn").disabled=true;$("backupBtn").textContent="Đang tạo backup...";const b=await api("GET");currentBackup=b;downloadJson(b);$("backupInfo").textContent=`Backup ${b.created_at||""} • ${Object.values(b.counts||{}).reduce((a,v)=>a+(+v||0),0)} bản ghi`;show("Đã tạo và tải file backup.",true)}catch(e){show(e.message)}finally{$("backupBtn").disabled=false;$("backupBtn").textContent="⬇ Tạo & tải Backup"}};
+$("backupBtn").onclick=async()=>{
+  try{
+    $("backupBtn").disabled=true;
+    $("backupBtn").textContent="Đang tạo backup...";
+    const b=await api("GET");
+    currentBackup=b;
+
+    $("backupBtn").textContent="Chọn nơi lưu...";
+    const saved=await saveBackupJson(b);
+
+    const total=Object.values(b.counts||{}).reduce((a,v)=>a+(+v||0),0);
+    $("backupInfo").innerHTML=`<b>Đã lưu:</b> ${esc(saved.name)}<br><span class="text-xs">${total} bản ghi • ${saved.mode==="save-as"?"Đã chọn vị trí lưu":"Đã gửi tới trình tải xuống"}</span>`;
+    show("Backup đã được lưu thành file JSON.",true);
+  }catch(e){
+    if(e?.name==="AbortError"){
+      show("Bạn đã hủy chọn nơi lưu. Dữ liệu chưa bị thay đổi.");
+    }else{
+      console.error("BACKUP SAVE ERROR:",e);
+      show(e?.message||String(e));
+    }
+  }finally{
+    $("backupBtn").disabled=false;
+    $("backupBtn").textContent="⬇ Tạo & lưu Backup";
+  }
+};
 $("previewBtn").onclick=async()=>{try{const b=await readFile();currentBackup=b;const r=await api("POST",{action:"preview",backup:b});$("previewBox").innerHTML=`<div class="bg-blue-50 text-blue-800 p-3 rounded-xl"><b>File hợp lệ.</b><br>Phiên bản: ${esc(r.version||"—")}<br>Ngày tạo: ${esc(r.created_at||"—")}<br>Tổng bản ghi: ${Object.values(r.counts||{}).reduce((a,v)=>a+(+v||0),0)}</div>`}catch(e){$("previewBox").innerHTML=`<div class="bg-red-50 text-red-700 p-3 rounded-xl">${esc(e.message)}</div>`}};
 $("restoreBtn").onclick=async()=>{try{if($("confirmText").value.trim()!=="RESTORE")throw new Error("Hãy nhập chính xác RESTORE để xác nhận.");const b=currentBackup||await readFile();if(!confirm("Khôi phục MERGE từ file này? Hệ thống sẽ thêm/cập nhật dữ liệu theo ID và KHÔNG xóa dữ liệu hiện có."))return;$("restoreBtn").disabled=true;$("restoreBtn").textContent="Đang khôi phục...";const r=await api("POST",{action:"restore",confirm:"RESTORE",backup:b});const failed=Object.entries(r.report||{}).filter(([k,v])=>!v.ok);if(failed.length)show("Khôi phục xong nhưng có bảng lỗi: "+failed.map(x=>x[0]).join(", "));else show("Khôi phục MERGE hoàn tất.",true);await loadStats();await loadLogs()}catch(e){show(e.message)}finally{$("restoreBtn").disabled=false;$("restoreBtn").textContent="♻️ Khôi phục MERGE"}};
 $("reload").onclick=async()=>{await loadStats();await loadLogs()};
