@@ -1,5 +1,5 @@
 <!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Kết quả Quiz V4.5.6 | CodeHub</title>
+<title>Kết quả Quiz V2.6 | CodeHub</title>
 <script src="https://cdn.tailwindcss.com">
 
 </script>
@@ -10,9 +10,9 @@
 .analysis-bad{color:#dc2626!important}
 .analysis-bar-ok{background:#10b981!important}
 .analysis-bar-bad{background:#ef4444!important}
-</style></head>
-<body class="bg-slate-50 text-slate-900"><main class="max-w-7xl mx-auto p-5">
-<div class="flex flex-wrap justify-between gap-3 mb-5"><div><h1 id="h" class="text-3xl font-bold">📊 Kết quả V2.5</h1><p id="sub" class="text-slate-500">Thống kê theo lớp và phân tích câu hỏi</p></div>
+</style><link rel="stylesheet" href="styles/codehub-v26.css"><script src="scripts/codehub-v26-ui.js"></script></head>
+<body class="ch-shell bg-slate-50 text-slate-900"><script>document.addEventListener("DOMContentLoaded",()=>CodeHubUI.mountHeader({active:"quizzes",breadcrumbs:[{label:"Quiz",href:"quizzes.html"},{label:"Kết quả"}]}))</script><main class="max-w-7xl mx-auto p-5">
+<div class="flex flex-wrap justify-between gap-3 mb-5"><div><h1 id="h" class="text-3xl font-bold">📊 Kết quả Quiz</h1><p id="sub" class="text-slate-500">Thống kê theo lớp và phân tích câu hỏi</p></div>
 <div class="flex gap-2"><button id="excel" class="bg-emerald-600 text-white px-4 py-2 rounded-xl font-bold">⬇ Xuất Excel</button><a href="quizzes.html" class="border bg-white px-4 py-2 rounded-xl">← Quiz</a></div></div>
 
 <div id="msg" class="hidden mb-4 p-3 rounded-xl bg-red-50 text-red-700"></div>
@@ -54,7 +54,7 @@ async function init(){
  let pr=await s.from("profiles").select("role").eq("id",me.id).single();role=String(pr.data?.role||"").trim().toLowerCase();if(!["admin","teacher"].includes(role))return location.href="student-dashboard.html";
  let qr=await s.from("quizzes").select("id,title,teacher_id").eq("id",qid).single();
  if(qr.error||!qr.data||(role==="teacher"&&qr.data.teacher_id!==me.id))return location.href="quizzes.html";
- quiz=qr.data;h.textContent="📊 "+quiz.title+" — V2.5";
+ quiz=qr.data;h.textContent="📊 "+quiz.title+" — V2.6";
  let [ar,qq,at]=await Promise.all([
   role==="teacher"?s.from("quiz_assignments").select("id,class_id,classes(class_name)").eq("quiz_id",qid).eq("teacher_id",me.id):s.from("quiz_assignments").select("id,class_id,classes(class_name)").eq("quiz_id",qid),
   s.from("quiz_questions").select("id,question_text,correct_answer,question_order").eq("quiz_id",qid).order("question_order"),
@@ -148,7 +148,7 @@ async function detail(id){
 close.onclick=()=>modal.classList.add("hidden");modal.onclick=e=>{if(e.target===modal)modal.classList.add("hidden")};
 classFilter.onchange=render;attemptMode.onchange=render;reload.onclick=async()=>{location.reload()};
 excel.onclick=()=>{
- if(!currentRows.length)return alert("Không có dữ liệu để xuất.");
+ if(!currentRows.length)return CodeHubUI.toast("Không có dữ liệu để xuất.","warning");
  let scoreRows=currentRows.map(({p,a})=>({"Học sinh":p.full_name||"—","Mã HS":p.student_code||"—","Lớp":p.class_name||"—","Trạng thái":a?"Đã làm":"Chưa làm","Điểm":a?a.score:"","Số câu đúng":a?a.correct_count:"","Tổng câu":a?a.total_questions:"","Nộp lúc":a?fmt(a.submitted_at):""}));
  let wb=XLSX.utils.book_new(),ws=XLSX.utils.json_to_sheet(scoreRows);XLSX.utils.book_append_sheet(wb,ws,"Bang diem");
  let allowed=assignments.filter(a=>!currentClassId||a.class_id===currentClassId).map(a=>a.id),arr=attempts.filter(a=>!a.assignment_id||allowed.includes(a.assignment_id)).filter(a=>a.answers);

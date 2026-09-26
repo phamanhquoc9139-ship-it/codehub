@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Quản lý khóa học | CodeHub</title>
+<title>Quản lý khóa học V2.6 | CodeHub</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="scripts/supabase-config.js"></script>
 <style>
@@ -12,11 +12,11 @@ main{max-width:1200px;margin:38px auto;padding:0 20px}h1{font-size:35px;margin-b
 .modal{display:none;position:fixed;inset:0;background:#0008;z-index:50;align-items:center;justify-content:center;padding:18px}.box{background:#fff;width:min(700px,96%);max-height:92vh;overflow:auto;border-radius:17px;padding:25px}.mh{display:flex;justify-content:space-between;align-items:center}.close{border:0;background:#e2e8f0;border-radius:8px;width:37px;height:37px;font-size:20px;cursor:pointer}.fg{margin:15px 0}.fg label{display:block;font-weight:700;margin-bottom:6px}.fg input,.fg textarea,.fg select{width:100%;padding:11px;border:1px solid #cbd5e1;border-radius:8px;font:inherit}.fg textarea{min-height:95px}.classes{display:grid;grid-template-columns:1fr 1fr;gap:8px}.cc{padding:10px;border:1px solid #e2e8f0;border-radius:8px;background:#f8fafc}.cc input{width:auto;margin-right:7px}.ma{display:flex;justify-content:flex-end;gap:8px}.msg{min-height:20px;font-weight:700}
 @media(max-width:700px){header{flex-direction:column;gap:10px}.stats{grid-template-columns:1fr}.toolbar{flex-direction:column}.classes{grid-template-columns:1fr}.actions{flex-wrap:wrap}}
 </style>
-</head>
-<body>
-<header><div class="logo">&lt;/&gt; CodeHub</div><div><button class="btn" onclick="location.href='teacher.html'">← Quản trị</button> <button class="btn" onclick="location.href='subjects.html'">📚 Môn học</button> <button class="btn" onclick="logout()">Đăng xuất</button></div></header>
+<link rel="stylesheet" href="styles/codehub-v26.css"><script src="scripts/codehub-v26-ui.js"></script></head>
+<body><script>document.addEventListener("DOMContentLoaded",()=>CodeHubUI.mountHeader({active:"courses",breadcrumbs:[{label:"Dashboard",href:"teacher.html"},{label:"Khóa học"}]}))</script>
+
 <main>
-<h1>📚 Quản lý khóa học</h1><div class="sub">Tạo khóa học theo nhiều môn học và giao cho các lớp</div>
+<div class="ch-page-title"><h1>📚 Quản lý khóa học</h1><span class="ch-version">V2.6</span></div><div class="sub">Tạo khóa học theo nhiều môn học và giao cho các lớp</div>
 <div class="stats"><div class="stat">Tổng khóa học<div class="num" id="total">0</div></div><div class="stat">Đã xuất bản<div class="num" id="pub">0</div></div><div class="stat">Bản nháp<div class="num" id="draft">0</div></div></div>
 <div class="toolbar"><input id="search" placeholder="🔎 Tìm khóa học..."><select id="subjectFilter"><option value="">Tất cả môn</option></select><select id="gradeFilter"><option value="">Tất cả khối</option><option>10</option><option>11</option><option>12</option></select><button class="btn green" onclick="openCreate()">➕ Tạo khóa học</button></div>
 <div class="grid" id="grid"></div>
@@ -35,10 +35,10 @@ main{max-width:1200px;margin:38px auto;padding:0 20px}h1{font-size:35px;margin-b
 let user=null,currentRole="",courses=[],classes=[],links=[],subjects=[],assignments=[];
 const norm=v=>String(v||"").trim().toLocaleLowerCase("vi-VN");
 document.addEventListener("DOMContentLoaded",async()=>{
- const s=window.supabaseClient;if(!s){alert("Không kết nối được Supabase.");return}
+ const s=window.supabaseClient;if(!s){CodeHubUI.toast("Không kết nối được Supabase.","error");return}
  const {data:{user:u}}=await s.auth.getUser();if(!u){location.href="login.html";return}user=u;
  const {data:p}=await s.from("profiles").select("role").eq("id",u.id).single();currentRole=norm(p?.role);
- if(!p||!["teacher","admin"].includes(currentRole)){location.href="index.html";return}
+ if(!p||!["teacher","admin"].includes(currentRole)){CodeHubUI.forbidden("Tài khoản này không có quyền quản lý khóa học.");return} CodeHubUI.setRole(currentRole)
  search.addEventListener("input",render);subjectFilter.addEventListener("change",render);gradeFilter.addEventListener("change",render);
  subject.addEventListener("change",()=>classChecks([]));await load();
 });
@@ -49,14 +49,14 @@ async function load(){
  let subjectQuery=s.from("subjects").select("*").order("subject_name");
  if(currentRole==="teacher"){
    const ar=await s.from("teacher_class_subjects").select("teacher_id,subject_id,class_id").eq("teacher_id",user.id);
-   if(ar.error){alert("Lỗi tải phân công V2.5: "+ar.error.message);return} assignments=ar.data||[];
+   if(ar.error){CodeHubUI.toast("Lỗi tải phân công: "+ar.error.message,"error");return} assignments=ar.data||[];
    const classIds=[...new Set(assignments.map(x=>x.class_id).filter(Boolean))], subjectIds=[...new Set(assignments.map(x=>x.subject_id).filter(Boolean))];
    courseQuery=courseQuery.eq("teacher_id",user.id);
    if(classIds.length) classQuery=classQuery.in("id",classIds); else classes=[];
    if(subjectIds.length) subjectQuery=subjectQuery.in("id",subjectIds); else subjects=[];
  }
  const [a,b,c,d]=await Promise.all([courseQuery,classQuery,s.from("course_classes").select("*"),subjectQuery]);
- for(const r of [a,b,c,d])if(r.error){alert("Lỗi tải dữ liệu: "+r.error.message);return}
+ for(const r of [a,b,c,d])if(r.error){CodeHubUI.toast("Lỗi tải dữ liệu: "+r.error.message,"error");return}
  courses=a.data||[];classes=b.data||[];links=c.data||[];
  subjects=[...new Map((d.data||[]).filter(x=>x.subject_name&&x.subject_name.trim()).map(x=>[norm(x.subject_name),{...x,subject_name:x.subject_name.trim()}])).values()];
  if(currentRole==="teacher"&&!assignments.length){classes=[];subjects=[]}
@@ -67,13 +67,13 @@ function assigned(id){const ids=links.filter(x=>x.course_id===id).map(x=>x.class
 function allowedClassesForSubject(subjectName){if(currentRole==="admin")return classes;const sub=subjects.find(x=>norm(x.subject_name)===norm(subjectName));if(!sub)return[];const ids=new Set(assignments.filter(x=>String(x.subject_id)===String(sub.id)).map(x=>String(x.class_id)));return classes.filter(x=>ids.has(String(x.id)))}
 function render(){total.textContent=courses.length;pub.textContent=courses.filter(x=>x.is_published).length;draft.textContent=courses.filter(x=>!x.is_published).length;const q=norm(search.value),sf=subjectFilter.value,gf=gradeFilter.value;grid.innerHTML="";const arr=courses.filter(x=>(!q||norm(x.title+" "+x.subject+" "+(x.description||"")).includes(q))&&(!sf||x.subject===sf)&&(!gf||String(x.grade)===gf));if(!arr.length){grid.innerHTML='<div class="empty">Chưa có khóa học phù hợp.</div>';return}arr.forEach(x=>{const c=document.createElement("div");c.className="card";c.innerHTML='<div style="font-size:34px">📘</div><div class="ct"></div><div class="meta"></div><div class="classchips"></div><div class="status"></div><div class="actions"></div>';c.querySelector(".ct").textContent=x.title;c.querySelector(".meta").textContent="📚 "+x.subject+" • 🎓 Khối "+x.grade;assigned(x.id).forEach(z=>{let e=document.createElement("span");e.className="chip";e.textContent="🏫 "+z.class_name;c.querySelector(".classchips").appendChild(e)});let st=c.querySelector(".status");st.className="status "+(x.is_published?"pub":"draft");st.textContent=x.is_published?"🟢 Đã xuất bản":"⚪ Bản nháp";[["📖 Bài học","",()=>location.href=`lessons.html?course=${encodeURIComponent(x.id)}`],["✏️ Sửa","orange",()=>openEdit(x)],["🗑️ Xóa","red",()=>removeCourse(x)]].forEach(v=>{let b=document.createElement("button");b.className=v[1]||"btn";b.textContent=v[0];b.onclick=v[2];c.querySelector(".actions").appendChild(b)});grid.appendChild(c)})}
 function classChecks(selected=[]){classList.innerHTML="";const arr=allowedClassesForSubject(subject.value);if(!subject.value){classList.innerHTML='<div style="color:#64748b">Chọn môn học trước.</div>';return}if(!arr.length){classList.innerHTML='<div style="color:#dc2626">Chưa được phân lớp cho môn này.</div>';return}arr.forEach(x=>{let l=document.createElement("label");l.className="cc";let i=document.createElement("input");i.type="checkbox";i.value=x.id;i.checked=selected.includes(x.id);l.append(i,document.createTextNode(x.class_name+" ("+(x.school_year||"")+")"));classList.appendChild(l)})}
-function openCreate(){if(!subjects.length){alert(currentRole==="teacher"?"Bạn chưa được Admin phân công Môn + Lớp.":"Chưa có môn học.");return}mt.textContent="➕ Tạo khóa học";courseId.value="";title.value="";subject.value="";grade.value="";description.value="";published.value="false";msg.textContent="";classChecks([]);modal.style.display="flex"}
+function openCreate(){if(!subjects.length){CodeHubUI.toast(currentRole==="teacher"?"Bạn chưa được Admin phân công Môn + Lớp.":"Chưa có môn học.","warning");return}mt.textContent="➕ Tạo khóa học";courseId.value="";title.value="";subject.value="";grade.value="";description.value="";published.value="false";msg.textContent="";classChecks([]);modal.style.display="flex"}
 function openEdit(x){mt.textContent="✏️ Sửa khóa học";courseId.value=x.id;title.value=x.title||"";subject.value=x.subject||"";grade.value=String(x.grade||"");description.value=x.description||"";published.value=String(!!x.is_published);msg.textContent="";classChecks(assigned(x.id).map(z=>z.id));modal.style.display="flex"}
 function closeModal(){modal.style.display="none"}
 async function saveCourse(){const id=courseId.value,t=title.value.trim(),sub=subject.value,g=grade.value,des=description.value.trim(),is_published=published.value==="true",ids=[...document.querySelectorAll("#classList input:checked")].map(x=>x.value);if(!t||!sub||!g){msg.textContent="⚠️ Chọn đầy đủ tên khóa học, môn học và khối.";return}if(!ids.length){msg.textContent="⚠️ Chọn ít nhất 1 lớp được phân công cho môn này.";return}if(currentRole==="teacher"){const ok=new Set(allowedClassesForSubject(sub).map(x=>String(x.id)));if(ids.some(id=>!ok.has(String(id)))){msg.textContent="❌ Có lớp không thuộc phân công Môn + Lớp của bạn.";return}}
  const s=window.supabaseClient;let cid=id;if(id){let q=s.from("courses").update({title:t,subject:sub,grade:g,description:des,is_published,updated_at:new Date().toISOString()}).eq("id",id);if(currentRole==="teacher")q=q.eq("teacher_id",user.id);const {error}=await q;if(error){msg.textContent="❌ "+error.message;return}}else{const {data,error}=await s.from("courses").insert({title:t,subject:sub,grade:g,description:des,is_published,teacher_id:user.id}).select("id").single();if(error){msg.textContent="❌ "+error.message;return}cid=data.id}
  let r=await s.from("course_classes").delete().eq("course_id",cid);if(r.error){msg.textContent="❌ "+r.error.message;return}r=await s.from("course_classes").insert(ids.map(class_id=>({course_id:cid,class_id})));if(r.error){msg.textContent="❌ "+r.error.message;return}closeModal();await load()}
-async function removeCourse(x){if(!confirm(`Xóa khóa học "${x.title}"?`))return;let q=window.supabaseClient.from("courses").delete().eq("id",x.id);if(currentRole==="teacher")q=q.eq("teacher_id",user.id);const {error}=await q;if(error){alert("❌ "+error.message);return}await load()}
-async function logout(){await window.supabaseClient.auth.signOut();location.href="login.html"}
+async function removeCourse(x){if(!confirm(`Xóa khóa học "${x.title}"?`))return;let q=window.supabaseClient.from("courses").delete().eq("id",x.id);if(currentRole==="teacher")q=q.eq("teacher_id",user.id);const {error}=await q;if(error){CodeHubUI.toast(error.message,"error");return}await load()}
+async function logout(){return CodeHubUI.logout()}
 modal.addEventListener("click",e=>{if(e.target.id==="modal")closeModal()});
 </script></body></html>
