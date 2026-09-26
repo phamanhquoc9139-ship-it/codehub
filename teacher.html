@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Dashboard V3.0 | CodeHub</title>
+<title>Dashboard V3.0.1 | CodeHub</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="scripts/supabase-config.js"></script>
 <style>
@@ -24,7 +24,7 @@ main{max-width:1280px;margin:30px auto;padding:0 20px}h1{font-size:36px;margin:0
 </head>
 <body>
 <header>
-  <div><div class="logo">&lt;/&gt; CodeHub <span style="font-size:13px;color:#2563eb">V3.0</span></div><div id="identity" style="font-size:13px;color:#64748b;margin-top:4px">Đang xác định quyền...</div></div>
+  <div><div class="logo">&lt;/&gt; CodeHub <span style="font-size:13px;color:#2563eb">V3.0.1</span></div><div id="identity" style="font-size:13px;color:#64748b;margin-top:4px">Đang xác định quyền...</div></div>
   <div class="nav">
     <a class="btn soft" href="index.html">Trang chủ</a>
     <a class="btn soft" href="courses.html">Khóa học</a>
@@ -158,33 +158,53 @@ async function init(){
 }
 
 async function loadAttempts(){
-  let q=s.from("quiz_attempts")
-    .select("id,score,submitted_at,student_id,quiz_id,profiles:student_id(full_name,student_code,class_name),quizzes:quiz_id(title,teacher_id)")
-    .order("submitted_at",{ascending:false})
-    .limit(50);
+  // V3.0.1: dùng RPC SECURITY DEFINER để Admin/GV đọc đúng lượt nộp
+  // mà không mở rộng RLS trực tiếp trên quiz_attempts.
+  const r=await s.rpc("codehub_v301_dashboard_attempts");
 
-  const r=await q;
-  let rows=r.data||[];
-
-  if(role==="teacher"){
-    rows=rows.filter(x=>x.quizzes?.teacher_id===user.id);
+  if(r.error){
+    console.error("dashboard attempts:",r.error);
+    setText("stAttempts","!");
+    setText("avgScore","Chưa cài SQL V3.0.1");
+    setText("weekActivity","Chưa cài SQL V3.0.1");
+    $("recentAttempts").innerHTML=
+      '<div class="item">⚠️ Chưa cài helper thống kê V3.0.1 trong Supabase.</div>';
+    return;
   }
+
+  const rows=r.data||[];
 
   setText("stAttempts",rows.length);
 
   const scored=rows.filter(x=>x.score!==null&&x.score!==undefined);
-  const avg=scored.length?scored.reduce((a,x)=>a+safeNum(x.score),0)/scored.length:null;
-  setText("avgScore",avg===null?"Chưa có dữ liệu":`${avg.toFixed(2)}/10 trên ${scored.length} lượt gần nhất`);
+  const avg=scored.length
+    ? scored.reduce((a,x)=>a+safeNum(x.score),0)/scored.length
+    : null;
+
+  setText(
+    "avgScore",
+    avg===null
+      ? "Chưa có dữ liệu"
+      : `${avg.toFixed(2)}/10 trên ${scored.length} lượt`
+  );
 
   const weekAgo=Date.now()-7*86400000;
-  const week=rows.filter(x=>x.submitted_at&&new Date(x.submitted_at).getTime()>=weekAgo);
+  const week=rows.filter(
+    x=>x.submitted_at&&new Date(x.submitted_at).getTime()>=weekAgo
+  );
   setText("weekActivity",`${week.length} lượt nộp bài trong 7 ngày gần nhất`);
 
   $("recentAttempts").innerHTML=rows.slice(0,8).map(x=>`
     <div class="item">
-      <b>${esc(x.profiles?.full_name||"Học sinh")} • ${esc(x.quizzes?.title||"Quiz")}</b>
-      <div class="meta">${esc(x.profiles?.class_name||"—")} • Điểm <b>${esc(x.score??"—")}</b>/10 • ${fmt(x.submitted_at)}</div>
-    </div>`).join("") || '<div class="item">Chưa có lượt nộp bài.</div>';
+      <b>${esc(x.student_name||"Học sinh")} • ${esc(x.quiz_title||"Quiz")}</b>
+      <div class="meta">
+        ${esc(x.class_name||"—")} •
+        Mã HS ${esc(x.student_code||"—")} •
+        Điểm <b>${esc(x.score??"—")}</b>/10 •
+        ${fmt(x.submitted_at)}
+      </div>
+    </div>`).join("") ||
+    '<div class="item">Chưa có lượt nộp bài.</div>';
 }
 
 async function loadAttention(){
