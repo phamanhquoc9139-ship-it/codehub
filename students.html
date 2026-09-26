@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quản lý học sinh V2.9 | CodeHub</title>
+  <title>Quản lý học sinh V2.9.1 | CodeHub</title>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="scripts/supabase-config.js"></script>
@@ -246,7 +246,7 @@
 
 <main class="container">
 
-  <h1>👨‍🎓 Quản lý học sinh <span style="font-size:16px;color:#2563eb">V2.9</span></h1>
+  <h1>👨‍🎓 Quản lý học sinh <span style="font-size:16px;color:#2563eb">V2.9.1</span></h1>
   <p class="subtitle">Nhập Excel hàng loạt • tự tạo tài khoản/mật khẩu • vẫn hỗ trợ thêm thủ công</p>
 
   <div class="box">
@@ -817,20 +817,90 @@ async function previewExcel() {
     const buf = await file.arrayBuffer();
     const wb = XLSX.read(buf, { type: "array" });
     const ws = wb.Sheets[wb.SheetNames[0]];
-    const raw = XLSX.utils.sheet_to_json(ws, { defval: "" });
 
-    const rows = raw.map((r, i) => {
-      const fullName = normalizeName(pickField(r, ["hovaten","hoten","fullname","name","tenhocsinh"]));
-      const studentCode = normalizeCode(pickField(r, ["mahocsinh","mahs","mshs","studentcode","code"]));
-      const className = normalizeClass(pickField(r, ["lop","classname","class"])) || defaultClass;
-      return { rowNumber: i + 2, fullName, studentCode, className };
-    }).filter(x => x.fullName || x.studentCode || x.className);
+    // V2.9.1: đọc dạng mảng để tự dò hàng tiêu đề.
+    // Hỗ trợ file có dòng tiêu đề lớn/merge ở phía trên bảng.
+    const matrix = XLSX.utils.sheet_to_json(ws, {
+      header: 1,
+      defval: "",
+      blankrows: false,
+      raw: false
+    });
+
+    const NAME_ALIASES = [
+      "hovaten","hoten","tenhocsinh","hotenhocsinh","fullname","studentname","name",
+      "hovatenhocsinh","hocten","hotenhs"
+    ];
+    const CODE_ALIASES = [
+      "mahocsinh","mahs","mshs","studentcode","studentid","mahocvien","code","ma"
+    ];
+    const CLASS_ALIASES = [
+      "lop","lophoc","classname","class","tenlop","lopdanghoc"
+    ];
+
+    function indexOfAlias(row, aliases) {
+      for (let i = 0; i < row.length; i++) {
+        if (aliases.includes(normalizeHeader(row[i]))) return i;
+      }
+      return -1;
+    }
+
+    let headerIndex = -1;
+    let nameCol = -1, codeCol = -1, classCol = -1;
+
+    // Dò tối đa 30 dòng đầu để tìm hàng tiêu đề.
+    const scanLimit = Math.min(matrix.length, 30);
+    for (let r = 0; r < scanLimit; r++) {
+      const row = matrix[r] || [];
+      const n = indexOfAlias(row, NAME_ALIASES);
+      const c = indexOfAlias(row, CODE_ALIASES);
+      const l = indexOfAlias(row, CLASS_ALIASES);
+
+      // Bắt buộc tìm được cột Họ tên; Mã HS và Lớp có thể thiếu.
+      if (n >= 0) {
+        headerIndex = r;
+        nameCol = n;
+        codeCol = c;
+        classCol = l;
+        break;
+      }
+    }
+
+    if (headerIndex < 0) {
+      const sample = matrix.slice(0, 8)
+        .map((r,i)=>`Dòng ${i+1}: ${(r||[]).filter(Boolean).join(" | ")}`)
+        .join("\n");
+      console.log("Không dò được tiêu đề Excel:", sample);
+      throw new Error("Không tìm thấy cột Họ và tên trong 30 dòng đầu. Có thể tiêu đề cột trong file đang dùng tên khác.");
+    }
+
+    const rows = [];
+    for (let r = headerIndex + 1; r < matrix.length; r++) {
+      const row = matrix[r] || [];
+      const fullName = normalizeName(row[nameCol] || "");
+      const studentCode = codeCol >= 0 ? normalizeCode(row[codeCol] || "") : "";
+      const className = (classCol >= 0 ? normalizeClass(row[classCol] || "") : "") || defaultClass;
+
+      // Bỏ qua dòng hoàn toàn trống.
+      if (!fullName && !studentCode && !className) continue;
+
+      rows.push({
+        rowNumber: r + 1,
+        fullName,
+        studentCode,
+        className
+      });
+    }
 
     const bad = rows.filter(x => !x.fullName || !x.className);
     pendingImportRows = rows.filter(x => x.fullName && x.className);
 
     if (!pendingImportRows.length) {
-      throw new Error("Không tìm thấy dòng hợp lệ. File cần có cột Họ và tên và Lớp (hoặc chọn Lớp mặc định).");
+      throw new Error(
+        classCol < 0 && !defaultClass
+          ? "Đã tìm thấy cột Họ và tên nhưng file không có cột Lớp. Hãy chọn Lớp mặc định."
+          : "Không tìm thấy dòng học sinh hợp lệ sau hàng tiêu đề."
+      );
     }
 
     const allowed = new Set(availableClasses.map(x => normalizeClass(x.class_name)));
@@ -841,7 +911,10 @@ async function previewExcel() {
     document.getElementById("importNowBtn").disabled = outside.length > 0;
 
     msg.innerHTML =
-      `✅ Đọc được <b>${pendingImportRows.length}</b> học sinh.` +
+      `✅ Đã nhận diện hàng tiêu đề ở dòng <b>${headerIndex + 1}</b>. ` +
+      `Đọc được <b>${pendingImportRows.length}</b> học sinh.` +
+      (codeCol < 0 ? ` Mã HS sẽ được tự tạo.` : "") +
+      (classCol < 0 ? ` Đang dùng lớp mặc định <b>${escapeHTML(defaultClass)}</b>.` : "") +
       (bad.length ? ` Bỏ qua ${bad.length} dòng thiếu Họ tên/Lớp.` : "") +
       (outside.length ? `<br>❌ Có ${outside.length} dòng thuộc lớp chưa được phân công cho giáo viên.` : "");
 
