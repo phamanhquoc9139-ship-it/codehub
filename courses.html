@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Quản lý khóa học V2.6 | CodeHub</title>
+<title>Quản lý khóa học V2.6.1 | CodeHub</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="scripts/supabase-config.js"></script>
 <style>
@@ -37,8 +37,8 @@ const norm=v=>String(v||"").trim().toLocaleLowerCase("vi-VN");
 document.addEventListener("DOMContentLoaded",async()=>{
  const s=window.supabaseClient;if(!s){CodeHubUI.toast("Không kết nối được Supabase.","error");return}
  const {data:{user:u}}=await s.auth.getUser();if(!u){location.href="login.html";return}user=u;
- const {data:p}=await s.from("profiles").select("role").eq("id",u.id).single();currentRole=norm(p?.role);
- if(!p||!["teacher","admin"].includes(currentRole)){CodeHubUI.forbidden("Tài khoản này không có quyền quản lý khóa học.");return} CodeHubUI.setRole(currentRole)
+ const {data:p}=await s.from("profiles").select("role,full_name").eq("id",u.id).single();currentRole=norm(p?.role);
+ if(!p||!["teacher","admin"].includes(currentRole)){CodeHubUI.forbidden("Tài khoản này không có quyền quản lý khóa học.");return} CodeHubUI.setIdentity(p?.full_name||"",currentRole,u.email||"")
  search.addEventListener("input",render);subjectFilter.addEventListener("change",render);gradeFilter.addEventListener("change",render);
  subject.addEventListener("change",()=>classChecks([]));await load();
 });

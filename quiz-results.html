@@ -1,5 +1,5 @@
 <!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Kết quả Quiz V2.6 | CodeHub</title>
+<title>Kết quả Quiz V2.6.1 | CodeHub</title>
 <script src="https://cdn.tailwindcss.com">
 
 </script>
@@ -51,10 +51,10 @@ function err(t){msg.classList.remove("hidden");msg.textContent=t}
 function fmt(v){return v?new Date(v).toLocaleString("vi-VN"):"—"}
 async function init(){
  me=(await s.auth.getUser()).data.user;if(!me)return location.href="login.html";
- let pr=await s.from("profiles").select("role").eq("id",me.id).single();role=String(pr.data?.role||"").trim().toLowerCase();if(!["admin","teacher"].includes(role))return location.href="student-dashboard.html";
+ let pr=await s.from("profiles").select("role,full_name").eq("id",me.id).single();role=String(pr.data?.role||"").trim().toLowerCase();CodeHubUI.setIdentity(pr.data?.full_name||"",role,me.email||"");if(!["admin","teacher"].includes(role))return location.href="student-dashboard.html";
  let qr=await s.from("quizzes").select("id,title,teacher_id").eq("id",qid).single();
  if(qr.error||!qr.data||(role==="teacher"&&qr.data.teacher_id!==me.id))return location.href="quizzes.html";
- quiz=qr.data;h.textContent="📊 "+quiz.title+" — V2.6";
+ quiz=qr.data;h.textContent="📊 "+quiz.title+" — V2.6.1";
  let [ar,qq,at]=await Promise.all([
   role==="teacher"?s.from("quiz_assignments").select("id,class_id,classes(class_name)").eq("quiz_id",qid).eq("teacher_id",me.id):s.from("quiz_assignments").select("id,class_id,classes(class_name)").eq("quiz_id",qid),
   s.from("quiz_questions").select("id,question_text,correct_answer,question_order").eq("quiz_id",qid).order("question_order"),

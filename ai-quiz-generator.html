@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>AI Quiz Generator V2.6 - CodeHub</title>
+<title>AI Quiz Generator V2.6.1 - CodeHub</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/mammoth@1.8.0/mammoth.browser.min.js"></script>
@@ -9,7 +9,7 @@
 <script src="scripts/supabase-config.js"></script>
 <style>.drop.drag{border-color:#7c3aed;background:#f5f3ff}.busy{opacity:.6;pointer-events:none}</style><link rel="stylesheet" href="styles/codehub-v26.css"><script src="scripts/codehub-v26-ui.js"></script></head>
 <body class="ch-shell bg-slate-50 text-slate-900"><script>document.addEventListener("DOMContentLoaded",()=>CodeHubUI.mountHeader({active:"ai",breadcrumbs:[{label:"Quiz",href:"quizzes.html"},{label:"AI Quiz Generator"}]}))</script><main class="max-w-7xl mx-auto p-5">
-<div class="flex justify-between gap-4 mb-5"><div><h1 class="text-3xl font-bold">✨ AI Quiz Generator V2.6 • MULTI-TEACHER + EXACT COUNT + SAFE SAVE</h1><p class="text-slate-500">Supabase ổn định • PDF tối đa 50 trang • OCR thông minh • Xuất Word</p></div><a href="quizzes.html" class="border bg-white rounded-xl px-4 py-2 h-fit">← Quiz</a></div>
+<div class="flex justify-between gap-4 mb-5"><div><h1 class="text-3xl font-bold">✨ AI Quiz Generator V2.6.1 • MULTI-TEACHER + EXACT COUNT + SAFE SAVE</h1><p class="text-slate-500">Supabase ổn định • PDF tối đa 50 trang • OCR thông minh • Xuất Word</p></div><a href="quizzes.html" class="border bg-white rounded-xl px-4 py-2 h-fit">← Quiz</a></div>
 <div id="msg" class="hidden mb-4 p-3 rounded-xl"></div>
 <div class="grid lg:grid-cols-4 gap-5">
 <aside class="bg-white rounded-2xl shadow p-5 space-y-3">
@@ -65,9 +65,9 @@ let myRole="";
 async function init(){
  me=(await s.auth.getUser()).data.user;
  if(!me)return location.href="login.html";
- let p=await s.from("profiles").select("role").eq("id",me.id).single();
+ let p=await s.from("profiles").select("role,full_name").eq("id",me.id).single();
  myRole=String(p.data?.role||"").trim().toLowerCase();
- CodeHubUI.setRole(myRole); if(!["admin","teacher"].includes(myRole))return CodeHubUI.forbidden("Tài khoản này không có quyền sử dụng AI Quiz Generator.");
+ CodeHubUI.setIdentity(p.data?.full_name||"",myRole,me.email||""); if(!["admin","teacher"].includes(myRole))return CodeHubUI.forbidden("Tài khoản này không có quyền sử dụng AI Quiz Generator.");
  let cq=s.from("courses").select("id,title,teacher_id").order("title");
  if(myRole==="teacher")cq=cq.eq("teacher_id",me.id);
  let c=await cq;
