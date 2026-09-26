@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Phân tích Quiz V3.2 | CodeHub</title>
+<title>Phân tích Quiz V3.2.1 | CodeHub</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
@@ -21,7 +21,7 @@
     <div>
       <div class="flex items-center gap-3">
         <h1 id="h" class="text-3xl font-black">📊 Phân tích Quiz</h1>
-        <span class="chip bg-violet-100 text-violet-700">V3.2</span>
+        <span class="chip bg-violet-100 text-violet-700">V3.2.1</span>
       </div>
       <p id="sub" class="text-slate-500 mt-1">Theo dõi đã làm/chưa làm, điểm số và tỷ lệ đúng từng câu</p>
     </div>
@@ -177,7 +177,7 @@ async function init(){
     }
 
     $("h").textContent="📊 "+quiz.title;
-    $("sub").textContent=(role==="admin"?"Quản trị viên":"Giáo viên")+" • Phân tích kết quả V3.2";
+    $("sub").textContent=(role==="admin"?"Quản trị viên":"Giáo viên")+" • Phân tích kết quả V3.2.1";
 
     const [ar,qq,at]=await Promise.all([
       s.from("quiz_assignments")
@@ -386,13 +386,15 @@ function renderQuestions(arr){
   const submitted=arr.filter(a=>a.answers&&typeof a.answers==="object");
 
   const stats=questionsData.map((q,i)=>{
-    let answered=0,wrong=0;
+    let answered=0,wrong=0,blank=0;
 
     for(const a of submitted){
       const v=a.answers?.[q.id];
       if(v){
         answered++;
         if(v!==q.correct_answer)wrong++;
+      }else{
+        blank++;
       }
     }
 
@@ -400,7 +402,7 @@ function renderQuestions(arr){
     const wrongRate=answered?wrong/answered*100:0;
     const correctRate=answered?correct/answered*100:0;
 
-    return {q,i,answered,wrong,correct,wrongRate,correctRate};
+    return {q,i,answered,wrong,correct,blank,wrongRate,correctRate};
   }).sort((a,b)=>b.wrongRate-a.wrongRate || a.i-b.i);
 
   const answeredQuestions=stats.filter(x=>x.answered>0);
@@ -426,6 +428,7 @@ function renderQuestions(arr){
         <div class="flex gap-3 text-sm font-bold">
           <span class="text-emerald-600">✓ ${x.correct}/${x.answered} (${x.correctRate.toFixed(1)}%)</span>
           <span class="text-red-600">✗ ${x.wrong}/${x.answered} (${x.wrongRate.toFixed(1)}%)</span>
+          <span class="text-slate-500">○ Bỏ trống ${x.blank}</span>
         </div>
       </div>
 
@@ -452,13 +455,28 @@ function detail(id){
   const ans=a.answers||{};
 
   $("md").innerHTML=questionsData.map((q,i)=>{
-    const mine=ans[q.id]||"—";
-    const ok=mine===q.correct_answer;
+    const mine=ans[q.id]||"";
+    const blank=!mine;
+    const ok=!blank && mine===q.correct_answer;
 
-    return `<div class="border rounded-xl p-3 ${ok?"border-emerald-300":"border-red-300"}">
+    const borderClass = blank
+      ? "border-slate-300"
+      : (ok ? "border-emerald-300" : "border-red-300");
+
+    const textClass = blank
+      ? "text-slate-600"
+      : (ok ? "text-emerald-700" : "text-red-600");
+
+    const statusText = blank
+      ? `○ Bỏ trống • Đáp án đúng ${esc(q.correct_answer)}`
+      : (ok
+          ? `✓ Đúng • Chọn ${esc(mine)} • Đáp án ${esc(q.correct_answer)}`
+          : `✗ Sai • Chọn ${esc(mine)} • Đáp án ${esc(q.correct_answer)}`);
+
+    return `<div class="border rounded-xl p-3 ${borderClass}">
       <b>Câu ${i+1}. ${esc(q.question_text)}</b>
-      <div class="mt-1 ${ok?"text-emerald-700":"text-red-600"}">
-        ${ok?"✓ Đúng":"✗ Sai"} • Chọn ${esc(mine)} • Đáp án ${esc(q.correct_answer)}
+      <div class="mt-1 ${textClass}">
+        ${statusText}
       </div>
     </div>`;
   }).join("");
