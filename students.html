@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quản lý học sinh V2.9.2 | CodeHub</title>
+  <title>Quản lý học sinh V2.9.3 | CodeHub</title>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="scripts/supabase-config.js"></script>
@@ -147,6 +147,10 @@
     .preview-wrap th,.preview-wrap td { padding:10px; font-size:14px; }
     .success-box { background:#ecfdf5; color:#047857; border:1px solid #a7f3d0; padding:12px; border-radius:10px; margin-top:12px; }
     .warn-box { background:#fff7ed; color:#9a3412; border:1px solid #fed7aa; padding:12px; border-radius:10px; margin-top:12px; }
+    .bulk-row{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 18px}
+    .bulk-reset{background:#dc2626}.bulk-class{background:#b45309}.bulk-excel{background:#0f766e}
+    .select-count{font-weight:700;color:#475569;margin-right:auto;align-self:center}
+
 
     #loading {
       text-align: center;
@@ -246,8 +250,8 @@
 
 <main class="container">
 
-  <h1>👨‍🎓 Quản lý học sinh <span style="font-size:16px;color:#2563eb">V2.9.2</span></h1>
-  <p class="subtitle">Nhập Excel hàng loạt • tự tạo tài khoản/mật khẩu • vẫn hỗ trợ thêm thủ công</p>
+  <h1>👨‍🎓 Quản lý học sinh <span style="font-size:16px;color:#2563eb">V2.9.3</span></h1>
+  <p class="subtitle">Nhập Excel • tự tạo tài khoản • reset mật khẩu hàng loạt theo lớp / lựa chọn / Excel</p>
 
   <div class="box">
 
@@ -269,6 +273,13 @@
         <option value="">Tất cả lớp</option>
       </select>
     </div>
+    <div class="bulk-row">
+      <div id="selectedCount" class="select-count">Đã chọn: 0 học sinh</div>
+      <button class="btn bulk-reset" onclick="bulkResetSelected()">🔑 Reset học sinh đã chọn</button>
+      <button class="btn bulk-class" onclick="bulkResetCurrentClass()">🏫 Reset cả lớp đang lọc</button>
+      <button class="btn bulk-excel" onclick="openResetExcelModal()">📄 Reset từ Excel</button>
+      <button id="exportResetBtn" class="btn export-btn" onclick="exportResetCredentials()" disabled style="opacity:.55">⬇ Xuất mật khẩu mới</button>
+    </div>
 
     <div id="loading">Đang tải danh sách học sinh...</div>
     <div id="error"></div>
@@ -276,6 +287,7 @@
     <table id="studentTable" style="display:none">
       <thead>
         <tr>
+          <th style="width:48px"><input id="selectAllVisible" type="checkbox" onchange="toggleSelectVisible(this.checked)"></th>
           <th>STT</th>
           <th>Họ và tên</th>
           <th>Mã học sinh</th>
@@ -340,6 +352,30 @@
   </div>
 </div>
 
+
+<!-- RESET MẬT KHẨU TỪ EXCEL -->
+<div id="resetExcelModal" class="modal">
+  <div class="modal-box" style="width:min(820px,96%)">
+    <h2>🔑 Reset mật khẩu hàng loạt từ Excel</h2>
+
+    <label>File Excel chứa Mã học sinh</label>
+    <input id="resetExcelFile" type="file" accept=".xlsx,.xls,.csv">
+    <div class="hint">
+      Chỉ cần cột <b>Mã học sinh</b> / <b>Mã HS</b>. Có thể dùng lại file danh sách lớp.
+      Hệ thống chỉ reset những mã đang tồn tại và thuộc phạm vi lớp của giáo viên.
+    </div>
+
+    <div class="modal-actions" style="justify-content:flex-start">
+      <button class="btn-cancel" onclick="closeModal('resetExcelModal')">Hủy</button>
+      <button class="btn-save" onclick="previewResetExcel()">🔎 Đọc & xem trước</button>
+      <button id="resetExcelNowBtn" class="btn-save" onclick="resetFromExcel()" disabled>🔑 Reset danh sách</button>
+    </div>
+
+    <div id="resetExcelMessage" class="message"></div>
+    <div id="resetExcelPreview"></div>
+  </div>
+</div>
+
 <!-- SỬA -->
 <div id="editModal" class="modal">
   <div class="modal-box">
@@ -396,12 +432,18 @@ const STUDENT_IMPORT_FUNCTION =
 const MANAGE_FUNCTION =
   "https://drfcejvmyhzorwepndta.supabase.co/functions/v1/manage-student";
 
+const BULK_PASSWORD_FUNCTION =
+  "https://drfcejvmyhzorwepndta.supabase.co/functions/v1/student-password-bulk";
+
 let students = [];
 let availableClasses = [];
 let currentRole = "";
 let currentUser = null;
 let pendingImportRows = [];
 let lastCredentials = [];
+let selectedStudentIds = new Set();
+let lastResetCredentials = [];
+let pendingResetCodes = [];
 
 /* ================================
    CHUẨN HÓA DỮ LIỆU
@@ -589,7 +631,7 @@ function buildClassFilter() {
   if (classNames.includes(oldValue)) select.value = oldValue;
 }
 
-function renderStudents() {
+function getFilteredStudents() {
   const search =
     normalizeSpaces(document.getElementById("searchInput").value)
       .toLocaleLowerCase("vi-VN");
@@ -597,7 +639,7 @@ function renderStudents() {
   const classValue =
     document.getElementById("classFilter").value;
 
-  const filtered = students.filter(student => {
+  return students.filter(student => {
     const name =
       normalizeSpaces(student.full_name)
         .toLocaleLowerCase("vi-VN");
@@ -616,6 +658,10 @@ function renderStudents() {
 
     return matchesSearch && matchesClass;
   });
+}
+
+function renderStudents() {
+  const filtered = getFilteredStudents();
 
   document.getElementById("studentCount").textContent =
     `Tổng số học sinh: ${students.length}`;
@@ -625,8 +671,11 @@ function renderStudents() {
 
   filtered.forEach((student, index) => {
     const tr = document.createElement("tr");
+    const checked = selectedStudentIds.has(student.id) ? "checked" : "";
 
     tr.innerHTML = `
+      <td><input type="checkbox" ${checked}
+        onchange="toggleStudentSelection('${student.id}', this.checked)"></td>
       <td>${index + 1}</td>
       <td>${escapeHTML(student.full_name || "")}</td>
       <td>${escapeHTML(student.student_code || "")}</td>
@@ -657,7 +706,33 @@ function renderStudents() {
     tbody.appendChild(tr);
   });
 
+  const allVisibleSelected =
+    filtered.length > 0 && filtered.every(x => selectedStudentIds.has(x.id));
+  const allBox = document.getElementById("selectAllVisible");
+  if (allBox) allBox.checked = allVisibleSelected;
+
+  updateSelectedCount();
   document.getElementById("studentTable").style.display = "table";
+}
+
+function toggleStudentSelection(id, checked) {
+  if (checked) selectedStudentIds.add(id);
+  else selectedStudentIds.delete(id);
+  updateSelectedCount();
+}
+
+function toggleSelectVisible(checked) {
+  const filtered = getFilteredStudents();
+  filtered.forEach(s => {
+    if (checked) selectedStudentIds.add(s.id);
+    else selectedStudentIds.delete(s.id);
+  });
+  renderStudents();
+}
+
+function updateSelectedCount() {
+  const box = document.getElementById("selectedCount");
+  if (box) box.textContent = `Đã chọn: ${selectedStudentIds.size} học sinh`;
 }
 
 /* ================================
@@ -1162,6 +1237,229 @@ async function updateStudent() {
   } catch (error) {
     message.textContent = "❌ " + error.message;
   }
+}
+
+
+/* ================================
+   BULK PASSWORD V2.9.3
+================================ */
+
+async function callBulkPassword(payload) {
+  const token = await getAccessToken();
+  const response = await fetch(BULK_PASSWORD_FUNCTION, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`
+    },
+    body: JSON.stringify(payload)
+  });
+
+  const raw = await response.text();
+  let result = {};
+  try { result = raw ? JSON.parse(raw) : {}; }
+  catch { throw new Error("Edge Function student-password-bulk trả dữ liệu không hợp lệ."); }
+
+  if (!response.ok) {
+    throw new Error(result.error || "Không reset được mật khẩu.");
+  }
+  return result;
+}
+
+async function runBulkReset(payload, label) {
+  if (!confirm(`${label}\n\nHệ thống sẽ tạo mật khẩu mới cho các học sinh này. Tiếp tục?`)) return;
+
+  try {
+    const result = await callBulkPassword(payload);
+    const credentials = result.credentials || [];
+    const errors = result.errors || [];
+
+    lastResetCredentials = credentials;
+    updateResetExportButton();
+
+    alert(
+      `✅ Đã reset ${credentials.length} học sinh.` +
+      (errors.length ? `\n⚠️ Lỗi: ${errors.length}` : "") +
+      `\n\nBấm "Xuất mật khẩu mới" để lấy file Excel.`
+    );
+  } catch (e) {
+    alert("❌ " + e.message);
+  }
+}
+
+async function bulkResetSelected() {
+  const ids = [...selectedStudentIds];
+  if (!ids.length) {
+    alert("Hãy chọn ít nhất 1 học sinh.");
+    return;
+  }
+  await runBulkReset(
+    { student_ids: ids },
+    `Reset mật khẩu cho ${ids.length} học sinh đã chọn?`
+  );
+}
+
+async function bulkResetCurrentClass() {
+  const cls = normalizeClass(document.getElementById("classFilter").value);
+  if (!cls) {
+    alert("Hãy chọn một lớp trong bộ lọc trước.");
+    return;
+  }
+
+  const ids = students
+    .filter(s => normalizeClass(s.class_name) === cls)
+    .map(s => s.id);
+
+  if (!ids.length) {
+    alert("Lớp này chưa có học sinh.");
+    return;
+  }
+
+  await runBulkReset(
+    { student_ids: ids },
+    `Reset mật khẩu cho toàn bộ ${ids.length} học sinh lớp ${cls}?`
+  );
+}
+
+function updateResetExportButton() {
+  const btn = document.getElementById("exportResetBtn");
+  if (!btn) return;
+  btn.disabled = lastResetCredentials.length === 0;
+  btn.style.opacity = lastResetCredentials.length ? "1" : ".55";
+}
+
+function exportResetCredentials() {
+  if (!lastResetCredentials.length) {
+    alert("Chưa có kết quả reset để xuất.");
+    return;
+  }
+
+  const rows = lastResetCredentials.map((x, i) => ({
+    "STT": i + 1,
+    "Họ và tên": x.full_name || "",
+    "Mã học sinh / Tên đăng nhập": x.student_code || "",
+    "Lớp": x.class_name || "",
+    "Mật khẩu mới": x.password || ""
+  }));
+
+  const ws = XLSX.utils.json_to_sheet(rows);
+  ws["!cols"] = [{wch:6},{wch:28},{wch:24},{wch:12},{wch:18}];
+
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "Mat khau moi");
+
+  const d = new Date();
+  const pad = n => String(n).padStart(2,"0");
+  XLSX.writeFile(
+    wb,
+    `CodeHub_reset_password_${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}.xlsx`
+  );
+}
+
+function openResetExcelModal() {
+  pendingResetCodes = [];
+  document.getElementById("resetExcelFile").value = "";
+  document.getElementById("resetExcelMessage").textContent = "";
+  document.getElementById("resetExcelPreview").innerHTML = "";
+  document.getElementById("resetExcelNowBtn").disabled = true;
+  document.getElementById("resetExcelModal").style.display = "flex";
+}
+
+async function previewResetExcel() {
+  const file = document.getElementById("resetExcelFile").files?.[0];
+  const msg = document.getElementById("resetExcelMessage");
+  const preview = document.getElementById("resetExcelPreview");
+
+  if (!file) {
+    msg.textContent = "⚠️ Chọn file Excel trước.";
+    return;
+  }
+
+  try {
+    const buf = await file.arrayBuffer();
+    const wb = XLSX.read(buf, {type:"array"});
+    const ws = wb.Sheets[wb.SheetNames[0]];
+    const matrix = XLSX.utils.sheet_to_json(ws,{
+      header:1, defval:"", blankrows:false, raw:false
+    });
+
+    const CODE_ALIASES = [
+      "mahocsinh","mahs","mshs","studentcode","studentid","mahocvien","code","ma"
+    ];
+
+    function idxAlias(row, aliases) {
+      for (let i=0;i<row.length;i++) {
+        if (aliases.includes(normalizeHeader(row[i]))) return i;
+      }
+      return -1;
+    }
+
+    let headerIndex=-1, codeCol=-1;
+    for (let r=0;r<Math.min(matrix.length,30);r++) {
+      const c=idxAlias(matrix[r]||[],CODE_ALIASES);
+      if (c>=0) { headerIndex=r; codeCol=c; break; }
+    }
+
+    if (headerIndex<0) {
+      throw new Error("Không tìm thấy cột Mã học sinh / Mã HS trong 30 dòng đầu.");
+    }
+
+    const codes=[];
+    for (let r=headerIndex+1;r<matrix.length;r++) {
+      const code=normalizeCode((matrix[r]||[])[codeCol]||"");
+      if (code) codes.push(code);
+    }
+
+    pendingResetCodes=[...new Set(codes)];
+    if (!pendingResetCodes.length) {
+      throw new Error("Không có mã học sinh hợp lệ trong file.");
+    }
+
+    const byCode = new Map(students.map(x=>[normalizeCode(x.student_code),x]));
+    const matched = pendingResetCodes.map(c=>byCode.get(c)).filter(Boolean);
+    const missing = pendingResetCodes.filter(c=>!byCode.has(c));
+
+    document.getElementById("resetExcelNowBtn").disabled = matched.length===0;
+
+    msg.innerHTML =
+      `✅ File có <b>${pendingResetCodes.length}</b> mã. ` +
+      `Khớp <b>${matched.length}</b> học sinh.` +
+      (missing.length ? ` Không tìm thấy: ${missing.length}.` : "");
+
+    preview.innerHTML = `
+      <div class="preview-wrap">
+        <table>
+          <thead><tr><th>Mã HS</th><th>Họ và tên</th><th>Lớp</th></tr></thead>
+          <tbody>${matched.slice(0,30).map(x=>`
+            <tr>
+              <td>${escapeHTML(x.student_code||"")}</td>
+              <td>${escapeHTML(x.full_name||"")}</td>
+              <td>${escapeHTML(x.class_name||"")}</td>
+            </tr>`).join("")}
+          </tbody>
+        </table>
+      </div>
+      ${matched.length>30?`<div class="hint">Chỉ hiển thị 30 học sinh đầu.</div>`:""}
+    `;
+  } catch(e) {
+    pendingResetCodes=[];
+    document.getElementById("resetExcelNowBtn").disabled=true;
+    preview.innerHTML="";
+    msg.textContent="❌ "+e.message;
+  }
+}
+
+async function resetFromExcel() {
+  if (!pendingResetCodes.length) {
+    alert("Chưa có danh sách mã học sinh.");
+    return;
+  }
+
+  closeModal("resetExcelModal");
+  await runBulkReset(
+    { student_codes: pendingResetCodes },
+    `Reset mật khẩu cho danh sách Excel (${pendingResetCodes.length} mã)?`
+  );
 }
 
 /* ================================
