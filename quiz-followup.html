@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Theo dõi Quiz V3.3 | CodeHub</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="scripts/supabase-config.js"></script>
+</head>
+<body class="bg-slate-50 text-slate-900">
+<main class="max-w-7xl mx-auto p-4 md:p-6">
+<div class="flex flex-wrap justify-between gap-3 mb-5">
+  <div>
+    <div class="flex items-center gap-3">
+      <h1 id="h" class="text-3xl font-black">🔔 Theo dõi Quiz</h1>
+      <span class="px-2 py-1 rounded-full bg-violet-100 text-violet-700 text-xs font-black">V3.3</span>
+    </div>
+    <p id="sub" class="text-slate-500 mt-1">Theo dõi học sinh chưa làm và tạo nội dung nhắc bài</p>
+  </div>
+  <div class="flex gap-2 flex-wrap">
+    <button id="copyAll" class="bg-violet-600 text-white px-4 py-2 rounded-xl font-bold">📋 Copy danh sách cần nhắc</button>
+    <button id="excel" class="bg-emerald-600 text-white px-4 py-2 rounded-xl font-bold">⬇ Xuất Excel</button>
+    <a id="backResults" href="#" class="border bg-white px-4 py-2 rounded-xl font-bold">← Kết quả</a>
+  </div>
+</div>
+
+<div id="msg" class="hidden mb-4 p-3 rounded-xl bg-red-50 text-red-700"></div>
+
+<section class="bg-white rounded-2xl shadow p-4 mb-5">
+  <div class="grid md:grid-cols-4 gap-3 items-end">
+    <label class="font-bold">Lớp<select id="classFilter" class="block w-full mt-1 border rounded-xl p-2"></select></label>
+    <label class="font-bold">Trạng thái<select id="statusFilter" class="block w-full mt-1 border rounded-xl p-2">
+      <option value="need">Cần nhắc</option>
+      <option value="not_done">Chưa làm</option>
+      <option value="done">Đã làm</option>
+      <option value="expired">Hết hạn</option>
+      <option value="all">Tất cả</option>
+    </select></label>
+    <label class="font-bold">Tìm học sinh<input id="search" class="block w-full mt-1 border rounded-xl p-2" placeholder="Tên hoặc mã HS"></label>
+    <button id="reload" class="bg-blue-600 text-white px-4 py-2 rounded-xl font-bold h-11">Làm mới</button>
+  </div>
+</section>
+
+<section class="grid grid-cols-2 lg:grid-cols-6 gap-3 mb-5">
+  <div class="bg-white rounded-2xl shadow p-4"><div class="text-slate-500 text-sm">Tổng HS</div><div id="stTotal" class="text-3xl font-black">0</div></div>
+  <div class="bg-white rounded-2xl shadow p-4"><div class="text-slate-500 text-sm">Đã làm</div><div id="stDone" class="text-3xl font-black text-emerald-600">0</div></div>
+  <div class="bg-white rounded-2xl shadow p-4"><div class="text-slate-500 text-sm">Chưa làm</div><div id="stNotDone" class="text-3xl font-black text-orange-600">0</div></div>
+  <div class="bg-white rounded-2xl shadow p-4"><div class="text-slate-500 text-sm">Cần nhắc</div><div id="stNeed" class="text-3xl font-black text-red-600">0</div></div>
+  <div class="bg-white rounded-2xl shadow p-4"><div class="text-slate-500 text-sm">Hết hạn</div><div id="stExpired" class="text-3xl font-black">0</div></div>
+  <div class="bg-white rounded-2xl shadow p-4"><div class="text-slate-500 text-sm">Tỷ lệ hoàn thành</div><div id="stRate" class="text-3xl font-black">—</div></div>
+</section>
+
+<section class="grid lg:grid-cols-[1fr_360px] gap-5">
+  <div class="bg-white rounded-2xl shadow overflow-hidden">
+    <div class="p-4 border-b flex justify-between gap-3">
+      <h2 class="text-xl font-black">👨‍🎓 Danh sách học sinh</h2>
+      <span id="tableInfo" class="text-sm text-slate-500"></span>
+    </div>
+    <div class="overflow-auto">
+      <table class="w-full text-sm">
+        <thead class="bg-slate-100">
+          <tr><th class="p-3 text-left">Học sinh</th><th class="p-3">Mã HS</th><th class="p-3">Lớp</th><th class="p-3">Trạng thái</th><th class="p-3">Lượt</th><th class="p-3">Điểm gần nhất</th><th class="p-3">Hạn</th><th class="p-3">Nhắc</th></tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+  </div>
+  <aside class="space-y-5">
+    <section class="bg-white rounded-2xl shadow p-4">
+      <h2 class="text-xl font-black mb-3">✉️ Mẫu nhắc bài</h2>
+      <textarea id="template" rows="9" class="w-full border rounded-xl p-3 text-sm">Chào {TEN_HS}, em còn bài kiểm tra "{QUIZ}" của lớp {LOP} chưa hoàn thành. Hạn làm bài: {HAN}. Em vui lòng vào CodeHub và hoàn thành trước thời hạn. Cảm ơn em.</textarea>
+      <p class="text-xs text-slate-500 mt-2">Biến: {TEN_HS}, {MA_HS}, {LOP}, {QUIZ}, {HAN}, {LUOT_CON}</p>
+    </section>
+    <section class="bg-white rounded-2xl shadow p-4 text-sm text-slate-600 space-y-2">
+      <h2 class="text-xl font-black text-slate-900 mb-3">📌 Gợi ý sử dụng</h2>
+      <p>• Copy từng học sinh để gửi qua Zalo/nhóm lớp.</p>
+      <p>• Copy danh sách cần nhắc để gửi GVCN/lớp trưởng.</p>
+      <p>• Xuất Excel để lưu hồ sơ theo dõi.</p>
+      <p>• V3.3 chưa tự gửi email/Zalo.</p>
+    </section>
+  </aside>
+</section>
+</main>
+
+<script>
+const s=window.supabaseClient,$=x=>document.getElementById(x),qid=new URLSearchParams(location.search).get("quiz");
+let me,role,quizTitle="",data=[],filtered=[];
+const esc=v=>String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
+const fmt=v=>v?new Date(v).toLocaleString("vi-VN"):"—";
+
+function statusOf(x){
+  const now=Date.now(),open=x.open_at?new Date(x.open_at).getTime():-Infinity,close=x.close_at?new Date(x.close_at).getTime():Infinity;
+  const used=Number(x.attempts_used||0),max=Number(x.max_attempts||1),done=used>0;
+  if(done&&used>=max)return "done";
+  if(now>close)return done?"done":"expired";
+  if(now<open)return done?"done":"not_open";
+  if(done&&used<max)return "done_retry";
+  return "not_done";
+}
+const needReminder=x=>statusOf(x)==="not_done";
+function statusLabel(x){
+  const st=statusOf(x);
+  if(st==="done")return '<span class="px-2 py-1 rounded-full bg-emerald-100 text-emerald-700 font-bold">Đã làm</span>';
+  if(st==="done_retry")return '<span class="px-2 py-1 rounded-full bg-blue-100 text-blue-700 font-bold">Đã làm • còn lượt</span>';
+  if(st==="expired")return '<span class="px-2 py-1 rounded-full bg-slate-200 text-slate-700 font-bold">Hết hạn</span>';
+  if(st==="not_open")return '<span class="px-2 py-1 rounded-full bg-violet-100 text-violet-700 font-bold">Chưa mở</span>';
+  return '<span class="px-2 py-1 rounded-full bg-orange-100 text-orange-700 font-bold">Chưa làm</span>';
+}
+function reminderText(x){
+  const remain=Math.max(0,Number(x.max_attempts||1)-Number(x.attempts_used||0));
+  return $("template").value.replaceAll("{TEN_HS}",x.full_name||"Học sinh").replaceAll("{MA_HS}",x.student_code||"—").replaceAll("{LOP}",x.class_name||"—").replaceAll("{QUIZ}",quizTitle||"Quiz").replaceAll("{HAN}",fmt(x.close_at)).replaceAll("{LUOT_CON}",String(remain));
+}
+async function copyText(t){
+  try{await navigator.clipboard.writeText(t);alert("Đã copy.");}
+  catch(e){const ta=document.createElement("textarea");ta.value=t;document.body.appendChild(ta);ta.select();document.execCommand("copy");ta.remove();alert("Đã copy.");}
+}
+async function init(){
+  try{
+    if(!qid)return location.href="quizzes.html";
+    me=(await s.auth.getUser()).data.user;if(!me)return location.href="login.html";
+    const pr=await s.from("profiles").select("role,full_name").eq("id",me.id).single();if(pr.error)throw pr.error;
+    role=String(pr.data?.role||"").toLowerCase();if(!["admin","teacher"].includes(role))return location.href="student-dashboard.html";
+    const qr=await s.from("quizzes").select("id,title,teacher_id").eq("id",qid).single();if(qr.error||!qr.data)return location.href="quizzes.html";
+    if(role==="teacher"&&qr.data.teacher_id!==me.id){alert("Quiz này thuộc giáo viên khác.");return location.href="quizzes.html";}
+    quizTitle=qr.data.title||"Quiz";$("h").textContent="🔔 "+quizTitle;$("sub").textContent=(role==="admin"?"Quản trị viên":"Giáo viên")+" • Theo dõi & nhắc bài V3.3";$("backResults").href="quiz-results.html?quiz="+encodeURIComponent(qid);
+    const r=await s.rpc("codehub_v33_quiz_followup",{p_quiz:qid});if(r.error)throw r.error;data=r.data||[];
+    const classes=[...new Set(data.map(x=>x.class_name).filter(Boolean))].sort();
+    $("classFilter").innerHTML='<option value="">Tất cả lớp</option>'+classes.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join("");
+    render();
+  }catch(e){console.error(e);$("msg").classList.remove("hidden");$("msg").textContent=e?.message||String(e);}
+}
+function render(){
+  const cls=$("classFilter").value,st=$("statusFilter").value,q=$("search").value.trim().toLowerCase();
+  filtered=data.filter(x=>{
+    if(cls&&x.class_name!==cls)return false;
+    const sx=statusOf(x);
+    if(st==="need"&&!needReminder(x))return false;
+    if(st==="not_done"&&sx!=="not_done")return false;
+    if(st==="done"&&!["done","done_retry"].includes(sx))return false;
+    if(st==="expired"&&sx!=="expired")return false;
+    if(q){const hay=(String(x.full_name||"")+" "+String(x.student_code||"")).toLowerCase();if(!hay.includes(q))return false;}
+    return true;
+  });
+  const total=data.length,done=data.filter(x=>Number(x.attempts_used||0)>0).length,notDone=data.filter(x=>Number(x.attempts_used||0)===0).length,need=data.filter(needReminder).length,expired=data.filter(x=>statusOf(x)==="expired").length;
+  $("stTotal").textContent=total;$("stDone").textContent=done;$("stNotDone").textContent=notDone;$("stNeed").textContent=need;$("stExpired").textContent=expired;$("stRate").textContent=total?((done/total)*100).toFixed(1)+"%":"—";$("tableInfo").textContent=filtered.length+" học sinh";
+  $("rows").innerHTML=filtered.map(x=>{const used=Number(x.attempts_used||0),max=Number(x.max_attempts||1);return `<tr class="border-t">
+    <td class="p-3 font-semibold">${esc(x.full_name||"—")}</td><td class="p-3 text-center">${esc(x.student_code||"—")}</td><td class="p-3 text-center">${esc(x.class_name||"—")}</td>
+    <td class="p-3 text-center">${statusLabel(x)}</td><td class="p-3 text-center">${used}/${max}</td><td class="p-3 text-center">${x.latest_score==null?"—":esc(x.latest_score)+"/10"}</td><td class="p-3 text-center">${fmt(x.close_at)}</td>
+    <td class="p-3 text-center">${needReminder(x)?`<button class="text-violet-600 font-bold" onclick="copyStudent('${x.student_id}','${x.assignment_id}')">Copy nhắc</button>`:"—"}</td></tr>`;}).join("")||'<tr><td colspan="8" class="p-6 text-center text-slate-500">Không có học sinh phù hợp.</td></tr>';
+}
+window.copyStudent=(studentId,assignmentId)=>{const x=data.find(v=>v.student_id===studentId&&v.assignment_id===assignmentId);if(x)copyText(reminderText(x));};
+$("copyAll").onclick=()=>{const arr=data.filter(needReminder);if(!arr.length)return alert("Hiện không có học sinh cần nhắc.");const byClass={};arr.forEach(x=>{const c=x.class_name||"Không rõ lớp";(byClass[c]??=[]).push(x);});let t=`DANH SÁCH HỌC SINH CHƯA LÀM QUIZ\n${quizTitle}\n\n`;for(const [cls,list] of Object.entries(byClass)){t+=`LỚP ${cls} (${list.length} HS)\n`;list.forEach((x,i)=>t+=`${i+1}. ${x.full_name} - ${x.student_code}\n`);t+="\n";}copyText(t.trim());};
+$("excel").onclick=()=>{const arr=data.map(x=>({"Họ và tên":x.full_name||"","Mã HS":x.student_code||"","Lớp":x.class_name||"","Trạng thái":statusOf(x),"Số lượt đã làm":Number(x.attempts_used||0),"Số lượt tối đa":Number(x.max_attempts||1),"Điểm gần nhất":x.latest_score??"","Nộp gần nhất":fmt(x.latest_submitted_at),"Mở lúc":fmt(x.open_at),"Đóng lúc":fmt(x.close_at),"Cần nhắc":needReminder(x)?"Có":"Không"}));const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(arr),"Theo doi Quiz");XLSX.writeFile(wb,`Theo_doi_${quizTitle.replace(/[^\p{L}\p{N}]+/gu,"_")}_V3_3.xlsx`);};
+$("classFilter").onchange=render;$("statusFilter").onchange=render;$("search").oninput=render;$("reload").onclick=()=>location.reload();init();
+</script>
+</body>
+</html>
