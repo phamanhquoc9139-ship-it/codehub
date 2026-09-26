@@ -1,24 +1,250 @@
-<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Thông báo V3.4 | CodeHub</title><script src="https://cdn.tailwindcss.com"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="scripts/supabase-config.js"></script></head>
-<body class="bg-slate-50 text-slate-900"><main class="max-w-6xl mx-auto p-4 md:p-6">
-<div class="flex justify-between gap-3 flex-wrap mb-5"><div><h1 class="text-3xl font-black">🔔 Thông báo CodeHub <span class="text-violet-600 text-lg">V3.4</span></h1><p id="sub" class="text-slate-500">Tạo thông báo cho học sinh</p></div><a href="teacher.html" class="border bg-white rounded-xl px-4 py-2 font-bold">← Dashboard</a></div>
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Trung tâm thông báo V3.5 | CodeHub</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="scripts/supabase-config.js"></script>
+</head>
+<body class="bg-slate-50 text-slate-900">
+<main class="max-w-7xl mx-auto p-4 md:p-6">
+<div class="flex justify-between gap-3 flex-wrap mb-5">
+  <div>
+    <h1 class="text-3xl font-black">🔔 Trung tâm thông báo <span class="text-violet-600 text-lg">V3.5</span></h1>
+    <p id="sub" class="text-slate-500">Quản lý, ghim và theo dõi tỷ lệ đã đọc</p>
+  </div>
+  <a href="teacher.html" class="border bg-white rounded-xl px-4 py-2 font-bold">← Dashboard</a>
+</div>
+
 <div id="msg" class="hidden p-3 rounded-xl mb-4"></div>
-<div class="grid lg:grid-cols-[420px_1fr] gap-5">
-<section class="bg-white rounded-2xl shadow p-5"><h2 class="text-xl font-black mb-4">✍️ Tạo thông báo</h2><form id="f" class="space-y-3">
-<input id="title" class="w-full border rounded-xl p-3" placeholder="Tiêu đề" required><textarea id="body" rows="6" class="w-full border rounded-xl p-3" placeholder="Nội dung thông báo" required></textarea>
-<label class="font-bold block">Mức độ<select id="priority" class="w-full border rounded-xl p-3 mt-1"><option value="normal">Thông thường</option><option value="important">Quan trọng</option><option value="urgent">Khẩn</option></select></label>
-<label class="font-bold block">Phạm vi<select id="targetType" class="w-full border rounded-xl p-3 mt-1"><option value="class">Theo lớp</option></select></label>
-<div id="classesBox"><div class="font-bold mb-2">Chọn lớp</div><div id="classes" class="grid grid-cols-2 gap-2 max-h-52 overflow-auto border rounded-xl p-3"></div></div>
-<label class="font-bold block">Hết hạn (không bắt buộc)<input id="expires" type="datetime-local" class="w-full border rounded-xl p-3 mt-1"></label>
-<button class="w-full bg-blue-600 text-white rounded-xl p-3 font-black">📣 Gửi thông báo</button></form></section>
-<section class="bg-white rounded-2xl shadow p-5"><div class="flex justify-between gap-2 mb-4"><h2 class="text-xl font-black">📋 Thông báo đã tạo</h2><button id="reload" class="border rounded-xl px-3 py-2">Làm mới</button></div><div id="list" class="space-y-3"></div></section>
-</div></main>
+
+<div class="grid xl:grid-cols-[410px_1fr] gap-5">
+<section class="bg-white rounded-2xl shadow p-5">
+  <h2 class="text-xl font-black mb-4">✍️ Tạo thông báo</h2>
+  <form id="f" class="space-y-3">
+    <input id="title" class="w-full border rounded-xl p-3" placeholder="Tiêu đề" required>
+    <textarea id="body" rows="6" class="w-full border rounded-xl p-3" placeholder="Nội dung thông báo" required></textarea>
+
+    <label class="font-bold block">Mức độ
+      <select id="priority" class="w-full border rounded-xl p-3 mt-1">
+        <option value="normal">Thông thường</option>
+        <option value="important">Quan trọng</option>
+        <option value="urgent">Khẩn</option>
+      </select>
+    </label>
+
+    <label class="font-bold block">Phạm vi
+      <select id="targetType" class="w-full border rounded-xl p-3 mt-1">
+        <option value="class">Theo lớp</option>
+      </select>
+    </label>
+
+    <div id="classesBox">
+      <div class="font-bold mb-2">Chọn lớp</div>
+      <div id="classes" class="grid grid-cols-2 gap-2 max-h-52 overflow-auto border rounded-xl p-3"></div>
+    </div>
+
+    <label class="font-bold block">Hết hạn (không bắt buộc)
+      <input id="expires" type="datetime-local" class="w-full border rounded-xl p-3 mt-1">
+    </label>
+
+    <button class="w-full bg-blue-600 text-white rounded-xl p-3 font-black">📣 Gửi thông báo</button>
+  </form>
+</section>
+
+<section>
+  <div class="bg-white rounded-2xl shadow p-4 mb-4">
+    <div class="grid md:grid-cols-4 gap-3">
+      <input id="search" class="border rounded-xl p-3" placeholder="Tìm tiêu đề/nội dung">
+      <select id="filterPriority" class="border rounded-xl p-3">
+        <option value="">Mọi mức độ</option>
+        <option value="urgent">Khẩn</option>
+        <option value="important">Quan trọng</option>
+        <option value="normal">Thông thường</option>
+      </select>
+      <select id="filterState" class="border rounded-xl p-3">
+        <option value="">Mọi trạng thái</option>
+        <option value="active">Đang hoạt động</option>
+        <option value="inactive">Đã tắt</option>
+        <option value="pinned">Đã ghim</option>
+      </select>
+      <button id="reload" class="bg-slate-900 text-white rounded-xl font-bold">Làm mới</button>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-4">
+    <div class="bg-white rounded-2xl shadow p-4"><div class="text-slate-500">Thông báo</div><div id="statTotal" class="text-3xl font-black">0</div></div>
+    <div class="bg-white rounded-2xl shadow p-4"><div class="text-slate-500">Đang hoạt động</div><div id="statActive" class="text-3xl font-black text-emerald-600">0</div></div>
+    <div class="bg-white rounded-2xl shadow p-4"><div class="text-slate-500">Đã ghim</div><div id="statPinned" class="text-3xl font-black text-violet-600">0</div></div>
+    <div class="bg-white rounded-2xl shadow p-4"><div class="text-slate-500">TB đã đọc</div><div id="statRate" class="text-3xl font-black">—</div></div>
+  </div>
+
+  <div id="list" class="space-y-3"></div>
+</section>
+</div>
+</main>
+
+<div id="modal" class="hidden fixed inset-0 bg-black/40 z-50 p-4 overflow-auto">
+  <div class="max-w-3xl mx-auto bg-white rounded-2xl shadow-xl p-5 mt-8">
+    <div class="flex justify-between gap-3 mb-4">
+      <div><h2 id="mh" class="text-2xl font-black">Học sinh chưa đọc</h2><p id="ms" class="text-slate-500"></p></div>
+      <button id="close" class="border rounded-xl px-4 h-10">Đóng</button>
+    </div>
+    <div class="flex gap-2 mb-3">
+      <button id="copyUnread" class="bg-violet-600 text-white px-4 py-2 rounded-xl font-bold">📋 Copy danh sách chưa đọc</button>
+    </div>
+    <div id="md" class="space-y-2"></div>
+  </div>
+</div>
+
 <script>
-const s=window.supabaseClient,$=x=>document.getElementById(x);let me,role;
-const esc=v=>String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));const fmt=v=>v?new Date(v).toLocaleString("vi-VN"):"—";
+const s=window.supabaseClient,$=x=>document.getElementById(x);
+let me,role,classesData=[],rows=[],currentUnread=[];
+const esc=v=>String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
+const fmt=v=>v?new Date(v).toLocaleString("vi-VN"):"—";
 function show(t,ok=true){$("msg").className=`p-3 rounded-xl mb-4 ${ok?"bg-emerald-50 text-emerald-700":"bg-red-50 text-red-700"}`;$("msg").textContent=t}
-async function init(){me=(await s.auth.getUser()).data.user;if(!me)return location.href="login.html";const p=await s.from("profiles").select("role,full_name").eq("id",me.id).single();if(p.error)throw p.error;role=String(p.data?.role||"").toLowerCase();if(!["admin","teacher"].includes(role))return location.href="student-dashboard.html";$("sub").textContent=(role==="admin"?"Quản trị viên":"Giáo viên")+" • "+(p.data?.full_name||"");if(role==="admin")$("targetType").insertAdjacentHTML("afterbegin",'<option value="global">Toàn hệ thống</option>');const cr=await s.rpc("codehub_v34_target_classes");if(cr.error)return show(cr.error.message,false);$("classes").innerHTML=(cr.data||[]).map(c=>`<label class="border rounded-lg p-2"><input type="checkbox" value="${c.class_id}" class="mr-2 cls">${esc(c.class_name)}</label>`).join("")||"Không có lớp được phân công.";await load();}
+
+async function init(){
+  me=(await s.auth.getUser()).data.user;if(!me)return location.href="login.html";
+  const p=await s.from("profiles").select("role,full_name").eq("id",me.id).single();
+  if(p.error)throw p.error;
+  role=String(p.data?.role||"").toLowerCase();
+  if(!["admin","teacher"].includes(role))return location.href="student-dashboard.html";
+
+  $("sub").textContent=(role==="admin"?"Quản trị viên":"Giáo viên")+" • "+(p.data?.full_name||"");
+  if(role==="admin")$("targetType").insertAdjacentHTML("afterbegin",'<option value="global">Toàn hệ thống</option>');
+
+  const cr=await s.rpc("codehub_v34_target_classes");
+  if(cr.error)return show(cr.error.message,false);
+  classesData=cr.data||[];
+  $("classes").innerHTML=classesData.map(c=>`<label class="border rounded-lg p-2"><input type="checkbox" value="${c.class_id}" class="mr-2 cls">${esc(c.class_name)}</label>`).join("")||"Không có lớp được phân công.";
+  await load();
+}
+
 $("targetType").onchange=()=>{$("classesBox").style.display=$("targetType").value==="global"?"none":"block"};
-$("f").onsubmit=async e=>{e.preventDefault();const ids=[...document.querySelectorAll(".cls:checked")].map(x=>x.value);const exp=$("expires").value?new Date($("expires").value).toISOString():null;const r=await s.rpc("codehub_v34_create_announcement",{p_title:$("title").value,p_body:$("body").value,p_priority:$("priority").value,p_target_type:$("targetType").value,p_class_ids:ids,p_expires_at:exp});if(r.error)return show(r.error.message,false);show("Đã gửi thông báo.");$("f").reset();$("targetType").dispatchEvent(new Event("change"));await load();};
-async function load(){const r=await s.rpc("codehub_v34_manage_announcements");if(r.error)return show(r.error.message,false);$("list").innerHTML=(r.data||[]).map(x=>`<div class="border rounded-xl p-4"><div class="flex justify-between gap-3"><div><div class="font-black">${x.priority==="urgent"?"🚨":x.priority==="important"?"⚠️":"📢"} ${esc(x.title)}</div><div class="text-sm text-slate-500">${esc(x.target_classes)} • ${fmt(x.created_at)}</div></div><button onclick="toggleActive('${x.id}',${!x.is_active})" class="text-sm font-bold ${x.is_active?"text-red-600":"text-emerald-600"}">${x.is_active?"Tắt":"Bật"}</button></div><div class="mt-2 whitespace-pre-wrap">${esc(x.body)}</div><div class="text-xs text-slate-500 mt-2">Hết hạn: ${fmt(x.expires_at)} • ${x.is_active?"Đang hoạt động":"Đã tắt"}</div></div>`).join("")||'<div class="text-slate-500">Chưa có thông báo.</div>';}
-window.toggleActive=async(id,val)=>{const r=await s.rpc("codehub_v34_set_announcement_active",{p_id:id,p_active:val});if(r.error)return show(r.error.message,false);await load();};$("reload").onclick=load;init().catch(e=>show(e.message,false));
-</script></body></html>
+
+$("f").onsubmit=async e=>{
+  e.preventDefault();
+  const ids=[...document.querySelectorAll(".cls:checked")].map(x=>x.value);
+  const exp=$("expires").value?new Date($("expires").value).toISOString():null;
+  const r=await s.rpc("codehub_v34_create_announcement",{
+    p_title:$("title").value,p_body:$("body").value,p_priority:$("priority").value,
+    p_target_type:$("targetType").value,p_class_ids:ids,p_expires_at:exp
+  });
+  if(r.error)return show(r.error.message,false);
+  show("Đã gửi thông báo.");
+  $("f").reset();$("targetType").dispatchEvent(new Event("change"));
+  await load();
+};
+
+async function load(){
+  const r=await s.rpc("codehub_v35_manage_announcements");
+  if(r.error)return show(r.error.message,false);
+  rows=r.data||[];
+  render();
+}
+
+function render(){
+  const q=$("search").value.trim().toLowerCase();
+  const fp=$("filterPriority").value;
+  const fs=$("filterState").value;
+
+  let a=rows.filter(x=>{
+    if(q && !(String(x.title||"")+" "+String(x.body||"")).toLowerCase().includes(q))return false;
+    if(fp && x.priority!==fp)return false;
+    if(fs==="active"&&!x.is_active)return false;
+    if(fs==="inactive"&&x.is_active)return false;
+    if(fs==="pinned"&&!x.is_pinned)return false;
+    return true;
+  });
+
+  $("statTotal").textContent=rows.length;
+  $("statActive").textContent=rows.filter(x=>x.is_active).length;
+  $("statPinned").textContent=rows.filter(x=>x.is_pinned).length;
+  const rates=rows.filter(x=>Number(x.target_count)>0).map(x=>Number(x.read_rate));
+  $("statRate").textContent=rates.length?(rates.reduce((m,n)=>m+n,0)/rates.length).toFixed(1)+"%":"—";
+
+  $("list").innerHTML=a.map(x=>`
+    <article class="bg-white rounded-2xl shadow p-5 border-l-4 ${x.priority==="urgent"?"border-red-500":x.priority==="important"?"border-orange-500":"border-blue-500"}">
+      <div class="flex justify-between gap-3 flex-wrap">
+        <div class="flex-1">
+          <div class="flex items-center gap-2 flex-wrap">
+            <h3 class="font-black text-xl">${x.is_pinned?"📌 ":""}${x.priority==="urgent"?"🚨":x.priority==="important"?"⚠️":"📢"} ${esc(x.title)}</h3>
+            ${x.is_active?'<span class="text-xs bg-emerald-100 text-emerald-700 px-2 py-1 rounded-full font-bold">Đang hoạt động</span>':'<span class="text-xs bg-slate-200 px-2 py-1 rounded-full font-bold">Đã tắt</span>'}
+          </div>
+          <div class="text-sm text-slate-500 mt-1">${esc(x.target_classes)} • ${fmt(x.created_at)} • ${esc(x.creator_name||"")}</div>
+        </div>
+        <div class="flex gap-2 flex-wrap">
+          <button onclick="togglePin('${x.id}',${!x.is_pinned})" class="border rounded-xl px-3 py-2 font-bold">${x.is_pinned?"Bỏ ghim":"📌 Ghim"}</button>
+          <button onclick="toggleActive('${x.id}',${!x.is_active})" class="border rounded-xl px-3 py-2 font-bold ${x.is_active?"text-red-600":"text-emerald-600"}">${x.is_active?"Tắt":"Bật"}</button>
+        </div>
+      </div>
+
+      <div class="mt-3 whitespace-pre-wrap">${esc(x.body)}</div>
+
+      <div class="grid grid-cols-3 gap-2 mt-4">
+        <div class="bg-slate-50 rounded-xl p-3 text-center"><div class="text-xs text-slate-500">Đối tượng</div><b>${x.target_count}</b></div>
+        <div class="bg-emerald-50 rounded-xl p-3 text-center"><div class="text-xs text-emerald-700">Đã đọc</div><b>${x.read_count}</b></div>
+        <div class="bg-orange-50 rounded-xl p-3 text-center"><div class="text-xs text-orange-700">Chưa đọc</div><b>${x.unread_count}</b></div>
+      </div>
+
+      <div class="mt-3">
+        <div class="flex justify-between text-sm"><b>Tỷ lệ đã đọc</b><span>${x.read_rate}%</span></div>
+        <div class="h-3 bg-slate-200 rounded-full overflow-hidden mt-1">
+          <div class="h-full bg-emerald-500" style="width:${Math.max(0,Math.min(100,Number(x.read_rate)||0))}%"></div>
+        </div>
+      </div>
+
+      <div class="mt-4 flex gap-2 flex-wrap">
+        <button onclick="showUnread('${x.id}','${esc(x.title).replaceAll("'","&#39;")}')" class="bg-violet-600 text-white px-4 py-2 rounded-xl font-bold">👥 Xem HS chưa đọc (${x.unread_count})</button>
+      </div>
+    </article>`).join("")||'<div class="bg-white rounded-2xl shadow p-6 text-center text-slate-500">Không có thông báo phù hợp.</div>';
+}
+
+window.toggleActive=async(id,val)=>{
+  const r=await s.rpc("codehub_v34_set_announcement_active",{p_id:id,p_active:val});
+  if(r.error)return show(r.error.message,false);
+  await load();
+};
+
+window.togglePin=async(id,val)=>{
+  const r=await s.rpc("codehub_v35_set_pinned",{p_id:id,p_pinned:val});
+  if(r.error)return show(r.error.message,false);
+  await load();
+};
+
+window.showUnread=async(id,title)=>{
+  const r=await s.rpc("codehub_v35_unread_students",{p_announcement:id});
+  if(r.error)return show(r.error.message,false);
+  currentUnread=r.data||[];
+  $("mh").textContent="👥 Học sinh chưa đọc";
+  $("ms").textContent=title+" • "+currentUnread.length+" học sinh";
+  $("md").innerHTML=currentUnread.map(x=>`<div class="border rounded-xl p-3"><b>${esc(x.full_name||"—")}</b><div class="text-sm text-slate-500">${esc(x.student_code||"—")} • ${esc(x.class_name||"—")}</div></div>`).join("")||'<div class="text-emerald-700 font-bold">🎉 Tất cả học sinh đã đọc.</div>';
+  $("modal").classList.remove("hidden");
+};
+
+$("copyUnread").onclick=async()=>{
+  if(!currentUnread.length)return alert("Không có học sinh chưa đọc.");
+  const byClass={};
+  currentUnread.forEach(x=>{const c=x.class_name||"Không rõ lớp";(byClass[c]??=[]).push(x)});
+  let t="DANH SÁCH HỌC SINH CHƯA ĐỌC THÔNG BÁO\n\n";
+  for(const [c,list] of Object.entries(byClass)){
+    t+=`LỚP ${c} (${list.length} HS)\n`;
+    list.forEach((x,i)=>t+=`${i+1}. ${x.full_name} - ${x.student_code}\n`);
+    t+="\n";
+  }
+  try{await navigator.clipboard.writeText(t.trim());alert("Đã copy danh sách chưa đọc.");}
+  catch(e){alert("Không thể copy tự động.");}
+};
+
+$("close").onclick=()=> $("modal").classList.add("hidden");
+$("modal").onclick=e=>{if(e.target===$("modal"))$("modal").classList.add("hidden")};
+$("reload").onclick=load;
+$("search").oninput=render;
+$("filterPriority").onchange=render;
+$("filterState").onchange=render;
+
+init().catch(e=>show(e.message,false));
+</script>
+</body></html>
