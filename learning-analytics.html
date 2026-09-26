@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Learning Analytics V3.6.0 | CodeHub</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="scripts/supabase-config.js"></script>
+<style>
+  .bar{height:12px;border-radius:999px;background:#e2e8f0;overflow:hidden}
+  .bar>i{display:block;height:100%;background:#2563eb}
+</style>
+</head>
+<body class="bg-slate-50 text-slate-900">
+<main class="max-w-7xl mx-auto p-5">
+  <div class="flex flex-wrap justify-between gap-3 items-start mb-5">
+    <div>
+      <div class="flex gap-3 items-center">
+        <h1 class="text-3xl font-black">📈 Phân tích học tập</h1>
+        <span class="px-2 py-1 rounded-full text-xs bg-violet-100 text-violet-700 font-black">V3.6.0</span>
+      </div>
+      <p class="text-slate-500 mt-1">Theo dõi mức độ hoàn thành, kết quả, phân bố điểm và học sinh cần hỗ trợ.</p>
+    </div>
+    <div class="flex gap-2">
+      <button id="excelBtn" class="bg-emerald-600 text-white px-4 py-2 rounded-xl font-bold">⬇ Xuất Excel</button>
+      <a href="teacher.html" class="border bg-white px-4 py-2 rounded-xl font-bold">← Dashboard</a>
+    </div>
+  </div>
+
+  <div id="msg" class="hidden mb-4 p-3 rounded-xl bg-red-50 text-red-700"></div>
+
+  <section class="bg-white rounded-2xl shadow p-4 mb-5">
+    <div class="grid md:grid-cols-5 gap-3 items-end">
+      <label class="font-bold">Môn học
+        <select id="subjectFilter" class="block w-full mt-1 border rounded-xl p-2"></select>
+      </label>
+      <label class="font-bold">Lớp
+        <select id="classFilter" class="block w-full mt-1 border rounded-xl p-2"></select>
+      </label>
+      <label class="font-bold">Bài kiểm tra
+        <select id="quizFilter" class="block w-full mt-1 border rounded-xl p-2"></select>
+      </label>
+      <label class="font-bold">Từ ngày
+        <input id="fromDate" type="date" class="block w-full mt-1 border rounded-xl p-2">
+      </label>
+      <label class="font-bold">Đến ngày
+        <input id="toDate" type="date" class="block w-full mt-1 border rounded-xl p-2">
+      </label>
+    </div>
+    <div class="flex gap-2 mt-4">
+      <button id="applyBtn" class="bg-blue-600 text-white px-4 py-2 rounded-xl font-bold">Áp dụng</button>
+      <button id="resetBtn" class="border bg-white px-4 py-2 rounded-xl font-bold">Xóa lọc</button>
+    </div>
+  </section>
+
+  <section class="grid grid-cols-2 lg:grid-cols-6 gap-3 mb-5">
+    <div class="bg-white rounded-2xl shadow p-4"><div class="text-slate-500 text-sm">Lượt cần hoàn thành</div><div id="kpiTarget" class="text-3xl font-black">0</div></div>
+    <div class="bg-white rounded-2xl shadow p-4"><div class="text-slate-500 text-sm">Đã hoàn thành</div><div id="kpiDone" class="text-3xl font-black text-emerald-600">0</div></div>
+    <div class="bg-white rounded-2xl shadow p-4"><div class="text-slate-500 text-sm">Tỷ lệ hoàn thành</div><div id="kpiRate" class="text-3xl font-black text-blue-600">0%</div></div>
+    <div class="bg-white rounded-2xl shadow p-4"><div class="text-slate-500 text-sm">Điểm trung bình</div><div id="kpiAvg" class="text-3xl font-black">—</div></div>
+    <div class="bg-white rounded-2xl shadow p-4"><div class="text-slate-500 text-sm">Điểm cao nhất</div><div id="kpiMax" class="text-3xl font-black text-violet-600">—</div></div>
+    <div class="bg-white rounded-2xl shadow p-4"><div class="text-slate-500 text-sm">Cần hỗ trợ (&lt;5)</div><div id="kpiNeed" class="text-3xl font-black text-red-600">0</div></div>
+  </section>
+
+  <div class="grid lg:grid-cols-2 gap-5 mb-5">
+    <section class="bg-white rounded-2xl shadow p-5">
+      <h2 class="text-xl font-black mb-4">🎯 Phân bố điểm</h2>
+      <div id="distribution" class="space-y-4"></div>
+    </section>
+
+    <section class="bg-white rounded-2xl shadow p-5">
+      <h2 class="text-xl font-black mb-4">🏫 So sánh theo lớp</h2>
+      <div id="classCompare" class="space-y-4"></div>
+    </section>
+  </div>
+
+  <div class="grid lg:grid-cols-2 gap-5 mb-5">
+    <section class="bg-white rounded-2xl shadow p-5">
+      <h2 class="text-xl font-black mb-4">🏆 Học sinh kết quả cao</h2>
+      <div id="topStudents" class="overflow-auto"></div>
+    </section>
+
+    <section class="bg-white rounded-2xl shadow p-5">
+      <h2 class="text-xl font-black mb-4">🆘 Học sinh cần hỗ trợ</h2>
+      <div id="needHelp" class="overflow-auto"></div>
+    </section>
+  </div>
+
+  <section class="bg-white rounded-2xl shadow p-5">
+    <div class="flex flex-wrap justify-between gap-2 mb-4">
+      <div>
+        <h2 class="text-xl font-black">📋 Chi tiết kết quả</h2>
+        <p class="text-sm text-slate-500">Mỗi dòng tương ứng một học sinh trong một lần giao bài.</p>
+      </div>
+      <input id="searchBox" class="border rounded-xl px-3 py-2" placeholder="Tìm học sinh...">
+    </div>
+    <div class="overflow-auto">
+      <table class="w-full text-sm">
+        <thead class="bg-slate-100">
+          <tr>
+            <th class="p-3 text-left">Học sinh</th>
+            <th class="p-3">Mã HS</th>
+            <th class="p-3">Lớp</th>
+            <th class="p-3 text-left">Môn</th>
+            <th class="p-3 text-left">Bài kiểm tra</th>
+            <th class="p-3">Trạng thái</th>
+            <th class="p-3">Điểm</th>
+            <th class="p-3">Đúng/Tổng</th>
+            <th class="p-3">Nộp lúc</th>
+          </tr>
+        </thead>
+        <tbody id="detailRows"></tbody>
+      </table>
+    </div>
+  </section>
+</main>
+
+<script>
+const s=window.supabaseClient;
+const $=x=>document.getElementById(x);
+let me, role, allRows=[], rows=[];
+
+const esc=v=>String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
+const fmt=v=>v?new Date(v).toLocaleString("vi-VN"):"—";
+const pct=n=>`${Number(n||0).toFixed(1)}%`;
+const num=v=>Number(v);
+const uniq=(arr,key)=>[...new Map(arr.map(x=>[x[key],x])).values()];
+
+function err(t){
+  $("msg").classList.remove("hidden");
+  $("msg").textContent=t;
+}
+
+async function init(){
+  try{
+    me=(await s.auth.getUser()).data.user;
+    if(!me)return location.href="login.html";
+
+    const pr=await s.from("profiles").select("role").eq("id",me.id).single();
+    if(pr.error)throw pr.error;
+    role=String(pr.data?.role||"").trim().toLowerCase();
+
+    if(!["admin","teacher"].includes(role))return location.href="student-dashboard.html";
+
+    await loadAll();
+  }catch(e){
+    console.error(e);
+    err(e?.message||String(e));
+  }
+}
+
+async function loadAll(){
+  const r=await s.rpc("codehub_v360_learning_rows",{
+    p_class:null,
+    p_subject:null,
+    p_quiz:null,
+    p_from:null,
+    p_to:null
+  });
+  if(r.error)throw r.error;
+
+  allRows=r.data||[];
+  buildFilters();
+  applyFilters();
+}
+
+function buildFilters(){
+  const subjects=[...new Set(allRows.map(x=>x.subject_name).filter(Boolean))].sort((a,b)=>a.localeCompare(b,"vi"));
+  $("subjectFilter").innerHTML='<option value="">Tất cả môn</option>'+subjects.map(x=>`<option>${esc(x)}</option>`).join("");
+
+  const classes=uniq(allRows.filter(x=>x.class_id), "class_id").sort((a,b)=>String(a.class_name).localeCompare(String(b.class_name),"vi"));
+  $("classFilter").innerHTML='<option value="">Tất cả lớp</option>'+classes.map(x=>`<option value="${x.class_id}">${esc(x.class_name)}</option>`).join("");
+
+  const quizzes=uniq(allRows.filter(x=>x.quiz_id), "quiz_id").sort((a,b)=>String(a.quiz_title).localeCompare(String(b.quiz_title),"vi"));
+  $("quizFilter").innerHTML='<option value="">Tất cả bài kiểm tra</option>'+quizzes.map(x=>`<option value="${x.quiz_id}">${esc(x.quiz_title)}</option>`).join("");
+}
+
+function applyFilters(){
+  const subject=$("subjectFilter").value;
+  const classId=$("classFilter").value;
+  const quizId=$("quizFilter").value;
+  const f=$("fromDate").value ? new Date($("fromDate").value+"T00:00:00") : null;
+  const t=$("toDate").value ? new Date($("toDate").value+"T23:59:59") : null;
+
+  rows=allRows.filter(x=>{
+    if(subject && x.subject_name!==subject)return false;
+    if(classId && x.class_id!==classId)return false;
+    if(quizId && x.quiz_id!==quizId)return false;
+    const d=x.open_at?new Date(x.open_at):null;
+    if(f && (!d || d<f))return false;
+    if(t && (!d || d>t))return false;
+    return true;
+  });
+
+  render();
+}
+
+function render(){
+  renderKpis();
+  renderDistribution();
+  renderClassCompare();
+  renderStudentLists();
+  renderDetail();
+}
+
+function completedRows(){
+  return rows.filter(x=>x.completed && x.score!==null && x.score!==undefined && Number.isFinite(num(x.score)));
+}
+
+function renderKpis(){
+  const done=completedRows();
+  const scores=done.map(x=>num(x.score));
+  const target=rows.length;
+  const rate=target?done.length/target*100:0;
+
+  $("kpiTarget").textContent=target;
+  $("kpiDone").textContent=done.length;
+  $("kpiRate").textContent=pct(rate);
+  $("kpiAvg").textContent=scores.length?(scores.reduce((a,b)=>a+b,0)/scores.length).toFixed(2):"—";
+  $("kpiMax").textContent=scores.length?Math.max(...scores).toFixed(2):"—";
+  $("kpiNeed").textContent=done.filter(x=>num(x.score)<5).length;
+}
+
+function renderDistribution(){
+  const scores=completedRows().map(x=>num(x.score));
+  const bands=[
+    {name:"8–10",min:8,max:10,last:true},
+    {name:"6.5–<8",min:6.5,max:8},
+    {name:"5–<6.5",min:5,max:6.5},
+    {name:"<5",min:-Infinity,max:5}
+  ];
+
+  $("distribution").innerHTML=bands.map(b=>{
+    const c=scores.filter(v=>v>=b.min && (b.last?v<=b.max:v<b.max)).length;
+    const p=scores.length?c/scores.length*100:0;
+    return `<div>
+      <div class="flex justify-between text-sm mb-1"><b>${b.name}</b><span>${c} lượt (${p.toFixed(1)}%)</span></div>
+      <div class="bar"><i style="width:${p}%"></i></div>
+    </div>`;
+  }).join("") || '<p class="text-slate-500">Chưa có dữ liệu.</p>';
+}
+
+function renderClassCompare(){
+  const mp=new Map();
+  for(const x of rows){
+    if(!mp.has(x.class_id))mp.set(x.class_id,{name:x.class_name,total:0,done:0,scores:[]});
+    const o=mp.get(x.class_id);
+    o.total++;
+    if(x.completed && x.score!==null){
+      o.done++;o.scores.push(num(x.score));
+    }
+  }
+
+  const arr=[...mp.values()].sort((a,b)=>a.name.localeCompare(b.name,"vi"));
+  $("classCompare").innerHTML=arr.map(o=>{
+    const avg=o.scores.length?o.scores.reduce((a,b)=>a+b,0)/o.scores.length:null;
+    const rate=o.total?o.done/o.total*100:0;
+    return `<div class="border rounded-xl p-3">
+      <div class="flex justify-between gap-2"><b>${esc(o.name)}</b><span>${o.done}/${o.total} • ${rate.toFixed(1)}%</span></div>
+      <div class="text-sm text-slate-500 mt-1">Điểm TB: <b class="text-slate-900">${avg===null?"—":avg.toFixed(2)}</b></div>
+      <div class="bar mt-2"><i style="width:${rate}%"></i></div>
+    </div>`;
+  }).join("") || '<p class="text-slate-500">Chưa có dữ liệu.</p>';
+}
+
+function aggregateStudents(){
+  const mp=new Map();
+  for(const x of rows){
+    if(!mp.has(x.student_id)){
+      mp.set(x.student_id,{
+        id:x.student_id,name:x.student_name,code:x.student_code,class_name:x.class_name,
+        total:0,done:0,scores:[]
+      });
+    }
+    const o=mp.get(x.student_id);
+    o.total++;
+    if(x.completed && x.score!==null){
+      o.done++;
+      o.scores.push(num(x.score));
+    }
+  }
+  return [...mp.values()].map(o=>({
+    ...o,
+    avg:o.scores.length?o.scores.reduce((a,b)=>a+b,0)/o.scores.length:null,
+    rate:o.total?o.done/o.total*100:0
+  }));
+}
+
+function tableForStudents(arr,emptyText){
+  if(!arr.length)return `<p class="text-slate-500">${emptyText}</p>`;
+  return `<table class="w-full text-sm">
+    <thead class="bg-slate-100"><tr><th class="p-2 text-left">Học sinh</th><th class="p-2">Lớp</th><th class="p-2">Hoàn thành</th><th class="p-2">Điểm TB</th></tr></thead>
+    <tbody>${arr.map(o=>`<tr class="border-t">
+      <td class="p-2"><b>${esc(o.name)}</b><div class="text-xs text-slate-500">${esc(o.code)}</div></td>
+      <td class="p-2 text-center">${esc(o.class_name)}</td>
+      <td class="p-2 text-center">${o.done}/${o.total}</td>
+      <td class="p-2 text-center font-bold">${o.avg===null?"—":o.avg.toFixed(2)}</td>
+    </tr>`).join("")}</tbody>
+  </table>`;
+}
+
+function renderStudentLists(){
+  const students=aggregateStudents();
+
+  const top=students.filter(x=>x.avg!==null).sort((a,b)=>b.avg-a.avg || b.rate-a.rate).slice(0,10);
+  $("topStudents").innerHTML=tableForStudents(top,"Chưa có dữ liệu.");
+
+  const need=students
+    .filter(x=>(x.avg!==null && x.avg<5) || x.done<x.total)
+    .sort((a,b)=>{
+      const aa=a.avg===null?-1:a.avg, bb=b.avg===null?-1:b.avg;
+      return aa-bb || a.rate-b.rate;
+    })
+    .slice(0,30);
+
+  $("needHelp").innerHTML=tableForStudents(need,"Chưa có học sinh thuộc nhóm cần hỗ trợ.");
+}
+
+function renderDetail(){
+  const q=$("searchBox").value.trim().toLowerCase();
+  const data=rows.filter(x=>{
+    if(!q)return true;
+    return [x.student_name,x.student_code,x.class_name,x.quiz_title,x.subject_name]
+      .some(v=>String(v||"").toLowerCase().includes(q));
+  });
+
+  $("detailRows").innerHTML=data.map(x=>`<tr class="border-t">
+    <td class="p-3 font-semibold">${esc(x.student_name)}</td>
+    <td class="p-3 text-center">${esc(x.student_code)}</td>
+    <td class="p-3 text-center">${esc(x.class_name)}</td>
+    <td class="p-3">${esc(x.subject_name)}</td>
+    <td class="p-3">${esc(x.quiz_title)}</td>
+    <td class="p-3 text-center">${x.completed?'<span class="text-emerald-700 font-bold">Đã làm</span>':'<span class="text-orange-600 font-bold">Chưa làm</span>'}</td>
+    <td class="p-3 text-center font-bold">${x.completed&&x.score!==null?Number(x.score).toFixed(2):"—"}</td>
+    <td class="p-3 text-center">${x.completed?`${x.correct_count??"—"}/${x.total_questions??"—"}`:"—"}</td>
+    <td class="p-3 text-center">${fmt(x.submitted_at)}</td>
+  </tr>`).join("") || '<tr><td colspan="9" class="p-8 text-center text-slate-500">Không có dữ liệu phù hợp.</td></tr>';
+}
+
+$("applyBtn").onclick=applyFilters;
+$("resetBtn").onclick=()=>{
+  $("subjectFilter").value="";
+  $("classFilter").value="";
+  $("quizFilter").value="";
+  $("fromDate").value="";
+  $("toDate").value="";
+  applyFilters();
+};
+$("searchBox").oninput=renderDetail;
+
+$("excelBtn").onclick=()=>{
+  if(!rows.length)return alert("Không có dữ liệu để xuất.");
+
+  const summary=aggregateStudents().map((x,i)=>({
+    "STT":i+1,
+    "Họ và tên":x.name,
+    "Mã HS":x.code,
+    "Lớp":x.class_name,
+    "Số bài phải làm":x.total,
+    "Đã hoàn thành":x.done,
+    "Tỷ lệ hoàn thành %":+x.rate.toFixed(1),
+    "Điểm trung bình":x.avg===null?"":+x.avg.toFixed(2)
+  }));
+
+  const detail=rows.map((x,i)=>({
+    "STT":i+1,
+    "Họ và tên":x.student_name,
+    "Mã HS":x.student_code,
+    "Lớp":x.class_name,
+    "Môn":x.subject_name,
+    "Bài kiểm tra":x.quiz_title,
+    "Trạng thái":x.completed?"Đã làm":"Chưa làm",
+    "Điểm":x.completed?x.score:"",
+    "Đúng":x.completed?x.correct_count:"",
+    "Tổng câu":x.completed?x.total_questions:"",
+    "Mở bài":fmt(x.open_at),
+    "Hạn":fmt(x.close_at),
+    "Nộp lúc":fmt(x.submitted_at)
+  }));
+
+  const wb=XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(summary),"Tong hop HS");
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(detail),"Chi tiet");
+  XLSX.writeFile(wb,"CodeHub_Learning_Analytics_V3_6_0.xlsx");
+};
+
+init();
+</script>
+</body>
+</html>
