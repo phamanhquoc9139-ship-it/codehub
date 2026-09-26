@@ -1,748 +1,230 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="vi">
-
 <head>
-  <meta charset="UTF-8">
-
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1.0">
-
-  <title>Quản trị Giáo viên | CodeHub</title>
-
-  <!-- SUPABASE -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="scripts/supabase-config.js"></script>
-
-  <style>
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: Arial, sans-serif;
-      background: #f5f7fb;
-      color: #172033;
-    }
-
-    /* =========================
-       HEADER
-    ========================= */
-
-    header {
-      background: white;
-      padding: 18px 32px;
-
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-
-      border-bottom: 1px solid #e5e7eb;
-    }
-
-    .logo {
-      font-size: 28px;
-      font-weight: bold;
-      color: #3182f6;
-    }
-
-    .user {
-      text-align: right;
-    }
-
-    #teacherName {
-      display: inline-block;
-      margin-bottom: 8px;
-      font-size: 16px;
-    }
-
-    /* =========================
-       CONTAINER
-    ========================= */
-
-    .container {
-      max-width: 1200px;
-      margin: 40px auto;
-      padding: 0 20px;
-    }
-
-    h1 {
-      font-size: 36px;
-      margin-bottom: 10px;
-    }
-
-    .subtitle {
-      color: #64748b;
-      margin-bottom: 35px;
-      font-size: 17px;
-    }
-
-    /* =========================
-       GRID
-    ========================= */
-
-    .grid {
-      display: grid;
-
-      grid-template-columns:
-        repeat(auto-fit, minmax(240px, 1fr));
-
-      gap: 20px;
-    }
-
-    /* =========================
-       CARD
-    ========================= */
-
-    .card {
-      background: white;
-
-      border-radius: 16px;
-
-      padding: 28px;
-
-      box-shadow:
-        0 5px 20px rgba(0,0,0,.06);
-
-      cursor: pointer;
-
-      transition:
-        transform .2s,
-        box-shadow .2s;
-
-      border:
-        1px solid #edf2f7;
-    }
-
-    .card:hover {
-      transform: translateY(-4px);
-
-      box-shadow:
-        0 10px 30px rgba(0,0,0,.10);
-    }
-
-    .icon {
-      font-size: 38px;
-      margin-bottom: 18px;
-    }
-
-    .card h2 {
-      margin-bottom: 10px;
-      font-size: 20px;
-    }
-
-    .card p {
-      color: #64748b;
-      line-height: 1.5;
-    }
-
-    /* =========================
-       BUTTON
-    ========================= */
-
-    .btn {
-      border: 0;
-
-      background: #3182f6;
-
-      color: white;
-
-      padding: 11px 18px;
-
-      border-radius: 9px;
-
-      cursor: pointer;
-
-      font-weight: bold;
-
-      margin-left: 5px;
-
-      transition: .2s;
-    }
-
-    .btn:hover {
-      background: #2563eb;
-    }
-
-    /* =========================
-       LOADING
-    ========================= */
-
-    #loading {
-      text-align: center;
-
-      margin-top: 100px;
-
-      font-size: 20px;
-
-      color: #64748b;
-    }
-
-    /* =========================
-       DASHBOARD
-    ========================= */
-
-    #dashboard {
-      display: none;
-    }
-
-    /* =========================
-       ERROR
-    ========================= */
-
-    #error {
-      display: none;
-
-      max-width: 600px;
-
-      margin: 100px auto;
-
-      background: white;
-
-      padding: 35px;
-
-      border-radius: 16px;
-
-      text-align: center;
-
-      box-shadow:
-        0 5px 20px rgba(0,0,0,.06);
-    }
-
-    /* =========================
-       MOBILE
-    ========================= */
-
-    @media(max-width: 700px) {
-
-      header {
-        flex-direction: column;
-        gap: 15px;
-      }
-
-      .user {
-        text-align: center;
-      }
-
-      h1 {
-        font-size: 30px;
-      }
-
-      .btn {
-        margin-top: 5px;
-      }
-
-    }
-
-  </style>
-
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dashboard V3.0 | CodeHub</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="scripts/supabase-config.js"></script>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f5f7fb;color:#172033}
+header{background:#fff;border-bottom:1px solid #e5e7eb;padding:16px 28px;display:flex;justify-content:space-between;align-items:center;gap:18px;position:sticky;top:0;z-index:20}
+.logo{font-size:28px;font-weight:900;color:#3182f6}.nav{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.btn{border:0;border-radius:10px;padding:10px 15px;font-weight:800;cursor:pointer;background:#3182f6;color:#fff;text-decoration:none;display:inline-block}
+.btn.soft{background:#eef5ff;color:#2563eb}.btn.dark{background:#172033}.badge{display:inline-block;padding:6px 10px;border-radius:999px;font-size:12px;font-weight:800;background:#ede9fe;color:#6d28d9}
+main{max-width:1280px;margin:30px auto;padding:0 20px}h1{font-size:36px;margin:0}.sub{color:#64748b;margin:8px 0 24px}
+.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}.stat,.panel,.card{background:#fff;border:1px solid #edf2f7;border-radius:18px;box-shadow:0 5px 18px #0000000d}
+.stat{padding:20px}.stat .n{font-size:32px;font-weight:900;margin-top:8px}.stat .l{color:#64748b}
+.layout{display:grid;grid-template-columns:2fr 1fr;gap:18px;margin-top:18px}.panel{padding:22px}.panel h2{margin:0 0 14px}
+.quick{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.card{padding:18px;cursor:pointer;transition:.15s}.card:hover{transform:translateY(-2px);box-shadow:0 8px 24px #00000015}.card .i{font-size:30px}.card h3{margin:8px 0 5px}.card p{color:#64748b;font-size:14px;line-height:1.45;margin:0}
+.list{display:flex;flex-direction:column;gap:10px}.item{border:1px solid #e5e7eb;border-radius:13px;padding:13px}.item b{display:block}.meta{font-size:13px;color:#64748b;margin-top:5px}.pill{display:inline-block;padding:4px 8px;border-radius:999px;background:#ecfdf5;color:#047857;font-size:12px;font-weight:800}.warn{background:#fff7ed;color:#9a3412}.danger{background:#fef2f2;color:#b91c1c}
+#loading{text-align:center;margin:100px auto;color:#64748b;font-size:18px}#dashboard{display:none}
+@media(max-width:1000px){.stats{grid-template-columns:repeat(2,1fr)}.layout{grid-template-columns:1fr}.quick{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:650px){header{flex-direction:column;align-items:flex-start}.stats,.quick{grid-template-columns:1fr}h1{font-size:30px}}
+</style>
 </head>
-
-
 <body>
-
-
-<!-- =========================
-     HEADER
-========================= -->
-
 <header>
-
-  <div class="logo">
-    &lt;/&gt; CodeHub
+  <div><div class="logo">&lt;/&gt; CodeHub <span style="font-size:13px;color:#2563eb">V3.0</span></div><div id="identity" style="font-size:13px;color:#64748b;margin-top:4px">Đang xác định quyền...</div></div>
+  <div class="nav">
+    <a class="btn soft" href="index.html">Trang chủ</a>
+    <a class="btn soft" href="courses.html">Khóa học</a>
+    <a class="btn soft" href="quizzes.html">Quiz</a>
+    <a class="btn soft" href="ai-quiz-generator.html">AI Quiz</a>
+    <button class="btn dark" onclick="logout()">Đăng xuất</button>
   </div>
-
-
-  <div class="user">
-
-    <strong id="teacherName">
-      Giáo viên
-    </strong>
-    <span id="roleLabel" style="display:block;color:#64748b;font-size:13px;margin-bottom:8px"></span>
-
-    <br>
-
-    <button
-      class="btn"
-      onclick="goHome()">
-
-      Trang chủ
-
-    </button>
-
-
-    <button
-      class="btn"
-      onclick="logout()">
-
-      Đăng xuất
-
-    </button>
-
-  </div>
-
 </header>
 
-
-
-<!-- =========================
-     LOADING
-========================= -->
-
-<div id="loading">
-
-  Đang kiểm tra quyền truy cập...
-
-</div>
-
-
-
-<!-- =========================
-     ERROR
-========================= -->
-
-<div id="error">
-
-  <h2>
-    ⛔ Không có quyền truy cập
-  </h2>
-
-  <br>
-
-  <p>
-    Trang này chỉ dành cho tài khoản giáo viên hoặc quản trị viên.
-  </p>
-
-  <br>
-
-  <button
-    class="btn"
-    onclick="goHome()">
-
-    Quay về trang chủ
-
-  </button>
-
-</div>
-
-
-
-<!-- =========================
-     DASHBOARD
-========================= -->
-
-<main
-  id="dashboard"
-  class="container">
-
-
-  <h1>
-    👨‍🏫 Quản trị Giáo viên
-  </h1>
-
-
-  <p class="subtitle">
-
-    Quản lý hoạt động học tập
-    trên hệ thống CodeHub
-
-  </p>
-
-
-
-  <div class="grid">
-
-
-    <!-- =====================
-         HỌC SINH
-    ====================== -->
-
-    <div
-      class="card"
-      onclick="goStudents()">
-
-      <div class="icon">
-        👨‍🎓
-      </div>
-
-      <h2>
-        Quản lý học sinh
-      </h2>
-
-      <p>
-        Thêm, sửa, xóa học sinh
-        và quản lý tài khoản đăng nhập.
-      </p>
-
-    </div>
-
-
-
-    <!-- =====================
-         LỚP HỌC
-    ====================== -->
-
-    <div
-      class="card"
-      onclick="goClasses()">
-
-      <div class="icon">
-        🏫
-      </div>
-
-      <h2>
-        Quản lý lớp học
-      </h2>
-
-      <p>
-        Xem các lớp học, sĩ số
-        và danh sách học sinh
-        theo từng lớp.
-      </p>
-
-    </div>
-
-
-
-    <!-- =====================
-         KHÓA HỌC
-    ====================== -->
-
-    <div
-      class="card"
-       onclick="window.location.href='courses.html'">
-
-      <div class="icon">
-        📚
-      </div>
-
-      <h2>
-        Quản lý khóa học
-      </h2>
-
-      <p>
-        Tạo và quản lý nội dung
-        các khóa học Tin học.
-      </p>
-
-    </div>
-
-
-
-    <!-- MÔN HỌC -->
-    <div class="card" onclick="window.location.href='subjects.html'">
-      <div class="icon">📘</div>
-      <h2>Quản lý môn học</h2>
-      <p>Quản lý danh mục môn học trên CodeHub.</p>
-    </div>
-
-
-    <!-- =====================
-         BÀI TẬP & QUIZ
-    ====================== -->
-
-    <div
-      class="card"
-      onclick="window.location.href='quizzes.html'">
-
-      <div class="icon">
-        📝
-      </div>
-
-      <h2>
-        Bài tập & Quiz
-      </h2>
-
-      <p>
-        Tạo bài tập,
-        câu hỏi trắc nghiệm
-        và bài kiểm tra.
-      </p>
-
-    </div>
-
-
-
-    <!-- =====================
-         KẾT QUẢ
-    ====================== -->
-
-    <div
-      class="card"
-      onclick="window.location.href='quizzes.html'">
-
-      <div class="icon">
-        📊
-      </div>
-
-      <h2>
-        Kết quả học tập
-      </h2>
-
-      <p>
-        Theo dõi điểm số
-        và tiến độ học tập
-        của học sinh.
-      </p>
-
-    </div>
-
-
-    <!-- QUẢN LÝ TÀI KHOẢN - CHỈ ADMIN -->
-    <div id="adminAccountsCard" class="card" style="display:none" onclick="window.location.href='admin-accounts.html'">
-      <div class="icon">👥</div>
-      <h2>Quản lý tài khoản</h2>
-      <p>Xem tài khoản học sinh, giáo viên và xuất danh sách tài khoản.</p>
-    </div>
-
-
+<div id="loading">Đang tải Dashboard V3.0...</div>
+
+<main id="dashboard">
+  <div style="display:flex;justify-content:space-between;gap:14px;align-items:flex-start;flex-wrap:wrap">
+    <div><h1 id="hello">Dashboard</h1><div class="sub" id="scopeText"></div></div>
+    <span id="roleBadge" class="badge"></span>
   </div>
 
+  <section class="stats">
+    <div class="stat"><div class="l">👨‍🎓 Học sinh</div><div id="stStudents" class="n">—</div></div>
+    <div class="stat"><div class="l">🏫 Lớp phụ trách</div><div id="stClasses" class="n">—</div></div>
+    <div class="stat"><div class="l">📚 Khóa học</div><div id="stCourses" class="n">—</div></div>
+    <div class="stat"><div class="l">📝 Quiz</div><div id="stQuizzes" class="n">—</div></div>
+    <div class="stat"><div class="l">✅ Lượt đã nộp</div><div id="stAttempts" class="n">—</div></div>
+  </section>
+
+  <section class="layout">
+    <div class="panel">
+      <h2>⚡ Truy cập nhanh</h2>
+      <div class="quick">
+        <div class="card" onclick="location.href='students.html'"><div class="i">👨‍🎓</div><h3>Học sinh</h3><p>Excel, tài khoản, mật khẩu và danh sách lớp.</p></div>
+        <div class="card" onclick="location.href='classes.html'"><div class="i">🏫</div><h3>Lớp học</h3><p>Xem lớp được phân công và sĩ số.</p></div>
+        <div class="card" onclick="location.href='subjects.html'"><div class="i">📗</div><h3>Môn học</h3><p>Môn được phân công hoặc toàn bộ môn của Admin.</p></div>
+        <div class="card" onclick="location.href='courses.html'"><div class="i">📚</div><h3>Khóa học</h3><p>Tạo khóa học và quản lý bài học.</p></div>
+        <div class="card" onclick="location.href='quizzes.html'"><div class="i">📝</div><h3>Quiz</h3><p>Tạo, giao lớp, xem kết quả và câu hỏi.</p></div>
+        <div class="card" onclick="location.href='ai-quiz-generator.html'"><div class="i">✨</div><h3>AI Quiz</h3><p>Tạo câu hỏi từ tài liệu nguồn.</p></div>
+        <div id="adminAccounts" class="card" style="display:none" onclick="location.href='admin-accounts.html'"><div class="i">👥</div><h3>Tài khoản</h3><p>Quản lý giáo viên, học sinh và phân công.</p></div>
+        <div id="adminSystem" class="card" style="display:none" onclick="location.href='admin-system.html'"><div class="i">🛡️</div><h3>Nhật ký & Backup</h3><p>Audit Log, backup và khôi phục an toàn.</p></div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>📊 Tình hình gần đây</h2>
+      <div class="list">
+        <div class="item"><b>Điểm trung bình gần đây</b><div id="avgScore" class="meta">Đang tính...</div></div>
+        <div class="item"><b>Quiz đang mở</b><div id="openQuiz" class="meta">Đang tính...</div></div>
+        <div class="item"><b>Hoạt động 7 ngày</b><div id="weekActivity" class="meta">Đang tính...</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="layout">
+    <div class="panel">
+      <h2>🕘 Lượt nộp bài gần nhất</h2>
+      <div id="recentAttempts" class="list"></div>
+    </div>
+    <div class="panel">
+      <h2 id="rightTitle">🔔 Cần chú ý</h2>
+      <div id="attention" class="list"></div>
+    </div>
+  </section>
 </main>
 
-
-
 <script>
+const s=window.supabaseClient,$=id=>document.getElementById(id);
+let user,profile,role,allowedClassIds=[],allowedClassNames=[];
 
-/* ==========================================
-   KIỂM TRA ĐĂNG NHẬP + QUYỀN GIÁO VIÊN
-========================================== */
+const esc=v=>String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
+const fmt=v=>v?new Date(v).toLocaleString("vi-VN"):"—";
+function setText(id,v){const e=$(id);if(e)e.textContent=v}
+function safeNum(v){return Number.isFinite(+v)?+v:0}
 
-document.addEventListener(
-  "DOMContentLoaded",
-  async () => {
+async function countQuery(q){const r=await q;if(r.error)throw r.error;return r.count||0}
 
-    const client =
-      window.supabaseClient;
+async function init(){
+  try{
+    if(!s)throw new Error("Không kết nối Supabase.");
+    user=(await s.auth.getUser()).data.user;
+    if(!user)return location.href="login.html";
 
+    const p=await s.from("profiles").select("full_name,role").eq("id",user.id).single();
+    if(p.error||!p.data)throw new Error("Không đọc được hồ sơ.");
+    profile=p.data; role=String(profile.role||"").trim().toLowerCase();
+    if(!["admin","teacher"].includes(role))return location.href="student-dashboard.html";
 
-    /* =========================
-       KIỂM TRA SUPABASE
-    ========================= */
+    setText("identity",(profile.full_name||user.email||"")+(role==="admin"?" • Quản trị viên":" • Giáo viên"));
+    setText("hello","👨‍🏫 Xin chào, "+(profile.full_name||"Giáo viên"));
+    setText("roleBadge",role==="admin"?"Quản trị viên":"Giáo viên");
 
-    if (!client) {
+    if(role==="admin"){
+      $("adminAccounts").style.display="block";
+      $("adminSystem").style.display="block";
+      setText("scopeText","Toàn hệ thống • dữ liệu được giới hạn bởi Supabase RLS");
+      setText("stClasses",await countQuery(s.from("classes").select("id",{count:"exact",head:true})));
+      setText("stStudents",await countQuery(s.from("profiles").select("id",{count:"exact",head:true}).eq("role","student")));
+    }else{
+      const asg=await s.from("teacher_class_subjects").select("class_id").eq("teacher_id",user.id);
+      allowedClassIds=[...new Set((asg.data||[]).map(x=>x.class_id).filter(Boolean))];
 
-      document
-        .getElementById("loading")
-        .innerText =
-          "Không kết nối được Supabase.";
+      if(allowedClassIds.length){
+        const cr=await s.from("classes").select("id,class_name").in("id",allowedClassIds);
+        allowedClassNames=(cr.data||[]).map(x=>String(x.class_name||"").trim().toUpperCase());
+      }
+      setText("stClasses",allowedClassIds.length);
+      setText("scopeText",allowedClassNames.length?"Lớp: "+allowedClassNames.join(", "):"Chưa được phân công lớp");
 
-      return;
-
+      const pr=await s.from("profiles").select("id,class_name").eq("role","student");
+      const allowed=new Set(allowedClassNames);
+      const studentCount=(pr.data||[]).filter(x=>allowed.has(String(x.class_name||"").trim().toUpperCase())).length;
+      setText("stStudents",studentCount);
     }
 
+    const cq=role==="admin"
+      ? s.from("courses").select("id",{count:"exact",head:true})
+      : s.from("courses").select("id",{count:"exact",head:true}).eq("teacher_id",user.id);
+    setText("stCourses",await countQuery(cq));
 
-    try {
+    const qq=role==="admin"
+      ? s.from("quizzes").select("id",{count:"exact",head:true})
+      : s.from("quizzes").select("id",{count:"exact",head:true}).eq("teacher_id",user.id);
+    setText("stQuizzes",await countQuery(qq));
 
+    await loadAttempts();
+    await loadAttention();
 
-      /* =========================
-         LẤY USER
-      ========================= */
-
-      const {
-        data: { user },
-        error: userError
-      } =
-        await client
-          .auth
-          .getUser();
-
-
-      if (
-        userError ||
-        !user
-      ) {
-
-        window.location.href =
-          "login.html";
-
-        return;
-
-      }
-
-
-      /* =========================
-         LẤY PROFILE
-      ========================= */
-
-      const {
-        data: profile,
-        error: profileError
-      } =
-        await client
-
-          .from("profiles")
-
-          .select(
-            "full_name, role"
-          )
-
-          .eq(
-            "id",
-            user.id
-          )
-
-          .single();
-
-
-
-      document
-        .getElementById("loading")
-        .style.display =
-          "none";
-
-
-      /* =========================
-         KIỂM TRA ROLE
-      ========================= */
-
-      if (
-        profileError ||
-        !profile ||
-        !["teacher", "admin"].includes(String(profile.role || "").trim().toLowerCase())
-      ) {
-
-        document
-          .getElementById("error")
-          .style.display =
-            "block";
-
-        return;
-
-      }
-
-
-      /* =========================
-         TÊN GIÁO VIÊN
-      ========================= */
-
-      document
-        .getElementById(
-          "teacherName"
-        )
-        .textContent =
-
-          profile.full_name ||
-          "Giáo viên";
-
-
-      const normalizedRole = String(profile.role || "").trim().toLowerCase();
-      const roleLabel = document.getElementById("roleLabel");
-      if (roleLabel) roleLabel.textContent = normalizedRole === "admin" ? "Quản trị viên" : "Giáo viên";
-
-      // Chỉ Admin mới thấy chức năng quản lý toàn bộ tài khoản
-      if (normalizedRole === "admin") {
-        const adminCard = document.getElementById("adminAccountsCard");
-        if (adminCard) adminCard.style.display = "block";
-      }
-
-      /* =========================
-         HIỆN DASHBOARD
-      ========================= */
-
-      document
-        .getElementById(
-          "dashboard"
-        )
-        .style.display =
-          "block";
-
-
-    }
-
-    catch(error) {
-
-      console.error(error);
-
-
-      document
-        .getElementById("loading")
-        .style.display =
-          "none";
-
-
-      document
-        .getElementById("error")
-        .style.display =
-          "block";
-
-    }
-
+    $("loading").style.display="none";
+    $("dashboard").style.display="block";
+  }catch(e){
+    console.error(e);
+    $("loading").textContent="❌ "+(e?.message||e);
   }
-);
-
-
-/* ==========================================
-   ĐIỀU HƯỚNG
-========================================== */
-
-function goHome() {
-
-  window.location.href =
-    "index.html";
-
 }
 
+async function loadAttempts(){
+  let q=s.from("quiz_attempts")
+    .select("id,score,submitted_at,student_id,quiz_id,profiles:student_id(full_name,student_code,class_name),quizzes:quiz_id(title,teacher_id)")
+    .order("submitted_at",{ascending:false})
+    .limit(50);
 
-function goStudents() {
+  const r=await q;
+  let rows=r.data||[];
 
-  window.location.href =
-    "students.html";
-
-}
-
-
-function goClasses() {
-
-  window.location.href =
-    "classes.html";
-
-}
-
-
-/* ==========================================
-   CHỨC NĂNG ĐANG PHÁT TRIỂN
-========================================== */
-
-function comingSoon(feature) {
-
-  alert(
-    "🚧 " +
-    feature +
-    " đang được xây dựng."
-  );
-
-}
-
-
-/* ==========================================
-   ĐĂNG XUẤT
-========================================== */
-
-async function logout() {
-
-  try {
-
-    await window
-      .supabaseClient
-      .auth
-      .signOut();
-
+  if(role==="teacher"){
+    rows=rows.filter(x=>x.quizzes?.teacher_id===user.id);
   }
 
-  finally {
+  setText("stAttempts",rows.length);
 
-    window.location.href =
-      "login.html";
+  const scored=rows.filter(x=>x.score!==null&&x.score!==undefined);
+  const avg=scored.length?scored.reduce((a,x)=>a+safeNum(x.score),0)/scored.length:null;
+  setText("avgScore",avg===null?"Chưa có dữ liệu":`${avg.toFixed(2)}/10 trên ${scored.length} lượt gần nhất`);
 
-  }
+  const weekAgo=Date.now()-7*86400000;
+  const week=rows.filter(x=>x.submitted_at&&new Date(x.submitted_at).getTime()>=weekAgo);
+  setText("weekActivity",`${week.length} lượt nộp bài trong 7 ngày gần nhất`);
 
+  $("recentAttempts").innerHTML=rows.slice(0,8).map(x=>`
+    <div class="item">
+      <b>${esc(x.profiles?.full_name||"Học sinh")} • ${esc(x.quizzes?.title||"Quiz")}</b>
+      <div class="meta">${esc(x.profiles?.class_name||"—")} • Điểm <b>${esc(x.score??"—")}</b>/10 • ${fmt(x.submitted_at)}</div>
+    </div>`).join("") || '<div class="item">Chưa có lượt nộp bài.</div>';
 }
 
+async function loadAttention(){
+  let ar=await s.from("quiz_assignments")
+    .select("id,quiz_id,class_id,open_at,close_at,quizzes(title,teacher_id)")
+    .order("close_at",{ascending:true})
+    .limit(100);
+
+  let rows=ar.data||[];
+  if(role==="teacher"){
+    rows=rows.filter(x=>x.quizzes?.teacher_id===user.id && allowedClassIds.includes(x.class_id));
+  }
+
+  const now=Date.now();
+  const open=rows.filter(x=>{
+    const a=x.open_at?new Date(x.open_at).getTime():-Infinity;
+    const b=x.close_at?new Date(x.close_at).getTime():Infinity;
+    return a<=now&&now<=b;
+  });
+  setText("openQuiz",`${open.length} bài đang trong thời gian làm`);
+
+  const soon=open.filter(x=>x.close_at&&(new Date(x.close_at).getTime()-now)<=48*3600000);
+  const items=[];
+
+  soon.slice(0,6).forEach(x=>{
+    items.push(`<div class="item"><span class="pill warn">Sắp đóng</span><b>${esc(x.quizzes?.title||"Quiz")}</b><div class="meta">Đóng: ${fmt(x.close_at)}</div></div>`);
+  });
+
+  if(role==="admin"){
+    $("rightTitle").textContent="🛡️ Hoạt động hệ thống";
+    const lg=await s.from("audit_logs").select("action,entity_table,created_at,actor_role").order("created_at",{ascending:false}).limit(6);
+    (lg.data||[]).forEach(x=>{
+      items.push(`<div class="item"><span class="pill">${esc(x.action)}</span><b>${esc(x.entity_table)}</b><div class="meta">${fmt(x.created_at)} • ${esc(x.actor_role||"—")}</div></div>`);
+    });
+  }
+
+  $("attention").innerHTML=items.join("")||'<div class="item">Không có cảnh báo đáng chú ý.</div>';
+}
+
+async function logout(){await s.auth.signOut();location.href="login.html"}
+init();
 </script>
-
-
-</body>
-</html>
+</body></html>

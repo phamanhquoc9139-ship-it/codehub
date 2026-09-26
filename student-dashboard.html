@@ -1,9 +1,177 @@
-<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Học sinh | CodeHub</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="scripts/supabase-config.js"></script><style>*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f5f7fb;color:#172033}header{background:#fff;border-bottom:1px solid #e5e7eb;padding:18px 30px;display:flex;justify-content:space-between;align-items:center}.logo{font-size:28px;font-weight:800;color:#3182f6}.btn{border:0;border-radius:9px;padding:11px 16px;font-weight:700;cursor:pointer;background:#3182f6;color:#fff}main{max-width:1100px;margin:36px auto;padding:0 20px}h1{font-size:34px;margin:0 0 8px}.sub{color:#64748b;margin-bottom:24px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:18px}.card,.content{background:#fff;border-radius:16px;padding:22px;box-shadow:0 5px 18px #0000000d}.title{font-size:21px;font-weight:800;margin:10px 0}.meta{color:#64748b;line-height:1.65}.chip,.resource{display:inline-block;background:#e8f1ff;color:#2563eb;padding:5px 10px;border-radius:15px;font-size:12px;font-weight:700;margin:9px 4px 5px 0}.empty{background:#fff;padding:40px;text-align:center;border-radius:15px;color:#64748b}.back{color:#2563eb;font-weight:700;cursor:pointer;margin-bottom:18px}.lesson{background:#fff;border-radius:15px;padding:20px;margin-bottom:13px;display:grid;grid-template-columns:55px 1fr auto;gap:15px;align-items:center}.order{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:#e8f1ff;color:#2563eb;font-weight:800}.content{line-height:1.75;white-space:pre-wrap}.links{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}.links a{text-decoration:none;background:#3182f6;color:#fff;padding:11px 15px;border-radius:9px;font-weight:700}.quizbar{display:flex;justify-content:space-between;align-items:center;gap:14px;background:linear-gradient(135deg,#eef5ff,#f5f0ff);border:1px solid #dbeafe;border-radius:16px;padding:18px 20px;margin-bottom:24px}.quizbar-title{font-size:19px;font-weight:800}.quizbar-sub{color:#64748b;margin-top:5px}.quizbtn{display:inline-block;text-decoration:none;background:#7c3aed;color:#fff;padding:12px 18px;border-radius:10px;font-weight:800;white-space:nowrap}.quiz-summary{font-size:13px;font-weight:700;color:#7c3aed;margin-top:6px}@media(max-width:700px){.quizbar{align-items:flex-start;flex-direction:column}.quizbtn{width:100%;text-align:center}}
-@media(max-width:700px){header{flex-direction:column;gap:10px}.lesson{grid-template-columns:48px 1fr}.lesson .btn{grid-column:1/-1}}</style></head><body><header><div class="logo">&lt;/&gt; CodeHub</div><button class="btn" onclick="logout()">Đăng xuất</button></header><main><h1 id="hello">🎓 Khóa học của em</h1><div class="sub" id="info">Đang tải...</div>
-<div class="quizbar"><div><div class="quizbar-title">📝 Bài kiểm tra</div><div class="quizbar-sub">Xem các bài được giáo viên giao, thời gian làm bài và kết quả.</div><div id="quizSummary" class="quiz-summary">Đang kiểm tra bài được giao...</div></div><a class="quizbtn" href="student-quizzes.html">Vào bài kiểm tra →</a></div>
-<div class="grid" id="grid"></div></main><script>
-let user,profile;
-document.addEventListener("DOMContentLoaded",async()=>{const s=window.supabaseClient;if(!s){alert("Không kết nối Supabase.");return}const u=await s.auth.getUser();user=u.data.user;if(!user){location.href="login.html";return}const p=await s.from("profiles").select("*").eq("id",user.id).single();profile=p.data;if(!profile||profile.role!=="student"){location.href="teacher.html";return}hello.textContent="🎓 Xin chào, "+(profile.full_name||"Học sinh");info.textContent="Lớp "+(profile.class_name||"—")+" • Khóa học đã xuất bản";await Promise.all([load(),loadQuizSummary()])});
-async function load(){const s=window.supabaseClient;const cr=await s.from("classes").select("id").eq("class_name",profile.class_name);if(cr.error||!cr.data.length){empty("Chưa tìm thấy lớp của em.");return}const ids=[];for(const c of cr.data){const r=await s.from("course_classes").select("course_id").eq("class_id",c.id);if(!r.error)r.data.forEach(x=>ids.push(x.course_id))}const unique=[...new Set(ids)];if(!unique.length){empty("Lớp của em chưa được giao khóa học.");return}const co=await s.from("courses").select("*").in("id",unique).eq("is_published",true);if(co.error){empty(co.error.message);return}render(co.data||[])}
-async function loadQuizSummary(){const s=window.supabaseClient;try{const cr=await s.from("classes").select("id").eq("class_name",profile.class_name);if(cr.error||!cr.data?.length){quizSummary.textContent="Chưa có bài kiểm tra được giao.";return}const classIds=cr.data.map(x=>x.id);const ar=await s.from("quiz_assignments").select("id,open_at,close_at,max_attempts").in("class_id",classIds);if(ar.error){quizSummary.textContent="Bấm vào để xem bài kiểm tra.";return}const assignments=ar.data||[];if(!assignments.length){quizSummary.textContent="Chưa có bài kiểm tra được giao.";return}const ids=assignments.map(x=>x.id);const at=await s.from("quiz_attempts").select("assignment_id,score,correct_count,total_questions,submitted_at").eq("student_id",user.id).in("assignment_id",ids).order("submitted_at",{ascending:false});const attempts=at.data||[];const now=Date.now();let available=0,done=0;for(const a of assignments){const used=attempts.filter(x=>x.assignment_id===a.id).length;const open=!a.open_at||new Date(a.open_at).getTime()<=now;const closed=a.close_at&&new Date(a.close_at).getTime()<now;if(used>0)done++;if(open&&!closed&&used<(a.max_attempts||1))available++}const latest=attempts[0];let parts=[];if(available)parts.push(available+" bài đang có thể làm");if(done)parts.push(done+" bài đã nộp");if(latest)parts.push("Điểm gần nhất: "+latest.score+"/10 • đúng "+latest.correct_count+"/"+latest.total_questions);quizSummary.textContent=parts.length?parts.join(" • "):"Không có bài đang mở."}catch(e){quizSummary.textContent="Bấm vào để xem bài kiểm tra."}}
-function empty(t){grid.innerHTML='<div class="empty">'+t+'</div>'}function render(a){grid.innerHTML="";if(!a.length){empty("Chưa có khóa học được xuất bản.");return}a.forEach(c=>{const e=document.createElement("div");e.className="card";e.innerHTML='<div style="font-size:38px">📘</div><div class="title"></div><div class="meta"></div><span class="chip"></span><div style="margin-top:14px"><button class="btn">Vào học →</button></div>';e.querySelector(".title").textContent=c.title;e.querySelector(".meta").textContent=c.description||"";e.querySelector(".chip").textContent=(c.subject||"Môn học")+" • Khối "+c.grade;e.querySelector("button").onclick=()=>location.href="student-course.html?course="+encodeURIComponent(c.id);grid.appendChild(e)})}async function logout(){await window.supabaseClient.auth.signOut();location.href="login.html"}</script></body></html>
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Học sinh V3.0 | CodeHub</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="scripts/supabase-config.js"></script>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f5f7fb;color:#172033}
+header{background:#fff;border-bottom:1px solid #e5e7eb;padding:16px 28px;display:flex;justify-content:space-between;align-items:center;gap:12px;position:sticky;top:0;z-index:20}
+.logo{font-size:28px;font-weight:900;color:#3182f6}.btn{border:0;border-radius:10px;padding:10px 15px;font-weight:800;cursor:pointer;background:#3182f6;color:white;text-decoration:none;display:inline-block}.btn.soft{background:#eef5ff;color:#2563eb}.btn.dark{background:#172033}
+main{max-width:1180px;margin:28px auto;padding:0 20px}h1{font-size:36px;margin:0}.sub{color:#64748b;margin:8px 0 22px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.stat,.panel,.course{background:white;border:1px solid #edf2f7;border-radius:18px;box-shadow:0 5px 18px #0000000d}.stat{padding:18px}.stat .l{color:#64748b}.stat .n{font-size:30px;font-weight:900;margin-top:7px}
+.layout{display:grid;grid-template-columns:1.4fr 1fr;gap:18px;margin-top:18px}.panel{padding:21px}.panel h2{margin:0 0 14px}.list{display:flex;flex-direction:column;gap:10px}.item{border:1px solid #e5e7eb;border-radius:13px;padding:13px}.item b{display:block}.meta{font-size:13px;color:#64748b;margin-top:5px}.pill{display:inline-block;padding:4px 8px;border-radius:999px;background:#ecfdf5;color:#047857;font-size:12px;font-weight:800}.warn{background:#fff7ed;color:#9a3412}.danger{background:#fef2f2;color:#b91c1c}.purple{background:#f5f3ff;color:#6d28d9}
+.courseGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px}.course{padding:18px}.course h3{margin:8px 0}.course p{color:#64748b;font-size:14px;min-height:38px}.chip{display:inline-block;background:#eef5ff;color:#2563eb;padding:5px 9px;border-radius:999px;font-size:12px;font-weight:800;margin:6px 0 12px}
+.empty{color:#64748b;text-align:center;padding:25px}
+@media(max-width:900px){.stats{grid-template-columns:repeat(2,1fr)}.layout{grid-template-columns:1fr}}@media(max-width:600px){header{flex-direction:column;align-items:flex-start}.stats{grid-template-columns:1fr}h1{font-size:30px}}
+</style>
+</head>
+<body>
+<header>
+  <div><div class="logo">&lt;/&gt; CodeHub <span style="font-size:13px;color:#2563eb">V3.0</span></div><div id="who" style="font-size:13px;color:#64748b;margin-top:4px"></div></div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap">
+    <a href="student-quizzes-v4.html" class="btn soft">Bài kiểm tra</a>
+    <button class="btn dark" onclick="logout()">Đăng xuất</button>
+  </div>
+</header>
+
+<main>
+  <h1 id="hello">🎓 Dashboard học sinh</h1>
+  <div class="sub" id="info">Đang tải dữ liệu...</div>
+
+  <section class="stats">
+    <div class="stat"><div class="l">📚 Khóa học</div><div id="stCourses" class="n">—</div></div>
+    <div class="stat"><div class="l">🟢 Bài đang mở</div><div id="stOpen" class="n">—</div></div>
+    <div class="stat"><div class="l">✅ Đã nộp</div><div id="stDone" class="n">—</div></div>
+    <div class="stat"><div class="l">⭐ Điểm gần nhất</div><div id="stScore" class="n">—</div></div>
+  </section>
+
+  <section class="layout">
+    <div class="panel">
+      <h2>🔔 Bài kiểm tra cần chú ý</h2>
+      <div id="assignments" class="list"></div>
+    </div>
+    <div class="panel">
+      <h2>📈 Kết quả gần đây</h2>
+      <div id="results" class="list"></div>
+    </div>
+  </section>
+
+  <section class="panel" style="margin-top:18px">
+    <h2>📚 Khóa học của em</h2>
+    <div id="courses" class="courseGrid"></div>
+  </section>
+</main>
+
+<script>
+const s=window.supabaseClient,$=id=>document.getElementById(id);
+let user,profile,classIds=[],courseIds=[];
+const esc=v=>String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
+const fmt=v=>v?new Date(v).toLocaleString("vi-VN"):"—";
+
+async function init(){
+  try{
+    user=(await s.auth.getUser()).data.user;
+    if(!user)return location.href="login.html";
+
+    const pr=await s.from("profiles").select("full_name,student_code,class_name,role").eq("id",user.id).single();
+    if(pr.error||pr.data?.role!=="student")return location.href="teacher.html";
+    profile=pr.data;
+
+    $("hello").textContent="🎓 Xin chào, "+(profile.full_name||"Học sinh");
+    $("who").textContent=(profile.student_code||"")+" • "+(profile.class_name||"");
+    $("info").textContent="Lớp "+(profile.class_name||"—")+" • Theo dõi khóa học, bài kiểm tra và kết quả";
+
+    await loadClassAndCourses();
+    await loadAssignmentsAndResults();
+  }catch(e){
+    console.error(e);
+    $("info").textContent="❌ "+(e?.message||e);
+  }
+}
+
+async function loadClassAndCourses(){
+  const cr=await s.from("classes").select("id").eq("class_name",profile.class_name);
+  classIds=(cr.data||[]).map(x=>x.id);
+
+  const cc=[];
+  for(const id of classIds){
+    const r=await s.from("course_classes").select("course_id").eq("class_id",id);
+    if(!r.error)(r.data||[]).forEach(x=>cc.push(x.course_id));
+  }
+  courseIds=[...new Set(cc)];
+
+  if(!courseIds.length){
+    $("stCourses").textContent="0";
+    $("courses").innerHTML='<div class="empty">Lớp của em chưa được giao khóa học.</div>';
+    return;
+  }
+
+  const co=await s.from("courses").select("id,title,subject,grade,description,is_published").in("id",courseIds).eq("is_published",true);
+  const rows=co.data||[];
+  $("stCourses").textContent=rows.length;
+  $("courses").innerHTML=rows.map(c=>`
+    <div class="course">
+      <div style="font-size:32px">📘</div>
+      <h3>${esc(c.title)}</h3>
+      <span class="chip">${esc(c.subject||"Môn học")} • Khối ${esc(c.grade||"—")}</span>
+      <p>${esc(c.description||"")}</p>
+      <button class="btn" onclick="location.href='student-course.html?course=${encodeURIComponent(c.id)}'">Vào học →</button>
+    </div>`).join("") || '<div class="empty">Chưa có khóa học được xuất bản.</div>';
+}
+
+async function loadAssignmentsAndResults(){
+  if(!classIds.length){
+    $("assignments").innerHTML='<div class="item">Chưa xác định được lớp.</div>';
+    $("results").innerHTML='<div class="item">Chưa có kết quả.</div>';
+    return;
+  }
+
+  const ar=await s.from("quiz_assignments")
+    .select("id,quiz_id,class_id,open_at,close_at,time_limit,max_attempts,show_result,quizzes(title,course_id)")
+    .in("class_id",classIds)
+    .order("close_at",{ascending:true});
+
+  const assignments=ar.data||[];
+
+  const at=await s.from("quiz_attempts")
+    .select("id,assignment_id,quiz_id,score,correct_count,total_questions,submitted_at")
+    .eq("student_id",user.id)
+    .order("submitted_at",{ascending:false});
+
+  const attempts=at.data||[];
+  const latestByAssignment=new Map();
+  attempts.forEach(x=>{if(x.assignment_id&&!latestByAssignment.has(x.assignment_id))latestByAssignment.set(x.assignment_id,x)});
+
+  const now=Date.now();
+  const open=assignments.filter(x=>{
+    const a=x.open_at?new Date(x.open_at).getTime():-Infinity;
+    const b=x.close_at?new Date(x.close_at).getTime():Infinity;
+    return a<=now&&now<=b;
+  });
+  $("stOpen").textContent=open.length;
+  $("stDone").textContent=new Set(attempts.map(x=>x.assignment_id).filter(Boolean)).size;
+  $("stScore").textContent=attempts.length&&attempts[0].score!=null?attempts[0].score+"/10":"—";
+
+  const priority=[...assignments].sort((a,b)=>{
+    const ao=a.close_at?new Date(a.close_at).getTime():Infinity;
+    const bo=b.close_at?new Date(b.close_at).getTime():Infinity;
+    return ao-bo;
+  });
+
+  $("assignments").innerHTML=priority.slice(0,8).map(x=>{
+    const a=x.open_at?new Date(x.open_at).getTime():-Infinity;
+    const b=x.close_at?new Date(x.close_at).getTime():Infinity;
+    const isOpen=a<=now&&now<=b;
+    const done=latestByAssignment.get(x.id);
+    const soon=isOpen&&x.close_at&&(b-now)<=48*3600000;
+    const status=done?`<span class="pill">Đã nộp ${esc(done.score??"—")}/10</span>`
+      : isOpen?(soon?'<span class="pill warn">Sắp hết hạn</span>':'<span class="pill purple">Đang mở</span>')
+      : now<a?'<span class="pill purple">Chưa mở</span>':'<span class="pill danger">Đã đóng</span>';
+    const action=isOpen?`<div style="margin-top:9px"><a class="btn" href="student-quiz-v4.html?assignment=${encodeURIComponent(x.id)}">${done?"Làm lại":"Làm bài"} →</a></div>`:"";
+    return `<div class="item">${status}<b>${esc(x.quizzes?.title||"Quiz")}</b><div class="meta">Mở: ${fmt(x.open_at)}<br>Đóng: ${fmt(x.close_at)} • ${esc(x.time_limit||"—")} phút</div>${action}</div>`;
+  }).join("") || '<div class="item">Chưa có bài kiểm tra được giao.</div>';
+
+  $("results").innerHTML=attempts.slice(0,7).map(x=>{
+    const ass=assignments.find(a=>a.id===x.assignment_id);
+    const title=ass?.quizzes?.title||"Quiz";
+    const link=ass?.show_result?`<div style="margin-top:8px"><a class="btn soft" href="student-quiz-result-v4-2.html?assignment=${encodeURIComponent(x.assignment_id)}">Xem chi tiết</a></div>`:"";
+    return `<div class="item"><b>${esc(title)}</b><div class="meta">Điểm <b>${esc(x.score??"—")}/10</b> • Đúng ${esc(x.correct_count??"—")}/${esc(x.total_questions??"—")}<br>${fmt(x.submitted_at)}</div>${link}</div>`;
+  }).join("") || '<div class="item">Em chưa nộp bài kiểm tra nào.</div>';
+}
+
+async function logout(){await s.auth.signOut();location.href="login.html"}
+init();
+</script>
+</body></html>
