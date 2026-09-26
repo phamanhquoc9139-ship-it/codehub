@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hệ thống V2.8 | CodeHub</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="scripts/supabase-config.js"></script>
+</head>
+<body class="bg-slate-50 text-slate-900">
+<header class="bg-white border-b sticky top-0 z-20">
+  <div class="max-w-7xl mx-auto px-5 py-4 flex flex-wrap gap-3 justify-between items-center">
+    <div><div class="text-2xl font-black text-blue-600">&lt;/&gt; CodeHub</div><div class="text-sm text-slate-500">V2.8 • Nhật ký • Sao lưu • Khôi phục an toàn</div></div>
+    <div class="flex gap-2"><a href="teacher.html" class="border bg-white px-4 py-2 rounded-xl font-bold">← Dashboard</a><button id="logout" class="bg-slate-900 text-white px-4 py-2 rounded-xl font-bold">Đăng xuất</button></div>
+  </div>
+</header>
+
+<main class="max-w-7xl mx-auto p-5">
+  <div id="msg" class="hidden mb-4 p-4 rounded-xl"></div>
+
+  <section class="grid md:grid-cols-4 gap-4 mb-5">
+    <div class="bg-white rounded-2xl shadow p-5"><div class="text-slate-500">Tổng nhật ký</div><div id="totalLogs" class="text-3xl font-black mt-1">—</div></div>
+    <div class="bg-white rounded-2xl shadow p-5"><div class="text-slate-500">Hôm nay</div><div id="todayLogs" class="text-3xl font-black mt-1 text-blue-600">—</div></div>
+    <div class="bg-white rounded-2xl shadow p-5"><div class="text-slate-500">7 ngày</div><div id="weekLogs" class="text-3xl font-black mt-1 text-violet-600">—</div></div>
+    <div class="bg-white rounded-2xl shadow p-5"><div class="text-slate-500">Trạng thái</div><div class="text-xl font-black mt-2 text-emerald-600">● V2.8 hoạt động</div></div>
+  </section>
+
+  <div class="grid lg:grid-cols-3 gap-5">
+    <section class="lg:col-span-2 bg-white rounded-2xl shadow overflow-hidden">
+      <div class="p-5 border-b">
+        <div class="flex flex-wrap gap-3 justify-between items-end">
+          <div><h1 class="text-2xl font-black">🧾 Nhật ký hệ thống</h1><p class="text-slate-500 text-sm">Theo dõi thay đổi dữ liệu quan trọng.</p></div>
+          <div class="flex flex-wrap gap-2">
+            <select id="tableFilter" class="border rounded-xl p-2"><option value="">Tất cả bảng</option></select>
+            <select id="actionFilter" class="border rounded-xl p-2"><option value="">Tất cả thao tác</option><option>INSERT</option><option>UPDATE</option><option>DELETE</option><option>RESTORE_MERGE</option></select>
+            <button id="reload" class="bg-blue-600 text-white rounded-xl px-4 py-2 font-bold">Làm mới</button>
+          </div>
+        </div>
+      </div>
+      <div class="overflow-auto max-h-[650px]">
+        <table class="w-full text-sm min-w-[850px]">
+          <thead class="bg-slate-100 sticky top-0"><tr><th class="p-3 text-left">Thời gian</th><th class="p-3 text-left">Người thực hiện</th><th class="p-3 text-left">Thao tác</th><th class="p-3 text-left">Bảng</th><th class="p-3 text-left">ID</th><th class="p-3 text-left">Nguồn</th></tr></thead>
+          <tbody id="logs"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <aside class="space-y-5">
+      <section class="bg-white rounded-2xl shadow p-5">
+        <h2 class="text-xl font-black">💾 Sao lưu JSON</h2>
+        <p class="text-sm text-slate-500 mt-1">Tải toàn bộ dữ liệu ứng dụng về máy. Không chứa mật khẩu Supabase Auth.</p>
+        <button id="backupBtn" class="mt-4 w-full bg-emerald-600 text-white p-3 rounded-xl font-bold">⬇ Tạo & tải Backup</button>
+        <div id="backupInfo" class="mt-3 text-sm text-slate-600"></div>
+      </section>
+
+      <section class="bg-white rounded-2xl shadow p-5">
+        <h2 class="text-xl font-black">♻️ Khôi phục an toàn</h2>
+        <p class="text-sm text-slate-500 mt-1"><b>MERGE:</b> thêm/cập nhật theo ID, không xóa dữ liệu hiện có.</p>
+        <input id="restoreFile" type="file" accept=".json,application/json" class="mt-4 w-full border rounded-xl p-3">
+        <button id="previewBtn" class="mt-3 w-full border border-blue-600 text-blue-700 p-3 rounded-xl font-bold">🔎 Kiểm tra file</button>
+        <div id="previewBox" class="mt-3 text-sm"></div>
+        <label class="block mt-4 text-sm font-bold">Nhập RESTORE để xác nhận</label>
+        <input id="confirmText" class="mt-1 w-full border rounded-xl p-3" placeholder="RESTORE">
+        <button id="restoreBtn" class="mt-3 w-full bg-orange-600 text-white p-3 rounded-xl font-bold">♻️ Khôi phục MERGE</button>
+      </section>
+
+      <section class="bg-amber-50 border border-amber-200 rounded-2xl p-5 text-sm text-amber-900">
+        <b>Lưu ý:</b> Backup V2.8 bảo vệ dữ liệu ứng dụng (lớp, môn, khóa học, bài học, Quiz, câu hỏi, kết quả...). Nó không chứa mật khẩu hoặc hash mật khẩu. Nếu Auth user bị xóa, cần tạo lại tài khoản Auth trước khi phục hồi các bản ghi liên quan.
+      </section>
+    </aside>
+  </div>
+</main>
+
+<script>
+const s=window.supabaseClient,$=id=>document.getElementById(id);
+const ENDPOINT="https://drfcejvmyhzorwepndta.supabase.co/functions/v1/admin-backup";
+let me=null, logsData=[], profileMap={}, currentBackup=null;
+
+function esc(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}
+function show(t,ok=false){$("msg").className="mb-4 p-4 rounded-xl "+(ok?"bg-emerald-50 text-emerald-700":"bg-red-50 text-red-700");$("msg").textContent=t}
+function fmt(v){return v?new Date(v).toLocaleString("vi-VN"):"—"}
+function short(v){v=String(v||"");return v.length>18?v.slice(0,8)+"…"+v.slice(-6):v||"—"}
+
+async function session(){
+  const {data:{session}}=await s.auth.getSession();
+  if(!session){location.href="login.html";throw new Error("Chưa đăng nhập")}
+  return session;
+}
+async function api(method,body){
+  const se=await session();
+  const r=await fetch(ENDPOINT,{method,headers:{Authorization:`Bearer ${se.access_token}`,"Content-Type":"application/json"},body:body?JSON.stringify(body):undefined});
+  const j=await r.json().catch(()=>({}));
+  if(!r.ok)throw new Error(j.error||`HTTP ${r.status}`);
+  return j;
+}
+async function requireAdmin(){
+  me=(await s.auth.getUser()).data.user;
+  if(!me)return location.href="login.html";
+  const p=await s.from("profiles").select("role,full_name").eq("id",me.id).single();
+  if(p.error||String(p.data?.role||"").toLowerCase()!=="admin"){location.href="403.html?reason="+encodeURIComponent("Chỉ Admin được truy cập Nhật ký & Sao lưu.");throw new Error("No admin")}
+}
+async function loadStats(){
+  const now=new Date(), startToday=new Date(now);startToday.setHours(0,0,0,0);
+  const week=new Date(now.getTime()-7*86400000);
+  const [a,b,c]=await Promise.all([
+    s.from("audit_logs").select("id",{count:"exact",head:true}),
+    s.from("audit_logs").select("id",{count:"exact",head:true}).gte("created_at",startToday.toISOString()),
+    s.from("audit_logs").select("id",{count:"exact",head:true}).gte("created_at",week.toISOString())
+  ]);
+  $("totalLogs").textContent=a.count??0;$("todayLogs").textContent=b.count??0;$("weekLogs").textContent=c.count??0;
+}
+async function loadLogs(){
+  let q=s.from("audit_logs").select("*").order("created_at",{ascending:false}).limit(300);
+  if($("tableFilter").value)q=q.eq("entity_table",$("tableFilter").value);
+  if($("actionFilter").value)q=q.eq("action",$("actionFilter").value);
+  const r=await q;if(r.error){show(r.error.message);return}
+  logsData=r.data||[];
+  const ids=[...new Set(logsData.map(x=>x.actor_id).filter(Boolean))];
+  profileMap={};
+  if(ids.length){
+    const p=await s.from("profiles").select("id,full_name,student_code,role").in("id",ids);
+    (p.data||[]).forEach(x=>profileMap[x.id]=x);
+  }
+  const tables=[...new Set(logsData.map(x=>x.entity_table).filter(Boolean))].sort();
+  const current=$("tableFilter").value;
+  $("tableFilter").innerHTML='<option value="">Tất cả bảng</option>'+tables.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join("");
+  $("tableFilter").value=current;
+  renderLogs();
+}
+function renderLogs(){
+  $("logs").innerHTML=logsData.map(x=>{
+    const p=profileMap[x.actor_id];
+    const actor=p?(p.full_name||p.student_code||short(x.actor_id)):(x.actor_role==="system"?"Hệ thống":short(x.actor_id));
+    const source=x.metadata?.actor_source||x.metadata?.source||"—";
+    const ac=x.action==="DELETE"?"text-red-600":x.action==="INSERT"?"text-emerald-700":x.action==="UPDATE"?"text-blue-700":"text-orange-700";
+    return `<tr class="border-t"><td class="p-3 whitespace-nowrap">${fmt(x.created_at)}</td><td class="p-3"><b>${esc(actor)}</b><div class="text-xs text-slate-400">${esc(x.actor_role||"—")}</div></td><td class="p-3 font-bold ${ac}">${esc(x.action)}</td><td class="p-3">${esc(x.entity_table)}</td><td class="p-3 font-mono text-xs">${esc(short(x.entity_id))}</td><td class="p-3 text-xs">${esc(source)}</td></tr>`
+  }).join("")||'<tr><td colspan="6" class="p-8 text-center text-slate-500">Chưa có nhật ký phù hợp.</td></tr>';
+}
+function downloadJson(obj){
+  const d=new Date(), pad=n=>String(n).padStart(2,"0");
+  const name=`CodeHub_backup_${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}_${pad(d.getHours())}-${pad(d.getMinutes())}.json`;
+  const url=URL.createObjectURL(new Blob([JSON.stringify(obj,null,2)],{type:"application/json"}));
+  const a=document.createElement("a");a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+async function readFile(){
+  const f=$("restoreFile").files?.[0];if(!f)throw new Error("Chưa chọn file backup JSON.");
+  return JSON.parse(await f.text());
+}
+$("backupBtn").onclick=async()=>{try{$("backupBtn").disabled=true;$("backupBtn").textContent="Đang tạo backup...";const b=await api("GET");currentBackup=b;downloadJson(b);$("backupInfo").textContent=`Backup ${b.created_at||""} • ${Object.values(b.counts||{}).reduce((a,v)=>a+(+v||0),0)} bản ghi`;show("Đã tạo và tải file backup.",true)}catch(e){show(e.message)}finally{$("backupBtn").disabled=false;$("backupBtn").textContent="⬇ Tạo & tải Backup"}};
+$("previewBtn").onclick=async()=>{try{const b=await readFile();currentBackup=b;const r=await api("POST",{action:"preview",backup:b});$("previewBox").innerHTML=`<div class="bg-blue-50 text-blue-800 p-3 rounded-xl"><b>File hợp lệ.</b><br>Phiên bản: ${esc(r.version||"—")}<br>Ngày tạo: ${esc(r.created_at||"—")}<br>Tổng bản ghi: ${Object.values(r.counts||{}).reduce((a,v)=>a+(+v||0),0)}</div>`}catch(e){$("previewBox").innerHTML=`<div class="bg-red-50 text-red-700 p-3 rounded-xl">${esc(e.message)}</div>`}};
+$("restoreBtn").onclick=async()=>{try{if($("confirmText").value.trim()!=="RESTORE")throw new Error("Hãy nhập chính xác RESTORE để xác nhận.");const b=currentBackup||await readFile();if(!confirm("Khôi phục MERGE từ file này? Hệ thống sẽ thêm/cập nhật dữ liệu theo ID và KHÔNG xóa dữ liệu hiện có."))return;$("restoreBtn").disabled=true;$("restoreBtn").textContent="Đang khôi phục...";const r=await api("POST",{action:"restore",confirm:"RESTORE",backup:b});const failed=Object.entries(r.report||{}).filter(([k,v])=>!v.ok);if(failed.length)show("Khôi phục xong nhưng có bảng lỗi: "+failed.map(x=>x[0]).join(", "));else show("Khôi phục MERGE hoàn tất.",true);await loadStats();await loadLogs()}catch(e){show(e.message)}finally{$("restoreBtn").disabled=false;$("restoreBtn").textContent="♻️ Khôi phục MERGE"}};
+$("reload").onclick=async()=>{await loadStats();await loadLogs()};
+$("tableFilter").onchange=loadLogs;$("actionFilter").onchange=loadLogs;
+$("logout").onclick=async()=>{await s.auth.signOut();location.href="login.html"};
+
+(async()=>{try{await requireAdmin();await loadStats();await loadLogs()}catch(e){console.error(e)}})();
+</script>
+</body></html>
