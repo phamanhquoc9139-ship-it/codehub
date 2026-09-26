@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Hồ sơ bài kiểm tra V3.5.1 | CodeHub</title>
+<title>Hồ sơ bài kiểm tra V3.5.3 | CodeHub</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
@@ -39,9 +39,9 @@
       <div>
         <div class="flex items-center gap-3">
           <h1 id="pageTitle" class="text-3xl font-black">🗂️ Hồ sơ bài kiểm tra</h1>
-          <span class="px-2 py-1 text-xs rounded-full bg-violet-100 text-violet-700 font-black">V3.5.1</span>
+          <span class="px-2 py-1 text-xs rounded-full bg-violet-100 text-violet-700 font-black">V3.5.3</span>
         </div>
-        <p class="text-slate-500 mt-1">Xuất hồ sơ giấy/PDF toàn lớp và bài làm chi tiết từng học sinh.</p>
+        <p class="text-slate-500 mt-1">Hồ sơ giấy/PDF theo trường, tổ chuyên môn, năm học lịch sử và thời gian giao bài.</p>
       </div>
       <div class="flex flex-wrap gap-2">
         <button id="printBtn" class="bg-blue-600 text-white px-4 py-2 rounded-xl font-bold">🖨 In trực tiếp</button>
@@ -78,6 +78,35 @@
 
         <button id="reloadBtn" class="bg-slate-900 text-white rounded-xl py-2.5 font-bold">Làm mới</button>
       </div>
+
+      <div id="metaPanel" class="hidden mt-4 pt-4 border-t">
+        <div class="grid md:grid-cols-3 gap-3">
+          <label class="font-bold">
+            Trường
+            <div class="flex gap-2 mt-1">
+              <select id="schoolSelect" class="min-w-0 flex-1 border rounded-xl p-2"></select>
+              <button id="addSchoolBtn" type="button" class="shrink-0 border rounded-xl px-3 font-bold">+ Trường</button>
+            </div>
+          </label>
+          <div class="rounded-xl bg-slate-50 p-3"><div class="text-xs text-slate-500">Tổ chuyên môn</div><div id="departmentView" class="font-bold">—</div></div>
+          <div class="rounded-xl bg-slate-50 p-3"><div class="text-xs text-slate-500">Năm học</div><div id="schoolYearView" class="font-bold">—</div></div>
+          <div class="rounded-xl bg-slate-50 p-3"><div class="text-xs text-slate-500">Giáo viên bộ môn</div><div id="teacherView" class="font-bold">—</div></div>
+          <div class="rounded-xl bg-slate-50 p-3"><div class="text-xs text-slate-500">Bắt đầu kiểm tra</div><div id="startView" class="font-bold">—</div></div>
+          <div class="rounded-xl bg-slate-50 p-3"><div class="text-xs text-slate-500">Kết thúc kiểm tra</div><div id="endView" class="font-bold">—</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="schoolModal" class="hidden fixed inset-0 z-50 bg-black/40 p-4">
+      <div class="max-w-md mx-auto mt-24 bg-white rounded-2xl shadow-xl p-5">
+        <h2 class="text-xl font-black">Thêm trường mới</h2>
+        <p class="text-sm text-slate-500 mt-1">Tên trường sẽ được lưu để dùng cho các hồ sơ sau.</p>
+        <input id="newSchoolName" class="w-full border rounded-xl p-3 mt-4" placeholder="Ví dụ: TRƯỜNG THPT ...">
+        <div class="flex justify-end gap-2 mt-4">
+          <button id="cancelSchoolBtn" class="border rounded-xl px-4 py-2">Hủy</button>
+          <button id="saveSchoolBtn" class="bg-blue-600 text-white rounded-xl px-4 py-2 font-bold">Lưu trường</button>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -90,7 +119,7 @@ const s=window.supabaseClient;
 const $=x=>document.getElementById(x);
 const qid=new URLSearchParams(location.search).get("quiz");
 
-let me,role,quiz=null,assignments=[],questions=[],attempts=[],students=[],teacherProfile=null;
+let me,role,quiz=null,assignments=[],questions=[],attempts=[],students=[],teacherProfile=null,schools=[],dossierMeta=null;
 let currentClassId="", currentClassName="", printRows=[];
 
 const esc=v=>String(v??"").replace(/[&<>"']/g,m=>({
@@ -133,7 +162,7 @@ async function init(){
 
     const [ar,qq,at,tp]=await Promise.all([
       s.from("quiz_assignments")
-        .select("id,class_id,open_at,close_at,max_attempts,time_limit,classes(class_name)")
+        .select("id,class_id,open_at,close_at,max_attempts,time_limit,school_id,school_year,classes(class_name)")
         .eq("quiz_id",qid),
 
       s.from("quiz_questions")
@@ -154,6 +183,10 @@ async function init(){
     questions=qq.data||[];
     attempts=at.data||[];
     teacherProfile=tp.data||{};
+
+    const sr=await s.rpc("codehub_v353_schools");
+    if(sr.error)throw new Error("V3.5.3 chưa cài SQL hoặc không đọc được danh sách trường: "+sr.error.message);
+    schools=sr.data||[];
 
     const unique=[];
     const seen=new Set();
@@ -203,6 +236,45 @@ function latestAttemptsForClass(classAssignmentIds){
   return map;
 }
 
+
+async function loadDossierMeta(){
+  if(!currentClassId){ dossierMeta=null; return; }
+  const r=await s.rpc("codehub_v353_dossier_meta",{p_quiz:qid,p_class:currentClassId});
+  if(r.error)throw r.error;
+  dossierMeta=(r.data||[])[0]||null;
+
+  if(!dossierMeta){
+    throw new Error("Không lấy được thông tin hồ sơ của lớp này.");
+  }
+
+  $("metaPanel").classList.remove("hidden");
+  $("departmentView").textContent=dossierMeta.department_name||"—";
+  $("schoolYearView").textContent=dossierMeta.school_year||"—";
+  $("teacherView").textContent=dossierMeta.teacher_name||"—";
+  $("startView").textContent=fmt(dossierMeta.open_at);
+  $("endView").textContent=fmt(dossierMeta.close_at);
+
+  $("schoolSelect").innerHTML=schools.map(x =>
+    `<option value="${x.id}">${esc(x.school_name)}${x.is_default?" (mặc định)":""}</option>`
+  ).join("");
+
+  if(dossierMeta.school_id)$("schoolSelect").value=dossierMeta.school_id;
+}
+
+function examDateText(){
+  if(!dossierMeta)return "—";
+  const a=dossierMeta.open_at?new Date(dossierMeta.open_at):null;
+  const b=dossierMeta.close_at?new Date(dossierMeta.close_at):null;
+  if(!a && !b)return "—";
+  if(a && b){
+    const da=a.toLocaleDateString("vi-VN");
+    const db=b.toLocaleDateString("vi-VN");
+    if(da===db)return da;
+    return `${da} - ${db}`;
+  }
+  return (a||b).toLocaleDateString("vi-VN");
+}
+
 async function render(){
   try{
     currentClassId=$("classFilter").value;
@@ -213,6 +285,7 @@ async function render(){
 
     const classAssignments=assignments.filter(a=>a.class_id===currentClassId);
     currentClassName=classAssignments[0]?.classes?.class_name||"";
+    await loadDossierMeta();
     students=await getStudents(currentClassName);
 
     const assignmentIds=classAssignments.map(a=>a.id);
@@ -263,16 +336,20 @@ function optionText(q,k){
 }
 
 function coverHtml(doneCount,total,avg){
-  const subject=quiz?.courses?.subject||"Môn học";
+  const subject=dossierMeta?.subject_name||quiz?.courses?.subject||"Môn học";
   const grade=quiz?.courses?.grade||"";
-  const dateCandidates=printRows.filter(x=>x.attempt?.submitted_at).map(x=>x.attempt.submitted_at);
-  const testDate=dateCandidates.length?fmtDate(dateCandidates[0]):"—";
+  const testDate=examDateText();
+  const schoolName=dossierMeta?.school_name||"TRƯỜNG THPT PHÚ HÒA";
+  const department=dossierMeta?.department_name||("Tổ "+subject);
+  const schoolYear=dossierMeta?.school_year||"—";
+  const subjectTeacher=dossierMeta?.teacher_name||teacherProfile?.full_name||"—";
 
   return `
   <section class="sheet p-8 min-h-[270mm] flex flex-col justify-between">
     <div>
       <div class="text-center">
-        <div class="font-bold text-lg">TRƯỜNG THPT PHÚ HÒA</div>
+        <div class="font-bold text-lg">${esc(schoolName)}</div>
+        <div class="mt-1 font-semibold">${esc(department)}</div>
         <div class="mt-1">HỒ SƠ BÀI KIỂM TRA TRÊN HỆ THỐNG CODEHUB</div>
         <div class="mt-8 text-2xl font-black uppercase">${esc(quiz.title)}</div>
         <div class="mt-2 text-lg">${esc(subject)} ${grade?`• Khối ${esc(grade)}`:""}</div>
@@ -280,9 +357,14 @@ function coverHtml(doneCount,total,avg){
 
       <div class="mt-12 border rounded-xl p-5 leading-8">
         <div><b>Lớp:</b> ${esc(currentClassName)}</div>
-        <div><b>Giáo viên:</b> ${esc(teacherProfile?.full_name||"—")}</div>
+        <div><b>Năm học:</b> ${esc(schoolYear)}</div>
+        <div><b>Môn học:</b> ${esc(subject)}</div>
+        <div><b>Tổ chuyên môn:</b> ${esc(department)}</div>
+        <div><b>Giáo viên bộ môn:</b> ${esc(subjectTeacher)}</div>
         <div><b>Ngày kiểm tra:</b> ${esc(testDate)}</div>
-        <div><b>Thời lượng:</b> ${esc(quiz.time_limit||classAssignmentsTime())} phút</div>
+        <div><b>Bắt đầu kiểm tra:</b> ${fmt(dossierMeta?.open_at)}</div>
+        <div><b>Kết thúc kiểm tra:</b> ${fmt(dossierMeta?.close_at)}</div>
+        <div><b>Thời lượng:</b> ${esc(dossierMeta?.time_limit||quiz.time_limit||classAssignmentsTime())} phút</div>
         <div><b>Số câu:</b> ${questions.length}</div>
         <div><b>Sĩ số:</b> ${total}</div>
         <div><b>Đã làm:</b> ${doneCount}</div>
@@ -393,7 +475,8 @@ function studentPaperHtml(row,index){
   return `
   <section class="sheet p-6 page-break">
     <div class="text-center">
-      <div class="font-bold">TRƯỜNG THPT PHÚ HÒA</div>
+      <div class="font-bold">${esc(dossierMeta?.school_name||"TRƯỜNG THPT PHÚ HÒA")}</div>
+      <div class="text-sm font-semibold">${esc(dossierMeta?.department_name||"")}</div>
       <div class="font-black text-xl mt-2">BÀI LÀM TRẮC NGHIỆM TRÊN CODEHUB</div>
       <div class="font-bold mt-1">${esc(quiz.title)}</div>
     </div>
@@ -402,6 +485,8 @@ function studentPaperHtml(row,index){
       <div><b>Họ và tên:</b> ${esc(st.full_name||"—")}</div>
       <div><b>Mã HS:</b> ${esc(st.student_code||"—")}</div>
       <div><b>Lớp:</b> ${esc(st.class_name||currentClassName)}</div>
+      <div><b>Năm học:</b> ${esc(dossierMeta?.school_year||"—")}</div>
+      <div><b>Giáo viên bộ môn:</b> ${esc(dossierMeta?.teacher_name||teacherProfile?.full_name||"—")}</div>
       <div><b>Lần làm:</b> ${round}</div>
       <div><b>Bắt đầu:</b> ${fmt(a.started_at)}</div>
       <div><b>Nộp lúc:</b> ${fmt(a.submitted_at)}</div>
@@ -414,7 +499,7 @@ function studentPaperHtml(row,index){
 
     <div class="grid grid-cols-2 gap-16 mt-8 text-center avoid-break">
       <div><b>HỌC SINH</b><div class="mt-14">(Ký, ghi rõ họ tên)</div></div>
-      <div><b>GIÁO VIÊN</b><div class="mt-14">${esc(teacherProfile?.full_name||"")}</div></div>
+      <div><b>GIÁO VIÊN BỘ MÔN</b><div class="mt-14">${esc(dossierMeta?.teacher_name||teacherProfile?.full_name||"")}</div></div>
     </div>
   </section>`;
 }
@@ -429,6 +514,50 @@ function renderPrintArea(){
     summaryHtml()+
     printRows.map(studentPaperHtml).join("");
 }
+
+
+$("addSchoolBtn").onclick=()=>{
+  $("newSchoolName").value="";
+  $("schoolModal").classList.remove("hidden");
+  setTimeout(()=>$("newSchoolName").focus(),50);
+};
+$("cancelSchoolBtn").onclick=()=>$("schoolModal").classList.add("hidden");
+$("schoolModal").onclick=e=>{if(e.target===$("schoolModal"))$("schoolModal").classList.add("hidden")};
+
+$("saveSchoolBtn").onclick=async()=>{
+  const name=$("newSchoolName").value.trim();
+  if(!name)return alert("Nhập tên trường.");
+  const b=$("saveSchoolBtn"),old=b.textContent;
+  b.disabled=true;b.textContent="Đang lưu...";
+  try{
+    const r=await s.rpc("codehub_v353_add_school",{p_school_name:name});
+    if(r.error)throw r.error;
+    const sr=await s.rpc("codehub_v353_schools");
+    if(sr.error)throw sr.error;
+    schools=sr.data||[];
+    $("schoolModal").classList.add("hidden");
+    await loadDossierMeta();
+    $("schoolSelect").value=r.data;
+    $("schoolSelect").dispatchEvent(new Event("change"));
+  }catch(e){ alert(e?.message||e); }
+  finally{ b.disabled=false;b.textContent=old; }
+};
+
+$("schoolSelect").onchange=async()=>{
+  if(!dossierMeta?.assignment_id || !$("schoolSelect").value)return;
+  const old=$("schoolSelect").disabled;
+  $("schoolSelect").disabled=true;
+  try{
+    const r=await s.rpc("codehub_v353_set_assignment_school",{
+      p_assignment:dossierMeta.assignment_id,
+      p_school:$("schoolSelect").value
+    });
+    if(r.error)throw r.error;
+    await loadDossierMeta();
+    renderPrintArea();
+  }catch(e){ alert(e?.message||e); }
+  finally{ $("schoolSelect").disabled=false; }
+};
 
 $("classFilter").onchange=render;
 $("attemptMode").onchange=render;
