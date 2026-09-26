@@ -1,12 +1,210 @@
-<!doctype html><html lang="vi"><head><meta charset="utf-8"><title>Làm Quiz V3.0.1 | CodeHub</title><script src="https://cdn.tailwindcss.com"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="scripts/supabase-config.js"></script></head><body class="bg-slate-50"><main class="max-w-4xl mx-auto p-5"><div class="sticky top-0 z-10 bg-white shadow rounded-2xl p-4 mb-5 flex justify-between"><div><h1 id="h" class="font-bold text-xl">Bài kiểm tra</h1><p id="info" class="text-sm text-slate-500"></p></div><div id="timer" class="text-2xl font-bold text-red-600">--:--</div></div><form id="form"><div id="list" class="space-y-4"></div><button id="submit" class="w-full mt-5 bg-emerald-600 text-white p-4 rounded-xl font-bold">Nộp bài</button></form></main><script>
-const s=window.supabaseClient,$=x=>document.getElementById(x),aid=new URLSearchParams(location.search).get("assignment");let me,asg,qs=[],started,tick;
-const esc=v=>String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Làm Quiz V3.1 | CodeHub</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="scripts/supabase-config.js"></script>
+<style>
+  html{scroll-behavior:smooth}
+  .opt:has(input:checked){border-color:#2563eb;background:#eff6ff;box-shadow:0 0 0 2px #bfdbfe inset}
+  .qnav.done{background:#16a34a;color:white;border-color:#16a34a}
+  .qnav.current{box-shadow:0 0 0 3px #bfdbfe}
+  .timer-warn{color:#ea580c!important}
+  .timer-danger{color:#dc2626!important;animation:pulse 1s infinite}
+  @keyframes pulse{50%{opacity:.45}}
+</style>
+</head>
+
+<body class="bg-slate-50 text-slate-900">
+<main class="max-w-6xl mx-auto p-4 md:p-6">
+
+  <section class="sticky top-0 z-30 bg-slate-50/95 backdrop-blur pt-1 pb-3">
+    <div class="bg-white shadow rounded-2xl p-4">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <div class="flex items-center gap-3">
+            <h1 id="h" class="font-black text-2xl">Bài kiểm tra</h1>
+            <span class="px-2 py-1 text-xs font-bold rounded-full bg-violet-100 text-violet-700">V3.1</span>
+          </div>
+          <p id="info" class="text-sm text-slate-500 mt-1"></p>
+        </div>
+
+        <div class="flex items-center gap-4">
+          <div class="text-right">
+            <div class="text-xs text-slate-500">Thời gian còn lại</div>
+            <div id="timer" class="text-3xl font-black text-red-600">--:--</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-4">
+        <div class="flex justify-between text-sm mb-2">
+          <b id="progressText">Đã làm 0/0 câu</b>
+          <span id="saveState" class="text-slate-500">Chưa lưu tạm</span>
+        </div>
+        <div class="w-full h-3 bg-slate-200 rounded-full overflow-hidden">
+          <div id="progressBar" class="h-full bg-blue-600 transition-all" style="width:0%"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="grid lg:grid-cols-[1fr_260px] gap-5">
+    <form id="form">
+      <div id="list" class="space-y-4"></div>
+
+      <div class="sticky bottom-3 z-20 mt-5">
+        <button id="submit"
+          class="w-full bg-emerald-600 hover:bg-emerald-700 text-white p-4 rounded-2xl font-black text-lg shadow-lg">
+          ✅ Nộp bài
+        </button>
+      </div>
+    </form>
+
+    <aside class="lg:sticky lg:top-40 lg:self-start">
+      <div class="bg-white shadow rounded-2xl p-4">
+        <h2 class="font-black text-lg mb-3">🧭 Điều hướng câu hỏi</h2>
+        <div id="qnav" class="grid grid-cols-5 gap-2"></div>
+
+        <div class="mt-4 text-sm text-slate-600 space-y-2">
+          <div><span class="inline-block w-4 h-4 rounded bg-green-600 align-middle mr-2"></span>Đã trả lời</div>
+          <div><span class="inline-block w-4 h-4 rounded border bg-white align-middle mr-2"></span>Chưa trả lời</div>
+        </div>
+
+        <button id="clearDraft" type="button"
+          class="w-full mt-5 border border-red-200 text-red-600 p-2 rounded-xl font-bold hover:bg-red-50">
+          Xóa đáp án tạm
+        </button>
+      </div>
+    </aside>
+  </section>
+
+</main>
+
+<script>
+const s=window.supabaseClient;
+const $=x=>document.getElementById(x);
+const aid=new URLSearchParams(location.search).get("assignment");
+
+let me,asg,qs=[],started,tick;
+let storageKey="", startKey="";
+let submitting=false;
+
+const esc=v=>String(v??"").replace(/[&<>"']/g,m=>({
+  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+}[m]));
+
+function getAnswers(){
+  const ans={};
+  qs.forEach(q=>{
+    const x=document.querySelector(`input[name="q_${q.id}"]:checked`);
+    if(x)ans[q.id]=x.value;
+  });
+  return ans;
+}
+
+function answeredCount(){
+  return Object.keys(getAnswers()).length;
+}
+
+function updateProgress(){
+  const done=answeredCount();
+  const total=qs.length||0;
+  $("progressText").textContent=`Đã làm ${done}/${total} câu`;
+  $("progressBar").style.width=total?`${done/total*100}%`:"0%";
+
+  qs.forEach((q,i)=>{
+    const b=document.querySelector(`[data-qnav="${q.id}"]`);
+    if(!b)return;
+    const checked=document.querySelector(`input[name="q_${q.id}"]:checked`);
+    b.classList.toggle("done",!!checked);
+  });
+}
+
+function saveDraft(){
+  if(!storageKey)return;
+  const payload={
+    answers:getAnswers(),
+    saved_at:new Date().toISOString()
+  };
+  localStorage.setItem(storageKey,JSON.stringify(payload));
+  $("saveState").textContent="Đã lưu tạm • "+new Date().toLocaleTimeString("vi-VN");
+}
+
+function restoreDraft(){
+  try{
+    const raw=localStorage.getItem(storageKey);
+    if(!raw)return;
+    const payload=JSON.parse(raw);
+    const ans=payload?.answers||{};
+    Object.entries(ans).forEach(([qid,val])=>{
+      const el=document.querySelector(`input[name="q_${qid}"][value="${val}"]`);
+      if(el)el.checked=true;
+    });
+    $("saveState").textContent="Đã khôi phục đáp án tạm";
+    updateProgress();
+  }catch(e){
+    console.warn("restore draft:",e);
+  }
+}
+
+function clearDraft(){
+  localStorage.removeItem(storageKey);
+  localStorage.removeItem(startKey);
+}
+
+function scrollToQuestion(index){
+  const el=document.getElementById(`question_${index}`);
+  if(el)el.scrollIntoView({behavior:"smooth",block:"center"});
+}
+
+function renderQuestions(){
+  $("list").innerHTML=qs.map((x,i)=>`
+    <section id="question_${i}" class="bg-white shadow rounded-2xl p-5 border border-slate-100">
+      <div class="flex gap-3">
+        <span class="shrink-0 w-9 h-9 rounded-full bg-blue-100 text-blue-700 font-black flex items-center justify-center">${i+1}</span>
+        <div class="font-bold text-lg leading-relaxed">${esc(x.question_text)}</div>
+      </div>
+
+      <div class="mt-4">
+        ${["A","B","C","D"].map(k=>`
+          <label class="opt block border rounded-xl p-3 mb-2 cursor-pointer hover:bg-blue-50 transition">
+            <input class="mr-2" type="radio" name="q_${x.id}" value="${k}">
+            <b>${k}.</b> ${esc(x["option_"+k.toLowerCase()])}
+          </label>`).join("")}
+      </div>
+    </section>`).join("");
+
+  $("qnav").innerHTML=qs.map((q,i)=>`
+    <button type="button"
+      data-qnav="${q.id}"
+      onclick="scrollToQuestion(${i})"
+      class="qnav border rounded-lg py-2 font-bold hover:bg-slate-50">
+      ${i+1}
+    </button>`).join("");
+
+  document.querySelectorAll('input[type="radio"]').forEach(el=>{
+    el.addEventListener("change",()=>{
+      updateProgress();
+      saveDraft();
+    });
+  });
+}
+
 async function init(){
   try{
+    if(!aid){
+      alert("Thiếu mã bài kiểm tra.");
+      return location.href="student-quizzes-v4.html";
+    }
+
     me=(await s.auth.getUser()).data.user;
     if(!me)return location.href="login.html";
 
-    const p=await s.from("profiles").select("role").eq("id",me.id).single();
+    const p=await s.from("profiles").select("role,full_name,student_code,class_name").eq("id",me.id).single();
     if(p.error)throw p.error;
     if(p.data?.role!=="student")return location.href="quizzes.html";
 
@@ -41,7 +239,8 @@ async function init(){
     if(old.error)throw old.error;
 
     const maxAttempts=Number(asg.max_attempts||1);
-    if((old.data||[]).length>=maxAttempts){
+    const used=(old.data||[]).length;
+    if(used>=maxAttempts){
       alert("Đã hết lượt làm.");
       return location.href="student-quizzes-v4.html";
     }
@@ -59,28 +258,149 @@ async function init(){
       return;
     }
 
-    h.textContent=asg.quizzes?.title||"Bài kiểm tra";
     const minutes=Number(asg.time_limit||15);
     asg.time_limit=minutes;
-    info.textContent=`${qs.length} câu • ${minutes} phút`;
 
-    list.innerHTML=qs.map((x,i)=>`
-      <div class="bg-white shadow rounded-2xl p-5">
-        <div class="font-bold mb-3">Câu ${i+1}. ${esc(x.question_text)}</div>
-        ${["A","B","C","D"].map(k=>`
-          <label class="block border rounded-xl p-3 mb-2 cursor-pointer hover:bg-blue-50">
-            <input type="radio" name="q_${x.id}" value="${k}">
-            <b>${k}.</b> ${esc(x["option_"+k.toLowerCase()])}
-          </label>`).join("")}
-      </div>`).join("");
+    $("h").textContent=asg.quizzes?.title||"Bài kiểm tra";
+    $("info").textContent=
+      `${qs.length} câu • ${minutes} phút • Lượt ${used+1}/${maxAttempts}`+
+      (p.data?.class_name?` • Lớp ${p.data.class_name}`:"");
 
-    started=Date.now();
+    storageKey=`codehub_quiz_draft_${me.id}_${aid}`;
+    startKey=`codehub_quiz_started_${me.id}_${aid}`;
+
+    renderQuestions();
+    restoreDraft();
+    updateProgress();
+
+    const savedStart=Number(localStorage.getItem(startKey)||0);
+    started=savedStart>0?savedStart:Date.now();
+    if(!savedStart)localStorage.setItem(startKey,String(started));
+
     runTimer();
+
   }catch(e){
-    console.error("CodeHub student quiz init error:",e);
+    console.error("CodeHub V3.1 init:",e);
     alert("Không tải được bài kiểm tra: "+(e?.message||String(e)));
   }
 }
-function runTimer(){let end=started+asg.time_limit*60000;tick=setInterval(()=>{let d=Math.max(0,end-Date.now()),m=Math.floor(d/60000),ss=Math.floor((d%60000)/1000);timer.textContent=`${String(m).padStart(2,"0")}:${String(ss).padStart(2,"0")}`;if(!d){clearInterval(tick);submitQuiz(true)}},1000)}
-form.onsubmit=e=>{e.preventDefault();submitQuiz(false)};
-async function submitQuiz(auto){if(submit.disabled)return;if(!auto&&!confirm("Nộp bài ngay?"))return;submit.disabled=true;clearInterval(tick);let ans={};qs.forEach(q=>{let x=document.querySelector(`input[name="q_${q.id}"]:checked`);if(x)ans[q.id]=x.value});let keys=await s.from("quiz_questions").select("id,correct_answer").eq("quiz_id",asg.quiz_id);let correct=0;(keys.data||[]).forEach(q=>{if(ans[q.id]===q.correct_answer)correct++});let total=qs.length,score=Math.round(correct/total*1000)/100;let row={quiz_id:asg.quiz_id,assignment_id:aid,student_id:me.id,score,correct_count:correct,total_questions:total,started_at:new Date(started).toISOString(),submitted_at:new Date().toISOString(),answers:ans};let r=await s.from("quiz_attempts").insert(row);if(r.error){submit.disabled=false;return alert(r.error.message)}alert(asg.show_result?`Đã nộp. Điểm: ${score}/10 • Đúng ${correct}/${total}`:"Đã nộp bài.");location.href="student-quizzes-v4.html"}init();</script></body></html>
+
+function runTimer(){
+  const assignmentClose=asg.close_at?new Date(asg.close_at).getTime():Infinity;
+  const durationEnd=started+asg.time_limit*60000;
+  const end=Math.min(assignmentClose,durationEnd);
+
+  const paint=()=>{
+    const d=Math.max(0,end-Date.now());
+    const m=Math.floor(d/60000);
+    const ss=Math.floor((d%60000)/1000);
+
+    $("timer").textContent=
+      `${String(m).padStart(2,"0")}:${String(ss).padStart(2,"0")}`;
+
+    $("timer").classList.toggle("timer-warn",d<=5*60000&&d>60*1000);
+    $("timer").classList.toggle("timer-danger",d<=60*1000);
+
+    if(d<=0){
+      clearInterval(tick);
+      $("timer").textContent="00:00";
+      submitQuiz(true);
+    }
+  };
+
+  paint();
+  tick=setInterval(paint,1000);
+}
+
+$("form").onsubmit=e=>{
+  e.preventDefault();
+  submitQuiz(false);
+};
+
+$("clearDraft").onclick=()=>{
+  if(!confirm("Xóa toàn bộ đáp án đã lưu tạm của bài này?"))return;
+  document.querySelectorAll('input[type="radio"]').forEach(x=>x.checked=false);
+  localStorage.removeItem(storageKey);
+  $("saveState").textContent="Đã xóa đáp án tạm";
+  updateProgress();
+};
+
+window.addEventListener("beforeunload",e=>{
+  if(!submitting && answeredCount()>0){
+    saveDraft();
+  }
+});
+
+async function submitQuiz(auto){
+  if(submitting)return;
+
+  const ans=getAnswers();
+  const unanswered=qs.length-Object.keys(ans).length;
+
+  if(!auto){
+    let msg="Nộp bài ngay?";
+    if(unanswered>0){
+      msg=`Bạn còn ${unanswered} câu chưa trả lời.\n\nVẫn nộp bài ngay?`;
+    }
+    if(!confirm(msg))return;
+  }
+
+  submitting=true;
+  $("submit").disabled=true;
+  $("submit").textContent=auto?"⏰ Hết giờ - đang nộp...":"Đang nộp bài...";
+  clearInterval(tick);
+
+  try{
+    const keys=await s.from("quiz_questions")
+      .select("id,correct_answer")
+      .eq("quiz_id",asg.quiz_id);
+
+    if(keys.error)throw keys.error;
+
+    let correct=0;
+    (keys.data||[]).forEach(q=>{
+      if(ans[q.id]===q.correct_answer)correct++;
+    });
+
+    const total=qs.length;
+    const score=Math.round(correct/total*1000)/100;
+
+    const row={
+      quiz_id:asg.quiz_id,
+      assignment_id:aid,
+      student_id:me.id,
+      score,
+      correct_count:correct,
+      total_questions:total,
+      started_at:new Date(started).toISOString(),
+      submitted_at:new Date().toISOString(),
+      answers:ans
+    };
+
+    const r=await s.from("quiz_attempts").insert(row);
+    if(r.error)throw r.error;
+
+    clearDraft();
+
+    alert(
+      asg.show_result
+        ? `Đã nộp bài.\nĐiểm: ${score}/10\nĐúng ${correct}/${total}`
+        : "Đã nộp bài."
+    );
+
+    location.href="student-quizzes-v4.html";
+
+  }catch(e){
+    console.error("submit quiz:",e);
+    submitting=false;
+    $("submit").disabled=false;
+    $("submit").textContent="✅ Nộp bài";
+    alert("Không nộp được bài: "+(e?.message||String(e)));
+    runTimer();
+  }
+}
+
+init();
+</script>
+</body>
+</html>
