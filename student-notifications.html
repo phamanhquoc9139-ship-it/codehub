@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Thông báo của em V3.4.1 | CodeHub</title>
+<title>Thông báo của em V3.4.2 | CodeHub</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="scripts/supabase-config.js"></script>
@@ -10,7 +10,7 @@
 <body class="bg-slate-50 text-slate-900">
 <main class="max-w-4xl mx-auto p-4 md:p-6">
 <div class="flex justify-between gap-3 flex-wrap mb-5">
-  <div><h1 class="text-3xl font-black">🔔 Thông báo của em <span class="text-violet-600 text-lg">V3.4.1</span></h1><p id="sub" class="text-slate-500"></p></div>
+  <div><h1 class="text-3xl font-black">🔔 Thông báo của em <span class="text-violet-600 text-lg">V3.4.2</span></h1><p id="sub" class="text-slate-500"></p></div>
   <a href="student-dashboard.html" class="border bg-white rounded-xl px-4 py-2 font-bold">← Dashboard</a>
 </div>
 <div class="grid grid-cols-3 gap-3 mb-5">
@@ -24,6 +24,7 @@
 const s=window.supabaseClient,$=x=>document.getElementById(x);
 const esc=v=>String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
 const fmt=v=>v?new Date(v).toLocaleString("vi-VN"):"—";
+
 async function init(){
   const u=(await s.auth.getUser()).data.user;if(!u)return location.href="login.html";
   const p=await s.from("profiles").select("role,full_name,class_name").eq("id",u.id).single();
@@ -31,19 +32,27 @@ async function init(){
   $("sub").textContent=(p.data?.full_name||"Học sinh")+" • Lớp "+(p.data?.class_name||"—");
   await load();
 }
+
 async function load(){
   const [ar,qr]=await Promise.all([
     s.rpc("codehub_v34_my_announcements"),
-    s.rpc("codehub_v341_quiz_deadline_alerts",{p_hours:48})
+    s.rpc("codehub_v342_quiz_deadline_alerts",{p_hours:48})
   ]);
+
   if(ar.error)return alert(ar.error.message);
   if(qr.error)return alert(qr.error.message);
-  const anns=ar.data||[], alerts=qr.data||[];
+
+  const anns=ar.data||[],alerts=qr.data||[];
   $("total").textContent=anns.length+alerts.length;
   $("unread").textContent=anns.filter(x=>!x.is_read).length+alerts.filter(x=>!x.is_read).length;
   $("quizCount").textContent=alerts.length;
 
-  const alertCards=alerts.map(x=>`
+  const alertCards=alerts.map(x=>{
+    const action=x.can_attempt
+      ? `<a class="inline-block bg-blue-600 text-white px-4 py-2 rounded-xl font-bold" href="student-quiz-v4.html?assignment=${encodeURIComponent(x.assignment_id)}">Làm bài ngay →</a>`
+      : `<span class="inline-block bg-slate-200 text-slate-700 px-4 py-2 rounded-xl font-bold">Đã hết lượt làm</span>`;
+
+    return `
     <article class="bg-white shadow rounded-2xl p-5 border-l-4 ${x.priority==="urgent"?"border-red-500":x.priority==="important"?"border-orange-500":"border-amber-400"} ${x.is_read?"opacity-70":""}">
       <div class="flex justify-between gap-3">
         <div>
@@ -52,9 +61,14 @@ async function load(){
         </div>
         ${x.is_read?'<span class="text-emerald-600 font-bold">Đã đọc</span>':`<button onclick="markQuiz('${x.assignment_id}')" class="bg-orange-500 text-white px-3 py-2 rounded-xl font-bold">Đã xem</button>`}
       </div>
-      <div class="mt-3">Còn khoảng <b>${esc(x.hours_left)} giờ</b>. Lượt đã dùng: <b>${esc(x.attempts_used)}/${esc(x.max_attempts)}</b>.</div>
-      <div class="mt-3"><a class="inline-block bg-blue-600 text-white px-4 py-2 rounded-xl font-bold" href="student-quiz-v4.html?assignment=${encodeURIComponent(x.assignment_id)}">Làm bài ngay →</a></div>
-    </article>`).join("");
+      <div class="mt-3">
+        Còn khoảng <b>${esc(x.hours_left)} giờ</b>.
+        Lượt đã dùng: <b>${esc(x.attempts_used)}/${esc(x.max_attempts)}</b>.
+        Còn: <b>${esc(x.remaining_attempts)} lượt</b>.
+      </div>
+      <div class="mt-3">${action}</div>
+    </article>`;
+  }).join("");
 
   const annCards=anns.map(x=>`
     <article class="bg-white shadow rounded-2xl p-5 border-l-4 ${x.priority==="urgent"?"border-red-500":x.priority==="important"?"border-orange-500":"border-blue-500"} ${x.is_read?"opacity-70":""}">
@@ -67,8 +81,19 @@ async function load(){
 
   $("list").innerHTML=alertCards+annCards||'<div class="bg-white shadow rounded-2xl p-6 text-center text-slate-500">Hiện chưa có thông báo.</div>';
 }
-window.markRead=async id=>{const r=await s.rpc("codehub_v34_mark_announcement_read",{p_id:id});if(r.error)return alert(r.error.message);await load();};
-window.markQuiz=async id=>{const r=await s.rpc("codehub_v341_mark_quiz_alert_read",{p_assignment:id});if(r.error)return alert(r.error.message);await load();};
+
+window.markRead=async id=>{
+  const r=await s.rpc("codehub_v34_mark_announcement_read",{p_id:id});
+  if(r.error)return alert(r.error.message);
+  await load();
+};
+
+window.markQuiz=async id=>{
+  const r=await s.rpc("codehub_v341_mark_quiz_alert_read",{p_assignment:id});
+  if(r.error)return alert(r.error.message);
+  await load();
+};
+
 init();
 </script>
 </body></html>
