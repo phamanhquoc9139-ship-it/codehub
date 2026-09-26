@@ -1,8 +1,174 @@
-<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Câu hỏi Quiz V2.6</title><script src="https://cdn.tailwindcss.com"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="scripts/supabase-config.js"></script><link rel="stylesheet" href="styles/codehub-v26.css"><script src="scripts/codehub-v26-ui.js"></script></head>
+<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Câu hỏi Quiz V2.6.2</title><script src="https://cdn.tailwindcss.com"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="scripts/supabase-config.js"></script><link rel="stylesheet" href="styles/codehub-v26.css"><script src="scripts/codehub-v26-ui.js"></script></head>
 <body class="ch-shell bg-slate-50"><script>document.addEventListener('DOMContentLoaded',()=>CodeHubUI.mountHeader({active:'quizzes',breadcrumbs:[{label:'Quiz',href:'quizzes.html'},{label:'Câu hỏi'}]}))</script>
-<main class="max-w-6xl mx-auto p-6"><div class="flex justify-between mb-5"><div><div class="ch-page-title"><h1 id="h" class="text-3xl font-bold">Câu hỏi</h1><span class="ch-version">V2.6</span></div><p class="text-slate-500">A/B/C/D • chỉ Quiz thuộc quyền quản lý</p></div></div>
+<main class="max-w-6xl mx-auto p-6"><div class="flex justify-between mb-5"><div><div class="ch-page-title"><h1 id="h" class="text-3xl font-bold">Câu hỏi</h1><span class="ch-version">V2.6.2</span></div><p class="text-slate-500">A/B/C/D • chỉ Quiz thuộc quyền quản lý</p></div></div>
 <div class="grid md:grid-cols-5 gap-5"><form id="f" class="md:col-span-2 bg-white p-5 rounded-2xl shadow space-y-3"><textarea id="qt" class="w-full border p-3 rounded-xl" placeholder="Nội dung câu hỏi" required></textarea><input id="a" class="w-full border p-3 rounded-xl" placeholder="A" required><input id="b" class="w-full border p-3 rounded-xl" placeholder="B" required><input id="c" class="w-full border p-3 rounded-xl" placeholder="C" required><input id="d" class="w-full border p-3 rounded-xl" placeholder="D" required><select id="correct" class="w-full border p-3 rounded-xl"><option>A</option><option>B</option><option>C</option><option>D</option></select><textarea id="ex" class="w-full border p-3 rounded-xl" placeholder="Giải thích đáp án"></textarea><input id="ord" type="number" min="1" value="1" class="w-full border p-3 rounded-xl"><button class="w-full bg-blue-600 text-white p-3 rounded-xl font-bold">Thêm câu hỏi</button></form><section id="list" class="md:col-span-3 space-y-3"></section></div></main>
-<script>const s=window.supabaseClient,qid=new URLSearchParams(location.search).get('quiz');async function init(){CodeHubUI.loading(true,'Đang kiểm tra quyền...');try{if(!qid)return location.href='quizzes.html';const u=(await s.auth.getUser()).data.user;if(!u)return location.href='login.html';const pr=await s.from('profiles').select('role,full_name').eq('id',u.id).single();const role=(pr.data?.role||'').trim().toLowerCase();CodeHubUI.setIdentity(pr.data?.full_name||"",role,u.email||"");if(!['admin','teacher'].includes(role))return CodeHubUI.forbidden('Tài khoản này không có quyền quản lý câu hỏi Quiz.');const q=await s.from('quizzes').select('title,teacher_id').eq('id',qid).single();if(q.error||!q.data)return CodeHubUI.forbidden('Không tìm thấy Quiz hoặc Quiz không thuộc phạm vi quản lý của bạn.');if(role==='teacher'&&q.data.teacher_id!==u.id)return CodeHubUI.forbidden('Quiz này thuộc giáo viên khác.');h.textContent='🧩 '+q.data.title;await load()}catch(e){console.error(e);CodeHubUI.toast(e?.message||String(e),'error')}finally{CodeHubUI.loading(false)}}
-async function load(){let r=await s.from('quiz_questions').select('*').eq('quiz_id',qid).order('question_order');if(r.error)return CodeHubUI.toast(r.error.message,'error');list.innerHTML=(r.data||[]).map((x,i)=>`<div class="bg-white p-5 rounded-2xl shadow"><div class="flex justify-between gap-3"><b>Câu ${i+1}. ${x.question_text}</b><button onclick="delx('${x.id}')" class="text-red-600">Xóa</button></div><div class="mt-2 text-sm">A. ${x.option_a}<br>B. ${x.option_b}<br>C. ${x.option_c}<br>D. ${x.option_d}</div><div class="mt-2 text-emerald-700 font-bold">Đáp án: ${x.correct_answer}</div></div>`).join('')||'<div class="bg-white p-5 rounded-xl">Chưa có câu hỏi.</div>'}
-f.onsubmit=async e=>{e.preventDefault();CodeHubUI.loading(true,'Đang thêm câu hỏi...');try{let r=await s.from('quiz_questions').insert({quiz_id:qid,question_text:qt.value.trim(),option_a:a.value.trim(),option_b:b.value.trim(),option_c:c.value.trim(),option_d:d.value.trim(),correct_answer:correct.value,explanation:ex.value.trim(),question_order:+ord.value||1});if(r.error)return CodeHubUI.toast(r.error.message,'error');f.reset();ord.value=1;CodeHubUI.toast('Đã thêm câu hỏi.','success');await load()}finally{CodeHubUI.loading(false)}};
-async function delx(id){if(!confirm('Xóa câu hỏi?'))return;let r=await s.from('quiz_questions').delete().eq('id',id);if(r.error)CodeHubUI.toast(r.error.message,'error');else{CodeHubUI.toast('Đã xóa câu hỏi.','success');load()}}init();</script></body></html>
+<script>
+const s = window.supabaseClient;
+const qid = (new URLSearchParams(location.search).get('quiz') || '').trim();
+
+const hEl = document.getElementById('h');
+const listEl = document.getElementById('list');
+const formEl = document.getElementById('f');
+const qtEl = document.getElementById('qt');
+const aEl = document.getElementById('a');
+const bEl = document.getElementById('b');
+const cEl = document.getElementById('c');
+const dEl = document.getElementById('d');
+const correctEl = document.getElementById('correct');
+const exEl = document.getElementById('ex');
+const ordEl = document.getElementById('ord');
+
+function esc(v=''){
+  return String(v)
+    .replaceAll('&','&amp;')
+    .replaceAll('<','&lt;')
+    .replaceAll('>','&gt;')
+    .replaceAll('"','&quot;')
+    .replaceAll("'",'&#039;');
+}
+
+async function init(){
+  CodeHubUI.loading(true,'Đang kiểm tra quyền...');
+  try{
+    if(!qid) return location.href='quizzes.html';
+
+    const {data:{user:u}, error:userError} = await s.auth.getUser();
+    if(userError || !u) return location.href='login.html';
+
+    const pr = await s.from('profiles')
+      .select('role,full_name')
+      .eq('id',u.id)
+      .single();
+
+    if(pr.error) throw pr.error;
+
+    const role = String(pr.data?.role||'').trim().toLowerCase();
+    CodeHubUI.setIdentity(pr.data?.full_name||'',role,u.email||'');
+
+    if(!['admin','teacher'].includes(role)){
+      return CodeHubUI.forbidden('Tài khoản này không có quyền quản lý câu hỏi Quiz.');
+    }
+
+    const q = await s.from('quizzes')
+      .select('id,title,teacher_id')
+      .eq('id',qid)
+      .single();
+
+    if(q.error || !q.data){
+      console.error('Quiz query:', q.error);
+      return CodeHubUI.forbidden('Không tìm thấy Quiz hoặc Quiz không thuộc phạm vi quản lý của bạn.');
+    }
+
+    if(role==='teacher' && q.data.teacher_id !== u.id){
+      return CodeHubUI.forbidden('Quiz này thuộc giáo viên khác.');
+    }
+
+    hEl.textContent = '🧩 ' + (q.data.title || 'Câu hỏi Quiz');
+    await loadQuestions();
+
+  }catch(e){
+    console.error('INIT ERROR:', e);
+    listEl.innerHTML = `<div class="bg-red-50 text-red-700 p-5 rounded-xl border border-red-200">
+      <b>Lỗi tải trang:</b> ${esc(e?.message||String(e))}
+    </div>`;
+    CodeHubUI.toast(e?.message||String(e),'error');
+  }finally{
+    CodeHubUI.loading(false);
+  }
+}
+
+async function loadQuestions(){
+  listEl.innerHTML = `<div class="bg-white p-5 rounded-xl text-slate-500">Đang tải câu hỏi...</div>`;
+
+  const r = await s.from('quiz_questions')
+    .select('id,quiz_id,question_text,option_a,option_b,option_c,option_d,correct_answer,explanation,question_order,created_at')
+    .eq('quiz_id',qid)
+    .order('question_order',{ascending:true})
+    .order('created_at',{ascending:true});
+
+  console.log('quiz_questions result', {qid, data:r.data, error:r.error, count:r.data?.length});
+
+  if(r.error){
+    listEl.innerHTML = `<div class="bg-red-50 text-red-700 p-5 rounded-xl border border-red-200">
+      <b>Supabase không đọc được câu hỏi.</b><br>
+      ${esc(r.error.message)}<br>
+      <span class="text-xs">Quiz ID: ${esc(qid)}</span>
+    </div>`;
+    CodeHubUI.toast(r.error.message,'error');
+    return;
+  }
+
+  const rows = r.data || [];
+
+  if(!rows.length){
+    listEl.innerHTML = `<div class="bg-amber-50 text-amber-800 p-5 rounded-xl border border-amber-200">
+      <b>Trình duyệt nhận được 0 câu hỏi.</b><br>
+      Quiz ID: <code>${esc(qid)}</code><br>
+      <span class="text-sm">Dữ liệu trong Supabase có thể còn, nhưng phiên đăng nhập hiện tại chưa nhận được bản ghi này.</span>
+    </div>`;
+    return;
+  }
+
+  listEl.innerHTML =
+    `<div class="bg-emerald-50 text-emerald-700 p-3 rounded-xl border border-emerald-200 mb-3">
+      ✅ Đã tải ${rows.length} câu hỏi.
+    </div>` +
+    rows.map((x,i)=>`
+      <div class="bg-white p-5 rounded-2xl shadow">
+        <div class="flex justify-between gap-3">
+          <b>Câu ${i+1}. ${esc(x.question_text)}</b>
+          <button onclick="delx('${esc(x.id)}')" class="text-red-600">Xóa</button>
+        </div>
+        <div class="mt-2 text-sm">
+          A. ${esc(x.option_a)}<br>
+          B. ${esc(x.option_b)}<br>
+          C. ${esc(x.option_c)}<br>
+          D. ${esc(x.option_d)}
+        </div>
+        <div class="mt-2 text-emerald-700 font-bold">Đáp án: ${esc(x.correct_answer)}</div>
+      </div>`).join('');
+}
+
+formEl.onsubmit = async e => {
+  e.preventDefault();
+  CodeHubUI.loading(true,'Đang thêm câu hỏi...');
+  try{
+    const r = await s.from('quiz_questions').insert({
+      quiz_id: qid,
+      question_text: qtEl.value.trim(),
+      option_a: aEl.value.trim(),
+      option_b: bEl.value.trim(),
+      option_c: cEl.value.trim(),
+      option_d: dEl.value.trim(),
+      correct_answer: correctEl.value,
+      explanation: exEl.value.trim(),
+      question_order: +ordEl.value || 1
+    });
+
+    if(r.error) throw r.error;
+
+    formEl.reset();
+    ordEl.value = 1;
+    CodeHubUI.toast('Đã thêm câu hỏi.','success');
+    await loadQuestions();
+  }catch(e){
+    console.error('INSERT ERROR:', e);
+    CodeHubUI.toast(e?.message||String(e),'error');
+  }finally{
+    CodeHubUI.loading(false);
+  }
+};
+
+async function delx(id){
+  if(!confirm('Xóa câu hỏi?')) return;
+  const r = await s.from('quiz_questions').delete().eq('id',id);
+  if(r.error){
+    CodeHubUI.toast(r.error.message,'error');
+  }else{
+    CodeHubUI.toast('Đã xóa câu hỏi.','success');
+    await loadQuestions();
+  }
+}
+
+init();
+</script></body></html>
