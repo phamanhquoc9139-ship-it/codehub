@@ -1,0 +1,483 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hồ sơ bài kiểm tra V3.5.1 | CodeHub</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="scripts/supabase-config.js"></script>
+<style>
+  @page { size: A4; margin: 14mm 14mm 14mm 14mm; }
+  @media print {
+    body { background:white!important; color:#000!important; font-family:"Times New Roman",serif!important; }
+    .no-print { display:none!important; }
+    .print-only { display:block!important; }
+    .sheet { box-shadow:none!important; border:none!important; margin:0!important; padding:0!important; }
+    .page-break { break-before: page; page-break-before: always; }
+    .avoid-break { break-inside: avoid; page-break-inside: avoid; }
+    .question { break-inside: avoid; page-break-inside: avoid; }
+    a { color:#000!important; text-decoration:none!important; }
+  }
+  .print-only { display:none; }
+  .sheet { background:#fff; border-radius:18px; box-shadow:0 8px 25px rgba(15,23,42,.07); }
+  .option-selected { font-weight:700; }
+  .correct { color:#047857; }
+  .wrong { color:#b91c1c; }
+  .blank { color:#64748b; }
+</style>
+</head>
+
+<body class="bg-slate-50 text-slate-900">
+<main class="max-w-7xl mx-auto p-4 md:p-6">
+
+  <section class="no-print mb-5">
+    <div class="flex flex-wrap justify-between gap-3 items-start">
+      <div>
+        <div class="flex items-center gap-3">
+          <h1 id="pageTitle" class="text-3xl font-black">🗂️ Hồ sơ bài kiểm tra</h1>
+          <span class="px-2 py-1 text-xs rounded-full bg-violet-100 text-violet-700 font-black">V3.5.1</span>
+        </div>
+        <p class="text-slate-500 mt-1">Xuất hồ sơ giấy/PDF toàn lớp và bài làm chi tiết từng học sinh.</p>
+      </div>
+      <div class="flex flex-wrap gap-2">
+        <button id="printBtn" class="bg-blue-600 text-white px-4 py-2 rounded-xl font-bold">🖨 In / Lưu PDF</button>
+        <button id="excelBtn" class="bg-emerald-600 text-white px-4 py-2 rounded-xl font-bold">⬇ Excel tổng hợp</button>
+        <a id="backLink" href="quizzes.html" class="border bg-white px-4 py-2 rounded-xl font-bold">← Kết quả</a>
+      </div>
+    </div>
+
+    <div id="msg" class="hidden mt-4 p-3 rounded-xl bg-red-50 text-red-700"></div>
+
+    <div class="bg-white rounded-2xl shadow p-4 mt-5">
+      <div class="grid md:grid-cols-4 gap-3 items-end">
+        <label class="font-bold">
+          Lớp
+          <select id="classFilter" class="block w-full mt-1 border rounded-xl p-2"></select>
+        </label>
+
+        <label class="font-bold">
+          Lượt in
+          <select id="attemptMode" class="block w-full mt-1 border rounded-xl p-2">
+            <option value="latest">Lần nộp gần nhất / học sinh</option>
+            <option value="all">Tất cả lượt nộp</option>
+          </select>
+        </label>
+
+        <label class="font-bold">
+          Kiểu hồ sơ
+          <select id="paperMode" class="block w-full mt-1 border rounded-xl p-2">
+            <option value="full">Đầy đủ câu hỏi + đáp án</option>
+            <option value="compact">Phiếu kết quả rút gọn</option>
+          </select>
+        </label>
+
+        <button id="reloadBtn" class="bg-slate-900 text-white rounded-xl py-2.5 font-bold">Làm mới</button>
+      </div>
+    </div>
+  </section>
+
+  <div id="printArea"></div>
+
+</main>
+
+<script>
+const s=window.supabaseClient;
+const $=x=>document.getElementById(x);
+const qid=new URLSearchParams(location.search).get("quiz");
+
+let me,role,quiz=null,assignments=[],questions=[],attempts=[],students=[],teacherProfile=null;
+let currentClassId="", currentClassName="", printRows=[];
+
+const esc=v=>String(v??"").replace(/[&<>"']/g,m=>({
+  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+}[m]));
+
+const fmt=v=>v?new Date(v).toLocaleString("vi-VN"):"—";
+const fmtDate=v=>v?new Date(v).toLocaleDateString("vi-VN"):"—";
+const safeFile=v=>String(v||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^\w\-]+/g,"_").replace(/^_+|_+$/g,"");
+
+function err(t){
+  $("msg").classList.remove("hidden");
+  $("msg").textContent=t;
+}
+
+async function init(){
+  try{
+    if(!qid)return location.href="quizzes.html";
+
+    me=(await s.auth.getUser()).data.user;
+    if(!me)return location.href="login.html";
+
+    const pr=await s.from("profiles").select("role,full_name").eq("id",me.id).single();
+    if(pr.error)throw pr.error;
+    role=String(pr.data?.role||"").trim().toLowerCase();
+
+    if(!["admin","teacher"].includes(role))return location.href="student-dashboard.html";
+
+    const qr=await s.from("quizzes")
+      .select("id,title,description,time_limit,teacher_id,course_id,courses(title,subject,grade)")
+      .eq("id",qid).single();
+
+    if(qr.error||!qr.data)throw new Error("Không tìm thấy Quiz.");
+    quiz=qr.data;
+
+    if(role==="teacher" && quiz.teacher_id!==me.id){
+      alert("Quiz này thuộc giáo viên khác.");
+      return location.href="quizzes.html";
+    }
+
+    const [ar,qq,at,tp]=await Promise.all([
+      s.from("quiz_assignments")
+        .select("id,class_id,open_at,close_at,max_attempts,time_limit,classes(class_name)")
+        .eq("quiz_id",qid),
+
+      s.from("quiz_questions")
+        .select("id,question_text,option_a,option_b,option_c,option_d,correct_answer,explanation,question_order")
+        .eq("quiz_id",qid)
+        .order("question_order"),
+
+      s.rpc("codehub_v32_quiz_attempts",{p_quiz:qid}),
+
+      s.from("profiles").select("full_name").eq("id",quiz.teacher_id).maybeSingle()
+    ]);
+
+    if(ar.error)throw ar.error;
+    if(qq.error)throw qq.error;
+    if(at.error)throw at.error;
+
+    assignments=ar.data||[];
+    questions=qq.data||[];
+    attempts=at.data||[];
+    teacherProfile=tp.data||{};
+
+    const unique=[];
+    const seen=new Set();
+    for(const a of assignments){
+      if(a.class_id&&!seen.has(a.class_id)){
+        seen.add(a.class_id);unique.push(a);
+      }
+    }
+
+    $("classFilter").innerHTML=
+      '<option value="">-- Chọn lớp để xuất hồ sơ --</option>'+
+      unique.map(a=>`<option value="${a.class_id}">${esc(a.classes?.class_name||"Lớp")}</option>`).join("");
+
+    $("backLink").href="quiz-results.html?quiz="+encodeURIComponent(qid);
+    $("pageTitle").textContent="🗂️ "+quiz.title;
+
+    if(unique.length===1){
+      $("classFilter").value=unique[0].class_id;
+      await render();
+    }else{
+      $("printArea").innerHTML='<div class="sheet p-8 text-center text-slate-500">Chọn một lớp để tạo bộ hồ sơ in.</div>';
+    }
+  }catch(e){
+    console.error(e);
+    err(e?.message||String(e));
+  }
+}
+
+async function getStudents(className){
+  if(!className)return [];
+  const r=await s.from("profiles")
+    .select("id,full_name,student_code,class_name")
+    .eq("role","student")
+    .ilike("class_name",className)
+    .order("full_name");
+  if(r.error)throw r.error;
+  return r.data||[];
+}
+
+function latestAttemptsForClass(classAssignmentIds){
+  const arr=attempts.filter(a=>classAssignmentIds.includes(a.assignment_id));
+  const map=new Map();
+  for(const a of arr){
+    const old=map.get(a.student_id);
+    if(!old || new Date(a.submitted_at)>new Date(old.submitted_at))map.set(a.student_id,a);
+  }
+  return map;
+}
+
+async function render(){
+  try{
+    currentClassId=$("classFilter").value;
+    if(!currentClassId){
+      $("printArea").innerHTML='<div class="sheet p-8 text-center text-slate-500">Chọn một lớp để tạo bộ hồ sơ in.</div>';
+      return;
+    }
+
+    const classAssignments=assignments.filter(a=>a.class_id===currentClassId);
+    currentClassName=classAssignments[0]?.classes?.class_name||"";
+    students=await getStudents(currentClassName);
+
+    const assignmentIds=classAssignments.map(a=>a.id);
+    const classAttempts=attempts.filter(a=>assignmentIds.includes(a.assignment_id));
+
+    if($("attemptMode").value==="latest"){
+      const latest=latestAttemptsForClass(assignmentIds);
+      printRows=students.map(st=>({student:st,attempt:latest.get(st.id)||null}));
+    }else{
+      printRows=classAttempts
+        .map(a=>({
+          student:students.find(st=>st.id===a.student_id)||{
+            id:a.student_id,
+            full_name:a.student_name||"—",
+            student_code:a.student_code||"—",
+            class_name:a.class_name||currentClassName
+          },
+          attempt:a
+        }))
+        .sort((x,y)=>{
+          const c=String(x.student.full_name||"").localeCompare(String(y.student.full_name||""),"vi");
+          if(c!==0)return c;
+          return new Date(x.attempt?.submitted_at||0)-new Date(y.attempt?.submitted_at||0);
+        });
+    }
+
+    renderPrintArea();
+  }catch(e){
+    console.error(e);err(e?.message||String(e));
+  }
+}
+
+function attemptIndex(studentId,attemptId){
+  const all=attempts
+    .filter(a=>a.student_id===studentId)
+    .sort((a,b)=>new Date(a.submitted_at)-new Date(b.submitted_at));
+  const i=all.findIndex(a=>a.attempt_id===attemptId);
+  return i>=0?i+1:1;
+}
+
+function answerText(q,a){
+  const ans=a?.answers||{};
+  return ans[q.id]||"";
+}
+
+function optionText(q,k){
+  return q["option_"+String(k).toLowerCase()]||"";
+}
+
+function coverHtml(doneCount,total,avg){
+  const subject=quiz?.courses?.subject||"Môn học";
+  const grade=quiz?.courses?.grade||"";
+  const dateCandidates=printRows.filter(x=>x.attempt?.submitted_at).map(x=>x.attempt.submitted_at);
+  const testDate=dateCandidates.length?fmtDate(dateCandidates[0]):"—";
+
+  return `
+  <section class="sheet p-8 min-h-[270mm] flex flex-col justify-between">
+    <div>
+      <div class="text-center">
+        <div class="font-bold text-lg">TRƯỜNG THPT PHÚ HÒA</div>
+        <div class="mt-1">HỒ SƠ BÀI KIỂM TRA TRÊN HỆ THỐNG CODEHUB</div>
+        <div class="mt-8 text-2xl font-black uppercase">${esc(quiz.title)}</div>
+        <div class="mt-2 text-lg">${esc(subject)} ${grade?`• Khối ${esc(grade)}`:""}</div>
+      </div>
+
+      <div class="mt-12 border rounded-xl p-5 leading-8">
+        <div><b>Lớp:</b> ${esc(currentClassName)}</div>
+        <div><b>Giáo viên:</b> ${esc(teacherProfile?.full_name||"—")}</div>
+        <div><b>Ngày kiểm tra:</b> ${esc(testDate)}</div>
+        <div><b>Thời lượng:</b> ${esc(quiz.time_limit||classAssignmentsTime())} phút</div>
+        <div><b>Số câu:</b> ${questions.length}</div>
+        <div><b>Sĩ số:</b> ${total}</div>
+        <div><b>Đã làm:</b> ${doneCount}</div>
+        <div><b>Chưa làm:</b> ${Math.max(0,total-doneCount)}</div>
+        <div><b>Điểm trung bình:</b> ${avg===null?"—":avg.toFixed(2)+"/10"}</div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-2 gap-16 text-center mt-16">
+      <div><b>NGƯỜI LẬP HỒ SƠ</b><div class="mt-20">${esc(teacherProfile?.full_name||"")}</div></div>
+      <div><b>XÁC NHẬN</b><div class="mt-20">(Ký, ghi rõ họ tên)</div></div>
+    </div>
+  </section>`;
+}
+
+function classAssignmentsTime(){
+  const x=assignments.find(a=>a.class_id===currentClassId);
+  return x?.time_limit||"—";
+}
+
+function summaryHtml(){
+  const rows=printRows.filter(x=>x.student);
+  return `
+  <section class="sheet p-6 page-break">
+    <div class="text-center font-black text-xl mb-5">BẢNG TỔNG HỢP KẾT QUẢ</div>
+    <table class="w-full border-collapse text-sm">
+      <thead>
+        <tr>
+          <th class="border p-2">STT</th>
+          <th class="border p-2 text-left">Họ và tên</th>
+          <th class="border p-2">Mã HS</th>
+          <th class="border p-2">Lớp</th>
+          <th class="border p-2">Trạng thái</th>
+          <th class="border p-2">Điểm</th>
+          <th class="border p-2">Đúng/Tổng</th>
+          <th class="border p-2">Nộp lúc</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${rows.map((x,i)=>`
+          <tr>
+            <td class="border p-2 text-center">${i+1}</td>
+            <td class="border p-2">${esc(x.student.full_name||"—")}</td>
+            <td class="border p-2 text-center">${esc(x.student.student_code||"—")}</td>
+            <td class="border p-2 text-center">${esc(x.student.class_name||currentClassName)}</td>
+            <td class="border p-2 text-center">${x.attempt?"Đã làm":"Chưa làm"}</td>
+            <td class="border p-2 text-center font-bold">${x.attempt?esc(x.attempt.score):"—"}</td>
+            <td class="border p-2 text-center">${x.attempt?`${esc(x.attempt.correct_count)}/${esc(x.attempt.total_questions)}`:"—"}</td>
+            <td class="border p-2 text-center">${x.attempt?fmt(x.attempt.submitted_at):"—"}</td>
+          </tr>`).join("")}
+      </tbody>
+    </table>
+  </section>`;
+}
+
+function studentPaperHtml(row,index){
+  const st=row.student, a=row.attempt;
+  if(!a){
+    return `
+    <section class="sheet p-6 page-break">
+      <div class="text-center font-black text-xl">PHIẾU HỒ SƠ HỌC SINH</div>
+      <div class="mt-5 border rounded-xl p-4 leading-7">
+        <div><b>Họ và tên:</b> ${esc(st.full_name||"—")}</div>
+        <div><b>Mã học sinh:</b> ${esc(st.student_code||"—")}</div>
+        <div><b>Lớp:</b> ${esc(st.class_name||currentClassName)}</div>
+        <div><b>Bài kiểm tra:</b> ${esc(quiz.title)}</div>
+        <div><b>Trạng thái:</b> CHƯA LÀM BÀI</div>
+      </div>
+    </section>`;
+  }
+
+  const round=attemptIndex(st.id,a.attempt_id);
+  const compact=$("paperMode").value==="compact";
+
+  const qhtml=questions.map((q,i)=>{
+    const mine=answerText(q,a);
+    const blank=!mine;
+    const ok=!blank&&mine===q.correct_answer;
+    const status=blank?"Bỏ trống":ok?"Đúng":"Sai";
+    const cls=blank?"blank":ok?"correct":"wrong";
+
+    if(compact){
+      return `
+      <div class="question border-b py-2">
+        <b>Câu ${i+1}:</b>
+        Chọn <b>${esc(mine||"—")}</b> •
+        Đáp án <b>${esc(q.correct_answer)}</b> •
+        <span class="${cls}"><b>${status}</b></span>
+      </div>`;
+    }
+
+    return `
+    <div class="question border rounded-lg p-3 mb-3">
+      <div><b>Câu ${i+1}. ${esc(q.question_text)}</b></div>
+      <div class="mt-2 text-sm leading-6">
+        <div class="${mine==="A"?"option-selected":""}">A. ${esc(q.option_a)}</div>
+        <div class="${mine==="B"?"option-selected":""}">B. ${esc(q.option_b)}</div>
+        <div class="${mine==="C"?"option-selected":""}">C. ${esc(q.option_c)}</div>
+        <div class="${mine==="D"?"option-selected":""}">D. ${esc(q.option_d)}</div>
+      </div>
+      <div class="mt-2 ${cls}">
+        <b>${status}</b> • Học sinh chọn: <b>${esc(mine||"—")}</b> • Đáp án đúng: <b>${esc(q.correct_answer)}</b>
+      </div>
+      ${q.explanation?`<div class="mt-1 text-sm"><b>Giải thích:</b> ${esc(q.explanation)}</div>`:""}
+    </div>`;
+  }).join("");
+
+  return `
+  <section class="sheet p-6 page-break">
+    <div class="text-center">
+      <div class="font-bold">TRƯỜNG THPT PHÚ HÒA</div>
+      <div class="font-black text-xl mt-2">BÀI LÀM TRẮC NGHIỆM TRÊN CODEHUB</div>
+      <div class="font-bold mt-1">${esc(quiz.title)}</div>
+    </div>
+
+    <div class="grid grid-cols-2 gap-x-8 gap-y-1 mt-5 border rounded-xl p-4 text-sm leading-7">
+      <div><b>Họ và tên:</b> ${esc(st.full_name||"—")}</div>
+      <div><b>Mã HS:</b> ${esc(st.student_code||"—")}</div>
+      <div><b>Lớp:</b> ${esc(st.class_name||currentClassName)}</div>
+      <div><b>Lần làm:</b> ${round}</div>
+      <div><b>Bắt đầu:</b> ${fmt(a.started_at)}</div>
+      <div><b>Nộp lúc:</b> ${fmt(a.submitted_at)}</div>
+      <div><b>Điểm:</b> ${esc(a.score)}/10</div>
+      <div><b>Kết quả:</b> ${esc(a.correct_count)}/${esc(a.total_questions)} câu đúng</div>
+      <div class="col-span-2 text-xs text-slate-500"><b>Mã lượt làm:</b> ${esc(a.attempt_id)}</div>
+    </div>
+
+    <div class="mt-5">${qhtml}</div>
+
+    <div class="grid grid-cols-2 gap-16 mt-8 text-center avoid-break">
+      <div><b>HỌC SINH</b><div class="mt-14">(Ký, ghi rõ họ tên)</div></div>
+      <div><b>GIÁO VIÊN</b><div class="mt-14">${esc(teacherProfile?.full_name||"")}</div></div>
+    </div>
+  </section>`;
+}
+
+function renderPrintArea(){
+  const doneRows=printRows.filter(x=>x.attempt);
+  const scores=doneRows.map(x=>Number(x.attempt.score)).filter(Number.isFinite);
+  const avg=scores.length?scores.reduce((a,b)=>a+b,0)/scores.length:null;
+
+  $("printArea").innerHTML=
+    coverHtml(doneRows.length, students.length, avg)+
+    summaryHtml()+
+    printRows.map(studentPaperHtml).join("");
+}
+
+$("classFilter").onchange=render;
+$("attemptMode").onchange=render;
+$("paperMode").onchange=render;
+$("reloadBtn").onclick=render;
+$("printBtn").onclick=()=>{
+  if(!$("classFilter").value)return alert("Chọn lớp trước khi in.");
+  document.title=`Ho_so_${safeFile(quiz.title)}_${safeFile(currentClassName)}`;
+  window.print();
+};
+$("excelBtn").onclick=()=>{
+  if(!printRows.length)return alert("Chưa có dữ liệu.");
+  const data=printRows.map((x,i)=>({
+    "STT":i+1,
+    "Họ và tên":x.student.full_name||"",
+    "Mã HS":x.student.student_code||"",
+    "Lớp":x.student.class_name||currentClassName,
+    "Trạng thái":x.attempt?"Đã làm":"Chưa làm",
+    "Điểm":x.attempt?x.attempt.score:"",
+    "Số câu đúng":x.attempt?x.attempt.correct_count:"",
+    "Tổng câu":x.attempt?x.attempt.total_questions:"",
+    "Nộp lúc":x.attempt?fmt(x.attempt.submitted_at):"",
+    "Mã lượt làm":x.attempt?x.attempt.attempt_id:""
+  }));
+
+  const detail=[];
+  for(const x of printRows.filter(r=>r.attempt)){
+    const ans=x.attempt.answers||{};
+    questions.forEach((q,i)=>{
+      const mine=ans[q.id]||"";
+      detail.push({
+        "Họ và tên":x.student.full_name||"",
+        "Mã HS":x.student.student_code||"",
+        "Lớp":x.student.class_name||currentClassName,
+        "Câu":i+1,
+        "Nội dung":q.question_text,
+        "A":q.option_a,"B":q.option_b,"C":q.option_c,"D":q.option_d,
+        "HS chọn":mine||"Bỏ trống",
+        "Đáp án đúng":q.correct_answer,
+        "Kết quả":!mine?"Bỏ trống":mine===q.correct_answer?"Đúng":"Sai",
+        "Giải thích":q.explanation||""
+      });
+    });
+  }
+
+  const wb=XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(data),"Tong hop");
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(detail),"Chi tiet bai lam");
+  XLSX.writeFile(wb,`Ho_so_${safeFile(quiz.title)}_${safeFile(currentClassName)}.xlsx`);
+};
+
+init();
+</script>
+</body>
+</html>
