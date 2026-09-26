@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Học sinh V3.0 | CodeHub</title>
+<title>Học sinh V3.1.1 | CodeHub</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="scripts/supabase-config.js"></script>
 <style>
@@ -19,7 +19,7 @@ main{max-width:1180px;margin:28px auto;padding:0 20px}h1{font-size:36px;margin:0
 </head>
 <body>
 <header>
-  <div><div class="logo">&lt;/&gt; CodeHub <span style="font-size:13px;color:#2563eb">V3.0</span></div><div id="who" style="font-size:13px;color:#64748b;margin-top:4px"></div></div>
+  <div><div class="logo">&lt;/&gt; CodeHub <span style="font-size:13px;color:#2563eb">V3.1.1</span></div><div id="who" style="font-size:13px;color:#64748b;margin-top:4px"></div></div>
   <div style="display:flex;gap:8px;flex-wrap:wrap">
     <a href="student-quizzes-v4.html" class="btn soft">Bài kiểm tra</a>
     <button class="btn dark" onclick="logout()">Đăng xuất</button>
@@ -43,9 +43,14 @@ main{max-width:1180px;margin:28px auto;padding:0 20px}h1{font-size:36px;margin:0
       <div id="assignments" class="list"></div>
     </div>
     <div class="panel">
-      <h2>📈 Kết quả gần đây</h2>
-      <div id="results" class="list"></div>
+      <h2>✅ Quiz đã làm</h2>
+      <div id="completed" class="list"></div>
     </div>
+  </section>
+
+  <section class="panel" style="margin-top:18px">
+    <h2>📈 Kết quả gần đây</h2>
+    <div id="results" class="list"></div>
   </section>
 
   <section class="panel" style="margin-top:18px">
@@ -114,6 +119,7 @@ async function loadClassAndCourses(){
 async function loadAssignmentsAndResults(){
   if(!classIds.length){
     $("assignments").innerHTML='<div class="item">Chưa xác định được lớp.</div>';
+    $("completed").innerHTML='<div class="item">Chưa có Quiz đã làm.</div>';
     $("results").innerHTML='<div class="item">Chưa có kết quả.</div>';
     return;
   }
@@ -131,8 +137,19 @@ async function loadAssignmentsAndResults(){
     .order("submitted_at",{ascending:false});
 
   const attempts=at.data||[];
+
+  const byAssignment=new Map();
+  attempts.forEach(x=>{
+    if(!x.assignment_id)return;
+    if(!byAssignment.has(x.assignment_id))byAssignment.set(x.assignment_id,[]);
+    byAssignment.get(x.assignment_id).push(x);
+  });
+
   const latestByAssignment=new Map();
-  attempts.forEach(x=>{if(x.assignment_id&&!latestByAssignment.has(x.assignment_id))latestByAssignment.set(x.assignment_id,x)});
+  byAssignment.forEach((arr,key)=>{
+    const sorted=[...arr].sort((a,b)=>new Date(b.submitted_at)-new Date(a.submitted_at));
+    latestByAssignment.set(key,sorted[0]);
+  });
 
   const now=Date.now();
   const open=assignments.filter(x=>{
@@ -140,34 +157,92 @@ async function loadAssignmentsAndResults(){
     const b=x.close_at?new Date(x.close_at).getTime():Infinity;
     return a<=now&&now<=b;
   });
+
   $("stOpen").textContent=open.length;
   $("stDone").textContent=new Set(attempts.map(x=>x.assignment_id).filter(Boolean)).size;
   $("stScore").textContent=attempts.length&&attempts[0].score!=null?attempts[0].score+"/10":"—";
 
-  const priority=[...assignments].sort((a,b)=>{
-    const ao=a.close_at?new Date(a.close_at).getTime():Infinity;
-    const bo=b.close_at?new Date(b.close_at).getTime():Infinity;
-    return ao-bo;
-  });
-
-  $("assignments").innerHTML=priority.slice(0,8).map(x=>{
+  // Chỉ đưa các bài CHƯA hoàn tất vào "Bài kiểm tra cần chú ý".
+  // Nếu đã nộp nhưng vẫn còn lượt làm lại thì vẫn hiện nút Làm lại.
+  const attentionRows=assignments.filter(x=>{
     const a=x.open_at?new Date(x.open_at).getTime():-Infinity;
     const b=x.close_at?new Date(x.close_at).getTime():Infinity;
     const isOpen=a<=now&&now<=b;
-    const done=latestByAssignment.get(x.id);
-    const soon=isOpen&&x.close_at&&(b-now)<=48*3600000;
-    const status=done?`<span class="pill">Đã nộp ${esc(done.score??"—")}/10</span>`
-      : isOpen?(soon?'<span class="pill warn">Sắp hết hạn</span>':'<span class="pill purple">Đang mở</span>')
-      : now<a?'<span class="pill purple">Chưa mở</span>':'<span class="pill danger">Đã đóng</span>';
-    const action=isOpen?`<div style="margin-top:9px"><a class="btn" href="student-quiz-v4.html?assignment=${encodeURIComponent(x.id)}">${done?"Làm lại":"Làm bài"} →</a></div>`:"";
-    return `<div class="item">${status}<b>${esc(x.quizzes?.title||"Quiz")}</b><div class="meta">Mở: ${fmt(x.open_at)}<br>Đóng: ${fmt(x.close_at)} • ${esc(x.time_limit||"—")} phút</div>${action}</div>`;
-  }).join("") || '<div class="item">Chưa có bài kiểm tra được giao.</div>';
+    const used=(byAssignment.get(x.id)||[]).length;
+    const max=Number(x.max_attempts||1);
 
-  $("results").innerHTML=attempts.slice(0,7).map(x=>{
+    if(!isOpen)return false;
+    return used < max;
+  });
+
+  $("assignments").innerHTML=attentionRows.map(x=>{
+    const b=x.close_at?new Date(x.close_at).getTime():Infinity;
+    const used=(byAssignment.get(x.id)||[]).length;
+    const max=Number(x.max_attempts||1);
+    const done=latestByAssignment.get(x.id);
+    const soon=x.close_at&&(b-now)<=48*3600000;
+
+    const status=done
+      ? `<span class="pill">Đã nộp ${esc(done.score??"—")}/10 • còn ${Math.max(0,max-used)} lượt</span>`
+      : (soon?'<span class="pill warn">Sắp hết hạn</span>':'<span class="pill purple">Đang mở</span>');
+
+    const action=`<div style="margin-top:9px"><a class="btn" href="student-quiz-v4.html?assignment=${encodeURIComponent(x.id)}">${done?"Làm lại":"Làm bài"} →</a></div>`;
+
+    return `<div class="item">
+      ${status}
+      <b>${esc(x.quizzes?.title||"Quiz")}</b>
+      <div class="meta">
+        Mở: ${fmt(x.open_at)}<br>
+        Đóng: ${fmt(x.close_at)} • ${esc(x.time_limit||"—")} phút • Lượt ${used}/${max}
+      </div>
+      ${action}
+    </div>`;
+  }).join("") || '<div class="item">Không có bài kiểm tra nào cần làm lúc này.</div>';
+
+  // Các assignment đã nộp ít nhất 1 lần -> gom riêng vào "Quiz đã làm".
+  const completedAssignments=assignments
+    .filter(x=>latestByAssignment.has(x.id))
+    .sort((a,b)=>{
+      const aa=latestByAssignment.get(a.id)?.submitted_at||"";
+      const bb=latestByAssignment.get(b.id)?.submitted_at||"";
+      return new Date(bb)-new Date(aa);
+    });
+
+  $("completed").innerHTML=completedAssignments.map(x=>{
+    const last=latestByAssignment.get(x.id);
+    const used=(byAssignment.get(x.id)||[]).length;
+    const max=Number(x.max_attempts||1);
+
+    return `<div class="item">
+      <span class="pill">Đã làm</span>
+      <b>${esc(x.quizzes?.title||"Quiz")}</b>
+      <div class="meta">
+        Điểm gần nhất: <b>${esc(last?.score??"—")}/10</b><br>
+        Đúng ${esc(last?.correct_count??"—")}/${esc(last?.total_questions??"—")} •
+        Đã làm ${used}/${max} lượt<br>
+        ${fmt(last?.submitted_at)}
+      </div>
+      ${x.show_result?`<div style="margin-top:8px"><a class="btn soft" href="student-quiz-result-v4-2.html?assignment=${encodeURIComponent(x.id)}">Xem kết quả</a></div>`:""}
+    </div>`;
+  }).join("") || '<div class="item">Em chưa hoàn thành Quiz nào.</div>';
+
+  // Lịch sử kết quả chi tiết từng lượt nộp
+  $("results").innerHTML=attempts.slice(0,10).map(x=>{
     const ass=assignments.find(a=>a.id===x.assignment_id);
     const title=ass?.quizzes?.title||"Quiz";
-    const link=ass?.show_result?`<div style="margin-top:8px"><a class="btn soft" href="student-quiz-result-v4-2.html?assignment=${encodeURIComponent(x.assignment_id)}">Xem chi tiết</a></div>`:"";
-    return `<div class="item"><b>${esc(title)}</b><div class="meta">Điểm <b>${esc(x.score??"—")}/10</b> • Đúng ${esc(x.correct_count??"—")}/${esc(x.total_questions??"—")}<br>${fmt(x.submitted_at)}</div>${link}</div>`;
+    const link=ass?.show_result
+      ? `<div style="margin-top:8px"><a class="btn soft" href="student-quiz-result-v4-2.html?assignment=${encodeURIComponent(x.assignment_id)}">Xem chi tiết</a></div>`
+      : "";
+
+    return `<div class="item">
+      <b>${esc(title)}</b>
+      <div class="meta">
+        Điểm <b>${esc(x.score??"—")}/10</b> •
+        Đúng ${esc(x.correct_count??"—")}/${esc(x.total_questions??"—")}<br>
+        ${fmt(x.submitted_at)}
+      </div>
+      ${link}
+    </div>`;
   }).join("") || '<div class="item">Em chưa nộp bài kiểm tra nào.</div>';
 }
 
