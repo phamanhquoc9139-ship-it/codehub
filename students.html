@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Quản lý học sinh V3.7.8 | CodeHub</title>
+<title>Quản lý học sinh V3.7.9 | CodeHub</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
@@ -11,8 +11,8 @@
 <body class="bg-slate-50 text-slate-900">
 <main class="max-w-7xl mx-auto p-5">
 <div class="flex flex-wrap justify-between gap-3 mb-5">
-  <div><h1 class="text-3xl font-black">👨‍🎓 Quản lý học sinh <span class="text-violet-600 text-lg">V3.7.8</span></h1>
-  <p class="text-slate-500">Excel có Tên trường + Lớp → tự tạo trường/lớp (Admin) → gán HS đúng class_id.</p></div>
+  <div><h1 class="text-3xl font-black">👨‍🎓 Quản lý học sinh <span class="text-violet-600 text-lg">V3.7.9</span></h1>
+  <p class="text-slate-500">Excel có Tên trường + Lớp → tự tạo trường/lớp • sửa mật khẩu • xuất User/Pass vừa tạo/đổi.</p></div>
   <div class="flex gap-2"><a href="schools.html" id="schoolAdminLink" class="hidden border bg-white px-4 py-2 rounded-xl font-bold">🏫 Trường</a><a href="teacher.html" class="border bg-white px-4 py-2 rounded-xl font-bold">← Dashboard</a></div>
 </div>
 
@@ -25,7 +25,7 @@
       <button id="templateBtn" class="bg-orange-500 text-white px-4 py-2 rounded-xl font-bold">📄 File mẫu</button>
       <button id="importBtn" class="bg-emerald-600 text-white px-4 py-2 rounded-xl font-bold">📥 Nhập Excel</button>
       <button id="exportListBtn" class="bg-cyan-600 text-white px-4 py-2 rounded-xl font-bold">⬇ Xuất DS học sinh</button>
-      <button id="credBtn" disabled class="bg-violet-600 text-white px-4 py-2 rounded-xl font-bold disabled:opacity-40">⬇ Tài khoản vừa tạo</button>
+      <button id="credBtn" disabled class="bg-violet-600 text-white px-4 py-2 rounded-xl font-bold disabled:opacity-40">⬇ User/Pass vừa tạo/đổi</button>
       <button id="addBtn" class="bg-blue-600 text-white px-4 py-2 rounded-xl font-bold">+ Thêm thủ công</button>
     </div>
   </div>
@@ -127,7 +127,7 @@ async function createStudent(){
 
 templateBtn.onclick=()=>{const a=[{"Họ và tên":"Nguyễn Văn A","Mã học sinh":"","Tên trường":"TRƯỜNG THPT PHÚ HÒA","Lớp":"10A1","Năm học":academicYear()},{"Họ và tên":"Trần Thị B","Mã học sinh":"HS010","Tên trường":"TRƯỜNG THPT TRUNG PHÚ","Lớp":"10A1","Năm học":academicYear()}];const wb=XLSX.utils.book_new(),ws=XLSX.utils.json_to_sheet(a);ws["!cols"]=[{wch:28},{wch:18},{wch:30},{wch:12},{wch:14}];XLSX.utils.book_append_sheet(wb,ws,"Danh sach hoc sinh");XLSX.writeFile(wb,"CodeHub_mau_import_hoc_sinh_V3_7_0.xlsx")};
 
-importBtn.onclick=()=>openModal("Nhập học sinh từ Excel • V3.7.8",`<input id="excelFile" type="file" accept=".xlsx,.xls,.csv" class="w-full border p-3 rounded-xl"><p class="text-sm text-slate-500 mt-2">Hỗ trợ 2 loại file: <b>(1)</b> file mẫu có Họ và tên + Tên trường + Lớp; <b>(2)</b> bảng điểm cũ có cột Họ + Tên và Trường/Lớp/Năm học nằm ở phần tiêu đề. Mã HS có thể để trống.</p><div class="flex gap-2 mt-4"><button onclick="previewExcel()" class="bg-blue-600 text-white px-4 py-2 rounded-xl font-bold">Xem trước</button><button id="doImportBtn" onclick="doImport()" disabled class="bg-emerald-600 text-white px-4 py-2 rounded-xl font-bold disabled:opacity-40">Tạo tài khoản</button></div><div id="importStatus" class="mt-3"></div><div id="preview" class="mt-3 overflow-auto"></div>`);
+importBtn.onclick=()=>openModal("Nhập học sinh từ Excel • V3.7.9",`<input id="excelFile" type="file" accept=".xlsx,.xls,.csv" class="w-full border p-3 rounded-xl"><p class="text-sm text-slate-500 mt-2">Hỗ trợ 2 loại file: <b>(1)</b> file mẫu có Họ và tên + Tên trường + Lớp; <b>(2)</b> bảng điểm cũ có cột Họ + Tên và Trường/Lớp/Năm học nằm ở phần tiêu đề. Mã HS có thể để trống.</p><div class="flex gap-2 mt-4"><button onclick="previewExcel()" class="bg-blue-600 text-white px-4 py-2 rounded-xl font-bold">Xem trước</button><button id="doImportBtn" onclick="doImport()" disabled class="bg-emerald-600 text-white px-4 py-2 rounded-xl font-bold disabled:opacity-40">Tạo tài khoản</button></div><div id="importStatus" class="mt-3"></div><div id="preview" class="mt-3 overflow-auto"></div>`);
 
 function colIndex(row,aliases){for(let i=0;i<row.length;i++)if(aliases.includes(header(row[i])))return i;return -1}
 async function previewExcel(){
@@ -439,11 +439,86 @@ exportListBtn.onclick=()=>{
   );
 };
 
-credBtn.onclick=()=>{if(!lastCredentials.length)return;const data=lastCredentials.map((x,i)=>({"STT":i+1,"Họ và tên":x.full_name||"","Mã HS / Username":x.student_code||"","Trường":x.school_name||"","Lớp":x.class_name||"","Mật khẩu":x.password||"","Email":x.email||""}));const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(data),"Tai khoan");XLSX.writeFile(wb,"CodeHub_tai_khoan_hoc_sinh_V3_7_0.xlsx")};
+credBtn.onclick=()=>{
+  if(!lastCredentials.length)return alert("Chưa có tài khoản vừa tạo hoặc vừa đổi mật khẩu trong phiên này.");
+
+  const data=[...lastCredentials]
+    .sort((a,b)=>{
+      const s=String(a.school_name||"").localeCompare(String(b.school_name||""),"vi");
+      const c=String(a.class_name||"").localeCompare(String(b.class_name||""),"vi");
+      return s||c||String(a.full_name||"").localeCompare(String(b.full_name||""),"vi");
+    })
+    .map((x,i)=>({
+      "STT":i+1,
+      "Họ và tên":x.full_name||"",
+      "Mã HS / Username":x.student_code||"",
+      "Trường":x.school_name||"",
+      "Lớp":x.class_name||"",
+      "Năm học":x.school_year||"",
+      "Mật khẩu":x.password||"",
+      "Email":x.email||""
+    }));
+
+  const ws=XLSX.utils.json_to_sheet(data);
+  ws["!cols"]=[
+    {wch:6},{wch:28},{wch:22},{wch:32},
+    {wch:12},{wch:14},{wch:18},{wch:30}
+  ];
+
+  const wb=XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb,ws,"User Pass hoc sinh");
+
+  const d=new Date();
+  const pad=n=>String(n).padStart(2,"0");
+  const date=`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+  XLSX.writeFile(wb,`CodeHub_UserPass_HocSinh_${date}.xlsx`);
+};
+
+
+function rememberCredential(student,password){
+  const item={
+    id:student.id,
+    full_name:student.full_name||"",
+    student_code:student.student_code||"",
+    school_name:student.school_name||"",
+    class_name:student.class_name||"",
+    school_year:student.school_year||"",
+    password:password||"",
+    email:student.email||""
+  };
+
+  const i=lastCredentials.findIndex(x=>x.id===student.id || (x.student_code && x.student_code===student.student_code));
+  if(i>=0)lastCredentials[i]=item;
+  else lastCredentials.push(item);
+
+  credBtn.disabled=lastCredentials.length===0;
+}
 
 function editStudent(id){const x=students.find(z=>z.id===id);if(!x)return;openModal("Sửa học sinh",`<div class="space-y-3"><input id="eName" class="w-full border p-3 rounded-xl" value="${esc(x.full_name)}"><input id="eCode" class="w-full border p-3 rounded-xl" value="${esc(x.student_code)}"><select id="eClass" class="w-full border p-3 rounded-xl">${classOptions(x.class_id)}</select><button onclick="saveStudent('${id}')" class="w-full bg-blue-600 text-white p-3 rounded-xl font-bold">Lưu</button><div id="eMsg"></div></div>`)}
 async function saveStudent(id){const c=classes.find(x=>x.id===eClass.value);if(!c)return eMsg.textContent="Chọn lớp.";try{const r=await callEdge(MANAGE_FUNCTION,{action:"update",studentId:id,fullName:norm(eName.value),studentCode:cls(eCode.value),className:c.class_name});const b=await s.rpc("codehub_v370_bind_student_id",{p_student:id,p_school:c.school_id,p_class:c.id});if(b.error)throw b.error;eMsg.textContent="✓ Đã cập nhật";await reload();setTimeout(closeModal,500)}catch(e){eMsg.textContent="❌ "+e.message}}
-async function resetPassword(id){const pw=prompt("Mật khẩu mới (ít nhất 6 ký tự):");if(!pw)return;if(pw.length<6)return alert("Mật khẩu quá ngắn.");try{await callEdge(MANAGE_FUNCTION,{action:"reset-password",studentId:id,newPassword:pw});alert("Đã đổi mật khẩu.")}catch(e){alert(e.message)}}
+async function resetPassword(id){
+  const st=students.find(z=>z.id===id);
+  if(!st)return alert("Không tìm thấy học sinh.");
+
+  const pw=prompt(`Mật khẩu mới cho ${st.full_name} (${st.student_code}) - ít nhất 6 ký tự:`);
+  if(!pw)return;
+  if(pw.length<6)return alert("Mật khẩu quá ngắn.");
+
+  try{
+    await callEdge(MANAGE_FUNCTION,{
+      action:"reset-password",
+      studentId:id,
+      newPassword:pw
+    });
+
+    // Sau khi đổi mật khẩu thành công, ghi vào danh sách xuất user/pass.
+    rememberCredential(st,pw);
+
+    alert("Đã đổi mật khẩu. Nút 'User/Pass vừa tạo/đổi' đã được bật để xuất Excel.");
+  }catch(e){
+    alert(e.message);
+  }
+}
 async function deleteStudent(id){const x=students.find(z=>z.id===id);if(!x||!confirm(`Xóa ${x.full_name}?`))return;try{await callEdge(MANAGE_FUNCTION,{action:"delete",studentId:id});await reload()}catch(e){alert(e.message)}}
 init();
 </script>
