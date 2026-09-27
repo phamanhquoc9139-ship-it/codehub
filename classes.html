@@ -1,1769 +1,230 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Quản lý lớp học | CodeHub</title>
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="scripts/supabase-config.js"></script>
-
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: Arial, sans-serif;
-      background: #f5f7fb;
-      color: #172033;
-    }
-
-    header {
-      background: white;
-      padding: 18px 32px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid #e5e7eb;
-    }
-
-    .logo {
-      font-size: 28px;
-      font-weight: bold;
-      color: #3182f6;
-    }
-
-    .header-actions {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .container {
-      max-width: 1200px;
-      margin: 40px auto;
-      padding: 0 20px;
-    }
-
-    h1 {
-      font-size: 36px;
-      margin-bottom: 8px;
-    }
-
-    .subtitle {
-      color: #64748b;
-      margin-bottom: 30px;
-    }
-
-    .btn {
-      border: none;
-      background: #3182f6;
-      color: white;
-      padding: 11px 17px;
-      border-radius: 9px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    .btn:hover {
-      opacity: .9;
-    }
-
-    .btn-green {
-      background: #16a34a;
-    }
-
-    .btn-gray {
-      background: #64748b;
-    }
-
-    .btn-red {
-      background: #dc2626;
-    }
-
-    .btn-orange {
-      background: #ea580c;
-    }
-
-    .summary {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
-      margin-bottom: 25px;
-    }
-
-    .summary-card {
-      background: white;
-      padding: 22px;
-      border-radius: 16px;
-      box-shadow: 0 5px 20px rgba(0,0,0,.05);
-    }
-
-    .summary-label {
-      color: #64748b;
-      margin-bottom: 8px;
-    }
-
-    .summary-number {
-      font-size: 32px;
-      font-weight: bold;
-      color: #2563eb;
-    }
-
-    .toolbar {
-      background: white;
-      padding: 18px;
-      border-radius: 16px;
-      box-shadow: 0 5px 20px rgba(0,0,0,.05);
-      display: flex;
-      gap: 12px;
-      margin-bottom: 25px;
-    }
-
-    .toolbar input {
-      flex: 1;
-      border: 1px solid #cbd5e1;
-      padding: 13px 15px;
-      border-radius: 9px;
-      font-size: 16px;
-    }
-
-    .class-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 20px;
-    }
-
-    .class-card {
-      background: white;
-      padding: 25px;
-      border-radius: 17px;
-      box-shadow: 0 5px 20px rgba(0,0,0,.06);
-      border: 1px solid #edf2f7;
-      transition: .2s;
-    }
-
-    .class-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 10px 28px rgba(0,0,0,.1);
-    }
-
-    .class-icon {
-      font-size: 38px;
-      margin-bottom: 13px;
-    }
-
-    .class-name {
-      font-size: 26px;
-      font-weight: bold;
-      margin-bottom: 8px;
-    }
-
-    .school-year {
-      color: #64748b;
-      margin-bottom: 8px;
-    }
-
-    .student-count {
-      color: #475569;
-      margin-bottom: 20px;
-      font-weight: bold;
-    }
-
-    .card-actions {
-      display: flex;
-      gap: 7px;
-      flex-wrap: wrap;
-    }
-
-    .card-actions button {
-      flex: 1;
-      min-width: 70px;
-      border: none;
-      padding: 10px 8px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    .view-btn {
-      background: #3182f6;
-      color: white;
-    }
-
-    .edit-btn {
-      background: #f59e0b;
-      color: white;
-    }
-
-    .delete-btn {
-      background: #ef4444;
-      color: white;
-    }
-
-    .empty,
-    #loading {
-      background: white;
-      padding: 40px;
-      border-radius: 16px;
-      text-align: center;
-      color: #64748b;
-      grid-column: 1 / -1;
-    }
-
-    /* MODAL */
-
-    .modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(15,23,42,.55);
-      z-index: 9999;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
-
-    .modal-box {
-      background: white;
-      width: min(600px, 96%);
-      max-height: 90vh;
-      overflow-y: auto;
-      border-radius: 18px;
-      padding: 26px;
-    }
-
-    .modal-large {
-      width: min(900px, 96%);
-    }
-
-    .modal-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 22px;
-    }
-
-    .modal-title {
-      font-size: 25px;
-      font-weight: bold;
-    }
-
-    .close-btn {
-      width: 38px;
-      height: 38px;
-      border: none;
-      border-radius: 9px;
-      cursor: pointer;
-      font-size: 20px;
-      background: #e2e8f0;
-    }
-
-    .form-group {
-      margin-bottom: 17px;
-    }
-
-    .form-group label {
-      display: block;
-      margin-bottom: 7px;
-      font-weight: bold;
-    }
-
-    .form-group input,
-    .form-group select {
-      width: 100%;
-      padding: 12px 13px;
-      border: 1px solid #cbd5e1;
-      border-radius: 9px;
-      font-size: 16px;
-    }
-
-    .modal-actions {
-      display: flex;
-      justify-content: flex-end;
-      gap: 8px;
-      margin-top: 20px;
-    }
-
-    .message {
-      margin-top: 12px;
-      font-weight: bold;
-      min-height: 20px;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    th {
-      background: #eef5ff;
-      text-align: left;
-      padding: 12px;
-    }
-
-    td {
-      padding: 12px;
-      border-bottom: 1px solid #e5e7eb;
-    }
-
-    .student-code {
-      color: #2563eb;
-      font-weight: bold;
-    }
-
-    .move-select {
-      padding: 8px;
-      border: 1px solid #cbd5e1;
-      border-radius: 7px;
-    }
-
-    .move-btn {
-      border: none;
-      padding: 8px 10px;
-      border-radius: 7px;
-      background: #16a34a;
-      color: white;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    @media(max-width: 750px) {
-      header {
-        flex-direction: column;
-        gap: 12px;
-      }
-
-      .summary {
-        grid-template-columns: 1fr;
-      }
-
-      .toolbar {
-        flex-direction: column;
-      }
-
-      h1 {
-        font-size: 29px;
-      }
-
-      table {
-        font-size: 13px;
-      }
-    }
-  </style>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Quản lý lớp học V3.7.6 | CodeHub</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="scripts/supabase-config.js"></script>
 </head>
-
-<body>
-
-<header>
-
-  <div class="logo">
-    &lt;/&gt; CodeHub
-  </div>
-
-  <div class="header-actions">
-
-    <button class="btn" onclick="goTeacher()">
-      ← Quản trị
-    </button>
-
-    <button class="btn" onclick="goStudents()">
-      👨‍🎓 Học sinh
-    </button>
-
-    <button class="btn" onclick="goHome()">
-      Trang chủ
-    </button>
-
-    <button class="btn" onclick="logout()">
-      Đăng xuất
-    </button>
-
-  </div>
-
-</header>
-
-
-<main class="container">
-
-  <h1>🏫 Quản lý lớp học</h1>
-
-  <p class="subtitle">
-    Tạo lớp, quản lý sĩ số và học sinh theo từng lớp
-  </p>
-
-
-  <div class="summary">
-
-    <div class="summary-card">
-      <div class="summary-label">
-        Tổng số lớp
-      </div>
-      <div class="summary-number" id="totalClasses">
-        0
-      </div>
+<body class="bg-slate-50 text-slate-900">
+<main class="max-w-7xl mx-auto p-5">
+  <div class="flex flex-wrap justify-between gap-3 items-start">
+    <div>
+      <h1 class="text-3xl font-black">🏫 Quản lý lớp học <span class="text-violet-600 text-lg">V3.7.6</span></h1>
+      <p class="text-slate-500 mt-1">Mỗi lớp được xác định bằng Trường + class_id. Tên lớp có thể trùng giữa các trường.</p>
     </div>
-
-    <div class="summary-card">
-      <div class="summary-label">
-        Tổng số học sinh
-      </div>
-      <div class="summary-number" id="totalStudents">
-        0
-      </div>
+    <div class="flex gap-2 flex-wrap">
+      <a id="schoolAdmin" href="schools.html" class="hidden border bg-white px-4 py-2 rounded-xl font-bold">🏫 Trường</a>
+      <a href="students.html" class="border bg-white px-4 py-2 rounded-xl font-bold">👨‍🎓 Học sinh</a>
+      <a href="teacher.html" class="border bg-white px-4 py-2 rounded-xl font-bold">← Dashboard</a>
     </div>
+  </div>
 
-    <div class="summary-card">
-      <div class="summary-label">
-        Trung bình HS / lớp
-      </div>
-      <div class="summary-number" id="averageStudents">
-        0
-      </div>
+  <div id="msg" class="hidden mt-4 p-3 rounded-xl"></div>
+
+  <section class="grid md:grid-cols-3 gap-4 mt-5">
+    <div class="bg-white rounded-2xl shadow p-5"><div class="text-slate-500">Tổng số lớp</div><div id="totalClasses" class="text-3xl font-black mt-1">0</div></div>
+    <div class="bg-white rounded-2xl shadow p-5"><div class="text-slate-500">Tổng số học sinh</div><div id="totalStudents" class="text-3xl font-black mt-1">0</div></div>
+    <div class="bg-white rounded-2xl shadow p-5"><div class="text-slate-500">Trung bình HS / lớp</div><div id="avgStudents" class="text-3xl font-black mt-1">0</div></div>
+  </section>
+
+  <section class="bg-white rounded-2xl shadow p-4 mt-5">
+    <div class="grid md:grid-cols-3 gap-3">
+      <input id="search" class="border rounded-xl p-3" placeholder="🔎 Tìm lớp / trường / năm học">
+      <select id="schoolFilter" class="border rounded-xl p-3"></select>
+      <button id="addBtn" class="bg-emerald-600 text-white rounded-xl p-3 font-bold">+ Tạo lớp mới</button>
     </div>
+  </section>
 
-  </div>
-
-
-  <div class="toolbar">
-
-    <input
-      id="searchInput"
-      type="text"
-      placeholder="🔎 Tìm lớp..."
-    >
-
-    <button id="createClassBtn" class="btn btn-green" onclick="openAddModal()">
-      ➕ Tạo lớp mới
-    </button>
-
-  </div>
-
-
-  <div id="loading">
-    Đang tải dữ liệu lớp học...
-  </div>
-
-  <div id="classGrid" class="class-grid"></div>
-
+  <div id="classGrid" class="grid md:grid-cols-2 xl:grid-cols-3 gap-4 mt-5"></div>
 </main>
 
-
-<!-- ======================================
-     MODAL THÊM LỚP
-====================================== -->
-
-<div id="addModal" class="modal">
-
-  <div class="modal-box">
-
-    <div class="modal-header">
-
-      <div class="modal-title">
-        ➕ Tạo lớp mới
-      </div>
-
-      <button class="close-btn" onclick="closeAddModal()">
-        ×
-      </button>
-
+<div id="modal" class="hidden fixed inset-0 z-50 bg-black/40 p-4 overflow-auto">
+  <div class="max-w-4xl mx-auto mt-8 bg-white rounded-2xl shadow-xl p-5">
+    <div class="flex justify-between gap-3 items-start">
+      <div><h2 id="modalTitle" class="text-2xl font-black"></h2><p id="modalSub" class="text-slate-500 mt-1"></p></div>
+      <button onclick="closeModal()" class="border rounded-xl px-3 py-2">✕</button>
     </div>
-
-
-    <div class="form-group">
-      <label>Tên lớp</label>
-
-      <input
-        id="newClassName"
-        placeholder="Ví dụ: 10A1"
-      >
-    </div>
-
-
-    <div class="form-group">
-      <label>Năm học</label>
-
-      <input
-        id="newSchoolYear"
-        value="2026-2027"
-        placeholder="2026-2027"
-      >
-    </div>
-
-
-    <div id="addMessage" class="message"></div>
-
-
-    <div class="modal-actions">
-
-      <button class="btn btn-gray" onclick="closeAddModal()">
-        Hủy
-      </button>
-
-      <button class="btn btn-green" onclick="createClass()">
-        Tạo lớp
-      </button>
-
-    </div>
-
+    <div id="modalBody" class="mt-4"></div>
   </div>
-
 </div>
-
-
-<!-- ======================================
-     MODAL SỬA LỚP
-====================================== -->
-
-<div id="editModal" class="modal">
-
-  <div class="modal-box">
-
-    <div class="modal-header">
-
-      <div class="modal-title">
-        ✏️ Sửa lớp học
-      </div>
-
-      <button class="close-btn" onclick="closeEditModal()">
-        ×
-      </button>
-
-    </div>
-
-
-    <input type="hidden" id="editClassId">
-    <input type="hidden" id="oldClassName">
-
-
-    <div class="form-group">
-      <label>Tên lớp</label>
-
-      <input id="editClassName">
-    </div>
-
-
-    <div class="form-group">
-      <label>Năm học</label>
-
-      <input id="editSchoolYear">
-    </div>
-
-
-    <div id="editMessage" class="message"></div>
-
-
-    <div class="modal-actions">
-
-      <button class="btn btn-gray" onclick="closeEditModal()">
-        Hủy
-      </button>
-
-      <button class="btn" onclick="updateClass()">
-        💾 Lưu thay đổi
-      </button>
-
-    </div>
-
-  </div>
-
-</div>
-
-
-<!-- ======================================
-     MODAL HỌC SINH
-====================================== -->
-
-<div id="studentsModal" class="modal">
-
-  <div class="modal-box modal-large">
-
-    <div class="modal-header">
-
-      <div>
-
-        <div class="modal-title" id="studentModalTitle">
-          👨‍🎓 Học sinh
-        </div>
-
-        <div
-          id="studentModalCount"
-          style="color:#64748b;margin-top:5px">
-        </div>
-
-      </div>
-
-      <button class="close-btn" onclick="closeStudentsModal()">
-        ×
-      </button>
-
-    </div>
-
-
-    <div style="overflow-x:auto">
-
-      <table>
-
-        <thead>
-          <tr>
-            <th>STT</th>
-            <th>Họ và tên</th>
-            <th>Mã HS</th>
-            <th>Lớp</th>
-            <th>Chuyển lớp</th>
-          </tr>
-        </thead>
-
-        <tbody id="studentTableBody"></tbody>
-
-      </table>
-
-    </div>
-
-  </div>
-
-</div>
-
 
 <script>
+const s=window.supabaseClient,$=x=>document.getElementById(x);
+const esc=v=>String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
+let me,role,classes=[],students=[],schools=[];
 
-let currentUser = null;
-let currentRole = "";
-let classes = [];
-let students = [];
-let currentOpenClass = "";
+function say(t,ok=false){msg.className="mt-4 p-3 rounded-xl "+(ok?"bg-emerald-50 text-emerald-700":"bg-red-50 text-red-700");msg.textContent=t}
+function normClass(v){return String(v||"").trim().replace(/\s+/g,"").toUpperCase()}
+function yearNow(){const d=new Date(),y=d.getFullYear();return d.getMonth()+1>=8?`${y}-${y+1}`:`${y-1}-${y}`}
 
+async function init(){
+  me=(await s.auth.getUser()).data.user;if(!me)return location.href="login.html";
+  const p=await s.from("profiles").select("role").eq("id",me.id).single();
+  role=String(p.data?.role||"").trim().toLowerCase();
+  if(!["admin","teacher"].includes(role))return location.href="index.html";
+  if(role==="admin")schoolAdmin.classList.remove("hidden");
 
-/* ======================================
-   CHUẨN HÓA
-====================================== */
-
-function normalizeClass(value) {
-
-  return String(value || "")
-    .trim()
-    .replace(/\s+/g, "")
-    .toUpperCase();
-
+  search.oninput=render;
+  schoolFilter.onchange=render;
+  addBtn.onclick=openAdd;
+  await reload();
 }
 
+async function reload(){
+  const [cr,sr,sc]=await Promise.all([
+    s.rpc("codehub_v370_classes_for_user"),
+    s.rpc("codehub_v370_students"),
+    s.rpc("codehub_v376_schools_for_user")
+  ]);
+  if(cr.error)return say(cr.error.message);
+  if(sr.error)return say(sr.error.message);
+  if(sc.error)return say(sc.error.message);
 
-function normalizeYear(value) {
+  classes=cr.data||[];
+  students=sr.data||[];
+  schools=sc.data||[];
 
-  return String(value || "")
-    .trim()
-    .replace(/\s+/g, "");
-
+  buildSchoolFilter();
+  updateStats();
+  render();
 }
 
-
-function escapeHTML(value = "") {
-
-  return String(value)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
-
+function buildSchoolFilter(){
+  const old=schoolFilter.value;
+  schoolFilter.innerHTML='<option value="">Tất cả trường</option>'+schools.map(x=>`<option value="${x.id}">${esc(x.school_name)}</option>`).join("");
+  if([...schoolFilter.options].some(o=>o.value===old))schoolFilter.value=old;
 }
 
-
-/* ======================================
-   KHỞI ĐỘNG
-====================================== */
-
-document.addEventListener("DOMContentLoaded", async () => {
-
-  const client = window.supabaseClient;
-
-  if (!client) {
-
-    alert("Không kết nối được Supabase.");
-
-    return;
-
-  }
-
-
-  const {
-    data: { user },
-    error: userError
-  } = await client.auth.getUser();
-
-
-  if (userError || !user) {
-
-    window.location.href = "login.html";
-
-    return;
-
-  }
-
-
-  currentUser = user;
-
-
-  const {
-    data: profile,
-    error: profileError
-  } = await client
-    .from("profiles")
-    .select("role")
-    .eq("id", user.id)
-    .single();
-
-
-  currentRole = String(profile?.role || "").trim().toLowerCase();
-
-  if (
-    profileError ||
-    !profile ||
-    !["teacher", "admin"].includes(currentRole)
-  ) {
-
-    alert("Bạn không có quyền truy cập trang này.");
-
-    window.location.href = "index.html";
-
-    return;
-
-  }
-
-
-  if (currentRole === "teacher") {
-    const createBtn = document.getElementById("createClassBtn");
-    if (createBtn) createBtn.style.display = "none";
-    const subtitle = document.querySelector(".subtitle");
-    if (subtitle) subtitle.textContent = "Các lớp được Quản trị viên phân công cho giáo viên";
-  }
-
-  document
-    .getElementById("searchInput")
-    .addEventListener(
-      "input",
-      renderClasses
-    );
-
-
-  await loadData();
-
-});
-
-
-/* ======================================
-   LOAD DỮ LIỆU
-====================================== */
-
-async function loadData() {
-
-  const client = window.supabaseClient;
-  document.getElementById("loading").style.display = "block";
-
-  try {
-    let classData = [];
-
-    if (currentRole === "admin") {
-      const classResult = await client
-        .from("classes")
-        .select("id, class_name, school_year, teacher_id, created_at")
-        .order("class_name");
-
-      if (classResult.error) throw classResult.error;
-      classData = classResult.data || [];
-
-    } else {
-      // V2.3: Giáo viên xem lớp qua bảng phân công teacher_class_subjects.
-      const assignmentResult = await client
-        .from("teacher_class_subjects")
-        .select("class_id")
-        .eq("teacher_id", currentUser.id);
-
-      if (assignmentResult.error) throw assignmentResult.error;
-
-      const classIds = [...new Set(
-        (assignmentResult.data || [])
-          .map(row => row.class_id)
-          .filter(Boolean)
-      )];
-
-      if (classIds.length > 0) {
-        const classResult = await client
-          .from("classes")
-          .select("id, class_name, school_year, teacher_id, created_at")
-          .in("id", classIds)
-          .order("class_name");
-
-        if (classResult.error) throw classResult.error;
-        classData = classResult.data || [];
-      }
-    }
-
-    // Chỉ lấy học sinh thuộc những lớp đang được phép xem.
-    const allowedClassNames = new Set(
-      classData.map(c => normalizeClass(c.class_name))
-    );
-
-    const studentResult = await client
-      .from("profiles")
-      .select("id, full_name, student_code, class_name, role")
-      .eq("role", "student")
-      .order("class_name")
-      .order("full_name");
-
-    if (studentResult.error) throw studentResult.error;
-
-    classes = classData;
-    students = (studentResult.data || []).filter(student =>
-      allowedClassNames.has(normalizeClass(student.class_name))
-    );
-
-    updateStatistics();
-    renderClasses();
-
-  } catch (error) {
-    console.error(error);
-    alert("Không tải được dữ liệu lớp học: " + (error?.message || error));
-  } finally {
-    document.getElementById("loading").style.display = "none";
-  }
+function studentsOf(classId){
+  return students.filter(x=>x.class_id===classId);
 }
 
-
-/* ======================================
-   THỐNG KÊ
-====================================== */
-
-function getStudentCount(className) {
-
-  const name = normalizeClass(className);
-
-  return students.filter(
-    student =>
-      normalizeClass(student.class_name) === name
-  ).length;
-
+function updateStats(){
+  const total=classes.length;
+  const ids=new Set(classes.map(x=>x.id));
+  const st=students.filter(x=>ids.has(x.class_id));
+  totalClasses.textContent=total;
+  totalStudents.textContent=st.length;
+  avgStudents.textContent=total?(st.length/total).toFixed(1):"0";
 }
 
+function render(){
+  const q=search.value.trim().toLowerCase();
+  const sid=schoolFilter.value;
+  const data=classes.filter(x=>{
+    if(sid && x.school_id!==sid)return false;
+    if(!q)return true;
+    return [x.school_name,x.class_name,x.school_year].some(v=>String(v||"").toLowerCase().includes(q));
+  });
 
-function updateStatistics() {
-
-  const totalClasses = classes.length;
-
-  const totalStudents = students.length;
-
-  const average =
-    totalClasses > 0
-      ? (totalStudents / totalClasses).toFixed(1)
-      : "0";
-
-
-  document.getElementById("totalClasses").textContent =
-    totalClasses;
-
-  document.getElementById("totalStudents").textContent =
-    totalStudents;
-
-  document.getElementById("averageStudents").textContent =
-    average;
-
-}
-
-
-/* ======================================
-   HIỂN THỊ LỚP
-====================================== */
-
-function renderClasses() {
-
-  const search =
-    document
-      .getElementById("searchInput")
-      .value
-      .trim()
-      .toUpperCase();
-
-
-  const grid =
-    document.getElementById("classGrid");
-
-
-  grid.innerHTML = "";
-
-
-  const filtered =
-    classes.filter(item => {
-
-      const text =
-        (
-          String(item.class_name || "") +
-          " " +
-          String(item.school_year || "")
-        ).toUpperCase();
-
-      return text.includes(search);
-
-    });
-
-
-  if (filtered.length === 0) {
-
-    grid.innerHTML = `
-      <div class="empty">
-        Không tìm thấy lớp học.
+  classGrid.innerHTML=data.map(x=>{
+    const n=studentsOf(x.id).length;
+    return `<section class="bg-white rounded-2xl shadow p-5 border">
+      <div class="text-sm font-bold text-blue-700">${esc(x.school_name)}</div>
+      <div class="text-3xl font-black mt-2">${esc(x.class_name)}</div>
+      <div class="text-slate-500 mt-2">📅 Năm học: ${esc(x.school_year||"—")}</div>
+      <div class="font-bold mt-2">👨‍🎓 ${n} học sinh</div>
+      <div class="grid grid-cols-3 gap-2 mt-5">
+        <button onclick="viewClass('${x.id}')" class="bg-blue-600 text-white rounded-xl py-2 font-bold">Xem</button>
+        <button onclick="editClass('${x.id}')" class="bg-amber-500 text-white rounded-xl py-2 font-bold">Sửa</button>
+        <button onclick="deleteClass('${x.id}')" class="bg-red-600 text-white rounded-xl py-2 font-bold">Xóa</button>
       </div>
-    `;
-
-    return;
-
-  }
-
-
-  filtered.forEach(item => {
-
-    const className =
-      normalizeClass(item.class_name);
-
-    const count =
-      getStudentCount(className);
-
-
-    const card =
-      document.createElement("div");
-
-    card.className = "class-card";
-
-
-    const icon =
-      document.createElement("div");
-
-    icon.className = "class-icon";
-    icon.textContent = "🏫";
-
-
-    const name =
-      document.createElement("div");
-
-    name.className = "class-name";
-    name.textContent = className;
-
-
-    const year =
-      document.createElement("div");
-
-    year.className = "school-year";
-    year.textContent =
-      "📅 Năm học: " +
-      (item.school_year || "Chưa cập nhật");
-
-
-    const countDiv =
-      document.createElement("div");
-
-    countDiv.className = "student-count";
-    countDiv.textContent =
-      "👨‍🎓 " +
-      count +
-      " học sinh";
-
-
-    const actions =
-      document.createElement("div");
-
-    actions.className = "card-actions";
-
-
-    const viewButton =
-      document.createElement("button");
-
-    viewButton.className = "view-btn";
-    viewButton.textContent = "👨‍🎓 Xem";
-
-    viewButton.onclick = () =>
-      openStudentsModal(className);
-
-
-    const editButton =
-      document.createElement("button");
-
-    editButton.className = "edit-btn";
-    editButton.textContent = "✏️ Sửa";
-
-    editButton.onclick = () =>
-      openEditModal(item);
-
-
-    const deleteButton =
-      document.createElement("button");
-
-    deleteButton.className = "delete-btn";
-    deleteButton.textContent = "🗑️ Xóa";
-
-    deleteButton.onclick = () =>
-      deleteClass(item);
-
-
-    actions.appendChild(viewButton);
-
-    // V2.3: chỉ Admin được sửa/xóa cấu trúc lớp.
-    if (currentRole === "admin") {
-      actions.appendChild(editButton);
-      actions.appendChild(deleteButton);
-    }
-
-    card.appendChild(icon);
-    card.appendChild(name);
-    card.appendChild(year);
-    card.appendChild(countDiv);
-    card.appendChild(actions);
-
-    grid.appendChild(card);
-
-  });
-
+    </section>`;
+  }).join("")||'<div class="col-span-full bg-white p-8 rounded-2xl text-center text-slate-500">Không tìm thấy lớp.</div>';
 }
 
+function openModal(title,sub,body){
+  modalTitle.textContent=title;modalSub.textContent=sub||"";modalBody.innerHTML=body;modal.classList.remove("hidden");
+}
+function closeModal(){modal.classList.add("hidden")}
 
-/* ======================================
-   THÊM LỚP
-====================================== */
-
-function openAddModal() {
-
-  if (currentRole !== "admin") {
-    alert("Chỉ Quản trị viên được tạo lớp.");
-    return;
-  }
-
-  document.getElementById("newClassName").value = "";
-
-  document.getElementById("newSchoolYear").value =
-    "2026-2027";
-
-  document.getElementById("addMessage").textContent = "";
-
-  document.getElementById("addModal").style.display =
-    "flex";
-
+function schoolOptions(selected=""){
+  return schools.map(x=>`<option value="${x.id}" ${x.id===selected?"selected":""}>${esc(x.school_name)}</option>`).join("");
 }
 
-
-function closeAddModal() {
-
-  document.getElementById("addModal").style.display =
-    "none";
-
+function openAdd(){
+  openModal("➕ Tạo lớp mới","Lớp cùng tên ở hai trường khác nhau là hợp lệ.",`
+    <div class="space-y-3">
+      <label class="block font-bold">Trường<select id="mSchool" class="block w-full border rounded-xl p-3 mt-1"><option value="">-- Chọn trường --</option>${schoolOptions()}</select></label>
+      <label class="block font-bold">Tên lớp<input id="mClass" class="block w-full border rounded-xl p-3 mt-1" placeholder="12A3"></label>
+      <label class="block font-bold">Năm học<input id="mYear" class="block w-full border rounded-xl p-3 mt-1" value="${yearNow()}"></label>
+      <button onclick="createClass()" class="w-full bg-emerald-600 text-white rounded-xl p-3 font-bold">Tạo lớp</button>
+      <div id="mMsg"></div>
+    </div>`);
 }
 
-
-async function createClass() {
-
-  if (currentRole !== "admin") {
-    alert("Chỉ Quản trị viên được tạo lớp.");
-    return;
-  }
-
-  const className =
-    normalizeClass(
-      document.getElementById("newClassName").value
-    );
-
-  const schoolYear =
-    normalizeYear(
-      document.getElementById("newSchoolYear").value
-    );
-
-  const message =
-    document.getElementById("addMessage");
-
-
-  if (!className) {
-
-    message.style.color = "#dc2626";
-
-    message.textContent =
-      "Vui lòng nhập tên lớp.";
-
-    return;
-
-  }
-
-
-  if (!schoolYear) {
-
-    message.style.color = "#dc2626";
-
-    message.textContent =
-      "Vui lòng nhập năm học.";
-
-    return;
-
-  }
-
-
-  message.style.color = "#2563eb";
-  message.textContent = "Đang tạo lớp...";
-
-
-  const {
-    error
-  } = await window.supabaseClient
-    .from("classes")
-    .insert({
-      class_name: className,
-      school_year: schoolYear,
-      teacher_id: currentUser.id
-    });
-
-
-  if (error) {
-
-    message.style.color = "#dc2626";
-
-    if (
-      error.code === "23505" ||
-      String(error.message).includes("duplicate")
-    ) {
-
-      message.textContent =
-        "Lớp " +
-        className +
-        " đã tồn tại.";
-
-    } else {
-
-      message.textContent =
-        "Không tạo được lớp: " +
-        error.message;
-
-    }
-
-    return;
-
-  }
-
-
-  closeAddModal();
-
-  await loadData();
-
+async function createClass(){
+  const sid=mSchool.value,name=normClass(mClass.value),year=mYear.value.trim();
+  if(!sid||!name)return mMsg.textContent="Chọn trường và nhập tên lớp.";
+  const r=await s.rpc("codehub_v376_create_class",{p_school:sid,p_class_name:name,p_school_year:year});
+  if(r.error)return mMsg.textContent="❌ "+r.error.message;
+  mMsg.innerHTML='<span class="text-emerald-700 font-bold">✓ Đã tạo lớp.</span>';
+  await reload();setTimeout(closeModal,500);
 }
 
-
-/* ======================================
-   SỬA LỚP
-====================================== */
-
-function openEditModal(item) {
-
-  if (currentRole !== "admin") {
-    alert("Chỉ Quản trị viên được sửa lớp.");
-    return;
-  }
-
-  document.getElementById("editClassId").value =
-    item.id;
-
-  document.getElementById("oldClassName").value =
-    normalizeClass(item.class_name);
-
-  document.getElementById("editClassName").value =
-    normalizeClass(item.class_name);
-
-  document.getElementById("editSchoolYear").value =
-    item.school_year || "";
-
-  document.getElementById("editMessage").textContent =
-    "";
-
-  document.getElementById("editModal").style.display =
-    "flex";
-
+function editClass(id){
+  const x=classes.find(z=>z.id===id);if(!x)return;
+  openModal("✏️ Sửa lớp",`${x.school_name} • ${x.class_name}`,`
+    <div class="space-y-3">
+      <label class="block font-bold">Trường<select id="eSchool" class="block w-full border rounded-xl p-3 mt-1">${schoolOptions(x.school_id)}</select></label>
+      <label class="block font-bold">Tên lớp<input id="eClass" class="block w-full border rounded-xl p-3 mt-1" value="${esc(x.class_name)}"></label>
+      <label class="block font-bold">Năm học<input id="eYear" class="block w-full border rounded-xl p-3 mt-1" value="${esc(x.school_year||yearNow())}"></label>
+      <button onclick="saveClass('${id}')" class="w-full bg-blue-600 text-white rounded-xl p-3 font-bold">Lưu thay đổi</button>
+      <div id="eMsg"></div>
+    </div>`);
+}
+async function saveClass(id){
+  const r=await s.rpc("codehub_v376_update_class",{p_class:id,p_school:eSchool.value,p_class_name:normClass(eClass.value),p_school_year:eYear.value.trim()});
+  if(r.error)return eMsg.textContent="❌ "+r.error.message;
+  eMsg.innerHTML='<span class="text-emerald-700 font-bold">✓ Đã cập nhật.</span>';
+  await reload();setTimeout(closeModal,500);
 }
 
+function viewClass(id){
+  const x=classes.find(z=>z.id===id);if(!x)return;
+  const list=studentsOf(id);
+  const targets=classes.filter(c=>c.id!==id);
 
-function closeEditModal() {
-
-  document.getElementById("editModal").style.display =
-    "none";
-
+  openModal(`👨‍🎓 Lớp ${x.class_name}`,`${x.school_name} • ${x.school_year||"—"} • ${list.length} học sinh`,`
+    <div class="overflow-auto">
+      <table class="w-full text-sm">
+        <thead class="bg-slate-100"><tr><th class="p-3">STT</th><th class="p-3 text-left">Họ và tên</th><th class="p-3">Mã HS</th><th class="p-3 text-left">Trường</th><th class="p-3">Lớp</th><th class="p-3">Chuyển lớp</th></tr></thead>
+        <tbody>${list.map((st,i)=>`<tr class="border-t">
+          <td class="p-3 text-center">${i+1}</td>
+          <td class="p-3 font-semibold">${esc(st.full_name)}</td>
+          <td class="p-3 text-center text-blue-600 font-bold">${esc(st.student_code)}</td>
+          <td class="p-3">${esc(st.school_name)}</td>
+          <td class="p-3 text-center">${esc(st.class_name)}</td>
+          <td class="p-3"><div class="flex gap-2"><select id="mv_${st.id}" class="border rounded-lg p-2 min-w-52"><option value="">-- Chọn Trường • Lớp --</option>${targets.map(c=>`<option value="${c.id}">${esc(c.school_name)} • ${esc(c.class_name)} • ${esc(c.school_year||"")}</option>`).join("")}</select><button onclick="moveStudent('${st.id}')" class="bg-emerald-600 text-white rounded-lg px-3 font-bold">Chuyển</button></div></td>
+        </tr>`).join("")||'<tr><td colspan="6" class="p-8 text-center text-slate-500">Lớp chưa có học sinh.</td></tr>'}</tbody>
+      </table>
+    </div>`);
 }
 
-
-async function updateClass() {
-
-  if (currentRole !== "admin") {
-    alert("Chỉ Quản trị viên được sửa lớp.");
-    return;
-  }
-
-  const id =
-    document.getElementById("editClassId").value;
-
-  const oldName =
-    normalizeClass(
-      document.getElementById("oldClassName").value
-    );
-
-  const newName =
-    normalizeClass(
-      document.getElementById("editClassName").value
-    );
-
-  const schoolYear =
-    normalizeYear(
-      document.getElementById("editSchoolYear").value
-    );
-
-  const message =
-    document.getElementById("editMessage");
-
-
-  if (!newName || !schoolYear) {
-
-    message.style.color = "#dc2626";
-
-    message.textContent =
-      "Vui lòng nhập đầy đủ thông tin.";
-
-    return;
-
-  }
-
-
-  message.style.color = "#2563eb";
-
-  message.textContent =
-    "Đang cập nhật...";
-
-
-  /* CẬP NHẬT BẢNG CLASSES */
-
-  const {
-    error: classError
-  } = await window.supabaseClient
-    .from("classes")
-    .update({
-      class_name: newName,
-      school_year: schoolYear
-    })
-    .eq("id", id)
-    .eq("teacher_id", currentUser.id);
-
-
-  if (classError) {
-
-    message.style.color = "#dc2626";
-
-    if (classError.code === "23505") {
-
-      message.textContent =
-        "Tên lớp này đã tồn tại.";
-
-    } else {
-
-      message.textContent =
-        "Không sửa được lớp: " +
-        classError.message;
-
-    }
-
-    return;
-
-  }
-
-
-  /* NẾU ĐỔI TÊN LỚP
-     CẬP NHẬT HỌC SINH THEO */
-
-  if (oldName !== newName) {
-
-    const {
-      error: studentError
-    } = await window.supabaseClient
-      .from("profiles")
-      .update({
-        class_name: newName
-      })
-      .eq("role", "student")
-      .eq("class_name", oldName);
-
-
-    if (studentError) {
-
-      message.style.color = "#dc2626";
-
-      message.textContent =
-        "Đã sửa tên lớp nhưng chưa cập nhật được học sinh: " +
-        studentError.message;
-
-      return;
-
-    }
-
-  }
-
-
-  closeEditModal();
-
-  await loadData();
-
+async function moveStudent(studentId){
+  const sel=document.getElementById("mv_"+studentId);
+  const target=classes.find(x=>x.id===sel?.value);
+  const st=students.find(x=>x.id===studentId);
+  if(!target)return alert("Chọn lớp cần chuyển.");
+  if(!confirm(`Chuyển ${st?.full_name||"học sinh"} sang ${target.school_name} • ${target.class_name}?`))return;
+  const r=await s.rpc("codehub_v370_bind_student_id",{p_student:studentId,p_school:target.school_id,p_class:target.id});
+  if(r.error)return alert(r.error.message);
+  await reload();closeModal();say("Đã chuyển học sinh đúng class_id.",true);
 }
 
-
-/* ======================================
-   XÓA LỚP
-====================================== */
-
-async function deleteClass(item) {
-
-  if (currentRole !== "admin") {
-    alert("Chỉ Quản trị viên được xóa lớp.");
-    return;
-  }
-
-  const className =
-    normalizeClass(item.class_name);
-
-  const count =
-    getStudentCount(className);
-
-
-  if (count > 0) {
-
-    alert(
-      "⚠️ Lớp " +
-      className +
-      " đang có " +
-      count +
-      " học sinh.\n\n" +
-      "Hãy chuyển học sinh sang lớp khác trước khi xóa."
-    );
-
-    return;
-
-  }
-
-
-  const confirmed =
-    confirm(
-      "Bạn có chắc muốn xóa lớp " +
-      className +
-      "?"
-    );
-
-
-  if (!confirmed) {
-    return;
-  }
-
-
-  const {
-    error
-  } = await window.supabaseClient
-    .from("classes")
-    .delete()
-    .eq("id", item.id)
-    .eq("teacher_id", currentUser.id);
-
-
-  if (error) {
-
-    alert(
-      "❌ Không xóa được lớp: " +
-      error.message
-    );
-
-    return;
-
-  }
-
-
-  await loadData();
-
+async function deleteClass(id){
+  const x=classes.find(z=>z.id===id);if(!x)return;
+  const n=studentsOf(id).length;
+  if(n)return alert(`Lớp ${x.school_name} • ${x.class_name} còn ${n} học sinh. Hãy chuyển HS trước.`);
+  if(!confirm(`Xóa ${x.school_name} • ${x.class_name}?`))return;
+  const r=await s.rpc("codehub_v376_delete_class",{p_class:id});
+  if(r.error)return alert(r.error.message);
+  await reload();say("Đã xóa lớp.",true);
 }
 
-
-/* ======================================
-   XEM HỌC SINH
-====================================== */
-
-function openStudentsModal(className) {
-
-  currentOpenClass =
-    normalizeClass(className);
-
-
-  document.getElementById("studentModalTitle").textContent =
-    "👨‍🎓 Lớp " +
-    currentOpenClass;
-
-
-  renderStudentsInClass();
-
-
-  document.getElementById("studentsModal").style.display =
-    "flex";
-
-}
-
-
-function closeStudentsModal() {
-
-  document.getElementById("studentsModal").style.display =
-    "none";
-
-  currentOpenClass = "";
-
-}
-
-
-function renderStudentsInClass() {
-
-  const list =
-    students.filter(
-      student =>
-        normalizeClass(student.class_name) ===
-        currentOpenClass
-    );
-
-
-  document.getElementById("studentModalCount").textContent =
-    list.length +
-    " học sinh";
-
-
-  const tbody =
-    document.getElementById("studentTableBody");
-
-
-  tbody.innerHTML = "";
-
-
-  if (list.length === 0) {
-
-    const tr =
-      document.createElement("tr");
-
-    const td =
-      document.createElement("td");
-
-    td.colSpan = 5;
-
-    td.style.textAlign = "center";
-    td.style.color = "#64748b";
-    td.style.padding = "25px";
-
-    td.textContent =
-      "Lớp này chưa có học sinh.";
-
-    tr.appendChild(td);
-    tbody.appendChild(tr);
-
-    return;
-
-  }
-
-
-  list.forEach((student, index) => {
-
-    const tr =
-      document.createElement("tr");
-
-
-    const tdIndex =
-      document.createElement("td");
-
-    tdIndex.textContent =
-      index + 1;
-
-
-    const tdName =
-      document.createElement("td");
-
-    tdName.textContent =
-      student.full_name || "";
-
-
-    const tdCode =
-      document.createElement("td");
-
-    tdCode.className =
-      "student-code";
-
-    tdCode.textContent =
-      student.student_code || "";
-
-
-    const tdClass =
-      document.createElement("td");
-
-    tdClass.textContent =
-      normalizeClass(student.class_name);
-
-
-    const tdMove =
-      document.createElement("td");
-
-    if (currentRole !== "admin") {
-      tdMove.textContent = "Chỉ xem";
-      tr.appendChild(tdIndex);
-      tr.appendChild(tdName);
-      tr.appendChild(tdCode);
-      tr.appendChild(tdClass);
-      tr.appendChild(tdMove);
-      tbody.appendChild(tr);
-      return;
-    }
-
-
-    const select =
-      document.createElement("select");
-
-    select.className =
-      "move-select";
-
-
-    const placeholder =
-      document.createElement("option");
-
-    placeholder.value = "";
-
-    placeholder.textContent =
-      "Chọn lớp";
-
-    select.appendChild(placeholder);
-
-
-    classes
-      .filter(
-        item =>
-          normalizeClass(item.class_name) !==
-          currentOpenClass
-      )
-      .forEach(item => {
-
-        const option =
-          document.createElement("option");
-
-        option.value =
-          normalizeClass(item.class_name);
-
-        option.textContent =
-          normalizeClass(item.class_name);
-
-        select.appendChild(option);
-
-      });
-
-
-    const moveButton =
-      document.createElement("button");
-
-    moveButton.className =
-      "move-btn";
-
-    moveButton.textContent =
-      "Chuyển";
-
-
-    moveButton.onclick =
-      () =>
-        moveStudent(
-          student,
-          select.value
-        );
-
-
-    tdMove.appendChild(select);
-
-    tdMove.appendChild(
-      document.createTextNode(" ")
-    );
-
-    tdMove.appendChild(moveButton);
-
-
-    tr.appendChild(tdIndex);
-    tr.appendChild(tdName);
-    tr.appendChild(tdCode);
-    tr.appendChild(tdClass);
-    tr.appendChild(tdMove);
-
-    tbody.appendChild(tr);
-
-  });
-
-}
-
-
-/* ======================================
-   CHUYỂN HỌC SINH
-====================================== */
-
-async function moveStudent(
-  student,
-  targetClass
-) {
-
-  if (currentRole !== "admin") {
-    alert("Chỉ Quản trị viên được chuyển lớp học sinh.");
-    return;
-  }
-
-  targetClass =
-    normalizeClass(targetClass);
-
-
-  if (!targetClass) {
-
-    alert(
-      "Vui lòng chọn lớp cần chuyển."
-    );
-
-    return;
-
-  }
-
-
-  const confirmed =
-    confirm(
-      "Chuyển học sinh " +
-      (student.full_name || "") +
-      " sang lớp " +
-      targetClass +
-      "?"
-    );
-
-
-  if (!confirmed) {
-    return;
-  }
-
-
-  const {
-    error
-  } = await window.supabaseClient
-    .from("profiles")
-    .update({
-      class_name: targetClass
-    })
-    .eq("id", student.id)
-    .eq("role", "student");
-
-
-  if (error) {
-
-    alert(
-      "❌ Không chuyển được học sinh: " +
-      error.message
-    );
-
-    return;
-
-  }
-
-
-  alert(
-    "✅ Đã chuyển " +
-    (student.full_name || "học sinh") +
-    " sang lớp " +
-    targetClass +
-    "."
-  );
-
-
-  await loadData();
-
-
-  if (currentOpenClass) {
-
-    renderStudentsInClass();
-
-  }
-
-}
-
-
-/* ======================================
-   ĐIỀU HƯỚNG
-====================================== */
-
-function goTeacher() {
-
-  window.location.href =
-    "teacher.html";
-
-}
-
-
-function goStudents() {
-
-  window.location.href =
-    "students.html";
-
-}
-
-
-function goHome() {
-
-  window.location.href =
-    "index.html";
-
-}
-
-
-/* ======================================
-   ĐĂNG XUẤT
-====================================== */
-
-async function logout() {
-
-  await window
-    .supabaseClient
-    .auth
-    .signOut();
-
-  window.location.href =
-    "login.html";
-
-}
-
-
-/* ======================================
-   CLICK NGOÀI MODAL
-====================================== */
-
-[
-  "addModal",
-  "editModal",
-  "studentsModal"
-].forEach(id => {
-
-  const modal =
-    document.getElementById(id);
-
-  modal.addEventListener(
-    "click",
-    event => {
-
-      if (event.target === modal) {
-
-        modal.style.display =
-          "none";
-
-      }
-
-    }
-  );
-
-});
-
+init();
 </script>
-
 </body>
 </html>
