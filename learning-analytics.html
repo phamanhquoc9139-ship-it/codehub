@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Learning Analytics V3.6.7 | CodeHub</title>
+<title>Learning Analytics V3.6.8 | CodeHub</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
@@ -21,7 +21,7 @@
     <div>
       <div class="flex gap-3 items-center">
         <h1 class="text-3xl font-black">📈 Phân tích học tập</h1>
-        <span class="px-2 py-1 rounded-full text-xs bg-violet-100 text-violet-700 font-black">V3.6.7</span>
+        <span class="px-2 py-1 rounded-full text-xs bg-violet-100 text-violet-700 font-black">V3.6.8</span>
       </div>
       <p class="text-slate-500 mt-1">Theo dõi mức độ hoàn thành, kết quả và báo cáo chính xác theo trường được chọn.</p>
     </div>
@@ -608,6 +608,10 @@ $("pdfBtn").onclick=async()=>{
     const esc2=v=>esc(v);
     const schoolText=schools.join(" • ")||"—";
     const scopeText=$("reportScope").textContent||"Toàn bộ dữ liệu trong phạm vi tài khoản";
+    const scopeWithoutSchool=scopeText
+      .replace(/^Trường:\s*[^•]+\s*•?\s*/,"")
+      .replace(/^Tất cả trường:\s*[^•]+\s*•?\s*/,"")
+      .trim();
     const generated=new Date().toLocaleString("vi-VN");
 
     const schoolBlocks=(()=>{
@@ -690,7 +694,7 @@ $("pdfBtn").onclick=async()=>{
     <div class="brand">CODEHUB</div>
     <div class="title">BÁO CÁO PHÂN TÍCH HỌC TẬP</div>
     <div class="school-title">${esc2(schoolText)}</div>
-    <div class="scope">${esc2(scopeText)}</div>
+    ${scopeWithoutSchool?`<div class="scope">${esc2(scopeWithoutSchool)}</div>`:""}
   </div>
 
   <div class="meta-row">
@@ -726,7 +730,7 @@ $("pdfBtn").onclick=async()=>{
     <div class="brand">CODEHUB</div>
     <div class="title" style="font-size:19px">BIỂU ĐỒ PHÂN TÍCH</div>
     <div class="school-title">${esc2(schoolText)}</div>
-    <div class="scope">${esc2(scopeText.replace(/^Trường:\s*[^•]+\s*•?\s*/,""))}</div>
+    ${scopeWithoutSchool?`<div class="scope">${esc2(scopeWithoutSchool)}</div>`:""}
   </div>
 
   <div class="chart-grid">
@@ -753,7 +757,7 @@ $("pdfBtn").onclick=async()=>{
     <div class="brand">CODEHUB</div>
     <div class="title" style="font-size:19px">DANH SÁCH HỌC SINH</div>
     <div class="school-title">${esc2(schoolText)}</div>
-    <div class="scope">${esc2(scopeText.replace(/^Trường:\s*[^•]+\s*•?\s*/,""))}</div>
+    ${scopeWithoutSchool?`<div class="scope">${esc2(scopeWithoutSchool)}</div>`:""}
   </div>
 
   <div class="section-title">🏆 Học sinh kết quả cao</div>
