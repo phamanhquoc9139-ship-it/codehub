@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Quản lý học sinh V3.7.4 | CodeHub</title>
+<title>Quản lý học sinh V3.7.5 | CodeHub</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
@@ -11,7 +11,7 @@
 <body class="bg-slate-50 text-slate-900">
 <main class="max-w-7xl mx-auto p-5">
 <div class="flex flex-wrap justify-between gap-3 mb-5">
-  <div><h1 class="text-3xl font-black">👨‍🎓 Quản lý học sinh <span class="text-violet-600 text-lg">V3.7.4</span></h1>
+  <div><h1 class="text-3xl font-black">👨‍🎓 Quản lý học sinh <span class="text-violet-600 text-lg">V3.7.5</span></h1>
   <p class="text-slate-500">Excel có Tên trường + Lớp → tự tạo trường/lớp (Admin) → gán HS đúng class_id.</p></div>
   <div class="flex gap-2"><a href="schools.html" id="schoolAdminLink" class="hidden border bg-white px-4 py-2 rounded-xl font-bold">🏫 Trường</a><a href="teacher.html" class="border bg-white px-4 py-2 rounded-xl font-bold">← Dashboard</a></div>
 </div>
@@ -113,7 +113,7 @@ async function createStudent(){
 
 templateBtn.onclick=()=>{const a=[{"Họ và tên":"Nguyễn Văn A","Mã học sinh":"","Tên trường":"TRƯỜNG THPT PHÚ HÒA","Lớp":"10A1","Năm học":academicYear()},{"Họ và tên":"Trần Thị B","Mã học sinh":"HS010","Tên trường":"TRƯỜNG THPT TRUNG PHÚ","Lớp":"10A1","Năm học":academicYear()}];const wb=XLSX.utils.book_new(),ws=XLSX.utils.json_to_sheet(a);ws["!cols"]=[{wch:28},{wch:18},{wch:30},{wch:12},{wch:14}];XLSX.utils.book_append_sheet(wb,ws,"Danh sach hoc sinh");XLSX.writeFile(wb,"CodeHub_mau_import_hoc_sinh_V3_7_0.xlsx")};
 
-importBtn.onclick=()=>openModal("Nhập học sinh từ Excel",`<input id="excelFile" type="file" accept=".xlsx,.xls,.csv" class="w-full border p-3 rounded-xl"><p class="text-sm text-slate-500 mt-2">Hỗ trợ 2 loại file: <b>(1)</b> file mẫu có Họ và tên + Tên trường + Lớp; <b>(2)</b> bảng điểm cũ có cột Họ + Tên và Trường/Lớp/Năm học nằm ở phần tiêu đề. Mã HS có thể để trống.</p><div class="flex gap-2 mt-4"><button onclick="previewExcel()" class="bg-blue-600 text-white px-4 py-2 rounded-xl font-bold">Xem trước</button><button id="doImportBtn" onclick="doImport()" disabled class="bg-emerald-600 text-white px-4 py-2 rounded-xl font-bold disabled:opacity-40">Tạo tài khoản</button></div><div id="importStatus" class="mt-3"></div><div id="preview" class="mt-3 overflow-auto"></div>`);
+importBtn.onclick=()=>openModal("Nhập học sinh từ Excel • V3.7.5",`<input id="excelFile" type="file" accept=".xlsx,.xls,.csv" class="w-full border p-3 rounded-xl"><p class="text-sm text-slate-500 mt-2">Hỗ trợ 2 loại file: <b>(1)</b> file mẫu có Họ và tên + Tên trường + Lớp; <b>(2)</b> bảng điểm cũ có cột Họ + Tên và Trường/Lớp/Năm học nằm ở phần tiêu đề. Mã HS có thể để trống.</p><div class="flex gap-2 mt-4"><button onclick="previewExcel()" class="bg-blue-600 text-white px-4 py-2 rounded-xl font-bold">Xem trước</button><button id="doImportBtn" onclick="doImport()" disabled class="bg-emerald-600 text-white px-4 py-2 rounded-xl font-bold disabled:opacity-40">Tạo tài khoản</button></div><div id="importStatus" class="mt-3"></div><div id="preview" class="mt-3 overflow-auto"></div>`);
 
 function colIndex(row,aliases){for(let i=0;i<row.length;i++)if(aliases.includes(header(row[i])))return i;return -1}
 async function previewExcel(){
@@ -126,6 +126,13 @@ async function previewExcel(){
   const m=XLSX.utils.sheet_to_json(ws,{
     header:1,defval:"",raw:false,blankrows:false
   });
+
+  // Đọc trực tiếp các ô tiêu đề phổ biến của sổ điểm cũ.
+  // File "Bảng điểm cá nhân. (5).xlsx":
+  // A1 = SỞ... + Trường THPT Phú Hòa
+  // A3 = BẢNG ĐIỂM... + LỚP: 12A3 ... NĂM HỌC: 2025-2026
+  const directA1=String(ws["A1"]?.v ?? ws["A1"]?.w ?? "");
+  const directA3=String(ws["A3"]?.v ?? ws["A3"]?.w ?? "");
 
   // Làm sạch text Excel cũ: _x000d_ thường xuất hiện trong file Sổ điểm.
   const cleanCell=v=>String(v??"")
@@ -145,6 +152,32 @@ async function previewExcel(){
   // ------------------------------------------------------
   let metaSchool="",metaClass="",metaYear="";
 
+  // Ưu tiên đọc trực tiếp A1/A3 vì đây là cấu trúc thật của file Sổ điểm.
+  const d1=cleanCell(directA1);
+  const d3=cleanCell(directA3);
+
+  if(d1){
+    const lines=d1.split("\n").map(x=>x.trim()).filter(Boolean);
+    for(const line of lines){
+      const up=line.toUpperCase();
+      const pos=up.indexOf("THPT");
+      if(pos>=0){
+        metaSchool=school("TRƯỜNG "+line.slice(pos));
+        break;
+      }
+    }
+  }
+
+  if(d3){
+    const f3=fold(d3);
+    const cm=f3.match(/lop\s*[:：]?\s*([a-z0-9._-]+)/i);
+    if(cm)metaClass=cls(cm[1]);
+
+    const ym=d3.match(/(\d{4})\s*[-–]\s*(\d{4})/);
+    if(ym)metaYear=`${ym[1]}-${ym[2]}`;
+  }
+
+  // Nếu A1/A3 không đúng cấu trúc thì quét toàn bộ vùng tiêu đề như trước.
   for(let r=0;r<Math.min(15,m.length);r++){
     for(let c=0;c<m[r].length;c++){
       const raw=cleanCell(m[r][c]);
@@ -269,7 +302,7 @@ async function previewExcel(){
 
   if(!pending.length){
     throw new Error(
-      `Không đọc được học sinh. Nhận diện hiện tại: Trường=${metaSchool||"?"}, Lớp=${metaClass||"?"}, Năm học=${metaYear||"?"}.`
+      `Không đọc được học sinh. Nhận diện: Trường=${metaSchool||"?"}, Lớp=${metaClass||"?"}, Năm học=${metaYear||"?"}. A1=${cleanCell(directA1).slice(0,80)}`
     );
   }
 
