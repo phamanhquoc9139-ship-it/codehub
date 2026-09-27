@@ -1,7 +1,7 @@
 <!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Quản lý tài khoản V3.7.16 | CodeHub</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="scripts/supabase-config.js"></script>
+<title>Quản lý tài khoản V3.7.16.1 | CodeHub</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="scripts/supabase-config.js"></script>
 <style>*{box-sizing:border-box}body{margin:0;font-family:Arial;background:#f4f7fb;color:#0f172a}header{background:#fff;padding:20px 3%;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #ddd}main{width:94%;margin:25px auto}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.card,.box{background:#fff;border-radius:18px;padding:22px}.num{font-size:38px;font-weight:800}.tools{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}.tools input,.tools select,input,select{padding:13px;border:1px solid #cbd5e1;border-radius:10px;font-size:16px}.tools input{flex:1}.btn{border:0;border-radius:11px;padding:13px 17px;font-weight:700;font-size:15px;cursor:pointer}.blue{background:#2563eb;color:#fff}.green{background:#059669;color:#fff}.orange{background:#f97316;color:#fff}.red{background:#dc2626;color:#fff}.white{background:#fff;border:1px solid #cbd5e1}.table{overflow:auto;background:#fff;border-radius:18px}table{width:100%;border-collapse:collapse;min-width:1050px}th,td{padding:14px;border-bottom:1px solid #e5e7eb;text-align:left}th{background:#eef3f9}.badge{padding:5px 9px;border-radius:20px;font-weight:700}.teacher{background:#dbeafe;color:#1d4ed8}.student{background:#dcfce7;color:#15803d}.admin{background:#ede9fe;color:#6d28d9}.modal{display:none;position:fixed;inset:0;background:#0007;align-items:center;justify-content:center;z-index:10}.modal.on{display:flex}.dialog{background:#fff;width:min(650px,94%);border-radius:18px;padding:25px;max-height:90vh;overflow:auto}.grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}.field{display:flex;flex-direction:column;gap:6px}.field.full{grid-column:1/-1}.subjects{display:flex;gap:10px;flex-wrap:wrap}.subject{background:#f1f5f9;padding:9px;border-radius:9px}.assign{background:#eff6ff;border:1px solid #bfdbfe;color:#1d4ed8}.classbox{display:block}.schoolgroup{margin:12px 0 16px;border:1px solid #dbe3ee;border-radius:14px;overflow:hidden}.schooltitle{background:#eaf2ff;color:#1d4ed8;font-weight:800;padding:11px 13px}.schoolclasses{display:flex;gap:10px;flex-wrap:wrap;padding:12px}.classitem{background:#f1f5f9;padding:10px 12px;border-radius:10px;display:inline-flex;gap:8px;align-items:center}.classitem small{color:#64748b}.assignhint{font-size:13px;color:#64748b;margin-top:6px}.schoolfilter{width:100%}#msg{margin:12px 0;color:#b91c1c;font-weight:700}@media(max-width:700px){.cards,.grid{grid-template-columns:1fr}.field.full{grid-column:auto}}</style></head>
-<body><header><div><h1>👥 Quản lý tài khoản <small style="font-size:16px;color:#2563eb">V3.7.16</small></h1><div>Admin • giáo viên • học sinh</div></div><div><button class="btn white" onclick="location.href='teacher.html'">← Quản trị</button> <button class="btn blue" id="logout">Đăng xuất</button></div></header>
+<body><header><div><h1>👥 Quản lý tài khoản <small style="font-size:16px;color:#2563eb">V3.7.16.1</small></h1><div>Admin • giáo viên • học sinh</div></div><div><button class="btn white" onclick="location.href='teacher.html'">← Quản trị</button> <button class="btn blue" id="logout">Đăng xuất</button></div></header>
 <main><div class="cards"><div class="card">Tổng tài khoản<div class="num" id="total">—</div></div><div class="card">👨‍🏫 Giáo viên<div class="num" id="teachers">—</div></div><div class="card">👨‍🎓 Học sinh<div class="num" id="students">—</div></div></div>
 <div class="tools"><input id="search" placeholder="🔎 Tìm họ tên, email, mã, lớp..."><select id="role"><option value="">Tất cả vai trò</option><option value="admin">Admin</option><option value="teacher">Giáo viên</option><option value="student">Học sinh</option></select><button class="btn green" id="add">＋ Thêm giáo viên</button><button class="btn orange" id="export">⬇ Xuất CSV</button><button class="btn blue" id="reload">↻ Làm mới</button></div><div id="msg"></div>
 <div class="table"><table><thead><tr><th>STT</th><th>Họ tên</th><th>Email</th><th>Mã</th><th>Lớp</th><th>Môn phụ trách</th><th>Vai trò</th><th>Thao tác</th></tr></thead><tbody id="rows"></tbody></table></div></main>
@@ -34,29 +34,36 @@ async function openAssign(id){try{
  let a=accounts.find(x=>x.id===id);
  $("assignTeacher").textContent=(a?.full_name||"Giáo viên")+" • "+(a?.student_code||"");
 
- let [{data:cs,error:ce},{data:ss,error:se},{data:as,error:ae}]=await Promise.all([
-   window.supabaseClient.from("classes")
-     .select("id,class_name,school_year,school_id")
-     .order("class_name"),
-   window.supabaseClient.from("schools")
-     .select("id,school_name")
-     .order("school_name"),
+ let [{data:cs,error:ce},{data:as,error:ae}]=await Promise.all([
+   // V3.7.16.1: dùng RPC SECURITY DEFINER đa trường.
+   // Tránh SELECT trực tiếp bảng schools bị RLS chặn.
+   window.supabaseClient.rpc("codehub_v370_classes_for_user"),
    window.supabaseClient.from("teacher_class_subjects")
      .select("teacher_id,subject_id,class_id")
      .eq("teacher_id",id)
  ]);
 
  if(ce)throw ce;
- if(se)throw se;
  if(ae)throw ae;
 
- schools=ss||[];
- const schoolMap=Object.fromEntries(schools.map(s=>[String(s.id),s.school_name||"—"]));
-
  classes=(cs||[]).map(c=>({
-   ...c,
-   school_name: schoolMap[String(c.school_id)] || "—"
+   id:c.id,
+   class_name:c.class_name||"",
+   school_year:c.school_year||"",
+   school_id:c.school_id||null,
+   school_name:c.school_name||"—"
  }));
+
+ schools=[...new Map(
+   classes
+     .filter(c=>c.school_id)
+     .map(c=>[String(c.school_id),{
+       id:c.school_id,
+       school_name:c.school_name||"—"
+     }])
+ ).values()].sort((a,b)=>
+   String(a.school_name||"").localeCompare(String(b.school_name||""),"vi")
+ );
 
  assignments=as||[];
 
