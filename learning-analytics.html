@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Learning Analytics V3.6.4 | CodeHub</title>
+<title>Learning Analytics V3.6.5 | CodeHub</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
@@ -21,12 +21,12 @@
     <div>
       <div class="flex gap-3 items-center">
         <h1 class="text-3xl font-black">📈 Phân tích học tập</h1>
-        <span class="px-2 py-1 rounded-full text-xs bg-violet-100 text-violet-700 font-black">V3.6.4</span>
+        <span class="px-2 py-1 rounded-full text-xs bg-violet-100 text-violet-700 font-black">V3.6.5</span>
       </div>
       <p class="text-slate-500 mt-1">Theo dõi mức độ hoàn thành, kết quả và báo cáo chính xác theo trường được chọn.</p>
     </div>
     <div class="flex gap-2">
-      <button id="pdfBtn" class="bg-violet-600 text-white px-4 py-2 rounded-xl font-bold">⬇ Báo cáo PDF có biểu đồ</button>
+      <button id="pdfBtn" class="bg-violet-600 text-white px-4 py-2 rounded-xl font-bold">⬇ Báo cáo PDF chuyên nghiệp</button>
       <button id="excelBtn" class="bg-emerald-600 text-white px-4 py-2 rounded-xl font-bold">⬇ Xuất Excel</button>
       <a href="teacher.html" class="border bg-white px-4 py-2 rounded-xl font-bold">← Dashboard</a>
     </div>
@@ -571,103 +571,225 @@ $("pdfBtn").onclick=async()=>{
   if(!rows.length)return alert("Không có dữ liệu để xuất PDF.");
 
   const b=$("pdfBtn"),old=b.textContent;
-  b.disabled=true;b.textContent="⏳ Đang tạo PDF...";
+  b.disabled=true;b.textContent="⏳ Đang tạo PDF đẹp...";
 
   try{
-    // Đợi browser hoàn tất render Chart.js trước khi chụp canvas
     await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
 
-    // Chụp biểu đồ trên web thành ảnh PNG
+    // 1) Chụp biểu đồ thành PNG để PDF luôn giữ hình.
     const chartImages={};
     for(const id of ["scoreChart","classChart","trendChart"]){
       const c=$(id);
       if(c && c.toDataURL){
-        try{
-          chartImages[id]=c.toDataURL("image/png",1.0);
-        }catch(e){
-          console.warn("Không chụp được biểu đồ",id,e);
-        }
+        try{ chartImages[id]=c.toDataURL("image/png",1.0); }
+        catch(e){ console.warn("Không chụp được",id,e); }
       }
     }
 
-    // Clone phần báo cáo, sau đó thay canvas bằng ảnh chụp.
-    const cloned=$("pdfReport").cloneNode(true);
-    cloned.id="pdfReportClone";
+    const done=completedRows();
+    const scores=done.map(x=>num(x.score));
+    const avg=scores.length?(scores.reduce((a,b)=>a+b,0)/scores.length):null;
+    const max=scores.length?Math.max(...scores):null;
+    const completion=rows.length?done.length/rows.length*100:0;
 
-    for(const id of ["scoreChart","classChart","trendChart"]){
-      const canvas=cloned.querySelector("#"+id);
-      if(canvas && chartImages[id]){
-        const img=document.createElement("img");
-        img.src=chartImages[id];
-        img.alt=id;
-        img.style.width="100%";
-        img.style.maxWidth="100%";
-        img.style.height="auto";
-        img.style.display="block";
-        img.style.margin="0 auto";
-        img.style.objectFit="contain";
-        canvas.replaceWith(img);
+    const schools=[...new Set(rows.map(x=>x.school_name).filter(Boolean))].sort((a,b)=>a.localeCompare(b,"vi"));
+    const years=[...new Set(rows.map(x=>x.school_year).filter(Boolean))].sort();
+    const subjects=[...new Set(rows.map(x=>x.subject_name).filter(Boolean))].sort((a,b)=>a.localeCompare(b,"vi"));
+    const classes=[...new Set(rows.map(x=>x.class_name).filter(Boolean))].sort((a,b)=>a.localeCompare(b,"vi"));
+
+    const studentAgg=aggregateStudents();
+    const top=studentAgg.filter(x=>x.avg!==null).sort((a,b)=>b.avg-a.avg || b.rate-a.rate).slice(0,10);
+    const need=studentAgg.filter(x=>(x.avg!==null&&x.avg<5)||x.done<x.total)
+      .sort((a,b)=>{
+        const aa=a.avg===null?-1:a.avg, bb=b.avg===null?-1:b.avg;
+        return aa-bb || a.rate-b.rate;
+      }).slice(0,15);
+
+    const esc2=v=>esc(v);
+    const schoolText=schools.join(" • ")||"—";
+    const scopeText=$("reportScope").textContent||"Toàn bộ dữ liệu trong phạm vi tài khoản";
+    const generated=new Date().toLocaleString("vi-VN");
+
+    const schoolBlocks=(()=>{
+      const mp=new Map();
+      for(const x of rows){
+        const key=x.school_name||"TRƯỜNG THPT PHÚ HÒA";
+        if(!mp.has(key))mp.set(key,{name:key,years:new Set(),total:0,done:0,scores:[]});
+        const o=mp.get(key);
+        if(x.school_year)o.years.add(x.school_year);
+        o.total++;
+        if(x.completed&&x.score!==null&&x.score!==undefined){o.done++;o.scores.push(num(x.score));}
       }
-    }
+      return [...mp.values()].map(o=>{
+        const av=o.scores.length?o.scores.reduce((a,b)=>a+b,0)/o.scores.length:null;
+        const rt=o.total?o.done/o.total*100:0;
+        return `<div class="school-card">
+          <div>
+            <div class="school-name">${esc2(o.name)}</div>
+            <div class="muted">Năm học: ${esc2([...o.years].sort().join(", ")||"—")}</div>
+          </div>
+          <div class="right">
+            <div><b>${o.done}/${o.total}</b> hoàn thành (${rt.toFixed(1)}%)</div>
+            <div>Điểm TB: <b>${av===null?"—":av.toFixed(2)}</b></div>
+          </div>
+        </div>`;
+      }).join("");
+    })();
 
-    // Tránh cắt các khối biểu đồ giữa hai trang PDF
-    cloned.querySelectorAll("section").forEach(x=>{
-      x.style.breakInside="avoid";
-      x.style.pageBreakInside="avoid";
-    });
+    const topRows=top.map((o,i)=>`<tr>
+      <td>${i+1}</td><td class="left"><b>${esc2(o.name)}</b><div class="muted tiny">${esc2(o.code)}</div></td>
+      <td>${esc2(o.class_name)}</td><td>${o.done}/${o.total}</td><td><b>${o.avg===null?"—":o.avg.toFixed(2)}</b></td>
+    </tr>`).join("");
 
-    const schools=[...new Set(rows.map(x=>x.school_name).filter(Boolean))];
-    const filename="CodeHub_Bao_cao_Phan_tich_hoc_tap_V3_6_4.pdf";
+    const needRows=need.map((o,i)=>`<tr>
+      <td>${i+1}</td><td class="left"><b>${esc2(o.name)}</b><div class="muted tiny">${esc2(o.code)}</div></td>
+      <td>${esc2(o.class_name)}</td><td>${o.done}/${o.total}</td><td><b>${o.avg===null?"—":o.avg.toFixed(2)}</b></td>
+    </tr>`).join("");
 
     const report=document.createElement("div");
-    report.style.background="#fff";
-    report.style.padding="18px";
-    report.style.fontFamily="Arial, sans-serif";
-
+    report.className="pdf-document";
     report.innerHTML=`
-      <div style="text-align:center;margin-bottom:20px">
-        <div style="font-weight:800;font-size:20px">CODEHUB</div>
-        <div style="font-weight:800;font-size:24px;margin-top:6px">BÁO CÁO PHÂN TÍCH HỌC TẬP</div>
-        <div style="margin-top:8px;font-weight:700">${esc(schools.join(" • "))}</div>
-        <div style="margin-top:8px">${esc($("reportScope").textContent)}</div>
-        <div style="font-size:12px;color:#64748b;margin-top:4px">${esc($("reportGenerated").textContent)}</div>
-      </div>
+<style>
+  .pdf-document{font-family:Arial,sans-serif;color:#0f172a;background:white}
+  .pdf-page{width:190mm;min-height:275mm;box-sizing:border-box;padding:13mm 12mm 12mm 12mm;background:white;position:relative;page-break-after:always}
+  .pdf-page:last-child{page-break-after:auto}
+  .pdf-head{text-align:center;border-bottom:2px solid #0f172a;padding-bottom:10px;margin-bottom:14px}
+  .brand{font-size:17px;font-weight:900;letter-spacing:.8px}
+  .title{font-size:23px;font-weight:900;margin-top:6px}
+  .school-title{font-size:14px;font-weight:800;margin-top:6px}
+  .scope{font-size:11px;color:#64748b;margin-top:5px}
+  .meta-row{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:10px 0 13px}
+  .meta{border:1px solid #e2e8f0;border-radius:10px;padding:8px 10px;background:#f8fafc}
+  .meta-label{font-size:9px;color:#64748b;text-transform:uppercase;letter-spacing:.4px}
+  .meta-value{font-size:12px;font-weight:800;margin-top:2px}
+  .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0 14px}
+  .kpi{border:1px solid #dbe3ee;border-radius:10px;padding:10px 11px;min-height:48px}
+  .kpi-label{font-size:10px;color:#475569}
+  .kpi-value{font-size:20px;font-weight:900;margin-top:3px}
+  .section-title{font-size:16px;font-weight:900;margin:14px 0 8px;display:flex;align-items:center;gap:6px}
+  .school-card{display:flex;justify-content:space-between;gap:16px;border:1px solid #dbe3ee;border-radius:10px;padding:9px 11px;margin-bottom:7px}
+  .school-name{font-weight:900;font-size:12px}
+  .right{text-align:right;font-size:10px;line-height:1.45}
+  .muted{color:#64748b;font-size:10px}
+  .tiny{font-size:8.5px}
+  .chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .chart-card{border:1px solid #dbe3ee;border-radius:12px;padding:10px;break-inside:avoid}
+  .chart-card h3{font-size:13px;margin:0 0 7px;font-weight:900}
+  .chart-card img{width:100%;height:72mm;object-fit:contain;display:block}
+  .chart-wide{border:1px solid #dbe3ee;border-radius:12px;padding:10px;margin-top:10px}
+  .chart-wide img{width:100%;height:78mm;object-fit:contain;display:block}
+  table{width:100%;border-collapse:collapse;font-size:9.5px}
+  th,td{border:1px solid #dbe3ee;padding:6px 6px;text-align:center;vertical-align:middle}
+  th{background:#f1f5f9;font-weight:900}
+  .left{text-align:left}
+  .footer{position:absolute;left:12mm;right:12mm;bottom:6mm;border-top:1px solid #e2e8f0;padding-top:4px;display:flex;justify-content:space-between;font-size:8.5px;color:#64748b}
+</style>
 
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;page-break-inside:avoid">
-        <div style="border:1px solid #ddd;padding:10px"><b>Lượt cần hoàn thành</b><div>${esc($("kpiTarget").textContent)}</div></div>
-        <div style="border:1px solid #ddd;padding:10px"><b>Đã hoàn thành</b><div>${esc($("kpiDone").textContent)}</div></div>
-        <div style="border:1px solid #ddd;padding:10px"><b>Tỷ lệ hoàn thành</b><div>${esc($("kpiRate").textContent)}</div></div>
-        <div style="border:1px solid #ddd;padding:10px"><b>Điểm trung bình</b><div>${esc($("kpiAvg").textContent)}</div></div>
-        <div style="border:1px solid #ddd;padding:10px"><b>Điểm cao nhất</b><div>${esc($("kpiMax").textContent)}</div></div>
-        <div style="border:1px solid #ddd;padding:10px"><b>Cần hỗ trợ (&lt;5)</b><div>${esc($("kpiNeed").textContent)}</div></div>
-      </div>
-    `;
+<div class="pdf-page">
+  <div class="pdf-head">
+    <div class="brand">CODEHUB</div>
+    <div class="title">BÁO CÁO PHÂN TÍCH HỌC TẬP</div>
+    <div class="school-title">${esc2(schoolText)}</div>
+    <div class="scope">${esc2(scopeText)}</div>
+  </div>
 
-    report.appendChild(cloned);
+  <div class="meta-row">
+    <div class="meta"><div class="meta-label">Năm học</div><div class="meta-value">${esc2(years.join(", ")||"—")}</div></div>
+    <div class="meta"><div class="meta-label">Môn học</div><div class="meta-value">${esc2(subjects.join(", ")||"Tất cả môn")}</div></div>
+    <div class="meta"><div class="meta-label">Lớp</div><div class="meta-value">${esc2(classes.join(", ")||"Tất cả lớp")}</div></div>
+  </div>
+
+  <div class="kpis">
+    <div class="kpi"><div class="kpi-label">Lượt cần hoàn thành</div><div class="kpi-value">${rows.length}</div></div>
+    <div class="kpi"><div class="kpi-label">Đã hoàn thành</div><div class="kpi-value">${done.length}</div></div>
+    <div class="kpi"><div class="kpi-label">Tỷ lệ hoàn thành</div><div class="kpi-value">${completion.toFixed(1)}%</div></div>
+    <div class="kpi"><div class="kpi-label">Điểm trung bình</div><div class="kpi-value">${avg===null?"—":avg.toFixed(2)}</div></div>
+    <div class="kpi"><div class="kpi-label">Điểm cao nhất</div><div class="kpi-value">${max===null?"—":max.toFixed(2)}</div></div>
+    <div class="kpi"><div class="kpi-label">Cần hỗ trợ (&lt;5)</div><div class="kpi-value">${done.filter(x=>num(x.score)<5).length}</div></div>
+  </div>
+
+  <div class="section-title">🏫 Thống kê theo trường</div>
+  ${schoolBlocks||'<div class="muted">Chưa có dữ liệu.</div>'}
+
+  <div class="section-title">📌 Nhận định nhanh</div>
+  <div class="meta" style="line-height:1.55">
+    <div>• Hoàn thành: <b>${done.length}/${rows.length}</b> lượt (${completion.toFixed(1)}%).</div>
+    <div>• Điểm trung bình: <b>${avg===null?"—":avg.toFixed(2)}</b>; điểm cao nhất: <b>${max===null?"—":max.toFixed(2)}</b>.</div>
+    <div>• Có <b>${done.filter(x=>num(x.score)<5).length}</b> lượt dưới 5 điểm trong dữ liệu đã hoàn thành.</div>
+  </div>
+
+  <div class="footer"><span>CodeHub • Báo cáo phân tích học tập</span><span>Trang 1/3 • ${esc2(generated)}</span></div>
+</div>
+
+<div class="pdf-page">
+  <div class="pdf-head">
+    <div class="brand">CODEHUB</div>
+    <div class="title" style="font-size:19px">BIỂU ĐỒ PHÂN TÍCH</div>
+    <div class="scope">${esc2(schoolText)} • ${esc2(scopeText)}</div>
+  </div>
+
+  <div class="chart-grid">
+    <div class="chart-card">
+      <h3>🎯 Phân bố điểm</h3>
+      ${chartImages.scoreChart?`<img src="${chartImages.scoreChart}">`:'<div class="muted">Không có biểu đồ.</div>'}
+    </div>
+    <div class="chart-card">
+      <h3>🏫 So sánh theo lớp</h3>
+      ${chartImages.classChart?`<img src="${chartImages.classChart}">`:'<div class="muted">Không có biểu đồ.</div>'}
+    </div>
+  </div>
+
+  <div class="chart-wide">
+    <h3 style="font-size:13px;margin:0 0 7px;font-weight:900">📉 Tiến bộ qua các bài kiểm tra</h3>
+    ${chartImages.trendChart?`<img src="${chartImages.trendChart}">`:'<div class="muted">Không có biểu đồ.</div>'}
+  </div>
+
+  <div class="footer"><span>CodeHub • Biểu đồ phân tích</span><span>Trang 2/3 • ${esc2(generated)}</span></div>
+</div>
+
+<div class="pdf-page">
+  <div class="pdf-head">
+    <div class="brand">CODEHUB</div>
+    <div class="title" style="font-size:19px">DANH SÁCH HỌC SINH</div>
+    <div class="scope">${esc2(schoolText)} • ${esc2(scopeText)}</div>
+  </div>
+
+  <div class="section-title">🏆 Học sinh kết quả cao</div>
+  <table>
+    <thead><tr><th>STT</th><th class="left">Học sinh</th><th>Lớp</th><th>Hoàn thành</th><th>Điểm TB</th></tr></thead>
+    <tbody>${topRows||'<tr><td colspan="5">Chưa có dữ liệu.</td></tr>'}</tbody>
+  </table>
+
+  <div class="section-title" style="margin-top:16px">🆘 Học sinh cần hỗ trợ</div>
+  <table>
+    <thead><tr><th>STT</th><th class="left">Học sinh</th><th>Lớp</th><th>Hoàn thành</th><th>Điểm TB</th></tr></thead>
+    <tbody>${needRows||'<tr><td colspan="5">Chưa có học sinh thuộc nhóm cần hỗ trợ.</td></tr>'}</tbody>
+  </table>
+
+  <div class="footer"><span>CodeHub • Danh sách học sinh</span><span>Trang 3/3 • ${esc2(generated)}</span></div>
+</div>
+`;
+
     document.body.appendChild(report);
 
-    // Chờ ảnh PNG trong bản clone tải xong
     const imgs=[...report.querySelectorAll("img")];
-    await Promise.all(imgs.map(img=>img.complete
-      ? Promise.resolve()
-      : new Promise(resolve=>{
-          img.onload=resolve;
-          img.onerror=resolve;
-        })
-    ));
+    await Promise.all(imgs.map(img=>img.complete?Promise.resolve():new Promise(resolve=>{
+      img.onload=resolve; img.onerror=resolve;
+    })));
 
+    const filename="CodeHub_Bao_cao_Phan_tich_hoc_tap_V3_6_5.pdf";
     await html2pdf().set({
-      margin:[8,8,8,8],
+      margin:0,
       filename,
-      image:{type:"jpeg",quality:.98},
+      image:{type:"jpeg",quality:.99},
       html2canvas:{
-        scale:1.8,
+        scale:1.65,
         useCORS:true,
         backgroundColor:"#ffffff",
         logging:false
       },
       jsPDF:{unit:"mm",format:"a4",orientation:"portrait"},
-      pagebreak:{mode:["css","legacy"],avoid:["section",".avoid-break"]}
+      pagebreak:{mode:["css","legacy"],before:".pdf-page:not(:first-child)"}
     }).from(report).save();
 
     report.remove();
