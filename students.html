@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Quản lý học sinh V3.7.5 | CodeHub</title>
+<title>Quản lý học sinh V3.7.8 | CodeHub</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
@@ -11,7 +11,7 @@
 <body class="bg-slate-50 text-slate-900">
 <main class="max-w-7xl mx-auto p-5">
 <div class="flex flex-wrap justify-between gap-3 mb-5">
-  <div><h1 class="text-3xl font-black">👨‍🎓 Quản lý học sinh <span class="text-violet-600 text-lg">V3.7.5</span></h1>
+  <div><h1 class="text-3xl font-black">👨‍🎓 Quản lý học sinh <span class="text-violet-600 text-lg">V3.7.8</span></h1>
   <p class="text-slate-500">Excel có Tên trường + Lớp → tự tạo trường/lớp (Admin) → gán HS đúng class_id.</p></div>
   <div class="flex gap-2"><a href="schools.html" id="schoolAdminLink" class="hidden border bg-white px-4 py-2 rounded-xl font-bold">🏫 Trường</a><a href="teacher.html" class="border bg-white px-4 py-2 rounded-xl font-bold">← Dashboard</a></div>
 </div>
@@ -24,6 +24,7 @@
     <div class="flex flex-wrap gap-2">
       <button id="templateBtn" class="bg-orange-500 text-white px-4 py-2 rounded-xl font-bold">📄 File mẫu</button>
       <button id="importBtn" class="bg-emerald-600 text-white px-4 py-2 rounded-xl font-bold">📥 Nhập Excel</button>
+      <button id="exportListBtn" class="bg-cyan-600 text-white px-4 py-2 rounded-xl font-bold">⬇ Xuất DS học sinh</button>
       <button id="credBtn" disabled class="bg-violet-600 text-white px-4 py-2 rounded-xl font-bold disabled:opacity-40">⬇ Tài khoản vừa tạo</button>
       <button id="addBtn" class="bg-blue-600 text-white px-4 py-2 rounded-xl font-bold">+ Thêm thủ công</button>
     </div>
@@ -91,10 +92,23 @@ function buildClassFilter(){
  classFilter.innerHTML='<option value="">Tất cả lớp</option>'+list.map(x=>`<option value="${x.id}">${esc(x.class_name)}${x.school_year?` (${esc(x.school_year)})`:""}</option>`).join("");
  if([...classFilter.options].some(o=>o.value===old))classFilter.value=old;
 }
-function render(){
+function filteredStudents(){
  const q=search.value.trim().toLowerCase(),sc=schoolFilter.value,cid=classFilter.value;
- const data=students.filter(x=>(!sc||x.school_name===sc)&&(!cid||x.class_id===cid)&&(!q||String(x.full_name).toLowerCase().includes(q)||String(x.student_code).toLowerCase().includes(q)));
- count.textContent=`Tổng số học sinh: ${students.length}`;
+ return students
+   .filter(x=>(!sc||x.school_name===sc)&&(!cid||x.class_id===cid)&&(!q||String(x.full_name).toLowerCase().includes(q)||String(x.student_code).toLowerCase().includes(q)))
+   .sort((a,b)=>{
+     const s=String(a.school_name||"").localeCompare(String(b.school_name||""),"vi");
+     const c=String(a.class_name||"").localeCompare(String(b.class_name||""),"vi");
+     return s||c||String(a.full_name||"").localeCompare(String(b.full_name||""),"vi");
+   });
+}
+
+function render(){
+ const data=filteredStudents();
+ count.textContent=data.length===students.length
+   ? `Tổng số học sinh: ${students.length}`
+   : `Đang hiển thị: ${data.length} / ${students.length} học sinh`;
+
  rows.innerHTML=data.map((x,i)=>`<tr class="border-t"><td class="p-3 text-center">${i+1}</td><td class="p-3 font-semibold">${esc(x.full_name)}</td><td class="p-3 text-center">${esc(x.student_code)}</td><td class="p-3">${esc(x.school_name)}</td><td class="p-3 text-center">${esc(x.class_name)}</td><td class="p-3 text-center">${esc(x.school_year||"—")}</td><td class="p-3 text-center"><button class="text-blue-600 font-bold" onclick="editStudent('${x.id}')">Sửa</button> · <button class="text-amber-600 font-bold" onclick="resetPassword('${x.id}')">Mật khẩu</button> · <button class="text-red-600 font-bold" onclick="deleteStudent('${x.id}')">Xóa</button></td></tr>`).join("")||'<tr><td colspan="7" class="p-8 text-center text-slate-500">Không có học sinh.</td></tr>';
 }
 function openModal(title,body){modalTitle.textContent=title;modalBody.innerHTML=body;modal.classList.remove("hidden")}
@@ -113,7 +127,7 @@ async function createStudent(){
 
 templateBtn.onclick=()=>{const a=[{"Họ và tên":"Nguyễn Văn A","Mã học sinh":"","Tên trường":"TRƯỜNG THPT PHÚ HÒA","Lớp":"10A1","Năm học":academicYear()},{"Họ và tên":"Trần Thị B","Mã học sinh":"HS010","Tên trường":"TRƯỜNG THPT TRUNG PHÚ","Lớp":"10A1","Năm học":academicYear()}];const wb=XLSX.utils.book_new(),ws=XLSX.utils.json_to_sheet(a);ws["!cols"]=[{wch:28},{wch:18},{wch:30},{wch:12},{wch:14}];XLSX.utils.book_append_sheet(wb,ws,"Danh sach hoc sinh");XLSX.writeFile(wb,"CodeHub_mau_import_hoc_sinh_V3_7_0.xlsx")};
 
-importBtn.onclick=()=>openModal("Nhập học sinh từ Excel • V3.7.5",`<input id="excelFile" type="file" accept=".xlsx,.xls,.csv" class="w-full border p-3 rounded-xl"><p class="text-sm text-slate-500 mt-2">Hỗ trợ 2 loại file: <b>(1)</b> file mẫu có Họ và tên + Tên trường + Lớp; <b>(2)</b> bảng điểm cũ có cột Họ + Tên và Trường/Lớp/Năm học nằm ở phần tiêu đề. Mã HS có thể để trống.</p><div class="flex gap-2 mt-4"><button onclick="previewExcel()" class="bg-blue-600 text-white px-4 py-2 rounded-xl font-bold">Xem trước</button><button id="doImportBtn" onclick="doImport()" disabled class="bg-emerald-600 text-white px-4 py-2 rounded-xl font-bold disabled:opacity-40">Tạo tài khoản</button></div><div id="importStatus" class="mt-3"></div><div id="preview" class="mt-3 overflow-auto"></div>`);
+importBtn.onclick=()=>openModal("Nhập học sinh từ Excel • V3.7.8",`<input id="excelFile" type="file" accept=".xlsx,.xls,.csv" class="w-full border p-3 rounded-xl"><p class="text-sm text-slate-500 mt-2">Hỗ trợ 2 loại file: <b>(1)</b> file mẫu có Họ và tên + Tên trường + Lớp; <b>(2)</b> bảng điểm cũ có cột Họ + Tên và Trường/Lớp/Năm học nằm ở phần tiêu đề. Mã HS có thể để trống.</p><div class="flex gap-2 mt-4"><button onclick="previewExcel()" class="bg-blue-600 text-white px-4 py-2 rounded-xl font-bold">Xem trước</button><button id="doImportBtn" onclick="doImport()" disabled class="bg-emerald-600 text-white px-4 py-2 rounded-xl font-bold disabled:opacity-40">Tạo tài khoản</button></div><div id="importStatus" class="mt-3"></div><div id="preview" class="mt-3 overflow-auto"></div>`);
 
 function colIndex(row,aliases){for(let i=0;i<row.length;i++)if(aliases.includes(header(row[i])))return i;return -1}
 async function previewExcel(){
@@ -372,6 +386,59 @@ async function doImport(){
  }catch(e){importStatus.textContent="❌ "+(e.message||e)}
  finally{doImportBtn.disabled=false}
 }
+
+function safeFilePart(v){
+  return String(v||"")
+    .normalize("NFD").replace(/[\u0300-\u036f]/g,"")
+    .replace(/Đ/g,"D").replace(/đ/g,"d")
+    .replace(/[^A-Za-z0-9_-]+/g,"_")
+    .replace(/^_+|_+$/g,"")
+    .slice(0,60) || "Tat_ca";
+}
+
+exportListBtn.onclick=()=>{
+  const data=filteredStudents();
+  if(!data.length)return alert("Không có học sinh trong phạm vi đang chọn để xuất.");
+
+  const rowsOut=data.map((x,i)=>({
+    "STT":i+1,
+    "Họ và tên":x.full_name||"",
+    "Mã HS / Username":x.student_code||"",
+    "Trường":x.school_name||"",
+    "Lớp":x.class_name||"",
+    "Năm học":x.school_year||""
+  }));
+
+  const ws=XLSX.utils.json_to_sheet(rowsOut);
+  ws["!cols"]=[
+    {wch:6},
+    {wch:30},
+    {wch:20},
+    {wch:32},
+    {wch:12},
+    {wch:14}
+  ];
+
+  const wb=XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb,ws,"Danh sach hoc sinh");
+
+  const sc=schoolFilter.value||"Tat_ca_truong";
+  const cid=classFilter.value;
+  const c=classes.find(x=>x.id===cid);
+
+  const schoolPart=sc ? safeFilePart(sc) : "Tat_ca_truong";
+  const classPart=c ? `${safeFilePart(c.class_name)}_${safeFilePart(c.school_year||"")}` : "Tat_ca_lop";
+
+  const d=new Date();
+  const pad=n=>String(n).padStart(2,"0");
+  const date=`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+
+  XLSX.writeFile(
+    wb,
+    `CodeHub_DS_HocSinh_${schoolPart}_${classPart}_${date}.xlsx`
+  );
+};
+
 credBtn.onclick=()=>{if(!lastCredentials.length)return;const data=lastCredentials.map((x,i)=>({"STT":i+1,"Họ và tên":x.full_name||"","Mã HS / Username":x.student_code||"","Trường":x.school_name||"","Lớp":x.class_name||"","Mật khẩu":x.password||"","Email":x.email||""}));const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(data),"Tai khoan");XLSX.writeFile(wb,"CodeHub_tai_khoan_hoc_sinh_V3_7_0.xlsx")};
 
 function editStudent(id){const x=students.find(z=>z.id===id);if(!x)return;openModal("Sửa học sinh",`<div class="space-y-3"><input id="eName" class="w-full border p-3 rounded-xl" value="${esc(x.full_name)}"><input id="eCode" class="w-full border p-3 rounded-xl" value="${esc(x.student_code)}"><select id="eClass" class="w-full border p-3 rounded-xl">${classOptions(x.class_id)}</select><button onclick="saveStudent('${id}')" class="w-full bg-blue-600 text-white p-3 rounded-xl font-bold">Lưu</button><div id="eMsg"></div></div>`)}
