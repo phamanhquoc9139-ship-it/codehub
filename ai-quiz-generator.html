@@ -288,7 +288,7 @@ async function readStructureFile(f){
  if(ext==="txt")return await f.text();
  if(ext==="docx")return(await window.mammoth.extractRawText({arrayBuffer:await f.arrayBuffer()})).value;
  if(ext==="pdf"){
-   const pdf=await loadPdf(f),to=Math.min(pdf.numPages,50),out=[];
+   const pdf=await loadPdf(f);if(pdf.numPages>50)throw Error("File cấu trúc vượt 50 trang. Hãy chọn riêng đề mẫu để tránh bỏ sót phần cuối.");const to=pdf.numPages,out=[];
    for(let i=1;i<=to;i++){
      const page=await pdf.getPage(i),tc=await page.getTextContent();
      let text=tc.items.map(x=>x.str).join(" ").replace(/\s+/g," ").trim();
@@ -303,7 +303,7 @@ async function readStructureFile(f){
 $("structureFile").onchange=async()=>{
  const f=$("structureFile").files?.[0];activeStructure=null;structureSource=null;$("balanceStructure").disabled=true;$("structurePreview").innerHTML="";
  if(!f)return;
- try{$("structurePicked").textContent="Đang đọc "+f.name+"...";const text=await readStructureFile(f);if(text.trim().length<50)throw Error("Không đọc được đủ nội dung cấu trúc.");structureSource={name:f.name,text:text.slice(0,90000)};$("structurePicked").textContent=`✓ ${f.name} • ${text.length.toLocaleString("vi-VN")} ký tự`;show("Đã đọc file cấu trúc. Bấm AI phân tích cấu trúc.",true)}catch(e){structureSource=null;$("structurePicked").textContent="Lỗi đọc file.";show(e.message)}
+ try{$("structurePicked").textContent="Đang đọc "+f.name+"...";const text=await readStructureFile(f);if(text.trim().length<50)throw Error("Không đọc được đủ nội dung cấu trúc.");if(text.length>90000)throw Error("File cấu trúc vượt 90.000 ký tự. Hãy chọn riêng đề mẫu, không chọn cả sách.");structureSource={name:f.name,text};$("structurePicked").textContent=`✓ ${f.name} • ${text.length.toLocaleString("vi-VN")} ký tự`;show("Đã đọc file cấu trúc. Bấm AI phân tích cấu trúc.",true)}catch(e){structureSource=null;$("structurePicked").textContent="Lỗi đọc file.";show(e.message)}
 };
 function scaleStructure(structure,target){
  const s0=JSON.parse(JSON.stringify(structure||{})),secs=(s0.sections||[]).map((x,i)=>({...x,key:x.key||`S${i+1}`,question_count:Math.max(1,Number(x.question_count||1))}));
@@ -328,8 +328,10 @@ function renderStructure(){
 }
 $("analyzeStructure").onclick=async()=>{
  if(!structureSource)return show("Hãy chọn file cấu trúc trước.");
- $("analyzeStructure").disabled=true;$("analyzeStructure").textContent="AI đang phân tích...";
- try{const x=await callAI({mode:"analyze_structure",structureSource,examType:$("examType").value,count:+$("count").value,language:$("language").value,courseTitle:selectedCourseBase()});activeStructure=scaleStructure(x.structure,+$("count").value);renderStructure();$("balanceStructure").disabled=false;show(`Đã phân tích ${activeStructure.sections?.length||0} phần. Nội dung file này chỉ dùng làm cấu trúc, không dùng làm nguồn kiến thức.`,true)}catch(e){show(e.message)}finally{$("analyzeStructure").disabled=false;$("analyzeStructure").textContent="🔎 AI phân tích cấu trúc"}
+ $("analyzeStructure").disabled=true;$("structureFile").disabled=true;$("analyzeStructure").textContent="AI đang phân tích...";
+ const started=Date.now(),progress=setInterval(()=>{$("analyzeStructure").textContent=`AI đang phân tích… ${Math.floor((Date.now()-started)/1000)}s`},1000);
+ show("File mẫu đã đọc xong. Đang gửi AI phân tích cấu trúc; bước này chưa tạo câu hỏi.",true);
+ try{const x=await callAI({mode:"analyze_structure",structureSource,examType:$("examType").value,count:+$("count").value,language:$("language").value,courseTitle:selectedCourseBase()});activeStructure=scaleStructure(x.structure,+$("count").value);renderStructure();$("balanceStructure").disabled=false;show(`Đã phân tích ${activeStructure.sections?.length||0} phần. Nội dung file này chỉ dùng làm cấu trúc, không dùng làm nguồn kiến thức.`,true)}catch(e){show(e.message)}finally{clearInterval(progress);$("structureFile").disabled=false;$("analyzeStructure").disabled=false;$("analyzeStructure").textContent="🔎 AI phân tích cấu trúc"}
 };
 $("balanceStructure").onclick=()=>{if(!activeStructure)return;activeStructure=scaleStructure(activeStructure,+$("count").value);renderStructure();show("Đã cân số câu các phần theo tổng đề.",true)};
 
@@ -345,10 +347,10 @@ function sourcePayload(count,ratios){
 function aiErrorDetail(value){
  if(typeof value==="string")return value.replace(/<[^>]*>/g," ").replace(/\s+/g," ").trim().slice(0,1200);
  if(!value||typeof value!=="object")return "";
- return [...new Set([value.error,value.message,value.details,value.hint,value.code].map(aiErrorDetail).filter(Boolean))].join(" • ").slice(0,1200);
+ return [...new Set([value.error,value.message,value.details,value.hint,value.code,value.request_id?"Mã tra cứu: "+value.request_id:""].map(aiErrorDetail).filter(Boolean))].join(" • ").slice(0,1200);
 }
 function aiStatusHint(status){
- return ({401:"Phiên đăng nhập hoặc JWT không hợp lệ. Hãy đăng nhập lại; nếu vẫn lỗi, kiểm tra cấu hình xác thực Edge Function.",403:"Yêu cầu bị từ chối. Kiểm tra quyền tài khoản và cấu hình dịch vụ AI.",404:`Không tìm thấy Edge Function ${AI_FUNCTION} trong dự án đang cấu hình.`,413:"Nguồn quá lớn. Hãy giảm số trang hoặc số tài liệu.",429:"Dịch vụ đang giới hạn lượt gọi hoặc hạn mức. Kiểm tra hạn mức và thử lại sau.",504:"Máy chủ xử lý quá thời gian. Hãy giảm số câu hoặc phạm vi tài liệu."})[status]||(status>=500?"Lỗi phía máy chủ. Cần kiểm tra nhật ký Edge Function và dịch vụ AI.":"Kiểm tra chi tiết phản hồi bên dưới.");
+ return ({401:"Phiên đăng nhập hoặc JWT không hợp lệ. Hãy đăng nhập lại; nếu vẫn lỗi, kiểm tra cấu hình xác thực Edge Function.",403:"Yêu cầu bị từ chối. Kiểm tra quyền tài khoản và cấu hình dịch vụ AI.",404:`Không tìm thấy Edge Function ${AI_FUNCTION} trong dự án đang cấu hình.`,413:"Nguồn quá lớn. Hãy giảm số trang hoặc số tài liệu.",429:"Dịch vụ đang giới hạn lượt gọi hoặc hạn mức. Kiểm tra hạn mức và thử lại sau.",504:"Máy chủ xử lý quá thời gian. Xem chi tiết bước gặp lỗi bên dưới."})[status]||(status>=500?"Lỗi phía máy chủ. Cần kiểm tra nhật ký Edge Function và dịch vụ AI.":"Kiểm tra chi tiết phản hồi bên dưới.");
 }
 async function callAI(payload){
  if(!s?.auth||!s?.functions)throw Error("Chưa tải được cấu hình Supabase. Hãy mở trang trên website CodeHub và kiểm tra scripts/supabase-config.js.");
@@ -360,6 +362,7 @@ async function callAI(payload){
    session=refreshed.data?.session;
    if(refreshed.error||!session?.access_token)throw Error("Không làm mới được phiên đăng nhập. Hãy đăng nhập lại.");
  }
+ const timeoutMessage=payload.mode==="analyze_structure"?"AI phân tích cấu trúc chưa phản hồi sau 150 giây. File mẫu đã đọc xong; hãy kiểm tra nhật ký generate-quiz-ai-v3 trên Supabase.":"AI tạo câu hỏi chưa phản hồi sau 150 giây. Hãy giảm số câu hoặc số trang rồi thử lại.";
  const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),150000);
  try{
    const result=await s.functions.invoke(AI_FUNCTION,{body:payload,headers:{Authorization:"Bearer "+session.access_token},signal:controller.signal});
@@ -371,7 +374,7 @@ async function callAI(payload){
        const raw=await response.text().catch(()=>"");
        try{detail=aiErrorDetail(JSON.parse(raw))}catch{detail=aiErrorDetail(raw)}
      }
-     if(controller.signal.aborted)throw Error("AI chưa trả lời sau 150 giây. Hãy giảm số câu hoặc số trang rồi thử lại.");
+     if(controller.signal.aborted)throw Error(timeoutMessage);
      if(!status)throw Error("Không kết nối được dịch vụ AI. Kiểm tra mạng, cấu hình dự án và CORS của Edge Function. "+aiErrorDetail(result.error.message));
      throw Error(`AI HTTP ${status}: ${aiStatusHint(status)}${detail?" Chi tiết: "+detail:""}`);
    }
@@ -386,7 +389,7 @@ async function callAI(payload){
    }
    return x;
  }catch(e){
-   if(controller.signal.aborted)throw Error("AI chưa trả lời sau 150 giây. Hãy giảm số câu hoặc số trang rồi thử lại.");
+   if(controller.signal.aborted)throw Error(timeoutMessage);
    throw e;
  }finally{clearTimeout(timer)}
 }
