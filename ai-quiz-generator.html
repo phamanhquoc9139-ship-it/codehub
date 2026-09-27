@@ -17,7 +17,7 @@
 <div class="grid lg:grid-cols-4 gap-5">
 <aside class="bg-white rounded-2xl shadow p-5 space-y-3">
 <label class="font-bold block">Khóa học</label><select id="course" class="w-full border rounded-xl p-3"></select>
-<label class="font-bold block">Bài học nguồn (chọn nhiều)</label><div id="lessons" class="border rounded-xl p-3 max-h-48 overflow-auto text-sm">Chọn khóa học trước.</div>
+<label class="font-bold block">Bài học nguồn (không bắt buộc)</label><div id="lessons" class="border rounded-xl p-3 max-h-48 overflow-auto text-sm">Chọn khóa học trước.</div>
 <label class="font-bold block">Quiz đích</label>
 <div class="flex gap-2">
 <select id="quiz" class="flex-1 min-w-0 border rounded-xl p-3"></select>
@@ -84,7 +84,7 @@
   <label class="text-xs block mt-2">Thời gian làm bài (phút)<input id="wordTime" type="number" min="1" value="45" class="mt-1 w-full border rounded-lg p-2 bg-white"></label>
   <div class="mt-2 text-[11px] text-slate-500">Bộ hồ sơ sẽ tạo: Ma trận • Đặc tả • 4 mã đề 101–104 • Đáp án 4 mã.</div>
 </details>
-<div class="pt-2 border-t"><label class="font-bold block mb-2">📎 Tài liệu bổ sung</label><div id="drop" class="drop border-2 border-dashed rounded-xl p-4 text-center cursor-pointer"><div class="font-semibold">Chọn hoặc kéo-thả file</div><div class="text-xs text-slate-500 mt-1">PDF • DOCX • TXT — tối đa 8 file</div><input id="files" type="file" multiple accept=".pdf,.docx,.txt,text/plain,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document" class="hidden"></div><div id="fileList" class="space-y-1 mt-2 text-xs"></div>
+<div class="pt-2 border-t"><label class="font-bold block mb-2">📎 Sách / tài liệu nguồn</label><div id="drop" class="drop border-2 border-dashed rounded-xl p-4 text-center cursor-pointer"><div class="font-semibold">Chọn hoặc kéo-thả file</div><div class="text-xs text-slate-500 mt-1">PDF • DOCX • TXT — tối đa 8 file<br>Có thể tạo câu hỏi từ tài liệu, không cần chọn bài học.</div><input id="files" type="file" multiple accept=".pdf,.docx,.txt,text/plain,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document" class="hidden"></div><div id="fileList" class="space-y-1 mt-2 text-xs"></div>
 <div class="mt-3 border rounded-xl p-3 bg-slate-50 space-y-2">
 <div class="font-bold text-sm">📖 PDF Reader — tối đa 50 trang/lần</div>
 <div id="pdfPicked" class="text-xs text-slate-500">Chưa chọn PDF.</div>
@@ -110,7 +110,7 @@
 <script type="module">
 const s=window.supabaseClient,$=id=>document.getElementById(id);
 let me,myRole="",generated=[],fileSources=[],structureSource=null,activeStructure=null,courseOwners={};
-const ENDPOINT="https://drfcejvmyhzorwepndta.supabase.co/functions/v1/generate-quiz-ai-v3";
+const AI_FUNCTION="generate-quiz-ai-v3";
 const esc=v=>String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
 const cleanTitle=v=>String(v||"").replace(/^\s*\[?(?:BÀI|BAI)\s*\d*\s*:\s*/i,"").replace(/^\s*\[?TÀI LIỆU\s*:\s*/i,"").replace(/\]\s*$/,"").trim();
 const cleanQuestion=v=>String(v||"").replace(/^\s*Theo\s+\[(?:BÀI|BAI)\s*\d*\s*:\s*[^\]]+\]\s*[,,:-]?\s*/i,"").replace(/^\s*Theo\s+(?:Bài|bài)\s*\d*\s*[,,:-]?\s*/i,"").trim();
@@ -235,7 +235,9 @@ async function loadCourseData(id,selectQuizId=""){
  let quizQuery=s.from("quizzes").select("id,title,teacher_id").eq("course_id",id).order("title");
  if(myRole==="teacher")quizQuery=quizQuery.eq("teacher_id",me.id);
  const [l,q]=await Promise.all([s.from("lessons").select("id,title").eq("course_id",id).order("lesson_order"),quizQuery]);
- $("lessons").innerHTML=(l.data||[]).map(x=>`<label class="block py-1"><input class="lp" type="checkbox" value="${x.id}"> ${esc(x.title)}</label>`).join("")||"Chưa có bài học.";
+ $("lessons").innerHTML=(l.data||[]).map(x=>`<label class="block py-1"><input class="lp" type="checkbox" value="${x.id}"> ${esc(x.title)}</label>`).join("")||"Chưa có bài học. Vẫn có thể dùng sách/tài liệu hoặc dán văn bản bên dưới.";
+ if(l.error)$("lessons").textContent="Không tải được bài học: "+l.error.message+". Vẫn có thể dùng tài liệu hoặc văn bản.";
+ if(q.error)show("Không tải được Quiz đích: "+q.error.message);
  $("quiz").innerHTML='<option value="">-- Chọn Quiz --</option>'+(q.data||[]).map(x=>`<option value="${x.id}">${esc(x.title)}</option>`).join("");
  if(selectQuizId)$("quiz").value=selectQuizId;
 }
@@ -279,7 +281,7 @@ $("readPdfBtn").onclick=async()=>{pdfStop=false;$("readPdfBtn").disabled=true;$(
 $("stopPdfBtn").onclick=()=>{pdfStop=true;$("pdfStatus").textContent="Đang dừng sau trang hiện tại...";$("stopPdfBtn").disabled=true};
 async function readOne(f){const ext=f.name.split(".").pop().toLowerCase();if(ext==="txt")return await f.text();if(ext==="docx")return(await window.mammoth.extractRawText({arrayBuffer:await f.arrayBuffer()})).value;throw Error("PDF dùng nút Đọc PDF; định dạng khác không hỗ trợ.")}
 async function readFiles(list){for(const f of [...list].slice(0,8-fileSources.length)){try{show("Đang đọc "+f.name+"...",true);const text=await readOne(f);if(text.trim().length<20)throw Error("Không trích được đủ chữ.");fileSources.push({name:f.name,text:text.slice(0,120000)})}catch(e){show(`${f.name}: ${e.message}`)}}renderFiles();if(fileSources.length)show(`Đã đọc ${fileSources.length} tài liệu.`,true)}
-function renderFiles(){$("fileList").innerHTML=fileSources.map((f,i)=>`<div class="flex justify-between bg-slate-50 p-2 rounded"><span>✓ ${esc(f.name)}</span><button data-rm="${i}" class="text-red-600">Xóa</button></div>`).join("");document.querySelectorAll("[data-rm]").forEach(b=>b.onclick=()=>{fileSources.splice(+b.dataset.rm,1);renderFiles()})}
+function renderFiles(){$("fileList").innerHTML=fileSources.map((f,i)=>`<div class="flex justify-between bg-slate-50 p-2 rounded"><span>✓ ${esc(f.name)} • ${f.text.length.toLocaleString("vi-VN")} ký tự đã đọc</span><button data-rm="${i}" class="text-red-600">Xóa</button></div>`).join("");document.querySelectorAll("[data-rm]").forEach(b=>b.onclick=()=>{fileSources.splice(+b.dataset.rm,1);renderFiles()})}
 
 async function readStructureFile(f){
  const ext=f.name.split(".").pop().toLowerCase();
@@ -337,20 +339,68 @@ function sourcePayload(count,ratios){
  const smartRules=`YÊU CẦU BẮT BUỘC KHI TẠO CÂU HỎI:\n- Chỉ kiểm tra KIẾN THỨC HỌC TẬP trong nội dung nguồn.\n- Bỏ qua bìa, mục lục, thông tin xuất bản và nội dung hành chính.\n- Không tự bổ sung kiến thức ngoài nguồn nếu nguồn không hỗ trợ.\n- Mỗi câu phải có đáp án được chứng minh trực tiếp bằng nguồn.\n${lessonTitles.length?`- Các bài đang chọn: ${lessonTitles.join("; ")}.`:""}`;
  const courseTitle=selectedCourseBase();
  const questionTypes=[[$("typeMcq"),"mcq4"],[$("typeTF"),"true_false"],[$("typeShort"),"short_answer"],[$("typeNumeric"),"numeric"]].filter(([el])=>el?.checked).map(([,t])=>t);
- return{mode:"generate",lessonIds,fileSources,extraText:[smartRules,$("extra").value].filter(Boolean).join("\n\n"),count,ratios,language:$("language").value||"auto",courseTitle,generationMode:$("generationMode").value,examType:$("examType").value,structure:isStructured()&&activeStructure?JSON.parse(JSON.stringify(activeStructure)):null,questionTypes:questionTypes.length?questionTypes:["mcq4"],allowVisuals:!!$("allowVisuals")?.checked}
+ return{mode:"generate",lessonIds,fileSources:fileSources.filter(f=>typeof f.text==="string"&&f.text.trim()).map(f=>({...f})),extraText:[smartRules,$("extra").value].filter(Boolean).join("\n\n"),count,ratios,language:$("language").value||"auto",courseTitle,generationMode:$("generationMode").value,examType:$("examType").value,structure:isStructured()&&activeStructure?JSON.parse(JSON.stringify(activeStructure)):null,questionTypes:questionTypes.length?questionTypes:["mcq4"],allowVisuals:!!$("allowVisuals")?.checked}
 }
-async function callAI(payload){const{data:{session}}=await s.auth.getSession();const res=await fetch(ENDPOINT,{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+session.access_token},body:JSON.stringify(payload)});const x=await res.json().catch(()=>({}));if(!res.ok)throw Error(x.error||"Lỗi AI");return x}
+// Invoke through the configured client so project URL and authentication headers agree.
+function aiErrorDetail(value){
+ if(typeof value==="string")return value.replace(/<[^>]*>/g," ").replace(/\s+/g," ").trim().slice(0,1200);
+ if(!value||typeof value!=="object")return "";
+ return [...new Set([value.error,value.message,value.details,value.hint,value.code].map(aiErrorDetail).filter(Boolean))].join(" • ").slice(0,1200);
+}
+function aiStatusHint(status){
+ return ({401:"Phiên đăng nhập hoặc JWT không hợp lệ. Hãy đăng nhập lại; nếu vẫn lỗi, kiểm tra cấu hình xác thực Edge Function.",403:"Yêu cầu bị từ chối. Kiểm tra quyền tài khoản và cấu hình dịch vụ AI.",404:`Không tìm thấy Edge Function ${AI_FUNCTION} trong dự án đang cấu hình.`,413:"Nguồn quá lớn. Hãy giảm số trang hoặc số tài liệu.",429:"Dịch vụ đang giới hạn lượt gọi hoặc hạn mức. Kiểm tra hạn mức và thử lại sau.",504:"Máy chủ xử lý quá thời gian. Hãy giảm số câu hoặc phạm vi tài liệu."})[status]||(status>=500?"Lỗi phía máy chủ. Cần kiểm tra nhật ký Edge Function và dịch vụ AI.":"Kiểm tra chi tiết phản hồi bên dưới.");
+}
+async function callAI(payload){
+ if(!s?.auth||!s?.functions)throw Error("Chưa tải được cấu hình Supabase. Hãy mở trang trên website CodeHub và kiểm tra scripts/supabase-config.js.");
+ const auth=await s.auth.getSession();
+ let session=auth.data?.session;
+ if(auth.error||!session?.access_token)throw Error("Phiên đăng nhập không còn hợp lệ. Hãy đăng nhập lại rồi tạo câu hỏi.");
+ if(session.expires_at&&session.expires_at*1000<Date.now()+60000){
+   const refreshed=await s.auth.refreshSession();
+   session=refreshed.data?.session;
+   if(refreshed.error||!session?.access_token)throw Error("Không làm mới được phiên đăng nhập. Hãy đăng nhập lại.");
+ }
+ const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),150000);
+ try{
+   const result=await s.functions.invoke(AI_FUNCTION,{body:payload,headers:{Authorization:"Bearer "+session.access_token},signal:controller.signal});
+   if(result.error){
+     const response=result.error.context||result.response;
+     const status=Number(response?.status||0);
+     let detail="";
+     if(typeof response?.text==="function"){
+       const raw=await response.text().catch(()=>"");
+       try{detail=aiErrorDetail(JSON.parse(raw))}catch{detail=aiErrorDetail(raw)}
+     }
+     if(controller.signal.aborted)throw Error("AI chưa trả lời sau 150 giây. Hãy giảm số câu hoặc số trang rồi thử lại.");
+     if(!status)throw Error("Không kết nối được dịch vụ AI. Kiểm tra mạng, cấu hình dự án và CORS của Edge Function. "+aiErrorDetail(result.error.message));
+     throw Error(`AI HTTP ${status}: ${aiStatusHint(status)}${detail?" Chi tiết: "+detail:""}`);
+   }
+   let x=result.data;
+   if(typeof x==="string"){try{x=JSON.parse(x)}catch{throw Error("AI trả về dữ liệu không phải JSON. Cần kiểm tra phản hồi của Edge Function.")}}
+   if(!x||typeof x!=="object"||Array.isArray(x))throw Error("AI trả về dữ liệu rỗng hoặc sai định dạng.");
+   if(x.error||x.success===false)throw Error("AI báo lỗi: "+(aiErrorDetail(x)||"Không có chi tiết từ máy chủ."));
+   if(payload.mode==="analyze_structure"){
+     if(!Array.isArray(x.structure?.sections)||!x.structure.sections.length)throw Error("AI chưa trả về cấu trúc đề hợp lệ. Hãy kiểm tra nội dung file cấu trúc.");
+   }else if(!Array.isArray(x.questions)||!x.questions.length||x.questions.some(q=>!q||typeof q.question_text!=="string"||!q.question_text.trim())){
+     throw Error("AI chưa trả về danh sách câu hỏi hợp lệ. Hãy kiểm tra nội dung nguồn hoặc phản hồi Edge Function.");
+   }
+   return x;
+ }catch(e){
+   if(controller.signal.aborted)throw Error("AI chưa trả lời sau 150 giây. Hãy giảm số câu hoặc số trang rồi thử lại.");
+   throw e;
+ }finally{clearTimeout(timer)}
+}
 function trimToStructure(items,structure){if(!structure?.sections?.length)return items.slice(0,+$("count").value);const out=[],used=new Set();for(const sec of structure.sections){let n=0;items.forEach((q,i)=>{if(!used.has(i)&&q.section_key===sec.key&&n<sec.question_count){out.push(q);used.add(i);n++}})}for(let i=0;i<items.length&&out.length<(structure.target_count||+$("count").value);i++)if(!used.has(i))out.push(items[i]);return out.slice(0,structure.target_count||+$("count").value)}
 function missingStructure(target,items){if(!target?.sections?.length)return null;const counts={};items.forEach(q=>counts[q.section_key]=(counts[q.section_key]||0)+1);const sections=target.sections.map(s=>({...s,question_count:Math.max(0,Number(s.question_count||0)-(counts[s.key]||0))})).filter(s=>s.question_count>0);return sections.length?{...target,sections,target_count:sections.reduce((a,x)=>a+x.question_count,0)}:null}
 
 $("generate").onclick=async()=>{
  const sum=+$("r").value + +$("u").value + +$("a").value,wanted=+$("count").value;
  if(sum!==100)return show("Tổng NB + TH + VD phải bằng 100%.");
- if(wanted<1||wanted>50)return show("Số câu phải từ 1 đến 50.");
+ if(!Number.isInteger(wanted)||wanted<1||wanted>50)return show("Số câu phải từ 1 đến 50.");
  if(($("examType").value==="midterm"||$("examType").value==="final")&&(wanted<40||wanted>50))return show("Giữa kỳ/Cuối kỳ phải chọn 40–50 câu.");
  if(isStructured()&&!activeStructure)return show("Chế độ theo cấu trúc: hãy tải file và bấm AI phân tích cấu trúc trước.");
  const p=sourcePayload(wanted,{remember:+$("r").value,understand:+$("u").value,apply:+$("a").value});
- if(!p.lessonIds.length&&!fileSources.length&&!$("extra").value.trim())return show("Hãy cung cấp NGUỒN KIẾN THỨC: chọn bài học, tải PDF/DOCX hoặc dán văn bản.");
+ if(!p.lessonIds.length&&!p.fileSources.length&&!$("extra").value.trim())return show(pendingPdf?"PDF mới được chọn nhưng chưa đọc được nội dung. Hãy chọn phạm vi và bấm Đọc PDF trước.":"Hãy cung cấp NGUỒN KIẾN THỨC: chọn bài học, đọc PDF/DOCX/TXT hoặc dán văn bản. Không bắt buộc có bài học.");
  if(isStructured()){activeStructure=scaleStructure(activeStructure,wanted);p.structure=JSON.parse(JSON.stringify(activeStructure));renderStructure()}
  $("generate").disabled=true;$("generate").textContent=isStructured()?"AI đang dựng đề theo cấu trúc...":"AI đang phân tích nguồn...";
  try{
@@ -360,12 +410,14 @@ $("generate").onclick=async()=>{
    while(generated.length<wanted&&attempts<3){
      const existing=generated.map((q,i)=>`${i+1}. ${q.question_text}`).join("\n"),missing=wanted-generated.length;
      $("generate").textContent=`AI đang bổ sung ${missing} câu còn thiếu...`;
-     const more=sourcePayload(missing,{remember:+$("r").value,understand:+$("u").value,apply:+$("a").value});
+     const more={...p,count:missing,fileSources:p.fileSources.map(f=>({...f}))};
      more.extraText += `\n\nCÁC CÂU ĐÃ CÓ - KHÔNG TẠO TRÙNG:\n${existing}`;
      if(isStructured()){
        const ms=missingStructure(target,generated);if(!ms)break;more.structure=ms;more.generationMode="structure";more.count=ms.target_count;
      }
-     const y=await callAI(more);raw=raw.concat(y.questions||[]);
+     let y;
+     try{y=await callAI(more)}catch(e){render();show(`Đã giữ ${generated.length}/${wanted} câu. Lỗi khi bổ sung: ${e.message}`);return}
+     raw=raw.concat(y.questions||[]);
      generated=isStructured()?trimToStructure(dedupe(raw),target):dedupe(raw).slice(0,wanted);
      attempts++;
    }
@@ -538,5 +590,5 @@ async function exportExamPack(){
 $("exportStudentWord").onclick=()=>makeWord(false);$("exportAnswerWord").onclick=()=>makeWord(true);$("exportMatrix").onclick=exportMatrixOnly;$("exportSpec").onclick=exportSpecOnly;$("exportPack").onclick=exportExamPack;
 
 $("quiz").addEventListener("change",async()=>{const id=$("quiz").value;$("publishQuiz").textContent="🚀 Xuất bản Quiz";$("publishQuiz").classList.remove("bg-emerald-600");$("publishQuiz").classList.add("bg-orange-500");if(!id)return;const r=await s.from("quizzes").select("is_published").eq("id",id).maybeSingle();if(r.data?.is_published){$("publishQuiz").textContent="✅ Đã xuất bản";$("publishQuiz").classList.remove("bg-orange-500");$("publishQuiz").classList.add("bg-emerald-600")}});
-init();
+init().catch(e=>show("Không khởi tạo được trang: "+e.message));
 </script></body></html>
