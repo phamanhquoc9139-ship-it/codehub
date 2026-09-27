@@ -1,17 +1,18 @@
 <!doctype html>
 <html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>AI Quiz Generator V3.7.25 STEM - CodeHub</title>
+<title>AI Quiz Generator V3.7.26 TEST MASTER - CodeHub</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/mammoth@1.8.0/mammoth.browser.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/docx@9.7.2/dist/index.iife.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
 <script>window.MathJax={loader:{load:['[tex]/mhchem']},tex:{packages:{'[+]':['mhchem']},inlineMath:[['$','$'],['\\(','\\)']]},options:{skipHtmlTags:['script','noscript','style','textarea','pre','code']}};</script>
 <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script src="scripts/supabase-config.js"></script>
 <style>.drop.drag{border-color:#7c3aed;background:#f5f3ff}.busy{opacity:.6;pointer-events:none}.stem-svg svg{max-width:100%;height:auto;display:block;margin:auto}.math-wrap mjx-container{overflow-x:auto;overflow-y:hidden;max-width:100%}</style></head>
 <body class="bg-slate-50 text-slate-900"><main class="max-w-7xl mx-auto p-5">
-<div class="flex justify-between gap-4 mb-5"><div><h1 class="text-3xl font-bold">✨ AI Quiz Generator V3.7.25 • STEM EXAM ENGINE</h1><p class="text-slate-500">Tiếng Anh • Toán • Lý • Hóa • Sinh • A–D • Đúng/Sai • Trả lời ngắn • Đáp án số + dung sai/đơn vị • Công thức • Sơ đồ/đồ thị SVG • Word .docx</p></div><a href="quizzes.html" class="border bg-white rounded-xl px-4 py-2 h-fit">← Quiz</a></div>
+<div class="flex justify-between gap-4 mb-5"><div><h1 class="text-3xl font-bold">✨ AI Quiz Generator V3.7.26 • AI TEST MASTER</h1><p class="text-slate-500">Ma trận • Đặc tả • Đề kiểm tra • Đáp án • 4 mã đề (101–104) • Chấm tự động • Word .docx</p></div><a href="quizzes.html" class="border bg-white rounded-xl px-4 py-2 h-fit">← Quiz</a></div>
 <div id="msg" class="hidden mb-4 p-3 rounded-xl"></div>
 <div class="grid lg:grid-cols-4 gap-5">
 <aside class="bg-white rounded-2xl shadow p-5 space-y-3">
@@ -81,6 +82,7 @@
   <summary class="font-bold cursor-pointer">📝 Thông tin file Word</summary>
   <label class="text-xs block mt-2">Tên trường<input id="wordSchool" value="TRƯỜNG THPT PHÚ HÒA" class="mt-1 w-full border rounded-lg p-2 bg-white"></label>
   <label class="text-xs block mt-2">Thời gian làm bài (phút)<input id="wordTime" type="number" min="1" value="45" class="mt-1 w-full border rounded-lg p-2 bg-white"></label>
+  <div class="mt-2 text-[11px] text-slate-500">Bộ hồ sơ sẽ tạo: Ma trận • Đặc tả • 4 mã đề 101–104 • Đáp án 4 mã.</div>
 </details>
 <div class="pt-2 border-t"><label class="font-bold block mb-2">📎 Tài liệu bổ sung</label><div id="drop" class="drop border-2 border-dashed rounded-xl p-4 text-center cursor-pointer"><div class="font-semibold">Chọn hoặc kéo-thả file</div><div class="text-xs text-slate-500 mt-1">PDF • DOCX • TXT — tối đa 8 file</div><input id="files" type="file" multiple accept=".pdf,.docx,.txt,text/plain,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document" class="hidden"></div><div id="fileList" class="space-y-1 mt-2 text-xs"></div>
 <div class="mt-3 border rounded-xl p-3 bg-slate-50 space-y-2">
@@ -94,7 +96,7 @@
 <label class="font-bold block">Hoặc dán văn bản</label><textarea id="extra" rows="5" class="w-full border rounded-xl p-3" placeholder="Ctrl + V nội dung văn bản vào đây..."></textarea>
 <button id="generate" class="w-full bg-violet-600 text-white font-bold p-3 rounded-xl">✨ Tạo câu hỏi</button>
 </aside>
-<section class="lg:col-span-3"><div class="flex flex-wrap justify-between items-center gap-2 mb-3"><div><h2 class="text-xl font-bold">Câu hỏi AI đề xuất</h2><div id="stats" class="text-sm text-slate-600"></div></div><div id="tools" class="hidden flex flex-wrap gap-2"><button id="all" class="border bg-white px-3 py-2 rounded-xl">☑ Chọn tất cả</button><button id="none" class="border bg-white px-3 py-2 rounded-xl">☐ Bỏ tất cả</button><button id="shuffleAll" class="border bg-white px-3 py-2 rounded-xl">🔀 Xáo đáp án</button><button id="preview" class="border bg-white px-3 py-2 rounded-xl">👁 Xem trước</button><button id="exportStudentWord" class="border border-blue-600 text-blue-700 bg-white px-3 py-2 rounded-xl font-bold">📄 Word đề HS</button><button id="exportAnswerWord" class="border border-indigo-600 text-indigo-700 bg-white px-3 py-2 rounded-xl font-bold">✅ Word + đáp án</button><button id="save" class="bg-emerald-600 text-white font-bold px-4 py-2 rounded-xl">💾 Lưu vào Quiz</button><button id="publishQuiz" type="button" class="bg-orange-500 text-white font-bold px-4 py-2 rounded-xl">🚀 Xuất bản Quiz</button></div></div><div id="list" class="space-y-4"><div class="bg-white p-8 rounded-2xl text-center text-slate-400">Chọn bài học, tài liệu hoặc dán văn bản để bắt đầu.</div></div></section>
+<section class="lg:col-span-3"><div class="flex flex-wrap justify-between items-center gap-2 mb-3"><div><h2 class="text-xl font-bold">Câu hỏi AI đề xuất</h2><div id="stats" class="text-sm text-slate-600"></div></div><div id="tools" class="hidden flex flex-wrap gap-2"><button id="all" class="border bg-white px-3 py-2 rounded-xl">☑ Chọn tất cả</button><button id="none" class="border bg-white px-3 py-2 rounded-xl">☐ Bỏ tất cả</button><button id="shuffleAll" class="border bg-white px-3 py-2 rounded-xl">🔀 Xáo đáp án</button><button id="preview" class="border bg-white px-3 py-2 rounded-xl">👁 Xem trước</button><button id="exportStudentWord" class="border border-blue-600 text-blue-700 bg-white px-3 py-2 rounded-xl font-bold">📄 Word đề HS</button><button id="exportAnswerWord" class="border border-indigo-600 text-indigo-700 bg-white px-3 py-2 rounded-xl font-bold">✅ Word + đáp án</button><button id="exportMatrix" class="border border-cyan-600 text-cyan-700 bg-white px-3 py-2 rounded-xl font-bold">📊 Ma trận</button><button id="exportSpec" class="border border-teal-600 text-teal-700 bg-white px-3 py-2 rounded-xl font-bold">📋 Đặc tả</button><button id="exportPack" class="border border-fuchsia-600 text-fuchsia-700 bg-white px-3 py-2 rounded-xl font-bold">📦 Bộ 4 mã đề</button><button id="save" class="bg-emerald-600 text-white font-bold px-4 py-2 rounded-xl">💾 Lưu vào Quiz</button><button id="publishQuiz" type="button" class="bg-orange-500 text-white font-bold px-4 py-2 rounded-xl">🚀 Xuất bản Quiz</button></div></div><div id="list" class="space-y-4"><div class="bg-white p-8 rounded-2xl text-center text-slate-400">Chọn bài học, tài liệu hoặc dán văn bản để bắt đầu.</div></div></section>
 </div></main>
 <div id="quizModal" class="hidden fixed inset-0 bg-black/50 z-50 p-4 overflow-auto">
 <div class="max-w-lg mx-auto bg-white rounded-2xl p-6 my-16 shadow-xl">
@@ -457,7 +459,83 @@ async function makeWord(includeAnswers=false){
  const doc=new Document({styles:{default:{document:{run:{font,size:24}}}},sections:[{properties:{page:{margin:{top:900,right:900,bottom:900,left:900}}},children}]});
  try{const blob=await Packer.toBlob(doc),safe=title.replace(/[\\/:*?"<>|]+/g,"_");downloadBlob(blob,`${safe}${includeAnswers?"_DAP_AN":"_DE_HOC_SINH"}.docx`);show(`Đã xuất Word .docx ${includeAnswers?"kèm đáp án":"đề học sinh"}.`,true)}catch(e){show("Lỗi xuất Word: "+e.message)}
 }
-$("exportStudentWord").onclick=()=>makeWord(false);$("exportAnswerWord").onclick=()=>makeWord(true);
+
+// ===============================
+// V3.7.26 TEST MASTER: Ma trận • Đặc tả • 4 mã đề
+// ===============================
+function academicYearFromCourse(){
+ const txt=$("course").selectedOptions[0]?.textContent||"";
+ const m=txt.match(/(20\d{2})\s*[-–]\s*(20\d{2})/);
+ if(m)return `${m[1]}-${m[2]}`;
+ const d=new Date(),y=d.getFullYear(),mo=d.getMonth()+1;return mo>=7?`${y}-${y+1}`:`${y-1}-${y}`;
+}
+function examTitleText(){return ($("quiz").selectedOptions[0]?.textContent?.trim()||"ĐỀ KIỂM TRA").replace(/^[^•]+•\s*/,"");}
+function questionAnswer(q){
+ if(q.question_type==="true_false")return String(q.correct_answer).toUpperCase()==="T"?(isEnglishSelected()?"True":"Đúng"):(isEnglishSelected()?"False":"Sai");
+ if(q.question_type==="short_answer")return q.correct_text||q.accepted_answers?.[0]||"";
+ if(q.question_type==="numeric")return `${q.correct_number}${q.numeric_tolerance?` ± ${q.numeric_tolerance}`:""}${q.answer_unit?` ${q.answer_unit}`:""}`;
+ return q.correct_answer||"";
+}
+function seededRandom(seed){let a=seed>>>0;return function(){a+=0x6D2B79F5;let t=a;t=Math.imul(t^t>>>15,t|1);t^=t+Math.imul(t^t>>>7,t|61);return((t^t>>>14)>>>0)/4294967296}}
+function shuffleSeed(arr,rnd){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(rnd()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function cloneQ(q){return JSON.parse(JSON.stringify(q))}
+function makeExamVariant(picks,code){
+ const rnd=seededRandom(372600+Number(code));
+ const selected=picks.map(i=>cloneQ(generated[i]));
+ const sections=[];const map=new Map();
+ selected.forEach((q,idx)=>{const key=q.section_key||q.section_title||"FREE";if(!map.has(key)){const sec={key,title:q.section_title||sectionFallback(),instruction:q.section_instruction||"",groups:[]};map.set(key,sec);sections.push(sec)}const sec=map.get(key);const stim=q.stimulus||"";let g=sec.groups.find(x=>x.stimulus===stim);if(!g){g={stimulus:stim,questions:[]};sec.groups.push(g)}q.__sourceIndex=idx;g.questions.push(q)});
+ const out=[];
+ sections.forEach(sec=>{const groups=shuffleSeed(sec.groups,rnd);groups.forEach(g=>{const qq=shuffleSeed(g.questions,rnd);qq.forEach(q=>{if(q.question_type==="mcq4"){const opts=["A","B","C","D"].map(k=>({k,text:q["option_"+k.toLowerCase()]}));const correctText=q["option_"+String(q.correct_answer||"A").toLowerCase()];const sh=shuffleSeed(opts,rnd);["A","B","C","D"].forEach((k,i)=>q["option_"+k.toLowerCase()]=sh[i].text);q.correct_answer=["A","B","C","D"][sh.findIndex(x=>x.text===correctText)]||"A"}q.section_key=sec.key;q.section_title=sec.title;q.section_instruction=sec.instruction;q.stimulus=g.stimulus;out.push(q)})})});
+ return {code:String(code),questions:out};
+}
+function buildSectionStats(picks){
+ const rows=[],map=new Map();
+ picks.forEach(i=>{const q=generated[i],key=q.section_key||q.section_title||"FREE";if(!map.has(key)){const r={key,title:localizeSectionTitle(q.section_title)||sectionFallback(),instruction:q.section_instruction||"",source:new Set(),types:new Set(),NB:0,TH:0,VD:0,total:0};map.set(key,r);rows.push(r)}const r=map.get(key);r.total++;if(q.level==="Nhận biết")r.NB++;else if(q.level==="Thông hiểu")r.TH++;else r.VD++;if(q.source_title)r.source.add(cleanTitle(q.source_title));r.types.add(typeLabel(q.question_type).replace(/^[^ ]+ /,""))});
+ return rows;
+}
+async function buildMatrixDoc(){
+ const picks=selectedQuestionIndexes();if(!picks.length)throw Error("Hãy chọn câu hỏi trước.");
+ const D=window.docx,{Document,Packer,Paragraph,TextRun,AlignmentType,Table,TableRow,TableCell,WidthType,BorderStyle}=D,font="Times New Roman";
+ const p=(text,opt={})=>new Paragraph({alignment:opt.center?AlignmentType.CENTER:undefined,spacing:{after:opt.after??70},children:[new TextRun({text:wordPlain(String(text||"")),bold:!!opt.bold,size:opt.size||22,font})]});
+ const thin={style:BorderStyle.SINGLE,size:1,color:"888888"},cell=(text,bold=false)=>new TableCell({children:[p(text,{bold,center:true,size:20,after:0})],borders:{top:thin,bottom:thin,left:thin,right:thin}});
+ const stats=buildSectionStats(picks),total=picks.length,rows=[new TableRow({children:[cell("TT",true),cell("Nội dung / phần",true),cell("Dạng câu",true),cell("NB",true),cell("TH",true),cell("VD",true),cell("Tổng",true),cell("Tỉ lệ %",true)]})];
+ stats.forEach((r,i)=>rows.push(new TableRow({children:[cell(String(i+1)),cell(r.title),cell([...r.types].join(", ")),cell(String(r.NB)),cell(String(r.TH)),cell(String(r.VD)),cell(String(r.total)),cell((r.total/total*100).toFixed(1))]})));
+ const sums=stats.reduce((a,r)=>(a.NB+=r.NB,a.TH+=r.TH,a.VD+=r.VD,a),{NB:0,TH:0,VD:0});rows.push(new TableRow({children:[cell("",true),cell("TỔNG",true),cell("",true),cell(String(sums.NB),true),cell(String(sums.TH),true),cell(String(sums.VD),true),cell(String(total),true),cell("100",true)]}));
+ const children=[p($('wordSchool').value.trim()||'TRƯỜNG THPT PHÚ HÒA',{center:true,bold:true,size:24}),p("MA TRẬN ĐỀ KIỂM TRA",{center:true,bold:true,size:28}),p(`${selectedCourseBase()} • Năm học ${academicYearFromCourse()}`,{center:true,bold:true,size:23}),p(`${examTitleText()} • ${+$('wordTime').value||45} phút • ${total} câu`,{center:true,size:22,after:140}),new Table({width:{size:100,type:WidthType.PERCENTAGE},rows}),p("Ghi chú: Ma trận được tổng hợp từ các câu hỏi đã chọn; giáo viên rà soát trước khi nộp chính thức.",{size:18,after:0})];
+ return await Packer.toBlob(new Document({styles:{default:{document:{run:{font,size:22}}}},sections:[{properties:{page:{margin:{top:850,right:700,bottom:850,left:700}}},children}]}));
+}
+async function buildSpecDoc(){
+ const picks=selectedQuestionIndexes();if(!picks.length)throw Error("Hãy chọn câu hỏi trước.");
+ const D=window.docx,{Document,Packer,Paragraph,TextRun,AlignmentType,Table,TableRow,TableCell,WidthType,BorderStyle}=D,font="Times New Roman";
+ const p=(text,opt={})=>new Paragraph({alignment:opt.center?AlignmentType.CENTER:undefined,spacing:{after:opt.after??65},children:[new TextRun({text:wordPlain(String(text||"")),bold:!!opt.bold,size:opt.size||20,font})]});
+ const thin={style:BorderStyle.SINGLE,size:1,color:"888888"},cell=(text,bold=false)=>new TableCell({children:[p(text,{bold,size:19,after:0})],borders:{top:thin,bottom:thin,left:thin,right:thin}});
+ const stats=buildSectionStats(picks),rows=[new TableRow({children:[cell("TT",true),cell("Nội dung / đơn vị kiến thức",true),cell("Yêu cầu đánh giá",true),cell("Mức độ",true),cell("Số câu",true),cell("Nguồn / căn cứ",true)]})];
+ stats.forEach((r,i)=>{const levels=[r.NB?`Nhận biết: ${r.NB}`:"",r.TH?`Thông hiểu: ${r.TH}`:"",r.VD?`Vận dụng: ${r.VD}`:""].filter(Boolean).join("; ");const req=[r.instruction,[...r.types].join(", ")].filter(Boolean).join(" — ");rows.push(new TableRow({children:[cell(String(i+1)),cell(r.title),cell(req||"Đánh giá kiến thức và năng lực theo nội dung nguồn"),cell(levels),cell(String(r.total)),cell([...r.source].join("; ")||"Tài liệu nguồn đã chọn")]}))});
+ const children=[p($('wordSchool').value.trim()||'TRƯỜNG THPT PHÚ HÒA',{center:true,bold:true,size:24}),p("BẢN ĐẶC TẢ ĐỀ KIỂM TRA",{center:true,bold:true,size:28}),p(`${selectedCourseBase()} • Năm học ${academicYearFromCourse()}`,{center:true,bold:true,size:23}),p(`${examTitleText()} • ${+$('wordTime').value||45} phút`,{center:true,size:22,after:140}),new Table({width:{size:100,type:WidthType.PERCENTAGE},rows}),p("Ghi chú: Bản đặc tả được tạo từ cấu trúc đề và câu hỏi thực tế; giáo viên cần đối chiếu YCCĐ của môn học trước khi ký duyệt.",{size:18,after:0})];
+ return await Packer.toBlob(new Document({styles:{default:{document:{run:{font,size:22}}}},sections:[{properties:{page:{margin:{top:850,right:650,bottom:850,left:650}}},children}]}));
+}
+async function buildVariantExamDoc(variant){
+ const D=window.docx,{Document,Packer,Paragraph,TextRun,AlignmentType,Table,TableRow,TableCell,WidthType,BorderStyle,ImageRun}=D,font="Times New Roman",children=[],school=$('wordSchool').value.trim()||'TRƯỜNG THPT PHÚ HÒA',minutes=+$('wordTime').value||45,title=examTitleText(),course=selectedCourseBase();
+ const para=(text,opt={})=>new Paragraph({alignment:opt.center?AlignmentType.CENTER:undefined,spacing:{after:opt.after??90},indent:opt.indent?{left:opt.indent}:undefined,children:[new TextRun({text:wordPlain(String(text||"")),bold:!!opt.bold,italics:!!opt.italic,size:opt.size||23,font})]});
+ children.push(new Table({width:{size:100,type:WidthType.PERCENTAGE},rows:[new TableRow({children:[new TableCell({children:[para(school,{center:true,bold:true,size:22,after:30}),para(title.toUpperCase(),{center:true,bold:true,size:26,after:30}),para(`${course} • Năm học ${academicYearFromCourse()}`,{center:true,size:21,after:30})]}),new TableCell({children:[para(`MÃ ĐỀ ${variant.code}`,{center:true,bold:true,size:25,after:30}),para(`Thời gian: ${minutes} phút`,{center:true,italic:true,size:20,after:30})]})]})]}));
+ children.push(para("Họ và tên: .............................................................................   Lớp: ......................",{after:150}));
+ let lastSec="__",lastStim="__";variant.questions.forEach(async()=>{});
+ for(let n=0;n<variant.questions.length;n++){const q=variant.questions[n],sec=q.section_key||q.section_title||"FREE";if(sec!==lastSec){children.push(para(localizeSectionTitle(q.section_title)||sectionFallback(),{bold:true,size:24,after:45}));if(q.section_instruction)children.push(para(q.section_instruction,{italic:true,size:21,after:80}));lastSec=sec;lastStim="__"}if(q.stimulus&&q.stimulus!==lastStim){String(q.stimulus).split(/\n+/).filter(Boolean).forEach(t=>children.push(para(t,{size:21,after:60})));lastStim=q.stimulus}if(q.visual_svg&&ImageRun){try{const png=await svgToPngBytes(q.visual_svg);if(png)children.push(new Paragraph({alignment:AlignmentType.CENTER,spacing:{after:90},children:[new ImageRun({data:png,transformation:{width:500,height:250}})]}))}catch{}}children.push(para(`${questionWord()} ${n+1}. ${q.question_text}`,{bold:true,size:22,after:40}));if(q.question_type==="mcq4"){const opts=["A","B","C","D"].map(k=>`${k}. ${q["option_"+k.toLowerCase()]||""}`);children.push(new Table({width:{size:100,type:WidthType.PERCENTAGE},rows:[new TableRow({children:[new TableCell({children:[para(opts[0],{size:21,after:25}),para(opts[1],{size:21,after:25})]}),new TableCell({children:[para(opts[2],{size:21,after:25}),para(opts[3],{size:21,after:25})]})]})]}))}else if(q.question_type==="true_false")children.push(para(isEnglishSelected()?"□ True          □ False":"□ Đúng          □ Sai",{indent:360,size:21,after:90}));else children.push(para(`${isEnglishSelected()?"Answer":"Trả lời"}: ........................................................................................................................`,{indent:360,size:21,after:90}))}
+ return await Packer.toBlob(new Document({styles:{default:{document:{run:{font,size:23}}}},sections:[{properties:{page:{margin:{top:700,right:700,bottom:700,left:700}}},children}]}));
+}
+async function buildFourCodeAnswerDoc(variants){
+ const D=window.docx,{Document,Packer,Paragraph,TextRun,AlignmentType,Table,TableRow,TableCell,WidthType,BorderStyle,PageBreak}=D,font="Times New Roman";
+ const p=(text,opt={})=>new Paragraph({alignment:opt.center?AlignmentType.CENTER:undefined,spacing:{after:opt.after??60},children:[new TextRun({text:wordPlain(String(text||"")),bold:!!opt.bold,size:opt.size||21,font})]});const thin={style:BorderStyle.SINGLE,size:1,color:"888888"},cell=(text,bold=false)=>new TableCell({children:[p(text,{bold,center:true,size:19,after:0})],borders:{top:thin,bottom:thin,left:thin,right:thin}}),children=[p($('wordSchool').value.trim()||'TRƯỜNG THPT PHÚ HÒA',{center:true,bold:true,size:24}),p("ĐÁP ÁN 4 MÃ ĐỀ",{center:true,bold:true,size:28}),p(`${selectedCourseBase()} • ${examTitleText()}`,{center:true,size:22,after:120})];
+ variants.forEach((v,vi)=>{if(vi)children.push(new Paragraph({children:[new PageBreak()]}));children.push(p(`MÃ ĐỀ ${v.code}`,{center:true,bold:true,size:25,after:90}));const rows=[new TableRow({children:[cell("Câu",true),cell("Đáp án",true),cell("Mức độ",true),cell("Dạng",true)]})];v.questions.forEach((q,i)=>rows.push(new TableRow({children:[cell(String(i+1)),cell(questionAnswer(q),true),cell(q.level||""),cell(typeLabel(q.question_type).replace(/^[^ ]+ /,""))]})));children.push(new Table({width:{size:100,type:WidthType.PERCENTAGE},rows}))});
+ return await Packer.toBlob(new Document({styles:{default:{document:{run:{font,size:21}}}},sections:[{properties:{page:{margin:{top:800,right:800,bottom:800,left:800}}},children}]}));
+}
+async function exportMatrixOnly(){try{const blob=await buildMatrixDoc();downloadBlob(blob,`01_MA_TRAN_${examTitleText().replace(/[\/:*?"<>|]+/g,"_")}.docx`);show("Đã xuất Ma trận Word.",true)}catch(e){show("Lỗi xuất Ma trận: "+e.message)}}
+async function exportSpecOnly(){try{const blob=await buildSpecDoc();downloadBlob(blob,`02_DAC_TA_${examTitleText().replace(/[\/:*?"<>|]+/g,"_")}.docx`);show("Đã xuất Bản đặc tả Word.",true)}catch(e){show("Lỗi xuất Đặc tả: "+e.message)}}
+async function exportExamPack(){
+ try{const picks=selectedQuestionIndexes();if(!picks.length)throw Error("Hãy chọn câu hỏi trước.");if(!window.JSZip)throw Error("Không tải được JSZip.");const btn=$('exportPack');btn.disabled=true;btn.textContent='⏳ Đang tạo hồ sơ...';const zip=new JSZip(),safe=examTitleText().replace(/[\/:*?"<>|]+/g,"_");const matrix=await buildMatrixDoc(),spec=await buildSpecDoc();zip.file(`01_MA_TRAN_${safe}.docx`,matrix);zip.file(`02_DAC_TA_${safe}.docx`,spec);const variants=[101,102,103,104].map(c=>makeExamVariant(picks,c));for(let i=0;i<variants.length;i++){const blob=await buildVariantExamDoc(variants[i]);zip.file(`${String(3+i).padStart(2,'0')}_DE_MA_${variants[i].code}_${safe}.docx`,blob)}const ans=await buildFourCodeAnswerDoc(variants);zip.file(`07_DAP_AN_4_MA_${safe}.docx`,ans);const manifest=`CODEHUB V3.7.26 AI TEST MASTER\n\nBộ hồ sơ gồm:\n01 Ma trận\n02 Bản đặc tả\n03-06 Đề mã 101-104\n07 Đáp án 4 mã\n\nNăm học: ${academicYearFromCourse()}\nKhóa học: ${selectedCourseBase()}\nSố câu: ${picks.length}\nThời gian: ${+$('wordTime').value||45} phút\n\nLưu ý: Ma trận/đặc tả được tự động tổng hợp từ đề; giáo viên cần duyệt trước khi nộp.`;zip.file('README.txt',manifest);const out=await zip.generateAsync({type:'blob'});downloadBlob(out,`CodeHub_TEST_MASTER_${safe}_4_MA.zip`);show("✓ Đã tạo bộ hồ sơ: Ma trận + Đặc tả + 4 mã đề 101–104 + Đáp án.",true)}catch(e){show("Lỗi tạo bộ hồ sơ: "+e.message)}finally{const btn=$('exportPack');if(btn){btn.disabled=false;btn.textContent='📦 Bộ 4 mã đề'}}
+}
+
+$("exportStudentWord").onclick=()=>makeWord(false);$("exportAnswerWord").onclick=()=>makeWord(true);$("exportMatrix").onclick=exportMatrixOnly;$("exportSpec").onclick=exportSpecOnly;$("exportPack").onclick=exportExamPack;
 
 $("quiz").addEventListener("change",async()=>{const id=$("quiz").value;$("publishQuiz").textContent="🚀 Xuất bản Quiz";$("publishQuiz").classList.remove("bg-emerald-600");$("publishQuiz").classList.add("bg-orange-500");if(!id)return;const r=await s.from("quizzes").select("is_published").eq("id",id).maybeSingle();if(r.data?.is_published){$("publishQuiz").textContent="✅ Đã xuất bản";$("publishQuiz").classList.remove("bg-orange-500");$("publishQuiz").classList.add("bg-emerald-600")}});
 init();
