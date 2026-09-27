@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Giao Quiz V3.7.14 | CodeHub</title>
+  <title>Giao Quiz V3.7.21 | CodeHub</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="scripts/supabase-config.js"></script>
@@ -12,7 +12,7 @@
 <main class="max-w-6xl mx-auto p-6">
   <div class="flex flex-col md:flex-row md:justify-between gap-4 mb-6">
     <div>
-      <h1 id="h" class="text-3xl font-bold">📤 Giao Quiz <span class="text-base text-blue-600">V3.7.14</span></h1>
+      <h1 id="h" class="text-3xl font-bold">📤 Giao Quiz <span class="text-base text-blue-600">V3.7.21</span></h1>
       <p id="sub" class="text-slate-500 mt-1">Giao đề đúng Trường • Lớp theo class_id</p>
     </div>
     <a href="quizzes.html" class="border bg-white px-4 py-2 rounded-xl h-fit">← Quản lý Quiz</a>
@@ -153,15 +153,15 @@ async function init(){
       return;
     }
 
-    $("h").innerHTML=`📤 ${esc(quiz.title)} <span class="text-base text-blue-600">V3.7.14</span>`;
-    $("sub").textContent=(role==="admin"?"Quản trị viên":"Giáo viên")+" • Giao đúng Trường • Lớp theo class_id";
+    $("h").innerHTML=`📤 ${esc(quiz.title)} <span class="text-base text-blue-600">V3.7.21</span>`;
+    $("sub").textContent=(role==="admin"?"Quản trị viên":"Giáo viên")+" • Giao/cập nhật Quiz đúng Trường • Lớp theo class_id";
     $("tm").value=quiz.time_limit||15;
 
     await loadClasses();
     await loadAssignments();
 
   }catch(e){
-    console.error("CodeHub V3.7.14 init:",e);
+    console.error("CodeHub V3.7.21 init:",e);
     say(e?.message||String(e));
   }
 }
@@ -245,60 +245,33 @@ function buildClassOptions(){
 $("school").onchange=buildClassOptions;
 
 async function loadAssignments(){
-  const ar=await s.from("quiz_assignments")
-    .select("id,quiz_id,class_id,teacher_id,open_at,close_at,time_limit,max_attempts,show_result,created_at")
-    .eq("quiz_id",qid)
-    .order("created_at",{ascending:false});
+  const ar=await s.rpc("codehub_v3721_quiz_assignments",{p_quiz:qid});
 
   if(ar.error){
     $("list").innerHTML=`<div class="text-red-600">${esc(ar.error.message)}</div>`;
     return;
   }
 
-  const rows=ar.data||[];
+  const rows=Array.isArray(ar.data)?ar.data:[];
   if(!rows.length){
-    $("list").innerHTML='<div class="text-slate-500">Chưa giao Quiz này cho lớp nào.</div>';
+    $("list").innerHTML='<div class="text-slate-500">Chưa giao Quiz này cho lớp nào trong phạm vi của bạn.</div>';
     return;
   }
 
-  const cmap={};
-  classes.forEach(c=>cmap[c.id]=c);
-
-  // Nếu assignment có class ngoài catalog hiện tại, đọc bổ sung.
-  const missing=[...new Set(rows.map(x=>x.class_id).filter(id=>id&&!cmap[id]))];
-  if(missing.length){
-    const cr=await s.from("classes")
-      .select("id,class_name,school_id,school_year")
-      .in("id",missing);
-
-    if(!cr.error){
-      for(const raw of cr.data||[]){
-        const c=normalizeClass(raw);
-        if(c.school_id){
-          const sr=await s.from("schools").select("school_name").eq("id",c.school_id).maybeSingle();
-          if(!sr.error&&sr.data?.school_name)c.school_name=sr.data.school_name;
-        }
-        cmap[c.id]=c;
-      }
-    }
-  }
-
-  $("list").innerHTML=rows.map(x=>{
-    const c=cmap[x.class_id]||{};
-    return `<div class="border rounded-xl p-4">
-      <div class="font-bold">${esc(c.school_name||"—")} • ${esc(c.class_name||x.class_id||"—")}</div>
+  $("list").innerHTML=rows.map(x=>`
+    <div class="border rounded-xl p-4">
+      <div class="font-bold">${esc(x.school_name||"—")} • ${esc(x.class_name||"—")}</div>
       <div class="text-sm text-slate-500 mt-1">
-        ${esc(c.school_year||"")} ${c.school_year?"• ":""}${Number(x.time_limit||15)} phút • ${Number(x.max_attempts||1)} lần
+        ${esc(x.school_year||"")} ${x.school_year?"• ":""}${Number(x.time_limit||15)} phút • ${Number(x.max_attempts||1)} lần
       </div>
       <div class="text-sm mt-2">
         Mở: ${x.open_at?new Date(x.open_at).toLocaleString("vi-VN"):"Ngay"}<br>
         Đóng: ${x.close_at?new Date(x.close_at).toLocaleString("vi-VN"):"Không giới hạn"}
       </div>
-      <button type="button" onclick="delAssignment('${x.id}')" class="mt-3 text-red-600 font-bold">
+      <button type="button" onclick="delAssignment('${x.assignment_id}')" class="mt-3 text-red-600 font-bold">
         Hủy giao
       </button>
-    </div>`;
-  }).join("");
+    </div>`).join("");
 }
 
 $("reloadBtn").onclick=loadAssignments;
@@ -321,42 +294,30 @@ $("f").onsubmit=async e=>{
   btn.textContent="Đang giao Quiz...";
 
   try{
-    const row={
-      quiz_id:qid,
-      class_id:classId,
-      teacher_id:me.id,
-      open_at:openAt,
-      close_at:closeAt,
-      time_limit:Number($("tm").value||15),
-      max_attempts:Number($("mx").value||1),
-      show_result:$("sr").checked
-    };
-
-    // Không dùng upsert onConflict để tránh phụ thuộc unique constraint cũ.
-    const ex=await s.from("quiz_assignments")
-      .select("id")
-      .eq("quiz_id",qid)
-      .eq("class_id",classId)
-      .maybeSingle();
-
-    let wr;
-    if(ex.error) throw ex.error;
-
-    if(ex.data?.id){
-      wr=await s.from("quiz_assignments")
-        .update(row)
-        .eq("id",ex.data.id);
-    }else{
-      wr=await s.from("quiz_assignments").insert(row);
-    }
+    const wr=await s.rpc("codehub_v3721_assign_quiz",{
+      p_quiz:qid,
+      p_class:classId,
+      p_open_at:openAt,
+      p_close_at:closeAt,
+      p_time_limit:Number($("tm").value||15),
+      p_max_attempts:Number($("mx").value||1),
+      p_show_result:$("sr").checked
+    });
 
     if(wr.error) throw wr.error;
 
-    say("✅ Đã giao Quiz đúng Trường/Lớp.",true);
+    const x=wr.data||{};
+    say(
+      x.updated
+        ?"✅ Lớp này đã được giao trước đó — CodeHub đã cập nhật lịch/thời lượng/số lần làm."
+        :"✅ Đã giao Quiz đúng Trường/Lớp.",
+      true
+    );
+
     await loadAssignments();
 
   }catch(e){
-    console.error("CodeHub V3.7.14 assign:",e);
+    console.error("CodeHub V3.7.21 assign:",e);
     say("Không giao được Quiz: "+(e?.message||String(e)));
   }finally{
     btn.disabled=false;
@@ -367,9 +328,7 @@ $("f").onsubmit=async e=>{
 async function delAssignment(id){
   if(!confirm("Hủy giao Quiz cho lớp này?"))return;
 
-  const r=await s.from("quiz_assignments")
-    .delete()
-    .eq("id",id);
+  const r=await s.rpc("codehub_v3721_unassign_quiz",{p_assignment:id});
 
   if(r.error) return say("Không hủy được: "+r.error.message);
 
