@@ -2,80 +2,112 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Quản lý khóa học | CodeHub</title>
+<title>Quản lý khóa học V3.7.25 | CodeHub</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="scripts/supabase-config.js"></script>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}body{font-family:Arial,sans-serif;background:#f5f7fb;color:#172033}header{background:#fff;padding:18px 30px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #e5e7eb}.logo{font-size:28px;font-weight:800;color:#3182f6}.btn{border:0;border-radius:9px;padding:11px 16px;font-weight:700;cursor:pointer;background:#3182f6;color:#fff}.green{background:#16a34a}.gray{background:#64748b}.orange{background:#f59e0b}.red{background:#dc2626}
-main{max-width:1200px;margin:38px auto;padding:0 20px}h1{font-size:35px;margin-bottom:7px}.sub{color:#64748b}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:24px 0}.stat{background:#fff;padding:20px;border-radius:15px;box-shadow:0 5px 18px #0000000d}.num{font-size:31px;font-weight:800;color:#2563eb;margin-top:6px}.toolbar{display:flex;gap:10px;background:#fff;padding:16px;border-radius:14px;margin-bottom:20px}.toolbar input,.toolbar select{padding:12px;border:1px solid #cbd5e1;border-radius:9px;font-size:16px}.toolbar input{flex:1}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:17px}.card{background:#fff;border-radius:15px;padding:22px;box-shadow:0 5px 18px #0000000d}.ct{font-size:21px;font-weight:800;margin:8px 0}.meta{color:#64748b;line-height:1.7}.chip{display:inline-block;background:#e8f1ff;color:#2563eb;padding:5px 9px;border-radius:15px;margin:9px 4px 5px 0;font-size:12px;font-weight:700}.status{display:inline-block;padding:5px 9px;border-radius:15px;margin:7px 0 13px;font-size:12px;font-weight:700}.pub{background:#dcfce7;color:#15803d}.draft{background:#f1f5f9;color:#475569}.actions{display:flex;gap:6px}.actions button{flex:1;border:0;border-radius:8px;padding:9px;color:#fff;font-weight:700;cursor:pointer}.empty{grid-column:1/-1;text-align:center;background:#fff;padding:40px;border-radius:15px;color:#64748b}
-.modal{display:none;position:fixed;inset:0;background:#0008;z-index:50;align-items:center;justify-content:center;padding:18px}.box{background:#fff;width:min(700px,96%);max-height:92vh;overflow:auto;border-radius:17px;padding:25px}.mh{display:flex;justify-content:space-between;align-items:center}.close{border:0;background:#e2e8f0;border-radius:8px;width:37px;height:37px;font-size:20px;cursor:pointer}.fg{margin:15px 0}.fg label{display:block;font-weight:700;margin-bottom:6px}.fg input,.fg textarea,.fg select{width:100%;padding:11px;border:1px solid #cbd5e1;border-radius:8px;font:inherit}.fg textarea{min-height:95px}.classes{display:grid;grid-template-columns:1fr 1fr;gap:8px}.cc{padding:10px;border:1px solid #e2e8f0;border-radius:8px;background:#f8fafc}.cc input{width:auto;margin-right:7px}.ma{display:flex;justify-content:flex-end;gap:8px}.msg{min-height:20px;font-weight:700}
-@media(max-width:700px){header{flex-direction:column;gap:10px}.stats{grid-template-columns:1fr}.toolbar{flex-direction:column}.classes{grid-template-columns:1fr}.actions{flex-wrap:wrap}}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f5f7fb;color:#172033}header{background:#fff;padding:18px 30px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #e5e7eb}.logo{font-size:28px;font-weight:800;color:#3182f6}.btn{border:0;border-radius:9px;padding:11px 16px;font-weight:700;cursor:pointer;background:#3182f6;color:#fff}.green{background:#16a34a}.gray{background:#64748b}.orange{background:#f59e0b}.red{background:#dc2626}.purple{background:#7c3aed}
+main{max-width:1250px;margin:34px auto;padding:0 20px}h1{font-size:34px;margin:0 0 7px}.sub{color:#64748b}.notice{margin-top:16px;background:#eff6ff;border:1px solid #bfdbfe;color:#1e40af;padding:13px 15px;border-radius:12px;line-height:1.5}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:22px 0}.stat{background:#fff;padding:18px;border-radius:15px;box-shadow:0 5px 18px #0000000d}.num{font-size:30px;font-weight:800;color:#2563eb;margin-top:5px}.toolbar{display:flex;flex-wrap:wrap;gap:9px;background:#fff;padding:15px;border-radius:14px;margin-bottom:18px}.toolbar input,.toolbar select{padding:11px;border:1px solid #cbd5e1;border-radius:9px;font-size:15px}.toolbar input{flex:1;min-width:220px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}.card{background:#fff;border-radius:15px;padding:20px;box-shadow:0 5px 18px #0000000d;position:relative}.ct{font-size:20px;font-weight:800;margin:8px 0}.meta{color:#64748b;line-height:1.7}.chip{display:inline-block;background:#e8f1ff;color:#2563eb;padding:5px 9px;border-radius:15px;margin:8px 4px 4px 0;font-size:12px;font-weight:700}.status{display:inline-block;padding:5px 9px;border-radius:15px;margin:8px 0 12px;font-size:12px;font-weight:700}.pub{background:#dcfce7;color:#15803d}.draft{background:#f1f5f9;color:#475569}.dup{position:absolute;right:14px;top:14px;background:#fee2e2;color:#b91c1c;border-radius:999px;padding:5px 9px;font-size:11px;font-weight:800}.actions{display:flex;gap:6px;flex-wrap:wrap}.actions button{flex:1;min-width:88px;border:0;border-radius:8px;padding:9px;color:#fff;font-weight:700;cursor:pointer}.empty{grid-column:1/-1;text-align:center;background:#fff;padding:40px;border-radius:15px;color:#64748b}
+.modal{display:none;position:fixed;inset:0;background:#0008;z-index:50;align-items:center;justify-content:center;padding:18px}.box{background:#fff;width:min(760px,96%);max-height:92vh;overflow:auto;border-radius:17px;padding:25px}.mh{display:flex;justify-content:space-between;align-items:center}.close{border:0;background:#e2e8f0;border-radius:8px;width:37px;height:37px;font-size:20px;cursor:pointer}.fg{margin:14px 0}.fg label{display:block;font-weight:700;margin-bottom:6px}.fg input,.fg textarea,.fg select{width:100%;padding:11px;border:1px solid #cbd5e1;border-radius:8px;font:inherit}.fg textarea{min-height:85px}.classes{display:grid;grid-template-columns:1fr 1fr;gap:8px}.cc{padding:10px;border:1px solid #e2e8f0;border-radius:8px;background:#f8fafc}.cc input{width:auto;margin-right:7px}.ma{display:flex;justify-content:flex-end;gap:8px}.msg{min-height:22px;font-weight:700}.readonly{background:#f8fafc;color:#334155}
+@media(max-width:750px){header{flex-direction:column;gap:10px}.stats{grid-template-columns:1fr 1fr}.toolbar{flex-direction:column}.classes{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-<header><div class="logo">&lt;/&gt; CodeHub</div><div><button class="btn" onclick="location.href='teacher.html'">← Quản trị</button> <button class="btn" onclick="location.href='subjects.html'">📚 Môn học</button> <button class="btn" onclick="logout()">Đăng xuất</button></div></header>
+<header><div class="logo">&lt;/&gt; CodeHub</div><div><button class="btn gray" onclick="location.href='teacher.html'">← Quản trị</button> <button class="btn" onclick="location.href='ai-quiz-generator.html'">✨ AI Quiz</button> <button class="btn" onclick="logout()">Đăng xuất</button></div></header>
 <main>
-<h1>📚 Quản lý khóa học</h1><div class="sub">Tạo khóa học theo nhiều môn học và giao cho các lớp</div>
-<div class="stats"><div class="stat">Tổng khóa học<div class="num" id="total">0</div></div><div class="stat">Đã xuất bản<div class="num" id="pub">0</div></div><div class="stat">Bản nháp<div class="num" id="draft">0</div></div></div>
-<div class="toolbar"><input id="search" placeholder="🔎 Tìm khóa học..."><select id="subjectFilter"><option value="">Tất cả môn</option></select><select id="gradeFilter"><option value="">Tất cả khối</option><option>10</option><option>11</option><option>12</option></select><button class="btn green" onclick="openCreate()">➕ Tạo khóa học</button></div>
+<h1>📚 Quản lý khóa học V3.7.25</h1>
+<div class="sub" id="roleText">Đang tải quyền...</div>
+<div class="notice"><b>Quy ước mới:</b> Tên khóa học = <b>Môn + Khối + Năm học</b>. Ví dụ: <b>Tiếng Anh 10 2026-2027</b>. Năm học mặc định được xác định theo ngày mở khóa học và vẫn có thể chỉnh khi tạo/sửa.</div>
+<div class="stats"><div class="stat">Tổng khóa học<div class="num" id="total">0</div></div><div class="stat">Đã xuất bản<div class="num" id="pub">0</div></div><div class="stat">Bản nháp<div class="num" id="draft">0</div></div><div class="stat">Tên trùng cùng năm<div class="num" id="dups">0</div></div></div>
+<div class="toolbar"><input id="search" placeholder="🔎 Tìm môn, khối, năm học, giáo viên..."><select id="subjectFilter"><option value="">Tất cả môn</option></select><select id="gradeFilter"><option value="">Tất cả khối</option><option>10</option><option>11</option><option>12</option></select><select id="yearFilter"><option value="">Tất cả năm học</option></select><button class="btn green" onclick="openCreate()">➕ Tạo khóa học</button></div>
 <div class="grid" id="grid"></div>
 </main>
 <div class="modal" id="modal"><div class="box">
 <div class="mh"><h2 id="mt">➕ Tạo khóa học</h2><button class="close" onclick="closeModal()">×</button></div><input type="hidden" id="courseId">
-<div class="fg"><label>Tên khóa học</label><input id="title"></div>
+<div class="fg" id="ownerWrap" style="display:none"><label>Giáo viên phụ trách</label><select id="owner"></select></div>
 <div class="fg"><label>Môn học</label><select id="subject"><option value="">-- Chọn môn học --</option></select></div>
 <div class="fg"><label>Khối</label><select id="grade"><option value="">-- Chọn khối --</option><option>10</option><option>11</option><option>12</option></select></div>
+<div class="fg"><label>Năm học</label><input id="schoolYear" placeholder="2026-2027"></div>
+<div class="fg"><label>Tên khóa học (tự động)</label><input id="title" class="readonly" readonly></div>
 <div class="fg"><label>Mô tả</label><textarea id="description"></textarea></div>
 <div class="fg"><label>Giao cho lớp</label><div class="classes" id="classList"></div></div>
 <div class="fg"><label>Trạng thái</label><select id="published"><option value="false">Bản nháp</option><option value="true">Xuất bản</option></select></div>
 <div class="msg" id="msg"></div><div class="ma"><button class="btn gray" onclick="closeModal()">Hủy</button><button class="btn green" onclick="saveCourse()">Lưu khóa học</button></div>
 </div></div>
 <script>
-let user=null,courses=[],classes=[],links=[],subjects=[];
+let user=null,role="",courses=[],classes=[],links=[],subjects=[],owners=[];
+const s=()=>window.supabaseClient;
+function norm(v){return String(v||"").trim().toLocaleLowerCase("vi-VN").normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/\s+/g," ")}
+function prettySubject(v){const raw=String(v||"").trim().replace(/\s+/g," "),k=norm(raw);const m={"tieng anh":"Tiếng Anh","english":"Tiếng Anh","tin hoc":"Tin học","ngu van":"Ngữ văn","toan":"Toán","vat ly":"Vật lý","vat li":"Vật lý","hoa hoc":"Hóa học","sinh hoc":"Sinh học","lich su":"Lịch sử","dia ly":"Địa lý","hoat dong trai nghiem":"Hoạt động trải nghiệm","hoat dong trai nghiem huong nghiep":"Hoạt động trải nghiệm hướng nghiệp"};return m[k]||raw}
+function currentSchoolYear(){const d=new Date(),y=d.getFullYear(),m=d.getMonth()+1;return m>=7?`${y}-${y+1}`:`${y-1}-${y}`}
+function canonical(c){const sub=prettySubject(c.subject),g=String(c.grade||"").trim(),y=String(c.school_year||"").trim();return [sub,g,y].filter(Boolean).join(" ")||c.title||"Khóa học"}
+function ownerName(id){const x=owners.find(o=>o.id===id);return x?.full_name||x?.student_code||""}
+function duplicateKey(c){return `${c.teacher_id}|${norm(c.subject)}|${c.grade}|${String(c.school_year||"").trim()}`}
+function duplicateCounts(){const m={};courses.forEach(c=>m[duplicateKey(c)]=(m[duplicateKey(c)]||0)+1);return m}
+
 document.addEventListener("DOMContentLoaded",async()=>{
- const s=window.supabaseClient;if(!s){alert("Không kết nối được Supabase.");return}
- const {data:{user:u}}=await s.auth.getUser();if(!u){location.href="login.html";return}user=u;
- const {data:p}=await s.from("profiles").select("role").eq("id",u.id).single();if(!p||p.role!=="teacher"){location.href="index.html";return}
- document.getElementById("search").addEventListener("input",render);document.getElementById("subjectFilter").addEventListener("change",render);document.getElementById("gradeFilter").addEventListener("change",render);
- document.getElementById("subject").addEventListener("change",autoCourseTitle);document.getElementById("grade").addEventListener("change",autoCourseTitle);document.getElementById("title").addEventListener("input",()=>document.getElementById("title").dataset.manual="1");await load();
+ if(!s()){alert("Không kết nối được Supabase.");return}
+ const {data:{user:u}}=await s().auth.getUser();if(!u){location.href="login.html";return}user=u;
+ const p=await s().from("profiles").select("role,full_name").eq("id",u.id).single();role=String(p.data?.role||"").trim().toLowerCase();
+ if(!["admin","teacher"].includes(role)){location.href="index.html";return}
+ document.getElementById("roleText").textContent=role==="admin"?"Admin: xem, sửa và xóa an toàn tất cả khóa học.":"Giáo viên: quản lý khóa học của chính mình.";
+ document.getElementById("ownerWrap").style.display=role==="admin"?"block":"none";
+ for(const id of ["search","subjectFilter","gradeFilter","yearFilter"])document.getElementById(id).addEventListener(id==="search"?"input":"change",render);
+ for(const id of ["subject","grade","schoolYear"])document.getElementById(id).addEventListener("input",refreshTitle);
+ document.getElementById("owner").addEventListener("change",refreshTitle);
+ await load();
 });
+
+async function loadClasses(){
+ let r=await s().rpc("codehub_v370_classes_for_user");
+ if(!r.error&&Array.isArray(r.data))return r.data;
+ if(role==="admin"){
+   r=await s().from("classes").select("id,class_name,school_year,school_id").order("class_name");return r.data||[];
+ }
+ const a=await s().from("teacher_class_subjects").select("class_id").eq("teacher_id",user.id);const ids=[...new Set((a.data||[]).map(x=>x.class_id).filter(Boolean))];
+ if(!ids.length)return[];r=await s().from("classes").select("id,class_name,school_year,school_id").in("id",ids).order("class_name");return r.data||[];
+}
 async function load(){
- const s=window.supabaseClient;const [a,b,c,d]=await Promise.all([s.from("courses").select("*").eq("teacher_id",user.id).order("created_at",{ascending:false}),s.from("classes").select("*").eq("teacher_id",user.id).order("class_name"),s.from("course_classes").select("*"),s.from("subjects").select("*").order("subject_name")]);
- for(const r of [a,b,c,d])if(r.error){alert("Lỗi tải dữ liệu: "+r.error.message);return}
- courses=a.data||[];classes=b.data||[];links=c.data||[];subjects=[...new Map((d.data||[]).filter(x=>x.subject_name&&x.subject_name.trim()).map(x=>[x.subject_name.trim().toLocaleLowerCase("vi-VN"),{...x,subject_name:x.subject_name.trim()}])).values()];fillSubjects();render();
+ let cq=s().from("courses").select("*").order("school_year",{ascending:false}).order("subject").order("grade");if(role==="teacher")cq=cq.eq("teacher_id",user.id);
+ const [cr,lr,sr,pr]=await Promise.all([cq,s().from("course_classes").select("*"),s().from("subjects").select("id,subject_name,subject_code").order("subject_name"),role==="admin"?s().from("profiles").select("id,full_name,student_code,role").in("role",["teacher","admin"]).order("full_name"):Promise.resolve({data:[{id:user.id,full_name:"Tôi",role:"teacher"}],error:null})]);
+ if(cr.error){alert("Không tải được khóa học: "+cr.error.message);return}if(lr.error){alert("Không tải được liên kết lớp: "+lr.error.message);return}if(sr.error){alert("Không tải được môn học: "+sr.error.message);return}
+ courses=cr.data||[];links=lr.data||[];subjects=[...new Map((sr.data||[]).filter(x=>x.subject_name).map(x=>[norm(x.subject_name),{...x,subject_name:prettySubject(x.subject_name)}])).values()];owners=pr.data||[];classes=await loadClasses();
+ fillControls();render();
 }
-function fillSubjects(){
- const f=document.getElementById("subjectFilter"),s=document.getElementById("subject"),fv=f.value,sv=s.value;f.innerHTML='<option value="">Tất cả môn</option>';s.innerHTML='<option value="">-- Chọn môn học --</option>';
- subjects.forEach(x=>{const o=document.createElement("option");o.value=x.subject_name;o.textContent=x.subject_name;f.appendChild(o);const p=o.cloneNode(true);s.appendChild(p)});f.value=fv;s.value=sv;
+function fillControls(){
+ const sf=document.getElementById("subjectFilter"),ss=document.getElementById("subject"),oldF=sf.value,oldS=ss.value;sf.innerHTML='<option value="">Tất cả môn</option>';ss.innerHTML='<option value="">-- Chọn môn học --</option>';
+ subjects.forEach(x=>{for(const el of [sf,ss]){const o=document.createElement("option");o.value=x.subject_name;o.textContent=x.subject_name;el.appendChild(o)}});sf.value=oldF;ss.value=oldS;
+ const years=[...new Set(courses.map(x=>x.school_year).filter(Boolean))].sort().reverse(),yf=document.getElementById("yearFilter"),oy=yf.value;yf.innerHTML='<option value="">Tất cả năm học</option>'+years.map(y=>`<option>${y}</option>`).join("");yf.value=oy;
+ const ow=document.getElementById("owner"),oo=ow.value;ow.innerHTML=owners.map(x=>`<option value="${x.id}">${x.full_name||x.student_code||x.id}</option>`).join("");ow.value=oo||user.id;
 }
-function normName(v){return String(v||"").trim().toLocaleLowerCase("vi-VN").normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/\s+/g," ")}
-function prettySubject(v){
- const raw=String(v||"").trim().replace(/\s+/g," "),k=normName(raw);
- const map={"tieng anh":"Tiếng Anh","tin hoc":"Tin học","ngu van":"Ngữ văn","toan":"Toán","vat ly":"Vật lý","hoa hoc":"Hóa học","sinh hoc":"Sinh học","lich su":"Lịch sử","dia ly":"Địa lý","gdcd":"GDCD","giao duc kinh te va phap luat":"Giáo dục Kinh tế và Pháp luật","hoat dong trai nghiem":"Hoạt động trải nghiệm","hoat dong trai nghiem huong nghiep":"Hoạt động trải nghiệm hướng nghiệp"};
- return map[k]||raw;
-}
-function suggestedTitle(){const subject=prettySubject(document.getElementById("subject").value),grade=document.getElementById("grade").value;return subject&&grade?`${subject} ${grade}`:""}
-function autoCourseTitle(){if(document.getElementById("courseId").value)return;const t=document.getElementById("title"),next=suggestedTitle();if(!t.dataset.manual||!t.value.trim())t.value=next}
 function assigned(id){const ids=links.filter(x=>x.course_id===id).map(x=>x.class_id);return classes.filter(x=>ids.includes(x.id))}
 function render(){
- document.getElementById("total").textContent=courses.length;document.getElementById("pub").textContent=courses.filter(x=>x.is_published).length;document.getElementById("draft").textContent=courses.filter(x=>!x.is_published).length;
- const q=document.getElementById("search").value.trim().toLocaleLowerCase("vi-VN"),sf=document.getElementById("subjectFilter").value,gf=document.getElementById("gradeFilter").value,g=document.getElementById("grid");g.innerHTML="";
- const arr=courses.filter(x=>(!q||(x.title+" "+x.subject+" "+(x.description||"")).toLocaleLowerCase("vi-VN").includes(q))&&(!sf||x.subject===sf)&&(!gf||String(x.grade)===gf));
+ const dups=duplicateCounts(),dupTotal=Object.values(dups).filter(n=>n>1).reduce((a,n)=>a+n,0);document.getElementById("total").textContent=courses.length;document.getElementById("pub").textContent=courses.filter(x=>x.is_published).length;document.getElementById("draft").textContent=courses.filter(x=>!x.is_published).length;document.getElementById("dups").textContent=dupTotal;
+ const q=norm(document.getElementById("search").value),sf=document.getElementById("subjectFilter").value,gf=document.getElementById("gradeFilter").value,yf=document.getElementById("yearFilter").value,g=document.getElementById("grid");g.innerHTML="";
+ const arr=courses.filter(x=>{const hay=norm(`${canonical(x)} ${x.description||""} ${ownerName(x.teacher_id)}`);return(!q||hay.includes(q))&&(!sf||norm(x.subject)===norm(sf))&&(!gf||String(x.grade)===gf)&&(!yf||x.school_year===yf)});
  if(!arr.length){g.innerHTML='<div class="empty">Chưa có khóa học phù hợp.</div>';return}
- arr.forEach(x=>{const c=document.createElement("div");c.className="card";c.innerHTML='<div style="font-size:34px">📘</div><div class="ct"></div><div class="meta"></div><div class="classchips"></div><div class="status"></div><div class="actions"></div>';c.querySelector(".ct").textContent=x.title;c.querySelector(".meta").textContent="📚 "+prettySubject(x.subject)+" • 🎓 Khối "+x.grade;const ch=c.querySelector(".classchips");assigned(x.id).forEach(z=>{const e=document.createElement("span");e.className="chip";e.textContent="🏫 "+z.class_name;ch.appendChild(e)});const st=c.querySelector(".status");st.className="status "+(x.is_published?"pub":"draft");st.textContent=x.is_published?"🟢 Đã xuất bản":"⚪ Bản nháp";
- const a=c.querySelector(".actions");[["📖 Bài học","",()=>location.href=`lessons.html?course=${encodeURIComponent(x.id)}`],["✏️ Sửa","orange",()=>openEdit(x)],["🗑️ Xóa","red",()=>removeCourse(x)]].forEach(v=>{const b=document.createElement("button");b.className=v[1]||"btn";b.textContent=v[0];b.onclick=v[2];a.appendChild(b)});g.appendChild(c)});
+ arr.forEach(x=>{const c=document.createElement("div");c.className="card";const isDup=dups[duplicateKey(x)]>1;c.innerHTML=`${isDup?'<div class="dup">⚠ TRÙNG CÙNG NĂM</div>':''}<div style="font-size:34px">📘</div><div class="ct"></div><div class="meta"></div><div class="classchips"></div><div class="status"></div><div class="actions"></div>`;c.querySelector(".ct").textContent=canonical(x);c.querySelector(".meta").innerHTML=`📚 ${prettySubject(x.subject)} • 🎓 Khối ${x.grade}<br>📅 Năm học: <b>${x.school_year||""}</b>${role==="admin"?`<br>👨‍🏫 ${ownerName(x.teacher_id)||x.teacher_id}`:""}<br>🕒 Mở: ${x.created_at?new Date(x.created_at).toLocaleDateString("vi-VN"):""}`;const ch=c.querySelector(".classchips");const as=assigned(x.id);if(as.length)as.forEach(z=>{const e=document.createElement("span");e.className="chip";e.textContent="🏫 "+z.class_name+(z.school_year?` (${z.school_year})`:"");ch.appendChild(e)});else ch.innerHTML='<span style="color:#94a3b8;font-size:13px">Chưa giao lớp</span>';const st=c.querySelector(".status");st.className="status "+(x.is_published?"pub":"draft");st.textContent=x.is_published?"🟢 Đã xuất bản":"⚪ Bản nháp";const a=c.querySelector(".actions");[["📖 Bài học","purple",()=>location.href=`lessons.html?course=${encodeURIComponent(x.id)}`],["✏️ Sửa","orange",()=>openEdit(x)],["🗑️ Xóa","red",()=>removeCourse(x)]].forEach(v=>{const b=document.createElement("button");b.className=v[1];b.textContent=v[0];b.onclick=v[2];a.appendChild(b)});g.appendChild(c)});
 }
-function classChecks(selected=[]){const b=document.getElementById("classList");b.innerHTML="";classes.forEach(x=>{const l=document.createElement("label");l.className="cc";const i=document.createElement("input");i.type="checkbox";i.value=x.id;i.checked=selected.includes(x.id);l.append(i,document.createTextNode(x.class_name+" ("+(x.school_year||"")+")"));b.appendChild(l)})}
-function openCreate(){if(!subjects.length){alert("Chưa có môn học. Hãy vào Quản lý môn học và thêm môn trước.");location.href="subjects.html";return}document.getElementById("mt").textContent="➕ Tạo khóa học";document.getElementById("courseId").value="";document.getElementById("title").value="";document.getElementById("title").dataset.manual="";document.getElementById("subject").value="";document.getElementById("grade").value="";document.getElementById("description").value="";document.getElementById("published").value="false";document.getElementById("msg").textContent="";classChecks([]);document.getElementById("modal").style.display="flex"}
-function openEdit(x){document.getElementById("mt").textContent="✏️ Sửa khóa học";document.getElementById("courseId").value=x.id;document.getElementById("title").value=x.title||"";document.getElementById("title").dataset.manual="1";document.getElementById("subject").value=x.subject||"";document.getElementById("grade").value=String(x.grade||"");document.getElementById("description").value=x.description||"";document.getElementById("published").value=String(!!x.is_published);document.getElementById("msg").textContent="";classChecks(assigned(x.id).map(z=>z.id));document.getElementById("modal").style.display="flex"}
+function classChecks(selected=[]){const b=document.getElementById("classList");b.innerHTML="";if(!classes.length){b.textContent="Không có lớp trong phạm vi quản lý.";return}classes.forEach(x=>{const l=document.createElement("label");l.className="cc";const i=document.createElement("input");i.type="checkbox";i.value=x.id;i.checked=selected.includes(x.id);l.append(i,document.createTextNode(x.class_name+(x.school_year?` (${x.school_year})`:"")));b.appendChild(l)})}
+function refreshTitle(){const subject=prettySubject(document.getElementById("subject").value),grade=document.getElementById("grade").value,year=document.getElementById("schoolYear").value.trim();document.getElementById("title").value=[subject,grade,year].filter(Boolean).join(" ")}
+function openCreate(){if(!subjects.length){alert("Chưa có môn học.");return}document.getElementById("mt").textContent="➕ Tạo khóa học";document.getElementById("courseId").value="";document.getElementById("owner").value=user.id;document.getElementById("subject").value="";document.getElementById("grade").value="";document.getElementById("schoolYear").value=currentSchoolYear();document.getElementById("description").value="";document.getElementById("published").value="false";document.getElementById("msg").textContent="";classChecks([]);refreshTitle();document.getElementById("modal").style.display="flex"}
+function openEdit(x){document.getElementById("mt").textContent="✏️ Sửa khóa học";document.getElementById("courseId").value=x.id;document.getElementById("owner").value=x.teacher_id||user.id;document.getElementById("subject").value=prettySubject(x.subject);document.getElementById("grade").value=String(x.grade||"");document.getElementById("schoolYear").value=x.school_year||currentSchoolYear();document.getElementById("description").value=x.description||"";document.getElementById("published").value=String(!!x.is_published);document.getElementById("msg").textContent="";classChecks(assigned(x.id).map(z=>z.id));refreshTitle();document.getElementById("modal").style.display="flex"}
 function closeModal(){document.getElementById("modal").style.display="none"}
-async function saveCourse(){const id=document.getElementById("courseId").value,title=document.getElementById("title").value.trim(),subject=document.getElementById("subject").value,grade=document.getElementById("grade").value,description=document.getElementById("description").value.trim(),is_published=document.getElementById("published").value==="true",ids=[...document.querySelectorAll("#classList input:checked")].map(x=>x.value),msg=document.getElementById("msg");if(!title||!subject||!grade){msg.style.color="#dc2626";msg.textContent="⚠️ Chọn đầy đủ tên khóa học, môn học và khối.";return}
- const dup=courses.find(x=>x.id!==id&&normName(x.title)===normName(title));
- if(dup){msg.style.color="#dc2626";msg.textContent=`⚠️ Đã có khóa học “${dup.title}”. Hãy sửa khóa học cũ thay vì tạo tên trùng.`;return}
- const s=window.supabaseClient;let cid=id;if(id){const {error}=await s.from("courses").update({title,subject,grade,description,is_published,updated_at:new Date().toISOString()}).eq("id",id);if(error){msg.textContent="❌ "+error.message;return}}else{const {data,error}=await s.from("courses").insert({title,subject,grade,description,is_published,teacher_id:user.id}).select("id").single();if(error){msg.textContent="❌ "+error.message;return}cid=data.id}
- let r=await s.from("course_classes").delete().eq("course_id",cid);if(r.error){msg.textContent="❌ "+r.error.message;return}if(ids.length){r=await s.from("course_classes").insert(ids.map(class_id=>({course_id:cid,class_id})));if(r.error){msg.textContent="❌ "+r.error.message;return}}closeModal();await load()}
-async function removeCourse(x){if(!confirm(`Xóa khóa học "${x.title}"?`))return;const {error}=await window.supabaseClient.from("courses").delete().eq("id",x.id);if(error){alert("❌ "+error.message);return}await load()}
-async function logout(){await window.supabaseClient.auth.signOut();location.href="login.html"}
+async function saveCourse(){
+ const id=document.getElementById("courseId").value,teacher_id=role==="admin"?document.getElementById("owner").value:user.id,subject=prettySubject(document.getElementById("subject").value),grade=document.getElementById("grade").value,school_year=document.getElementById("schoolYear").value.trim(),description=document.getElementById("description").value.trim(),is_published=document.getElementById("published").value==="true",ids=[...document.querySelectorAll("#classList input:checked")].map(x=>x.value),msg=document.getElementById("msg"),title=[subject,grade,school_year].join(" ");
+ if(!teacher_id||!subject||!grade||!/^20\d{2}-20\d{2}$/.test(school_year)){msg.style.color="#dc2626";msg.textContent="⚠️ Chọn đủ giáo viên, môn, khối và năm học dạng 2026-2027.";return}
+ const dup=courses.find(x=>x.id!==id&&x.teacher_id===teacher_id&&norm(x.subject)===norm(subject)&&String(x.grade)===String(grade)&&String(x.school_year)===school_year);if(dup){msg.style.color="#dc2626";msg.textContent=`⚠️ Giáo viên này đã có “${canonical(dup)}”. Hãy dùng khóa học cũ thay vì tạo trùng.`;return}
+ msg.style.color="#2563eb";msg.textContent="Đang lưu...";let cid=id;
+ if(id){let q=s().from("courses").update({teacher_id,subject,grade,school_year,title,description,is_published,updated_at:new Date().toISOString()}).eq("id",id);if(role==="teacher")q=q.eq("teacher_id",user.id);const r=await q;if(r.error){msg.style.color="#dc2626";msg.textContent="❌ "+r.error.message;return}}
+ else{const r=await s().from("courses").insert({teacher_id,subject,grade,school_year,title,description,is_published}).select("id").single();if(r.error){msg.style.color="#dc2626";msg.textContent="❌ "+r.error.message;return}cid=r.data.id}
+ let r=await s().from("course_classes").delete().eq("course_id",cid);if(r.error){msg.style.color="#dc2626";msg.textContent="❌ Không cập nhật được lớp: "+r.error.message;return}if(ids.length){r=await s().from("course_classes").insert(ids.map(class_id=>({course_id:cid,class_id})));if(r.error){msg.style.color="#dc2626";msg.textContent="❌ Không giao được lớp: "+r.error.message;return}}
+ closeModal();await load();
+}
+async function removeCourse(x){
+ if(!confirm(`Xóa khóa học “${canonical(x)}”?\n\nHệ thống chỉ xóa nếu khóa học chưa có Bài học và Quiz.`))return;
+ const r=await s().rpc("codehub_v3725_delete_course",{p_course:x.id});if(r.error){alert("❌ "+r.error.message);return}const z=r.data||{};alert((z.success?"✅ ":"⚠️ ")+(z.message||"Đã xử lý."));if(z.success)await load();
+}
+async function logout(){await s().auth.signOut();location.href="login.html"}
 document.getElementById("modal").addEventListener("click",e=>{if(e.target.id==="modal")closeModal()});
-</script></body></html>
+</script>
+</body></html>

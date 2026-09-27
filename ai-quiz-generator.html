@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>AI Quiz Generator V3.7.24.2 STEM - CodeHub</title>
+<title>AI Quiz Generator V3.7.25 STEM - CodeHub</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/mammoth@1.8.0/mammoth.browser.min.js"></script>
@@ -11,7 +11,7 @@
 <script src="scripts/supabase-config.js"></script>
 <style>.drop.drag{border-color:#7c3aed;background:#f5f3ff}.busy{opacity:.6;pointer-events:none}.stem-svg svg{max-width:100%;height:auto;display:block;margin:auto}.math-wrap mjx-container{overflow-x:auto;overflow-y:hidden;max-width:100%}</style></head>
 <body class="bg-slate-50 text-slate-900"><main class="max-w-7xl mx-auto p-5">
-<div class="flex justify-between gap-4 mb-5"><div><h1 class="text-3xl font-bold">✨ AI Quiz Generator V3.7.24.2 • STEM EXAM ENGINE</h1><p class="text-slate-500">Tiếng Anh • Toán • Lý • Hóa • Sinh • A–D • Đúng/Sai • Trả lời ngắn • Đáp án số + dung sai/đơn vị • Công thức • Sơ đồ/đồ thị SVG • Word .docx</p></div><a href="quizzes.html" class="border bg-white rounded-xl px-4 py-2 h-fit">← Quiz</a></div>
+<div class="flex justify-between gap-4 mb-5"><div><h1 class="text-3xl font-bold">✨ AI Quiz Generator V3.7.25 • STEM EXAM ENGINE</h1><p class="text-slate-500">Tiếng Anh • Toán • Lý • Hóa • Sinh • A–D • Đúng/Sai • Trả lời ngắn • Đáp án số + dung sai/đơn vị • Công thức • Sơ đồ/đồ thị SVG • Word .docx</p></div><a href="quizzes.html" class="border bg-white rounded-xl px-4 py-2 h-fit">← Quiz</a></div>
 <div id="msg" class="hidden mb-4 p-3 rounded-xl"></div>
 <div class="grid lg:grid-cols-4 gap-5">
 <aside class="bg-white rounded-2xl shadow p-5 space-y-3">
@@ -107,7 +107,7 @@
 <div id="modal" class="hidden fixed inset-0 bg-black/50 z-50 p-4 overflow-auto"><div class="max-w-4xl mx-auto bg-white rounded-2xl p-6 my-6"><div class="flex justify-between items-center mb-4"><div><h2 class="text-2xl font-bold">👁 Xem trước đề học sinh</h2><p id="previewInfo" class="text-slate-500"></p></div><button id="closeModal" class="text-2xl px-3">✕</button></div><div id="previewList" class="space-y-5"></div></div></div>
 <script type="module">
 const s=window.supabaseClient,$=id=>document.getElementById(id);
-let me,myRole="",generated=[],fileSources=[],structureSource=null,activeStructure=null;
+let me,myRole="",generated=[],fileSources=[],structureSource=null,activeStructure=null,courseOwners={};
 const ENDPOINT="https://drfcejvmyhzorwepndta.supabase.co/functions/v1/generate-quiz-ai-v3";
 const esc=v=>String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
 const cleanTitle=v=>String(v||"").replace(/^\s*\[?(?:BÀI|BAI)\s*\d*\s*:\s*/i,"").replace(/^\s*\[?TÀI LIỆU\s*:\s*/i,"").replace(/\]\s*$/,"").trim();
@@ -141,18 +141,26 @@ function prettySubject(v){
  if(map[k])return map[k];
  return raw.split(" ").map(w=>w? w.charAt(0).toLocaleUpperCase("vi-VN")+w.slice(1).toLocaleLowerCase("vi-VN"):w).join(" ");
 }
+function courseYear(c){
+ const sy=String(c.school_year||"").trim();
+ if(sy)return sy;
+ const d=c.created_at?new Date(c.created_at):new Date();
+ const y=d.getFullYear(),m=d.getMonth()+1;
+ return m>=7?`${y}-${y+1}`:`${y-1}-${y}`;
+}
 function courseBaseLabel(c){
  const subject=prettySubject(c.subject);
  const grade=String(c.grade||"").trim();
+ const year=courseYear(c);
+ if(subject&&grade&&year)return `${subject} ${grade} ${year}`;
  if(subject&&grade)return `${subject} ${grade}`;
  if(subject)return subject;
  return String(c.title||"Khóa học").trim();
 }
+function shortDate(v){try{return new Date(v).toLocaleDateString("vi-VN")}catch{return ""}}
 function renderCourseOptions(rows){
  const groups=new Map();
  for(const c of rows){
-   // Nhóm toàn cục theo Môn + Khối, KHÔNG tách theo giáo viên.
-   // Nhờ vậy Admin không còn thấy hai option có cùng tên y hệt.
    const base=courseBaseLabel(c),key=norm(base);
    if(!groups.has(key))groups.set(key,{base,items:[]});
    groups.get(key).items.push(c);
@@ -161,15 +169,15 @@ function renderCourseOptions(rows){
  let html='<option value="">-- Chọn khóa học --</option>';
  for(const g of ordered){
    const arr=g.items.sort((a,b)=>Number(!!b.is_published)-Number(!!a.is_published)||String(a.created_at||"").localeCompare(String(b.created_at||"")));
-   if(arr.length===1){
-     const c=arr[0];
-     html+=`<option value="${c.id}" data-base="${esc(g.base)}">${esc(g.base)}</option>`;
-   }else{
-     arr.forEach((c,i)=>{
-       const suffix=` • Bản ${i+1} • ${c.is_published?"Đã xuất bản":"Nháp"}`;
-       html+=`<option value="${c.id}" data-base="${esc(g.base)}">${esc(g.base+suffix)}</option>`;
-     });
-   }
+   arr.forEach(c=>{
+     let label=g.base;
+     if(arr.length>1){
+       const owner=courseOwners[c.teacher_id]||"";
+       label+=myRole==="admin"&&owner?` • ${owner}`:` • tạo ${shortDate(c.created_at)}`;
+       label+=` • ${c.is_published?"Đã xuất bản":"Nháp"}`;
+     }
+     html+=`<option value="${c.id}" data-base="${esc(g.base)}">${esc(label)}</option>`;
+   });
  }
  $("course").innerHTML=html;
 }
@@ -206,10 +214,17 @@ async function init(){
  const p=await s.from("profiles").select("role").eq("id",me.id).single();
  myRole=String(p.data?.role||"").trim().toLowerCase();
  if(!["admin","teacher"].includes(myRole))return location.href="student-dashboard.html";
- let cq=s.from("courses").select("id,title,subject,grade,teacher_id,is_published,created_at").order("subject").order("grade").order("created_at");
+ let cq=s.from("courses").select("id,title,subject,grade,school_year,teacher_id,is_published,created_at").order("subject").order("grade").order("school_year").order("created_at");
  if(myRole==="teacher")cq=cq.eq("teacher_id",me.id);
  const c=await cq;
  if(c.error)return show("Không tải được khóa học: "+c.error.message);
+ if(myRole==="admin"){
+   const ids=[...new Set((c.data||[]).map(x=>x.teacher_id).filter(Boolean))];
+   if(ids.length){
+     const pr=await s.from("profiles").select("id,full_name,student_code").in("id",ids);
+     (pr.data||[]).forEach(x=>courseOwners[x.id]=x.full_name||x.student_code||"Giáo viên");
+   }
+ }
  renderCourseOptions(c.data||[]);
  applyExamRules();
 }
