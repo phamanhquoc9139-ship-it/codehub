@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Learning Analytics V3.6.1 | CodeHub</title>
+<title>Learning Analytics V3.6.2 | CodeHub</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
@@ -21,7 +21,7 @@
     <div>
       <div class="flex gap-3 items-center">
         <h1 class="text-3xl font-black">📈 Phân tích học tập</h1>
-        <span class="px-2 py-1 rounded-full text-xs bg-violet-100 text-violet-700 font-black">V3.6.1</span>
+        <span class="px-2 py-1 rounded-full text-xs bg-violet-100 text-violet-700 font-black">V3.6.2</span>
       </div>
       <p class="text-slate-500 mt-1">Theo dõi mức độ hoàn thành, kết quả, phân bố điểm và học sinh cần hỗ trợ.</p>
     </div>
@@ -35,7 +35,10 @@
   <div id="msg" class="hidden mb-4 p-3 rounded-xl bg-red-50 text-red-700"></div>
 
   <section class="bg-white rounded-2xl shadow p-4 mb-5">
-    <div class="grid md:grid-cols-5 gap-3 items-end">
+    <div class="grid md:grid-cols-6 gap-3 items-end">
+      <label class="font-bold">Trường
+        <select id="schoolFilter" class="block w-full mt-1 border rounded-xl p-2"></select>
+      </label>
       <label class="font-bold">Môn học
         <select id="subjectFilter" class="block w-full mt-1 border rounded-xl p-2"></select>
       </label>
@@ -76,6 +79,12 @@
         </div>
         <div id="reportGenerated" class="text-sm text-slate-500"></div>
       </div>
+    </section>
+
+    <section class="bg-white rounded-2xl shadow p-5 mb-5">
+      <h2 class="text-xl font-black mb-2">🏫 Trường trong báo cáo</h2>
+      <div id="schoolList" class="flex flex-wrap gap-2"></div>
+      <div id="schoolSummary" class="mt-4 space-y-3"></div>
     </section>
 
     <div class="grid lg:grid-cols-2 gap-5 mb-5">
@@ -125,6 +134,7 @@
           <tr>
             <th class="p-3 text-left">Học sinh</th>
             <th class="p-3">Mã HS</th>
+            <th class="p-3 text-left">Trường</th>
             <th class="p-3">Lớp</th>
             <th class="p-3 text-left">Môn</th>
             <th class="p-3 text-left">Bài kiểm tra</th>
@@ -176,7 +186,8 @@ async function init(){
 }
 
 async function loadAll(){
-  const r=await s.rpc("codehub_v360_learning_rows",{
+  const r=await s.rpc("codehub_v362_learning_rows",{
+    p_school:null,
     p_class:null,
     p_subject:null,
     p_quiz:null,
@@ -191,6 +202,11 @@ async function loadAll(){
 }
 
 function buildFilters(){
+  const schools=uniq(allRows.filter(x=>x.school_name),"school_name")
+    .sort((a,b)=>String(a.school_name).localeCompare(String(b.school_name),"vi"));
+  $("schoolFilter").innerHTML='<option value="">Tất cả trường</option>'+
+    schools.map(x=>`<option value="${x.school_id||""}">${esc(x.school_name)}</option>`).join("");
+
   const subjects=[...new Set(allRows.map(x=>x.subject_name).filter(Boolean))].sort((a,b)=>a.localeCompare(b,"vi"));
   $("subjectFilter").innerHTML='<option value="">Tất cả môn</option>'+subjects.map(x=>`<option>${esc(x)}</option>`).join("");
 
@@ -202,6 +218,7 @@ function buildFilters(){
 }
 
 function applyFilters(){
+  const schoolId=$("schoolFilter").value;
   const subject=$("subjectFilter").value;
   const classId=$("classFilter").value;
   const quizId=$("quizFilter").value;
@@ -209,6 +226,7 @@ function applyFilters(){
   const t=$("toDate").value ? new Date($("toDate").value+"T23:59:59") : null;
 
   rows=allRows.filter(x=>{
+    if(schoolId && String(x.school_id||"")!==schoolId)return false;
     if(subject && x.subject_name!==subject)return false;
     if(classId && x.class_id!==classId)return false;
     if(quizId && x.quiz_id!==quizId)return false;
@@ -223,6 +241,7 @@ function applyFilters(){
 
 function render(){
   renderKpis();
+  renderSchoolSummary();
   renderDistribution();
   renderClassCompare();
   renderTrend();
@@ -247,6 +266,57 @@ function renderKpis(){
   $("kpiAvg").textContent=scores.length?(scores.reduce((a,b)=>a+b,0)/scores.length).toFixed(2):"—";
   $("kpiMax").textContent=scores.length?Math.max(...scores).toFixed(2):"—";
   $("kpiNeed").textContent=done.filter(x=>num(x.score)<5).length;
+}
+
+
+function renderSchoolSummary(){
+  const mp=new Map();
+
+  for(const x of rows){
+    const key=x.school_name||"TRƯỜNG THPT PHÚ HÒA";
+    if(!mp.has(key)){
+      mp.set(key,{
+        name:key,
+        years:new Set(),
+        total:0,
+        done:0,
+        scores:[]
+      });
+    }
+    const o=mp.get(key);
+    if(x.school_year)o.years.add(x.school_year);
+    o.total++;
+    if(x.completed && x.score!==null && x.score!==undefined){
+      o.done++;
+      o.scores.push(num(x.score));
+    }
+  }
+
+  const arr=[...mp.values()].sort((a,b)=>a.name.localeCompare(b.name,"vi"));
+
+  $("schoolList").innerHTML=arr.length
+    ?arr.map(o=>`<span class="px-3 py-2 rounded-full bg-blue-50 text-blue-700 font-bold">${esc(o.name)}</span>`).join("")
+    :'<span class="text-slate-500">Chưa có dữ liệu trường.</span>';
+
+  $("schoolSummary").innerHTML=arr.map(o=>{
+    const avg=o.scores.length?o.scores.reduce((a,b)=>a+b,0)/o.scores.length:null;
+    const rate=o.total?o.done/o.total*100:0;
+    const years=[...o.years].sort().join(", ")||"—";
+
+    return `<div class="border rounded-xl p-4">
+      <div class="flex flex-wrap justify-between gap-2">
+        <div>
+          <b>${esc(o.name)}</b>
+          <div class="text-sm text-slate-500 mt-1">Năm học: ${esc(years)}</div>
+        </div>
+        <div class="text-right text-sm">
+          <div>Hoàn thành: <b>${o.done}/${o.total}</b> (${rate.toFixed(1)}%)</div>
+          <div>Điểm TB: <b>${avg===null?"—":avg.toFixed(2)}</b></div>
+        </div>
+      </div>
+      <div class="bar mt-3"><i style="width:${rate}%"></i></div>
+    </div>`;
+  }).join("");
 }
 
 function renderDistribution(){
@@ -382,6 +452,17 @@ function renderTrend(){
 
 function renderReportMeta(){
   const parts=[];
+  const schools=[...new Set(rows.map(x=>x.school_name).filter(Boolean))].sort((a,b)=>a.localeCompare(b,"vi"));
+
+  if($("schoolFilter").value){
+    const opt=$("schoolFilter").selectedOptions[0];
+    parts.push("Trường: "+(opt?.textContent||""));
+  }else if(schools.length===1){
+    parts.push("Trường: "+schools[0]);
+  }else if(schools.length>1){
+    parts.push("Các trường: "+schools.join(" | "));
+  }
+
   if($("subjectFilter").value)parts.push("Môn: "+$("subjectFilter").value);
   if($("classFilter").value){
     const opt=$("classFilter").selectedOptions[0];
@@ -455,13 +536,14 @@ function renderDetail(){
   const q=$("searchBox").value.trim().toLowerCase();
   const data=rows.filter(x=>{
     if(!q)return true;
-    return [x.student_name,x.student_code,x.class_name,x.quiz_title,x.subject_name]
+    return [x.student_name,x.student_code,x.school_name,x.class_name,x.quiz_title,x.subject_name]
       .some(v=>String(v||"").toLowerCase().includes(q));
   });
 
   $("detailRows").innerHTML=data.map(x=>`<tr class="border-t">
     <td class="p-3 font-semibold">${esc(x.student_name)}</td>
     <td class="p-3 text-center">${esc(x.student_code)}</td>
+    <td class="p-3">${esc(x.school_name||"TRƯỜNG THPT PHÚ HÒA")}</td>
     <td class="p-3 text-center">${esc(x.class_name)}</td>
     <td class="p-3">${esc(x.subject_name)}</td>
     <td class="p-3">${esc(x.quiz_title)}</td>
@@ -469,11 +551,12 @@ function renderDetail(){
     <td class="p-3 text-center font-bold">${x.completed&&x.score!==null?Number(x.score).toFixed(2):"—"}</td>
     <td class="p-3 text-center">${x.completed?`${x.correct_count??"—"}/${x.total_questions??"—"}`:"—"}</td>
     <td class="p-3 text-center">${fmt(x.submitted_at)}</td>
-  </tr>`).join("") || '<tr><td colspan="9" class="p-8 text-center text-slate-500">Không có dữ liệu phù hợp.</td></tr>';
+  </tr>`).join("") || '<tr><td colspan="10" class="p-8 text-center text-slate-500">Không có dữ liệu phù hợp.</td></tr>';
 }
 
 $("applyBtn").onclick=applyFilters;
 $("resetBtn").onclick=()=>{
+  $("schoolFilter").value="";
   $("subjectFilter").value="";
   $("classFilter").value="";
   $("quizFilter").value="";
@@ -499,6 +582,7 @@ $("pdfBtn").onclick=async()=>{
       <div style="text-align:center;margin-bottom:20px">
         <div style="font-weight:800;font-size:20px">CODEHUB</div>
         <div style="font-weight:800;font-size:24px;margin-top:6px">BÁO CÁO PHÂN TÍCH HỌC TẬP</div>
+        <div style="margin-top:8px;font-weight:700">${esc([...new Set(rows.map(x=>x.school_name).filter(Boolean))].join(" • "))}</div>
         <div style="margin-top:8px">${esc($("reportScope").textContent)}</div>
         <div style="font-size:12px;color:#64748b;margin-top:4px">${esc($("reportGenerated").textContent)}</div>
       </div>
@@ -540,6 +624,7 @@ $("excelBtn").onclick=()=>{
     "STT":i+1,
     "Họ và tên":x.name,
     "Mã HS":x.code,
+    "Trường": [...new Set(rows.filter(r=>r.student_id===x.id).map(r=>r.school_name).filter(Boolean))].join(" | "),
     "Lớp":x.class_name,
     "Số bài phải làm":x.total,
     "Đã hoàn thành":x.done,
@@ -551,6 +636,8 @@ $("excelBtn").onclick=()=>{
     "STT":i+1,
     "Họ và tên":x.student_name,
     "Mã HS":x.student_code,
+    "Trường":x.school_name,
+    "Năm học":x.school_year,
     "Lớp":x.class_name,
     "Môn":x.subject_name,
     "Bài kiểm tra":x.quiz_title,
