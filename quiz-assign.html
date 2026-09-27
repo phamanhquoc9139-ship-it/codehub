@@ -1,10 +1,383 @@
-<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Giao Quiz V3.7.0</title><script src="https://cdn.tailwindcss.com"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="scripts/supabase-config.js"></script></head>
-<body class="bg-slate-50"><main class="max-w-5xl mx-auto p-6"><div class="flex justify-between mb-5"><div><h1 id="h" class="text-3xl font-bold">📤 Giao Quiz V3.7.0</h1><p class="text-slate-500">Chọn đúng Trường • Lớp. Trường được suy ra từ class_id.</p></div><a href="quizzes.html" class="border p-2 rounded-xl">← Quiz</a></div><div id="msg"></div><div class="grid md:grid-cols-2 gap-5"><form id="f" class="bg-white p-5 rounded-2xl shadow space-y-3"><select id="cls" required class="w-full border p-3 rounded-xl"></select><label class="block">Mở từ<input id="op" type="datetime-local" class="w-full border p-3 rounded-xl"></label><label class="block">Đóng lúc<input id="cl" type="datetime-local" class="w-full border p-3 rounded-xl"></label><label class="block">Thời lượng (phút)<input id="tm" type="number" min="1" value="15" class="w-full border p-3 rounded-xl"></label><label class="block">Số lần làm<input id="mx" type="number" min="1" value="1" class="w-full border p-3 rounded-xl"></label><label><input id="sr" type="checkbox" checked> Cho xem điểm sau khi nộp</label><button class="w-full bg-blue-600 text-white p-3 rounded-xl font-bold">Giao cho lớp</button></form><section class="bg-white p-5 rounded-2xl shadow"><h2 class="font-bold text-xl mb-3">Đã giao</h2><div id="list"></div></section></div></main>
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Giao Quiz V3.7.14 | CodeHub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="scripts/supabase-config.js"></script>
+</head>
+<body class="bg-slate-50 text-slate-900">
+<main class="max-w-6xl mx-auto p-6">
+  <div class="flex flex-col md:flex-row md:justify-between gap-4 mb-6">
+    <div>
+      <h1 id="h" class="text-3xl font-bold">📤 Giao Quiz <span class="text-base text-blue-600">V3.7.14</span></h1>
+      <p id="sub" class="text-slate-500 mt-1">Giao đề đúng Trường • Lớp theo class_id</p>
+    </div>
+    <a href="quizzes.html" class="border bg-white px-4 py-2 rounded-xl h-fit">← Quản lý Quiz</a>
+  </div>
+
+  <div id="msg" class="hidden mb-4 p-4 rounded-xl"></div>
+
+  <div class="grid lg:grid-cols-2 gap-5">
+    <form id="f" class="bg-white p-5 rounded-2xl shadow space-y-4">
+      <div>
+        <label class="block font-bold mb-2">Trường</label>
+        <select id="school" class="w-full border p-3 rounded-xl">
+          <option value="">-- Tất cả trường --</option>
+        </select>
+      </div>
+
+      <div>
+        <label class="block font-bold mb-2">Lớp</label>
+        <select id="cls" required class="w-full border p-3 rounded-xl">
+          <option value="">-- Chọn lớp --</option>
+        </select>
+        <div class="text-xs text-slate-500 mt-1">
+          Mỗi lớp được xác định bằng class_id nên 12A3 ở hai trường là hai lớp khác nhau.
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-3">
+        <label class="block">
+          <span class="font-bold">Mở từ</span>
+          <input id="op" type="datetime-local" class="w-full border p-3 rounded-xl mt-1">
+        </label>
+        <label class="block">
+          <span class="font-bold">Đóng lúc</span>
+          <input id="cl" type="datetime-local" class="w-full border p-3 rounded-xl mt-1">
+        </label>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-3">
+        <label class="block">
+          <span class="font-bold">Thời lượng (phút)</span>
+          <input id="tm" type="number" min="1" value="15" class="w-full border p-3 rounded-xl mt-1">
+        </label>
+        <label class="block">
+          <span class="font-bold">Số lần làm</span>
+          <input id="mx" type="number" min="1" value="1" class="w-full border p-3 rounded-xl mt-1">
+        </label>
+      </div>
+
+      <label class="flex gap-2 items-center">
+        <input id="sr" type="checkbox" checked>
+        <span>Cho xem điểm/kết quả sau khi nộp</span>
+      </label>
+
+      <button id="submitBtn" class="w-full bg-blue-600 text-white p-3 rounded-xl font-bold">
+        📤 Giao cho lớp
+      </button>
+    </form>
+
+    <section class="bg-white p-5 rounded-2xl shadow">
+      <div class="flex justify-between items-center mb-3">
+        <h2 class="font-bold text-xl">Đã giao</h2>
+        <button id="reloadBtn" type="button" class="border px-3 py-2 rounded-xl">↻ Tải lại</button>
+      </div>
+      <div id="list" class="space-y-3 text-slate-600">Đang tải...</div>
+    </section>
+  </div>
+</main>
+
 <script>
-const s=window.supabaseClient,$=x=>document.getElementById(x),qid=new URLSearchParams(location.search).get("quiz");let me,classes=[];
-function say(t,ok=false){msg.className="mb-4 p-3 rounded-xl "+(ok?"bg-emerald-50 text-emerald-700":"bg-red-50 text-red-700");msg.textContent=t}
-async function init(){me=(await s.auth.getUser()).data.user;if(!me)return location.href="login.html";let q=await s.from("quizzes").select("title,teacher_id,time_limit").eq("id",qid).single();if(q.error||q.data.teacher_id!==me.id)return location.href="quizzes.html";h.textContent="📤 "+q.data.title;tm.value=q.data.time_limit||15;let c=await s.rpc("codehub_v370_classes_for_user");if(c.error)return say(c.error.message);classes=c.data||[];cls.innerHTML='<option value="">-- Chọn Trường • Lớp --</option>'+classes.map(x=>`<option value="${x.id}">${x.school_name} • ${x.class_name}${x.school_year?` • ${x.school_year}`:""}</option>`).join("");load()}
-async function load(){let r=await s.from("quiz_assignments").select("*,classes(class_name,school_id,schools(school_name))").eq("quiz_id",qid).eq("teacher_id",me.id);list.innerHTML=(r.data||[]).map(x=>`<div class="border p-3 rounded-xl mb-2"><b>${x.classes?.schools?.school_name||"—"} • ${x.classes?.class_name||""}</b><div class="text-sm">${x.time_limit} phút • ${x.max_attempts} lần<br>Mở: ${x.open_at?new Date(x.open_at).toLocaleString("vi-VN"):"Ngay"}<br>Đóng: ${x.close_at?new Date(x.close_at).toLocaleString("vi-VN"):"Không giới hạn"}</div><button onclick="delx('${x.id}')" class="text-red-600 mt-2">Hủy giao</button></div>`).join("")||"Chưa giao."}
-f.onsubmit=async e=>{e.preventDefault();let row={quiz_id:qid,class_id:cls.value,teacher_id:me.id,open_at:op.value?new Date(op.value).toISOString():null,close_at:cl.value?new Date(cl.value).toISOString():null,time_limit:+tm.value||15,max_attempts:+mx.value||1,show_result:sr.checked};if(row.open_at&&row.close_at&&new Date(row.close_at)<=new Date(row.open_at))return say("Giờ đóng phải sau giờ mở.");let r=await s.from("quiz_assignments").upsert(row,{onConflict:"quiz_id,class_id"});if(r.error)return say(r.error.message);say("Đã giao Quiz.",true);load()}
-async function delx(id){if(confirm("Hủy giao?")){let r=await s.from("quiz_assignments").delete().eq("id",id);r.error?say(r.error.message):load()}}init();
-</script></body></html>
+const s=window.supabaseClient;
+const $=id=>document.getElementById(id);
+const qid=new URLSearchParams(location.search).get("quiz");
+
+let me=null;
+let role="";
+let quiz=null;
+let classes=[];
+let schools=[];
+
+function esc(v){
+  return String(v??"").replace(/[&<>"']/g,m=>({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  }[m]));
+}
+
+function say(text,ok=false){
+  const el=$("msg");
+  el.className="mb-4 p-4 rounded-xl "+(ok
+    ?"bg-emerald-50 text-emerald-700"
+    :"bg-red-50 text-red-700");
+  el.textContent=text;
+}
+
+function normalizeClass(x){
+  return {
+    id:x.id || x.class_id,
+    class_name:x.class_name || x.name || "",
+    school_id:x.school_id || null,
+    school_name:x.school_name || x.school || "—",
+    school_year:x.school_year || ""
+  };
+}
+
+async function init(){
+  try{
+    if(!s) throw new Error("Không kết nối được Supabase.");
+    if(!qid) throw new Error("Thiếu mã Quiz trên URL.");
+
+    const au=await s.auth.getUser();
+    me=au.data?.user;
+    if(!me) return location.href="login.html";
+
+    const pr=await s.from("profiles")
+      .select("role,full_name")
+      .eq("id",me.id)
+      .single();
+
+    if(pr.error) throw new Error("Không đọc được quyền tài khoản: "+pr.error.message);
+
+    role=String(pr.data?.role||"").toLowerCase();
+    if(!["admin","teacher"].includes(role)){
+      say("Trang Giao Quiz chỉ dành cho giáo viên hoặc quản trị viên.");
+      return;
+    }
+
+    const qr=await s.from("quizzes")
+      .select("id,title,teacher_id,time_limit,is_published")
+      .eq("id",qid)
+      .single();
+
+    if(qr.error||!qr.data) throw new Error("Không tìm thấy Quiz.");
+
+    quiz=qr.data;
+
+    // Admin được quản lý mọi Quiz. Teacher chỉ quản lý Quiz của chính mình.
+    if(role==="teacher" && quiz.teacher_id!==me.id){
+      say("Quiz này không thuộc tài khoản giáo viên hiện tại.");
+      return;
+    }
+
+    $("h").innerHTML=`📤 ${esc(quiz.title)} <span class="text-base text-blue-600">V3.7.14</span>`;
+    $("sub").textContent=(role==="admin"?"Quản trị viên":"Giáo viên")+" • Giao đúng Trường • Lớp theo class_id";
+    $("tm").value=quiz.time_limit||15;
+
+    await loadClasses();
+    await loadAssignments();
+
+  }catch(e){
+    console.error("CodeHub V3.7.14 init:",e);
+    say(e?.message||String(e));
+  }
+}
+
+async function loadClasses(){
+  // V3.7: lấy lớp theo RPC đa trường thay vì classes.teacher_id.
+  let r=await s.rpc("codehub_v370_classes_for_user");
+
+  if(r.error){
+    console.warn("RPC classes_for_user lỗi, dùng fallback:",r.error);
+    // Fallback admin: đọc tất cả lớp. Teacher: chỉ lớp teacher_id cũ.
+    if(role==="admin"){
+      r=await s.from("classes")
+        .select("id,class_name,school_id,school_year")
+        .order("class_name");
+    }else{
+      r=await s.from("classes")
+        .select("id,class_name,school_id,school_year")
+        .eq("teacher_id",me.id)
+        .order("class_name");
+    }
+  }
+
+  if(r.error) throw new Error("Không tải được danh sách lớp: "+r.error.message);
+
+  classes=(r.data||[]).map(normalizeClass).filter(x=>x.id);
+
+  // Nếu RPC/fallback chưa trả school_name thì bổ sung từ bảng schools.
+  const schoolIds=[...new Set(classes.map(x=>x.school_id).filter(Boolean))];
+  let schoolMap={};
+
+  if(schoolIds.length){
+    const sr=await s.from("schools")
+      .select("id,school_name")
+      .in("id",schoolIds);
+
+    if(!sr.error){
+      (sr.data||[]).forEach(x=>schoolMap[x.id]=x.school_name);
+      classes.forEach(x=>{
+        if((!x.school_name || x.school_name==="—") && x.school_id){
+          x.school_name=schoolMap[x.school_id]||"—";
+        }
+      });
+    }
+  }
+
+  schools=[...new Map(
+    classes.map(x=>[x.school_id||x.school_name,{
+      id:x.school_id||"",
+      name:x.school_name||"—"
+    }])
+  ).values()].sort((a,b)=>a.name.localeCompare(b.name,"vi"));
+
+  $("school").innerHTML=
+    '<option value="">-- Tất cả trường --</option>'+
+    schools.map(x=>`<option value="${esc(x.id||x.name)}">${esc(x.name)}</option>`).join("");
+
+  buildClassOptions();
+
+  if(!classes.length){
+    say("Không có lớp nào trong phạm vi tài khoản hiện tại.");
+  }
+}
+
+function buildClassOptions(){
+  const sv=$("school").value;
+
+  const filtered=classes
+    .filter(x=>!sv || x.school_id===sv || (!x.school_id && x.school_name===sv))
+    .sort((a,b)=>{
+      const s=String(a.school_name).localeCompare(String(b.school_name),"vi");
+      const c=String(a.class_name).localeCompare(String(b.class_name),"vi");
+      return s||c||String(a.school_year).localeCompare(String(b.school_year),"vi");
+    });
+
+  $("cls").innerHTML=
+    '<option value="">-- Chọn lớp --</option>'+
+    filtered.map(x=>`<option value="${esc(x.id)}">${esc(x.school_name)} • ${esc(x.class_name)}${x.school_year?` • ${esc(x.school_year)}`:""}</option>`).join("");
+}
+
+$("school").onchange=buildClassOptions;
+
+async function loadAssignments(){
+  const ar=await s.from("quiz_assignments")
+    .select("id,quiz_id,class_id,teacher_id,open_at,close_at,time_limit,max_attempts,show_result,created_at")
+    .eq("quiz_id",qid)
+    .order("created_at",{ascending:false});
+
+  if(ar.error){
+    $("list").innerHTML=`<div class="text-red-600">${esc(ar.error.message)}</div>`;
+    return;
+  }
+
+  const rows=ar.data||[];
+  if(!rows.length){
+    $("list").innerHTML='<div class="text-slate-500">Chưa giao Quiz này cho lớp nào.</div>';
+    return;
+  }
+
+  const cmap={};
+  classes.forEach(c=>cmap[c.id]=c);
+
+  // Nếu assignment có class ngoài catalog hiện tại, đọc bổ sung.
+  const missing=[...new Set(rows.map(x=>x.class_id).filter(id=>id&&!cmap[id]))];
+  if(missing.length){
+    const cr=await s.from("classes")
+      .select("id,class_name,school_id,school_year")
+      .in("id",missing);
+
+    if(!cr.error){
+      for(const raw of cr.data||[]){
+        const c=normalizeClass(raw);
+        if(c.school_id){
+          const sr=await s.from("schools").select("school_name").eq("id",c.school_id).maybeSingle();
+          if(!sr.error&&sr.data?.school_name)c.school_name=sr.data.school_name;
+        }
+        cmap[c.id]=c;
+      }
+    }
+  }
+
+  $("list").innerHTML=rows.map(x=>{
+    const c=cmap[x.class_id]||{};
+    return `<div class="border rounded-xl p-4">
+      <div class="font-bold">${esc(c.school_name||"—")} • ${esc(c.class_name||x.class_id||"—")}</div>
+      <div class="text-sm text-slate-500 mt-1">
+        ${esc(c.school_year||"")} ${c.school_year?"• ":""}${Number(x.time_limit||15)} phút • ${Number(x.max_attempts||1)} lần
+      </div>
+      <div class="text-sm mt-2">
+        Mở: ${x.open_at?new Date(x.open_at).toLocaleString("vi-VN"):"Ngay"}<br>
+        Đóng: ${x.close_at?new Date(x.close_at).toLocaleString("vi-VN"):"Không giới hạn"}
+      </div>
+      <button type="button" onclick="delAssignment('${x.id}')" class="mt-3 text-red-600 font-bold">
+        Hủy giao
+      </button>
+    </div>`;
+  }).join("");
+}
+
+$("reloadBtn").onclick=loadAssignments;
+
+$("f").onsubmit=async e=>{
+  e.preventDefault();
+
+  const classId=$("cls").value;
+  if(!classId) return say("Hãy chọn Trường/Lớp cần giao.");
+
+  const openAt=$("op").value?new Date($("op").value).toISOString():null;
+  const closeAt=$("cl").value?new Date($("cl").value).toISOString():null;
+
+  if(openAt && closeAt && new Date(closeAt)<=new Date(openAt)){
+    return say("Giờ đóng phải sau giờ mở.");
+  }
+
+  const btn=$("submitBtn");
+  btn.disabled=true;
+  btn.textContent="Đang giao Quiz...";
+
+  try{
+    const row={
+      quiz_id:qid,
+      class_id:classId,
+      teacher_id:me.id,
+      open_at:openAt,
+      close_at:closeAt,
+      time_limit:Number($("tm").value||15),
+      max_attempts:Number($("mx").value||1),
+      show_result:$("sr").checked
+    };
+
+    // Không dùng upsert onConflict để tránh phụ thuộc unique constraint cũ.
+    const ex=await s.from("quiz_assignments")
+      .select("id")
+      .eq("quiz_id",qid)
+      .eq("class_id",classId)
+      .maybeSingle();
+
+    let wr;
+    if(ex.error) throw ex.error;
+
+    if(ex.data?.id){
+      wr=await s.from("quiz_assignments")
+        .update(row)
+        .eq("id",ex.data.id);
+    }else{
+      wr=await s.from("quiz_assignments").insert(row);
+    }
+
+    if(wr.error) throw wr.error;
+
+    say("✅ Đã giao Quiz đúng Trường/Lớp.",true);
+    await loadAssignments();
+
+  }catch(e){
+    console.error("CodeHub V3.7.14 assign:",e);
+    say("Không giao được Quiz: "+(e?.message||String(e)));
+  }finally{
+    btn.disabled=false;
+    btn.textContent="📤 Giao cho lớp";
+  }
+};
+
+async function delAssignment(id){
+  if(!confirm("Hủy giao Quiz cho lớp này?"))return;
+
+  const r=await s.from("quiz_assignments")
+    .delete()
+    .eq("id",id);
+
+  if(r.error) return say("Không hủy được: "+r.error.message);
+
+  say("Đã hủy giao.",true);
+  loadAssignments();
+}
+
+init();
+</script>
+</body>
+</html>
