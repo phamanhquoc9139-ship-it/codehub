@@ -11,7 +11,7 @@
 <script src="scripts/supabase-config.js"></script>
 <style>.drop.drag{border-color:#7c3aed;background:#f5f3ff}.busy{opacity:.6;pointer-events:none}.stem-svg svg{max-width:100%;height:auto;display:block;margin:auto}.math-wrap mjx-container{overflow-x:auto;overflow-y:hidden;max-width:100%}</style></head>
 <body class="bg-slate-50 text-slate-900"><main class="max-w-7xl mx-auto p-5">
-<div class="flex justify-between gap-4 mb-5"><div><h1 class="text-3xl font-bold">✨ AI Quiz Generator V3.7.24 • STEM EXAM ENGINE</h1><p class="text-slate-500">Tiếng Anh • Toán • Lý • Hóa • Sinh • A–D • Đúng/Sai • Trả lời ngắn • Đáp án số + dung sai/đơn vị • Công thức • Sơ đồ/đồ thị SVG • Word .docx</p></div><a href="quizzes.html" class="border bg-white rounded-xl px-4 py-2 h-fit">← Quiz</a></div>
+<div class="flex justify-between gap-4 mb-5"><div><h1 class="text-3xl font-bold">✨ AI Quiz Generator V3.7.24.1 • STEM EXAM ENGINE</h1><p class="text-slate-500">Tiếng Anh • Toán • Lý • Hóa • Sinh • A–D • Đúng/Sai • Trả lời ngắn • Đáp án số + dung sai/đơn vị • Công thức • Sơ đồ/đồ thị SVG • Word .docx</p></div><a href="quizzes.html" class="border bg-white rounded-xl px-4 py-2 h-fit">← Quiz</a></div>
 <div id="msg" class="hidden mb-4 p-3 rounded-xl"></div>
 <div class="grid lg:grid-cols-4 gap-5">
 <aside class="bg-white rounded-2xl shadow p-5 space-y-3">
@@ -127,6 +127,45 @@ async function svgToPngBytes(raw){const x=sanitizeSvg(raw);if(!x)return null;ret
 function show(t,ok=false){$("msg").className="mb-4 p-3 rounded-xl "+(ok?"bg-emerald-50 text-emerald-700":"bg-red-50 text-red-700");$("msg").textContent=t;$("msg").scrollIntoView({behavior:"smooth",block:"nearest"})}
 function norm(v){return String(v||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9 ]/g," ").replace(/\s+/g," ").trim()}
 function similarity(a,b){a=new Set(norm(a).split(" ").filter(x=>x.length>2));b=new Set(norm(b).split(" ").filter(x=>x.length>2));if(!a.size||!b.size)return 0;let n=[...a].filter(x=>b.has(x)).length;return n/Math.max(a.size,b.size)}
+
+function prettySubject(v){
+ const raw=String(v||"").trim().replace(/\s+/g," ");
+ if(!raw)return "";
+ const k=norm(raw);
+ const map={
+  "tieng anh":"Tiếng Anh","tin hoc":"Tin học","ngu van":"Ngữ văn","toan":"Toán",
+  "vat ly":"Vật lý","hoa hoc":"Hóa học","sinh hoc":"Sinh học","lich su":"Lịch sử",
+  "dia ly":"Địa lý","gdcd":"GDCD","giao duc kinh te va phap luat":"Giáo dục Kinh tế và Pháp luật",
+  "hoat dong trai nghiem":"Hoạt động trải nghiệm","hoat dong trai nghiem huong nghiep":"Hoạt động trải nghiệm hướng nghiệp"
+ };
+ if(map[k])return map[k];
+ return raw.split(" ").map(w=>w? w.charAt(0).toLocaleUpperCase("vi-VN")+w.slice(1).toLocaleLowerCase("vi-VN"):w).join(" ");
+}
+function courseBaseLabel(c){
+ const subject=prettySubject(c.subject);
+ const grade=String(c.grade||"").trim();
+ if(subject&&grade)return `${subject} ${grade}`;
+ if(subject)return subject;
+ return String(c.title||"Khóa học").trim();
+}
+function renderCourseOptions(rows){
+ const groups=new Map();
+ for(const c of rows){
+   const key=norm(courseBaseLabel(c))+"|"+String(c.teacher_id||"");
+   if(!groups.has(key))groups.set(key,[]);
+   groups.get(key).push(c);
+ }
+ let html='<option value="">-- Chọn khóa học --</option>';
+ for(const arr of groups.values()){
+   const base=courseBaseLabel(arr[0]);
+   arr.forEach((c,i)=>{
+     const suffix=arr.length>1?` • Bản ${i+1}${c.is_published?" • Đã xuất bản":" • Nháp"}`:"";
+     html+=`<option value="${c.id}">${esc(base+suffix)}</option>`;
+   });
+ }
+ $("course").innerHTML=html;
+}
+
 function isStructured(){return $("generationMode").value==="structure"}
 function dedupe(arr){let out=[];for(const raw of arr||[]){const q={...raw};q.question_text=cleanQuestion(q.question_text);q.source_title=cleanTitle(q.source_title);q.question_type=["mcq4","true_false","short_answer","numeric"].includes(q.question_type)?q.question_type:"mcq4";q.accepted_answers=Array.isArray(q.accepted_answers)?q.accepted_answers:[];q.accepted_units=Array.isArray(q.accepted_units)?q.accepted_units:[];q.visual_svg=sanitizeSvg(q.visual_svg);const dup=isStructured()?out.some(x=>x.section_key===q.section_key&&norm(x.question_text)===norm(q.question_text)):out.some(x=>similarity(x.question_text,q.question_text)>.82);if(!dup)out.push(q)}return out}
 
@@ -136,11 +175,11 @@ async function init(){
  const p=await s.from("profiles").select("role").eq("id",me.id).single();
  myRole=String(p.data?.role||"").trim().toLowerCase();
  if(!["admin","teacher"].includes(myRole))return location.href="student-dashboard.html";
- let cq=s.from("courses").select("id,title,teacher_id").order("title");
+ let cq=s.from("courses").select("id,title,subject,grade,teacher_id,is_published,created_at").order("subject").order("grade").order("created_at");
  if(myRole==="teacher")cq=cq.eq("teacher_id",me.id);
  const c=await cq;
  if(c.error)return show("Không tải được khóa học: "+c.error.message);
- $("course").innerHTML='<option value="">-- Chọn khóa học --</option>'+(c.data||[]).map(x=>`<option value="${x.id}">${esc(x.title)}</option>`).join("");
+ renderCourseOptions(c.data||[]);
  applyExamRules();
 }
 async function loadCourseData(id,selectQuizId=""){
