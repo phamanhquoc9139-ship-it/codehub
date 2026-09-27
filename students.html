@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Quản lý học sinh V3.7.3 | CodeHub</title>
+<title>Quản lý học sinh V3.7.4 | CodeHub</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
@@ -11,7 +11,7 @@
 <body class="bg-slate-50 text-slate-900">
 <main class="max-w-7xl mx-auto p-5">
 <div class="flex flex-wrap justify-between gap-3 mb-5">
-  <div><h1 class="text-3xl font-black">👨‍🎓 Quản lý học sinh <span class="text-violet-600 text-lg">V3.7.3</span></h1>
+  <div><h1 class="text-3xl font-black">👨‍🎓 Quản lý học sinh <span class="text-violet-600 text-lg">V3.7.4</span></h1>
   <p class="text-slate-500">Excel có Tên trường + Lớp → tự tạo trường/lớp (Admin) → gán HS đúng class_id.</p></div>
   <div class="flex gap-2"><a href="schools.html" id="schoolAdminLink" class="hidden border bg-white px-4 py-2 rounded-xl font-bold">🏫 Trường</a><a href="teacher.html" class="border bg-white px-4 py-2 rounded-xl font-bold">← Dashboard</a></div>
 </div>
@@ -155,15 +155,13 @@ async function previewExcel(){
       for(const line of lines){
         const fl=fold(line);
 
-        // Tên trường: ưu tiên dòng có chữ "trường" và THPT.
-        if(!metaSchool && fl.includes("truong") && fl.includes("thpt")){
-          const mm=line.match(/(?:trường|truong)\s+(.+)/i);
-          if(mm){
-            metaSchool=school("TRƯỜNG "+mm[1].trim());
-          }else{
-            // fallback: lấy từ vị trí chữ TRƯỜNG trở đi
-            const idx=fl.indexOf("truong");
-            if(idx>=0)metaSchool=school(line.slice(idx));
+        // Tên trường: chỉ cần nhận diện "THPT" rồi lấy phần tên từ THPT trở đi.
+        // Cách này tránh lỗi regex Unicode với chữ "Trường/ TRƯỜNG".
+        if(!metaSchool && fl.includes("thpt")){
+          const up=line.toUpperCase();
+          const pos=up.indexOf("THPT");
+          if(pos>=0){
+            metaSchool=school("TRƯỜNG "+line.slice(pos));
           }
         }
 
