@@ -1,174 +1,24 @@
-<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Câu hỏi Quiz V2.6.2</title><script src="https://cdn.tailwindcss.com"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="scripts/supabase-config.js"></script><link rel="stylesheet" href="styles/codehub-v26.css"><script src="scripts/codehub-v26-ui.js"></script></head>
+<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Câu hỏi Quiz V3.7.24</title><script src="https://cdn.tailwindcss.com"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script>window.MathJax={loader:{load:['[tex]/mhchem']},tex:{packages:{'[+]':['mhchem']},inlineMath:[['$','$'],['\\(','\\)']]}};</script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script><script src="scripts/supabase-config.js"></script><link rel="stylesheet" href="styles/codehub-v26.css"><script src="scripts/codehub-v26-ui.js"></script><style>.stem-svg svg{max-width:100%;height:auto;display:block;margin:auto}</style></head>
 <body class="ch-shell bg-slate-50"><script>document.addEventListener('DOMContentLoaded',()=>CodeHubUI.mountHeader({active:'quizzes',breadcrumbs:[{label:'Quiz',href:'quizzes.html'},{label:'Câu hỏi'}]}))</script>
-<main class="max-w-6xl mx-auto p-6"><div class="flex justify-between mb-5"><div><div class="ch-page-title"><h1 id="h" class="text-3xl font-bold">Câu hỏi</h1><span class="ch-version">V2.6.2</span></div><p class="text-slate-500">A/B/C/D • chỉ Quiz thuộc quyền quản lý</p></div></div>
-<div class="grid md:grid-cols-5 gap-5"><form id="f" class="md:col-span-2 bg-white p-5 rounded-2xl shadow space-y-3"><textarea id="qt" class="w-full border p-3 rounded-xl" placeholder="Nội dung câu hỏi" required></textarea><input id="a" class="w-full border p-3 rounded-xl" placeholder="A" required><input id="b" class="w-full border p-3 rounded-xl" placeholder="B" required><input id="c" class="w-full border p-3 rounded-xl" placeholder="C" required><input id="d" class="w-full border p-3 rounded-xl" placeholder="D" required><select id="correct" class="w-full border p-3 rounded-xl"><option>A</option><option>B</option><option>C</option><option>D</option></select><textarea id="ex" class="w-full border p-3 rounded-xl" placeholder="Giải thích đáp án"></textarea><input id="ord" type="number" min="1" value="1" class="w-full border p-3 rounded-xl"><button class="w-full bg-blue-600 text-white p-3 rounded-xl font-bold">Thêm câu hỏi</button></form><section id="list" class="md:col-span-3 space-y-3"></section></div></main>
+<main class="max-w-7xl mx-auto p-6"><div class="flex justify-between mb-5"><div><div class="ch-page-title"><h1 id="h" class="text-3xl font-bold">Câu hỏi</h1><span class="ch-version">V3.7.24</span></div><p class="text-slate-500">A–D • Đúng/Sai • Trả lời ngắn • Đáp án số + dung sai/đơn vị • Công thức/SVG</p></div></div>
+<div class="grid lg:grid-cols-5 gap-5"><form id="f" class="lg:col-span-2 bg-white p-5 rounded-2xl shadow space-y-3">
+<select id="type" class="w-full border p-3 rounded-xl"><option value="mcq4">A–D</option><option value="true_false">Đúng / Sai</option><option value="short_answer">Trả lời ngắn</option><option value="numeric">Đáp án số</option></select>
+<input id="section" class="w-full border p-3 rounded-xl" placeholder="Tên phần (tùy chọn)"><textarea id="stimulus" class="w-full border p-3 rounded-xl" rows="3" placeholder="Ngữ liệu / passage / dữ kiện chung (tùy chọn)"></textarea><textarea id="qt" class="w-full border p-3 rounded-xl" placeholder="Nội dung câu hỏi" required></textarea>
+<div id="mcqBox" class="space-y-2"><input id="a" class="w-full border p-3 rounded-xl" placeholder="A"><input id="b" class="w-full border p-3 rounded-xl" placeholder="B"><input id="c" class="w-full border p-3 rounded-xl" placeholder="C"><input id="d" class="w-full border p-3 rounded-xl" placeholder="D"><select id="correct" class="w-full border p-3 rounded-xl"><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+<div id="tfBox" class="hidden"><select id="tfCorrect" class="w-full border p-3 rounded-xl"><option value="T">Đúng</option><option value="F">Sai</option></select></div>
+<div id="shortBox" class="hidden space-y-2"><input id="correctText" class="w-full border p-3 rounded-xl" placeholder="Đáp án chuẩn"><input id="accepted" class="w-full border p-3 rounded-xl" placeholder="Đáp án chấp nhận, cách nhau bằng |"></div>
+<div id="numBox" class="hidden space-y-2"><div class="grid grid-cols-2 gap-2"><input id="correctNumber" class="w-full border p-3 rounded-xl" placeholder="Đáp án số"><input id="tolerance" class="w-full border p-3 rounded-xl" value="0" placeholder="Dung sai ±"></div><input id="unit" class="w-full border p-3 rounded-xl" placeholder="Đơn vị chuẩn"><input id="units" class="w-full border p-3 rounded-xl" placeholder="Đơn vị chấp nhận, cách nhau bằng |"><label class="flex items-center gap-2 text-sm"><input id="unitRequired" type="checkbox"> Bắt buộc nhập đơn vị</label></div>
+<textarea id="svg" class="w-full border p-3 rounded-xl font-mono text-xs" rows="3" placeholder="SVG sơ đồ/đồ thị (tùy chọn)"></textarea><textarea id="ex" class="w-full border p-3 rounded-xl" placeholder="Giải thích đáp án"></textarea><input id="ord" type="number" min="1" value="1" class="w-full border p-3 rounded-xl"><button class="w-full bg-blue-600 text-white p-3 rounded-xl font-bold">Thêm câu hỏi</button></form><section id="list" class="lg:col-span-3 space-y-3"></section></div></main>
 <script>
-const s = window.supabaseClient;
-const qid = (new URLSearchParams(location.search).get('quiz') || '').trim();
-
-const hEl = document.getElementById('h');
-const listEl = document.getElementById('list');
-const formEl = document.getElementById('f');
-const qtEl = document.getElementById('qt');
-const aEl = document.getElementById('a');
-const bEl = document.getElementById('b');
-const cEl = document.getElementById('c');
-const dEl = document.getElementById('d');
-const correctEl = document.getElementById('correct');
-const exEl = document.getElementById('ex');
-const ordEl = document.getElementById('ord');
-
-function esc(v=''){
-  return String(v)
-    .replaceAll('&','&amp;')
-    .replaceAll('<','&lt;')
-    .replaceAll('>','&gt;')
-    .replaceAll('"','&quot;')
-    .replaceAll("'",'&#039;');
-}
-
-async function init(){
-  CodeHubUI.loading(true,'Đang kiểm tra quyền...');
-  try{
-    if(!qid) return location.href='quizzes.html';
-
-    const {data:{user:u}, error:userError} = await s.auth.getUser();
-    if(userError || !u) return location.href='login.html';
-
-    const pr = await s.from('profiles')
-      .select('role,full_name')
-      .eq('id',u.id)
-      .single();
-
-    if(pr.error) throw pr.error;
-
-    const role = String(pr.data?.role||'').trim().toLowerCase();
-    CodeHubUI.setIdentity(pr.data?.full_name||'',role,u.email||'');
-
-    if(!['admin','teacher'].includes(role)){
-      return CodeHubUI.forbidden('Tài khoản này không có quyền quản lý câu hỏi Quiz.');
-    }
-
-    const q = await s.from('quizzes')
-      .select('id,title,teacher_id')
-      .eq('id',qid)
-      .single();
-
-    if(q.error || !q.data){
-      console.error('Quiz query:', q.error);
-      return CodeHubUI.forbidden('Không tìm thấy Quiz hoặc Quiz không thuộc phạm vi quản lý của bạn.');
-    }
-
-    if(role==='teacher' && q.data.teacher_id !== u.id){
-      return CodeHubUI.forbidden('Quiz này thuộc giáo viên khác.');
-    }
-
-    hEl.textContent = '🧩 ' + (q.data.title || 'Câu hỏi Quiz');
-    await loadQuestions();
-
-  }catch(e){
-    console.error('INIT ERROR:', e);
-    listEl.innerHTML = `<div class="bg-red-50 text-red-700 p-5 rounded-xl border border-red-200">
-      <b>Lỗi tải trang:</b> ${esc(e?.message||String(e))}
-    </div>`;
-    CodeHubUI.toast(e?.message||String(e),'error');
-  }finally{
-    CodeHubUI.loading(false);
-  }
-}
-
-async function loadQuestions(){
-  listEl.innerHTML = `<div class="bg-white p-5 rounded-xl text-slate-500">Đang tải câu hỏi...</div>`;
-
-  const r = await s.from('quiz_questions')
-    .select('id,quiz_id,question_text,option_a,option_b,option_c,option_d,correct_answer,explanation,question_order,created_at')
-    .eq('quiz_id',qid)
-    .order('question_order',{ascending:true})
-    .order('created_at',{ascending:true});
-
-  console.log('quiz_questions result', {qid, data:r.data, error:r.error, count:r.data?.length});
-
-  if(r.error){
-    listEl.innerHTML = `<div class="bg-red-50 text-red-700 p-5 rounded-xl border border-red-200">
-      <b>Supabase không đọc được câu hỏi.</b><br>
-      ${esc(r.error.message)}<br>
-      <span class="text-xs">Quiz ID: ${esc(qid)}</span>
-    </div>`;
-    CodeHubUI.toast(r.error.message,'error');
-    return;
-  }
-
-  const rows = r.data || [];
-
-  if(!rows.length){
-    listEl.innerHTML = `<div class="bg-amber-50 text-amber-800 p-5 rounded-xl border border-amber-200">
-      <b>Trình duyệt nhận được 0 câu hỏi.</b><br>
-      Quiz ID: <code>${esc(qid)}</code><br>
-      <span class="text-sm">Dữ liệu trong Supabase có thể còn, nhưng phiên đăng nhập hiện tại chưa nhận được bản ghi này.</span>
-    </div>`;
-    return;
-  }
-
-  listEl.innerHTML =
-    `<div class="bg-emerald-50 text-emerald-700 p-3 rounded-xl border border-emerald-200 mb-3">
-      ✅ Đã tải ${rows.length} câu hỏi.
-    </div>` +
-    rows.map((x,i)=>`
-      <div class="bg-white p-5 rounded-2xl shadow">
-        <div class="flex justify-between gap-3">
-          <b>Câu ${i+1}. ${esc(x.question_text)}</b>
-          <button onclick="delx('${esc(x.id)}')" class="text-red-600">Xóa</button>
-        </div>
-        <div class="mt-2 text-sm">
-          A. ${esc(x.option_a)}<br>
-          B. ${esc(x.option_b)}<br>
-          C. ${esc(x.option_c)}<br>
-          D. ${esc(x.option_d)}
-        </div>
-        <div class="mt-2 text-emerald-700 font-bold">Đáp án: ${esc(x.correct_answer)}</div>
-      </div>`).join('');
-}
-
-formEl.onsubmit = async e => {
-  e.preventDefault();
-  CodeHubUI.loading(true,'Đang thêm câu hỏi...');
-  try{
-    const r = await s.from('quiz_questions').insert({
-      quiz_id: qid,
-      question_text: qtEl.value.trim(),
-      option_a: aEl.value.trim(),
-      option_b: bEl.value.trim(),
-      option_c: cEl.value.trim(),
-      option_d: dEl.value.trim(),
-      correct_answer: correctEl.value,
-      explanation: exEl.value.trim(),
-      question_order: +ordEl.value || 1
-    });
-
-    if(r.error) throw r.error;
-
-    formEl.reset();
-    ordEl.value = 1;
-    CodeHubUI.toast('Đã thêm câu hỏi.','success');
-    await loadQuestions();
-  }catch(e){
-    console.error('INSERT ERROR:', e);
-    CodeHubUI.toast(e?.message||String(e),'error');
-  }finally{
-    CodeHubUI.loading(false);
-  }
-};
-
-async function delx(id){
-  if(!confirm('Xóa câu hỏi?')) return;
-  const r = await s.from('quiz_questions').delete().eq('id',id);
-  if(r.error){
-    CodeHubUI.toast(r.error.message,'error');
-  }else{
-    CodeHubUI.toast('Đã xóa câu hỏi.','success');
-    await loadQuestions();
-  }
-}
-
-init();
+const s=window.supabaseClient,qid=new URLSearchParams(location.search).get('quiz'),$=id=>document.getElementById(id),esc=v=>String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+const h=$('h'),f=$('f'),list=$('list'),type=$('type'),mcqBox=$('mcqBox'),tfBox=$('tfBox'),shortBox=$('shortBox'),numBox=$('numBox'),section=$('section'),stimulus=$('stimulus'),qt=$('qt'),a=$('a'),b=$('b'),c=$('c'),d=$('d'),correct=$('correct'),tfCorrect=$('tfCorrect'),correctText=$('correctText'),accepted=$('accepted'),correctNumber=$('correctNumber'),tolerance=$('tolerance'),unit=$('unit'),units=$('units'),unitRequired=$('unitRequired'),svg=$('svg'),ex=$('ex'),ord=$('ord');
+function typeset(){if(window.MathJax?.typesetPromise)setTimeout(()=>MathJax.typesetPromise([list]).catch(()=>{}),0)}
+function typeLabel(t){return({mcq4:'A–D',true_false:'Đúng/Sai',short_answer:'Trả lời ngắn',numeric:'Đáp án số'}[t]||t)}
+function sanitizeSvg(raw){const txt=String(raw||'').trim();if(!txt||!/<svg[\s>]/i.test(txt))return'';try{const d=new DOMParser().parseFromString(txt,'image/svg+xml'),svg=d.documentElement;svg.querySelectorAll('script,foreignObject,image,use,a,style,iframe').forEach(x=>x.remove());[...svg.querySelectorAll('*')].forEach(el=>[...el.attributes].forEach(a=>{if(a.name.toLowerCase().startsWith('on')||/javascript:|https?:|data:/i.test(a.value))el.removeAttribute(a.name)}));svg.setAttribute('xmlns','http://www.w3.org/2000/svg');svg.removeAttribute('width');svg.removeAttribute('height');return new XMLSerializer().serializeToString(svg)}catch{return''}}
+function updateType(){const t=type.value;mcqBox.classList.toggle('hidden',t!=='mcq4');tfBox.classList.toggle('hidden',t!=='true_false');shortBox.classList.toggle('hidden',t!=='short_answer');numBox.classList.toggle('hidden',t!=='numeric')}type.onchange=updateType;
+async function init(){CodeHubUI.loading(true,'Đang kiểm tra quyền...');try{if(!qid)return location.href='quizzes.html';const u=(await s.auth.getUser()).data.user;if(!u)return location.href='login.html';const pr=await s.from('profiles').select('role,full_name').eq('id',u.id).single();const role=(pr.data?.role||'').trim().toLowerCase();CodeHubUI.setIdentity(pr.data?.full_name||'',role,u.email||'');if(!['admin','teacher'].includes(role))return CodeHubUI.forbidden('Tài khoản này không có quyền quản lý câu hỏi Quiz.');const q=await s.from('quizzes').select('title,teacher_id').eq('id',qid).single();if(q.error||!q.data)return CodeHubUI.forbidden('Không tìm thấy Quiz hoặc Quiz không thuộc phạm vi quản lý của bạn.');if(role==='teacher'&&q.data.teacher_id!==u.id)return CodeHubUI.forbidden('Quiz này thuộc giáo viên khác.');h.textContent='🧩 '+q.data.title;updateType();await load()}catch(e){console.error(e);CodeHubUI.toast(e?.message||String(e),'error')}finally{CodeHubUI.loading(false)}}
+function answerText(x){if(x.question_type==='true_false')return String(x.correct_text||x.correct_answer).toUpperCase()==='T'?'Đúng':'Sai';if(x.question_type==='short_answer')return x.correct_text||'';if(x.question_type==='numeric')return `${x.correct_number??''}${Number(x.numeric_tolerance)>0?` ± ${x.numeric_tolerance}`:''}${x.answer_unit?` ${x.answer_unit}`:''}`;return x.correct_answer||''}
+async function load(){let r=await s.from('quiz_questions').select('*').eq('quiz_id',qid).order('question_order');if(r.error)return CodeHubUI.toast(r.error.message,'error');list.innerHTML=(r.data||[]).map((x,i)=>`<div class="bg-white p-5 rounded-2xl shadow"><div class="flex justify-between gap-3"><div><b>Câu ${i+1}. ${esc(x.question_text)}</b><div class="text-xs text-blue-700 mt-1">${typeLabel(x.question_type||'mcq4')}${x.section_title?` • ${esc(x.section_title)}`:''}</div></div><button onclick="delx('${x.id}')" class="text-red-600">Xóa</button></div>${x.stimulus?`<div class="mt-2 bg-blue-50 p-3 rounded-xl whitespace-pre-wrap">${esc(x.stimulus)}</div>`:''}${x.visual_svg?`<div class="stem-svg mt-2 border rounded-xl p-3">${sanitizeSvg(x.visual_svg)}</div>`:''}${x.question_type==='mcq4'?`<div class="mt-2 text-sm">A. ${esc(x.option_a)}<br>B. ${esc(x.option_b)}<br>C. ${esc(x.option_c)}<br>D. ${esc(x.option_d)}</div>`:''}<div class="mt-2 text-emerald-700 font-bold">Đáp án: ${esc(answerText(x))}</div>${x.question_type==='short_answer'&&x.accepted_answers?.length?`<div class="text-xs text-slate-500">Chấp nhận: ${esc(x.accepted_answers.join(' | '))}</div>`:''}${x.question_type==='numeric'&&x.unit_required?`<div class="text-xs text-slate-500">Bắt buộc đơn vị • Chấp nhận: ${esc((x.accepted_units||[]).join(' | '))}</div>`:''}</div>`).join('')||'<div class="bg-white p-5 rounded-xl">Chưa có câu hỏi.</div>';typeset()}
+f.onsubmit=async e=>{e.preventDefault();CodeHubUI.loading(true,'Đang thêm câu hỏi...');try{const t=type.value,row={quiz_id:qid,question_type:t,section_title:section.value.trim()||null,stimulus:stimulus.value.trim()||null,visual_svg:sanitizeSvg(svg.value)||null,question_text:qt.value.trim(),explanation:ex.value.trim(),question_order:+ord.value||1,option_a:'',option_b:'',option_c:'',option_d:'',correct_answer:'',correct_text:null,accepted_answers:[],correct_number:null,numeric_tolerance:0,answer_unit:null,accepted_units:[],unit_required:false};if(t==='mcq4'){Object.assign(row,{option_a:a.value.trim(),option_b:b.value.trim(),option_c:c.value.trim(),option_d:d.value.trim(),correct_answer:correct.value})}else if(t==='true_false'){row.correct_answer='A';row.correct_text=tfCorrect.value}else if(t==='short_answer'){row.correct_text=correctText.value.trim();row.accepted_answers=accepted.value.split('|').map(x=>x.trim()).filter(Boolean);if(row.correct_text&&!row.accepted_answers.includes(row.correct_text))row.accepted_answers.unshift(row.correct_text)}else{row.correct_number=Number(correctNumber.value.replace(',','.'));if(!Number.isFinite(row.correct_number))throw Error('Đáp án số không hợp lệ.');row.numeric_tolerance=Math.max(0,Number(tolerance.value.replace(',','.'))||0);row.answer_unit=unit.value.trim()||null;row.accepted_units=units.value.split('|').map(x=>x.trim()).filter(Boolean);row.unit_required=unitRequired.checked}let r=await s.from('quiz_questions').insert(row);if(r.error)throw r.error;f.reset();type.value='mcq4';ord.value=1;tolerance.value='0';updateType();CodeHubUI.toast('Đã thêm câu hỏi.','success');await load()}catch(e){CodeHubUI.toast(e?.message||String(e),'error')}finally{CodeHubUI.loading(false)}};
+async function delx(id){if(!confirm('Xóa câu hỏi?'))return;let r=await s.from('quiz_questions').delete().eq('id',id);if(r.error)CodeHubUI.toast(r.error.message,'error');else{CodeHubUI.toast('Đã xóa câu hỏi.','success');load()}}init();
 </script></body></html>
