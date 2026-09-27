@@ -12,7 +12,7 @@
 <script src="scripts/supabase-config.js"></script>
 <style>.drop.drag{border-color:#7c3aed;background:#f5f3ff}.busy{opacity:.6;pointer-events:none}.stem-svg svg{max-width:100%;height:auto;display:block;margin:auto}.math-wrap mjx-container{overflow-x:auto;overflow-y:hidden;max-width:100%}</style></head>
 <body class="bg-slate-50 text-slate-900"><main class="max-w-7xl mx-auto p-5">
-<div class="flex justify-between gap-4 mb-5"><div><h1 class="text-3xl font-bold">✨ AI Quiz Generator V3.7.26 • AI TEST MASTER</h1><p class="text-slate-500">Ma trận • Đặc tả • Đề kiểm tra • Đáp án • 4 mã đề (101–104) • Chấm tự động • Word .docx</p></div><a href="quizzes.html" class="border bg-white rounded-xl px-4 py-2 h-fit">← Quiz</a></div>
+<div class="flex justify-between gap-4 mb-5"><div><h1 class="text-3xl font-bold">✨ AI Quiz Generator V3.7.26 • AI TEST MASTER</h1><p class="text-slate-500">Ma trận • Đặc tả • Đề kiểm tra • Đáp án • 4 mã đề theo khối • Chấm tự động • Word .docx</p></div><a href="quizzes.html" class="border bg-white rounded-xl px-4 py-2 h-fit">← Quiz</a></div>
 <div id="msg" class="hidden mb-4 p-3 rounded-xl"></div>
 <div class="grid lg:grid-cols-4 gap-5">
 <aside class="bg-white rounded-2xl shadow p-5 space-y-3">
@@ -82,7 +82,7 @@
   <summary class="font-bold cursor-pointer">📝 Thông tin file Word</summary>
   <label class="text-xs block mt-2">Tên trường<input id="wordSchool" value="TRƯỜNG THPT PHÚ HÒA" class="mt-1 w-full border rounded-lg p-2 bg-white"></label>
   <label class="text-xs block mt-2">Thời gian làm bài (phút)<input id="wordTime" type="number" min="1" value="45" class="mt-1 w-full border rounded-lg p-2 bg-white"></label>
-  <div class="mt-2 text-[11px] text-slate-500">Bộ hồ sơ sẽ tạo: Ma trận • Đặc tả • 4 mã đề 101–104 • Đáp án 4 mã.</div>
+  <label class="text-xs block mt-2">Khối dùng để đánh mã đề<select id="wordGrade" class="mt-1 w-full border rounded-lg p-2 bg-white"><option value="auto">Tự động theo khóa học</option><option value="10">Khối 10</option><option value="11">Khối 11</option><option value="12">Khối 12</option></select></label><div id="examCodeHint" class="text-xs text-blue-700 mt-2">Chọn khóa học để xác định mã đề.</div><label class="text-xs block mt-2">Thang điểm hồ sơ<input id="wordScore" type="number" min="0.1" step="0.1" value="10" class="mt-1 w-full border rounded-lg p-2 bg-white"></label><div class="mt-2 text-[11px] text-slate-500">Mặc định chia đều điểm cho các câu đã chọn; có thể nhập điểm riêng trong từng câu. Điểm này dùng cho hồ sơ Word, không đổi cách chấm Quiz online.</div><div class="mt-2 text-[11px] text-slate-500">Bộ hồ sơ sẽ tạo: Ma trận • Đặc tả • 4 mã đề theo khối • Đáp án 4 mã.</div>
 </details>
 <div class="pt-2 border-t"><label class="font-bold block mb-2">📎 Sách / tài liệu nguồn</label><div id="drop" class="drop border-2 border-dashed rounded-xl p-4 text-center cursor-pointer"><div class="font-semibold">Chọn hoặc kéo-thả file</div><div class="text-xs text-slate-500 mt-1">PDF • DOCX • TXT — tối đa 8 file<br>Có thể tạo câu hỏi từ tài liệu, không cần chọn bài học.</div><input id="files" type="file" multiple accept=".pdf,.docx,.txt,text/plain,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document" class="hidden"></div><div id="fileList" class="space-y-1 mt-2 text-xs"></div>
 <div class="mt-3 border rounded-xl p-3 bg-slate-50 space-y-2">
@@ -178,12 +178,32 @@ function renderCourseOptions(rows){
        label+=myRole==="admin"&&owner?` • ${owner}`:` • tạo ${shortDate(c.created_at)}`;
        label+=` • ${c.is_published?"Đã xuất bản":"Nháp"}`;
      }
-     html+=`<option value="${c.id}" data-base="${esc(g.base)}">${esc(label)}</option>`;
+     html+=`<option value="${c.id}" data-base="${esc(g.base)}" data-grade="${esc(c.grade||"")}">${esc(label)}</option>`;
    });
  }
  $("course").innerHTML=html;
+ updateExamCodeHint();
 }
 function selectedCourseBase(){const o=$("course").selectedOptions?.[0];return String(o?.dataset?.base||courseBaseLabel({title:o?.textContent||""})||o?.textContent||"").trim()}
+function selectedExamGrade(){
+ const override=$("wordGrade")?.value;
+ if(["10","11","12"].includes(override))return Number(override);
+ const o=$("course").selectedOptions?.[0];
+ const grade=String(o?.dataset?.grade||"").match(/(?:^|[^0-9])(10|11|12)(?=[^0-9]|$)/);
+ if(grade)return Number(grade[1]);
+ const found=[...new Set([...String(o?.dataset?.base||o?.textContent||"").matchAll(/(?:^|[^0-9])(10|11|12)(?=[^0-9]|$)/g)].map(m=>Number(m[1])))];
+ return found.length===1?found[0]:null;
+}
+function selectedExamCodes(){
+ const grade=selectedExamGrade();
+ if(!grade)throw Error("Chưa xác định được khối để đánh mã đề. Hãy chọn Khối 10, 11 hoặc 12 trong Thông tin file Word.");
+ return [1,2,3,4].map(n=>grade*10+n);
+}
+function updateExamCodeHint(){
+ const grade=selectedExamGrade(),hint=$("examCodeHint");
+ if(hint)hint.textContent=grade?`Khối ${grade}: ${selectedExamCodes().join(", ")}`:"Chọn khóa học hoặc chọn khối để xác định mã đề.";
+}
+$("wordGrade").onchange=updateExamCodeHint;
 function isEnglishSelected(){const x=norm(selectedCourseBase());return x.includes("tieng anh")||x.includes("english")}
 function questionWord(){return isEnglishSelected()?"Question":"Câu"}
 function sectionFallback(){return isEnglishSelected()?"QUESTIONS":"PHẦN CÂU HỎI"}
@@ -241,7 +261,7 @@ async function loadCourseData(id,selectQuizId=""){
  $("quiz").innerHTML='<option value="">-- Chọn Quiz --</option>'+(q.data||[]).map(x=>`<option value="${x.id}">${esc(x.title)}</option>`).join("");
  if(selectQuizId)$("quiz").value=selectQuizId;
 }
-$("course").onchange=()=>loadCourseData($("course").value);
+$("course").onchange=()=>{updateExamCodeHint();return loadCourseData($("course").value)};
 $("newQuiz").onclick=()=>{if(!$("course").value)return show("Hãy chọn Khóa học trước khi tạo Quiz.");$("quizPreset").value="Kiểm tra 15 phút";$("quizTitle").value="Kiểm tra 15 phút";$("quizModal").classList.remove("hidden")};
 $("quizPreset").onchange=()=>{if($("quizPreset").value!=="custom")$("quizTitle").value=$("quizPreset").value;else{$("quizTitle").value="";$("quizTitle").focus()}};
 function closeQuizCreate(){$("quizModal").classList.add("hidden")}
@@ -435,6 +455,8 @@ function syncOne(i){
  q.question_text=document.querySelector(`.q[data-i="${i}"]`)?.value||q.question_text;
  q.stimulus=document.querySelector(`.stim[data-i="${i}"]`)?.value??q.stimulus;
  q.visual_svg=sanitizeSvg(document.querySelector(`.svgsrc[data-i="${i}"]`)?.value??q.visual_svg);
+ for(const [field,cls]of [["content_topic","report-topic"],["assessment_objective","report-objective"],["level_reason","report-reason"],["level","report-level"]]){const el=document.querySelector(`.${cls}[data-i="${i}"]`);if(el)q[field]=el.value.trim()}
+ const scoreEl=document.querySelector(`.report-points[data-i="${i}"]`);if(scoreEl)q.report_points=scoreEl.value.trim()===""?null:Number(scoreEl.value.replace(",","."));
  q.explanation=document.querySelector(`.exp[data-i="${i}"]`)?.value||q.explanation;
  if(q.question_type==="short_answer"){
    q.correct_text=document.querySelector(`.txtans[data-i="${i}"]`)?.value||q.correct_text;
@@ -462,10 +484,10 @@ function editorByType(x,i){
 }
 function render(){
  const c={},tc={};generated.forEach(x=>{c[x.level]=(c[x.level]||0)+1;tc[x.question_type]=(tc[x.question_type]||0)+1});$("stats").textContent=`NB ${c["Nhận biết"]||0} • TH ${c["Thông hiểu"]||0} • VD ${c["Vận dụng"]||0} • A–D ${tc.mcq4||0} • Đ/S ${tc.true_false||0} • Ngắn ${tc.short_answer||0} • Số ${tc.numeric||0} • Tổng ${generated.length}`;$("tools").classList.toggle("hidden",!generated.length);
- $("list").innerHTML=generated.map((x,i)=>`<div class="card bg-white shadow rounded-2xl p-5 math-wrap" data-card="${i}"><div class="flex flex-wrap justify-between gap-2"><label><input class="pick" data-i="${i}" type="checkbox" checked> <b>${questionWord()} ${i+1}</b> • ${esc(x.level||"")} • <span class="text-blue-700">${typeLabel(x.question_type)}</span>${x.section_title?` • ${esc(localizeSectionTitle(x.section_title))}`:""}</label><div class="flex gap-2">${x.question_type==="mcq4"?`<button data-sh="${i}" class="border px-2 py-1 rounded-lg text-sm">🔀 Xáo A–D</button>`:""}<button data-re="${i}" class="border border-violet-300 text-violet-700 px-2 py-1 rounded-lg text-sm">✨ Tạo lại</button></div></div>${x.stimulus?`<label class="block text-xs font-bold mt-2">Ngữ liệu<textarea class="stim w-full border bg-blue-50 p-2 mt-1 rounded" rows="4" data-i="${i}">${esc(x.stimulus)}</textarea></label>`:""}${visualHtml(x.visual_svg)}${x.visual_svg?`<details class="mt-2"><summary class="text-xs cursor-pointer text-slate-500">SVG hình/đồ thị</summary><textarea class="svgsrc w-full border p-2 rounded mt-1 text-xs font-mono" rows="3" data-i="${i}">${esc(sanitizeSvg(x.visual_svg))}</textarea></details>`:""}<textarea class="q w-full border p-2 mt-2 rounded" data-i="${i}">${esc(cleanQuestion(x.question_text))}</textarea>${editorByType(x,i)}<input class="exp w-full border p-2 mt-2 rounded" data-i="${i}" value="${esc(x.explanation||"")}"><div class="bg-amber-50 p-2 mt-2 text-sm rounded">Căn cứ: ${esc(x.source_evidence||"")}</div></div>`).join("");
+ $("list").innerHTML=generated.map((x,i)=>`<div class="card bg-white shadow rounded-2xl p-5 math-wrap" data-card="${i}"><div class="flex flex-wrap justify-between gap-2"><label><input class="pick" data-i="${i}" type="checkbox" checked> <b>${questionWord()} ${i+1}</b> • ${esc(x.level||"")} • <span class="text-blue-700">${typeLabel(x.question_type)}</span>${x.section_title?` • ${esc(localizeSectionTitle(x.section_title))}`:""}</label><div class="flex gap-2">${x.question_type==="mcq4"?`<button data-sh="${i}" class="border px-2 py-1 rounded-lg text-sm">🔀 Xáo A–D</button>`:""}<button data-re="${i}" class="border border-violet-300 text-violet-700 px-2 py-1 rounded-lg text-sm">✨ Tạo lại</button></div></div>${x.stimulus?`<label class="block text-xs font-bold mt-2">Ngữ liệu<textarea class="stim w-full border bg-blue-50 p-2 mt-1 rounded" rows="4" data-i="${i}">${esc(x.stimulus)}</textarea></label>`:""}${visualHtml(x.visual_svg)}${x.visual_svg?`<details class="mt-2"><summary class="text-xs cursor-pointer text-slate-500">SVG hình/đồ thị</summary><textarea class="svgsrc w-full border p-2 rounded mt-1 text-xs font-mono" rows="3" data-i="${i}">${esc(sanitizeSvg(x.visual_svg))}</textarea></details>`:""}<textarea class="q w-full border p-2 mt-2 rounded" data-i="${i}">${esc(cleanQuestion(x.question_text))}</textarea>${editorByType(x,i)}<input class="exp w-full border p-2 mt-2 rounded" data-i="${i}" value="${esc(x.explanation||"")}"><div class="bg-amber-50 p-2 mt-2 text-sm rounded">Căn cứ: ${esc(x.source_evidence||"")}</div>${dossierMetadataEditor(x,i)}</div>`).join("");
  document.querySelectorAll("[data-sh]").forEach(b=>b.onclick=()=>shuffleOne(+b.dataset.sh));document.querySelectorAll("[data-re]").forEach(b=>b.onclick=()=>regenerateOne(+b.dataset.re));typesetMath($("list"));
 }
-async function regenerateOne(i){syncAll();const old=generated[i],ratios={remember:old.level==="Nhận biết"?100:0,understand:old.level==="Thông hiểu"?100:0,apply:old.level==="Vận dụng"?100:0},card=document.querySelector(`[data-card="${i}"]`);card?.classList.add("busy");try{const p=sourcePayload(1,ratios);p.questionTypes=[old.question_type||"mcq4"];p.extraText+=`\n\nTạo lại đúng 1 câu, không trùng với: ${generated.filter((_,n)=>n!==i).map(q=>q.question_text).join(" | ")}`;if(isStructured()){const sec=(activeStructure?.sections||[]).find(s=>s.key===old.section_key)||{key:old.section_key||"S1",title:old.section_title||"",instruction:old.section_instruction||"",question_type:old.question_type||"mcq4",question_count:1};p.structure={title_hint:activeStructure?.title_hint||"",sections:[{...sec,question_count:1}],target_count:1};p.generationMode="structure"}const x=await callAI(p),q=x.questions?.[0];if(!q)throw Error("AI chưa tạo được câu thay thế.");generated[i]={...q,section_key:q.section_key||old.section_key,section_title:q.section_title||old.section_title,section_instruction:q.section_instruction||old.section_instruction,question_type:q.question_type||old.question_type};render();show(`Đã tạo lại câu ${i+1}.`,true)}catch(e){show(e.message)}finally{card?.classList.remove("busy")}}
+async function regenerateOne(i){syncAll();const old=generated[i],ratios={remember:old.level==="Nhận biết"?100:0,understand:old.level==="Thông hiểu"?100:0,apply:old.level==="Vận dụng"?100:0},card=document.querySelector(`[data-card="${i}"]`);card?.classList.add("busy");try{const p=sourcePayload(1,ratios);p.questionTypes=[old.question_type||"mcq4"];p.extraText+=`\n\nTạo lại đúng 1 câu, không trùng với: ${generated.filter((_,n)=>n!==i).map(q=>q.question_text).join(" | ")}`;if(isStructured()){const sec=(activeStructure?.sections||[]).find(s=>s.key===old.section_key)||{key:old.section_key||"S1",title:old.section_title||"",instruction:old.section_instruction||"",question_type:old.question_type||"mcq4",question_count:1};p.structure={title_hint:activeStructure?.title_hint||"",sections:[{...sec,question_count:1}],target_count:1};p.generationMode="structure"}const x=await callAI(p),q=x.questions?.[0];if(!q)throw Error("AI chưa tạo được câu thay thế.");generated[i]={...q,report_points:old.report_points,section_key:q.section_key||old.section_key,section_title:q.section_title||old.section_title,section_instruction:q.section_instruction||old.section_instruction,question_type:q.question_type||old.question_type};render();show(`Đã tạo lại câu ${i+1}.`,true)}catch(e){show(e.message)}finally{card?.classList.remove("busy")}}
 $("all").onclick=()=>document.querySelectorAll(".pick").forEach(x=>x.checked=true);$("none").onclick=()=>document.querySelectorAll(".pick").forEach(x=>x.checked=false);$("shuffleAll").onclick=()=>{syncAll();generated.forEach((q,i)=>{if(q.question_type==="mcq4")shuffleOne(i)});render();show("Đã xáo đáp án các câu A–D.",true)};
 function answerPreview(q){
  if(q.question_type==="short_answer")return '<input disabled class="w-full border rounded-xl p-3" placeholder="Nhập câu trả lời...">';
@@ -543,32 +565,94 @@ function makeExamVariant(picks,code){
  sections.forEach(sec=>{const groups=shuffleSeed(sec.groups,rnd);groups.forEach(g=>{const qq=shuffleSeed(g.questions,rnd);qq.forEach(q=>{if(q.question_type==="mcq4"){const opts=["A","B","C","D"].map(k=>({k,text:q["option_"+k.toLowerCase()]}));const correctText=q["option_"+String(q.correct_answer||"A").toLowerCase()];const sh=shuffleSeed(opts,rnd);["A","B","C","D"].forEach((k,i)=>q["option_"+k.toLowerCase()]=sh[i].text);q.correct_answer=["A","B","C","D"][sh.findIndex(x=>x.text===correctText)]||"A"}q.section_key=sec.key;q.section_title=sec.title;q.section_instruction=sec.instruction;q.stimulus=g.stimulus;out.push(q)})})});
  return {code:String(code),questions:out};
 }
-function buildSectionStats(picks){
- const rows=[],map=new Map();
- picks.forEach(i=>{const q=generated[i],key=q.section_key||q.section_title||"FREE";if(!map.has(key)){const r={key,title:localizeSectionTitle(q.section_title)||sectionFallback(),instruction:q.section_instruction||"",source:new Set(),types:new Set(),NB:0,TH:0,VD:0,total:0};map.set(key,r);rows.push(r)}const r=map.get(key);r.total++;if(q.level==="Nhận biết")r.NB++;else if(q.level==="Thông hiểu")r.TH++;else r.VD++;if(q.source_title)r.source.add(cleanTitle(q.source_title));r.types.add(typeLabel(q.question_type).replace(/^[^ ]+ /,""))});
- return rows;
+const REPORT_LEVELS=["Nhận biết","Thông hiểu","Vận dụng"];
+const REPORT_TYPES={mcq4:"Trắc nghiệm A–D",true_false:"Đúng/Sai",short_answer:"Trả lời ngắn",numeric:"Đáp án số"};
+function reportNumber(n,digits=2){return Number(n).toLocaleString("vi-VN",{maximumFractionDigits:digits})}
+function dossierRows(picks){
+ const scale=Number($("wordScore")?.value||10);
+ if(!Number.isFinite(scale)||scale<=0)throw Error("Thang điểm hồ sơ phải lớn hơn 0.");
+ const custom=picks.some(i=>generated[i].report_points!==undefined&&generated[i].report_points!==null&&generated[i].report_points!=="");
+ const rows=picks.map((idx,n)=>{
+   const q=generated[idx];
+   if(!REPORT_LEVELS.includes(q.level))throw Error(`Câu ${n+1}: hãy chọn mức độ NB/TH/VD trong Thông tin ma trận / đặc tả.`);
+   const raw=q.report_points;
+   const points=custom?Number(raw):scale/picks.length;
+   if(custom&&(raw===""||raw===null||raw===undefined||!Number.isFinite(points)||points<=0))throw Error("Nếu chấm điểm riêng, hãy nhập điểm lớn hơn 0 cho TẤT CẢ câu đã chọn; hoặc để trống toàn bộ để chia đều.");
+   const source=cleanTitle(q.source_title)||"";
+   const section=localizeSectionTitle(q.section_title)||sectionFallback();
+   return {q,no:n+1,idx,points,source,section,topic:String(q.content_topic||source||section).trim(),objective:String(q.assessment_objective||"").trim(),reason:String(q.level_reason||"").trim(),type:q.question_type||"mcq4",level:q.level};
+ });
+ const total=rows.reduce((a,r)=>a+r.points,0);
+ if(Math.abs(total-scale)>0.00001)throw Error(`Tổng điểm các câu đã chọn là ${reportNumber(total,4)}, khác thang điểm ${reportNumber(scale)}. Hãy điều chỉnh trước khi xuất.`);
+ return {rows,total:scale,custom};
+}
+function dossierGroups(rows){
+ const groups=[],map=new Map();
+ rows.forEach(r=>{const key=JSON.stringify([r.topic,r.source]);if(!map.has(key)){const g={topic:r.topic,source:r.source,sections:new Set(),rows:[]};map.set(key,g);groups.push(g)}const g=map.get(key);g.rows.push(r);g.sections.add(r.section)});
+ return groups;
+}
+function dossierLevelCell(rows,level){
+ const a=rows.filter(r=>r.level===level);if(!a.length)return "—";
+ const lines=[`${a.length} câu / ${reportNumber(a.reduce((s,r)=>s+r.points,0),4)} điểm`];
+ for(const [type,label]of Object.entries(REPORT_TYPES)){const t=a.filter(r=>r.type===type);if(t.length)lines.push(`${label}: ${t.map(r=>"C"+r.no).join(", ")}`)}
+ return lines.join("\n");
+}
+function dossierEvidence(q){
+ if(q.question_type==="mcq4"){const letter=String(q.correct_answer||"").toUpperCase();return `${letter}. ${q["option_"+letter.toLowerCase()]||""}`.trim()}
+ if(q.question_type==="short_answer")return [...new Set([q.correct_text,...(q.accepted_answers||[])].filter(Boolean))].join(" / ");
+ if(q.question_type==="numeric")return questionAnswer(q)+(q.unit_required?" (bắt buộc đơn vị)":"");
+ return questionAnswer(q);
+}
+function dossierMetadataEditor(q,i){
+ return `<details class="border rounded-xl bg-slate-50 p-3 mt-3"><summary class="text-sm font-bold cursor-pointer">Thông tin ma trận / đặc tả</summary><div class="grid md:grid-cols-2 gap-2 mt-2 text-sm"><label>Chủ đề / đơn vị kiến thức<input class="report-topic w-full border rounded p-2" data-i="${i}" value="${esc(q.content_topic||"")}" placeholder="Ví dụ: Đọc hiểu – tìm thông tin chi tiết"></label><label>Mức độ<select class="report-level w-full border rounded p-2" data-i="${i}">${REPORT_LEVELS.map(l=>`<option ${q.level===l?"selected":""}>${l}</option>`).join("")}</select></label><label class="md:col-span-2">Yêu cầu đánh giá cụ thể<textarea class="report-objective w-full border rounded p-2" data-i="${i}" rows="2" placeholder="Học sinh làm được gì qua câu hỏi này?">${esc(q.assessment_objective||"")}</textarea></label><label>Căn cứ phân loại mức độ<textarea class="report-reason w-full border rounded p-2" data-i="${i}" rows="2">${esc(q.level_reason||"")}</textarea></label><label>Điểm hồ sơ (trống = chia đều)<input type="number" min="0.001" step="any" class="report-points w-full border rounded p-2" data-i="${i}" value="${esc(q.report_points??"")}"></label></div></details>`;
+}
+function reportDocTools(){
+ if(!window.docx)throw Error("Chưa tải được thư viện Word.");
+ const D=window.docx,{Paragraph,TextRun,AlignmentType,Table,TableRow,TableCell,WidthType,BorderStyle,TableLayoutType}=D;
+ const width=14540,font="Times New Roman";
+ const p=(text,opt={})=>new Paragraph({style:opt.title?"Title":undefined,alignment:opt.center?AlignmentType.CENTER:undefined,keepNext:!!opt.keep,spacing:{before:opt.before??0,after:opt.after??80,line:260},children:[new TextRun({text:wordPlain(String(text??"")),bold:!!opt.bold,size:opt.size||22,font,color:"000000"})]});
+ const border={style:BorderStyle.SINGLE,size:4,color:"8A99A8"};
+ const table=(headers,data,widths)=>{
+   const row=(values,head=false)=>new TableRow({tableHeader:head,cantSplit:true,children:values.map((v,i)=>new TableCell({width:{size:widths[i],type:WidthType.DXA},shading:head?{fill:"E8F0F8"}:undefined,margins:{top:85,bottom:85,left:90,right:90},borders:{top:border,bottom:border,left:border,right:border},children:String(v??"").split("\n").map(line=>p(line,{bold:head,size:head?21:22,after:35}))}))});
+   return new Table({width:{size:width,type:WidthType.DXA},columnWidths:widths,layout:TableLayoutType.FIXED,rows:[row(headers,true),...data.map(r=>row(r))]});
+ };
+ const heading=text=>p(text,{bold:true,size:24,keep:true,before:160,after:100});
+ const header=(title,info)=>[p($("wordSchool").value.trim()||"TRƯỜNG THPT PHÚ HÒA",{center:true,bold:true,size:24}),p(title,{title:true,center:true,bold:true,size:28}),p(`${selectedCourseBase()} • Năm học ${academicYearFromCourse()}`,{center:true,bold:true,size:23}),p(`${examTitleText()} • ${+$("wordTime").value||45} phút • ${info.rows.length} câu • ${reportNumber(info.total)} điểm`,{center:true,after:150})];
+ const scoring=info=>info.custom?`Điểm theo từng câu do giáo viên thiết lập. Tổng: ${reportNumber(info.total)} điểm.`:`Điểm chia đều: ${reportNumber(info.total)} / ${info.rows.length} = ${reportNumber(info.total/info.rows.length,4)} điểm/câu. Số lẻ được làm tròn khi trình bày; tổng tính theo giá trị chưa làm tròn.`;
+ const pack=children=>D.Packer.toBlob(new D.Document({styles:{default:{document:{run:{font,size:22}}}},sections:[{properties:{page:{size:{width:12240,height:15840,orientation:D.PageOrientation.LANDSCAPE},margin:{top:650,right:650,bottom:650,left:650}}},footers:{default:new D.Footer({children:[new D.Paragraph({alignment:AlignmentType.RIGHT,children:[new TextRun({text:"Trang ",font,size:18}),new TextRun({children:[D.PageNumber.CURRENT],font,size:18})]})]})},children}]}));
+ return {D,p,table,heading,header,scoring,pack};
 }
 async function buildMatrixDoc(){
  const picks=selectedQuestionIndexes();if(!picks.length)throw Error("Hãy chọn câu hỏi trước.");
- const D=window.docx,{Document,Packer,Paragraph,TextRun,AlignmentType,Table,TableRow,TableCell,WidthType,BorderStyle}=D,font="Times New Roman";
- const p=(text,opt={})=>new Paragraph({alignment:opt.center?AlignmentType.CENTER:undefined,spacing:{after:opt.after??70},children:[new TextRun({text:wordPlain(String(text||"")),bold:!!opt.bold,size:opt.size||22,font})]});
- const thin={style:BorderStyle.SINGLE,size:1,color:"888888"},cell=(text,bold=false)=>new TableCell({children:[p(text,{bold,center:true,size:20,after:0})],borders:{top:thin,bottom:thin,left:thin,right:thin}});
- const stats=buildSectionStats(picks),total=picks.length,rows=[new TableRow({children:[cell("TT",true),cell("Nội dung / phần",true),cell("Dạng câu",true),cell("NB",true),cell("TH",true),cell("VD",true),cell("Tổng",true),cell("Tỉ lệ %",true)]})];
- stats.forEach((r,i)=>rows.push(new TableRow({children:[cell(String(i+1)),cell(r.title),cell([...r.types].join(", ")),cell(String(r.NB)),cell(String(r.TH)),cell(String(r.VD)),cell(String(r.total)),cell((r.total/total*100).toFixed(1))]})));
- const sums=stats.reduce((a,r)=>(a.NB+=r.NB,a.TH+=r.TH,a.VD+=r.VD,a),{NB:0,TH:0,VD:0});rows.push(new TableRow({children:[cell("",true),cell("TỔNG",true),cell("",true),cell(String(sums.NB),true),cell(String(sums.TH),true),cell(String(sums.VD),true),cell(String(total),true),cell("100",true)]}));
- const children=[p($('wordSchool').value.trim()||'TRƯỜNG THPT PHÚ HÒA',{center:true,bold:true,size:24}),p("MA TRẬN ĐỀ KIỂM TRA",{center:true,bold:true,size:28}),p(`${selectedCourseBase()} • Năm học ${academicYearFromCourse()}`,{center:true,bold:true,size:23}),p(`${examTitleText()} • ${+$('wordTime').value||45} phút • ${total} câu`,{center:true,size:22,after:140}),new Table({width:{size:100,type:WidthType.PERCENTAGE},rows}),p("Ghi chú: Ma trận được tổng hợp từ các câu hỏi đã chọn; giáo viên rà soát trước khi nộp chính thức.",{size:18,after:0})];
- return await Packer.toBlob(new Document({styles:{default:{document:{run:{font,size:22}}}},sections:[{properties:{page:{margin:{top:850,right:700,bottom:850,left:700}}},children}]}));
+ const info=dossierRows(picks),{rows,total}=info,groups=dossierGroups(rows),T=reportDocTools();
+ const data=groups.map((g,i)=>{const points=g.rows.reduce((a,r)=>a+r.points,0);return [i+1,[g.topic,g.source&&g.source!==g.topic?"Nguồn: "+g.source:"","Phần: "+[...g.sections].join("; ")].filter(Boolean).join("\n"),...REPORT_LEVELS.map(l=>dossierLevelCell(g.rows,l)),g.rows.length,reportNumber(points,4),reportNumber(points/total*100,1)]});
+ data.push(["","TỔNG",...REPORT_LEVELS.map(l=>{const a=rows.filter(r=>r.level===l);return `${a.length} câu\n${reportNumber(a.reduce((s,r)=>s+r.points,0),4)} điểm`}),rows.length,reportNumber(total),"100"]);
+ const children=[...T.header("MA TRẬN ĐỀ KIỂM TRA",info),T.p(T.scoring(info),{size:21}),T.p("NB: Nhận biết; TH: Thông hiểu; VD: Vận dụng. Ký hiệu C1, C2… theo thứ tự đề gốc đã chọn; đối chiếu 4 mã đề trong bản đặc tả.",{size:21}),T.heading("1. Ma trận theo chủ đề và mức độ nhận thức"),T.table(["TT","Chủ đề / đơn vị kiến thức","Nhận biết","Thông hiểu","Vận dụng","Số câu","Điểm","Tỉ lệ điểm %"],data,[650,3100,2250,2250,2250,750,1500,1790])];
+ // Column widths sum to the printable landscape width.
+ const typeRows=Object.entries(REPORT_TYPES).filter(([type])=>rows.some(r=>r.type===type)).map(([type,label])=>{const a=rows.filter(r=>r.type===type),points=a.reduce((s,r)=>s+r.points,0);return[label,...REPORT_LEVELS.map(l=>a.filter(r=>r.level===l).length),a.length,reportNumber(points,4),reportNumber(points/total*100,1)]});
+ typeRows.push(["TỔNG",...REPORT_LEVELS.map(l=>rows.filter(r=>r.level===l).length),rows.length,reportNumber(total),"100"]);
+ children.push(T.heading("2. Phân bố theo dạng câu hỏi"),T.table(["Dạng câu","NB","TH","VD","Tổng số câu","Điểm","Tỉ lệ điểm %"],typeRows,[3840,1300,1300,1300,1700,2300,2800]));
+ const targets=[$("r").value,$("u").value,$("a").value];
+ children.push(T.heading("3. Đối chiếu tỉ lệ mức độ"),T.table(["Mức độ","Tỉ lệ số câu đang đặt %","Số câu thực tế","Tỉ lệ số câu thực tế %","Điểm thực tế","Tỉ lệ điểm thực tế %"],REPORT_LEVELS.map((l,i)=>{const a=rows.filter(r=>r.level===l),points=a.reduce((s,r)=>s+r.points,0);return[l,targets[i],a.length,reportNumber(a.length/rows.length*100,1),reportNumber(points,4),reportNumber(points/total*100,1)]}),[2740,2300,2000,2600,2300,2600]));
+ children.push(T.p("Số liệu tổng hợp từ các câu đã chọn. Tỉ lệ thực tế có thể khác tỉ lệ đặt ban đầu sau khi chỉnh sửa hoặc bỏ chọn câu hỏi.",{size:21}));
+ return T.pack(children);
 }
 async function buildSpecDoc(){
  const picks=selectedQuestionIndexes();if(!picks.length)throw Error("Hãy chọn câu hỏi trước.");
- const D=window.docx,{Document,Packer,Paragraph,TextRun,AlignmentType,Table,TableRow,TableCell,WidthType,BorderStyle}=D,font="Times New Roman";
- const p=(text,opt={})=>new Paragraph({alignment:opt.center?AlignmentType.CENTER:undefined,spacing:{after:opt.after??65},children:[new TextRun({text:wordPlain(String(text||"")),bold:!!opt.bold,size:opt.size||20,font})]});
- const thin={style:BorderStyle.SINGLE,size:1,color:"888888"},cell=(text,bold=false)=>new TableCell({children:[p(text,{bold,size:19,after:0})],borders:{top:thin,bottom:thin,left:thin,right:thin}});
- const stats=buildSectionStats(picks),rows=[new TableRow({children:[cell("TT",true),cell("Nội dung / đơn vị kiến thức",true),cell("Yêu cầu đánh giá",true),cell("Mức độ",true),cell("Số câu",true),cell("Nguồn / căn cứ",true)]})];
- stats.forEach((r,i)=>{const levels=[r.NB?`Nhận biết: ${r.NB}`:"",r.TH?`Thông hiểu: ${r.TH}`:"",r.VD?`Vận dụng: ${r.VD}`:""].filter(Boolean).join("; ");const req=[r.instruction,[...r.types].join(", ")].filter(Boolean).join(" — ");rows.push(new TableRow({children:[cell(String(i+1)),cell(r.title),cell(req||"Đánh giá kiến thức và năng lực theo nội dung nguồn"),cell(levels),cell(String(r.total)),cell([...r.source].join("; ")||"Tài liệu nguồn đã chọn")]}))});
- const children=[p($('wordSchool').value.trim()||'TRƯỜNG THPT PHÚ HÒA',{center:true,bold:true,size:24}),p("BẢN ĐẶC TẢ ĐỀ KIỂM TRA",{center:true,bold:true,size:28}),p(`${selectedCourseBase()} • Năm học ${academicYearFromCourse()}`,{center:true,bold:true,size:23}),p(`${examTitleText()} • ${+$('wordTime').value||45} phút`,{center:true,size:22,after:140}),new Table({width:{size:100,type:WidthType.PERCENTAGE},rows}),p("Ghi chú: Bản đặc tả được tạo từ cấu trúc đề và câu hỏi thực tế; giáo viên cần đối chiếu YCCĐ của môn học trước khi ký duyệt.",{size:18,after:0})];
- return await Packer.toBlob(new Document({styles:{default:{document:{run:{font,size:22}}}},sections:[{properties:{page:{margin:{top:850,right:650,bottom:850,left:650}}},children}]}));
+ const info=dossierRows(picks),T=reportDocTools();
+ const children=[...T.header("BẢN ĐẶC TẢ ĐỀ KIỂM TRA",info),T.p(T.scoring(info),{size:21}),T.p("Yêu cầu đánh giá được mô tả theo câu hỏi thực tế. Giáo viên đối chiếu và hoàn thiện theo yêu cầu cần đạt của môn học trước khi duyệt.",{size:21}),T.p("Dạng câu: A–D = trắc nghiệm 4 lựa chọn; Đ/S = đúng/sai; Ngắn = trả lời ngắn; Số = đáp án số.",{size:21}),T.heading("1. Đặc tả từng câu hỏi")];
+ const data=info.rows.map(r=>{
+   const task=r.objective?`Yêu cầu: ${r.objective}\nNhiệm vụ: ${r.q.question_text}`:`Nhiệm vụ đánh giá: ${r.q.question_text}`;
+   const expected=dossierEvidence(r.q);
+   return [`C${r.no}\n${({mcq4:"A–D",true_false:"Đ/S",short_answer:"Ngắn",numeric:"Số"})[r.type]||r.type}`,`${r.topic}\nPhần: ${r.section}`,task+(expected?`\nMinh chứng đạt: ${expected}`:""),r.level+(r.reason?`\nCăn cứ: ${r.reason}`:""),reportNumber(r.points,4),[r.source?`Nguồn: ${r.source}`:"",r.q.source_evidence?`Căn cứ nguồn: ${r.q.source_evidence}`:"",r.q.explanation?`Giải thích: ${r.q.explanation}`:""].filter(Boolean).join("\n")||"—"];
+ });
+ children.push(T.table(["Câu / dạng","Chủ đề / nội dung","Yêu cầu và minh chứng đánh giá","Mức độ nhận thức","Điểm","Nguồn và giải thích"],data,[1100,2100,4000,2300,850,4190]));
+ const variants=selectedExamCodes().map(code=>makeExamVariant(picks,code));
+ const mapping=info.rows.map((r,i)=>[`C${r.no}`,...variants.map(v=>`C${v.questions.findIndex(q=>q.__sourceIndex===i)+1}`),r.level,reportNumber(r.points,4)]);
+ children.push(T.heading("2. Đối chiếu câu hỏi giữa bốn mã đề"),T.p("Số thứ tự được đối chiếu sau khi xáo câu. Đáp án A–D có thể thay đổi theo mã; sử dụng file Đáp án 4 mã đề để chấm.",{size:21}),T.table(["Đề gốc",...variants.map(v=>"Mã "+v.code),"Mức độ","Điểm"],mapping,[1700,1700,1700,1700,1700,3840,2200]));
+ return T.pack(children);
 }
+
 async function buildVariantExamDoc(variant){
  const D=window.docx,{Document,Packer,Paragraph,TextRun,AlignmentType,Table,TableRow,TableCell,WidthType,BorderStyle,ImageRun}=D,font="Times New Roman",children=[],school=$('wordSchool').value.trim()||'TRƯỜNG THPT PHÚ HÒA',minutes=+$('wordTime').value||45,title=examTitleText(),course=selectedCourseBase();
  const para=(text,opt={})=>new Paragraph({alignment:opt.center?AlignmentType.CENTER:undefined,spacing:{after:opt.after??90},indent:opt.indent?{left:opt.indent}:undefined,children:[new TextRun({text:wordPlain(String(text||"")),bold:!!opt.bold,italics:!!opt.italic,size:opt.size||23,font})]});
@@ -587,7 +671,7 @@ async function buildFourCodeAnswerDoc(variants){
 async function exportMatrixOnly(){try{const blob=await buildMatrixDoc();downloadBlob(blob,`01_MA_TRAN_${examTitleText().replace(/[\/:*?"<>|]+/g,"_")}.docx`);show("Đã xuất Ma trận Word.",true)}catch(e){show("Lỗi xuất Ma trận: "+e.message)}}
 async function exportSpecOnly(){try{const blob=await buildSpecDoc();downloadBlob(blob,`02_DAC_TA_${examTitleText().replace(/[\/:*?"<>|]+/g,"_")}.docx`);show("Đã xuất Bản đặc tả Word.",true)}catch(e){show("Lỗi xuất Đặc tả: "+e.message)}}
 async function exportExamPack(){
- try{const picks=selectedQuestionIndexes();if(!picks.length)throw Error("Hãy chọn câu hỏi trước.");if(!window.JSZip)throw Error("Không tải được JSZip.");const btn=$('exportPack');btn.disabled=true;btn.textContent='⏳ Đang tạo hồ sơ...';const zip=new JSZip(),safe=examTitleText().replace(/[\/:*?"<>|]+/g,"_");const matrix=await buildMatrixDoc(),spec=await buildSpecDoc();zip.file(`01_MA_TRAN_${safe}.docx`,matrix);zip.file(`02_DAC_TA_${safe}.docx`,spec);const variants=[101,102,103,104].map(c=>makeExamVariant(picks,c));for(let i=0;i<variants.length;i++){const blob=await buildVariantExamDoc(variants[i]);zip.file(`${String(3+i).padStart(2,'0')}_DE_MA_${variants[i].code}_${safe}.docx`,blob)}const ans=await buildFourCodeAnswerDoc(variants);zip.file(`07_DAP_AN_4_MA_${safe}.docx`,ans);const manifest=`CODEHUB V3.7.26 AI TEST MASTER\n\nBộ hồ sơ gồm:\n01 Ma trận\n02 Bản đặc tả\n03-06 Đề mã 101-104\n07 Đáp án 4 mã\n\nNăm học: ${academicYearFromCourse()}\nKhóa học: ${selectedCourseBase()}\nSố câu: ${picks.length}\nThời gian: ${+$('wordTime').value||45} phút\n\nLưu ý: Ma trận/đặc tả được tự động tổng hợp từ đề; giáo viên cần duyệt trước khi nộp.`;zip.file('README.txt',manifest);const out=await zip.generateAsync({type:'blob'});downloadBlob(out,`CodeHub_TEST_MASTER_${safe}_4_MA.zip`);show("✓ Đã tạo bộ hồ sơ: Ma trận + Đặc tả + 4 mã đề 101–104 + Đáp án.",true)}catch(e){show("Lỗi tạo bộ hồ sơ: "+e.message)}finally{const btn=$('exportPack');if(btn){btn.disabled=false;btn.textContent='📦 Bộ 4 mã đề'}}
+ try{const picks=selectedQuestionIndexes();if(!picks.length)throw Error("Hãy chọn câu hỏi trước.");dossierRows(picks);if(!window.JSZip)throw Error("Không tải được JSZip.");const btn=$('exportPack');btn.disabled=true;btn.textContent='⏳ Đang tạo hồ sơ...';const zip=new JSZip(),safe=examTitleText().replace(/[\/:*?"<>|]+/g,"_");const matrix=await buildMatrixDoc(),spec=await buildSpecDoc();zip.file(`01_MA_TRAN_${safe}.docx`,matrix);zip.file(`02_DAC_TA_${safe}.docx`,spec);const variants=selectedExamCodes().map(c=>makeExamVariant(picks,c));for(let i=0;i<variants.length;i++){const blob=await buildVariantExamDoc(variants[i]);zip.file(`${String(3+i).padStart(2,'0')}_DE_MA_${variants[i].code}_${safe}.docx`,blob)}const ans=await buildFourCodeAnswerDoc(variants);zip.file(`07_DAP_AN_4_MA_${safe}.docx`,ans);const manifest=`CODEHUB V3.7.26 AI TEST MASTER\n\nBộ hồ sơ gồm:\n01 Ma trận\n02 Bản đặc tả\n03-06 Đề mã ${variants.map(v=>v.code).join(", ")}\n07 Đáp án 4 mã\n\nNăm học: ${academicYearFromCourse()}\nKhóa học: ${selectedCourseBase()}\nSố câu: ${picks.length}\nThời gian: ${+$('wordTime').value||45} phút\n\nLưu ý: Ma trận/đặc tả được tự động tổng hợp từ đề; giáo viên cần duyệt trước khi nộp.`;zip.file('README.txt',manifest);const out=await zip.generateAsync({type:'blob'});downloadBlob(out,`CodeHub_TEST_MASTER_${safe}_4_MA.zip`);show(`✓ Đã tạo bộ hồ sơ: Ma trận + Đặc tả + 4 mã đề ${variants.map(v=>v.code).join(", ")} + Đáp án.`,true)}catch(e){show("Lỗi tạo bộ hồ sơ: "+e.message)}finally{const btn=$('exportPack');if(btn){btn.disabled=false;btn.textContent='📦 Bộ 4 mã đề'}}
 }
 
 $("exportStudentWord").onclick=()=>makeWord(false);$("exportAnswerWord").onclick=()=>makeWord(true);$("exportMatrix").onclick=exportMatrixOnly;$("exportSpec").onclick=exportSpecOnly;$("exportPack").onclick=exportExamPack;
