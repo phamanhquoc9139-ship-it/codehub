@@ -1,17 +1,18 @@
 <!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Quản lý tài khoản V3.7.16.1 | CodeHub</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="scripts/supabase-config.js"></script>
+<title>Quản lý tài khoản V3.7.17 | CodeHub</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="scripts/supabase-config.js"></script>
 <style>*{box-sizing:border-box}body{margin:0;font-family:Arial;background:#f4f7fb;color:#0f172a}header{background:#fff;padding:20px 3%;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #ddd}main{width:94%;margin:25px auto}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.card,.box{background:#fff;border-radius:18px;padding:22px}.num{font-size:38px;font-weight:800}.tools{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}.tools input,.tools select,input,select{padding:13px;border:1px solid #cbd5e1;border-radius:10px;font-size:16px}.tools input{flex:1}.btn{border:0;border-radius:11px;padding:13px 17px;font-weight:700;font-size:15px;cursor:pointer}.blue{background:#2563eb;color:#fff}.green{background:#059669;color:#fff}.orange{background:#f97316;color:#fff}.red{background:#dc2626;color:#fff}.white{background:#fff;border:1px solid #cbd5e1}.table{overflow:auto;background:#fff;border-radius:18px}table{width:100%;border-collapse:collapse;min-width:1050px}th,td{padding:14px;border-bottom:1px solid #e5e7eb;text-align:left}th{background:#eef3f9}.badge{padding:5px 9px;border-radius:20px;font-weight:700}.teacher{background:#dbeafe;color:#1d4ed8}.student{background:#dcfce7;color:#15803d}.admin{background:#ede9fe;color:#6d28d9}.modal{display:none;position:fixed;inset:0;background:#0007;align-items:center;justify-content:center;z-index:10}.modal.on{display:flex}.dialog{background:#fff;width:min(650px,94%);border-radius:18px;padding:25px;max-height:90vh;overflow:auto}.grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}.field{display:flex;flex-direction:column;gap:6px}.field.full{grid-column:1/-1}.subjects{display:flex;gap:10px;flex-wrap:wrap}.subject{background:#f1f5f9;padding:9px;border-radius:9px}.assign{background:#eff6ff;border:1px solid #bfdbfe;color:#1d4ed8}.classbox{display:block}.schoolgroup{margin:12px 0 16px;border:1px solid #dbe3ee;border-radius:14px;overflow:hidden}.schooltitle{background:#eaf2ff;color:#1d4ed8;font-weight:800;padding:11px 13px}.schoolclasses{display:flex;gap:10px;flex-wrap:wrap;padding:12px}.classitem{background:#f1f5f9;padding:10px 12px;border-radius:10px;display:inline-flex;gap:8px;align-items:center}.classitem small{color:#64748b}.assignhint{font-size:13px;color:#64748b;margin-top:6px}.schoolfilter{width:100%}#msg{margin:12px 0;color:#b91c1c;font-weight:700}@media(max-width:700px){.cards,.grid{grid-template-columns:1fr}.field.full{grid-column:auto}}</style></head>
-<body><header><div><h1>👥 Quản lý tài khoản <small style="font-size:16px;color:#2563eb">V3.7.16.1</small></h1><div>Admin • giáo viên • học sinh</div></div><div><button class="btn white" onclick="location.href='teacher.html'">← Quản trị</button> <button class="btn blue" id="logout">Đăng xuất</button></div></header>
+<body><header><div><h1>👥 Quản lý tài khoản <small style="font-size:16px;color:#2563eb">V3.7.17</small></h1><div>Admin • giáo viên • học sinh</div></div><div><button class="btn white" onclick="location.href='teacher.html'">← Quản trị</button> <button class="btn blue" id="logout">Đăng xuất</button></div></header>
 <main><div class="cards"><div class="card">Tổng tài khoản<div class="num" id="total">—</div></div><div class="card">👨‍🏫 Giáo viên<div class="num" id="teachers">—</div></div><div class="card">👨‍🎓 Học sinh<div class="num" id="students">—</div></div></div>
 <div class="tools"><input id="search" placeholder="🔎 Tìm họ tên, email, mã, lớp..."><select id="role"><option value="">Tất cả vai trò</option><option value="admin">Admin</option><option value="teacher">Giáo viên</option><option value="student">Học sinh</option></select><button class="btn green" id="add">＋ Thêm giáo viên</button><button class="btn orange" id="export">⬇ Xuất CSV</button><button class="btn blue" id="reload">↻ Làm mới</button></div><div id="msg"></div>
 <div class="table"><table><thead><tr><th>STT</th><th>Họ tên</th><th>Email</th><th>Mã</th><th>Lớp</th><th>Môn phụ trách</th><th>Vai trò</th><th>Thao tác</th></tr></thead><tbody id="rows"></tbody></table></div></main>
-<div class="modal" id="assignModal"><div class="dialog"><h2>🏫 Phân công môn & lớp</h2>
+<div class="modal" id="assignModal"><div class="dialog"><h2>🏫 Phân công môn & lớp <small style="font-size:14px;color:#2563eb">V3.7.17</small></h2>
 <div id="assignTeacher" style="margin-bottom:16px;font-weight:700"></div>
 <div class="field full"><b>Môn phụ trách *</b><select id="assignSubject"></select></div>
 <div class="field full" style="margin-top:14px">
   <b>Trường</b>
   <select id="assignSchool" class="schoolfilter"><option value="">-- Tất cả trường --</option></select>
-  <div class="assignhint">Danh sách lớp được nhóm theo trường để tránh nhầm các lớp trùng tên.</div>
+  <div class="assignhint">Bộ lọc Trường chỉ dùng để xem. Các lớp đã chọn ở trường khác vẫn được giữ khi lưu.</div>
+  <div id="assignSelectedCount" class="assignhint" style="font-weight:700;color:#2563eb;margin-top:8px">Đã chọn: 0 lớp</div>
 </div>
 <div class="field full" style="margin-top:14px"><b>Lớp phụ trách</b><div class="classbox" id="assignClasses">Đang tải...</div></div>
 <div style="margin-top:20px;text-align:right"><button class="btn white" id="assignCancel">Hủy</button> <button class="btn green" id="assignSave">💾 Lưu phân công</button></div>
@@ -22,7 +23,7 @@
 <div class="field full"><b>Môn phụ trách</b><div class="subjects" id="subjects">Đang tải...</div></div></div>
 <div style="margin-top:20px;text-align:right"><button class="btn white" id="cancel">Hủy</button> <button class="btn green" id="save">Tạo giáo viên</button></div></div></div>
 <script>
-const $=x=>document.getElementById(x), FN="https://drfcejvmyhzorwepndta.supabase.co/functions/v1/admin-accounts";let accounts=[],subjects=[],classes=[],schools=[],assignments=[],assignTeacherId=null;
+const $=x=>document.getElementById(x), FN="https://drfcejvmyhzorwepndta.supabase.co/functions/v1/admin-accounts";let accounts=[],subjects=[],classes=[],schools=[],assignments=[],assignTeacherId=null,assignmentDraft=new Map();
 const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 async function session(){const {data:{session}}=await window.supabaseClient.auth.getSession();if(!session){location.href="login.html";throw 0}return session}
 async function api(method,body){let s=await session();let r=await fetch(FN,{method,headers:{Authorization:`Bearer ${s.access_token}`,"Content-Type":"application/json"},body:body?JSON.stringify(body):undefined});let j=await r.json().catch(()=>({}));if(!r.ok)throw Error(j.error||j.message||`HTTP ${r.status}`);return j}
@@ -35,7 +36,7 @@ async function openAssign(id){try{
  $("assignTeacher").textContent=(a?.full_name||"Giáo viên")+" • "+(a?.student_code||"");
 
  let [{data:cs,error:ce},{data:as,error:ae}]=await Promise.all([
-   // V3.7.16.1: dùng RPC SECURITY DEFINER đa trường.
+   // V3.7.17: dùng RPC SECURITY DEFINER đa trường.
    // Tránh SELECT trực tiếp bảng schools bị RLS chặn.
    window.supabaseClient.rpc("codehub_v370_classes_for_user"),
    window.supabaseClient.from("teacher_class_subjects")
@@ -67,6 +68,15 @@ async function openAssign(id){try{
 
  assignments=as||[];
 
+ // V3.7.17: tạo bộ chọn tạm cho TẤT CẢ trường/lớp.
+ // Khi đổi bộ lọc trường, lựa chọn ở trường khác không bị mất.
+ assignmentDraft=new Map();
+ for(const row of assignments){
+   const key=String(row.subject_id);
+   if(!assignmentDraft.has(key))assignmentDraft.set(key,new Set());
+   assignmentDraft.get(key).add(String(row.class_id));
+ }
+
  let allowedIds=new Set((a?.subject_ids||[]).map(String));
  let allowed=subjects.filter(s=>allowedIds.size?allowedIds.has(String(s.id)):(a?.subjects||[]).includes(s.subject_name));
  if(!allowed.length)allowed=subjects;
@@ -86,20 +96,35 @@ async function openAssign(id){try{
  alert("Không mở được phân công: "+e.message)
 }}
 
+function getDraftSet(subjectId){
+ const key=String(subjectId||"");
+ if(!assignmentDraft.has(key)){
+   const init=new Set(
+     assignments
+       .filter(x=>String(x.subject_id)===key)
+       .map(x=>String(x.class_id))
+   );
+   assignmentDraft.set(key,init);
+ }
+ return assignmentDraft.get(key);
+}
+
+function updateAssignSelectedCount(){
+ const sid=$("assignSubject").value;
+ const selected=getDraftSet(sid);
+ $("assignSelectedCount").textContent=`Đã chọn: ${selected.size} lớp`;
+}
+
 function renderAssignClasses(){
  const sid=$("assignSubject").value;
  const schoolId=$("assignSchool").value;
-
- const selected=new Set(
-   assignments
-     .filter(x=>String(x.subject_id)===String(sid))
-     .map(x=>String(x.class_id))
- );
+ const selected=getDraftSet(sid);
 
  const visible=classes.filter(c=>!schoolId||String(c.school_id)===String(schoolId));
 
  if(!visible.length){
    $("assignClasses").innerHTML="Chưa có lớp.";
+   updateAssignSelectedCount();
    return;
  }
 
@@ -130,7 +155,8 @@ function renderAssignClasses(){
          <label class="classitem">
            <input type="checkbox"
                   value="${esc(c.id)}"
-                  ${selected.has(String(c.id))?"checked":""}>
+                  ${selected.has(String(c.id))?"checked":""}
+                  onchange="toggleAssignClass(this)">
            <span>
              <b>${esc(c.class_name)}</b>
              ${c.school_year?` <small>(${esc(c.school_year)})</small>`:""}
@@ -140,18 +166,111 @@ function renderAssignClasses(){
      </div>
    </div>
  `).join("");
+
+ updateAssignSelectedCount();
 }
 
-$("assignSubject").onchange=renderAssignClasses;
-$("assignSchool").onchange=renderAssignClasses;
+window.toggleAssignClass=function(el){
+ const sid=$("assignSubject").value;
+ const selected=getDraftSet(sid);
+ const id=String(el.value);
+
+ if(el.checked)selected.add(id);
+ else selected.delete(id);
+
+ updateAssignSelectedCount();
+};
+
+$("assignSubject").onchange=()=>{
+ renderAssignClasses();
+};
+
+$("assignSchool").onchange=()=>{
+ // Chỉ lọc giao diện. Không thay đổi assignmentDraft.
+ renderAssignClasses();
+};
 $("assignCancel").onclick=()=>$("assignModal").classList.remove("on");
 $("assignSave").onclick=async()=>{try{
- let subject_id=$("assignSubject").value;if(!subject_id)throw Error("Chưa chọn môn.");
- let class_ids=[...document.querySelectorAll("#assignClasses input:checked")].map(x=>x.value);
- let {error:d}=await window.supabaseClient.from("teacher_class_subjects").delete().eq("teacher_id",assignTeacherId).eq("subject_id",subject_id);if(d)throw d;
- if(class_ids.length){let rows=class_ids.map(class_id=>({teacher_id:assignTeacherId,subject_id,class_id}));let {error:i}=await window.supabaseClient.from("teacher_class_subjects").insert(rows);if(i)throw i}
- alert("Đã lưu phân công.");$("assignModal").classList.remove("on");
-}catch(e){alert("Lỗi lưu phân công: "+e.message)}};
+ const subject_id=$("assignSubject").value;
+ if(!subject_id)throw Error("Chưa chọn môn.");
+
+ // V3.7.17: luôn lấy TOÀN BỘ lựa chọn của môn này,
+ // không chỉ các checkbox đang nhìn thấy sau khi lọc trường.
+ const desired=getDraftSet(subject_id);
+ const current=new Set(
+   assignments
+     .filter(x=>String(x.subject_id)===String(subject_id))
+     .map(x=>String(x.class_id))
+ );
+
+ const toDelete=[...current].filter(id=>!desired.has(id));
+ const toInsert=[...desired].filter(id=>!current.has(id));
+
+ if(!confirm(
+   `Lưu phân công môn này?\n\n`+
+   `Tổng lớp sau khi lưu: ${desired.size}\n`+
+   `Thêm mới: ${toInsert.length}\n`+
+   `Bỏ phân công: ${toDelete.length}\n\n`+
+   `Lưu ý: bộ lọc Trường chỉ để xem, các lớp đã chọn ở trường khác vẫn được giữ.`
+ ))return;
+
+ const btn=$("assignSave");
+ btn.disabled=true;
+ const oldText=btn.textContent;
+ btn.textContent="Đang lưu...";
+
+ try{
+   if(toDelete.length){
+     const d=await window.supabaseClient
+       .from("teacher_class_subjects")
+       .delete()
+       .eq("teacher_id",assignTeacherId)
+       .eq("subject_id",subject_id)
+       .in("class_id",toDelete);
+
+     if(d.error)throw d.error;
+   }
+
+   if(toInsert.length){
+     const rows=toInsert.map(class_id=>({
+       teacher_id:assignTeacherId,
+       subject_id,
+       class_id
+     }));
+
+     const i=await window.supabaseClient
+       .from("teacher_class_subjects")
+       .insert(rows);
+
+     if(i.error)throw i.error;
+   }
+
+   // Cập nhật dữ liệu local để mở/lọc tiếp mà không mất trạng thái.
+   assignments=assignments.filter(x=>
+     !(String(x.teacher_id)===String(assignTeacherId) &&
+       String(x.subject_id)===String(subject_id))
+   );
+
+   for(const class_id of desired){
+     assignments.push({
+       teacher_id:assignTeacherId,
+       subject_id,
+       class_id
+     });
+   }
+
+   alert(`Đã lưu phân công. Giáo viên hiện phụ trách ${desired.size} lớp cho môn này.`);
+   $("assignModal").classList.remove("on");
+
+ }finally{
+   btn.disabled=false;
+   btn.textContent=oldText;
+ }
+
+}catch(e){
+ alert("Lỗi lưu phân công: "+e.message)
+}};
+
 $("search").oninput=render;$("role").onchange=render;$("reload").onclick=load;$("add").onclick=()=>{$("modal").classList.add("on")};$("cancel").onclick=()=>$("modal").classList.remove("on");
 $("save").onclick=async()=>{try{let subject_ids=[...document.querySelectorAll("#subjects input:checked")].map(x=>x.value);await api("POST",{action:"create-teacher",full_name:$("name").value.trim(),student_code:$("code").value.trim(),email:$("email").value.trim(),password:$("password").value,subject_ids});alert("Đã tạo giáo viên.");$("modal").classList.remove("on");await load()}catch(e){alert(e.message)}};
 async function resetPwd(id){let p=prompt("Nhập mật khẩu mới (ít nhất 6 ký tự):","123456");if(!p)return;try{await api("POST",{action:"reset-password",user_id:id,password:p});alert("Đã đổi mật khẩu.")}catch(e){alert(e.message)}}
