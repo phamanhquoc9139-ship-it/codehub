@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Learning Analytics V3.6.3 | CodeHub</title>
+<title>Learning Analytics V3.6.4 | CodeHub</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
@@ -21,12 +21,12 @@
     <div>
       <div class="flex gap-3 items-center">
         <h1 class="text-3xl font-black">📈 Phân tích học tập</h1>
-        <span class="px-2 py-1 rounded-full text-xs bg-violet-100 text-violet-700 font-black">V3.6.3</span>
+        <span class="px-2 py-1 rounded-full text-xs bg-violet-100 text-violet-700 font-black">V3.6.4</span>
       </div>
       <p class="text-slate-500 mt-1">Theo dõi mức độ hoàn thành, kết quả và báo cáo chính xác theo trường được chọn.</p>
     </div>
     <div class="flex gap-2">
-      <button id="pdfBtn" class="bg-violet-600 text-white px-4 py-2 rounded-xl font-bold">⬇ Báo cáo PDF</button>
+      <button id="pdfBtn" class="bg-violet-600 text-white px-4 py-2 rounded-xl font-bold">⬇ Báo cáo PDF có biểu đồ</button>
       <button id="excelBtn" class="bg-emerald-600 text-white px-4 py-2 rounded-xl font-bold">⬇ Xuất Excel</button>
       <a href="teacher.html" class="border bg-white px-4 py-2 rounded-xl font-bold">← Dashboard</a>
     </div>
@@ -574,19 +574,66 @@ $("pdfBtn").onclick=async()=>{
   b.disabled=true;b.textContent="⏳ Đang tạo PDF...";
 
   try{
-    const filename="CodeHub_Bao_cao_Phan_tich_hoc_tap_V3_6_1.pdf";
+    // Đợi browser hoàn tất render Chart.js trước khi chụp canvas
+    await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
+
+    // Chụp biểu đồ trên web thành ảnh PNG
+    const chartImages={};
+    for(const id of ["scoreChart","classChart","trendChart"]){
+      const c=$(id);
+      if(c && c.toDataURL){
+        try{
+          chartImages[id]=c.toDataURL("image/png",1.0);
+        }catch(e){
+          console.warn("Không chụp được biểu đồ",id,e);
+        }
+      }
+    }
+
+    // Clone phần báo cáo, sau đó thay canvas bằng ảnh chụp.
+    const cloned=$("pdfReport").cloneNode(true);
+    cloned.id="pdfReportClone";
+
+    for(const id of ["scoreChart","classChart","trendChart"]){
+      const canvas=cloned.querySelector("#"+id);
+      if(canvas && chartImages[id]){
+        const img=document.createElement("img");
+        img.src=chartImages[id];
+        img.alt=id;
+        img.style.width="100%";
+        img.style.maxWidth="100%";
+        img.style.height="auto";
+        img.style.display="block";
+        img.style.margin="0 auto";
+        img.style.objectFit="contain";
+        canvas.replaceWith(img);
+      }
+    }
+
+    // Tránh cắt các khối biểu đồ giữa hai trang PDF
+    cloned.querySelectorAll("section").forEach(x=>{
+      x.style.breakInside="avoid";
+      x.style.pageBreakInside="avoid";
+    });
+
+    const schools=[...new Set(rows.map(x=>x.school_name).filter(Boolean))];
+    const filename="CodeHub_Bao_cao_Phan_tich_hoc_tap_V3_6_4.pdf";
+
     const report=document.createElement("div");
     report.style.background="#fff";
     report.style.padding="18px";
+    report.style.fontFamily="Arial, sans-serif";
+
     report.innerHTML=`
       <div style="text-align:center;margin-bottom:20px">
         <div style="font-weight:800;font-size:20px">CODEHUB</div>
         <div style="font-weight:800;font-size:24px;margin-top:6px">BÁO CÁO PHÂN TÍCH HỌC TẬP</div>
-        <div style="margin-top:8px;font-weight:700">${esc([...new Set(rows.map(x=>x.school_name).filter(Boolean))].join(" • "))}</div>
+        <div style="margin-top:8px;font-weight:700">${esc(schools.join(" • "))}</div>
         <div style="margin-top:8px">${esc($("reportScope").textContent)}</div>
         <div style="font-size:12px;color:#64748b;margin-top:4px">${esc($("reportGenerated").textContent)}</div>
       </div>
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px">
+
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;page-break-inside:avoid">
         <div style="border:1px solid #ddd;padding:10px"><b>Lượt cần hoàn thành</b><div>${esc($("kpiTarget").textContent)}</div></div>
         <div style="border:1px solid #ddd;padding:10px"><b>Đã hoàn thành</b><div>${esc($("kpiDone").textContent)}</div></div>
         <div style="border:1px solid #ddd;padding:10px"><b>Tỷ lệ hoàn thành</b><div>${esc($("kpiRate").textContent)}</div></div>
@@ -594,18 +641,33 @@ $("pdfBtn").onclick=async()=>{
         <div style="border:1px solid #ddd;padding:10px"><b>Điểm cao nhất</b><div>${esc($("kpiMax").textContent)}</div></div>
         <div style="border:1px solid #ddd;padding:10px"><b>Cần hỗ trợ (&lt;5)</b><div>${esc($("kpiNeed").textContent)}</div></div>
       </div>
-      ${$("pdfReport").innerHTML}
     `;
 
+    report.appendChild(cloned);
     document.body.appendChild(report);
+
+    // Chờ ảnh PNG trong bản clone tải xong
+    const imgs=[...report.querySelectorAll("img")];
+    await Promise.all(imgs.map(img=>img.complete
+      ? Promise.resolve()
+      : new Promise(resolve=>{
+          img.onload=resolve;
+          img.onerror=resolve;
+        })
+    ));
 
     await html2pdf().set({
       margin:[8,8,8,8],
       filename,
       image:{type:"jpeg",quality:.98},
-      html2canvas:{scale:1.5,useCORS:true,backgroundColor:"#ffffff"},
+      html2canvas:{
+        scale:1.8,
+        useCORS:true,
+        backgroundColor:"#ffffff",
+        logging:false
+      },
       jsPDF:{unit:"mm",format:"a4",orientation:"portrait"},
-      pagebreak:{mode:["css","legacy"]}
+      pagebreak:{mode:["css","legacy"],avoid:["section",".avoid-break"]}
     }).from(report).save();
 
     report.remove();
