@@ -1,7 +1,197 @@
-<!doctype html><html lang="vi"><head><meta charset="utf-8"><title>Làm Quiz V3.7.0</title><script src="https://cdn.tailwindcss.com"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="scripts/supabase-config.js"></script></head><body class="bg-slate-50"><main class="max-w-4xl mx-auto p-5"><div class="sticky top-0 z-10 bg-white shadow rounded-2xl p-4 mb-5 flex justify-between"><div><h1 id="h" class="font-bold text-xl">Bài kiểm tra</h1><p id="info" class="text-sm text-slate-500"></p></div><div id="timer" class="text-2xl font-bold text-red-600">--:--</div></div><form id="form"><div id="list" class="space-y-4"></div><button id="submit" class="w-full mt-5 bg-emerald-600 text-white p-4 rounded-xl font-bold">Nộp bài</button></form></main><script>
-const s=window.supabaseClient,$=x=>document.getElementById(x),aid=new URLSearchParams(location.search).get("assignment");let me,asg,qs=[],started,tick;
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Làm Quiz V3.7.13 | CodeHub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="scripts/supabase-config.js"></script>
+</head>
+<body class="bg-slate-50">
+<main class="max-w-4xl mx-auto p-5">
+  <div class="sticky top-0 z-10 bg-white shadow rounded-2xl p-4 mb-5 flex justify-between gap-4">
+    <div>
+      <h1 id="h" class="font-bold text-xl">Bài kiểm tra</h1>
+      <p id="info" class="text-sm text-slate-500"></p>
+    </div>
+    <div class="flex items-center gap-3">
+      <div id="timer" class="text-2xl font-bold text-red-600">--:--</div>
+      <a href="student-quizzes-v4.html" class="border px-3 py-2 rounded-xl">Thoát</a>
+    </div>
+  </div>
+
+  <div id="error" class="hidden bg-red-50 text-red-700 p-4 rounded-xl mb-4"></div>
+
+  <form id="form">
+    <div id="list" class="space-y-4"></div>
+    <button id="submit" class="w-full mt-5 bg-emerald-600 text-white p-4 rounded-xl font-bold">Nộp bài</button>
+  </form>
+</main>
+
+<script>
+const s=window.supabaseClient,$=x=>document.getElementById(x);
+const aid=new URLSearchParams(location.search).get("assignment");
+let me,asg,qs=[],started,tick;
 const esc=v=>String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
-async function init(){me=(await s.auth.getUser()).data.user;if(!me)return location.href="login.html";let p=await s.from("profiles").select("role,class_id").eq("id",me.id).single();if(p.data?.role!=="student")return location.href="quizzes.html";let r=await s.from("quiz_assignments").select("*,quizzes(title)").eq("id",aid).single();if(r.error)return location.href="student-quizzes-v4.html";asg=r.data;if(!p.data.class_id||p.data.class_id!==asg.class_id){alert("Bài kiểm tra không thuộc lớp của em.");return location.href="student-quizzes-v4.html";}let now=Date.now();if(asg.open_at&&new Date(asg.open_at).getTime()>now)return alert("Bài chưa mở."),location.href="student-quizzes-v4.html";if(asg.close_at&&new Date(asg.close_at).getTime()<now)return alert("Bài đã hết hạn."),location.href="student-quizzes-v4.html";let old=await s.from("quiz_attempts").select("id").eq("assignment_id",aid).eq("student_id",me.id);if((old.data||[]).length>=asg.max_attempts)return alert("Đã hết lượt làm."),location.href="student-quizzes-v4.html";let q=await s.from("quiz_questions").select("id,question_text,option_a,option_b,option_c,option_d,question_order").eq("quiz_id",asg.quiz_id).order("question_order");qs=q.data||[];if(!qs.length)return alert("Đề chưa có câu hỏi.");h.textContent=asg.quizzes.title;info.textContent=`${qs.length} câu • ${asg.time_limit} phút`;list.innerHTML=qs.map((x,i)=>`<div class="bg-white shadow rounded-2xl p-5"><div class="font-bold mb-3">Câu ${i+1}. ${esc(x.question_text)}</div>${["A","B","C","D"].map(k=>`<label class="block border rounded-xl p-3 mb-2"><input type="radio" name="q_${x.id}" value="${k}"> <b>${k}.</b> ${esc(x["option_"+k.toLowerCase()])}</label>`).join("")}</div>`).join("");started=Date.now();runTimer()}
-function runTimer(){let end=started+asg.time_limit*60000;tick=setInterval(()=>{let d=Math.max(0,end-Date.now()),m=Math.floor(d/60000),ss=Math.floor((d%60000)/1000);timer.textContent=`${String(m).padStart(2,"0")}:${String(ss).padStart(2,"0")}`;if(!d){clearInterval(tick);submitQuiz(true)}},1000)}
-form.onsubmit=e=>{e.preventDefault();submitQuiz(false)};
-async function submitQuiz(auto){if(submit.disabled)return;if(!auto&&!confirm("Nộp bài ngay?"))return;submit.disabled=true;clearInterval(tick);let ans={};qs.forEach(q=>{let x=document.querySelector(`input[name="q_${q.id}"]:checked`);if(x)ans[q.id]=x.value});let keys=await s.from("quiz_questions").select("id,correct_answer").eq("quiz_id",asg.quiz_id);let correct=0;(keys.data||[]).forEach(q=>{if(ans[q.id]===q.correct_answer)correct++});let total=qs.length,score=Math.round(correct/total*1000)/100;let row={quiz_id:asg.quiz_id,assignment_id:aid,student_id:me.id,score,correct_count:correct,total_questions:total,started_at:new Date(started).toISOString(),submitted_at:new Date().toISOString(),answers:ans};let r=await s.from("quiz_attempts").insert(row);if(r.error){submit.disabled=false;return alert(r.error.message)}alert(asg.show_result?`Đã nộp. Điểm: ${score}/10 • Đúng ${correct}/${total}`:"Đã nộp bài.");location.href="student-quizzes-v4.html"}init();</script></body></html>
+
+function fail(msg,back=false){
+  $("error").classList.remove("hidden");
+  $("error").textContent=msg;
+  $("form").classList.add("hidden");
+  if(back) setTimeout(()=>location.href="student-quizzes-v4.html",1200);
+}
+
+async function init(){
+  try{
+    if(!aid){ fail("Thiếu mã bài kiểm tra.",true); return; }
+
+    me=(await s.auth.getUser()).data.user;
+    if(!me)return location.href="login.html";
+
+    const pr=await s.from("profiles")
+      .select("role,class_id")
+      .eq("id",me.id)
+      .single();
+
+    if(pr.error) throw new Error("Không đọc được hồ sơ: "+pr.error.message);
+    if(pr.data?.role!=="student"){ fail("Trang này chỉ dành cho học sinh."); return; }
+    if(!pr.data.class_id){ fail("Tài khoản chưa được gán lớp.",true); return; }
+
+    const ar=await s.from("quiz_assignments")
+      .select("id,quiz_id,class_id,open_at,close_at,time_limit,max_attempts,show_result")
+      .eq("id",aid)
+      .single();
+
+    if(ar.error||!ar.data){ fail("Không tìm thấy bài kiểm tra được giao.",true); return; }
+    asg=ar.data;
+
+    // Chặn mở URL bài của trường/lớp khác.
+    if(asg.class_id!==pr.data.class_id){
+      fail("Bài kiểm tra không thuộc lớp của em.",true);
+      return;
+    }
+
+    const qr=await s.from("quizzes")
+      .select("id,title,is_published")
+      .eq("id",asg.quiz_id)
+      .single();
+
+    if(qr.error||!qr.data){ fail("Không đọc được thông tin Quiz.",true); return; }
+
+    const now=Date.now();
+    if(asg.open_at && new Date(asg.open_at).getTime()>now){ fail("Bài chưa mở.",true); return; }
+    if(asg.close_at && new Date(asg.close_at).getTime()<now){ fail("Bài đã hết hạn.",true); return; }
+
+    const old=await s.from("quiz_attempts")
+      .select("id")
+      .eq("assignment_id",aid)
+      .eq("student_id",me.id);
+
+    if(old.error) throw new Error("Không đọc được số lượt làm: "+old.error.message);
+
+    const maxAttempts=Number(asg.max_attempts||1);
+    if((old.data||[]).length>=maxAttempts){ fail("Đã hết lượt làm.",true); return; }
+
+    const q=await s.from("quiz_questions")
+      .select("id,question_text,option_a,option_b,option_c,option_d,question_order")
+      .eq("quiz_id",asg.quiz_id)
+      .order("question_order");
+
+    if(q.error) throw new Error("Không tải được câu hỏi: "+q.error.message);
+
+    qs=q.data||[];
+    if(!qs.length){ fail("Đề chưa có câu hỏi hoặc học sinh chưa có quyền đọc câu hỏi."); return; }
+
+    $("h").textContent=qr.data.title||"Bài kiểm tra";
+    const minutes=Number(asg.time_limit||15);
+    asg.time_limit=minutes;
+    $("info").textContent=`${qs.length} câu • ${minutes} phút • Lượt ${(old.data||[]).length+1}/${maxAttempts}`;
+
+    $("list").innerHTML=qs.map((x,i)=>`
+      <div class="bg-white shadow rounded-2xl p-5">
+        <div class="font-bold mb-3">Câu ${i+1}. ${esc(x.question_text)}</div>
+        ${["A","B","C","D"].map(k=>`
+          <label class="block border rounded-xl p-3 mb-2 cursor-pointer hover:bg-blue-50">
+            <input type="radio" name="q_${x.id}" value="${k}">
+            <b>${k}.</b> ${esc(x["option_"+k.toLowerCase()])}
+          </label>`).join("")}
+      </div>`).join("");
+
+    started=Date.now();
+    runTimer();
+
+  }catch(e){
+    console.error("CodeHub V3.7.13 student quiz:",e);
+    fail(e?.message||String(e));
+  }
+}
+
+function runTimer(){
+  const end=started+asg.time_limit*60000;
+  tick=setInterval(()=>{
+    const d=Math.max(0,end-Date.now());
+    const m=Math.floor(d/60000),ss=Math.floor((d%60000)/1000);
+    $("timer").textContent=`${String(m).padStart(2,"0")}:${String(ss).padStart(2,"0")}`;
+    if(!d){clearInterval(tick);submitQuiz(true)}
+  },1000);
+}
+
+$("form").onsubmit=e=>{e.preventDefault();submitQuiz(false)};
+
+async function submitQuiz(auto){
+  if($("submit").disabled)return;
+  if(!auto&&!confirm("Nộp bài ngay?"))return;
+
+  $("submit").disabled=true;
+  clearInterval(tick);
+
+  try{
+    const ans={};
+    qs.forEach(q=>{
+      const x=document.querySelector(`input[name="q_${q.id}"]:checked`);
+      if(x)ans[q.id]=x.value;
+    });
+
+    const keys=await s.from("quiz_questions")
+      .select("id,correct_answer")
+      .eq("quiz_id",asg.quiz_id);
+
+    if(keys.error)throw keys.error;
+
+    let correct=0;
+    (keys.data||[]).forEach(q=>{if(ans[q.id]===q.correct_answer)correct++});
+
+    const total=qs.length;
+    const score=Math.round((correct/total)*1000)/100;
+
+    const row={
+      quiz_id:asg.quiz_id,
+      assignment_id:aid,
+      student_id:me.id,
+      score,
+      correct_count:correct,
+      total_questions:total,
+      started_at:new Date(started).toISOString(),
+      submitted_at:new Date().toISOString(),
+      answers:ans
+    };
+
+    const r=await s.from("quiz_attempts").insert(row);
+    if(r.error)throw r.error;
+
+    alert(asg.show_result?`Đã nộp. Điểm: ${score}/10`:"Đã nộp bài.");
+    location.href=asg.show_result
+      ? `student-quiz-result-v4-2.html?assignment=${encodeURIComponent(aid)}`
+      : "student-quizzes-v4.html";
+
+  }catch(e){
+    $("submit").disabled=false;
+    alert("Không nộp được bài: "+(e?.message||String(e)));
+  }
+}
+
+init();
+</script>
+</body>
+</html>
