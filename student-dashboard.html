@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Học sinh V3.7.11 | CodeHub</title>
+<title>Học sinh V3.7.12 | CodeHub</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="scripts/supabase-config.js"></script>
 <style>
@@ -19,7 +19,7 @@ main{max-width:1180px;margin:28px auto;padding:0 20px}h1{font-size:36px;margin:0
 </head>
 <body>
 <header>
-  <div><div class="logo">&lt;/&gt; CodeHub <span style="font-size:13px;color:#2563eb">V3.7.11</span></div><div id="who" style="font-size:13px;color:#64748b;margin-top:4px"></div></div>
+  <div><div class="logo">&lt;/&gt; CodeHub <span style="font-size:13px;color:#2563eb">V3.7.12</span></div><div id="who" style="font-size:13px;color:#64748b;margin-top:4px"></div></div>
   <div style="display:flex;gap:8px;flex-wrap:wrap">
     <a href="student-quizzes-v4.html" class="btn soft">Bài kiểm tra</a>
     <button class="btn dark" onclick="logout()">Đăng xuất</button>
@@ -61,7 +61,7 @@ main{max-width:1180px;margin:28px auto;padding:0 20px}h1{font-size:36px;margin:0
 
 <script>
 const s=window.supabaseClient,$=id=>document.getElementById(id);
-let user,profile,classIds=[],courseIds=[],schoolName="—";
+let user,profile,classIds=[],courseIds=[],schoolName="—",className="—",schoolYear="";
 const esc=v=>String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
 const fmt=v=>v?new Date(v).toLocaleString("vi-VN"):"—";
 
@@ -78,14 +78,33 @@ async function init(){
       throw new Error("Tài khoản chưa được gán class_id. Vui lòng liên hệ giáo viên.");
     }
 
-    if(profile.school_id){
-      const sr=await s.from("schools").select("school_name").eq("id",profile.school_id).maybeSingle();
-      if(!sr.error&&sr.data?.school_name)schoolName=sr.data.school_name;
+    // V3.7.12: lấy Trường/Lớp từ chính class_id, không phụ thuộc profile.school_id.
+    const cr=await s.from("classes")
+      .select("id,class_name,school_id,school_year")
+      .eq("id",profile.class_id)
+      .maybeSingle();
+
+    if(!cr.error&&cr.data){
+      className=cr.data.class_name||profile.class_name||"—";
+      schoolYear=cr.data.school_year||"";
+
+      if(cr.data.school_id){
+        const sr=await s.from("schools")
+          .select("school_name")
+          .eq("id",cr.data.school_id)
+          .maybeSingle();
+
+        if(!sr.error&&sr.data?.school_name){
+          schoolName=sr.data.school_name;
+        }
+      }
+    }else{
+      className=profile.class_name||"—";
     }
 
     $("hello").textContent="🎓 Xin chào, "+(profile.full_name||"Học sinh");
-    $("who").textContent=(profile.student_code||"")+" • "+schoolName+" • "+(profile.class_name||"");
-    $("info").textContent=schoolName+" • Lớp "+(profile.class_name||"—")+" • Theo dõi khóa học, bài kiểm tra và kết quả";
+    $("who").textContent=(profile.student_code||"")+" • "+schoolName+" • "+className;
+    $("info").textContent=schoolName+" • Lớp "+className+(schoolYear?" • "+schoolYear:"")+" • Theo dõi khóa học, bài kiểm tra và kết quả";
 
     await loadClassAndCourses();
     await loadAssignmentsAndResults();
@@ -96,7 +115,7 @@ async function init(){
 }
 
 async function loadClassAndCourses(){
-  // V3.7.11: chỉ dùng đúng class_id của học sinh.
+  // V3.7.12: chỉ dùng đúng class_id của học sinh.
   classIds=[profile.class_id];
 
   const r=await s.from("course_classes").select("course_id").eq("class_id",profile.class_id);
