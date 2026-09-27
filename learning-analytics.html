@@ -3,10 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Learning Analytics V3.6.0 | CodeHub</title>
+<title>Learning Analytics V3.6.1 | CodeHub</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
 <script src="scripts/supabase-config.js"></script>
 <style>
   .bar{height:12px;border-radius:999px;background:#e2e8f0;overflow:hidden}
@@ -19,11 +21,12 @@
     <div>
       <div class="flex gap-3 items-center">
         <h1 class="text-3xl font-black">📈 Phân tích học tập</h1>
-        <span class="px-2 py-1 rounded-full text-xs bg-violet-100 text-violet-700 font-black">V3.6.0</span>
+        <span class="px-2 py-1 rounded-full text-xs bg-violet-100 text-violet-700 font-black">V3.6.1</span>
       </div>
       <p class="text-slate-500 mt-1">Theo dõi mức độ hoàn thành, kết quả, phân bố điểm và học sinh cần hỗ trợ.</p>
     </div>
     <div class="flex gap-2">
+      <button id="pdfBtn" class="bg-violet-600 text-white px-4 py-2 rounded-xl font-bold">⬇ Báo cáo PDF</button>
       <button id="excelBtn" class="bg-emerald-600 text-white px-4 py-2 rounded-xl font-bold">⬇ Xuất Excel</button>
       <a href="teacher.html" class="border bg-white px-4 py-2 rounded-xl font-bold">← Dashboard</a>
     </div>
@@ -64,15 +67,35 @@
     <div class="bg-white rounded-2xl shadow p-4"><div class="text-slate-500 text-sm">Cần hỗ trợ (&lt;5)</div><div id="kpiNeed" class="text-3xl font-black text-red-600">0</div></div>
   </section>
 
-  <div class="grid lg:grid-cols-2 gap-5 mb-5">
-    <section class="bg-white rounded-2xl shadow p-5">
-      <h2 class="text-xl font-black mb-4">🎯 Phân bố điểm</h2>
-      <div id="distribution" class="space-y-4"></div>
+  <div id="pdfReport">
+    <section class="bg-white rounded-2xl shadow p-5 mb-5">
+      <div class="flex flex-wrap justify-between gap-3">
+        <div>
+          <h2 class="text-xl font-black">📌 Tóm tắt báo cáo</h2>
+          <p id="reportScope" class="text-slate-500 text-sm mt-1">Toàn bộ dữ liệu hiện có</p>
+        </div>
+        <div id="reportGenerated" class="text-sm text-slate-500"></div>
+      </div>
     </section>
 
-    <section class="bg-white rounded-2xl shadow p-5">
-      <h2 class="text-xl font-black mb-4">🏫 So sánh theo lớp</h2>
-      <div id="classCompare" class="space-y-4"></div>
+    <div class="grid lg:grid-cols-2 gap-5 mb-5">
+      <section class="bg-white rounded-2xl shadow p-5">
+        <h2 class="text-xl font-black mb-4">🎯 Phân bố điểm</h2>
+        <div class="h-72"><canvas id="scoreChart"></canvas></div>
+        <div id="distribution" class="space-y-3 mt-5"></div>
+      </section>
+
+      <section class="bg-white rounded-2xl shadow p-5">
+        <h2 class="text-xl font-black mb-4">🏫 So sánh theo lớp</h2>
+        <div class="h-72"><canvas id="classChart"></canvas></div>
+        <div id="classCompare" class="space-y-3 mt-5"></div>
+      </section>
+    </div>
+
+    <section class="bg-white rounded-2xl shadow p-5 mb-5">
+      <h2 class="text-xl font-black mb-1">📉 Tiến bộ qua các bài kiểm tra</h2>
+      <p class="text-sm text-slate-500 mb-4">Điểm trung bình theo thời điểm mở bài kiểm tra.</p>
+      <div class="h-80"><canvas id="trendChart"></canvas></div>
     </section>
   </div>
 
@@ -121,6 +144,7 @@
 const s=window.supabaseClient;
 const $=x=>document.getElementById(x);
 let me, role, allRows=[], rows=[];
+let scoreChart=null,classChart=null,trendChart=null;
 
 const esc=v=>String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
 const fmt=v=>v?new Date(v).toLocaleString("vi-VN"):"—";
@@ -201,8 +225,10 @@ function render(){
   renderKpis();
   renderDistribution();
   renderClassCompare();
+  renderTrend();
   renderStudentLists();
   renderDetail();
+  renderReportMeta();
 }
 
 function completedRows(){
@@ -232,14 +258,30 @@ function renderDistribution(){
     {name:"<5",min:-Infinity,max:5}
   ];
 
-  $("distribution").innerHTML=bands.map(b=>{
-    const c=scores.filter(v=>v>=b.min && (b.last?v<=b.max:v<b.max)).length;
+  const counts=bands.map(b=>scores.filter(v=>v>=b.min && (b.last?v<=b.max:v<b.max)).length);
+
+  $("distribution").innerHTML=bands.map((b,i)=>{
+    const c=counts[i];
     const p=scores.length?c/scores.length*100:0;
     return `<div>
       <div class="flex justify-between text-sm mb-1"><b>${b.name}</b><span>${c} lượt (${p.toFixed(1)}%)</span></div>
       <div class="bar"><i style="width:${p}%"></i></div>
     </div>`;
   }).join("") || '<p class="text-slate-500">Chưa có dữ liệu.</p>';
+
+  if(scoreChart)scoreChart.destroy();
+  scoreChart=new Chart($("scoreChart"),{
+    type:"doughnut",
+    data:{
+      labels:bands.map(x=>x.name),
+      datasets:[{data:counts}]
+    },
+    options:{
+      responsive:true,
+      maintainAspectRatio:false,
+      plugins:{legend:{position:"bottom"}}
+    }
+  });
 }
 
 function renderClassCompare(){
@@ -263,6 +305,97 @@ function renderClassCompare(){
       <div class="bar mt-2"><i style="width:${rate}%"></i></div>
     </div>`;
   }).join("") || '<p class="text-slate-500">Chưa có dữ liệu.</p>';
+
+  const labels=arr.map(o=>o.name);
+  const avgs=arr.map(o=>o.scores.length?+(o.scores.reduce((a,b)=>a+b,0)/o.scores.length).toFixed(2):0);
+  const rates=arr.map(o=>o.total?+(o.done/o.total*100).toFixed(1):0);
+
+  if(classChart)classChart.destroy();
+  classChart=new Chart($("classChart"),{
+    type:"bar",
+    data:{
+      labels,
+      datasets:[
+        {label:"Điểm TB",data:avgs,yAxisID:"y"},
+        {label:"Hoàn thành %",data:rates,yAxisID:"y1"}
+      ]
+    },
+    options:{
+      responsive:true,
+      maintainAspectRatio:false,
+      scales:{
+        y:{beginAtZero:true,max:10,title:{display:true,text:"Điểm"}},
+        y1:{beginAtZero:true,max:100,position:"right",grid:{drawOnChartArea:false},title:{display:true,text:"%"}}
+      }
+    }
+  });
+}
+
+
+function renderTrend(){
+  const mp=new Map();
+
+  for(const x of rows){
+    if(!x.completed || x.score===null || x.score===undefined)continue;
+
+    const key=x.quiz_id;
+    if(!mp.has(key)){
+      mp.set(key,{
+        title:x.quiz_title,
+        date:x.open_at||x.submitted_at,
+        scores:[]
+      });
+    }
+    mp.get(key).scores.push(num(x.score));
+  }
+
+  const arr=[...mp.values()]
+    .map(o=>({
+      ...o,
+      avg:o.scores.length?o.scores.reduce((a,b)=>a+b,0)/o.scores.length:0
+    }))
+    .sort((a,b)=>new Date(a.date||0)-new Date(b.date||0));
+
+  if(trendChart)trendChart.destroy();
+  trendChart=new Chart($("trendChart"),{
+    type:"line",
+    data:{
+      labels:arr.map(o=>{
+        const d=o.date?new Date(o.date).toLocaleDateString("vi-VN"):"";
+        return `${d} • ${o.title}`;
+      }),
+      datasets:[{
+        label:"Điểm trung bình",
+        data:arr.map(o=>+o.avg.toFixed(2)),
+        tension:.25,
+        fill:false
+      }]
+    },
+    options:{
+      responsive:true,
+      maintainAspectRatio:false,
+      scales:{y:{beginAtZero:true,max:10}},
+      plugins:{legend:{position:"bottom"}}
+    }
+  });
+}
+
+function renderReportMeta(){
+  const parts=[];
+  if($("subjectFilter").value)parts.push("Môn: "+$("subjectFilter").value);
+  if($("classFilter").value){
+    const opt=$("classFilter").selectedOptions[0];
+    parts.push("Lớp: "+(opt?.textContent||""));
+  }
+  if($("quizFilter").value){
+    const opt=$("quizFilter").selectedOptions[0];
+    parts.push("Bài kiểm tra: "+(opt?.textContent||""));
+  }
+  if($("fromDate").value)parts.push("Từ: "+new Date($("fromDate").value+"T00:00:00").toLocaleDateString("vi-VN"));
+  if($("toDate").value)parts.push("Đến: "+new Date($("toDate").value+"T00:00:00").toLocaleDateString("vi-VN"));
+
+  $("reportScope").textContent=parts.length?parts.join(" • "):"Toàn bộ dữ liệu trong phạm vi tài khoản";
+  $("reportGenerated").textContent="Cập nhật: "+new Date().toLocaleString("vi-VN");
 }
 
 function aggregateStudents(){
@@ -349,6 +482,56 @@ $("resetBtn").onclick=()=>{
   applyFilters();
 };
 $("searchBox").oninput=renderDetail;
+
+
+$("pdfBtn").onclick=async()=>{
+  if(!rows.length)return alert("Không có dữ liệu để xuất PDF.");
+
+  const b=$("pdfBtn"),old=b.textContent;
+  b.disabled=true;b.textContent="⏳ Đang tạo PDF...";
+
+  try{
+    const filename="CodeHub_Bao_cao_Phan_tich_hoc_tap_V3_6_1.pdf";
+    const report=document.createElement("div");
+    report.style.background="#fff";
+    report.style.padding="18px";
+    report.innerHTML=`
+      <div style="text-align:center;margin-bottom:20px">
+        <div style="font-weight:800;font-size:20px">CODEHUB</div>
+        <div style="font-weight:800;font-size:24px;margin-top:6px">BÁO CÁO PHÂN TÍCH HỌC TẬP</div>
+        <div style="margin-top:8px">${esc($("reportScope").textContent)}</div>
+        <div style="font-size:12px;color:#64748b;margin-top:4px">${esc($("reportGenerated").textContent)}</div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px">
+        <div style="border:1px solid #ddd;padding:10px"><b>Lượt cần hoàn thành</b><div>${esc($("kpiTarget").textContent)}</div></div>
+        <div style="border:1px solid #ddd;padding:10px"><b>Đã hoàn thành</b><div>${esc($("kpiDone").textContent)}</div></div>
+        <div style="border:1px solid #ddd;padding:10px"><b>Tỷ lệ hoàn thành</b><div>${esc($("kpiRate").textContent)}</div></div>
+        <div style="border:1px solid #ddd;padding:10px"><b>Điểm trung bình</b><div>${esc($("kpiAvg").textContent)}</div></div>
+        <div style="border:1px solid #ddd;padding:10px"><b>Điểm cao nhất</b><div>${esc($("kpiMax").textContent)}</div></div>
+        <div style="border:1px solid #ddd;padding:10px"><b>Cần hỗ trợ (&lt;5)</b><div>${esc($("kpiNeed").textContent)}</div></div>
+      </div>
+      ${$("pdfReport").innerHTML}
+    `;
+
+    document.body.appendChild(report);
+
+    await html2pdf().set({
+      margin:[8,8,8,8],
+      filename,
+      image:{type:"jpeg",quality:.98},
+      html2canvas:{scale:1.5,useCORS:true,backgroundColor:"#ffffff"},
+      jsPDF:{unit:"mm",format:"a4",orientation:"portrait"},
+      pagebreak:{mode:["css","legacy"]}
+    }).from(report).save();
+
+    report.remove();
+  }catch(e){
+    console.error(e);
+    alert("Không tạo được PDF: "+(e?.message||e));
+  }finally{
+    b.disabled=false;b.textContent=old;
+  }
+};
 
 $("excelBtn").onclick=()=>{
   if(!rows.length)return alert("Không có dữ liệu để xuất.");
