@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Bài kiểm tra V3.7.13 | CodeHub</title>
+  <title>Bài kiểm tra V3.7.15 | CodeHub</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="scripts/supabase-config.js"></script>
@@ -12,7 +12,7 @@
 <main class="max-w-5xl mx-auto p-6">
   <div class="flex flex-col md:flex-row md:justify-between gap-4 mb-5">
     <div>
-      <h1 class="text-3xl font-bold">📝 Bài kiểm tra của em <span class="text-base text-blue-600">V3.7.13</span></h1>
+      <h1 class="text-3xl font-bold">📝 Bài kiểm tra của em <span class="text-base text-blue-600">V3.7.15</span></h1>
       <p id="who" class="text-slate-500 mt-1">Đang tải...</p>
     </div>
     <a href="student-dashboard.html" class="border px-4 py-2 rounded-xl h-fit bg-white">← Trang học sinh</a>
@@ -65,22 +65,14 @@ async function init(){
     }
 
     let schoolName="—", className=p.class_name||"—", schoolYear="";
-    const cr=await s.from("classes")
-      .select("id,class_name,school_id,school_year")
-      .eq("id",p.class_id)
-      .maybeSingle();
+    const org=await s.rpc("codehub_v3715_my_org");
+    if(org.error) throw new Error("Không đọc được thông tin Trường/Lớp: "+org.error.message);
 
-    if(cr.error) throw new Error("Không đọc được lớp học: "+cr.error.message);
-    if(cr.data){
-      className=cr.data.class_name||className;
-      schoolYear=cr.data.school_year||"";
-      if(cr.data.school_id){
-        const sr=await s.from("schools")
-          .select("school_name")
-          .eq("id",cr.data.school_id)
-          .maybeSingle();
-        if(!sr.error && sr.data?.school_name) schoolName=sr.data.school_name;
-      }
+    const o=(org.data||[])[0];
+    if(o){
+      schoolName=o.school_name||"—";
+      className=o.class_name||className;
+      schoolYear=o.school_year||"";
     }
 
     $("who").textContent=
@@ -164,7 +156,7 @@ async function init(){
     }).join("");
 
   }catch(e){
-    console.error("CodeHub V3.7.13 student quizzes:",e);
+    console.error("CodeHub V3.7.15 student quizzes:",e);
     message(e?.message||String(e),"error");
     $("list").innerHTML="";
   }
