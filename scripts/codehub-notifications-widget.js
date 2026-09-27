@@ -1,4 +1,4 @@
-// CodeHub V3.5 notification center widget
+// CodeHub V3.7.11 notification center widget (class_id isolation)
 (async()=>{
   try{
     const s=window.supabaseClient;if(!s)return;
