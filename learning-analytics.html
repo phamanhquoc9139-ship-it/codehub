@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Learning Analytics V3.7.0 | CodeHub</title>
+<title>Learning Analytics V3.7.7 | CodeHub</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
@@ -21,9 +21,9 @@
     <div>
       <div class="flex gap-3 items-center">
         <h1 class="text-3xl font-black">📈 Phân tích học tập</h1>
-        <span class="px-2 py-1 rounded-full text-xs bg-violet-100 text-violet-700 font-black">V3.7.0</span>
+        <span class="px-2 py-1 rounded-full text-xs bg-violet-100 text-violet-700 font-black">V3.7.7</span>
       </div>
-      <p class="text-slate-500 mt-1">Theo dõi mức độ hoàn thành, kết quả và báo cáo chính xác theo trường được chọn.</p>
+      <p class="text-slate-500 mt-1">Danh sách trường lấy trực tiếp từ Quản lý trường; dữ liệu phân tích vẫn lấy theo đúng class_id.</p>
     </div>
     <div class="flex gap-2">
       <button id="pdfBtn" class="bg-violet-600 text-white px-4 py-2 rounded-xl font-bold">⬇ Báo cáo PDF chuyên nghiệp</button>
@@ -153,7 +153,7 @@
 <script>
 const s=window.supabaseClient;
 const $=x=>document.getElementById(x);
-let me, role, allRows=[], rows=[];
+let me, role, allRows=[], rows=[], schoolCatalog=[], classCatalog=[];
 let scoreChart=null,classChart=null,trendChart=null;
 
 const esc=v=>String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
@@ -186,40 +186,75 @@ async function init(){
 }
 
 async function loadAll(){
-  const r=await s.rpc("codehub_v370_learning_rows",{
-    p_school:null,
-    p_class:null,
-    p_subject:null,
-    p_quiz:null,
-    p_from:null,
-    p_to:null
-  });
+  const [r,sc,cc]=await Promise.all([
+    s.rpc("codehub_v370_learning_rows",{
+      p_school:null,
+      p_class:null,
+      p_subject:null,
+      p_quiz:null,
+      p_from:null,
+      p_to:null
+    }),
+    s.rpc("codehub_v376_schools_for_user"),
+    s.rpc("codehub_v370_classes_for_user")
+  ]);
+
   if(r.error)throw r.error;
+  if(sc.error)throw sc.error;
+  if(cc.error)throw cc.error;
 
   allRows=r.data||[];
+  schoolCatalog=sc.data||[];
+  classCatalog=cc.data||[];
+
   buildFilters();
   applyFilters();
 }
 
 function buildFilters(){
-  const schools=[...new Set(allRows.map(x=>x.school_name).filter(Boolean))]
-    .sort((a,b)=>String(a).localeCompare(String(b),"vi"));
+  // Trường lấy từ DANH MỤC TRƯỜNG, không lấy từ dữ liệu Quiz.
+  // Vì vậy trường mới tạo vẫn xuất hiện dù chưa có bài kiểm tra.
+  const schools=[...schoolCatalog]
+    .sort((a,b)=>String(a.school_name||"").localeCompare(String(b.school_name||""),"vi"));
+
   $("schoolFilter").innerHTML='<option value="__ALL__">Tất cả trường</option>'+
-    schools.map(name=>`<option value="${esc(name)}">${esc(name)}</option>`).join("");
+    schools.map(x=>`<option value="${x.id}">${esc(x.school_name)}</option>`).join("");
 
-  const subjects=[...new Set(allRows.map(x=>x.subject_name).filter(Boolean))].sort((a,b)=>a.localeCompare(b,"vi"));
-  $("subjectFilter").innerHTML='<option value="">Tất cả môn</option>'+subjects.map(x=>`<option>${esc(x)}</option>`).join("");
+  const subjects=[...new Set(allRows.map(x=>x.subject_name).filter(Boolean))]
+    .sort((a,b)=>a.localeCompare(b,"vi"));
+  $("subjectFilter").innerHTML='<option value="">Tất cả môn</option>'+
+    subjects.map(x=>`<option>${esc(x)}</option>`).join("");
 
-  const classes=uniq(allRows.filter(x=>x.class_id), "class_id").sort((a,b)=>String(a.class_name).localeCompare(String(b.class_name),"vi"));
-  $("classFilter").innerHTML='<option value="">Tất cả lớp</option>'+classes.map(x=>`<option value="${x.class_id}">${esc(x.class_name)}</option>`).join("");
+  buildClassFilter();
 
-  const quizzes=uniq(allRows.filter(x=>x.quiz_id), "quiz_id").sort((a,b)=>String(a.quiz_title).localeCompare(String(b.quiz_title),"vi"));
-  $("quizFilter").innerHTML='<option value="">Tất cả bài kiểm tra</option>'+quizzes.map(x=>`<option value="${x.quiz_id}">${esc(x.quiz_title)}</option>`).join("");
+  const quizzes=uniq(allRows.filter(x=>x.quiz_id),"quiz_id")
+    .sort((a,b)=>String(a.quiz_title).localeCompare(String(b.quiz_title),"vi"));
+  $("quizFilter").innerHTML='<option value="">Tất cả bài kiểm tra</option>'+
+    quizzes.map(x=>`<option value="${x.quiz_id}">${esc(x.quiz_title)}</option>`).join("");
+
   $("schoolFilter").value="__ALL__";
 }
 
+function buildClassFilter(){
+  const selectedSchool=$("schoolFilter").value;
+  const old=$("classFilter").value;
+
+  const list=classCatalog
+    .filter(x=>selectedSchool==="__ALL__" || !selectedSchool || x.school_id===selectedSchool)
+    .sort((a,b)=>{
+      const s=String(a.school_name||"").localeCompare(String(b.school_name||""),"vi");
+      return s || String(a.class_name||"").localeCompare(String(b.class_name||""),"vi");
+    });
+
+  $("classFilter").innerHTML='<option value="">Tất cả lớp</option>'+
+    list.map(x=>`<option value="${x.id}">${esc(x.school_name)} • ${esc(x.class_name)}${x.school_year?` • ${esc(x.school_year)}`:""}</option>`).join("");
+
+  if([...$("classFilter").options].some(o=>o.value===old)){
+    $("classFilter").value=old;
+  }
+}
 function applyFilters(){
-  const schoolName=$("schoolFilter").value;
+  const schoolId=$("schoolFilter").value;
   const subject=$("subjectFilter").value;
   const classId=$("classFilter").value;
   const quizId=$("quizFilter").value;
@@ -227,7 +262,7 @@ function applyFilters(){
   const t=$("toDate").value ? new Date($("toDate").value+"T23:59:59") : null;
 
   rows=allRows.filter(x=>{
-    if(schoolName && schoolName!=="__ALL__" && String(x.school_name||"")!==schoolName)return false;
+    if(schoolId && schoolId!=="__ALL__" && String(x.school_id||"")!==schoolId)return false;
     if(subject && x.subject_name!==subject)return false;
     if(classId && x.class_id!==classId)return false;
     if(quizId && x.quiz_id!==quizId)return false;
@@ -456,7 +491,8 @@ function renderReportMeta(){
   const schools=[...new Set(rows.map(x=>x.school_name).filter(Boolean))].sort((a,b)=>a.localeCompare(b,"vi"));
 
   if($("schoolFilter").value && $("schoolFilter").value!=="__ALL__"){
-    parts.push("Trường: "+$("schoolFilter").value);
+    const opt=$("schoolFilter").selectedOptions[0];
+    parts.push("Trường: "+(opt?.textContent||""));
   }else if(schools.length===1){
     parts.push("Trường: "+schools[0]);
   }else if(schools.length>1){
@@ -565,9 +601,11 @@ function renderDetail(){
   </tr>`).join("") || '<tr><td colspan="10" class="p-8 text-center text-slate-500">Không có dữ liệu phù hợp.</td></tr>';
 }
 
+$("schoolFilter").onchange=()=>{ buildClassFilter(); applyFilters(); };
 $("applyBtn").onclick=applyFilters;
 $("resetBtn").onclick=()=>{
   $("schoolFilter").value="__ALL__";
+  buildClassFilter();
   $("subjectFilter").value="";
   $("classFilter").value="";
   $("quizFilter").value="";
