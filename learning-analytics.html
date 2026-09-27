@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Learning Analytics V3.6.2 | CodeHub</title>
+<title>Learning Analytics V3.6.3 | CodeHub</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
@@ -21,9 +21,9 @@
     <div>
       <div class="flex gap-3 items-center">
         <h1 class="text-3xl font-black">📈 Phân tích học tập</h1>
-        <span class="px-2 py-1 rounded-full text-xs bg-violet-100 text-violet-700 font-black">V3.6.2</span>
+        <span class="px-2 py-1 rounded-full text-xs bg-violet-100 text-violet-700 font-black">V3.6.3</span>
       </div>
-      <p class="text-slate-500 mt-1">Theo dõi mức độ hoàn thành, kết quả, phân bố điểm và học sinh cần hỗ trợ.</p>
+      <p class="text-slate-500 mt-1">Theo dõi mức độ hoàn thành, kết quả và báo cáo chính xác theo trường được chọn.</p>
     </div>
     <div class="flex gap-2">
       <button id="pdfBtn" class="bg-violet-600 text-white px-4 py-2 rounded-xl font-bold">⬇ Báo cáo PDF</button>
@@ -202,10 +202,10 @@ async function loadAll(){
 }
 
 function buildFilters(){
-  const schools=uniq(allRows.filter(x=>x.school_name),"school_name")
-    .sort((a,b)=>String(a.school_name).localeCompare(String(b.school_name),"vi"));
-  $("schoolFilter").innerHTML='<option value="">Tất cả trường</option>'+
-    schools.map(x=>`<option value="${x.school_id||""}">${esc(x.school_name)}</option>`).join("");
+  const schools=[...new Set(allRows.map(x=>x.school_name).filter(Boolean))]
+    .sort((a,b)=>String(a).localeCompare(String(b),"vi"));
+  $("schoolFilter").innerHTML='<option value="__ALL__">Tất cả trường</option>'+
+    schools.map(name=>`<option value="${esc(name)}">${esc(name)}</option>`).join("");
 
   const subjects=[...new Set(allRows.map(x=>x.subject_name).filter(Boolean))].sort((a,b)=>a.localeCompare(b,"vi"));
   $("subjectFilter").innerHTML='<option value="">Tất cả môn</option>'+subjects.map(x=>`<option>${esc(x)}</option>`).join("");
@@ -215,10 +215,11 @@ function buildFilters(){
 
   const quizzes=uniq(allRows.filter(x=>x.quiz_id), "quiz_id").sort((a,b)=>String(a.quiz_title).localeCompare(String(b.quiz_title),"vi"));
   $("quizFilter").innerHTML='<option value="">Tất cả bài kiểm tra</option>'+quizzes.map(x=>`<option value="${x.quiz_id}">${esc(x.quiz_title)}</option>`).join("");
+  $("schoolFilter").value="__ALL__";
 }
 
 function applyFilters(){
-  const schoolId=$("schoolFilter").value;
+  const schoolName=$("schoolFilter").value;
   const subject=$("subjectFilter").value;
   const classId=$("classFilter").value;
   const quizId=$("quizFilter").value;
@@ -226,7 +227,7 @@ function applyFilters(){
   const t=$("toDate").value ? new Date($("toDate").value+"T23:59:59") : null;
 
   rows=allRows.filter(x=>{
-    if(schoolId && String(x.school_id||"")!==schoolId)return false;
+    if(schoolName && schoolName!=="__ALL__" && String(x.school_name||"")!==schoolName)return false;
     if(subject && x.subject_name!==subject)return false;
     if(classId && x.class_id!==classId)return false;
     if(quizId && x.quiz_id!==quizId)return false;
@@ -454,13 +455,12 @@ function renderReportMeta(){
   const parts=[];
   const schools=[...new Set(rows.map(x=>x.school_name).filter(Boolean))].sort((a,b)=>a.localeCompare(b,"vi"));
 
-  if($("schoolFilter").value){
-    const opt=$("schoolFilter").selectedOptions[0];
-    parts.push("Trường: "+(opt?.textContent||""));
+  if($("schoolFilter").value && $("schoolFilter").value!=="__ALL__"){
+    parts.push("Trường: "+$("schoolFilter").value);
   }else if(schools.length===1){
     parts.push("Trường: "+schools[0]);
   }else if(schools.length>1){
-    parts.push("Các trường: "+schools.join(" | "));
+    parts.push("Tất cả trường: "+schools.join(" | "));
   }
 
   if($("subjectFilter").value)parts.push("Môn: "+$("subjectFilter").value);
@@ -556,7 +556,7 @@ function renderDetail(){
 
 $("applyBtn").onclick=applyFilters;
 $("resetBtn").onclick=()=>{
-  $("schoolFilter").value="";
+  $("schoolFilter").value="__ALL__";
   $("subjectFilter").value="";
   $("classFilter").value="";
   $("quizFilter").value="";
