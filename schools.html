@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Quản lý trường V3.7.0 | CodeHub</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="scripts/supabase-config.js"></script>
+</head>
+<body class="bg-slate-50 text-slate-900">
+<main class="max-w-6xl mx-auto p-5">
+  <div class="flex flex-wrap justify-between gap-3 items-start">
+    <div><h1 class="text-3xl font-black">🏫 Quản lý trường <span class="text-violet-600 text-lg">V3.7.0</span></h1>
+    <p class="text-slate-500 mt-1">Trường → Lớp → Học sinh. Tên lớp được phép trùng giữa các trường.</p></div>
+    <a href="teacher.html" class="border bg-white px-4 py-2 rounded-xl font-bold">← Dashboard</a>
+  </div>
+
+  <div id="msg" class="hidden mt-4 p-3 rounded-xl"></div>
+
+  <section class="bg-white rounded-2xl shadow p-5 mt-5">
+    <div class="flex flex-wrap gap-2">
+      <input id="schoolName" class="flex-1 min-w-64 border rounded-xl p-3" placeholder="Tên trường mới">
+      <button id="addBtn" class="bg-blue-600 text-white px-4 py-3 rounded-xl font-bold">+ Thêm trường</button>
+    </div>
+  </section>
+
+  <section class="bg-white rounded-2xl shadow p-5 mt-5">
+    <div class="overflow-auto">
+      <table class="w-full text-sm">
+        <thead class="bg-slate-100">
+          <tr><th class="p-3 text-left">Tên trường</th><th class="p-3">Mặc định</th><th class="p-3">Số lớp</th><th class="p-3">Số HS</th><th class="p-3">Thao tác</th></tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+  </section>
+</main>
+
+<script>
+const s=window.supabaseClient,$=x=>document.getElementById(x);
+const esc=v=>String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
+let me,role,schools=[];
+
+function say(t,ok=false){msg.className="mt-4 p-3 rounded-xl "+(ok?"bg-emerald-50 text-emerald-700":"bg-red-50 text-red-700");msg.textContent=t}
+
+async function init(){
+  me=(await s.auth.getUser()).data.user;if(!me)return location.href="login.html";
+  const p=await s.from("profiles").select("role").eq("id",me.id).single();
+  role=String(p.data?.role||"").toLowerCase();
+  if(role!=="admin"){alert("Chỉ Admin quản lý danh mục trường.");return location.href="teacher.html"}
+  await load();
+}
+async function load(){
+  const r=await s.rpc("codehub_v370_schools_admin");
+  if(r.error)return say(r.error.message);
+  schools=r.data||[];
+  rows.innerHTML=schools.map(x=>`<tr class="border-t">
+    <td class="p-3 font-bold">${esc(x.school_name)}</td>
+    <td class="p-3 text-center">${x.is_default?'<span class="text-emerald-700 font-bold">✓ Mặc định</span>':'—'}</td>
+    <td class="p-3 text-center">${x.class_count}</td>
+    <td class="p-3 text-center">${x.student_count}</td>
+    <td class="p-3 text-center space-x-2">
+      <button class="text-blue-600 font-bold" onclick="renameSchool('${x.id}')">Đổi tên</button>
+      ${x.is_default?'':`<button class="text-violet-600 font-bold" onclick="setDefault('${x.id}')">Đặt mặc định</button>`}
+    </td>
+  </tr>`).join("")||'<tr><td colspan="5" class="p-6 text-center text-slate-500">Chưa có trường.</td></tr>';
+}
+addBtn.onclick=async()=>{
+  const name=schoolName.value.trim();if(!name)return say("Nhập tên trường.");
+  const r=await s.rpc("codehub_v370_add_school",{p_school_name:name});
+  if(r.error)return say(r.error.message);
+  schoolName.value="";say("Đã thêm trường.",true);await load();
+};
+async function renameSchool(id){
+  const x=schools.find(s=>s.id===id);if(!x)return;
+  const name=prompt("Tên trường mới:",x.school_name);if(!name?.trim())return;
+  const r=await s.rpc("codehub_v370_rename_school",{p_school:id,p_name:name.trim()});
+  if(r.error)return say(r.error.message);say("Đã đổi tên.",true);await load();
+}
+async function setDefault(id){
+  if(!confirm("Đặt trường này làm trường mặc định?"))return;
+  const r=await s.rpc("codehub_v370_set_default_school",{p_school:id});
+  if(r.error)return say(r.error.message);say("Đã đổi trường mặc định.",true);await load();
+}
+init();
+</script>
+</body></html>
