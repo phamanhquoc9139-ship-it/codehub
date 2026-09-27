@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Quản lý lớp học V3.7.6 | CodeHub</title>
+<title>Quản lý lớp học V3.7.20 | CodeHub</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="scripts/supabase-config.js"></script>
@@ -11,7 +11,7 @@
 <main class="max-w-7xl mx-auto p-5">
   <div class="flex flex-wrap justify-between gap-3 items-start">
     <div>
-      <h1 class="text-3xl font-black">🏫 Quản lý lớp học <span class="text-violet-600 text-lg">V3.7.6</span></h1>
+      <h1 class="text-3xl font-black">🏫 Quản lý lớp học <span class="text-violet-600 text-lg">V3.7.20</span></h1>
       <p class="text-slate-500 mt-1">Mỗi lớp được xác định bằng Trường + class_id. Tên lớp có thể trùng giữa các trường.</p>
     </div>
     <div class="flex gap-2 flex-wrap">
@@ -64,11 +64,18 @@ async function init(){
   const p=await s.from("profiles").select("role").eq("id",me.id).single();
   role=String(p.data?.role||"").trim().toLowerCase();
   if(!["admin","teacher"].includes(role))return location.href="index.html";
-  if(role==="admin")schoolAdmin.classList.remove("hidden");
+
+  if(role==="admin"){
+    schoolAdmin.classList.remove("hidden");
+    addBtn.onclick=openAdd;
+  }else{
+    addBtn.classList.add("hidden");
+    const sub=document.querySelector("p.text-slate-500");
+    if(sub)sub.textContent="Giáo viên chỉ xem các lớp được Admin phân công; không được tạo, sửa, xóa hoặc chuyển học sinh.";
+  }
 
   search.oninput=render;
   schoolFilter.onchange=render;
-  addBtn.onclick=openAdd;
   await reload();
 }
 
@@ -126,10 +133,10 @@ function render(){
       <div class="text-3xl font-black mt-2">${esc(x.class_name)}</div>
       <div class="text-slate-500 mt-2">📅 Năm học: ${esc(x.school_year||"—")}</div>
       <div class="font-bold mt-2">👨‍🎓 ${n} học sinh</div>
-      <div class="grid grid-cols-3 gap-2 mt-5">
+      <div class="${role==="admin"?"grid grid-cols-3":"grid grid-cols-1"} gap-2 mt-5">
         <button onclick="viewClass('${x.id}')" class="bg-blue-600 text-white rounded-xl py-2 font-bold">Xem</button>
-        <button onclick="editClass('${x.id}')" class="bg-amber-500 text-white rounded-xl py-2 font-bold">Sửa</button>
-        <button onclick="deleteClass('${x.id}')" class="bg-red-600 text-white rounded-xl py-2 font-bold">Xóa</button>
+        ${role==="admin"?`<button onclick="editClass('${x.id}')" class="bg-amber-500 text-white rounded-xl py-2 font-bold">Sửa</button>
+        <button onclick="deleteClass('${x.id}')" class="bg-red-600 text-white rounded-xl py-2 font-bold">Xóa</button>`:""}
       </div>
     </section>`;
   }).join("")||'<div class="col-span-full bg-white p-8 rounded-2xl text-center text-slate-500">Không tìm thấy lớp.</div>';
@@ -144,7 +151,7 @@ function schoolOptions(selected=""){
   return schools.map(x=>`<option value="${x.id}" ${x.id===selected?"selected":""}>${esc(x.school_name)}</option>`).join("");
 }
 
-function openAdd(){
+function openAdd(){if(role!=="admin")return alert("Chỉ Admin được tạo lớp.");
   openModal("➕ Tạo lớp mới","Lớp cùng tên ở hai trường khác nhau là hợp lệ.",`
     <div class="space-y-3">
       <label class="block font-bold">Trường<select id="mSchool" class="block w-full border rounded-xl p-3 mt-1"><option value="">-- Chọn trường --</option>${schoolOptions()}</select></label>
@@ -155,7 +162,7 @@ function openAdd(){
     </div>`);
 }
 
-async function createClass(){
+async function createClass(){if(role!=="admin")return alert("Chỉ Admin được tạo lớp.");
   const sid=mSchool.value,name=normClass(mClass.value),year=mYear.value.trim();
   if(!sid||!name)return mMsg.textContent="Chọn trường và nhập tên lớp.";
   const r=await s.rpc("codehub_v376_create_class",{p_school:sid,p_class_name:name,p_school_year:year});
@@ -164,7 +171,7 @@ async function createClass(){
   await reload();setTimeout(closeModal,500);
 }
 
-function editClass(id){
+function editClass(id){if(role!=="admin")return alert("Giáo viên không được sửa lớp.");
   const x=classes.find(z=>z.id===id);if(!x)return;
   openModal("✏️ Sửa lớp",`${x.school_name} • ${x.class_name}`,`
     <div class="space-y-3">
@@ -175,7 +182,7 @@ function editClass(id){
       <div id="eMsg"></div>
     </div>`);
 }
-async function saveClass(id){
+async function saveClass(id){if(role!=="admin")return alert("Giáo viên không được sửa lớp.");
   const r=await s.rpc("codehub_v376_update_class",{p_class:id,p_school:eSchool.value,p_class_name:normClass(eClass.value),p_school_year:eYear.value.trim()});
   if(r.error)return eMsg.textContent="❌ "+r.error.message;
   eMsg.innerHTML='<span class="text-emerald-700 font-bold">✓ Đã cập nhật.</span>';
@@ -186,24 +193,25 @@ function viewClass(id){
   const x=classes.find(z=>z.id===id);if(!x)return;
   const list=studentsOf(id);
   const targets=classes.filter(c=>c.id!==id);
+  const adminMove=role==="admin";
 
   openModal(`👨‍🎓 Lớp ${x.class_name}`,`${x.school_name} • ${x.school_year||"—"} • ${list.length} học sinh`,`
     <div class="overflow-auto">
       <table class="w-full text-sm">
-        <thead class="bg-slate-100"><tr><th class="p-3">STT</th><th class="p-3 text-left">Họ và tên</th><th class="p-3">Mã HS</th><th class="p-3 text-left">Trường</th><th class="p-3">Lớp</th><th class="p-3">Chuyển lớp</th></tr></thead>
+        <thead class="bg-slate-100"><tr><th class="p-3">STT</th><th class="p-3 text-left">Họ và tên</th><th class="p-3">Mã HS</th><th class="p-3 text-left">Trường</th><th class="p-3">Lớp</th>${adminMove?'<th class="p-3">Chuyển lớp</th>':""}</tr></thead>
         <tbody>${list.map((st,i)=>`<tr class="border-t">
           <td class="p-3 text-center">${i+1}</td>
           <td class="p-3 font-semibold">${esc(st.full_name)}</td>
           <td class="p-3 text-center text-blue-600 font-bold">${esc(st.student_code)}</td>
           <td class="p-3">${esc(st.school_name)}</td>
           <td class="p-3 text-center">${esc(st.class_name)}</td>
-          <td class="p-3"><div class="flex gap-2"><select id="mv_${st.id}" class="border rounded-lg p-2 min-w-52"><option value="">-- Chọn Trường • Lớp --</option>${targets.map(c=>`<option value="${c.id}">${esc(c.school_name)} • ${esc(c.class_name)} • ${esc(c.school_year||"")}</option>`).join("")}</select><button onclick="moveStudent('${st.id}')" class="bg-emerald-600 text-white rounded-lg px-3 font-bold">Chuyển</button></div></td>
-        </tr>`).join("")||'<tr><td colspan="6" class="p-8 text-center text-slate-500">Lớp chưa có học sinh.</td></tr>'}</tbody>
+          ${adminMove?`<td class="p-3"><div class="flex gap-2"><select id="mv_${st.id}" class="border rounded-lg p-2 min-w-52"><option value="">-- Chọn Trường • Lớp --</option>${targets.map(c=>`<option value="${c.id}">${esc(c.school_name)} • ${esc(c.class_name)} • ${esc(c.school_year||"")}</option>`).join("")}</select><button onclick="moveStudent('${st.id}')" class="bg-emerald-600 text-white rounded-lg px-3 font-bold">Chuyển</button></div></td>`:""}
+        </tr>`).join("")||`<tr><td colspan="${adminMove?6:5}" class="p-8 text-center text-slate-500">Lớp chưa có học sinh.</td></tr>`}</tbody>
       </table>
     </div>`);
 }
 
-async function moveStudent(studentId){
+async function moveStudent(studentId){if(role!=="admin")return alert("Giáo viên không được chuyển lớp học sinh.");
   const sel=document.getElementById("mv_"+studentId);
   const target=classes.find(x=>x.id===sel?.value);
   const st=students.find(x=>x.id===studentId);
@@ -214,7 +222,7 @@ async function moveStudent(studentId){
   await reload();closeModal();say("Đã chuyển học sinh đúng class_id.",true);
 }
 
-async function deleteClass(id){
+async function deleteClass(id){if(role!=="admin")return alert("Giáo viên không được xóa lớp.");
   const x=classes.find(z=>z.id===id);if(!x)return;
   const n=studentsOf(id).length;
   if(n)return alert(`Lớp ${x.school_name} • ${x.class_name} còn ${n} học sinh. Hãy chuyển HS trước.`);

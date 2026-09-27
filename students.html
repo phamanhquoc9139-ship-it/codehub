@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Quản lý học sinh V3.7.10 | CodeHub</title>
+<title>Quản lý học sinh V3.7.20 | CodeHub</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
@@ -11,8 +11,8 @@
 <body class="bg-slate-50 text-slate-900">
 <main class="max-w-7xl mx-auto p-5">
 <div class="flex flex-wrap justify-between gap-3 mb-5">
-  <div><h1 class="text-3xl font-black">👨‍🎓 Quản lý học sinh <span class="text-violet-600 text-lg">V3.7.10</span></h1>
-  <p class="text-slate-500">Xuất danh sách theo Trường/Lớp kèm Username + Mật khẩu; tài khoản cũ có thể đặt lại mật khẩu khi xuất.</p></div>
+  <div><h1 class="text-3xl font-black">👨‍🎓 Quản lý học sinh <span class="text-violet-600 text-lg">V3.7.20</span></h1>
+  <p class="text-slate-500">Admin quản lý toàn bộ. Giáo viên chỉ xem học sinh thuộc lớp được phân công và được xuất User/Pass của chính các lớp đó.</p></div>
   <div class="flex gap-2"><a href="schools.html" id="schoolAdminLink" class="hidden border bg-white px-4 py-2 rounded-xl font-bold">🏫 Trường</a><a href="teacher.html" class="border bg-white px-4 py-2 rounded-xl font-bold">← Dashboard</a></div>
 </div>
 
@@ -22,15 +22,15 @@
   <div class="flex flex-wrap justify-between gap-2 mb-4">
     <div id="count" class="font-bold text-slate-600">0 học sinh</div>
     <div class="flex flex-wrap gap-2">
-      <button id="templateBtn" class="bg-orange-500 text-white px-4 py-2 rounded-xl font-bold">📄 File mẫu</button>
-      <button id="importBtn" class="bg-emerald-600 text-white px-4 py-2 rounded-xl font-bold">📥 Nhập Excel</button>
+      <button id="templateBtn" data-admin-only class="bg-orange-500 text-white px-4 py-2 rounded-xl font-bold">📄 File mẫu</button>
+      <button id="importBtn" data-admin-only class="bg-emerald-600 text-white px-4 py-2 rounded-xl font-bold">📥 Nhập Excel</button>
       <button id="exportListBtn" class="bg-cyan-600 text-white px-4 py-2 rounded-xl font-bold">🔐 Xuất DS + mật khẩu</button>
       <button id="credBtn" disabled class="bg-violet-600 text-white px-4 py-2 rounded-xl font-bold disabled:opacity-40">⬇ User/Pass vừa tạo/đổi</button>
-      <button id="addBtn" class="bg-blue-600 text-white px-4 py-2 rounded-xl font-bold">+ Thêm thủ công</button>
+      <button id="addBtn" data-admin-only class="bg-blue-600 text-white px-4 py-2 rounded-xl font-bold">+ Thêm thủ công</button>
     </div>
   </div>
 
-  <div class="mb-3 rounded-xl bg-amber-50 text-amber-800 p-3 text-sm">
+  <div id="roleNotice" class="mb-3 rounded-xl bg-amber-50 text-amber-800 p-3 text-sm">
     🔐 <b>Xuất DS + mật khẩu:</b> nếu học sinh cũ không còn mật khẩu trong phiên, CodeHub sẽ hỏi xác nhận trước khi đặt lại mật khẩu mới và xuất Excel.
   </div>
 
@@ -76,7 +76,15 @@ async function init(){
  me=(await s.auth.getUser()).data.user;if(!me)return location.href="login.html";
  const p=await s.from("profiles").select("role").eq("id",me.id).single();role=String(p.data?.role||"").toLowerCase();
  if(!["admin","teacher"].includes(role))return location.href="student-dashboard.html";
- if(role==="admin")schoolAdminLink.classList.remove("hidden");
+
+ if(role==="admin"){
+   schoolAdminLink.classList.remove("hidden");
+ }else{
+   document.querySelectorAll("[data-admin-only]").forEach(el=>el.classList.add("hidden"));
+   roleNotice.className="mb-3 rounded-xl bg-blue-50 text-blue-800 p-3 text-sm";
+   roleNotice.innerHTML="👨‍🏫 <b>Phạm vi giáo viên:</b> chỉ hiển thị học sinh thuộc các lớp Admin đã phân công. Giáo viên được đổi/xuất mật khẩu cho các học sinh này, không được nhập thêm, sửa, xóa hay chuyển lớp.";
+ }
+
  await reload();
  search.oninput=render;schoolFilter.onchange=()=>{buildClassFilter();render()};classFilter.onchange=render;
 }
@@ -113,15 +121,20 @@ function render(){
    ? `Tổng số học sinh: ${students.length}`
    : `Đang hiển thị: ${data.length} / ${students.length} học sinh`;
 
- rows.innerHTML=data.map((x,i)=>`<tr class="border-t"><td class="p-3 text-center">${i+1}</td><td class="p-3 font-semibold">${esc(x.full_name)}</td><td class="p-3 text-center">${esc(x.student_code)}</td><td class="p-3">${esc(x.school_name)}</td><td class="p-3 text-center">${esc(x.class_name)}</td><td class="p-3 text-center">${esc(x.school_year||"—")}</td><td class="p-3 text-center"><button class="text-blue-600 font-bold" onclick="editStudent('${x.id}')">Sửa</button> · <button class="text-amber-600 font-bold" onclick="resetPassword('${x.id}')">Mật khẩu</button> · <button class="text-red-600 font-bold" onclick="deleteStudent('${x.id}')">Xóa</button></td></tr>`).join("")||'<tr><td colspan="7" class="p-8 text-center text-slate-500">Không có học sinh.</td></tr>';
+ rows.innerHTML=data.map((x,i)=>{
+   const actions=role==="admin"
+     ? `<button class="text-blue-600 font-bold" onclick="editStudent('${x.id}')">Sửa</button> · <button class="text-amber-600 font-bold" onclick="resetPassword('${x.id}')">Mật khẩu</button> · <button class="text-red-600 font-bold" onclick="deleteStudent('${x.id}')">Xóa</button>`
+     : `<button class="text-amber-600 font-bold" onclick="resetPassword('${x.id}')">Mật khẩu</button>`;
+   return `<tr class="border-t"><td class="p-3 text-center">${i+1}</td><td class="p-3 font-semibold">${esc(x.full_name)}</td><td class="p-3 text-center">${esc(x.student_code)}</td><td class="p-3">${esc(x.school_name)}</td><td class="p-3 text-center">${esc(x.class_name)}</td><td class="p-3 text-center">${esc(x.school_year||"—")}</td><td class="p-3 text-center">${actions}</td></tr>`;
+ }).join("")||'<tr><td colspan="7" class="p-8 text-center text-slate-500">Không có học sinh.</td></tr>';
 }
 function openModal(title,body){modalTitle.textContent=title;modalBody.innerHTML=body;modal.classList.remove("hidden")}
 function closeModal(){modal.classList.add("hidden")}
 
 function classOptions(selected=""){return classes.map(x=>`<option value="${x.id}" ${x.id===selected?"selected":""}>${esc(x.school_name)} • ${esc(x.class_name)}${x.school_year?` • ${esc(x.school_year)}`:""}</option>`).join("")}
 
-addBtn.onclick=()=>openModal("Thêm học sinh",`<div class="space-y-3"><input id="mName" class="w-full border p-3 rounded-xl" placeholder="Họ và tên"><input id="mCode" class="w-full border p-3 rounded-xl" placeholder="Mã HS (có thể để trống)"><select id="mClass" class="w-full border p-3 rounded-xl"><option value="">-- Chọn trường / lớp --</option>${classOptions()}</select><button onclick="createStudent()" class="w-full bg-blue-600 text-white p-3 rounded-xl font-bold">Tạo tài khoản</button><div id="mMsg"></div></div>`);
-async function createStudent(){
+addBtn.onclick=()=>{if(role!=="admin")return alert("Chỉ Admin được thêm học sinh.");openModal("Thêm học sinh",`<div class="space-y-3"><input id="mName" class="w-full border p-3 rounded-xl" placeholder="Họ và tên"><input id="mCode" class="w-full border p-3 rounded-xl" placeholder="Mã HS (có thể để trống)"><select id="mClass" class="w-full border p-3 rounded-xl"><option value="">-- Chọn trường / lớp --</option>${classOptions()}</select><button onclick="createStudent()" class="w-full bg-blue-600 text-white p-3 rounded-xl font-bold">Tạo tài khoản</button><div id="mMsg"></div></div>`)};
+async function createStudent(){if(role!=="admin")return alert("Chỉ Admin được thêm học sinh.");
  const fullName=norm(mName.value),studentCode=cls(mCode.value),c=classes.find(x=>x.id===mClass.value);if(!fullName||!c)return mMsg.textContent="Chọn đầy đủ họ tên và lớp.";
  try{mMsg.textContent="Đang tạo...";const r=await callEdge(STUDENT_IMPORT_FUNCTION,{action:"single",rows:[{fullName,studentCode,className:c.class_name}]});const made=r.created||[];if(!made.length)throw new Error((r.errors||[])[0]?.error||"Không tạo được.");
  const z=made[0];const b=await s.rpc("codehub_v370_bind_student_by_code",{p_student_code:z.student_code,p_school:c.school_id,p_class:c.id});if(b.error)throw b.error;
@@ -131,7 +144,7 @@ async function createStudent(){
 
 templateBtn.onclick=()=>{const a=[{"Họ và tên":"Nguyễn Văn A","Mã học sinh":"","Tên trường":"TRƯỜNG THPT PHÚ HÒA","Lớp":"10A1","Năm học":academicYear()},{"Họ và tên":"Trần Thị B","Mã học sinh":"HS010","Tên trường":"TRƯỜNG THPT TRUNG PHÚ","Lớp":"10A1","Năm học":academicYear()}];const wb=XLSX.utils.book_new(),ws=XLSX.utils.json_to_sheet(a);ws["!cols"]=[{wch:28},{wch:18},{wch:30},{wch:12},{wch:14}];XLSX.utils.book_append_sheet(wb,ws,"Danh sach hoc sinh");XLSX.writeFile(wb,"CodeHub_mau_import_hoc_sinh_V3_7_0.xlsx")};
 
-importBtn.onclick=()=>openModal("Nhập học sinh từ Excel • V3.7.10",`<input id="excelFile" type="file" accept=".xlsx,.xls,.csv" class="w-full border p-3 rounded-xl"><p class="text-sm text-slate-500 mt-2">Hỗ trợ 2 loại file: <b>(1)</b> file mẫu có Họ và tên + Tên trường + Lớp; <b>(2)</b> bảng điểm cũ có cột Họ + Tên và Trường/Lớp/Năm học nằm ở phần tiêu đề. Mã HS có thể để trống.</p><div class="flex gap-2 mt-4"><button onclick="previewExcel()" class="bg-blue-600 text-white px-4 py-2 rounded-xl font-bold">Xem trước</button><button id="doImportBtn" onclick="doImport()" disabled class="bg-emerald-600 text-white px-4 py-2 rounded-xl font-bold disabled:opacity-40">Tạo tài khoản</button></div><div id="importStatus" class="mt-3"></div><div id="preview" class="mt-3 overflow-auto"></div>`);
+importBtn.onclick=()=>{if(role!=="admin")return alert("Chỉ Admin được nhập Excel.");openModal("Nhập học sinh từ Excel • V3.7.10",`<input id="excelFile" type="file" accept=".xlsx,.xls,.csv" class="w-full border p-3 rounded-xl"><p class="text-sm text-slate-500 mt-2">Hỗ trợ 2 loại file: <b>(1)</b> file mẫu có Họ và tên + Tên trường + Lớp; <b>(2)</b> bảng điểm cũ có cột Họ + Tên và Trường/Lớp/Năm học nằm ở phần tiêu đề. Mã HS có thể để trống.</p><div class="flex gap-2 mt-4"><button onclick="previewExcel()" class="bg-blue-600 text-white px-4 py-2 rounded-xl font-bold">Xem trước</button><button id="doImportBtn" onclick="doImport()" disabled class="bg-emerald-600 text-white px-4 py-2 rounded-xl font-bold disabled:opacity-40">Tạo tài khoản</button></div><div id="importStatus" class="mt-3"></div><div id="preview" class="mt-3 overflow-auto"></div>`)};
 
 function colIndex(row,aliases){for(let i=0;i<row.length;i++)if(aliases.includes(header(row[i])))return i;return -1}
 async function previewExcel(){
@@ -362,7 +375,7 @@ async function previewExcel(){
   importStatus.textContent="❌ "+(e.message||e);
  }
 }
-async function doImport(){
+async function doImport(){if(role!=="admin")return alert("Chỉ Admin được nhập học sinh.");
  if(!pending.length)return;doImportBtn.disabled=true;importStatus.textContent="Đang tạo trường/lớp và tài khoản...";
  try{
   const orgMap=new Map();
@@ -515,7 +528,7 @@ function downloadStudentPasswordFile(data){
 
   XLSX.writeFile(
     wb,
-    `CodeHub_DS_UserPass_${schoolPart}_${classPart}_${date}.xlsx`
+    `CodeHub_DS_UserPass_${role==="teacher"?"GV_":""}${schoolPart}_${classPart}_${date}.xlsx`
   );
 }
 
@@ -576,8 +589,8 @@ function rememberCredential(student,password){
   credBtn.disabled=lastCredentials.length===0;
 }
 
-function editStudent(id){const x=students.find(z=>z.id===id);if(!x)return;openModal("Sửa học sinh",`<div class="space-y-3"><input id="eName" class="w-full border p-3 rounded-xl" value="${esc(x.full_name)}"><input id="eCode" class="w-full border p-3 rounded-xl" value="${esc(x.student_code)}"><select id="eClass" class="w-full border p-3 rounded-xl">${classOptions(x.class_id)}</select><button onclick="saveStudent('${id}')" class="w-full bg-blue-600 text-white p-3 rounded-xl font-bold">Lưu</button><div id="eMsg"></div></div>`)}
-async function saveStudent(id){const c=classes.find(x=>x.id===eClass.value);if(!c)return eMsg.textContent="Chọn lớp.";try{const r=await callEdge(MANAGE_FUNCTION,{action:"update",studentId:id,fullName:norm(eName.value),studentCode:cls(eCode.value),className:c.class_name});const b=await s.rpc("codehub_v370_bind_student_id",{p_student:id,p_school:c.school_id,p_class:c.id});if(b.error)throw b.error;eMsg.textContent="✓ Đã cập nhật";await reload();setTimeout(closeModal,500)}catch(e){eMsg.textContent="❌ "+e.message}}
+function editStudent(id){if(role!=="admin")return alert("Giáo viên không được sửa hồ sơ học sinh.");const x=students.find(z=>z.id===id);if(!x)return;openModal("Sửa học sinh",`<div class="space-y-3"><input id="eName" class="w-full border p-3 rounded-xl" value="${esc(x.full_name)}"><input id="eCode" class="w-full border p-3 rounded-xl" value="${esc(x.student_code)}"><select id="eClass" class="w-full border p-3 rounded-xl">${classOptions(x.class_id)}</select><button onclick="saveStudent('${id}')" class="w-full bg-blue-600 text-white p-3 rounded-xl font-bold">Lưu</button><div id="eMsg"></div></div>`)}
+async function saveStudent(id){if(role!=="admin")return alert("Giáo viên không được sửa hồ sơ học sinh.");const c=classes.find(x=>x.id===eClass.value);if(!c)return eMsg.textContent="Chọn lớp.";try{const r=await callEdge(MANAGE_FUNCTION,{action:"update",studentId:id,fullName:norm(eName.value),studentCode:cls(eCode.value),className:c.class_name});const b=await s.rpc("codehub_v370_bind_student_id",{p_student:id,p_school:c.school_id,p_class:c.id});if(b.error)throw b.error;eMsg.textContent="✓ Đã cập nhật";await reload();setTimeout(closeModal,500)}catch(e){eMsg.textContent="❌ "+e.message}}
 async function resetPassword(id){
   const st=students.find(z=>z.id===id);
   if(!st)return alert("Không tìm thấy học sinh.");
@@ -601,7 +614,7 @@ async function resetPassword(id){
     alert(e.message);
   }
 }
-async function deleteStudent(id){const x=students.find(z=>z.id===id);if(!x||!confirm(`Xóa ${x.full_name}?`))return;try{await callEdge(MANAGE_FUNCTION,{action:"delete",studentId:id});await reload()}catch(e){alert(e.message)}}
+async function deleteStudent(id){if(role!=="admin")return alert("Giáo viên không được xóa học sinh.");const x=students.find(z=>z.id===id);if(!x||!confirm(`Xóa ${x.full_name}?`))return;try{await callEdge(MANAGE_FUNCTION,{action:"delete",studentId:id});await reload()}catch(e){alert(e.message)}}
 init();
 </script>
 </body></html>
