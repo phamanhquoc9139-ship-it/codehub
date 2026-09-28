@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Quản lý môn học | CodeHub</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="scripts/supabase-config.js"></script>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f5f7fb;color:#172033}
+header{background:#fff;padding:18px 30px;border-bottom:1px solid #e5e7eb;display:flex;justify-content:space-between;align-items:center}.logo{font-size:28px;font-weight:800;color:#3182f6}
+.btn{border:0;border-radius:9px;padding:11px 16px;font-weight:700;cursor:pointer;background:#3182f6;color:#fff}.green{background:#16a34a}.orange{background:#f59e0b}.red{background:#dc2626}.gray{background:#64748b}
+main{max-width:1100px;margin:38px auto;padding:0 20px}h1{font-size:35px;margin-bottom:7px}.sub{color:#64748b}.stat{margin:23px 0;background:#fff;padding:20px;border-radius:15px;box-shadow:0 5px 18px #0000000d;width:260px}.num{font-size:31px;font-weight:800;color:#2563eb;margin-top:6px}
+.toolbar{display:flex;gap:10px;background:#fff;padding:16px;border-radius:14px;margin-bottom:20px}.toolbar input{flex:1;padding:12px;border:1px solid #cbd5e1;border-radius:9px;font-size:16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:16px}.card{background:#fff;border-radius:15px;padding:22px;box-shadow:0 5px 18px #0000000d}.name{font-size:21px;font-weight:800;margin-bottom:9px}.meta,.desc{color:#64748b;line-height:1.5}.desc{margin:10px 0 16px}.actions{display:flex;gap:8px}.actions button{flex:1}
+.empty{grid-column:1/-1;text-align:center;background:#fff;padding:40px;border-radius:15px;color:#64748b}
+.modal{display:none;position:fixed;inset:0;background:#0008;z-index:50;align-items:center;justify-content:center;padding:18px}.box{background:#fff;border-radius:17px;width:min(560px,96%);padding:25px}.mh{display:flex;justify-content:space-between;align-items:center}.close{border:0;background:#e2e8f0;border-radius:8px;width:37px;height:37px;font-size:20px;cursor:pointer}.fg{margin:15px 0}.fg label{display:block;font-weight:700;margin-bottom:6px}.fg input,.fg textarea{width:100%;padding:11px;border:1px solid #cbd5e1;border-radius:8px;font:inherit}.fg textarea{min-height:90px}.ma{display:flex;justify-content:flex-end;gap:8px}.msg{min-height:20px;font-weight:700}
+@media(max-width:700px){header{flex-direction:column;gap:10px}.toolbar{flex-direction:column}.stat{width:100%}}
+</style>
+</head>
+<body>
+<header><div class="logo">&lt;/&gt; CodeHub</div><div><button class="btn" onclick="location.href='teacher.html'">← Quản trị</button> <button class="btn" onclick="location.href='courses.html'">📚 Khóa học</button> <button class="btn" onclick="logout()">Đăng xuất</button></div></header>
+<main>
+<h1>📚 Quản lý môn học</h1><div class="sub">Tạo danh mục môn học dùng cho các khóa học trên CodeHub</div>
+<div class="stat">Tổng môn học<div class="num" id="total">0</div></div>
+<div class="toolbar"><input id="search" placeholder="🔎 Tìm môn học..."><button class="btn green" id="addSubjectBtn" onclick="openCreate()">➕ Thêm môn</button></div>
+<div class="grid" id="grid"></div>
+</main>
+<div class="modal" id="modal"><div class="box">
+<div class="mh"><h2 id="mt">➕ Thêm môn học</h2><button class="close" onclick="closeModal()">×</button></div>
+<input type="hidden" id="subjectId">
+<div class="fg"><label>Tên môn học</label><input id="subjectName" placeholder="Ví dụ: Tin học"></div>
+<div class="fg"><label>Mô tả</label><textarea id="description" placeholder="Mô tả ngắn..."></textarea></div>
+<div class="fg" id="sourceGroup">
+  <label>📚 Dữ liệu nguồn <span style="font-weight:400;color:#64748b">(không lưu file lên Supabase)</span></label>
+  <input id="sourceFiles" type="file" multiple accept=".pdf,.docx,.pptx,.txt,.md" style="padding:9px;background:#f8fafc">
+  <div id="sourceList" style="margin-top:8px;color:#475569;font-size:14px"></div>
+  <div style="margin-top:8px;color:#64748b;font-size:13px;line-height:1.45">
+    File chỉ được chọn để AI đọc và tạo cấu trúc. Khi hoàn tất, hệ thống chỉ lưu dữ liệu môn/khóa học/bài học cần thiết.
+  </div>
+</div>
+<div class="fg" id="aiGroup">
+  <button type="button" class="btn" id="analyzeBtn" onclick="analyzeSource()" style="width:100%;background:#7c3aed">✨ AI phân tích dữ liệu nguồn</button>
+  <div id="aiStatus" style="margin-top:8px;font-weight:700;color:#475569"></div>
+  <div id="aiPreview" style="display:none;margin-top:10px;padding:12px;border:1px solid #ddd6fe;background:#faf5ff;border-radius:10px;max-height:220px;overflow:auto"></div>
+</div>
+<div class="msg" id="msg"></div>
+<div class="ma"><button class="btn gray" onclick="closeModal()">Hủy</button><button class="btn green" onclick="saveSubject()">Lưu</button></div>
+</div></div>
+<script>
+let currentUser=null,subjects=[];
+document.addEventListener("DOMContentLoaded",async()=>{
+ const s=window.supabaseClient;if(!s){alert("Không kết nối được Supabase.");return}
+ const {data:{user}}=await s.auth.getUser();if(!user){location.href="login.html";return}currentUser=user;
+ const {data:p}=await s.from("profiles").select("role").eq("id",user.id).single();const currentRole=String(p?.role||"").trim().toLowerCase();if(!p||!["teacher","admin"].includes(currentRole)){location.href="index.html";return}window.currentRole=currentRole
+ document.getElementById("search").addEventListener("input",render);
+ const addBtn=document.getElementById("addSubjectBtn");
+ if(currentRole!=="admin"){
+   if(addBtn)addBtn.style.display="none";
+   document.querySelector(".sub").textContent="Các môn học được quản trị viên phân công cho giáo viên";
+ }
+ await load();
+});
+async function load(){
+ const s=window.supabaseClient;
+ const {data,error}=await s.from("subjects").select("*").order("subject_name");
+ if(error){alert("Không tải được môn học: "+error.message);return}
+ subjects=data||[];
+ render();
+}
+function render(){
+ document.getElementById("total").textContent=subjects.length;const q=document.getElementById("search").value.trim().toLocaleLowerCase("vi-VN"),g=document.getElementById("grid");g.innerHTML="";
+ const a=subjects.filter(x=>(x.subject_name+" "+(x.description||"")).toLocaleLowerCase("vi-VN").includes(q));
+ if(!a.length){g.innerHTML=window.currentRole==="admin"?'<div class="empty">Chưa có môn học. Bấm <b>➕ Thêm môn</b> để bắt đầu.</div>':'<div class="empty">Chưa có môn học được phân công. Vui lòng liên hệ quản trị viên.</div>';return}
+ a.forEach(x=>{const c=document.createElement("div");c.className="card";c.innerHTML='<div class="name"></div><div class="meta"></div><div class="desc"></div><div class="actions"></div>';c.querySelector(".name").textContent="📘 "+x.subject_name;c.querySelector(".meta").textContent="";c.querySelector(".meta").style.display="none";c.querySelector(".desc").textContent=x.description||"";
+ const actions=c.querySelector(".actions");
+ if(window.currentRole==="admin"){const e=document.createElement("button"),d=document.createElement("button");e.className="btn orange";e.textContent="✏️ Sửa";e.onclick=()=>openEdit(x);d.className="btn red";d.textContent="🗑️ Xóa";d.onclick=()=>removeSubject(x);actions.append(e,d)}
+ else{const badge=document.createElement("div");badge.className="meta";badge.textContent="✓ Môn được phân công";actions.appendChild(badge)}
+ g.appendChild(c)});
+}
+function openCreate(){if(window.currentRole!=="admin")return;document.getElementById("mt").textContent="➕ Thêm môn học";document.getElementById("subjectId").value="";document.getElementById("subjectName").value="";resetSourceUI();document.getElementById("description").value="";document.getElementById("msg").textContent="";document.getElementById("modal").style.display="flex"}
+function openEdit(x){if(window.currentRole!=="admin")return;document.getElementById("mt").textContent="✏️ Sửa môn học";document.getElementById("subjectId").value=x.id;document.getElementById("subjectName").value=x.subject_name||"";resetSourceUI();document.getElementById("description").value=x.description||"";document.getElementById("msg").textContent="";document.getElementById("modal").style.display="flex"}
+function closeModal(){document.getElementById("modal").style.display="none"}
+async function saveSubject(){if(window.currentRole!=="admin")return;const id=document.getElementById("subjectId").value,name=document.getElementById("subjectName").value.trim(),description=document.getElementById("description").value.trim(),msg=document.getElementById("msg");if(!name){msg.style.color="#dc2626";msg.textContent="⚠️ Nhập tên môn học.";return}
+ const row={subject_name:name,description,teacher_id:currentUser.id};
+ if(!id){
+   // Giữ tương thích CSDL cũ nếu subject_code đang là cột bắt buộc; người dùng không cần nhập mã.
+   row.subject_code=("SUB_"+Date.now().toString(36)).toUpperCase();
+ }const r=id?await window.supabaseClient.from("subjects").update(row).eq("id",id):await window.supabaseClient.from("subjects").insert(row);if(r.error){msg.style.color="#dc2626";msg.textContent="❌ "+r.error.message;return}closeModal();await load()}
+async function removeSubject(x){if(window.currentRole!=="admin")return;if(!confirm(`Xóa môn "${x.subject_name}"?`))return;const {error}=await window.supabaseClient.from("subjects").delete().eq("id",x.id);if(error){alert("❌ "+error.message);return}await load()}
+
+let aiDraft=null;
+function resetSourceUI(){
+ const f=document.getElementById("sourceFiles"),l=document.getElementById("sourceList"),s=document.getElementById("aiStatus"),p=document.getElementById("aiPreview");
+ if(f)f.value=""; if(l)l.innerHTML=""; if(s)s.textContent=""; if(p){p.style.display="none";p.innerHTML=""} aiDraft=null;
+}
+document.getElementById("sourceFiles")?.addEventListener("change",e=>{
+ const files=[...e.target.files], box=document.getElementById("sourceList");
+ if(!files.length){box.innerHTML="";return}
+ box.innerHTML=files.map(f=>`• ${escapeHtml(f.name)} — ${(f.size/1024/1024).toFixed(2)} MB`).join("<br>");
+});
+function escapeHtml(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+async function analyzeSource(){
+ const files=[...document.getElementById("sourceFiles").files],
+       status=document.getElementById("aiStatus"),
+       preview=document.getElementById("aiPreview"),
+       btn=document.getElementById("analyzeBtn");
+ if(!files.length){
+   status.style.color="#dc2626";
+   status.textContent="⚠️ Chọn ít nhất 1 file PDF/DOCX/PPTX/TXT.";
+   return;
+ }
+ const maxEach=10*1024*1024, maxTotal=20*1024*1024;
+ if(files.some(f=>f.size>maxEach)){
+   status.style.color="#dc2626"; status.textContent="⚠️ Mỗi file tối đa 10 MB."; return;
+ }
+ if(files.reduce((s,f)=>s+f.size,0)>maxTotal){
+   status.style.color="#dc2626"; status.textContent="⚠️ Tổng dữ liệu nguồn tối đa 20 MB/lần."; return;
+ }
+ btn.disabled=true; btn.style.opacity=".65";
+ status.style.color="#475569"; status.textContent="⏳ Đang gửi dữ liệu tạm thời cho AI phân tích...";
+ preview.style.display="none";
+ try{
+   const payloadFiles=[];
+   for(const f of files){
+     const data=await fileToBase64(f);
+     payloadFiles.push({name:f.name,type:f.type||"application/octet-stream",data});
+   }
+   const {data,error}=await window.supabaseClient.functions.invoke("generate-subject",{
+     body:{
+       subject_name:document.getElementById("subjectName").value.trim(),
+       description:document.getElementById("description").value.trim(),
+       files:payloadFiles
+     }
+   });
+   if(error) throw error;
+   if(!data?.ok || !data?.draft) throw new Error(data?.error||"AI không trả về cấu trúc hợp lệ.");
+   aiDraft=data.draft;
+   if(aiDraft.subject_name && !document.getElementById("subjectName").value.trim())
+     document.getElementById("subjectName").value=aiDraft.subject_name;
+   if(aiDraft.description && !document.getElementById("description").value.trim())
+     document.getElementById("description").value=aiDraft.description;
+   renderAIPreview(aiDraft);
+   status.style.color="#16a34a"; status.textContent="✓ AI đã phân tích xong. Hãy kiểm tra trước khi lưu.";
+ }catch(e){
+   console.error(e);
+   status.style.color="#dc2626";
+   status.textContent="❌ Không phân tích được: "+(e?.message||"Lỗi không xác định");
+ }finally{
+   btn.disabled=false; btn.style.opacity="1";
+ }
+}
+function fileToBase64(file){
+ return new Promise((resolve,reject)=>{
+   const r=new FileReader();
+   r.onload=()=>resolve(String(r.result).split(",")[1]||"");
+   r.onerror=()=>reject(r.error);
+   r.readAsDataURL(file);
+ });
+}
+function renderAIPreview(d){
+ const p=document.getElementById("aiPreview");
+ const courses=Array.isArray(d.courses)?d.courses:[];
+ p.style.display="block";
+ p.innerHTML=`<b>🤖 AI đề xuất</b><br><br>
+ <b>Môn:</b> ${escapeHtml(d.subject_name||"")}<br>
+ <b>Mô tả:</b> ${escapeHtml(d.description||"")}<br><br>
+ ${courses.map((c,i)=>`<div style="margin:8px 0;padding:9px;background:white;border-radius:8px">
+   <b>${i+1}. ${escapeHtml(c.title||"Khóa học")}</b>
+   <div style="margin-top:5px;color:#64748b">${escapeHtml(c.description||"")}</div>
+   <div style="margin-top:5px">${(c.lessons||[]).map((l,j)=>`${j+1}. ${escapeHtml(l.title||l)}`).join("<br>")}</div>
+ </div>`).join("")}
+ <div style="margin-top:10px;color:#7c3aed;font-weight:700">ℹ️ Đây là bản xem trước. Chưa ghi khóa học/bài học vào CSDL.</div>`;
+}
+
+async function logout(){await window.supabaseClient.auth.signOut();location.href="login.html"}
+document.getElementById("modal").addEventListener("click",e=>{if(e.target.id==="modal")closeModal()});
+</script></body></html>
