@@ -104,58 +104,45 @@ async function analyzeSource(){
        status=document.getElementById("aiStatus"),
        preview=document.getElementById("aiPreview"),
        btn=document.getElementById("analyzeBtn");
- if(!files.length){
-   status.style.color="#dc2626";
-   status.textContent="⚠️ Chọn ít nhất 1 file PDF/DOCX/PPTX/TXT.";
-   return;
- }
- const maxEach=10*1024*1024, maxTotal=20*1024*1024;
- if(files.some(f=>f.size>maxEach)){
-   status.style.color="#dc2626"; status.textContent="⚠️ Mỗi file tối đa 10 MB."; return;
- }
- if(files.reduce((s,f)=>s+f.size,0)>maxTotal){
-   status.style.color="#dc2626"; status.textContent="⚠️ Tổng dữ liệu nguồn tối đa 20 MB/lần."; return;
- }
- btn.disabled=true; btn.style.opacity=".65";
- status.style.color="#475569"; status.textContent="⏳ Đang gửi dữ liệu tạm thời cho AI phân tích...";
+ if(!files.length){status.style.color="#dc2626";status.textContent="⚠️ Chọn ít nhất 1 file PDF/DOCX/PPTX/TXT.";return}
+ const maxEach=10*1024*1024,maxTotal=18*1024*1024;
+ if(files.some(f=>f.size>maxEach)){status.style.color="#dc2626";status.textContent="⚠️ Mỗi file tối đa 10 MB.";return}
+ if(files.reduce((s,f)=>s+f.size,0)>maxTotal){status.style.color="#dc2626";status.textContent="⚠️ Tổng dữ liệu tối đa 18 MB/lần.";return}
+
+ btn.disabled=true;btn.style.opacity=".65";
+ status.style.color="#475569";status.textContent="⏳ Gemini 3.8 Flash đang đọc dữ liệu nguồn...";
  preview.style.display="none";
  try{
-   const payloadFiles=[];
-   for(const f of files){
-     const data=await fileToBase64(f);
-     payloadFiles.push({name:f.name,type:f.type||"application/octet-stream",data});
+   const form=new FormData();
+   form.append("subject_name",document.getElementById("subjectName").value.trim());
+   form.append("description",document.getElementById("description").value.trim());
+   files.forEach(f=>form.append("files",f,f.name));
+
+   const {data,error}=await window.supabaseClient.functions.invoke("generate-subject",{body:form});
+   if(error){
+     let detail="";
+     try{
+       const r=error.context;
+       if(r && typeof r.json==="function"){
+         const j=await r.json();
+         detail=j?.error||j?.message||"";
+       }
+     }catch(_){}
+     throw new Error(detail||error.message||"Edge Function lỗi.");
    }
-   const {data,error}=await window.supabaseClient.functions.invoke("generate-subject",{
-     body:{
-       subject_name:document.getElementById("subjectName").value.trim(),
-       description:document.getElementById("description").value.trim(),
-       files:payloadFiles
-     }
-   });
-   if(error) throw error;
-   if(!data?.ok || !data?.draft) throw new Error(data?.error||"AI không trả về cấu trúc hợp lệ.");
+   if(!data?.ok||!data?.draft) throw new Error(data?.error||"AI không trả cấu trúc hợp lệ.");
    aiDraft=data.draft;
-   if(aiDraft.subject_name && !document.getElementById("subjectName").value.trim())
+   if(aiDraft.subject_name&&!document.getElementById("subjectName").value.trim())
      document.getElementById("subjectName").value=aiDraft.subject_name;
-   if(aiDraft.description && !document.getElementById("description").value.trim())
+   if(aiDraft.description&&!document.getElementById("description").value.trim())
      document.getElementById("description").value=aiDraft.description;
    renderAIPreview(aiDraft);
-   status.style.color="#16a34a"; status.textContent="✓ AI đã phân tích xong. Hãy kiểm tra trước khi lưu.";
+   status.style.color="#16a34a";status.textContent="✓ AI đã phân tích xong. Kiểm tra bản xem trước trước khi lưu.";
  }catch(e){
    console.error(e);
    status.style.color="#dc2626";
-   status.textContent="❌ Không phân tích được: "+(e?.message||"Lỗi không xác định");
- }finally{
-   btn.disabled=false; btn.style.opacity="1";
- }
-}
-function fileToBase64(file){
- return new Promise((resolve,reject)=>{
-   const r=new FileReader();
-   r.onload=()=>resolve(String(r.result).split(",")[1]||"");
-   r.onerror=()=>reject(r.error);
-   r.readAsDataURL(file);
- });
+   status.textContent="❌ "+(e?.message||"Không phân tích được.");
+ }finally{btn.disabled=false;btn.style.opacity="1"}
 }
 function renderAIPreview(d){
  const p=document.getElementById("aiPreview");
