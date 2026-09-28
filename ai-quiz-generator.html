@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>AI Quiz Generator V3.7.26 TEST MASTER - CodeHub</title>
+<title>AI Quiz Generator V3.7.28 TEST MASTER - CodeHub</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/mammoth@1.8.0/mammoth.browser.min.js"></script>
@@ -12,7 +12,7 @@
 <script src="scripts/supabase-config.js"></script>
 <style>.drop.drag{border-color:#7c3aed;background:#f5f3ff}.busy{opacity:.6;pointer-events:none}.stem-svg svg{max-width:100%;height:auto;display:block;margin:auto}.math-wrap mjx-container{overflow-x:auto;overflow-y:hidden;max-width:100%}</style></head>
 <body class="bg-slate-50 text-slate-900"><main class="max-w-7xl mx-auto p-5">
-<div class="flex justify-between gap-4 mb-5"><div><h1 class="text-3xl font-bold">✨ AI Quiz Generator V3.7.26 • AI TEST MASTER</h1><p class="text-slate-500">Ma trận • Đặc tả • Đề kiểm tra • Đáp án • 4 mã đề theo khối • Chấm tự động • Word .docx</p></div><a href="quizzes.html" class="border bg-white rounded-xl px-4 py-2 h-fit">← Quiz</a></div>
+<div class="flex justify-between gap-4 mb-5"><div><h1 class="text-3xl font-bold">✨ AI Quiz Generator V3.7.28 • AI TEST MASTER</h1><p class="text-slate-500">Ma trận • Đặc tả • Đề kiểm tra • Đáp án • 4 mã đề theo khối • Chấm tự động • Word .docx</p></div><a href="quizzes.html" class="border bg-white rounded-xl px-4 py-2 h-fit">← Quiz</a></div>
 <div id="msg" class="hidden mb-4 p-3 rounded-xl"></div>
 <div class="grid lg:grid-cols-4 gap-5">
 <aside class="bg-white rounded-2xl shadow p-5 space-y-3">
@@ -113,7 +113,16 @@ let me,myRole="",generated=[],fileSources=[],structureSource=null,activeStructur
 const AI_FUNCTION="generate-quiz-ai-v3";
 const esc=v=>String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
 const cleanTitle=v=>String(v||"").replace(/^\s*\[?(?:BÀI|BAI)\s*\d*\s*:\s*/i,"").replace(/^\s*\[?TÀI LIỆU\s*:\s*/i,"").replace(/\]\s*$/,"").trim();
-const cleanQuestion=v=>String(v||"").replace(/^\s*Theo\s+\[(?:BÀI|BAI)\s*\d*\s*:\s*[^\]]+\]\s*[,,:-]?\s*/i,"").replace(/^\s*Theo\s+(?:Bài|bài)\s*\d*\s*[,,:-]?\s*/i,"").trim();
+const cleanStudentText=v=>String(v||"")
+ .replace(/^\s*(?:UNIT|Unit)\s*\d+[A-Za-z]?\s*[:.\-–—]\s*[^\n]*?(?=(?:\s{2,}|\n|$))/i,"")
+ .replace(/^\s*(?:UNIT|Unit)\s*\d+[A-Za-z]?\s*[:.\-–—]?\s*/i,"")
+ .replace(/\baccording\s+to\s+(?:the\s+)?(?:dialogue|conversation|reading(?:\s+text)?|passage|text|lesson)\s+in\s+Unit\s*\d+[A-Za-z]?\s*,?\s*/ig,"")
+ .replace(/\baccording\s+to\s+Unit\s*\d+[A-Za-z]?\s*,?\s*/ig,"")
+ .replace(/\bin\s+Unit\s*\d+[A-Za-z]?\b\s*,?\s*/ig,"")
+ .replace(/^\s*Theo\s+\[(?:BÀI|BAI)\s*\d*\s*:\s*[^\]]+\]\s*[,,:-]?\s*/i,"")
+ .replace(/^\s*Theo\s+(?:Bài|bài)\s*\d*\s*[,,:-]?\s*/i,"")
+ .replace(/\s+([?.!,;:])/g,"$1").replace(/\s{2,}/g," ").trim();
+const cleanQuestion=v=>cleanStudentText(v);
 const typeLabel=t=>({mcq4:"🔘 A–D",true_false:"☑ Đúng/Sai",short_answer:"✍️ Trả lời ngắn",numeric:"🔢 Đáp án số"}[t]||t);
 function typesetMath(root=document){if(window.MathJax?.typesetPromise)setTimeout(()=>MathJax.typesetPromise([root]).catch(()=>{}),0)}
 function sanitizeSvg(raw){
@@ -228,7 +237,7 @@ function localizeSectionTitle(v){
 }
 
 function isStructured(){return $("generationMode").value==="structure"}
-function dedupe(arr){let out=[];for(const raw of arr||[]){const q={...raw};q.question_text=cleanQuestion(q.question_text);q.source_title=cleanTitle(q.source_title);q.question_type=["mcq4","true_false","short_answer","numeric"].includes(q.question_type)?q.question_type:"mcq4";q.accepted_answers=Array.isArray(q.accepted_answers)?q.accepted_answers:[];q.accepted_units=Array.isArray(q.accepted_units)?q.accepted_units:[];q.section_title=localizeSectionTitle(q.section_title);q.visual_svg=sanitizeSvg(q.visual_svg);const dup=isStructured()?out.some(x=>x.section_key===q.section_key&&norm(x.question_text)===norm(q.question_text)):out.some(x=>similarity(x.question_text,q.question_text)>.82);if(!dup)out.push(q)}return out}
+function dedupe(arr){let out=[];for(const raw of arr||[]){const q={...raw};q.question_text=cleanQuestion(q.question_text);q.stimulus=cleanStudentText(q.stimulus);q.section_title=cleanStudentText(q.section_title);q.section_instruction=cleanStudentText(q.section_instruction);q.source_title=cleanTitle(q.source_title);q.question_type=["mcq4","true_false","short_answer","numeric"].includes(q.question_type)?q.question_type:"mcq4";q.accepted_answers=Array.isArray(q.accepted_answers)?q.accepted_answers:[];q.accepted_units=Array.isArray(q.accepted_units)?q.accepted_units:[];q.section_title=localizeSectionTitle(q.section_title);q.visual_svg=sanitizeSvg(q.visual_svg);const dup=isStructured()?out.some(x=>x.section_key===q.section_key&&norm(x.question_text)===norm(q.question_text)):out.some(x=>similarity(x.question_text,q.question_text)>.82);if(!dup)out.push(q)}return out}
 
 async function init(){
  me=(await s.auth.getUser()).data.user;
@@ -382,8 +391,8 @@ async function callAI(payload){
    session=refreshed.data?.session;
    if(refreshed.error||!session?.access_token)throw Error("Không làm mới được phiên đăng nhập. Hãy đăng nhập lại.");
  }
- const timeoutMessage=payload.mode==="analyze_structure"?"AI phân tích cấu trúc chưa phản hồi sau 150 giây. File mẫu đã đọc xong; hãy kiểm tra nhật ký generate-quiz-ai-v3 trên Supabase.":"AI tạo câu hỏi chưa phản hồi sau 150 giây. Hãy giảm số câu hoặc số trang rồi thử lại.";
- const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),150000);
+ const timeoutMessage=payload.mode==="analyze_structure"?"AI phân tích cấu trúc chưa phản hồi sau 300 giây. File mẫu đã đọc xong; hãy kiểm tra nhật ký generate-quiz-ai-v3 trên Supabase.":"AI tạo câu hỏi chưa phản hồi sau 300 giây. Hãy giảm số trang/tài liệu rồi thử lại.";
+ const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),300000);
  try{
    const result=await s.functions.invoke(AI_FUNCTION,{body:payload,headers:{Authorization:"Bearer "+session.access_token},signal:controller.signal});
    if(result.error){
@@ -427,7 +436,25 @@ $("generate").onclick=async()=>{
  if(isStructured()){activeStructure=scaleStructure(activeStructure,wanted);p.structure=JSON.parse(JSON.stringify(activeStructure));renderStructure()}
  $("generate").disabled=true;$("generate").textContent=isStructured()?"AI đang dựng đề theo cấu trúc...":"AI đang phân tích nguồn...";
  try{
-   let x=await callAI(p),raw=x.questions||[],target=isStructured()?p.structure:null;
+   let x,raw=[],target=isStructured()?p.structure:null;
+   // V3.7.28: đề tự do dài được chia thành nhiều lượt tối đa 20 câu để tránh timeout Edge/Gemini.
+   if(!isStructured()&&wanted>20){
+     const batchSize=20,totalBatches=Math.ceil(wanted/batchSize);
+     for(let batch=0;batch<totalBatches;batch++){
+       const need=Math.min(batchSize,wanted-raw.length);
+       if(need<=0)break;
+       $("generate").textContent=`AI đang tạo lượt ${batch+1}/${totalBatches} • ${need} câu...`;
+       const bp={...p,count:need,fileSources:p.fileSources.map(f=>({...f}))};
+       if(raw.length){
+         const existing=dedupe(raw).map((q,i)=>`${i+1}. ${q.question_text}`).join("\n");
+         bp.extraText += `\n\nCÁC CÂU ĐÃ CÓ Ở CÁC LƯỢT TRƯỚC - TUYỆT ĐỐI KHÔNG TẠO TRÙNG:\n${existing}`;
+       }
+       const bx=await callAI(bp); if(!x)x=bx;
+       raw=raw.concat(bx.questions||[]);
+     }
+   }else{
+     x=await callAI(p);raw=x.questions||[];
+   }
    generated=isStructured()?trimToStructure(dedupe(raw),target):dedupe(raw).slice(0,wanted);
    let attempts=0;
    while(generated.length<wanted&&attempts<3){
@@ -538,7 +565,7 @@ async function makeWord(includeAnswers=false){
 }
 
 // ===============================
-// V3.7.26 TEST MASTER: Ma trận • Đặc tả • 4 mã đề
+// V3.7.28 TEST MASTER: Ma trận • Đặc tả • 4 mã đề
 // ===============================
 function academicYearFromCourse(){
  const txt=$("course").selectedOptions[0]?.textContent||"";
