@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>AI Quiz Generator V3.7.28 TEST MASTER - CodeHub</title>
+<title>AI Quiz Generator V3.7.30 TEST MASTER - CodeHub</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/mammoth@1.8.0/mammoth.browser.min.js"></script>
@@ -12,7 +12,7 @@
 <script src="scripts/supabase-config.js"></script>
 <style>.drop.drag{border-color:#7c3aed;background:#f5f3ff}.busy{opacity:.6;pointer-events:none}.stem-svg svg{max-width:100%;height:auto;display:block;margin:auto}.math-wrap mjx-container{overflow-x:auto;overflow-y:hidden;max-width:100%}</style></head>
 <body class="bg-slate-50 text-slate-900"><main class="max-w-7xl mx-auto p-5">
-<div class="flex justify-between gap-4 mb-5"><div><h1 class="text-3xl font-bold">✨ AI Quiz Generator V3.7.28 • AI TEST MASTER</h1><p class="text-slate-500">Ma trận • Đặc tả • Đề kiểm tra • Đáp án • 4 mã đề theo khối • Chấm tự động • Word .docx</p></div><a href="quizzes.html" class="border bg-white rounded-xl px-4 py-2 h-fit">← Quiz</a></div>
+<div class="flex justify-between gap-4 mb-5"><div><h1 class="text-3xl font-bold">✨ AI Quiz Generator V3.7.30 • AI TEST MASTER</h1><p class="text-slate-500">Ma trận • Đặc tả • Đề kiểm tra • Đáp án • 4 mã đề theo khối • Chấm tự động • Word .docx</p></div><a href="quizzes.html" class="border bg-white rounded-xl px-4 py-2 h-fit">← Quiz</a></div>
 <div id="msg" class="hidden mb-4 p-3 rounded-xl"></div>
 <div class="grid lg:grid-cols-4 gap-5">
 <aside class="bg-white rounded-2xl shadow p-5 space-y-3">
@@ -236,6 +236,42 @@ function localizeSectionTitle(v){
  return map[k]||raw;
 }
 
+
+const V3730_BATCH_SIZE=10;
+const waitMs=ms=>new Promise(r=>setTimeout(r,ms));
+function splitFreeBatches(total){
+  const out=[];let left=total;
+  while(left>0){const n=Math.min(V3730_BATCH_SIZE,left);out.push({count:n,structure:null});left-=n}
+  return out;
+}
+function splitStructuredBatches(structure){
+  // Preserve section boundaries and shared stimuli. A section <=10 stays intact.
+  // Larger sections are split only when necessary, retaining the same section metadata.
+  const out=[];
+  for(const sec of (structure?.sections||[])){
+    let left=Math.max(0,Number(sec.question_count||0));
+    while(left>0){
+      const n=Math.min(V3730_BATCH_SIZE,left);
+      out.push({count:n,structure:{...structure,sections:[{...sec,question_count:n}]}});
+      left-=n;
+    }
+  }
+  return out;
+}
+function allocateBatchRatios(totalBatches,totalCount,r,u,a){
+  let remR=Math.round(totalCount*r/100),remU=Math.round(totalCount*u/100),remA=Math.max(0,totalCount-Math.round(totalCount*r/100)-Math.round(totalCount*u/100));
+  return totalBatches.map((b,i)=>{
+    const n=b.count,left=totalBatches.slice(i).reduce((z,x)=>z+x.count,0);
+    let br=i===totalBatches.length-1?remR:Math.round(n*remR/left);
+    let bu=i===totalBatches.length-1?remU:Math.round(n*remU/left);
+    br=Math.max(0,Math.min(n,br));bu=Math.max(0,Math.min(n-br,bu));
+    let ba=n-br-bu;
+    remR-=br;remU-=bu;remA-=ba;
+    const sum=Math.max(1,n);
+    return {...b,ratios:{remember:Math.round(br*100/sum),understand:Math.round(bu*100/sum),apply:0},_levels:{r:br,u:bu,a:ba}};
+  }).map(b=>({...b,ratios:{remember:Math.round(b._levels.r*100/b.count),understand:Math.round(b._levels.u*100/b.count),apply:100-Math.round(b._levels.r*100/b.count)-Math.round(b._levels.u*100/b.count)}}));
+}
+
 function isStructured(){return $("generationMode").value==="structure"}
 function dedupe(arr){let out=[];for(const raw of arr||[]){const q={...raw};q.question_text=cleanQuestion(q.question_text);q.stimulus=cleanStudentText(q.stimulus);q.section_title=cleanStudentText(q.section_title);q.section_instruction=cleanStudentText(q.section_instruction);q.source_title=cleanTitle(q.source_title);q.question_type=["mcq4","true_false","short_answer","numeric"].includes(q.question_type)?q.question_type:"mcq4";q.accepted_answers=Array.isArray(q.accepted_answers)?q.accepted_answers:[];q.accepted_units=Array.isArray(q.accepted_units)?q.accepted_units:[];q.section_title=localizeSectionTitle(q.section_title);q.visual_svg=sanitizeSvg(q.visual_svg);const dup=isStructured()?out.some(x=>x.section_key===q.section_key&&norm(x.question_text)===norm(q.question_text)):out.some(x=>similarity(x.question_text,q.question_text)>.82);if(!dup)out.push(q)}return out}
 
@@ -426,55 +462,68 @@ function trimToStructure(items,structure){if(!structure?.sections?.length)return
 function missingStructure(target,items){if(!target?.sections?.length)return null;const counts={};items.forEach(q=>counts[q.section_key]=(counts[q.section_key]||0)+1);const sections=target.sections.map(s=>({...s,question_count:Math.max(0,Number(s.question_count||0)-(counts[s.key]||0))})).filter(s=>s.question_count>0);return sections.length?{...target,sections,target_count:sections.reduce((a,x)=>a+x.question_count,0)}:null}
 
 $("generate").onclick=async()=>{
- const sum=+$("r").value + +$("u").value + +$("a").value,wanted=+$("count").value;
- if(sum!==100)return show("Tổng NB + TH + VD phải bằng 100%.");
- if(!Number.isInteger(wanted)||wanted<1||wanted>50)return show("Số câu phải từ 1 đến 50.");
- if(($("examType").value==="midterm"||$("examType").value==="final")&&(wanted<40||wanted>50))return show("Giữa kỳ/Cuối kỳ phải chọn 40–50 câu.");
- if(isStructured()&&!activeStructure)return show("Chế độ theo cấu trúc: hãy tải file và bấm AI phân tích cấu trúc trước.");
- const p=sourcePayload(wanted,{remember:+$("r").value,understand:+$("u").value,apply:+$("a").value});
- if(!p.lessonIds.length&&!p.fileSources.length&&!$("extra").value.trim())return show(pendingPdf?"PDF mới được chọn nhưng chưa đọc được nội dung. Hãy chọn phạm vi và bấm Đọc PDF trước.":"Hãy cung cấp NGUỒN KIẾN THỨC: chọn bài học, đọc PDF/DOCX/TXT hoặc dán văn bản. Không bắt buộc có bài học.");
- if(isStructured()){activeStructure=scaleStructure(activeStructure,wanted);p.structure=JSON.parse(JSON.stringify(activeStructure));renderStructure()}
- $("generate").disabled=true;$("generate").textContent=isStructured()?"AI đang dựng đề theo cấu trúc...":"AI đang phân tích nguồn...";
- try{
-   let x,raw=[],target=isStructured()?p.structure:null;
-   // V3.7.28: đề tự do dài được chia thành nhiều lượt tối đa 20 câu để tránh timeout Edge/Gemini.
-   if(!isStructured()&&wanted>20){
-     const batchSize=20,totalBatches=Math.ceil(wanted/batchSize);
-     for(let batch=0;batch<totalBatches;batch++){
-       const need=Math.min(batchSize,wanted-raw.length);
-       if(need<=0)break;
-       $("generate").textContent=`AI đang tạo lượt ${batch+1}/${totalBatches} • ${need} câu...`;
-       const bp={...p,count:need,fileSources:p.fileSources.map(f=>({...f}))};
-       if(raw.length){
-         const existing=dedupe(raw).map((q,i)=>`${i+1}. ${q.question_text}`).join("\n");
-         bp.extraText += `\n\nCÁC CÂU ĐÃ CÓ Ở CÁC LƯỢT TRƯỚC - TUYỆT ĐỐI KHÔNG TẠO TRÙNG:\n${existing}`;
-       }
-       const bx=await callAI(bp); if(!x)x=bx;
-       raw=raw.concat(bx.questions||[]);
-     }
-   }else{
-     x=await callAI(p);raw=x.questions||[];
-   }
-   generated=isStructured()?trimToStructure(dedupe(raw),target):dedupe(raw).slice(0,wanted);
-   let attempts=0;
-   while(generated.length<wanted&&attempts<3){
-     const existing=generated.map((q,i)=>`${i+1}. ${q.question_text}`).join("\n"),missing=wanted-generated.length;
-     $("generate").textContent=`AI đang bổ sung ${missing} câu còn thiếu...`;
-     const more={...p,count:missing,fileSources:p.fileSources.map(f=>({...f}))};
-     more.extraText += `\n\nCÁC CÂU ĐÃ CÓ - KHÔNG TẠO TRÙNG:\n${existing}`;
-     if(isStructured()){
-       const ms=missingStructure(target,generated);if(!ms)break;more.structure=ms;more.generationMode="structure";more.count=ms.target_count;
-     }
-     let y;
-     try{y=await callAI(more)}catch(e){render();show(`Đã giữ ${generated.length}/${wanted} câu. Lỗi khi bổ sung: ${e.message}`);return}
-     raw=raw.concat(y.questions||[]);
-     generated=isStructured()?trimToStructure(dedupe(raw),target):dedupe(raw).slice(0,wanted);
-     attempts++;
-   }
-   render();
-   const lang=$("language").value==="auto"?"Tự động":($("language").value==="en"?"English":"Tiếng Việt");
-   show(`AI đã tạo ${generated.length}/${wanted} câu${isStructured()?" theo file cấu trúc":""} • Ngôn ngữ: ${lang} • ${x.model||"Gemini"}. Hãy duyệt trước khi lưu.`,generated.length>0);
- }catch(e){show(e.message)}finally{$("generate").disabled=false;$("generate").textContent="✨ Tạo câu hỏi"}
+  const btn=$("generate");btn.disabled=true;btn.classList.add("busy");
+  try{
+    const courseId=$("course").value;
+    if(!courseId)throw Error("Hãy chọn Khóa học.");
+    const lessonIds=[...document.querySelectorAll(".lp:checked")].map(x=>x.value);
+    const extraText=$("extra").value.trim();
+    if(!lessonIds.length&&!extraText&&!fileSources.length)throw Error("Hãy chọn bài học, tài liệu hoặc dán văn bản.");
+    if(isStructured()&&!activeStructure)throw Error("Hãy phân tích file cấu trúc đề trước.");
+
+    const total=+$("count").value;
+    const r=+$("r").value,u=+$("u").value,a=+$("a").value;
+    if(r+u+a!==100)throw Error("Tổng NB + TH + VD phải bằng 100%.");
+
+    const selectedTypes=[];
+    if($("typeMcq").checked)selectedTypes.push("mcq4");
+    if($("typeTF").checked)selectedTypes.push("true_false");
+    if($("typeShort").checked)selectedTypes.push("short_answer");
+    if($("typeNumeric").checked)selectedTypes.push("numeric");
+    if(!isStructured()&&!selectedTypes.length)throw Error("Hãy chọn ít nhất một dạng câu.");
+
+    let batches=isStructured()?splitStructuredBatches(activeStructure):splitFreeBatches(total);
+    batches=allocateBatchRatios(batches,total,r,u,a);
+
+    const all=[];
+    for(let i=0;i<batches.length;i++){
+      const b=batches[i];
+      show(`AI đang tạo lượt ${i+1}/${batches.length} • ${b.count} câu...`,true);
+      const payload={
+        mode:"generate",courseTitle:selectedCourseBase(),language:$("language").value,
+        generationMode:isStructured()?"structure":"free",
+        lessonIds,extraText,fileSources,count:b.count,ratios:b.ratios,
+        questionTypes:selectedTypes,allowVisuals:$("allowVisuals").checked,
+        structure:b.structure,excludeQuestions:all.map(q=>q.question_text).slice(-60)
+      };
+      let success=false,lastErr=null;
+      for(let attempt=1;attempt<=3&&!success;attempt++){
+        try{
+          const timeout=new Promise((_,reject)=>setTimeout(()=>reject(Error("AI batch timeout")),90000));
+          const invoke=s.functions.invoke(AI_FUNCTION,{body:payload});
+          const result=await Promise.race([invoke,timeout]);
+          if(result.error)throw Error(result.error?.context?.body?.error||result.error.message||"Lỗi Edge Function");
+          const data=result.data||{};
+          if(data?.success===false)throw Error(data.error||"AI không tạo được câu hỏi.");
+          all.push(...(data.questions||[]));success=true;
+        }catch(err){
+          lastErr=err;
+          if(attempt<3){
+            show(`Lượt ${i+1}/${batches.length} tạm lỗi. Đang thử lại ${attempt+1}/3...`,true);
+            await waitMs(attempt*2500);
+          }
+        }
+      }
+      if(!success)throw lastErr||Error(`Không tạo được lượt ${i+1}.`);
+    }
+
+    generated=dedupe(all).slice(0,total);
+    if(generated.length<total)show(`Đã tạo ${generated.length}/${total} câu sau khi loại câu trùng. Có thể bấm Tạo câu hỏi lại nếu cần bổ sung.`);
+    else show(`✓ Hoàn tất ${generated.length}/${total} câu. Đã ghép ${batches.length} lượt nhỏ để giảm tải máy chủ.`,true);
+    render();
+  }catch(e){
+    show(e?.name==="AbortError"?"AI chưa phản hồi trong thời gian cho phép ở một lượt nhỏ. Hãy thử lại.":(e.message||String(e)));
+  }finally{btn.disabled=false;btn.classList.remove("busy")}
 };
 
 function syncOne(i){
@@ -565,7 +614,7 @@ async function makeWord(includeAnswers=false){
 }
 
 // ===============================
-// V3.7.28 TEST MASTER: Ma trận • Đặc tả • 4 mã đề
+// V3.7.30 TEST MASTER: Ma trận • Đặc tả • 4 mã đề
 // ===============================
 function academicYearFromCourse(){
  const txt=$("course").selectedOptions[0]?.textContent||"";
@@ -698,7 +747,7 @@ async function buildFourCodeAnswerDoc(variants){
 async function exportMatrixOnly(){try{const blob=await buildMatrixDoc();downloadBlob(blob,`01_MA_TRAN_${examTitleText().replace(/[\/:*?"<>|]+/g,"_")}.docx`);show("Đã xuất Ma trận Word.",true)}catch(e){show("Lỗi xuất Ma trận: "+e.message)}}
 async function exportSpecOnly(){try{const blob=await buildSpecDoc();downloadBlob(blob,`02_DAC_TA_${examTitleText().replace(/[\/:*?"<>|]+/g,"_")}.docx`);show("Đã xuất Bản đặc tả Word.",true)}catch(e){show("Lỗi xuất Đặc tả: "+e.message)}}
 async function exportExamPack(){
- try{const picks=selectedQuestionIndexes();if(!picks.length)throw Error("Hãy chọn câu hỏi trước.");dossierRows(picks);if(!window.JSZip)throw Error("Không tải được JSZip.");const btn=$('exportPack');btn.disabled=true;btn.textContent='⏳ Đang tạo hồ sơ...';const zip=new JSZip(),safe=examTitleText().replace(/[\/:*?"<>|]+/g,"_");const matrix=await buildMatrixDoc(),spec=await buildSpecDoc();zip.file(`01_MA_TRAN_${safe}.docx`,matrix);zip.file(`02_DAC_TA_${safe}.docx`,spec);const variants=selectedExamCodes().map(c=>makeExamVariant(picks,c));for(let i=0;i<variants.length;i++){const blob=await buildVariantExamDoc(variants[i]);zip.file(`${String(3+i).padStart(2,'0')}_DE_MA_${variants[i].code}_${safe}.docx`,blob)}const ans=await buildFourCodeAnswerDoc(variants);zip.file(`07_DAP_AN_4_MA_${safe}.docx`,ans);const manifest=`CODEHUB V3.7.26 AI TEST MASTER\n\nBộ hồ sơ gồm:\n01 Ma trận\n02 Bản đặc tả\n03-06 Đề mã ${variants.map(v=>v.code).join(", ")}\n07 Đáp án 4 mã\n\nNăm học: ${academicYearFromCourse()}\nKhóa học: ${selectedCourseBase()}\nSố câu: ${picks.length}\nThời gian: ${+$('wordTime').value||45} phút\n\nLưu ý: Ma trận/đặc tả được tự động tổng hợp từ đề; giáo viên cần duyệt trước khi nộp.`;zip.file('README.txt',manifest);const out=await zip.generateAsync({type:'blob'});downloadBlob(out,`CodeHub_TEST_MASTER_${safe}_4_MA.zip`);show(`✓ Đã tạo bộ hồ sơ: Ma trận + Đặc tả + 4 mã đề ${variants.map(v=>v.code).join(", ")} + Đáp án.`,true)}catch(e){show("Lỗi tạo bộ hồ sơ: "+e.message)}finally{const btn=$('exportPack');if(btn){btn.disabled=false;btn.textContent='📦 Bộ 4 mã đề'}}
+ try{const picks=selectedQuestionIndexes();if(!picks.length)throw Error("Hãy chọn câu hỏi trước.");dossierRows(picks);if(!window.JSZip)throw Error("Không tải được JSZip.");const btn=$('exportPack');btn.disabled=true;btn.textContent='⏳ Đang tạo hồ sơ...';const zip=new JSZip(),safe=examTitleText().replace(/[\/:*?"<>|]+/g,"_");const matrix=await buildMatrixDoc(),spec=await buildSpecDoc();zip.file(`01_MA_TRAN_${safe}.docx`,matrix);zip.file(`02_DAC_TA_${safe}.docx`,spec);const variants=selectedExamCodes().map(c=>makeExamVariant(picks,c));for(let i=0;i<variants.length;i++){const blob=await buildVariantExamDoc(variants[i]);zip.file(`${String(3+i).padStart(2,'0')}_DE_MA_${variants[i].code}_${safe}.docx`,blob)}const ans=await buildFourCodeAnswerDoc(variants);zip.file(`07_DAP_AN_4_MA_${safe}.docx`,ans);const manifest=`CODEHUB V3.7.30 AI TEST MASTER\n\nBộ hồ sơ gồm:\n01 Ma trận\n02 Bản đặc tả\n03-06 Đề mã ${variants.map(v=>v.code).join(", ")}\n07 Đáp án 4 mã\n\nNăm học: ${academicYearFromCourse()}\nKhóa học: ${selectedCourseBase()}\nSố câu: ${picks.length}\nThời gian: ${+$('wordTime').value||45} phút\n\nLưu ý: Ma trận/đặc tả được tự động tổng hợp từ đề; giáo viên cần duyệt trước khi nộp.`;zip.file('README.txt',manifest);const out=await zip.generateAsync({type:'blob'});downloadBlob(out,`CodeHub_TEST_MASTER_${safe}_4_MA.zip`);show(`✓ Đã tạo bộ hồ sơ: Ma trận + Đặc tả + 4 mã đề ${variants.map(v=>v.code).join(", ")} + Đáp án.`,true)}catch(e){show("Lỗi tạo bộ hồ sơ: "+e.message)}finally{const btn=$('exportPack');if(btn){btn.disabled=false;btn.textContent='📦 Bộ 4 mã đề'}}
 }
 
 $("exportStudentWord").onclick=()=>makeWord(false);$("exportAnswerWord").onclick=()=>makeWord(true);$("exportMatrix").onclick=exportMatrixOnly;$("exportSpec").onclick=exportSpecOnly;$("exportPack").onclick=exportExamPack;
