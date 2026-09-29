@@ -129,7 +129,7 @@
             </div>
 
             <div class="mt-10">
-                <div id="homepage-course-grid" class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+                <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
                     <!-- Course Card 1 -->
                     <div
                         class="bg-white dark:bg-gray-700 overflow-hidden shadow rounded-lg hover:shadow-lg transition duration-300 transform hover:-translate-y-1 cursor-pointer">
@@ -878,73 +878,6 @@
     <script src="scripts/supabase-config.js"></script>
     <script src="scripts/auth-ui.js"></script>
     <script>
-
-    // CodeHub V3.4 - tự động đưa môn học trong Supabase ra trang chính
-    async function loadSubjectsOnHomepage() {
-      const client = window.supabaseClient;
-      const grid = document.getElementById('homepage-course-grid');
-      if (!client || !grid) return;
-
-      const escSubject = (v='') => String(v)
-        .replaceAll('&','&amp;').replaceAll('<','&lt;')
-        .replaceAll('>','&gt;').replaceAll('"','&quot;')
-        .replaceAll("'",'&#039;');
-
-      try {
-        const { data, error } = await client
-          .from('subjects')
-          .select('id,subject_name,description')
-          .order('subject_name');
-
-        if (error) {
-          console.error('Không tải được môn học:', error);
-          return;
-        }
-
-        const existingNames = new Set(
-          [...grid.querySelectorAll('h3')]
-            .map(x => (x.textContent || '').trim().toLocaleLowerCase('vi-VN'))
-        );
-
-        const fragment = document.createDocumentFragment();
-
-        (data || []).forEach(subject => {
-          const name = String(subject.subject_name || '').trim();
-          if (!name) return;
-
-          // Không tạo thẻ trùng với các môn/khóa học đã viết sẵn trên trang chủ.
-          if (existingNames.has(name.toLocaleLowerCase('vi-VN'))) return;
-
-          const wrap = document.createElement('div');
-          wrap.innerHTML = `
-            <div class="bg-white dark:bg-gray-700 overflow-hidden shadow rounded-lg hover:shadow-lg transition duration-300 transform hover:-translate-y-1 cursor-pointer border-l-4 border-blue-500"
-                 data-subject-id="${escSubject(subject.id)}">
-              <div class="px-4 py-5 sm:p-6">
-                <div class="flex items-center">
-                  <div class="flex-shrink-0 bg-blue-500 rounded-md p-3 text-white text-xl">📘</div>
-                  <h3 class="ml-3 text-lg font-medium text-gray-900 dark:text-white">${escSubject(name)}</h3>
-                </div>
-                <div class="mt-4">
-                  <p class="text-sm text-gray-500 dark:text-gray-300">${escSubject(subject.description || 'Môn học trên CodeHub')}</p>
-                </div>
-                <div class="mt-4">
-                  <a href="courses.html?subject_id=${encodeURIComponent(subject.id)}"
-                     class="text-primary hover:text-blue-700 font-medium">Xem khóa học &rarr;</a>
-                </div>
-              </div>
-            </div>`;
-          fragment.appendChild(wrap.firstElementChild);
-        });
-
-        // Môn tạo từ subjects.html xuất hiện ở đầu danh sách.
-        grid.prepend(fragment);
-      } catch (e) {
-        console.error('Lỗi hiển thị môn học trên trang chính:', e);
-      }
-    }
-
-    document.addEventListener('DOMContentLoaded', loadSubjectsOnHomepage);
-
     // CodeHub role-aware navigation patch
     document.addEventListener('DOMContentLoaded', async () => {
       const client = window.supabaseClient;
