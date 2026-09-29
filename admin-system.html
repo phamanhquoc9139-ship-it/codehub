@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Sao lưu & Khôi phục V3.7.22 | CodeHub</title>
+<title>Sao lưu & Khôi phục V3.7.23 | CodeHub</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="scripts/supabase-config.js"></script>
@@ -10,7 +10,7 @@
 <body class="bg-slate-50 text-slate-900">
 <header class="bg-white border-b sticky top-0 z-20">
   <div class="max-w-7xl mx-auto px-5 py-4 flex flex-wrap gap-3 justify-between items-center">
-    <div><div class="text-2xl font-black text-blue-600">&lt;/&gt; CodeHub</div><div class="text-sm text-slate-500">V3.7.22 • Nhật ký • Sao lưu • Khôi phục an toàn</div></div>
+    <div><div class="text-2xl font-black text-blue-600">&lt;/&gt; CodeHub</div><div class="text-sm text-slate-500">V3.7.23 • Nhật ký • Sao lưu • Khôi phục an toàn</div></div>
     <div class="flex gap-2"><a href="teacher.html" class="border bg-white px-4 py-2 rounded-xl font-bold">← Dashboard</a><button id="logout" class="bg-slate-900 text-white px-4 py-2 rounded-xl font-bold">Đăng xuất</button></div>
   </div>
 </header>
@@ -26,7 +26,7 @@
     <div class="bg-white rounded-2xl shadow p-5"><div class="text-slate-500">Tổng nhật ký</div><div id="totalLogs" class="text-3xl font-black mt-1">—</div></div>
     <div class="bg-white rounded-2xl shadow p-5"><div class="text-slate-500">Hôm nay</div><div id="todayLogs" class="text-3xl font-black mt-1 text-blue-600">—</div></div>
     <div class="bg-white rounded-2xl shadow p-5"><div class="text-slate-500">7 ngày</div><div id="weekLogs" class="text-3xl font-black mt-1 text-violet-600">—</div></div>
-    <div class="bg-white rounded-2xl shadow p-5"><div class="text-slate-500">Trạng thái</div><div class="text-xl font-black mt-2 text-emerald-600">● V3.7.22 hoạt động</div></div>
+    <div class="bg-white rounded-2xl shadow p-5"><div class="text-slate-500">Trạng thái</div><div class="text-xl font-black mt-2 text-emerald-600">● V3.7.23 hoạt động</div></div>
   </section>
 
   <div class="grid lg:grid-cols-3 gap-5">
@@ -145,22 +145,7 @@ async function saveBackupJson(obj){
   const name=`CodeHub_backup_${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}_${pad(d.getHours())}-${pad(d.getMinutes())}.json`;
   const text=JSON.stringify(obj,null,2);
 
-  // Edge/Chrome trên HTTPS: cho người dùng tự chọn đúng thư mục và tên file.
-  if ("showSaveFilePicker" in window) {
-    const handle=await window.showSaveFilePicker({
-      suggestedName:name,
-      types:[{
-        description:"CodeHub Backup JSON",
-        accept:{"application/json":[".json"]}
-      }]
-    });
-    const writable=await handle.createWritable();
-    await writable.write(text);
-    await writable.close();
-    return {name, mode:"save-as"};
-  }
-
-  // Fallback cho trình duyệt không hỗ trợ Save As API.
+  // V3.7.23: dùng cơ chế tải xuống chuẩn để tránh lỗi user gesture của showSaveFilePicker().
   const blob=new Blob([text],{type:"application/json;charset=utf-8"});
   const url=URL.createObjectURL(blob);
   const a=document.createElement("a");
@@ -184,11 +169,11 @@ $("backupBtn").onclick=async()=>{
     const b=await api("GET");
     currentBackup=b;
 
-    $("backupBtn").textContent="Chọn nơi lưu...";
+    $("backupBtn").textContent="Đang tải file...";
     const saved=await saveBackupJson(b);
 
     const total=Object.values(b.counts||{}).reduce((a,v)=>a+(+v||0),0);
-    $("backupInfo").innerHTML=`<b>Đã lưu:</b> ${esc(saved.name)}<br><span class="text-xs">${total} bản ghi • ${saved.mode==="save-as"?"Đã chọn vị trí lưu":"Đã gửi tới trình tải xuống"}</span>`;
+    $("backupInfo").innerHTML=`<b>Đã lưu:</b> ${esc(saved.name)}<br><span class="text-xs">${total} bản ghi • Đã gửi tới trình tải xuống</span>`;
     show("Backup đã được lưu thành file JSON.",true);
   }catch(e){
     if(e?.name==="AbortError"){
