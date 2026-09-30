@@ -1,0 +1,2700 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Công Nghệ 10 (Thiết Kế & Công Nghệ) - Chương trình GDPT 2018</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            dark: {
+              bg: '#0F172A',
+              surface: '#1E293B',
+              card: '#1E293B'
+            }
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <style>
+    .sidebar-scroll::-webkit-scrollbar { width: 4px; }
+    .sidebar-scroll::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 4px; }
+    .dark .sidebar-scroll::-webkit-scrollbar-thumb { background: #475569; }
+  </style>
+</head>
+<body class="bg-gray-50 dark:bg-dark-bg text-gray-900 dark:text-gray-100 min-h-screen flex flex-col font-sans transition-colors duration-200">
+
+  <!-- Header Navigation -->
+  <header class="sticky top-0 z-50 bg-white/90 dark:bg-dark-surface/90 backdrop-blur border-b border-gray-200 dark:border-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <a href="../index.html" class="flex items-center gap-2 text-indigo-600 dark:text-indigo-400 font-bold text-lg hover:opacity-90">
+          <i class="fa-solid fa-graduation-cap text-xl"></i>
+          <span class="hidden sm:inline">CodeHub</span>
+        </a>
+        <div class="h-5 w-px bg-gray-300 dark:bg-gray-700"></div>
+                                <div class="flex items-center gap-1.5 bg-gray-100 dark:bg-gray-800 p-1 rounded-xl text-xs sm:text-sm font-semibold overflow-x-auto max-w-[60vw] sm:max-w-none">
+          <a href="congnghe_trongtrot_10.html" class="px-2.5 py-1 rounded-lg text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white flex items-center gap-1 shrink-0">
+            <i class="fa-solid fa-wheat-awn"></i> Trồng Trọt 10
+          </a>
+          <a href="congnghe_10.html" class="px-2.5 py-1 rounded-lg bg-white dark:bg-gray-700 shadow-sm text-emerald-600 dark:text-emerald-400 flex items-center gap-1 shrink-0">
+            <i class="fa-solid fa-compass-drafting"></i> Thiết Kế 10
+          </a>
+          <a href="congnghe_cokhi_11.html" class="px-2.5 py-1 rounded-lg text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white flex items-center gap-1 shrink-0">
+            <i class="fa-solid fa-gears"></i> Cơ Khí 11
+          </a>
+          <a href="congnghe_channuoi_11.html" class="px-2.5 py-1 rounded-lg text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white flex items-center gap-1 shrink-0">
+            <i class="fa-solid fa-cow"></i> Chăn Nuôi 11
+          </a>
+          <a href="congnghe_lamnghiep_thuysan_12.html" class="px-2.5 py-1 rounded-lg text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white flex items-center gap-1 shrink-0">
+            <i class="fa-solid fa-tree"></i> Lâm Nghiệp - Thủy Sản 12
+          </a>
+          <a href="congnghe_dien.html" class="px-2.5 py-1 rounded-lg text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white flex items-center gap-1 shrink-0">
+            <i class="fa-solid fa-bolt"></i> Điện - Điện Tử 12
+          </a>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <button id="themeToggle" class="p-2 rounded-xl text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none" title="Chuyển chế độ sáng/tối">
+          <i class="fa-solid fa-moon dark:hidden text-lg"></i>
+          <i class="fa-solid fa-sun hidden dark:inline text-lg text-amber-400"></i>
+        </button>
+        <button id="mobileMenuBtn" class="lg:hidden p-2 rounded-xl text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800">
+          <i class="fa-solid fa-bars text-lg"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="bg-gradient-to-r from-emerald-700 via-teal-700 to-indigo-800 text-white py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto text-center">
+      <span class="inline-block px-3 py-1 bg-white/20 backdrop-blur rounded-full text-xs sm:text-sm font-semibold mb-3">
+        Chương trình Giáo dục Phổ thông 2018 - Định hướng Công nghiệp
+      </span>
+      <h1 class="text-2xl sm:text-4xl font-extrabold tracking-tight mb-3">
+        Công Nghệ 10: Thiết Kế & Công Nghệ
+      </h1>
+      <p class="max-w-3xl mx-auto text-sm sm:text-base text-emerald-100 leading-relaxed">
+        Toàn bộ 21 bài học chuẩn SGK Kết nối tri thức: Đại cương về công nghệ (CMCN 4.0, Hệ thống kĩ thuật, In 3D, AI), Vẽ kĩ thuật (Hình chiếu vuông góc, Hình cắt, Hình chiếu trục đo, Phối cảnh, CAD) và Quy trình thiết kế kĩ thuật công thái học.
+      </p>
+    </div>
+  </section>
+
+  <!-- Main Content Layout -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full">
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+      
+      <!-- Sticky Sidebar -->
+      <aside class="hidden lg:block lg:col-span-1">
+        <div class="sticky top-24 bg-white dark:bg-dark-surface rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-4">
+          <h3 class="text-sm font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-3 flex items-center justify-between">
+            <span>Danh mục 21 bài học</span>
+            <span class="text-xs bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300 px-2 py-0.5 rounded-full font-bold">21 bài</span>
+          </h3>
+          <ul class="sidebar-scroll max-h-[calc(100vh-180px)] overflow-y-auto space-y-1 pr-1">
+            
+      <li>
+        <a href="#bai-1" class="sidebar-link flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 shrink-0"></span>
+          <span class="truncate">Bài 1: Công nghệ và đời sống</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="#bai-2" class="sidebar-link flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+          <span class="w-2.5 h-2.5 rounded-full bg-teal-500 shrink-0"></span>
+          <span class="truncate">Bài 2: Hệ thống kĩ thuật</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="#bai-3" class="sidebar-link flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+          <span class="w-2.5 h-2.5 rounded-full bg-cyan-500 shrink-0"></span>
+          <span class="truncate">Bài 3: Công nghệ phổ biến</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="#bai-4" class="sidebar-link flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+          <span class="w-2.5 h-2.5 rounded-full bg-blue-500 shrink-0"></span>
+          <span class="truncate">Bài 4: Một số công nghệ mới</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="#bai-5" class="sidebar-link flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+          <span class="w-2.5 h-2.5 rounded-full bg-indigo-500 shrink-0"></span>
+          <span class="truncate">Bài 5: Đánh giá công nghệ</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="#bai-6" class="sidebar-link flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+          <span class="w-2.5 h-2.5 rounded-full bg-purple-500 shrink-0"></span>
+          <span class="truncate">Bài 6: Cách mạng công nghiệp</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="#bai-7" class="sidebar-link flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+          <span class="w-2.5 h-2.5 rounded-full bg-rose-500 shrink-0"></span>
+          <span class="truncate">Bài 7: Ngành nghề kĩ thuật, công nghệ</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="#bai-8" class="sidebar-link flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+          <span class="w-2.5 h-2.5 rounded-full bg-pink-500 shrink-0"></span>
+          <span class="truncate">Bài 8: Bản vẽ kĩ thuật và tiêu chuẩn trình bày bản vẽ kĩ thuật</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="#bai-9" class="sidebar-link flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+          <span class="w-2.5 h-2.5 rounded-full bg-amber-500 shrink-0"></span>
+          <span class="truncate">Bài 9: Hình chiếu vuông góc</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="#bai-10" class="sidebar-link flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+          <span class="w-2.5 h-2.5 rounded-full bg-lime-500 shrink-0"></span>
+          <span class="truncate">Bài 10: Hình cắt và mặt cắt</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="#bai-11" class="sidebar-link flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+          <span class="w-2.5 h-2.5 rounded-full bg-violet-500 shrink-0"></span>
+          <span class="truncate">Bài 11: Hình chiếu trục đo</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="#bai-12" class="sidebar-link flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+          <span class="w-2.5 h-2.5 rounded-full bg-sky-500 shrink-0"></span>
+          <span class="truncate">Bài 12: Hình chiếu phối cảnh</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="#bai-13" class="sidebar-link flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+          <span class="w-2.5 h-2.5 rounded-full bg-fuchsia-500 shrink-0"></span>
+          <span class="truncate">Bài 13: Biểu diễn quy ước ren</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="#bai-14" class="sidebar-link flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+          <span class="w-2.5 h-2.5 rounded-full bg-orange-500 shrink-0"></span>
+          <span class="truncate">Bài 14: Bản vẽ cơ khí</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="#bai-15" class="sidebar-link flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+          <span class="w-2.5 h-2.5 rounded-full bg-green-500 shrink-0"></span>
+          <span class="truncate">Bài 15: Bản vẽ xây dựng</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="#bai-16" class="sidebar-link flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+          <span class="w-2.5 h-2.5 rounded-full bg-yellow-500 shrink-0"></span>
+          <span class="truncate">Bài 16: Vẽ kĩ thuật với sự trợ giúp của máy tính</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="#bai-17" class="sidebar-link flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 shrink-0"></span>
+          <span class="truncate">Bài 17: Khái quát về thiết kế kĩ thuật</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="#bai-18" class="sidebar-link flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+          <span class="w-2.5 h-2.5 rounded-full bg-teal-500 shrink-0"></span>
+          <span class="truncate">Bài 18: Quy trình thiết kế kĩ thuật</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="#bai-19" class="sidebar-link flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+          <span class="w-2.5 h-2.5 rounded-full bg-cyan-500 shrink-0"></span>
+          <span class="truncate">Bài 19: Những yếu tố ảnh hưởng đến thiết kế kĩ thuật</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="#bai-20" class="sidebar-link flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+          <span class="w-2.5 h-2.5 rounded-full bg-blue-500 shrink-0"></span>
+          <span class="truncate">Bài 20: Nguyên tắc thiết kế kĩ thuật</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="#bai-21" class="sidebar-link flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+          <span class="w-2.5 h-2.5 rounded-full bg-indigo-500 shrink-0"></span>
+          <span class="truncate">Bài 21: Phương pháp, phương tiện hỗ trợ thiết kế kĩ thuật</span>
+        </a>
+      </li>
+    
+          </ul>
+        </div>
+      </aside>
+
+      <!-- Main Lesson Articles -->
+      <main class="lg:col-span-3 space-y-8">
+        
+      <article id="bai-1" class="bg-white dark:bg-dark-surface rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 border-t-4 border-emerald-500 p-6 sm:p-8 transition-all hover:shadow-md">
+        <!-- Lesson Header -->
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-4 mb-6 border-b border-gray-100 dark:border-gray-800">
+          <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300">
+            Chương trình GDPT 2018
+          </span>
+          <span class="text-xs font-medium text-gray-500 dark:text-gray-400">
+            Bài 1 / 21
+          </span>
+        </div>
+
+        <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-4">
+          Bài 1: Công nghệ và đời sống
+        </h2>
+
+        <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-800/40 border border-gray-100 dark:border-gray-700 mb-6">
+          <p class="text-xs font-semibold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 mb-1">Mục tiêu bài học</p>
+          <p class="text-sm sm:text-base text-gray-600 dark:text-gray-300">Khái niệm khoa học, kĩ thuật, công nghệ và mối quan hệ biện chứng giữa chúng; Tác động tích cực và mặt trái của công nghệ đối với đời sống con người, kinh tế và môi trường tự nhiên.</p>
+        </div>
+
+        <!-- Lesson Sections -->
+        <div class="space-y-6">
+          
+      <div class="mb-6">
+        <h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+          <span class="w-1.5 h-5 bg-emerald-500 rounded-full inline-block"></span>
+          1. Khái niệm Khoa học, Kĩ thuật và Công nghệ
+        </h3>
+        <div class="text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed pl-2 sm:pl-3">
+          
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3 my-3 text-sm">
+            <div class="p-3.5 rounded-lg bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800">
+              <strong class="text-blue-800 dark:text-blue-300">Khoa học (Science):</strong>
+              <p class="mt-1">Hệ thống tri thức về các định luật, cấu trúc và cách vận hành của thế giới tự nhiên và xã hội, được tích luỹ thông qua quan sát, thực nghiệm và nghiên cứu lí thuyết.</p>
+            </div>
+            <div class="p-3.5 rounded-lg bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800">
+              <strong class="text-indigo-800 dark:text-indigo-300">Kĩ thuật (Engineering):</strong>
+              <p class="mt-1">Việc ứng dụng các tri thức khoa học vào thực tiễn để thiết kế, chế tạo, xây dựng, vận hành các công trình, máy móc, hệ thống phục vụ nhu cầu con người.</p>
+            </div>
+            <div class="p-3.5 rounded-lg bg-purple-50 dark:bg-purple-950/40 border border-purple-200 dark:border-purple-800">
+              <strong class="text-purple-800 dark:text-purple-300">Công nghệ (Technology):</strong>
+              <p class="mt-1">Giải pháp, quy trình, bí quyết kĩ thuật có hoặc không kèm công cụ, phương tiện dùng để biến đổi nguồn lực thành sản phẩm hoàn thiện phục vụ đời sống.</p>
+            </div>
+          </div>
+          <p class="text-sm text-gray-600 dark:text-gray-300"><strong>Mối quan hệ:</strong> Khoa học tạo ra tri thức $\rightarrow$ Kĩ thuật ứng dụng tri thức $\rightarrow$ Công nghệ hiện thực hoá giải pháp sản xuất $\rightarrow$ Công nghệ tạo ra công cụ nghiên cứu mới thúc đẩy Khoa học phát triển.</p>
+        
+        </div>
+      </div>
+    
+      <div class="mb-6">
+        <h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+          <span class="w-1.5 h-5 bg-emerald-500 rounded-full inline-block"></span>
+          2. Tác động của công nghệ đối với tự nhiên, con người và xã hội
+        </h3>
+        <div class="text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed pl-2 sm:pl-3">
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-2 text-sm">
+            <div class="p-3.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800">
+              <h4 class="font-bold text-emerald-800 dark:text-emerald-300 mb-1">Tác động tích cực</h4>
+              <ul class="space-y-1 list-disc list-inside">
+                <li>Nâng cao năng suất lao động, hạ giá thành sản phẩm.</li>
+                <li>Nâng cao chất lượng cuộc sống (y tế, giáo dục, giao thông, giải trí).</li>
+                <li>Mở rộng khả năng nhận thức của con người vào vũ trụ và thế giới vi mô.</li>
+              </ul>
+            </div>
+            <div class="p-3.5 rounded-xl bg-rose-50 dark:bg-rose-950/30 border border-rose-200 dark:border-rose-800">
+              <h4 class="font-bold text-rose-800 dark:text-rose-300 mb-1">Mặt trái (Tiêu cực)</h4>
+              <ul class="space-y-1 list-disc list-inside">
+                <li>Ô nhiễm môi trường, biến đổi khí hậu do khí thải và rác thải công nghiệp.</li>
+                <li>Cạn kiệt tài nguyên thiên nhiên nếu khai thác quá mức.</li>
+                <li>Nguy cơ mất an toàn thông tin số và giảm vận động thể chất.</li>
+              </ul>
+            </div>
+          </div>
+        
+        </div>
+      </div>
+    
+        </div>
+
+        <!-- Summary Callout -->
+        <div class="mt-8 p-4 sm:p-5 rounded-xl bg-emerald-50/60 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-800/50">
+          <h4 class="font-bold text-emerald-900 dark:text-emerald-200 text-sm sm:text-base mb-1.5 flex items-center gap-2">
+            <svg class="w-5 h-5 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            Ghi nhớ trọng tâm
+          </h4>
+          <p class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">Khoa học khám phá quy luật, Kĩ thuật ứng dụng tri thức và Công nghệ là giải pháp quy trình tạo sản phẩm. Công nghệ thúc đẩy kinh tế xã hội vượt bậc nhưng đòi hỏi phát triển có trách nhiệm bảo vệ môi trường.</p>
+        </div>
+
+        <!-- Interactive Quiz -->
+        <div class="mt-8 pt-6 border-t border-gray-100 dark:border-gray-800">
+          <h4 class="font-bold text-gray-900 dark:text-white text-base mb-3 flex items-center gap-2">
+            <span class="w-6 h-6 rounded-full bg-emerald-500 text-white inline-flex items-center justify-center text-xs">?</span>
+            Câu hỏi củng cố kiến thức
+          </h4>
+          <p class="text-sm sm:text-base text-gray-800 dark:text-gray-200 mb-4 font-medium">Hoạt động nào sau đây thuộc về phạm trù Khoa học (Science)?</p>
+          <div class="space-y-2.5">
+            
+      <button onclick="checkQuiz(this, true)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-emerald-50 dark:hover:bg-emerald-950/30 hover:border-emerald-300 dark:hover:border-emerald-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        A. Tìm ra định luật vạn vật hấp dẫn và định luật quang điện
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-emerald-50 dark:hover:bg-emerald-950/30 hover:border-emerald-300 dark:hover:border-emerald-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        B. Lắp ráp dây chuyền sản xuất xe máy
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-emerald-50 dark:hover:bg-emerald-950/30 hover:border-emerald-300 dark:hover:border-emerald-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        C. Vận hành lò cao luyện gang thép
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-emerald-50 dark:hover:bg-emerald-950/30 hover:border-emerald-300 dark:hover:border-emerald-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        D. Đóng gói bao bì mì ăn liền
+      </button>
+    
+          </div>
+          <div class="quiz-feedback hidden mt-4 p-4 rounded-xl text-sm leading-relaxed"></div>
+        </div>
+      </article>
+    
+
+      <article id="bai-2" class="bg-white dark:bg-dark-surface rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 border-t-4 border-teal-500 p-6 sm:p-8 transition-all hover:shadow-md">
+        <!-- Lesson Header -->
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-4 mb-6 border-b border-gray-100 dark:border-gray-800">
+          <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-teal-100 dark:bg-teal-900/40 text-teal-700 dark:text-teal-300">
+            Chương trình GDPT 2018
+          </span>
+          <span class="text-xs font-medium text-gray-500 dark:text-gray-400">
+            Bài 2 / 21
+          </span>
+        </div>
+
+        <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-4">
+          Bài 2: Hệ thống kĩ thuật
+        </h2>
+
+        <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-800/40 border border-gray-100 dark:border-gray-700 mb-6">
+          <p class="text-xs font-semibold uppercase tracking-wider text-teal-600 dark:text-teal-400 mb-1">Mục tiêu bài học</p>
+          <p class="text-sm sm:text-base text-gray-600 dark:text-gray-300">Khái niệm và cấu trúc của một hệ thống kĩ thuật (Đầu vào Input, Khối xử lí Process, Đầu ra Output, Mạch phản hồi Feedback); Phân loại hệ thống kĩ thuật kín và hở.</p>
+        </div>
+
+        <!-- Lesson Sections -->
+        <div class="space-y-6">
+          
+      <div class="mb-6">
+        <h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+          <span class="w-1.5 h-5 bg-teal-500 rounded-full inline-block"></span>
+          1. Khái niệm và cấu trúc hệ thống kĩ thuật
+        </h3>
+        <div class="text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed pl-2 sm:pl-3">
+          
+          <p class="mb-3"><strong>Hệ thống kĩ thuật</strong> là một hệ thống gồm các phần tử liên kết với nhau theo một quy luật xác định nhằm thực hiện một nhiệm vụ hay chức năng kĩ thuật nhất định.</p>
+          <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700 text-sm space-y-2">
+            <p>• <strong>Đầu vào (Input):</strong> Năng lượng, thông tin, vật liệu được đưa vào hệ thống.</p>
+            <p>• <strong>Phần tử xử lí (Processing Unit):</strong> Các cơ cấu, linh kiện biến đổi đầu vào theo quy trình công nghệ (cơ cấu truyền động, vi xử lí, bộ nung nhiệt).</p>
+            <p>• <strong>Đầu ra (Output):</strong> Sản phẩm, năng lượng hữu ích hoặc hành vi mong muốn sinh ra từ hệ thống.</p>
+            <p>• <strong>Mạch phản hồi (Feedback):</strong> Thu thập thông tin từ đầu ra gửi ngược về bộ xử lí để điều chỉnh đầu vào, bảo đảm hệ thống vận hành chính xác.</p>
+          </div>
+        
+        </div>
+      </div>
+    
+      <div class="mb-6">
+        <h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+          <span class="w-1.5 h-5 bg-teal-500 rounded-full inline-block"></span>
+          2. Hệ thống kĩ thuật hở và kín
+        </h3>
+        <div class="text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed pl-2 sm:pl-3">
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 my-2 text-sm">
+            <div class="p-3.5 rounded-lg bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700">
+              <strong class="text-blue-600 dark:text-blue-400">Hệ thống kĩ thuật hở:</strong>
+              <p class="mt-1">Không có mạch phản hồi từ đầu ra về đầu vào. Hệ thống hoạt động theo lệnh đặt sẵn bất chấp môi trường bên ngoài biến động (Ví dụ: quạt bàn cơ bật số 1 quay liên tục dù phòng nóng hay lạnh).</p>
+            </div>
+            <div class="p-3.5 rounded-lg bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700">
+              <strong class="text-blue-600 dark:text-blue-400">Hệ thống kĩ thuật kín (Có phản hồi):</strong>
+              <p class="mt-1">Có cảm biến đo tín hiệu đầu ra để tự động điều chỉnh hoạt động (Ví dụ: điều hoà Inverter có cảm biến nhiệt độ tự ngắt hoặc giảm công suất khi phòng đạt $26^circ	ext{C}$).</p>
+            </div>
+          </div>
+        
+        </div>
+      </div>
+    
+        </div>
+
+        <!-- Summary Callout -->
+        <div class="mt-8 p-4 sm:p-5 rounded-xl bg-teal-50/60 dark:bg-teal-950/20 border border-teal-200 dark:border-teal-800/50">
+          <h4 class="font-bold text-teal-900 dark:text-teal-200 text-sm sm:text-base mb-1.5 flex items-center gap-2">
+            <svg class="w-5 h-5 text-teal-600 dark:text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            Ghi nhớ trọng tâm
+          </h4>
+          <p class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">Hệ thống kĩ thuật gồm đầu vào, khối xử lí, đầu ra và mạch phản hồi. Hệ thống kín có cơ chế phản hồi tự điều chỉnh thông minh hơn so với hệ thống hở truyền thống.</p>
+        </div>
+
+        <!-- Interactive Quiz -->
+        <div class="mt-8 pt-6 border-t border-gray-100 dark:border-gray-800">
+          <h4 class="font-bold text-gray-900 dark:text-white text-base mb-3 flex items-center gap-2">
+            <span class="w-6 h-6 rounded-full bg-teal-500 text-white inline-flex items-center justify-center text-xs">?</span>
+            Câu hỏi củng cố kiến thức
+          </h4>
+          <p class="text-sm sm:text-base text-gray-800 dark:text-gray-200 mb-4 font-medium">Hệ thống bàn ủi điện tự động ngắt điện khi đạt đến nhiệt độ cài đặt và tự bật lại khi nhiệt độ nguội xuống là ví dụ điển hình của loại hệ thống kĩ thuật nào?</p>
+          <div class="space-y-2.5">
+            
+      <button onclick="checkQuiz(this, true)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-teal-50 dark:hover:bg-teal-950/30 hover:border-teal-300 dark:hover:border-teal-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        A. Hệ thống kĩ thuật kín (có mạch phản hồi nhiệt độ)
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-teal-50 dark:hover:bg-teal-950/30 hover:border-teal-300 dark:hover:border-teal-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        B. Hệ thống kĩ thuật hoàn toàn hở
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-teal-50 dark:hover:bg-teal-950/30 hover:border-teal-300 dark:hover:border-teal-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        C. Hệ thống cơ học thủ công
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-teal-50 dark:hover:bg-teal-950/30 hover:border-teal-300 dark:hover:border-teal-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        D. Hệ thống truyền thông vô tuyến
+      </button>
+    
+          </div>
+          <div class="quiz-feedback hidden mt-4 p-4 rounded-xl text-sm leading-relaxed"></div>
+        </div>
+      </article>
+    
+
+      <article id="bai-3" class="bg-white dark:bg-dark-surface rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 border-t-4 border-cyan-500 p-6 sm:p-8 transition-all hover:shadow-md">
+        <!-- Lesson Header -->
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-4 mb-6 border-b border-gray-100 dark:border-gray-800">
+          <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-cyan-100 dark:bg-cyan-900/40 text-cyan-700 dark:text-cyan-300">
+            Chương trình GDPT 2018
+          </span>
+          <span class="text-xs font-medium text-gray-500 dark:text-gray-400">
+            Bài 3 / 21
+          </span>
+        </div>
+
+        <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-4">
+          Bài 3: Công nghệ phổ biến
+        </h2>
+
+        <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-800/40 border border-gray-100 dark:border-gray-700 mb-6">
+          <p class="text-xs font-semibold uppercase tracking-wider text-cyan-600 dark:text-cyan-400 mb-1">Mục tiêu bài học</p>
+          <p class="text-sm sm:text-base text-gray-600 dark:text-gray-300">Khái niệm và đặc điểm của các công nghệ sản xuất phổ biến trong đời sống: Công nghệ luyện kim, đúc, hàn, gia công cắt gọt, công nghệ điện - điện tử và công nghệ sinh học.</p>
+        </div>
+
+        <!-- Lesson Sections -->
+        <div class="space-y-6">
+          
+      <div class="mb-6">
+        <h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+          <span class="w-1.5 h-5 bg-cyan-500 rounded-full inline-block"></span>
+          1. Các công nghệ luyện kim và chế tạo phôi
+        </h3>
+        <div class="text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed pl-2 sm:pl-3">
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 my-3 text-sm">
+            <div class="p-3.5 rounded-lg bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700">
+              <strong class="text-amber-600 dark:text-amber-400">Công nghệ luyện kim:</strong>
+              <p class="mt-1">Nấu chảy quặng sắt trong lò cao để thu hồi gang và luyện thép trong lò chuyển oxy, cung cấp phôi kim loại nguyên liệu cho toàn ngành công nghiệp.</p>
+            </div>
+            <div class="p-3.5 rounded-lg bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700">
+              <strong class="text-amber-600 dark:text-amber-400">Công nghệ Đúc:</strong>
+              <p class="mt-1">Rót kim loại lỏng vào khuôn có hình dạng của chi tiết; sau khi kim loại đông đặc thu được vật đúc có hình dạng phức tạp (như thân máy ô tô, xoong nồi nhôm).</p>
+            </div>
+          </div>
+        
+        </div>
+      </div>
+    
+      <div class="mb-6">
+        <h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+          <span class="w-1.5 h-5 bg-cyan-500 rounded-full inline-block"></span>
+          2. Công nghệ gia công cắt gọt và Công nghệ Điện - Điện tử
+        </h3>
+        <div class="text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed pl-2 sm:pl-3">
+          
+          <ul class="space-y-1.5 text-sm list-disc list-inside">
+            <li><strong>Công nghệ gia công cắt gọt (Gia công có phoi):</strong> Dùng dao tiện, phay, bào, mài bóc tách kim loại thừa để đạt độ bóng bề mặt và độ chính xác micromet.</li>
+            <li><strong>Công nghệ Điện - Điện tử:</strong> Biến đổi, phân phối điện năng và lắp ráp vi mạch bán dẫn điều khiển các thiết bị tự động.</li>
+            <li><strong>Công nghệ sinh học & Thực phẩm:</strong> Lên men vi sinh, bảo quản lạnh, tiệt trùng UHT trong chế biến nông thuỷ sản.</li>
+          </ul>
+        
+        </div>
+      </div>
+    
+        </div>
+
+        <!-- Summary Callout -->
+        <div class="mt-8 p-4 sm:p-5 rounded-xl bg-cyan-50/60 dark:bg-cyan-950/20 border border-cyan-200 dark:border-cyan-800/50">
+          <h4 class="font-bold text-cyan-900 dark:text-cyan-200 text-sm sm:text-base mb-1.5 flex items-center gap-2">
+            <svg class="w-5 h-5 text-cyan-600 dark:text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            Ghi nhớ trọng tâm
+          </h4>
+          <p class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">Các công nghệ phổ biến nền tảng gồm luyện kim, đúc, cắt gọt cơ khí, điện - điện tử và công nghệ sinh học, tạo nên nền móng cung ứng của xã hội công nghiệp.</p>
+        </div>
+
+        <!-- Interactive Quiz -->
+        <div class="mt-8 pt-6 border-t border-gray-100 dark:border-gray-800">
+          <h4 class="font-bold text-gray-900 dark:text-white text-base mb-3 flex items-center gap-2">
+            <span class="w-6 h-6 rounded-full bg-cyan-500 text-white inline-flex items-center justify-center text-xs">?</span>
+            Câu hỏi củng cố kiến thức
+          </h4>
+          <p class="text-sm sm:text-base text-gray-800 dark:text-gray-200 mb-4 font-medium">Công nghệ nào sử dụng phương pháp nấu chảy kim loại rồi rót vào lòng khuôn đúc có hình dáng chi tiết định sẵn?</p>
+          <div class="space-y-2.5">
+            
+      <button onclick="checkQuiz(this, true)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-cyan-50 dark:hover:bg-cyan-950/30 hover:border-cyan-300 dark:hover:border-cyan-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        A. Công nghệ đúc
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-cyan-50 dark:hover:bg-cyan-950/30 hover:border-cyan-300 dark:hover:border-cyan-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        B. Công nghệ tiện ren
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-cyan-50 dark:hover:bg-cyan-950/30 hover:border-cyan-300 dark:hover:border-cyan-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        C. Công nghệ mạ điện
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-cyan-50 dark:hover:bg-cyan-950/30 hover:border-cyan-300 dark:hover:border-cyan-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        D. Công nghệ in 3D nhựa
+      </button>
+    
+          </div>
+          <div class="quiz-feedback hidden mt-4 p-4 rounded-xl text-sm leading-relaxed"></div>
+        </div>
+      </article>
+    
+
+      <article id="bai-4" class="bg-white dark:bg-dark-surface rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 border-t-4 border-blue-500 p-6 sm:p-8 transition-all hover:shadow-md">
+        <!-- Lesson Header -->
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-4 mb-6 border-b border-gray-100 dark:border-gray-800">
+          <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300">
+            Chương trình GDPT 2018
+          </span>
+          <span class="text-xs font-medium text-gray-500 dark:text-gray-400">
+            Bài 4 / 21
+          </span>
+        </div>
+
+        <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-4">
+          Bài 4: Một số công nghệ mới
+        </h2>
+
+        <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-800/40 border border-gray-100 dark:border-gray-700 mb-6">
+          <p class="text-xs font-semibold uppercase tracking-wider text-blue-600 dark:text-blue-400 mb-1">Mục tiêu bài học</p>
+          <p class="text-sm sm:text-base text-gray-600 dark:text-gray-300">Khái niệm và tiềm năng ứng dụng của các công nghệ đột phá: Công nghệ Robot thông minh, Công nghệ in 3D (sản xuất đắp dần), Công nghệ Nano, Công nghệ Trí tuệ nhân tạo (AI) và Internet vạn vật (IoT).</p>
+        </div>
+
+        <!-- Lesson Sections -->
+        <div class="space-y-6">
+          
+      <div class="mb-6">
+        <h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+          <span class="w-1.5 h-5 bg-blue-500 rounded-full inline-block"></span>
+          1. Công nghệ in 3D (Additive Manufacturing)
+        </h3>
+        <div class="text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed pl-2 sm:pl-3">
+          
+          <p class="mb-3"><strong>Công nghệ in 3D</strong> là phương pháp chế tạo sản phẩm bằng cách <em>đắp từng lớp vật liệu (layer by layer)</em> liên tiếp chồng lên nhau dựa trên mô hình thiết kế 3D kĩ thuật số (CAD).</p>
+          <div class="p-3 bg-purple-50 dark:bg-purple-950/40 rounded-xl border border-purple-200 dark:border-purple-800 text-sm">
+            <strong>Ưu điểm:</strong> Chế tạo được các cấu trúc rỗng bên trong siêu nhẹ và hình dạng phức tạp mà phương pháp cắt gọt truyền thống không thể gia công được; tiết kiệm tối đa nguyên vật liệu phế thải.
+          </div>
+        
+        </div>
+      </div>
+    
+      <div class="mb-6">
+        <h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+          <span class="w-1.5 h-5 bg-blue-500 rounded-full inline-block"></span>
+          2. Robot thông minh, AI và IoT
+        </h3>
+        <div class="text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed pl-2 sm:pl-3">
+          
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3 my-2 text-sm">
+            <div class="p-3 rounded-lg bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700">
+              <strong class="text-teal-600 dark:text-teal-400">Trí tuệ nhân tạo (AI):</strong>
+              <p class="mt-1">Mô phỏng khả năng học hỏi, suy luận và tự đưa ra quyết định tối ưu của con người (nhận diện hình ảnh, xe tự lái).</p>
+            </div>
+            <div class="p-3 rounded-lg bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700">
+              <strong class="text-teal-600 dark:text-teal-400">Internet vạn vật (IoT):</strong>
+              <p class="mt-1">Kết nối hàng tỉ thiết bị qua mạng Internet để thu thập dữ liệu và điều khiển từ xa (Smart Home, Smart Agriculture).</p>
+            </div>
+            <div class="p-3 rounded-lg bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700">
+              <strong class="text-teal-600 dark:text-teal-400">Công nghệ Nano:</strong>
+              <p class="mt-1">Thao tác, chế tạo vật liệu ở cấp độ nguyên tử và phân tử ($1 - 100,	ext{nm}$) mang lại cơ tính và tính chất quang điện phi thường.</p>
+            </div>
+          </div>
+        
+        </div>
+      </div>
+    
+        </div>
+
+        <!-- Summary Callout -->
+        <div class="mt-8 p-4 sm:p-5 rounded-xl bg-blue-50/60 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-800/50">
+          <h4 class="font-bold text-blue-900 dark:text-blue-200 text-sm sm:text-base mb-1.5 flex items-center gap-2">
+            <svg class="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            Ghi nhớ trọng tâm
+          </h4>
+          <p class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">Công nghệ mới như in 3D, AI, IoT, Robot thông minh và Nano đang làm thay đổi căn bản phương thức sản xuất từ trừ vật liệu sang đắp dần và tự động hoá thích ứng.</p>
+        </div>
+
+        <!-- Interactive Quiz -->
+        <div class="mt-8 pt-6 border-t border-gray-100 dark:border-gray-800">
+          <h4 class="font-bold text-gray-900 dark:text-white text-base mb-3 flex items-center gap-2">
+            <span class="w-6 h-6 rounded-full bg-blue-500 text-white inline-flex items-center justify-center text-xs">?</span>
+            Câu hỏi củng cố kiến thức
+          </h4>
+          <p class="text-sm sm:text-base text-gray-800 dark:text-gray-200 mb-4 font-medium">Công nghệ sản xuất nào chế tạo sản phẩm bằng cách xếp chồng từng lớp vật liệu mỏng liên tiếp lên nhau dựa trên mô hình 3D trên máy tính?</p>
+          <div class="space-y-2.5">
+            
+      <button onclick="checkQuiz(this, true)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-blue-50 dark:hover:bg-blue-950/30 hover:border-blue-300 dark:hover:border-blue-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        A. Công nghệ in 3D (Sản xuất đắp dần)
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-blue-50 dark:hover:bg-blue-950/30 hover:border-blue-300 dark:hover:border-blue-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        B. Công nghệ tiện phôi trụ
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-blue-50 dark:hover:bg-blue-950/30 hover:border-blue-300 dark:hover:border-blue-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        C. Công nghệ mài phẳng
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-blue-50 dark:hover:bg-blue-950/30 hover:border-blue-300 dark:hover:border-blue-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        D. Công nghệ rèn dập kim loại nóng
+      </button>
+    
+          </div>
+          <div class="quiz-feedback hidden mt-4 p-4 rounded-xl text-sm leading-relaxed"></div>
+        </div>
+      </article>
+    
+
+      <article id="bai-5" class="bg-white dark:bg-dark-surface rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 border-t-4 border-indigo-500 p-6 sm:p-8 transition-all hover:shadow-md">
+        <!-- Lesson Header -->
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-4 mb-6 border-b border-gray-100 dark:border-gray-800">
+          <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-indigo-100 dark:bg-indigo-900/40 text-indigo-700 dark:text-indigo-300">
+            Chương trình GDPT 2018
+          </span>
+          <span class="text-xs font-medium text-gray-500 dark:text-gray-400">
+            Bài 5 / 21
+          </span>
+        </div>
+
+        <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-4">
+          Bài 5: Đánh giá công nghệ
+        </h2>
+
+        <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-800/40 border border-gray-100 dark:border-gray-700 mb-6">
+          <p class="text-xs font-semibold uppercase tracking-wider text-indigo-600 dark:text-indigo-400 mb-1">Mục tiêu bài học</p>
+          <p class="text-sm sm:text-base text-gray-600 dark:text-gray-300">Khái niệm và mục đích của việc đánh giá công nghệ; Các tiêu chí cơ bản để đánh giá một công nghệ (hiệu quả kinh tế, tính khả thi kĩ thuật, tác động môi trường, an toàn xã hội).</p>
+        </div>
+
+        <!-- Lesson Sections -->
+        <div class="space-y-6">
+          
+      <div class="mb-6">
+        <h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+          <span class="w-1.5 h-5 bg-indigo-500 rounded-full inline-block"></span>
+          1. Khái niệm và mục đích đánh giá công nghệ
+        </h3>
+        <div class="text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed pl-2 sm:pl-3">
+          
+          <p class="mb-3"><strong>Đánh giá công nghệ</strong> là việc thu thập thông tin, phân tích toàn diện các khía cạnh kinh tế, kĩ thuật, xã hội và môi trường của một công nghệ nhằm đưa ra quyết định lựa chọn, chuyển giao, đầu tư hoặc đổi mới công nghệ phù hợp nhất.</p>
+        
+        </div>
+      </div>
+    
+      <div class="mb-6">
+        <h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+          <span class="w-1.5 h-5 bg-indigo-500 rounded-full inline-block"></span>
+          2. Các tiêu chí cốt lõi trong đánh giá công nghệ
+        </h3>
+        <div class="text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed pl-2 sm:pl-3">
+          
+          <div class="space-y-2 text-sm my-2">
+            <div class="p-3 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 border-l-4 border-emerald-500">
+              <strong>1. Hiệu quả kĩ thuật:</strong> Năng suất cao, độ chính xác tin cậy, tuổi thọ bền lâu, mức tiêu thụ năng lượng thấp.
+            </div>
+            <div class="p-3 rounded-lg bg-blue-50 dark:bg-blue-950/40 border-l-4 border-blue-500">
+              <strong>2. Hiệu quả kinh tế:</strong> Chi phí đầu tư ban đầu hợp lí, thời gian thu hồi vốn nhanh, chi phí vận hành bảo dưỡng thấp, giá thành sản phẩm cạnh tranh.
+            </div>
+            <div class="p-3 rounded-lg bg-amber-50 dark:bg-amber-950/40 border-l-4 border-amber-500">
+              <strong>3. Môi trường và phát triển bền vững:</strong> Ít phát thải chất độc hại, tiết kiệm tài nguyên thiên nhiên, an toàn với hệ sinh thái.
+            </div>
+            <div class="p-3 rounded-lg bg-purple-50 dark:bg-purple-950/40 border-l-4 border-purple-500">
+              <strong>4. Tác động xã hội:</strong> An toàn cho người lao động, tạo công ăn việc làm, nâng cao chất lượng đời sống cộng đồng.
+            </div>
+          </div>
+        
+        </div>
+      </div>
+    
+        </div>
+
+        <!-- Summary Callout -->
+        <div class="mt-8 p-4 sm:p-5 rounded-xl bg-indigo-50/60 dark:bg-indigo-950/20 border border-indigo-200 dark:border-indigo-800/50">
+          <h4 class="font-bold text-indigo-900 dark:text-indigo-200 text-sm sm:text-base mb-1.5 flex items-center gap-2">
+            <svg class="w-5 h-5 text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            Ghi nhớ trọng tâm
+          </h4>
+          <p class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">Đánh giá công nghệ giúp chọn lựa giải pháp tối ưu dựa trên 4 trụ cột: kĩ thuật, kinh tế, môi trường và an toàn xã hội, bảo đảm hiệu quả đầu tư và phát triển bền vững.</p>
+        </div>
+
+        <!-- Interactive Quiz -->
+        <div class="mt-8 pt-6 border-t border-gray-100 dark:border-gray-800">
+          <h4 class="font-bold text-gray-900 dark:text-white text-base mb-3 flex items-center gap-2">
+            <span class="w-6 h-6 rounded-full bg-indigo-500 text-white inline-flex items-center justify-center text-xs">?</span>
+            Câu hỏi củng cố kiến thức
+          </h4>
+          <p class="text-sm sm:text-base text-gray-800 dark:text-gray-200 mb-4 font-medium">Khi đánh giá một công nghệ mới dự kiến nhập khẩu vào nhà máy, tiêu chí nào sau đây cần được ưu tiên hàng đầu để bảo đảm phát triển bền vững?</p>
+          <div class="space-y-2.5">
+            
+      <button onclick="checkQuiz(this, true)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-indigo-50 dark:hover:bg-indigo-950/30 hover:border-indigo-300 dark:hover:border-indigo-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        A. Hiệu quả kinh tế gắn liền với mức độ thân thiện môi trường và an toàn lao động
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-indigo-50 dark:hover:bg-indigo-950/30 hover:border-indigo-300 dark:hover:border-indigo-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        B. Chỉ quan tâm đến công nghệ có giá thành mua rẻ nhất
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-indigo-50 dark:hover:bg-indigo-950/30 hover:border-indigo-300 dark:hover:border-indigo-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        C. Chỉ chọn công nghệ có kích thước máy móc cồng kềnh nhất
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-indigo-50 dark:hover:bg-indigo-950/30 hover:border-indigo-300 dark:hover:border-indigo-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        D. Bỏ qua các chỉ số tiêu thụ điện năng và chất thải
+      </button>
+    
+          </div>
+          <div class="quiz-feedback hidden mt-4 p-4 rounded-xl text-sm leading-relaxed"></div>
+        </div>
+      </article>
+    
+
+      <article id="bai-6" class="bg-white dark:bg-dark-surface rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 border-t-4 border-purple-500 p-6 sm:p-8 transition-all hover:shadow-md">
+        <!-- Lesson Header -->
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-4 mb-6 border-b border-gray-100 dark:border-gray-800">
+          <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-purple-100 dark:bg-purple-900/40 text-purple-700 dark:text-purple-300">
+            Chương trình GDPT 2018
+          </span>
+          <span class="text-xs font-medium text-gray-500 dark:text-gray-400">
+            Bài 6 / 21
+          </span>
+        </div>
+
+        <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-4">
+          Bài 6: Cách mạng công nghiệp
+        </h2>
+
+        <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-800/40 border border-gray-100 dark:border-gray-700 mb-6">
+          <p class="text-xs font-semibold uppercase tracking-wider text-purple-600 dark:text-purple-400 mb-1">Mục tiêu bài học</p>
+          <p class="text-sm sm:text-base text-gray-600 dark:text-gray-300">Bản chất và động lực của 4 cuộc cách mạng công nghiệp: CMCN 1.0 (Máy hơi nước), CMCN 2.0 (Động cơ điện & dây chuyền lắp ráp), CMCN 3.0 (Máy tính & tự động hoá PLC), CMCN 4.0 (Hệ thống không gian mạng - thực thể).</p>
+        </div>
+
+        <!-- Lesson Sections -->
+        <div class="space-y-6">
+          
+      <div class="mb-6">
+        <h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+          <span class="w-1.5 h-5 bg-purple-500 rounded-full inline-block"></span>
+          1. Bốn cuộc cách mạng công nghiệp trong lịch sử
+        </h3>
+        <div class="text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed pl-2 sm:pl-3">
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-3 text-sm">
+            <div class="p-3.5 rounded-lg bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700">
+              <strong class="text-rose-600 dark:text-rose-400">CMCN 1.0 (Cuối thế kỉ 18):</strong>
+              <p class="mt-1">Khởi nguồn từ phát minh <em>động cơ hơi nước</em> của James Watt; cơ giới hoá ngành dệt và giao thông đường sắt.</p>
+            </div>
+            <div class="p-3.5 rounded-lg bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700">
+              <strong class="text-blue-600 dark:text-blue-400">CMCN 2.0 (Cuối thế kỉ 19 - đầu 20):</strong>
+              <p class="mt-1">Gắn với việc sử dụng <em>năng lượng điện</em> và dây chuyền sản xuất lắp ráp hàng loạt của Henry Ford.</p>
+            </div>
+            <div class="p-3.5 rounded-lg bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700">
+              <strong class="text-indigo-600 dark:text-indigo-400">CMCN 3.0 (Nửa sau thế kỉ 20):</strong>
+              <p class="mt-1">Kỉ nguyên <em>máy tính điện tử, mạch tích hợp bán dẫn, Internet</em> và tự động hoá với bộ điều khiển PLC.</p>
+            </div>
+            <div class="p-3.5 rounded-lg bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700">
+              <strong class="text-purple-600 dark:text-purple-400">CMCN 4.0 (Từ đầu thế kỉ 21):</strong>
+              <p class="mt-1">Hội tụ của <em>AI, Big Data, IoT, Robot tự hành, Điện toán đám mây</em> tạo nên nhà máy thông minh không ngủ.</p>
+            </div>
+          </div>
+        
+        </div>
+      </div>
+    
+        </div>
+
+        <!-- Summary Callout -->
+        <div class="mt-8 p-4 sm:p-5 rounded-xl bg-purple-50/60 dark:bg-purple-950/20 border border-purple-200 dark:border-purple-800/50">
+          <h4 class="font-bold text-purple-900 dark:text-purple-200 text-sm sm:text-base mb-1.5 flex items-center gap-2">
+            <svg class="w-5 h-5 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            Ghi nhớ trọng tâm
+          </h4>
+          <p class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">Lịch sử trải qua 4 cuộc cách mạng công nghiệp: 1.0 (cơ giới hoá hơi nước), 2.0 (điện khí hoá đại trà), 3.0 (tin học hoá tự động) và 4.0 (kết nối mạng thực - ảo thông minh).</p>
+        </div>
+
+        <!-- Interactive Quiz -->
+        <div class="mt-8 pt-6 border-t border-gray-100 dark:border-gray-800">
+          <h4 class="font-bold text-gray-900 dark:text-white text-base mb-3 flex items-center gap-2">
+            <span class="w-6 h-6 rounded-full bg-purple-500 text-white inline-flex items-center justify-center text-xs">?</span>
+            Câu hỏi củng cố kiến thức
+          </h4>
+          <p class="text-sm sm:text-base text-gray-800 dark:text-gray-200 mb-4 font-medium">Phát minh kĩ thuật nào được coi là biểu tượng và khởi nguồn cho cuộc Cách mạng công nghiệp lần thứ nhất (1.0)?</p>
+          <div class="space-y-2.5">
+            
+      <button onclick="checkQuiz(this, true)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-purple-50 dark:hover:bg-purple-950/30 hover:border-purple-300 dark:hover:border-purple-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        A. Động cơ hơi nước của James Watt
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-purple-50 dark:hover:bg-purple-950/30 hover:border-purple-300 dark:hover:border-purple-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        B. Mạng máy tính Internet toàn cầu
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-purple-50 dark:hover:bg-purple-950/30 hover:border-purple-300 dark:hover:border-purple-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        C. Đèn điện tử chân không
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-purple-50 dark:hover:bg-purple-950/30 hover:border-purple-300 dark:hover:border-purple-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        D. Bo mạch vi điều khiển Arduino
+      </button>
+    
+          </div>
+          <div class="quiz-feedback hidden mt-4 p-4 rounded-xl text-sm leading-relaxed"></div>
+        </div>
+      </article>
+    
+
+      <article id="bai-7" class="bg-white dark:bg-dark-surface rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 border-t-4 border-rose-500 p-6 sm:p-8 transition-all hover:shadow-md">
+        <!-- Lesson Header -->
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-4 mb-6 border-b border-gray-100 dark:border-gray-800">
+          <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-rose-100 dark:bg-rose-900/40 text-rose-700 dark:text-rose-300">
+            Chương trình GDPT 2018
+          </span>
+          <span class="text-xs font-medium text-gray-500 dark:text-gray-400">
+            Bài 7 / 21
+          </span>
+        </div>
+
+        <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-4">
+          Bài 7: Ngành nghề kĩ thuật, công nghệ
+        </h2>
+
+        <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-800/40 border border-gray-100 dark:border-gray-700 mb-6">
+          <p class="text-xs font-semibold uppercase tracking-wider text-rose-600 dark:text-rose-400 mb-1">Mục tiêu bài học</p>
+          <p class="text-sm sm:text-base text-gray-600 dark:text-gray-300">Bức tranh tổng thể các khối ngành nghề STEM (Kĩ thuật cơ khí, Điện - Điện tử, Công nghệ thông tin, Xây dựng, Hoá chất); Xu hướng nghề nghiệp trong kỉ nguyên số.</p>
+        </div>
+
+        <!-- Lesson Sections -->
+        <div class="space-y-6">
+          
+      <div class="mb-6">
+        <h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+          <span class="w-1.5 h-5 bg-rose-500 rounded-full inline-block"></span>
+          1. Các nhóm ngành nghề kĩ thuật - công nghệ then chốt
+        </h3>
+        <div class="text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed pl-2 sm:pl-3">
+          
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3 my-3 text-sm">
+            <div class="p-3.5 rounded-lg bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700">
+              <strong class="text-teal-600 dark:text-teal-400">Kĩ thuật Cơ khí & Tự động:</strong>
+              <p class="mt-1">Thiết kế máy, chế tạo khuôn mẫu, cơ điện tử Mechatronics, robot công nghiệp.</p>
+            </div>
+            <div class="p-3.5 rounded-lg bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700">
+              <strong class="text-teal-600 dark:text-teal-400">Điện - Điện tử - Viễn thông:</strong>
+              <p class="mt-1">Lưới điện thông minh, vi mạch bán dẫn, viễn thông 5G/6G, thiết bị IoT gia dụng.</p>
+            </div>
+            <div class="p-3.5 rounded-lg bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700">
+              <strong class="text-teal-600 dark:text-teal-400">Công nghệ Thông tin (IT):</strong>
+              <p class="mt-1">Phát triển phần mềm, an toàn thông tin, kĩ sư dữ liệu AI, lập trình đám mây.</p>
+            </div>
+          </div>
+        
+        </div>
+      </div>
+    
+      <div class="mb-6">
+        <h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+          <span class="w-1.5 h-5 bg-rose-500 rounded-full inline-block"></span>
+          2. Phẩm chất và kĩ năng cần thiết trong kỉ nguyên mới
+        </h3>
+        <div class="text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed pl-2 sm:pl-3">
+          
+          <p class="text-sm">Đòi hỏi kiến thức liên ngành (STEM: Science, Technology, Engineering, Math), năng lực tư duy phản biện, kĩ năng giải quyết vấn đề sáng tạo, khả năng học tập suốt đời và ngoại ngữ chuyên ngành.</p>
+        
+        </div>
+      </div>
+    
+        </div>
+
+        <!-- Summary Callout -->
+        <div class="mt-8 p-4 sm:p-5 rounded-xl bg-rose-50/60 dark:bg-rose-950/20 border border-rose-200 dark:border-rose-800/50">
+          <h4 class="font-bold text-rose-900 dark:text-rose-200 text-sm sm:text-base mb-1.5 flex items-center gap-2">
+            <svg class="w-5 h-5 text-rose-600 dark:text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            Ghi nhớ trọng tâm
+          </h4>
+          <p class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">Ngành kĩ thuật công nghệ đóng vai trò đầu tàu phát triển kinh tế. Người học cần trang bị kiến thức STEM liên ngành, tư duy công nghệ và năng lực thích ứng với đổi mới liên tục.</p>
+        </div>
+
+        <!-- Interactive Quiz -->
+        <div class="mt-8 pt-6 border-t border-gray-100 dark:border-gray-800">
+          <h4 class="font-bold text-gray-900 dark:text-white text-base mb-3 flex items-center gap-2">
+            <span class="w-6 h-6 rounded-full bg-rose-500 text-white inline-flex items-center justify-center text-xs">?</span>
+            Câu hỏi củng cố kiến thức
+          </h4>
+          <p class="text-sm sm:text-base text-gray-800 dark:text-gray-200 mb-4 font-medium">Mô hình giáo dục tích hợp nào đang được khuyến khích mạnh mẽ nhằm trang bị kiến thức toàn diện cho học sinh tiếp cận các ngành nghề kĩ thuật và công nghệ hiện đại?</p>
+          <div class="space-y-2.5">
+            
+      <button onclick="checkQuiz(this, true)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-rose-50 dark:hover:bg-rose-950/30 hover:border-rose-300 dark:hover:border-rose-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        A. Giáo dục STEM (Khoa học, Công nghệ, Kĩ thuật và Toán học)
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-rose-50 dark:hover:bg-rose-950/30 hover:border-rose-300 dark:hover:border-rose-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        B. Phương pháp học vẹt truyền thống
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-rose-50 dark:hover:bg-rose-950/30 hover:border-rose-300 dark:hover:border-rose-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        C. Giáo dục thể chất đơn thuần
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-rose-50 dark:hover:bg-rose-950/30 hover:border-rose-300 dark:hover:border-rose-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        D. Khảo cổ học cổ đại
+      </button>
+    
+          </div>
+          <div class="quiz-feedback hidden mt-4 p-4 rounded-xl text-sm leading-relaxed"></div>
+        </div>
+      </article>
+    
+
+      <article id="bai-8" class="bg-white dark:bg-dark-surface rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 border-t-4 border-pink-500 p-6 sm:p-8 transition-all hover:shadow-md">
+        <!-- Lesson Header -->
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-4 mb-6 border-b border-gray-100 dark:border-gray-800">
+          <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-pink-100 dark:bg-pink-900/40 text-pink-700 dark:text-pink-300">
+            Chương trình GDPT 2018
+          </span>
+          <span class="text-xs font-medium text-gray-500 dark:text-gray-400">
+            Bài 8 / 21
+          </span>
+        </div>
+
+        <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-4">
+          Bài 8: Bản vẽ kĩ thuật và tiêu chuẩn trình bày bản vẽ kĩ thuật
+        </h2>
+
+        <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-800/40 border border-gray-100 dark:border-gray-700 mb-6">
+          <p class="text-xs font-semibold uppercase tracking-wider text-pink-600 dark:text-pink-400 mb-1">Mục tiêu bài học</p>
+          <p class="text-sm sm:text-base text-gray-600 dark:text-gray-300">Khái niệm bản vẽ kĩ thuật và vai trò 'ngôn ngữ của kĩ thuật'; Các tiêu chuẩn trình bày bản vẽ theo TCVN và ISO: Khổ giấy (A0 đến A4), Tỉ lệ, Nét vẽ, Chữ viết và Ghi kích thước.</p>
+        </div>
+
+        <!-- Lesson Sections -->
+        <div class="space-y-6">
+          
+      <div class="mb-6">
+        <h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+          <span class="w-1.5 h-5 bg-pink-500 rounded-full inline-block"></span>
+          1. Khái niệm và vai trò của bản vẽ kĩ thuật
+        </h3>
+        <div class="text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed pl-2 sm:pl-3">
+          
+          <p class="mb-3"><strong>Bản vẽ kĩ thuật</strong> là tài liệu kĩ thuật trình bày các thông tin hình học, kích thước, yêu cầu kĩ thuật của vật thể dưới dạng hình vẽ và kí hiệu quy ước theo các quy tắc thống nhất.</p>
+          <div class="p-3 bg-blue-50 dark:bg-blue-950/40 rounded-lg border border-blue-200 dark:border-blue-800 text-sm">
+            Được coi là <strong>ngôn ngữ chung của giới kĩ thuật</strong>: Người thiết kế diễn đạt ý tưởng qua bản vẽ, người thợ gia công đọc bản vẽ để chế tạo chính xác và nhân viên kiểm định căn cứ vào bản vẽ để nghiệm thu.
+          </div>
+        
+        </div>
+      </div>
+    
+      <div class="mb-6">
+        <h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+          <span class="w-1.5 h-5 bg-pink-500 rounded-full inline-block"></span>
+          2. Các tiêu chuẩn trình bày bản vẽ kĩ thuật (TCVN)
+        </h3>
+        <div class="text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed pl-2 sm:pl-3">
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 my-3 text-sm">
+            <div class="p-3.5 rounded-lg bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700">
+              <strong class="text-indigo-600 dark:text-indigo-400">1. Khổ giấy chính (TCVN 7285):</strong>
+              <p class="mt-1">A0 ($1189 \times 841\,\text{mm}$), A1 ($841 \times 594\,\text{mm}$), A2 ($594 \times 420\,\text{mm}$), A3 ($420 \times 297\,\text{mm}$), A4 ($297 \times 210\,\text{mm}$). Mỗi khổ sau bằng một nửa khổ trước đó.</p>
+            </div>
+            <div class="p-3.5 rounded-lg bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700">
+              <strong class="text-indigo-600 dark:text-indigo-400">2. Các loại nét vẽ cơ bản:</strong>
+              <p class="mt-1">• <em>Nét liền đậm:</em> Đường bao thấy, cạnh thấy của vật thể.<br>• <em>Nét đứt mảnh:</em> Đường bao khuất, cạnh khuất.<br>• <em>Nét gạch chấm mảnh:</em> Đường tâm, đường trục đối xứng.<br>• <em>Nét liền mảnh:</em> Đường gióng, đường kích thước.</p>
+            </div>
+            <div class="p-3.5 rounded-lg bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700">
+              <strong class="text-indigo-600 dark:text-indigo-400">3. Tỉ lệ bản vẽ:</strong>
+              <p class="mt-1">• Tỉ lệ nguyên hình: $1:1$.<br>• Tỉ lệ thu nhỏ: $1:2, 1:5, 1:10$.<br>• Tỉ lệ phóng to: $2:1, 5:1, 10:1$.</p>
+            </div>
+            <div class="p-3.5 rounded-lg bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700">
+              <strong class="text-indigo-600 dark:text-indigo-400">4. Ghi kích thước:</strong>
+              <p class="mt-1">Con số ghi trên bản vẽ là <em>kích thước thật</em> của vật thể (đơn vị milimet không cần ghi kí hiệu mm), không phụ thuộc vào tỉ lệ bản vẽ.</p>
+            </div>
+          </div>
+        
+        </div>
+      </div>
+    
+        </div>
+
+        <!-- Summary Callout -->
+        <div class="mt-8 p-4 sm:p-5 rounded-xl bg-pink-50/60 dark:bg-pink-950/20 border border-pink-200 dark:border-pink-800/50">
+          <h4 class="font-bold text-pink-900 dark:text-pink-200 text-sm sm:text-base mb-1.5 flex items-center gap-2">
+            <svg class="w-5 h-5 text-pink-600 dark:text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            Ghi nhớ trọng tâm
+          </h4>
+          <p class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">Bản vẽ kĩ thuật là ngôn ngữ chung trong kĩ thuật. Các tiêu chuẩn quốc gia TCVN quy định nghiêm ngặt về khổ giấy (A0 - A4), nét vẽ (liền đậm, đứt, gạch chấm), tỉ lệ và cách ghi con số kích thước thật.</p>
+        </div>
+
+        <!-- Interactive Quiz -->
+        <div class="mt-8 pt-6 border-t border-gray-100 dark:border-gray-800">
+          <h4 class="font-bold text-gray-900 dark:text-white text-base mb-3 flex items-center gap-2">
+            <span class="w-6 h-6 rounded-full bg-pink-500 text-white inline-flex items-center justify-center text-xs">?</span>
+            Câu hỏi củng cố kiến thức
+          </h4>
+          <p class="text-sm sm:text-base text-gray-800 dark:text-gray-200 mb-4 font-medium">Loại nét vẽ nào sau đây theo tiêu chuẩn kĩ thuật được dùng để biểu diễn các đường bao thấy và cạnh thấy của vật thể?</p>
+          <div class="space-y-2.5">
+            
+      <button onclick="checkQuiz(this, true)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-pink-50 dark:hover:bg-pink-950/30 hover:border-pink-300 dark:hover:border-pink-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        A. Nét liền đậm
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-pink-50 dark:hover:bg-pink-950/30 hover:border-pink-300 dark:hover:border-pink-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        B. Nét đứt mảnh
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-pink-50 dark:hover:bg-pink-950/30 hover:border-pink-300 dark:hover:border-pink-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        C. Nét gạch chấm mảnh
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-pink-50 dark:hover:bg-pink-950/30 hover:border-pink-300 dark:hover:border-pink-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        D. Nét lượn sóng tự do
+      </button>
+    
+          </div>
+          <div class="quiz-feedback hidden mt-4 p-4 rounded-xl text-sm leading-relaxed"></div>
+        </div>
+      </article>
+    
+
+      <article id="bai-9" class="bg-white dark:bg-dark-surface rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 border-t-4 border-amber-500 p-6 sm:p-8 transition-all hover:shadow-md">
+        <!-- Lesson Header -->
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-4 mb-6 border-b border-gray-100 dark:border-gray-800">
+          <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300">
+            Chương trình GDPT 2018
+          </span>
+          <span class="text-xs font-medium text-gray-500 dark:text-gray-400">
+            Bài 9 / 21
+          </span>
+        </div>
+
+        <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-4">
+          Bài 9: Hình chiếu vuông góc
+        </h2>
+
+        <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-800/40 border border-gray-100 dark:border-gray-700 mb-6">
+          <p class="text-xs font-semibold uppercase tracking-wider text-amber-600 dark:text-amber-400 mb-1">Mục tiêu bài học</p>
+          <p class="text-sm sm:text-base text-gray-600 dark:text-gray-300">Phương pháp chiếu góc thứ nhất (Phương pháp E); Ba mặt phẳng hình chiếu (Đứng, Bằng, Cạnh); Cách bố trí các hình chiếu vuông góc trên bản vẽ kĩ thuật và quy trình vẽ hình chiếu.</p>
+        </div>
+
+        <!-- Lesson Sections -->
+        <div class="space-y-6">
+          
+      <div class="mb-6">
+        <h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+          <span class="w-1.5 h-5 bg-amber-500 rounded-full inline-block"></span>
+          1. Phương pháp hình chiếu góc thứ nhất
+        </h3>
+        <div class="text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed pl-2 sm:pl-3">
+          
+          <p class="mb-3">Vật thể được đặt giữa người quan sát và các mặt phẳng hình chiếu:</p>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3 my-3 text-sm">
+            <div class="p-3.5 rounded-lg bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700">
+              <strong class="text-blue-600 dark:text-blue-400">1. Hình chiếu đứng:</strong>
+              <p class="mt-1">Hướng chiếu từ <strong>trước tới</strong> lên mặt phẳng hình chiếu đứng. Thể hiện chiều dài và chiều cao của vật thể.</p>
+            </div>
+            <div class="p-3.5 rounded-lg bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700">
+              <strong class="text-blue-600 dark:text-blue-400">2. Hình chiếu bằng:</strong>
+              <p class="mt-1">Hướng chiếu từ <strong>trên xuống</strong> lên mặt phẳng hình chiếu bằng. Thể hiện chiều dài và chiều rộng của vật thể.</p>
+            </div>
+            <div class="p-3.5 rounded-lg bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700">
+              <strong class="text-blue-600 dark:text-blue-400">3. Hình chiếu cạnh:</strong>
+              <p class="mt-1">Hướng chiếu từ <strong>trái sang</strong> lên mặt phẳng hình chiếu cạnh. Thể hiện chiều rộng và chiều cao của vật thể.</p>
+            </div>
+          </div>
+        
+        </div>
+      </div>
+    
+      <div class="mb-6">
+        <h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+          <span class="w-1.5 h-5 bg-amber-500 rounded-full inline-block"></span>
+          2. Quy tắc bố trí các hình chiếu trên bản vẽ
+        </h3>
+        <div class="text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed pl-2 sm:pl-3">
+          
+          <div class="p-3.5 bg-indigo-50 dark:bg-indigo-950/40 rounded-xl border border-indigo-200 dark:border-indigo-800 text-sm space-y-1">
+            <p>• Hình chiếu đứng đặt ở vị trí trung tâm phía trên.</p>
+            <p>• <strong>Hình chiếu bằng</strong> được bố trí ở <em>ngay phía dưới</em> hình chiếu đứng.</p>
+            <p>• <strong>Hình chiếu cạnh</strong> được bố trí ở <em>ngay bên phải</em> hình chiếu đứng.</p>
+            <p class="text-xs text-gray-500 mt-1">Các đường gióng dóng thẳng hàng bảo đảm liên hệ dóng kích thước giữa 3 hình chiếu.</p>
+          </div>
+        
+        </div>
+      </div>
+    
+        </div>
+
+        <!-- Summary Callout -->
+        <div class="mt-8 p-4 sm:p-5 rounded-xl bg-amber-50/60 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800/50">
+          <h4 class="font-bold text-amber-900 dark:text-amber-200 text-sm sm:text-base mb-1.5 flex items-center gap-2">
+            <svg class="w-5 h-5 text-amber-600 dark:text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            Ghi nhớ trọng tâm
+          </h4>
+          <p class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">Phương pháp góc chiếu thứ nhất tạo ra 3 hình chiếu cơ bản: hình chiếu đứng (nhìn từ trước), hình chiếu bằng (nhìn từ trên, đặt dưới hình chiếu đứng) và hình chiếu cạnh (nhìn từ trái, đặt bên phải hình chiếu đứng).</p>
+        </div>
+
+        <!-- Interactive Quiz -->
+        <div class="mt-8 pt-6 border-t border-gray-100 dark:border-gray-800">
+          <h4 class="font-bold text-gray-900 dark:text-white text-base mb-3 flex items-center gap-2">
+            <span class="w-6 h-6 rounded-full bg-amber-500 text-white inline-flex items-center justify-center text-xs">?</span>
+            Câu hỏi củng cố kiến thức
+          </h4>
+          <p class="text-sm sm:text-base text-gray-800 dark:text-gray-200 mb-4 font-medium">Theo phương pháp chiếu góc thứ nhất chuẩn Việt Nam, hình chiếu bằng có hướng chiếu từ đâu và được bố trí ở vị trí nào so với hình chiếu đứng?</p>
+          <div class="space-y-2.5">
+            
+      <button onclick="checkQuiz(this, true)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-amber-50 dark:hover:bg-amber-950/30 hover:border-amber-300 dark:hover:border-amber-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        A. Hướng chiếu từ trên xuống và được bố trí ở ngay phía dưới hình chiếu đứng
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-amber-50 dark:hover:bg-amber-950/30 hover:border-amber-300 dark:hover:border-amber-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        B. Hướng chiếu từ dưới lên và đặt ở phía trên hình chiếu đứng
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-amber-50 dark:hover:bg-amber-950/30 hover:border-amber-300 dark:hover:border-amber-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        C. Hướng chiếu từ phải sang và đặt bên trái hình chiếu đứng
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-amber-50 dark:hover:bg-amber-950/30 hover:border-amber-300 dark:hover:border-amber-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        D. Đặt tuỳ ý không theo quy tắc dóng hàng
+      </button>
+    
+          </div>
+          <div class="quiz-feedback hidden mt-4 p-4 rounded-xl text-sm leading-relaxed"></div>
+        </div>
+      </article>
+    
+
+      <article id="bai-10" class="bg-white dark:bg-dark-surface rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 border-t-4 border-lime-500 p-6 sm:p-8 transition-all hover:shadow-md">
+        <!-- Lesson Header -->
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-4 mb-6 border-b border-gray-100 dark:border-gray-800">
+          <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-lime-100 dark:bg-lime-900/40 text-lime-700 dark:text-lime-300">
+            Chương trình GDPT 2018
+          </span>
+          <span class="text-xs font-medium text-gray-500 dark:text-gray-400">
+            Bài 10 / 21
+          </span>
+        </div>
+
+        <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-4">
+          Bài 10: Hình cắt và mặt cắt
+        </h2>
+
+        <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-800/40 border border-gray-100 dark:border-gray-700 mb-6">
+          <p class="text-xs font-semibold uppercase tracking-wider text-lime-600 dark:text-lime-400 mb-1">Mục tiêu bài học</p>
+          <p class="text-sm sm:text-base text-gray-600 dark:text-gray-300">Khái niệm và công dụng của hình cắt, mặt cắt nhằm biểu diễn rõ ràng cấu trúc rỗng bên trong vật thể; Phân loại mặt cắt chập, mặt cắt rời; Hình cắt toàn phần, hình cắt bán phần và hình cắt cục bộ.</p>
+        </div>
+
+        <!-- Lesson Sections -->
+        <div class="space-y-6">
+          
+      <div class="mb-6">
+        <h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+          <span class="w-1.5 h-5 bg-lime-500 rounded-full inline-block"></span>
+          1. Khái niệm và sự cần thiết của hình cắt, mặt cắt
+        </h3>
+        <div class="text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed pl-2 sm:pl-3">
+          
+          <p class="mb-3">Khi chi tiết có nhiều lỗ, hốc rãnh ngầm phức tạp bên trong, việc dùng nét đứt mảnh sẽ gây rối mắt và khó đọc bản vẽ. <strong>Phương pháp cắt:</strong> Tưởng tượng dùng một mặt phẳng cắt bổ đôi vật thể, bỏ đi phần giữa người quan sát và mặt phẳng cắt, sau đó chiếu phần còn lại lên mặt phẳng hình chiếu.</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 my-2 text-sm">
+            <div class="p-3 rounded-lg bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700">
+              <strong class="text-teal-600 dark:text-teal-400">Mặt cắt (Cross Section):</strong>
+              <p class="mt-1">Chỉ biểu diễn riêng phần tiếp xúc trực tiếp giữa vật thể với mặt phẳng cắt (được kẻ gạch gạch bằng nét liền mảnh nghiêng $45^circ$).</p>
+            </div>
+            <div class="p-3 rounded-lg bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700">
+              <strong class="text-teal-600 dark:text-teal-400">Hình cắt (Sectional View):</strong>
+              <p class="mt-1">Biểu diễn mặt cắt và <em>cả các đường bao nhìn thấy phía sau mặt phẳng cắt</em>.</p>
+            </div>
+          </div>
+        
+        </div>
+      </div>
+    
+      <div class="mb-6">
+        <h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+          <span class="w-1.5 h-5 bg-lime-500 rounded-full inline-block"></span>
+          2. Các loại hình cắt thông dụng
+        </h3>
+        <div class="text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed pl-2 sm:pl-3">
+          
+          <ul class="space-y-1.5 text-sm list-disc list-inside my-2">
+            <li><strong>Hình cắt toàn phần:</strong> Dùng mặt phẳng cắt bổ toàn bộ vật thể, dùng cho vật thể rỗng không đối xứng.</li>
+            <li><strong>Hình cắt bán phần (Một nửa hình chiếu, một nửa hình cắt):</strong> Ghép một nửa hình chiếu ngoài với một nửa hình cắt bên trong, phân cách bởi trục đối xứng gạch chấm mảnh; dùng cho vật thể đối xứng.</li>
+            <li><strong>Hình cắt cục bộ (Hình cắt riêng phần):</strong> Chỉ cắt một góc nhỏ của vật thể, giới hạn bởi nét lượn sóng tự do.</li>
+          </ul>
+        
+        </div>
+      </div>
+    
+        </div>
+
+        <!-- Summary Callout -->
+        <div class="mt-8 p-4 sm:p-5 rounded-xl bg-lime-50/60 dark:bg-lime-950/20 border border-lime-200 dark:border-lime-800/50">
+          <h4 class="font-bold text-lime-900 dark:text-lime-200 text-sm sm:text-base mb-1.5 flex items-center gap-2">
+            <svg class="w-5 h-5 text-lime-600 dark:text-lime-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            Ghi nhớ trọng tâm
+          </h4>
+          <p class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">Hình cắt và mặt cắt dùng để biểu diễn cấu tạo rỗng bên trong. Phần vật liệu bị cắt được kẻ gạch nghiêng 45 độ. Hình cắt bán phần kết hợp nửa chiếu nửa cắt rất hữu hiệu cho vật thể đối xứng.</p>
+        </div>
+
+        <!-- Interactive Quiz -->
+        <div class="mt-8 pt-6 border-t border-gray-100 dark:border-gray-800">
+          <h4 class="font-bold text-gray-900 dark:text-white text-base mb-3 flex items-center gap-2">
+            <span class="w-6 h-6 rounded-full bg-lime-500 text-white inline-flex items-center justify-center text-xs">?</span>
+            Câu hỏi củng cố kiến thức
+          </h4>
+          <p class="text-sm sm:text-base text-gray-800 dark:text-gray-200 mb-4 font-medium">Để thể hiện cấu trúc bên trong của một chi tiết cơ khí có tính chất đối xứng hoàn toàn, người ta thường sử dụng loại hình cắt nào để vừa thấy được hình dáng bên ngoài vừa thấy được kết cấu bên trong?</p>
+          <div class="space-y-2.5">
+            
+      <button onclick="checkQuiz(this, true)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-lime-50 dark:hover:bg-lime-950/30 hover:border-lime-300 dark:hover:border-lime-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        A. Hình cắt bán phần (ghép một nửa hình chiếu và một nửa hình cắt qua trục đối xứng)
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-lime-50 dark:hover:bg-lime-950/30 hover:border-lime-300 dark:hover:border-lime-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        B. Hình chiếu phối cảnh hai điểm tụ
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-lime-50 dark:hover:bg-lime-950/30 hover:border-lime-300 dark:hover:border-lime-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        C. Mặt cắt chập
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-lime-50 dark:hover:bg-lime-950/30 hover:border-lime-300 dark:hover:border-lime-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        D. Hình chiếu trục đo xiên góc
+      </button>
+    
+          </div>
+          <div class="quiz-feedback hidden mt-4 p-4 rounded-xl text-sm leading-relaxed"></div>
+        </div>
+      </article>
+    
+
+      <article id="bai-11" class="bg-white dark:bg-dark-surface rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 border-t-4 border-violet-500 p-6 sm:p-8 transition-all hover:shadow-md">
+        <!-- Lesson Header -->
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-4 mb-6 border-b border-gray-100 dark:border-gray-800">
+          <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-violet-100 dark:bg-violet-900/40 text-violet-700 dark:text-violet-300">
+            Chương trình GDPT 2018
+          </span>
+          <span class="text-xs font-medium text-gray-500 dark:text-gray-400">
+            Bài 11 / 21
+          </span>
+        </div>
+
+        <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-4">
+          Bài 11: Hình chiếu trục đo
+        </h2>
+
+        <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-800/40 border border-gray-100 dark:border-gray-700 mb-6">
+          <p class="text-xs font-semibold uppercase tracking-wider text-violet-600 dark:text-violet-400 mb-1">Mục tiêu bài học</p>
+          <p class="text-sm sm:text-base text-gray-600 dark:text-gray-300">Khái niệm hình chiếu trục đo (Axonometric Projection); Hệ số biến dạng và góc trục đo của hai loại thông dụng: Hình chiếu trục đo vuông góc đều (p=q=r=1, 120°) và xiên góc cân (p=r=1, q=0.5, 135°); Cách dựng hình chiếu trục đo vật thể.</p>
+        </div>
+
+        <!-- Lesson Sections -->
+        <div class="space-y-6">
+          
+      <div class="mb-6">
+        <h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+          <span class="w-1.5 h-5 bg-violet-500 rounded-full inline-block"></span>
+          1. Khái niệm hình chiếu trục đo
+        </h3>
+        <div class="text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed pl-2 sm:pl-3">
+          
+          <p class="mb-3"><strong>Hình chiếu trục đo</strong> là hình biểu diễn không gian 3 chiều của vật thể trên một mặt phẳng hình chiếu duy nhất bằng phép chiếu song song, giúp người đọc dễ dàng hình dung hình dáng thực tế 3D của chi tiết.</p>
+        
+        </div>
+      </div>
+    
+      <div class="mb-6">
+        <h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+          <span class="w-1.5 h-5 bg-violet-500 rounded-full inline-block"></span>
+          2. Hai loại hình chiếu trục đo tiêu chuẩn
+        </h3>
+        <div class="text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed pl-2 sm:pl-3">
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-3 text-sm">
+            <div class="p-3.5 rounded-lg bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800">
+              <h4 class="font-bold text-blue-800 dark:text-blue-300 mb-1">A. Vuông góc đều (Isometric)</h4>
+              <p>• <strong>Góc trục đo:</strong> $\widehat{X'O'Y'} = \widehat{Y'O'Z'} = \widehat{Z'O'X'} = 120^\circ$.</p>
+              <p>• <strong>Hệ số biến dạng:</strong> $p = q = r = 1$ (kích thước trên cả 3 trục $O'X', O'Y', O'Z'$ đều giữ nguyên tỉ lệ thật).</p>
+              <p class="mt-1 text-xs text-gray-500">Hình tròn trên các mặt toạ độ bị biến dạng thành hình Elip đều.</p>
+            </div>
+            <div class="p-3.5 rounded-lg bg-purple-50 dark:bg-purple-950/40 border border-purple-200 dark:border-purple-800">
+              <h4 class="font-bold text-purple-800 dark:text-purple-300 mb-1">B. Xiên góc cân (Cabinet/Dimetric)</h4>
+              <p>• <strong>Góc trục đo:</strong> $\widehat{X'O'Z'} = 90^\circ$; $\widehat{X'O'Y'} = \widehat{Y'O'Z'} = 135^\circ$.</p>
+              <p>• <strong>Hệ số biến dạng:</strong> $p = r = 1$; riêng trục $O'Y'$ thu ngắn một nửa ($q = 0.5$).</p>
+              <p class="mt-1 text-xs text-gray-500">Mặt phẳng đứng song song với mặt toạ độ XOZ giữ nguyên hình tròn không bị méo thành elip.</p>
+            </div>
+          </div>
+        
+        </div>
+      </div>
+    
+        </div>
+
+        <!-- Summary Callout -->
+        <div class="mt-8 p-4 sm:p-5 rounded-xl bg-violet-50/60 dark:bg-violet-950/20 border border-violet-200 dark:border-violet-800/50">
+          <h4 class="font-bold text-violet-900 dark:text-violet-200 text-sm sm:text-base mb-1.5 flex items-center gap-2">
+            <svg class="w-5 h-5 text-violet-600 dark:text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            Ghi nhớ trọng tâm
+          </h4>
+          <p class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">Hình chiếu trục đo vuông góc đều có 3 góc 120° và hệ số biến dạng p=q=r=1. Hình chiếu trục đo xiên góc cân có góc 90° và 135°, hệ số biến dạng trên trục OY giảm một nửa (q=0.5).</p>
+        </div>
+
+        <!-- Interactive Quiz -->
+        <div class="mt-8 pt-6 border-t border-gray-100 dark:border-gray-800">
+          <h4 class="font-bold text-gray-900 dark:text-white text-base mb-3 flex items-center gap-2">
+            <span class="w-6 h-6 rounded-full bg-violet-500 text-white inline-flex items-center justify-center text-xs">?</span>
+            Câu hỏi củng cố kiến thức
+          </h4>
+          <p class="text-sm sm:text-base text-gray-800 dark:text-gray-200 mb-4 font-medium">Trong hình chiếu trục đo xiên góc cân, hệ số biến dạng q trên trục toạ độ O'Y' (trục chiều rộng) được quy ước bằng bao nhiêu?</p>
+          <div class="space-y-2.5">
+            
+      <button onclick="checkQuiz(this, true)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-violet-50 dark:hover:bg-violet-950/30 hover:border-violet-300 dark:hover:border-violet-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        A. q = 0.5 (thu ngắn lại một nửa)
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-violet-50 dark:hover:bg-violet-950/30 hover:border-violet-300 dark:hover:border-violet-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        B. q = 1 (giữ nguyên kích thước)
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-violet-50 dark:hover:bg-violet-950/30 hover:border-violet-300 dark:hover:border-violet-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        C. q = 2 (phóng to gấp đôi)
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-violet-50 dark:hover:bg-violet-950/30 hover:border-violet-300 dark:hover:border-violet-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        D. q = 0 (bằng không)
+      </button>
+    
+          </div>
+          <div class="quiz-feedback hidden mt-4 p-4 rounded-xl text-sm leading-relaxed"></div>
+        </div>
+      </article>
+    
+
+      <article id="bai-12" class="bg-white dark:bg-dark-surface rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 border-t-4 border-sky-500 p-6 sm:p-8 transition-all hover:shadow-md">
+        <!-- Lesson Header -->
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-4 mb-6 border-b border-gray-100 dark:border-gray-800">
+          <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-sky-100 dark:bg-sky-900/40 text-sky-700 dark:text-sky-300">
+            Chương trình GDPT 2018
+          </span>
+          <span class="text-xs font-medium text-gray-500 dark:text-gray-400">
+            Bài 12 / 21
+          </span>
+        </div>
+
+        <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-4">
+          Bài 12: Hình chiếu phối cảnh
+        </h2>
+
+        <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-800/40 border border-gray-100 dark:border-gray-700 mb-6">
+          <p class="text-xs font-semibold uppercase tracking-wider text-sky-600 dark:text-sky-400 mb-1">Mục tiêu bài học</p>
+          <p class="text-sm sm:text-base text-gray-600 dark:text-gray-300">Khái niệm hình chiếu phối cảnh (Perspective Projection) bằng phép chiếu xuyên tâm; Điểm nhìn, mặt phẳng tầm mắt, đường chân trời (đường chân trời dd), điểm tụ; Ứng dụng trong bản vẽ kiến trúc, xây dựng.</p>
+        </div>
+
+        <!-- Lesson Sections -->
+        <div class="space-y-6">
+          
+      <div class="mb-6">
+        <h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+          <span class="w-1.5 h-5 bg-sky-500 rounded-full inline-block"></span>
+          1. Khái niệm hình chiếu phối cảnh
+        </h3>
+        <div class="text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed pl-2 sm:pl-3">
+          
+          <p class="mb-3"><strong>Hình chiếu phối cảnh</strong> là hình biểu diễn 3D được xây dựng bằng <em>phép chiếu xuyên tâm</em> (tâm chiếu là mắt người quan sát). Cho ta cảm giác hình ảnh của vật thể chân thực giống hệt như mắt người nhìn trong thực tế: <em>vật thể ở gần thì to, ở càng xa thì càng nhỏ lại và các đường thẳng song song trong không gian hội tụ về một điểm ở vô cực (gọi là Điểm tụ)</em>.</p>
+        
+        </div>
+      </div>
+    
+      <div class="mb-6">
+        <h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+          <span class="w-1.5 h-5 bg-sky-500 rounded-full inline-block"></span>
+          2. Các loại hình chiếu phối cảnh
+        </h3>
+        <div class="text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed pl-2 sm:pl-3">
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 my-2 text-sm">
+            <div class="p-3.5 rounded-lg bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700">
+              <strong class="text-amber-600 dark:text-amber-400">Phối cảnh một điểm tụ (Phối cảnh chính diện):</strong>
+              <p class="mt-1">Mặt trước của vật thể song song với mặt phẳng tranh. Các đường song song theo chiều sâu hội tụ về 1 điểm tụ duy nhất trên đường chân trời. Thường dùng vẽ nội thất phòng ở, hành lang, đường phố thẳng.</p>
+            </div>
+            <div class="p-3.5 rounded-lg bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700">
+              <strong class="text-amber-600 dark:text-amber-400">Phối cảnh hai điểm tụ (Phối cảnh góc):</strong>
+              <p class="mt-1">Vật thể đặt nghiêng góc so với mặt tranh. Có hai điểm tụ ($F_1, F_2$) trên đường chân trời. Dùng biểu diễn góc nhìn phối cảnh ngoại thất các công trình kiến trúc nhà cửa, cầu đường hoành tráng.</p>
+            </div>
+          </div>
+        
+        </div>
+      </div>
+    
+        </div>
+
+        <!-- Summary Callout -->
+        <div class="mt-8 p-4 sm:p-5 rounded-xl bg-sky-50/60 dark:bg-sky-950/20 border border-sky-200 dark:border-sky-800/50">
+          <h4 class="font-bold text-sky-900 dark:text-sky-200 text-sm sm:text-base mb-1.5 flex items-center gap-2">
+            <svg class="w-5 h-5 text-sky-600 dark:text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            Ghi nhớ trọng tâm
+          </h4>
+          <p class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">Hình chiếu phối cảnh mô phỏng trung thực tầm nhìn mắt người bằng phép chiếu xuyên tâm qua các điểm tụ trên đường chân trời. Thường áp dụng vẽ công trình xây dựng và nội thất kiến trúc.</p>
+        </div>
+
+        <!-- Interactive Quiz -->
+        <div class="mt-8 pt-6 border-t border-gray-100 dark:border-gray-800">
+          <h4 class="font-bold text-gray-900 dark:text-white text-base mb-3 flex items-center gap-2">
+            <span class="w-6 h-6 rounded-full bg-sky-500 text-white inline-flex items-center justify-center text-xs">?</span>
+            Câu hỏi củng cố kiến thức
+          </h4>
+          <p class="text-sm sm:text-base text-gray-800 dark:text-gray-200 mb-4 font-medium">Đặc điểm trực quan nổi bật nhất của hình chiếu phối cảnh giúp nó được ứng dụng rộng rãi trong các bản vẽ thiết kế kiến trúc xây dựng nhà ở là gì?</p>
+          <div class="space-y-2.5">
+            
+      <button onclick="checkQuiz(this, true)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-sky-50 dark:hover:bg-sky-950/30 hover:border-sky-300 dark:hover:border-sky-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        A. Thể hiện các vật thể ở gần thì lớn, ở xa thì nhỏ dần và hội tụ về điểm tụ giống mắt người nhìn trong thực tế
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-sky-50 dark:hover:bg-sky-950/30 hover:border-sky-300 dark:hover:border-sky-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        B. Các đường song song không bao giờ hội tụ
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-sky-50 dark:hover:bg-sky-950/30 hover:border-sky-300 dark:hover:border-sky-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        C. Cho phép đo trực tiếp kích thước bằng thước kẻ mà không cần tỉ lệ
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-sky-50 dark:hover:bg-sky-950/30 hover:border-sky-300 dark:hover:border-sky-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        D. Chỉ có thể vẽ được trên mặt phẳng cong
+      </button>
+    
+          </div>
+          <div class="quiz-feedback hidden mt-4 p-4 rounded-xl text-sm leading-relaxed"></div>
+        </div>
+      </article>
+    
+
+      <article id="bai-13" class="bg-white dark:bg-dark-surface rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 border-t-4 border-fuchsia-500 p-6 sm:p-8 transition-all hover:shadow-md">
+        <!-- Lesson Header -->
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-4 mb-6 border-b border-gray-100 dark:border-gray-800">
+          <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-fuchsia-100 dark:bg-fuchsia-900/40 text-fuchsia-700 dark:text-fuchsia-300">
+            Chương trình GDPT 2018
+          </span>
+          <span class="text-xs font-medium text-gray-500 dark:text-gray-400">
+            Bài 13 / 21
+          </span>
+        </div>
+
+        <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-4">
+          Bài 13: Biểu diễn quy ước ren
+        </h2>
+
+        <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-800/40 border border-gray-100 dark:border-gray-700 mb-6">
+          <p class="text-xs font-semibold uppercase tracking-wider text-fuchsia-600 dark:text-fuchsia-400 mb-1">Mục tiêu bài học</p>
+          <p class="text-sm sm:text-base text-gray-600 dark:text-gray-300">Cấu tạo ren (ren trục, ren lỗ); Các thông số của ren (đường kính đỉnh d/D, đường kính chân d1/D1, bước ren p); Quy ước vẽ ren nhìn thấy và ren bị che khuất theo tiêu chuẩn TCVN.</p>
+        </div>
+
+        <!-- Lesson Sections -->
+        <div class="space-y-6">
+          
+      <div class="mb-6">
+        <h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+          <span class="w-1.5 h-5 bg-fuchsia-500 rounded-full inline-block"></span>
+          1. Khái niệm và các thông số cơ bản của ren
+        </h3>
+        <div class="text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed pl-2 sm:pl-3">
+          
+          <p class="mb-3">Ren được hình thành bởi đường xoắn ốc trên mặt trụ (hoặc mặt côn) ngoài (ren trục: bu lông, vít) hoặc mặt trong (ren lỗ: đai ốc, ê-cu). Dùng để ghép nối tháo được hoặc truyền chuyển động (trục vít me).</p>
+          <ul class="space-y-1 text-sm list-disc list-inside">
+            <li><strong>Đường kính đỉnh ren ($d, D$):</strong> Đường kính của mặt trụ đi qua đỉnh ren.</li>
+            <li><strong>Đường kính chân ren ($d_1, D_1$):</strong> Đường kính của mặt trụ đi qua đáy chân ren.</li>
+            <li><strong>Bước ren ($p$):</strong> Khoảng cách dọc trục giữa hai đỉnh ren kề nhau.</li>
+          </ul>
+        
+        </div>
+      </div>
+    
+      <div class="mb-6">
+        <h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+          <span class="w-1.5 h-5 bg-fuchsia-500 rounded-full inline-block"></span>
+          2. Quy ước vẽ ren (TCVN 5907)
+        </h3>
+        <div class="text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed pl-2 sm:pl-3">
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-3 text-sm">
+            <div class="p-3.5 rounded-lg bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700">
+              <strong class="text-blue-600 dark:text-blue-400">Ren trục (Ren thấy):</strong>
+              <p class="mt-1">• Đường đỉnh ren và đường giới hạn ren: vẽ bằng <strong>nét liền đậm</strong>.<br>• Đường chân ren: vẽ bằng <strong>nét liền mảnh</strong> và cung tròn chân ren chỉ vẽ hở $3/4$ vòng tròn.</p>
+            </div>
+            <div class="p-3.5 rounded-lg bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700">
+              <strong class="text-blue-600 dark:text-blue-400">Ren lỗ (Ren thấy trên hình cắt):</strong>
+              <p class="mt-1">• Đường đỉnh ren trong: vẽ bằng <strong>nét liền đậm</strong>.<br>• Đường chân ren ngoài: vẽ bằng <strong>nét liền mảnh</strong>.<br>• Vạch gạch mặt cắt kéo dài đến tận đường đỉnh ren (nét liền đậm).</p>
+            </div>
+          </div>
+        
+        </div>
+      </div>
+    
+        </div>
+
+        <!-- Summary Callout -->
+        <div class="mt-8 p-4 sm:p-5 rounded-xl bg-fuchsia-50/60 dark:bg-fuchsia-950/20 border border-fuchsia-200 dark:border-fuchsia-800/50">
+          <h4 class="font-bold text-fuchsia-900 dark:text-fuchsia-200 text-sm sm:text-base mb-1.5 flex items-center gap-2">
+            <svg class="w-5 h-5 text-fuchsia-600 dark:text-fuchsia-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            Ghi nhớ trọng tâm
+          </h4>
+          <p class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">Quy ước vẽ ren: đường đỉnh ren vẽ bằng nét liền đậm, đường chân ren vẽ bằng nét liền mảnh (vòng tròn chân ren vẽ hở 3/4). Với ren khuất, tất cả các đường biểu diễn bằng nét đứt.</p>
+        </div>
+
+        <!-- Interactive Quiz -->
+        <div class="mt-8 pt-6 border-t border-gray-100 dark:border-gray-800">
+          <h4 class="font-bold text-gray-900 dark:text-white text-base mb-3 flex items-center gap-2">
+            <span class="w-6 h-6 rounded-full bg-fuchsia-500 text-white inline-flex items-center justify-center text-xs">?</span>
+            Câu hỏi củng cố kiến thức
+          </h4>
+          <p class="text-sm sm:text-base text-gray-800 dark:text-gray-200 mb-4 font-medium">Theo tiêu chuẩn vẽ kĩ thuật, đường chân ren của một chi tiết ren trục nhìn thấy (như thân bu lông) được quy ước thể hiện bằng loại nét vẽ nào?</p>
+          <div class="space-y-2.5">
+            
+      <button onclick="checkQuiz(this, true)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-fuchsia-50 dark:hover:bg-fuchsia-950/30 hover:border-fuchsia-300 dark:hover:border-fuchsia-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        A. Nét liền mảnh (trên hình chiếu cạnh vòng tròn vẽ hở khoảng 3/4 vòng)
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-fuchsia-50 dark:hover:bg-fuchsia-950/30 hover:border-fuchsia-300 dark:hover:border-fuchsia-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        B. Nét liền đậm rất dày
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-fuchsia-50 dark:hover:bg-fuchsia-950/30 hover:border-fuchsia-300 dark:hover:border-fuchsia-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        C. Nét lượn sóng ziczac
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-fuchsia-50 dark:hover:bg-fuchsia-950/30 hover:border-fuchsia-300 dark:hover:border-fuchsia-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        D. Nét chấm gạch hai chấm
+      </button>
+    
+          </div>
+          <div class="quiz-feedback hidden mt-4 p-4 rounded-xl text-sm leading-relaxed"></div>
+        </div>
+      </article>
+    
+
+      <article id="bai-14" class="bg-white dark:bg-dark-surface rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 border-t-4 border-orange-500 p-6 sm:p-8 transition-all hover:shadow-md">
+        <!-- Lesson Header -->
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-4 mb-6 border-b border-gray-100 dark:border-gray-800">
+          <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-orange-100 dark:bg-orange-900/40 text-orange-700 dark:text-orange-300">
+            Chương trình GDPT 2018
+          </span>
+          <span class="text-xs font-medium text-gray-500 dark:text-gray-400">
+            Bài 14 / 21
+          </span>
+        </div>
+
+        <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-4">
+          Bài 14: Bản vẽ cơ khí
+        </h2>
+
+        <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-800/40 border border-gray-100 dark:border-gray-700 mb-6">
+          <p class="text-xs font-semibold uppercase tracking-wider text-orange-600 dark:text-orange-400 mb-1">Mục tiêu bài học</p>
+          <p class="text-sm sm:text-base text-gray-600 dark:text-gray-300">Khái niệm, cấu trúc nội dung và các bước đọc bản vẽ cơ khí: Bản vẽ chi tiết (Detail Drawing) và Bản vẽ lắp (Assembly Drawing); Yêu cầu kĩ thuật và bảng kê.</p>
+        </div>
+
+        <!-- Lesson Sections -->
+        <div class="space-y-6">
+          
+      <div class="mb-6">
+        <h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+          <span class="w-1.5 h-5 bg-orange-500 rounded-full inline-block"></span>
+          1. Bản vẽ chi tiết (Detail Drawing)
+        </h3>
+        <div class="text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed pl-2 sm:pl-3">
+          
+          <p class="mb-3">Là bản vẽ thể hiện hình dáng, kích thước và các yêu cầu kĩ thuật của <em>một chi tiết đơn lẻ</em> để phục vụ chế tạo và kiểm tra. Nội dung gồm:</p>
+          <div class="space-y-1.5 text-sm list-disc list-inside">
+            <p>• <strong>Các hình biểu diễn:</strong> Hình chiếu, hình cắt, mặt cắt mô tả đầy đủ hình học chi tiết.</p>
+            <p>• <strong>Kích thước:</strong> Kích thước định hình, kích thước định vị và dung sai lắp ghép.</p>
+            <p>• <strong>Yêu cầu kĩ thuật:</strong> Độ nhám bề mặt ($Ra$), nhiệt luyện (tôi, ram đạt độ cứng HRC), lớp phủ mạ chống gỉ.</p>
+            <p>• <strong>Khung tên:</strong> Tên chi tiết, vật liệu (thép C45, nhôm A6061), tỉ lệ, người vẽ, cơ quan thiết kế.</p>
+          </div>
+        
+        </div>
+      </div>
+    
+      <div class="mb-6">
+        <h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+          <span class="w-1.5 h-5 bg-orange-500 rounded-full inline-block"></span>
+          2. Bản vẽ lắp (Assembly Drawing)
+        </h3>
+        <div class="text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed pl-2 sm:pl-3">
+          
+          <p class="text-sm">Diễn tả hình dáng, vị trí tương quan và kết cấu lắp ghép của một nhóm chi tiết tạo thành bộ phận máy hoặc máy hoàn chỉnh. Ngoài các hình biểu diễn và kích thước chung (kích thước lắp ráp, kích thước bao), bản vẽ lắp có thêm <strong>Bảng kê (Part List)</strong> liệt kê số thứ tự, tên gọi, số lượng và vật liệu của từng chi tiết đơn lẻ.</p>
+        
+        </div>
+      </div>
+    
+        </div>
+
+        <!-- Summary Callout -->
+        <div class="mt-8 p-4 sm:p-5 rounded-xl bg-orange-50/60 dark:bg-orange-950/20 border border-orange-200 dark:border-orange-800/50">
+          <h4 class="font-bold text-orange-900 dark:text-orange-200 text-sm sm:text-base mb-1.5 flex items-center gap-2">
+            <svg class="w-5 h-5 text-orange-600 dark:text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            Ghi nhớ trọng tâm
+          </h4>
+          <p class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">Bản vẽ cơ khí gồm bản vẽ chi tiết (đầy đủ kích thước, dung sai, yêu cầu kĩ thuật để chế tạo 1 chi tiết) và bản vẽ lắp (mô tả kết cấu tương quan của nhiều chi tiết, kèm bảng kê để lắp ráp máy hoàn chỉnh).</p>
+        </div>
+
+        <!-- Interactive Quiz -->
+        <div class="mt-8 pt-6 border-t border-gray-100 dark:border-gray-800">
+          <h4 class="font-bold text-gray-900 dark:text-white text-base mb-3 flex items-center gap-2">
+            <span class="w-6 h-6 rounded-full bg-orange-500 text-white inline-flex items-center justify-center text-xs">?</span>
+            Câu hỏi củng cố kiến thức
+          </h4>
+          <p class="text-sm sm:text-base text-gray-800 dark:text-gray-200 mb-4 font-medium">Nội dung nào sau đây có trên Bản vẽ lắp mà KHÔNG CÓ trên Bản vẽ chi tiết cơ khí?</p>
+          <div class="space-y-2.5">
+            
+      <button onclick="checkQuiz(this, true)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-orange-50 dark:hover:bg-orange-950/30 hover:border-orange-300 dark:hover:border-orange-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        A. Bảng kê danh mục các chi tiết (Part List) và kích thước khoảng cách lắp ráp
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-orange-50 dark:hover:bg-orange-950/30 hover:border-orange-300 dark:hover:border-orange-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        B. Khung tên bản vẽ
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-orange-50 dark:hover:bg-orange-950/30 hover:border-orange-300 dark:hover:border-orange-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        C. Các hình chiếu vuông góc
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-orange-50 dark:hover:bg-orange-950/30 hover:border-orange-300 dark:hover:border-orange-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        D. Nét liền đậm thể hiện đường bao
+      </button>
+    
+          </div>
+          <div class="quiz-feedback hidden mt-4 p-4 rounded-xl text-sm leading-relaxed"></div>
+        </div>
+      </article>
+    
+
+      <article id="bai-15" class="bg-white dark:bg-dark-surface rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 border-t-4 border-green-500 p-6 sm:p-8 transition-all hover:shadow-md">
+        <!-- Lesson Header -->
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-4 mb-6 border-b border-gray-100 dark:border-gray-800">
+          <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-300">
+            Chương trình GDPT 2018
+          </span>
+          <span class="text-xs font-medium text-gray-500 dark:text-gray-400">
+            Bài 15 / 21
+          </span>
+        </div>
+
+        <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-4">
+          Bài 15: Bản vẽ xây dựng
+        </h2>
+
+        <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-800/40 border border-gray-100 dark:border-gray-700 mb-6">
+          <p class="text-xs font-semibold uppercase tracking-wider text-green-600 dark:text-green-400 mb-1">Mục tiêu bài học</p>
+          <p class="text-sm sm:text-base text-gray-600 dark:text-gray-300">Khái niệm và đặc điểm của bản vẽ xây dựng nhà ở; Các hình biểu diễn chủ yếu: Mặt bằng (Floor Plan), Mặt đứng (Elevation) và Mặt cắt (Section); Các kí hiệu quy ước trong bản vẽ xây dựng.</p>
+        </div>
+
+        <!-- Lesson Sections -->
+        <div class="space-y-6">
+          
+      <div class="mb-6">
+        <h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+          <span class="w-1.5 h-5 bg-green-500 rounded-full inline-block"></span>
+          1. Các hình biểu diễn chính trong bản vẽ ngôi nhà
+        </h3>
+        <div class="text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed pl-2 sm:pl-3">
+          
+          <div class="space-y-3 my-3 text-sm">
+            <div class="p-3.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 border-l-4 border-emerald-500">
+              <strong>1. Mặt bằng (Floor Plan) - Hình biểu diễn quan trọng nhất:</strong>
+              <p class="mt-1">Là hình cắt bằng của ngôi nhà thu được bằng một mặt phẳng cắt nằm ngang tưởng tượng (cách sàn nhà khoảng $1.5\,\text{m}$). Thể hiện cách bố trí các phòng (khách, ngủ, bếp, vệ sinh), vị trí tường, cột, cửa đi, cửa sổ và cầu thang.</p>
+            </div>
+            <div class="p-3.5 rounded-lg bg-blue-50 dark:bg-blue-950/40 border-l-4 border-blue-500">
+              <strong>2. Mặt đứng (Elevation):</strong>
+              <p class="mt-1">Hình chiếu vuông góc các mặt ngoài của ngôi nhà lên mặt phẳng chiếu đứng hoặc cạnh. Thể hiện vẻ đẹp kiến trúc bên ngoài, chiều cao các tầng, ban công, mái nhà.</p>
+            </div>
+            <div class="p-3.5 rounded-lg bg-amber-50 dark:bg-amber-950/40 border-l-4 border-amber-500">
+              <strong>3. Mặt cắt (Section):</strong>
+              <p class="mt-1">Hình cắt tạo bởi mặt phẳng cắt thẳng đứng song song với mặt phẳng chiếu cơ bản. Thể hiện kết cấu bên trong ngôi nhà: chiều cao dầm, sàn, trần, móng và cấu tạo cầu thang.</p>
+            </div>
+          </div>
+        
+        </div>
+      </div>
+    
+      <div class="mb-6">
+        <h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+          <span class="w-1.5 h-5 bg-green-500 rounded-full inline-block"></span>
+          2. Kí hiệu quy ước trong xây dựng
+        </h3>
+        <div class="text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed pl-2 sm:pl-3">
+          
+          <p class="text-sm">Bao gồm kí hiệu cửa đi 1 cánh, cửa đi 2 cánh, cửa sổ mở hất, cầu thang lên tầng, thiết bị vệ sinh (bồn cầu, bồn tắm, lavabo) theo TCVN 4614.</p>
+        
+        </div>
+      </div>
+    
+        </div>
+
+        <!-- Summary Callout -->
+        <div class="mt-8 p-4 sm:p-5 rounded-xl bg-green-50/60 dark:bg-green-950/20 border border-green-200 dark:border-green-800/50">
+          <h4 class="font-bold text-green-900 dark:text-green-200 text-sm sm:text-base mb-1.5 flex items-center gap-2">
+            <svg class="w-5 h-5 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            Ghi nhớ trọng tâm
+          </h4>
+          <p class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">Bản vẽ xây dựng gồm mặt bằng (hình cắt bằng quan trọng nhất thể hiện công năng phòng ốc), mặt đứng (kiến trúc bên ngoài) và mặt cắt (kết cấu dầm, sàn, móng theo chiều đứng).</p>
+        </div>
+
+        <!-- Interactive Quiz -->
+        <div class="mt-8 pt-6 border-t border-gray-100 dark:border-gray-800">
+          <h4 class="font-bold text-gray-900 dark:text-white text-base mb-3 flex items-center gap-2">
+            <span class="w-6 h-6 rounded-full bg-green-500 text-white inline-flex items-center justify-center text-xs">?</span>
+            Câu hỏi củng cố kiến thức
+          </h4>
+          <p class="text-sm sm:text-base text-gray-800 dark:text-gray-200 mb-4 font-medium">Trong bộ hồ sơ bản vẽ thiết kế một ngôi nhà ở, hình biểu diễn nào được coi là QUAN TRỌNG NHẤT thể hiện rõ ràng diện tích, vị trí phân chia các phòng, cửa đi và cửa sổ?</p>
+          <div class="space-y-2.5">
+            
+      <button onclick="checkQuiz(this, true)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-green-50 dark:hover:bg-green-950/30 hover:border-green-300 dark:hover:border-green-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        A. Mặt bằng các tầng (Floor Plan)
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-green-50 dark:hover:bg-green-950/30 hover:border-green-300 dark:hover:border-green-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        B. Mặt đứng nhìn từ góc nghiêng
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-green-50 dark:hover:bg-green-950/30 hover:border-green-300 dark:hover:border-green-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        C. Hình chiếu phối cảnh sân thượng
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-green-50 dark:hover:bg-green-950/30 hover:border-green-300 dark:hover:border-green-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        D. Bản vẽ chi tiết chốt then cửa
+      </button>
+    
+          </div>
+          <div class="quiz-feedback hidden mt-4 p-4 rounded-xl text-sm leading-relaxed"></div>
+        </div>
+      </article>
+    
+
+      <article id="bai-16" class="bg-white dark:bg-dark-surface rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 border-t-4 border-yellow-500 p-6 sm:p-8 transition-all hover:shadow-md">
+        <!-- Lesson Header -->
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-4 mb-6 border-b border-gray-100 dark:border-gray-800">
+          <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-yellow-100 dark:bg-yellow-900/40 text-yellow-700 dark:text-yellow-300">
+            Chương trình GDPT 2018
+          </span>
+          <span class="text-xs font-medium text-gray-500 dark:text-gray-400">
+            Bài 16 / 21
+          </span>
+        </div>
+
+        <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-4">
+          Bài 16: Vẽ kĩ thuật với sự trợ giúp của máy tính
+        </h2>
+
+        <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-800/40 border border-gray-100 dark:border-gray-700 mb-6">
+          <p class="text-xs font-semibold uppercase tracking-wider text-yellow-600 dark:text-yellow-400 mb-1">Mục tiêu bài học</p>
+          <p class="text-sm sm:text-base text-gray-600 dark:text-gray-300">Khái niệm hệ thống CAD (Computer-Aided Design); Ưu điểm vượt trội so với vẽ tay truyền thống; Các phần mềm vẽ kĩ thuật 2D/3D phổ biến (AutoCAD, SolidWorks, Revit); Các lệnh vẽ và chỉnh sửa cơ bản.</p>
+        </div>
+
+        <!-- Lesson Sections -->
+        <div class="space-y-6">
+          
+      <div class="mb-6">
+        <h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+          <span class="w-1.5 h-5 bg-yellow-500 rounded-full inline-block"></span>
+          1. Khái niệm và ưu thế của công nghệ CAD
+        </h3>
+        <div class="text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed pl-2 sm:pl-3">
+          
+          <p class="mb-3"><strong>CAD (Computer-Aided Design)</strong> là việc ứng dụng hệ thống máy tính và phần mềm chuyên dụng để hỗ trợ người kĩ sư trong việc phác thảo, xây dựng mô hình 2D/3D, chỉnh sửa, phân tích và xuất bản vẽ kĩ thuật.</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 my-2 text-sm">
+            <div class="p-3 rounded-lg bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700">
+              <strong class="text-blue-600 dark:text-blue-400">Tốc độ & Độ chính xác tuyệt đối:</strong>
+              <p class="mt-1">Độ chính xác số học gần như tuyệt đối, phóng to thu nhỏ không suy hao, sửa đổi kích thước chỉ trong vài cú nhấp chuột.</p>
+            </div>
+            <div class="p-3 rounded-lg bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700">
+              <strong class="text-blue-600 dark:text-blue-400">Mô phỏng 3D & Chuyển giao số:</strong>
+              <p class="mt-1">Dễ dàng mô phỏng động học lắp ráp, kiểm tra va chạm và xuất trực tiếp file sang phần mềm CAM để máy phay CNC gia công tự động.</p>
+            </div>
+          </div>
+        
+        </div>
+      </div>
+    
+      <div class="mb-6">
+        <h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+          <span class="w-1.5 h-5 bg-yellow-500 rounded-full inline-block"></span>
+          2. Một số nhóm lệnh vẽ cơ bản trong AutoCAD 2D
+        </h3>
+        <div class="text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed pl-2 sm:pl-3">
+          
+          <ul class="space-y-1 text-sm list-disc list-inside">
+            <li><em>Nhóm lệnh tạo hình (Draw):</em> Line (đoạn thẳng), Circle (đường tròn), Arc (cung tròn), Rectangle (hình chữ nhật).</li>
+            <li><em>Nhóm lệnh chỉnh sửa (Modify):</em> Trim (cắt xén), Fillet (bo tròn góc), Offset (tạo đối tượng song song), Move/Copy (di chuyển/sao chép).</li>
+            <li><em>Nhóm kích thước (Dimension):</em> Ghi kích thước thẳng, kích thước góc, bán kính, đường kính tự động.</li>
+          </ul>
+        
+        </div>
+      </div>
+    
+        </div>
+
+        <!-- Summary Callout -->
+        <div class="mt-8 p-4 sm:p-5 rounded-xl bg-yellow-50/60 dark:bg-yellow-950/20 border border-yellow-200 dark:border-yellow-800/50">
+          <h4 class="font-bold text-yellow-900 dark:text-yellow-200 text-sm sm:text-base mb-1.5 flex items-center gap-2">
+            <svg class="w-5 h-5 text-yellow-600 dark:text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            Ghi nhớ trọng tâm
+          </h4>
+          <p class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">Hệ thống CAD hỗ trợ thiết kế kĩ thuật nhanh chóng, chính xác tuyệt đối và dễ dàng chỉnh sửa, lưu trữ số hoá. Là cầu nối trực tiếp đến gia công chế tạo tự động CAM/CNC.</p>
+        </div>
+
+        <!-- Interactive Quiz -->
+        <div class="mt-8 pt-6 border-t border-gray-100 dark:border-gray-800">
+          <h4 class="font-bold text-gray-900 dark:text-white text-base mb-3 flex items-center gap-2">
+            <span class="w-6 h-6 rounded-full bg-yellow-500 text-white inline-flex items-center justify-center text-xs">?</span>
+            Câu hỏi củng cố kiến thức
+          </h4>
+          <p class="text-sm sm:text-base text-gray-800 dark:text-gray-200 mb-4 font-medium">Thuật ngữ 'CAD' trong thiết kế kĩ thuật và sản xuất công nghiệp hiện đại là viết tắt của cụm từ tiếng Anh nào?</p>
+          <div class="space-y-2.5">
+            
+      <button onclick="checkQuiz(this, true)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-yellow-50 dark:hover:bg-yellow-950/30 hover:border-yellow-300 dark:hover:border-yellow-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        A. Computer-Aided Design (Thiết kế với sự trợ giúp của máy tính)
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-yellow-50 dark:hover:bg-yellow-950/30 hover:border-yellow-300 dark:hover:border-yellow-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        B. Central Automobile Department
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-yellow-50 dark:hover:bg-yellow-950/30 hover:border-yellow-300 dark:hover:border-yellow-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        C. Circuit Automatic Diode
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-yellow-50 dark:hover:bg-yellow-950/30 hover:border-yellow-300 dark:hover:border-yellow-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        D. Control Alternating Device
+      </button>
+    
+          </div>
+          <div class="quiz-feedback hidden mt-4 p-4 rounded-xl text-sm leading-relaxed"></div>
+        </div>
+      </article>
+    
+
+      <article id="bai-17" class="bg-white dark:bg-dark-surface rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 border-t-4 border-emerald-500 p-6 sm:p-8 transition-all hover:shadow-md">
+        <!-- Lesson Header -->
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-4 mb-6 border-b border-gray-100 dark:border-gray-800">
+          <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300">
+            Chương trình GDPT 2018
+          </span>
+          <span class="text-xs font-medium text-gray-500 dark:text-gray-400">
+            Bài 17 / 21
+          </span>
+        </div>
+
+        <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-4">
+          Bài 17: Khái quát về thiết kế kĩ thuật
+        </h2>
+
+        <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-800/40 border border-gray-100 dark:border-gray-700 mb-6">
+          <p class="text-xs font-semibold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 mb-1">Mục tiêu bài học</p>
+          <p class="text-sm sm:text-base text-gray-600 dark:text-gray-300">Khái niệm thiết kế kĩ thuật; Mục đích, vai trò của thiết kế kĩ thuật trong việc tạo ra sản phẩm mới và nâng cao chất lượng cuộc sống; Đặc điểm tư duy của người làm thiết kế kĩ thuật.</p>
+        </div>
+
+        <!-- Lesson Sections -->
+        <div class="space-y-6">
+          
+      <div class="mb-6">
+        <h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+          <span class="w-1.5 h-5 bg-emerald-500 rounded-full inline-block"></span>
+          1. Khái niệm thiết kế kĩ thuật
+        </h3>
+        <div class="text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed pl-2 sm:pl-3">
+          
+          <p class="mb-3"><strong>Thiết kế kĩ thuật (Engineering Design)</strong> là quá trình sáng tạo, ứng dụng tri thức khoa học, toán học và công nghệ nhằm tìm kiếm, lựa chọn và hiện thực hoá giải pháp tối ưu biến ý tưởng thành tài liệu kĩ thuật (bản vẽ, thuyết minh, mô hình mẫu) để chế tạo ra sản phẩm thoả mãn nhu cầu của con người.</p>
+        
+        </div>
+      </div>
+    
+      <div class="mb-6">
+        <h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+          <span class="w-1.5 h-5 bg-emerald-500 rounded-full inline-block"></span>
+          2. Vai trò của thiết kế kĩ thuật
+        </h3>
+        <div class="text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed pl-2 sm:pl-3">
+          
+          <ul class="space-y-1.5 text-sm list-disc list-inside my-2">
+            <li><strong>Khởi nguồn của sản phẩm:</strong> Bất kì đồ vật nào (từ chiếc kim may, điện thoại thông minh đến tàu vũ trụ) đều phải trải qua quá trình thiết kế kĩ thuật trước khi đem vào sản xuất.</li>
+            <li><strong>Quyết định giá thành và chất lượng:</strong> Hơn 70% chi phí sản xuất và vòng đời sản phẩm được quyết định ngay trong giai đoạn thiết kế ban đầu.</li>
+            <li><strong>Thúc đẩy đổi mới sáng tạo:</strong> Nâng cao năng lực cạnh tranh quốc gia và tạo ra các giải pháp bảo vệ môi trường sinh thái.</li>
+          </ul>
+        
+        </div>
+      </div>
+    
+        </div>
+
+        <!-- Summary Callout -->
+        <div class="mt-8 p-4 sm:p-5 rounded-xl bg-emerald-50/60 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-800/50">
+          <h4 class="font-bold text-emerald-900 dark:text-emerald-200 text-sm sm:text-base mb-1.5 flex items-center gap-2">
+            <svg class="w-5 h-5 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            Ghi nhớ trọng tâm
+          </h4>
+          <p class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">Thiết kế kĩ thuật là hoạt động sáng tạo ứng dụng khoa học công nghệ để giải quyết vấn đề thực tiễn. Thiết kế kĩ thuật là khởi nguồn quyết định chất lượng, thẩm mĩ và giá thành sản phẩm.</p>
+        </div>
+
+        <!-- Interactive Quiz -->
+        <div class="mt-8 pt-6 border-t border-gray-100 dark:border-gray-800">
+          <h4 class="font-bold text-gray-900 dark:text-white text-base mb-3 flex items-center gap-2">
+            <span class="w-6 h-6 rounded-full bg-emerald-500 text-white inline-flex items-center justify-center text-xs">?</span>
+            Câu hỏi củng cố kiến thức
+          </h4>
+          <p class="text-sm sm:text-base text-gray-800 dark:text-gray-200 mb-4 font-medium">Khâu nào trong vòng đời của một sản phẩm cơ khí công nghệ đóng vai trò khởi nguồn và quyết định đến hơn 70% chất lượng cũng như giá thành sản xuất của sản phẩm đó?</p>
+          <div class="space-y-2.5">
+            
+      <button onclick="checkQuiz(this, true)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-emerald-50 dark:hover:bg-emerald-950/30 hover:border-emerald-300 dark:hover:border-emerald-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        A. Khâu thiết kế kĩ thuật
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-emerald-50 dark:hover:bg-emerald-950/30 hover:border-emerald-300 dark:hover:border-emerald-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        B. Khâu đóng thùng carton vận chuyển
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-emerald-50 dark:hover:bg-emerald-950/30 hover:border-emerald-300 dark:hover:border-emerald-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        C. Khâu vệ sinh quét dọn nhà kho
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-emerald-50 dark:hover:bg-emerald-950/30 hover:border-emerald-300 dark:hover:border-emerald-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        D. Khâu in tem nhãn quảng cáo sau cùng
+      </button>
+    
+          </div>
+          <div class="quiz-feedback hidden mt-4 p-4 rounded-xl text-sm leading-relaxed"></div>
+        </div>
+      </article>
+    
+
+      <article id="bai-18" class="bg-white dark:bg-dark-surface rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 border-t-4 border-teal-500 p-6 sm:p-8 transition-all hover:shadow-md">
+        <!-- Lesson Header -->
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-4 mb-6 border-b border-gray-100 dark:border-gray-800">
+          <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-teal-100 dark:bg-teal-900/40 text-teal-700 dark:text-teal-300">
+            Chương trình GDPT 2018
+          </span>
+          <span class="text-xs font-medium text-gray-500 dark:text-gray-400">
+            Bài 18 / 21
+          </span>
+        </div>
+
+        <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-4">
+          Bài 18: Quy trình thiết kế kĩ thuật
+        </h2>
+
+        <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-800/40 border border-gray-100 dark:border-gray-700 mb-6">
+          <p class="text-xs font-semibold uppercase tracking-wider text-teal-600 dark:text-teal-400 mb-1">Mục tiêu bài học</p>
+          <p class="text-sm sm:text-base text-gray-600 dark:text-gray-300">Các bước trong quy trình thiết kế kĩ thuật chuẩn quốc tế: Xác định vấn đề $\rightarrow$ Tìm kiếm giải pháp $\rightarrow$ Chọn giải pháp $\rightarrow$ Thiết kế chi tiết $\rightarrow$ Chế tạo mẫu thử $\rightarrow$ Đánh giá thử nghiệm $\rightarrow$ Hoàn thiện hồ sơ.</p>
+        </div>
+
+        <!-- Lesson Sections -->
+        <div class="space-y-6">
+          
+      <div class="mb-6">
+        <h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+          <span class="w-1.5 h-5 bg-teal-500 rounded-full inline-block"></span>
+          1. Sơ đồ các bước trong quy trình thiết kế kĩ thuật
+        </h3>
+        <div class="text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed pl-2 sm:pl-3">
+          
+          <div class="space-y-2 text-sm my-3">
+            <div class="p-3 rounded-lg bg-gray-50 dark:bg-gray-800/60 border-l-4 border-blue-500">
+              <strong>Bước 1: Xác định vấn đề và tiêu chí thiết kế:</strong> Nhận biết nhu cầu người dùng, xác định rõ các yêu cầu về tính năng, kích thước, tải trọng, giá thành.
+            </div>
+            <div class="p-3 rounded-lg bg-gray-50 dark:bg-gray-800/60 border-l-4 border-indigo-500">
+              <strong>Bước 2: Tìm kiếm thông tin và đề xuất các giải pháp:</strong> Thu thập thông tin sản phẩm tương tự, phác thảo nhiều ý tưởng sơ bộ khác nhau.
+            </div>
+            <div class="p-3 rounded-lg bg-gray-50 dark:bg-gray-800/60 border-l-4 border-purple-500">
+              <strong>Bước 3: Lựa chọn phương án tối ưu:</strong> Sử dụng ma trận đánh giá chấm điểm các tiêu chí (chi phí, độ bền, thẩm mĩ) để chọn giải pháp khả thi nhất.
+            </div>
+            <div class="p-3 rounded-lg bg-gray-50 dark:bg-gray-800/60 border-l-4 border-teal-500">
+              <strong>Bước 4: Thiết kế chi tiết và lập hồ sơ kĩ thuật:</strong> Dùng phần mềm CAD mô hình hoá 3D, tính toán sức bền, lập bản vẽ chi tiết và bản vẽ lắp.
+            </div>
+            <div class="p-3 rounded-lg bg-gray-50 dark:bg-gray-800/60 border-l-4 border-amber-500">
+              <strong>Bước 5: Chế tạo mẫu thử nghiệm (Prototype) và Đánh giá:</strong> Làm mẫu thử nghiệm thực tế (hoặc in 3D), kiểm tra tải trọng và chức năng. <em>Nếu không đạt yêu cầu $\rightarrow$ quay lại bước trước để sửa đổi (vòng lặp lặp đi lặp lại).</em>
+            </div>
+            <div class="p-3 rounded-lg bg-gray-50 dark:bg-gray-800/60 border-l-4 border-emerald-500">
+              <strong>Bước 6: Hoàn thiện và công bố hồ sơ:</strong> Xuất bản vẽ sản xuất đại trà và thuyết minh hướng dẫn sử dụng.
+            </div>
+          </div>
+        
+        </div>
+      </div>
+    
+        </div>
+
+        <!-- Summary Callout -->
+        <div class="mt-8 p-4 sm:p-5 rounded-xl bg-teal-50/60 dark:bg-teal-950/20 border border-teal-200 dark:border-teal-800/50">
+          <h4 class="font-bold text-teal-900 dark:text-teal-200 text-sm sm:text-base mb-1.5 flex items-center gap-2">
+            <svg class="w-5 h-5 text-teal-600 dark:text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            Ghi nhớ trọng tâm
+          </h4>
+          <p class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">Quy trình thiết kế kĩ thuật mang tính lặp (Iterative): từ xác định vấn đề, đề xuất giải pháp, thiết kế chi tiết đến làm mẫu thử nghiệm và kiểm chứng, không ngừng cải tiến hoàn thiện.</p>
+        </div>
+
+        <!-- Interactive Quiz -->
+        <div class="mt-8 pt-6 border-t border-gray-100 dark:border-gray-800">
+          <h4 class="font-bold text-gray-900 dark:text-white text-base mb-3 flex items-center gap-2">
+            <span class="w-6 h-6 rounded-full bg-teal-500 text-white inline-flex items-center justify-center text-xs">?</span>
+            Câu hỏi củng cố kiến thức
+          </h4>
+          <p class="text-sm sm:text-base text-gray-800 dark:text-gray-200 mb-4 font-medium">Nếu trong quá trình thử nghiệm mẫu thử (Prototype), sản phẩm không đạt được các tiêu chí kĩ thuật đề ra thì người kĩ sư thiết kế cần phải làm gì?</p>
+          <div class="space-y-2.5">
+            
+      <button onclick="checkQuiz(this, true)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-teal-50 dark:hover:bg-teal-950/30 hover:border-teal-300 dark:hover:border-teal-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        A. Quay trở lại các bước trước đó để phân tích nguyên nhân, điều chỉnh phương án thiết kế và thử nghiệm lại (tính lặp của thiết kế)
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-teal-50 dark:hover:bg-teal-950/30 hover:border-teal-300 dark:hover:border-teal-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        B. Vẫn cho xuất xưởng bán đại trà ra thị trường
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-teal-50 dark:hover:bg-teal-950/30 hover:border-teal-300 dark:hover:border-teal-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        C. Bỏ nghề không làm kĩ sư nữa
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-teal-50 dark:hover:bg-teal-950/30 hover:border-teal-300 dark:hover:border-teal-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        D. Thay đổi tiêu chuẩn an toàn cho thấp xuống để sản phẩm đạt
+      </button>
+    
+          </div>
+          <div class="quiz-feedback hidden mt-4 p-4 rounded-xl text-sm leading-relaxed"></div>
+        </div>
+      </article>
+    
+
+      <article id="bai-19" class="bg-white dark:bg-dark-surface rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 border-t-4 border-cyan-500 p-6 sm:p-8 transition-all hover:shadow-md">
+        <!-- Lesson Header -->
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-4 mb-6 border-b border-gray-100 dark:border-gray-800">
+          <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-cyan-100 dark:bg-cyan-900/40 text-cyan-700 dark:text-cyan-300">
+            Chương trình GDPT 2018
+          </span>
+          <span class="text-xs font-medium text-gray-500 dark:text-gray-400">
+            Bài 19 / 21
+          </span>
+        </div>
+
+        <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-4">
+          Bài 19: Những yếu tố ảnh hưởng đến thiết kế kĩ thuật
+        </h2>
+
+        <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-800/40 border border-gray-100 dark:border-gray-700 mb-6">
+          <p class="text-xs font-semibold uppercase tracking-wider text-cyan-600 dark:text-cyan-400 mb-1">Mục tiêu bài học</p>
+          <p class="text-sm sm:text-base text-gray-600 dark:text-gray-300">Các yếu tố chi phối quá trình thiết kế: Yếu tố con người (Ec-gô-nô-mi / Công thái học); Yếu tố công nghệ và cơ sở vật chất; Yếu tố tài chính kinh tế; Yếu tố môi trường và quy chuẩn pháp lí.</p>
+        </div>
+
+        <!-- Lesson Sections -->
+        <div class="space-y-6">
+          
+      <div class="mb-6">
+        <h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+          <span class="w-1.5 h-5 bg-cyan-500 rounded-full inline-block"></span>
+          1. Yếu tố Công thái học (Ergonomics / Ec-gô-nô-mi)
+        </h3>
+        <div class="text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed pl-2 sm:pl-3">
+          
+          <p class="mb-3">Là khoa học nghiên cứu sự tương thích tối ưu giữa sản phẩm thiết bị với kích thước cơ thể, khả năng tâm sinh lí của con người nhằm mang lại sự <strong>thoải mái, tiện dụng, nâng cao hiệu suất và bảo vệ sức khoẻ</strong> người sử dụng (ví dụ: tay cầm chuột máy tính ôm sát bàn tay, ghế ngồi công thái học nâng đỡ cột sống, bàn phím uốn cong chống mỏi cổ tay).</p>
+        
+        </div>
+      </div>
+    
+      <div class="mb-6">
+        <h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+          <span class="w-1.5 h-5 bg-cyan-500 rounded-full inline-block"></span>
+          2. Các yếu tố kinh tế, công nghệ và môi trường
+        </h3>
+        <div class="text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed pl-2 sm:pl-3">
+          
+          <div class="space-y-2 text-sm my-2">
+            <div class="p-3 rounded-lg bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700">
+              <strong>Yếu tố công nghệ & vật liệu:</strong> Phải phù hợp với năng lực máy móc thiết bị hiện có của doanh nghiệp; không thiết kế chi tiết mà máy móc trong nước không thể chế tạo được.
+            </div>
+            <div class="p-3 rounded-lg bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700">
+              <strong>Yếu tố tài chính:</strong> Giá thành sản xuất phải có tính cạnh tranh trên thị trường, tối ưu hoá chi phí nguyên vật liệu.
+            </div>
+            <div class="p-3 rounded-lg bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700">
+              <strong>Tiêu chuẩn & Môi trường:</strong> Tuân thủ tiêu chuẩn an toàn quốc gia (TCVN, CE, RoHS); ưu tiên vật liệu tái chế và tiết kiệm năng lượng.
+            </div>
+          </div>
+        
+        </div>
+      </div>
+    
+        </div>
+
+        <!-- Summary Callout -->
+        <div class="mt-8 p-4 sm:p-5 rounded-xl bg-cyan-50/60 dark:bg-cyan-950/20 border border-cyan-200 dark:border-cyan-800/50">
+          <h4 class="font-bold text-cyan-900 dark:text-cyan-200 text-sm sm:text-base mb-1.5 flex items-center gap-2">
+            <svg class="w-5 h-5 text-cyan-600 dark:text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            Ghi nhớ trọng tâm
+          </h4>
+          <p class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">Thiết kế kĩ thuật chịu ảnh hưởng đa chiều từ yếu tố con người (công thái học Ergonomics), trình độ công nghệ gia công, chi phí tài chính đến các tiêu chuẩn pháp lí và môi trường sinh thái.</p>
+        </div>
+
+        <!-- Interactive Quiz -->
+        <div class="mt-8 pt-6 border-t border-gray-100 dark:border-gray-800">
+          <h4 class="font-bold text-gray-900 dark:text-white text-base mb-3 flex items-center gap-2">
+            <span class="w-6 h-6 rounded-full bg-cyan-500 text-white inline-flex items-center justify-center text-xs">?</span>
+            Câu hỏi củng cố kiến thức
+          </h4>
+          <p class="text-sm sm:text-base text-gray-800 dark:text-gray-200 mb-4 font-medium">Việc thiết kế một chiếc ghế ngồi học có chiều cao và độ cong tựa lưng phù hợp với vóc dáng sinh học của học sinh nhằm tránh cong vẹo cột sống là sự quan tâm đến yếu tố nào trong thiết kế kĩ thuật?</p>
+          <div class="space-y-2.5">
+            
+      <button onclick="checkQuiz(this, true)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-cyan-50 dark:hover:bg-cyan-950/30 hover:border-cyan-300 dark:hover:border-cyan-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        A. Yếu tố công thái học (Ergonomics / Nhân trắc học)
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-cyan-50 dark:hover:bg-cyan-950/30 hover:border-cyan-300 dark:hover:border-cyan-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        B. Yếu tố vận chuyển đường biển quốc tế
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-cyan-50 dark:hover:bg-cyan-950/30 hover:border-cyan-300 dark:hover:border-cyan-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        C. Yếu tố thanh toán ngoại tệ
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-cyan-50 dark:hover:bg-cyan-950/30 hover:border-cyan-300 dark:hover:border-cyan-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        D. Yếu tố thị trường chứng khoán
+      </button>
+    
+          </div>
+          <div class="quiz-feedback hidden mt-4 p-4 rounded-xl text-sm leading-relaxed"></div>
+        </div>
+      </article>
+    
+
+      <article id="bai-20" class="bg-white dark:bg-dark-surface rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 border-t-4 border-blue-500 p-6 sm:p-8 transition-all hover:shadow-md">
+        <!-- Lesson Header -->
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-4 mb-6 border-b border-gray-100 dark:border-gray-800">
+          <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300">
+            Chương trình GDPT 2018
+          </span>
+          <span class="text-xs font-medium text-gray-500 dark:text-gray-400">
+            Bài 20 / 21
+          </span>
+        </div>
+
+        <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-4">
+          Bài 20: Nguyên tắc thiết kế kĩ thuật
+        </h2>
+
+        <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-800/40 border border-gray-100 dark:border-gray-700 mb-6">
+          <p class="text-xs font-semibold uppercase tracking-wider text-blue-600 dark:text-blue-400 mb-1">Mục tiêu bài học</p>
+          <p class="text-sm sm:text-base text-gray-600 dark:text-gray-300">Các nguyên tắc cơ bản trong thiết kế: Nguyên tắc công năng (đúng chức năng); Nguyên tắc công nghệ (dễ chế tạo); Nguyên tắc kinh tế (chi phí thấp nhất); Nguyên tắc thẩm mĩ; Nguyên tắc an toàn và thân thiện môi trường; Thiết kế cho sản xuất và lắp ráp (DFMA).</p>
+        </div>
+
+        <!-- Lesson Sections -->
+        <div class="space-y-6">
+          
+      <div class="mb-6">
+        <h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+          <span class="w-1.5 h-5 bg-blue-500 rounded-full inline-block"></span>
+          1. Các nguyên tắc thiết kế kĩ thuật cơ bản
+        </h3>
+        <div class="text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed pl-2 sm:pl-3">
+          
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3 my-3 text-sm">
+            <div class="p-3.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800">
+              <strong class="text-emerald-700 dark:text-emerald-300">1. Nguyên tắc Công năng:</strong>
+              <p class="mt-1">Sản phẩm phải thực hiện đầy đủ, chính xác và tin cậy các chức năng đặt ra ban đầu, độ bền cao dưới tải trọng làm việc.</p>
+            </div>
+            <div class="p-3.5 rounded-lg bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800">
+              <strong class="text-blue-700 dark:text-blue-300">2. Nguyên tắc Công nghệ:</strong>
+              <p class="mt-1">Kết cấu chi tiết đơn giản, dễ gia công bằng các máy công cụ thông dụng, dễ tháo lắp, bảo trì thay thế phụ tùng.</p>
+            </div>
+            <div class="p-3.5 rounded-lg bg-purple-50 dark:bg-purple-950/40 border border-purple-200 dark:border-purple-800">
+              <strong class="text-purple-700 dark:text-purple-300">3. Nguyên tắc Thẩm mĩ & An toàn:</strong>
+              <p class="mt-1">Hình thức thanh thoát, màu sắc hài hoà; an toàn tuyệt đối không có cạnh sắc nhọn gây nguy hiểm cho người dùng.</p>
+            </div>
+          </div>
+        
+        </div>
+      </div>
+    
+      <div class="mb-6">
+        <h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+          <span class="w-1.5 h-5 bg-blue-500 rounded-full inline-block"></span>
+          2. Nguyên tắc Tiêu chuẩn hoá và DFMA
+        </h3>
+        <div class="text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed pl-2 sm:pl-3">
+          
+          <p class="text-sm">Ưu tiên sử dụng các chi tiết đã được <strong>tiêu chuẩn hoá</strong> (bu lông, đai ốc, vòng bi tiêu chuẩn) để giảm giá thành mua sắm. Áp dụng triết lí <strong>DFMA (Design for Manufacture and Assembly)</strong>: giảm số lượng chi tiết xuống tối thiểu, thiết kế để lắp ráp chỉ theo một chiều duy nhất tránh lắp nhầm.</p>
+        
+        </div>
+      </div>
+    
+        </div>
+
+        <!-- Summary Callout -->
+        <div class="mt-8 p-4 sm:p-5 rounded-xl bg-blue-50/60 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-800/50">
+          <h4 class="font-bold text-blue-900 dark:text-blue-200 text-sm sm:text-base mb-1.5 flex items-center gap-2">
+            <svg class="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            Ghi nhớ trọng tâm
+          </h4>
+          <p class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">Nguyên tắc thiết kế gồm: bảo đảm công năng, dễ chế tạo, chi phí tối ưu, thẩm mĩ, an toàn và tiêu chuẩn hoá phụ tùng để thuận tiện cho việc sản xuất hàng loạt.</p>
+        </div>
+
+        <!-- Interactive Quiz -->
+        <div class="mt-8 pt-6 border-t border-gray-100 dark:border-gray-800">
+          <h4 class="font-bold text-gray-900 dark:text-white text-base mb-3 flex items-center gap-2">
+            <span class="w-6 h-6 rounded-full bg-blue-500 text-white inline-flex items-center justify-center text-xs">?</span>
+            Câu hỏi củng cố kiến thức
+          </h4>
+          <p class="text-sm sm:text-base text-gray-800 dark:text-gray-200 mb-4 font-medium">Vì sao trong thiết kế cơ khí, người kĩ sư luôn ưu tiên lựa chọn các chi tiết có sẵn theo tiêu chuẩn (như bu lông, đai ốc, vòng bi tiêu chuẩn) thay vì thiết kế kích thước dị biệt?</p>
+          <div class="space-y-2.5">
+            
+      <button onclick="checkQuiz(this, true)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-blue-50 dark:hover:bg-blue-950/30 hover:border-blue-300 dark:hover:border-blue-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        A. Tiết kiệm chi phí chế tạo, dễ dàng mua sắm thay thế và sửa chữa bảo trì
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-blue-50 dark:hover:bg-blue-950/30 hover:border-blue-300 dark:hover:border-blue-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        B. Bắt buộc phải làm như vậy vì máy vi tính không vẽ được chi tiết mới
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-blue-50 dark:hover:bg-blue-950/30 hover:border-blue-300 dark:hover:border-blue-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        C. Để sản phẩm nặng hơn
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-blue-50 dark:hover:bg-blue-950/30 hover:border-blue-300 dark:hover:border-blue-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        D. Để giảm bớt số lượng người mua hàng
+      </button>
+    
+          </div>
+          <div class="quiz-feedback hidden mt-4 p-4 rounded-xl text-sm leading-relaxed"></div>
+        </div>
+      </article>
+    
+
+      <article id="bai-21" class="bg-white dark:bg-dark-surface rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 border-t-4 border-indigo-500 p-6 sm:p-8 transition-all hover:shadow-md">
+        <!-- Lesson Header -->
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-4 mb-6 border-b border-gray-100 dark:border-gray-800">
+          <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-indigo-100 dark:bg-indigo-900/40 text-indigo-700 dark:text-indigo-300">
+            Chương trình GDPT 2018
+          </span>
+          <span class="text-xs font-medium text-gray-500 dark:text-gray-400">
+            Bài 21 / 21
+          </span>
+        </div>
+
+        <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-4">
+          Bài 21: Phương pháp, phương tiện hỗ trợ thiết kế kĩ thuật
+        </h2>
+
+        <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-800/40 border border-gray-100 dark:border-gray-700 mb-6">
+          <p class="text-xs font-semibold uppercase tracking-wider text-indigo-600 dark:text-indigo-400 mb-1">Mục tiêu bài học</p>
+          <p class="text-sm sm:text-base text-gray-600 dark:text-gray-300">Các phương pháp kích thích tư duy sáng tạo (Động não Brainstorming, Bản đồ tư duy Mindmap, Phương pháp SCAMPER); Các phương tiện phần mềm CAD/CAE/CAM và công cụ in 3D tạo mẫu nhanh.</p>
+        </div>
+
+        <!-- Lesson Sections -->
+        <div class="space-y-6">
+          
+      <div class="mb-6">
+        <h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+          <span class="w-1.5 h-5 bg-indigo-500 rounded-full inline-block"></span>
+          1. Các phương pháp kích thích tư duy thiết kế sáng tạo
+        </h3>
+        <div class="text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed pl-2 sm:pl-3">
+          
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3 my-3 text-sm">
+            <div class="p-3.5 rounded-lg bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700">
+              <strong class="text-indigo-600 dark:text-indigo-400">1. Động não (Brainstorming):</strong>
+              <p class="mt-1">Thảo luận nhóm cởi mở, khuyến khích đưa ra càng nhiều ý tưởng càng tốt trong thời gian ngắn, <em>tuyệt đối không chỉ trích ý tưởng ban đầu</em>.</p>
+            </div>
+            <div class="p-3.5 rounded-lg bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700">
+              <strong class="text-indigo-600 dark:text-indigo-400">2. Bản đồ tư duy (Mindmap):</strong>
+              <p class="mt-1">Phát triển ý tưởng từ một chủ đề trung tâm toả ra các nhánh phụ bằng hình ảnh, từ khoá và màu sắc trực quan.</p>
+            </div>
+            <div class="p-3.5 rounded-lg bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700">
+              <strong class="text-indigo-600 dark:text-indigo-400">3. Kĩ thuật SCAMPER:</strong>
+              <p class="mt-1">Bộ câu hỏi gợi mở: Thay thế (Substitute), Kết hợp (Combine), Thích ứng (Adapt), Sửa đổi (Modify), Dùng cho mục đích khác (Put to other use), Loại bỏ (Eliminate), Đảo ngược (Reverse).</p>
+            </div>
+          </div>
+        
+        </div>
+      </div>
+    
+      <div class="mb-6">
+        <h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+          <span class="w-1.5 h-5 bg-indigo-500 rounded-full inline-block"></span>
+          2. Các phương tiện phần mềm và công nghệ tạo mẫu nhanh
+        </h3>
+        <div class="text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed pl-2 sm:pl-3">
+          
+          <div class="p-3.5 bg-gray-50 dark:bg-gray-800/60 rounded-xl border border-gray-200 dark:border-gray-700 text-sm space-y-1.5">
+            <p>• <strong>CAD (Computer-Aided Design):</strong> Thiết kế mô hình 3D hình học.</p>
+            <p>• <strong>CAE (Computer-Aided Engineering):</strong> Mô phỏng phân tích ứng suất, sức bền phần tử hữu hạn (FEA) và khí động học (CFD) trên máy tính mà không cần phá huỷ sản phẩm thật.</p>
+            <p>• <strong>CAM (Computer-Aided Manufacturing):</strong> Lập trình đường chạy dao và tự động sinh mã G-code điều khiển máy CNC.</p>
+            <p>• <strong>Tạo mẫu nhanh (Rapid Prototyping - Máy in 3D):</strong> Chế tạo mô hình thực thể chỉ trong vài giờ để kiểm chứng lắp ráp thực tế.</p>
+          </div>
+        
+        </div>
+      </div>
+    
+        </div>
+
+        <!-- Summary Callout -->
+        <div class="mt-8 p-4 sm:p-5 rounded-xl bg-indigo-50/60 dark:bg-indigo-950/20 border border-indigo-200 dark:border-indigo-800/50">
+          <h4 class="font-bold text-indigo-900 dark:text-indigo-200 text-sm sm:text-base mb-1.5 flex items-center gap-2">
+            <svg class="w-5 h-5 text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            Ghi nhớ trọng tâm
+          </h4>
+          <p class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">Thiết kế kĩ thuật hiện đại kết hợp phương pháp tư duy sáng tạo (Brainstorming, SCAMPER) cùng hệ sinh thái công cụ số CAD/CAE/CAM và công nghệ in 3D tạo mẫu nhanh, giúp rút ngắn thời gian đưa sản phẩm ra thị trường.</p>
+        </div>
+
+        <!-- Interactive Quiz -->
+        <div class="mt-8 pt-6 border-t border-gray-100 dark:border-gray-800">
+          <h4 class="font-bold text-gray-900 dark:text-white text-base mb-3 flex items-center gap-2">
+            <span class="w-6 h-6 rounded-full bg-indigo-500 text-white inline-flex items-center justify-center text-xs">?</span>
+            Câu hỏi củng cố kiến thức
+          </h4>
+          <p class="text-sm sm:text-base text-gray-800 dark:text-gray-200 mb-4 font-medium">Phần mềm kĩ thuật nào (CAE) cho phép người kĩ sư mô phỏng ứng suất chịu lực, độ võng uốn và độ bền của chi tiết máy trên máy tính trước khi đem đi gia công thực tế?</p>
+          <div class="space-y-2.5">
+            
+      <button onclick="checkQuiz(this, true)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-indigo-50 dark:hover:bg-indigo-950/30 hover:border-indigo-300 dark:hover:border-indigo-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        A. Phần mềm tính toán kĩ thuật hỗ trợ bởi máy tính (CAE - Computer-Aided Engineering)
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-indigo-50 dark:hover:bg-indigo-950/30 hover:border-indigo-300 dark:hover:border-indigo-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        B. Phần mềm bảng tính kế toán Excel
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-indigo-50 dark:hover:bg-indigo-950/30 hover:border-indigo-300 dark:hover:border-indigo-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        C. Trình duyệt xem video trực tuyến
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="quiz-btn w-full text-left p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-indigo-50 dark:hover:bg-indigo-950/30 hover:border-indigo-300 dark:hover:border-indigo-700 transition-all text-sm sm:text-base font-medium text-gray-800 dark:text-gray-200">
+        D. Trình gõ văn bản thuần tuý
+      </button>
+    
+          </div>
+          <div class="quiz-feedback hidden mt-4 p-4 rounded-xl text-sm leading-relaxed"></div>
+        </div>
+      </article>
+    
+      </main>
+
+    </div>
+  </div>
+
+  <!-- Mobile Drawer Menu -->
+  <div id="mobileDrawer" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden flex justify-end">
+    <div class="w-80 max-w-full bg-white dark:bg-dark-surface h-full p-6 shadow-2xl overflow-y-auto flex flex-col justify-between">
+      <div>
+        <div class="flex items-center justify-between pb-4 border-b border-gray-200 dark:border-gray-700 mb-4">
+          <h3 class="font-bold text-gray-900 dark:text-white">Danh sách bài học Thiết Kế 10</h3>
+          <button id="closeMobileDrawer" class="p-1.5 text-gray-400 hover:text-gray-600">
+            <i class="fa-solid fa-xmark text-xl"></i>
+          </button>
+        </div>
+        <ul class="space-y-1">
+          
+      <li>
+        <a href="#bai-1" class="sidebar-link flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 shrink-0"></span>
+          <span class="truncate">Bài 1: Công nghệ và đời sống</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="#bai-2" class="sidebar-link flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+          <span class="w-2.5 h-2.5 rounded-full bg-teal-500 shrink-0"></span>
+          <span class="truncate">Bài 2: Hệ thống kĩ thuật</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="#bai-3" class="sidebar-link flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+          <span class="w-2.5 h-2.5 rounded-full bg-cyan-500 shrink-0"></span>
+          <span class="truncate">Bài 3: Công nghệ phổ biến</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="#bai-4" class="sidebar-link flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+          <span class="w-2.5 h-2.5 rounded-full bg-blue-500 shrink-0"></span>
+          <span class="truncate">Bài 4: Một số công nghệ mới</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="#bai-5" class="sidebar-link flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+          <span class="w-2.5 h-2.5 rounded-full bg-indigo-500 shrink-0"></span>
+          <span class="truncate">Bài 5: Đánh giá công nghệ</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="#bai-6" class="sidebar-link flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+          <span class="w-2.5 h-2.5 rounded-full bg-purple-500 shrink-0"></span>
+          <span class="truncate">Bài 6: Cách mạng công nghiệp</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="#bai-7" class="sidebar-link flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+          <span class="w-2.5 h-2.5 rounded-full bg-rose-500 shrink-0"></span>
+          <span class="truncate">Bài 7: Ngành nghề kĩ thuật, công nghệ</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="#bai-8" class="sidebar-link flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+          <span class="w-2.5 h-2.5 rounded-full bg-pink-500 shrink-0"></span>
+          <span class="truncate">Bài 8: Bản vẽ kĩ thuật và tiêu chuẩn trình bày bản vẽ kĩ thuật</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="#bai-9" class="sidebar-link flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+          <span class="w-2.5 h-2.5 rounded-full bg-amber-500 shrink-0"></span>
+          <span class="truncate">Bài 9: Hình chiếu vuông góc</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="#bai-10" class="sidebar-link flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+          <span class="w-2.5 h-2.5 rounded-full bg-lime-500 shrink-0"></span>
+          <span class="truncate">Bài 10: Hình cắt và mặt cắt</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="#bai-11" class="sidebar-link flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+          <span class="w-2.5 h-2.5 rounded-full bg-violet-500 shrink-0"></span>
+          <span class="truncate">Bài 11: Hình chiếu trục đo</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="#bai-12" class="sidebar-link flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+          <span class="w-2.5 h-2.5 rounded-full bg-sky-500 shrink-0"></span>
+          <span class="truncate">Bài 12: Hình chiếu phối cảnh</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="#bai-13" class="sidebar-link flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+          <span class="w-2.5 h-2.5 rounded-full bg-fuchsia-500 shrink-0"></span>
+          <span class="truncate">Bài 13: Biểu diễn quy ước ren</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="#bai-14" class="sidebar-link flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+          <span class="w-2.5 h-2.5 rounded-full bg-orange-500 shrink-0"></span>
+          <span class="truncate">Bài 14: Bản vẽ cơ khí</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="#bai-15" class="sidebar-link flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+          <span class="w-2.5 h-2.5 rounded-full bg-green-500 shrink-0"></span>
+          <span class="truncate">Bài 15: Bản vẽ xây dựng</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="#bai-16" class="sidebar-link flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+          <span class="w-2.5 h-2.5 rounded-full bg-yellow-500 shrink-0"></span>
+          <span class="truncate">Bài 16: Vẽ kĩ thuật với sự trợ giúp của máy tính</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="#bai-17" class="sidebar-link flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 shrink-0"></span>
+          <span class="truncate">Bài 17: Khái quát về thiết kế kĩ thuật</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="#bai-18" class="sidebar-link flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+          <span class="w-2.5 h-2.5 rounded-full bg-teal-500 shrink-0"></span>
+          <span class="truncate">Bài 18: Quy trình thiết kế kĩ thuật</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="#bai-19" class="sidebar-link flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+          <span class="w-2.5 h-2.5 rounded-full bg-cyan-500 shrink-0"></span>
+          <span class="truncate">Bài 19: Những yếu tố ảnh hưởng đến thiết kế kĩ thuật</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="#bai-20" class="sidebar-link flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+          <span class="w-2.5 h-2.5 rounded-full bg-blue-500 shrink-0"></span>
+          <span class="truncate">Bài 20: Nguyên tắc thiết kế kĩ thuật</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="#bai-21" class="sidebar-link flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+          <span class="w-2.5 h-2.5 rounded-full bg-indigo-500 shrink-0"></span>
+          <span class="truncate">Bài 21: Phương pháp, phương tiện hỗ trợ thiết kế kĩ thuật</span>
+        </a>
+      </li>
+    
+        </ul>
+      </div>
+      <div class="pt-4 border-t border-gray-200 dark:border-gray-700 mt-6">
+        <a href="../index.html" class="flex items-center justify-center gap-2 w-full py-2.5 bg-gray-100 dark:bg-gray-800 rounded-xl text-sm font-medium hover:bg-gray-200 dark:hover:bg-gray-700">
+          <i class="fa-solid fa-arrow-left"></i>
+          Về trang chủ
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-white dark:bg-dark-surface border-t border-gray-200 dark:border-gray-800 py-6 mt-16 text-center text-xs text-gray-500 dark:text-gray-400">
+    <p>Chương trình Công nghệ 10 (Thiết kế và Công nghệ) - GDPT 2018. Xây dựng với giao diện trực quan và bài tập tương tác sinh động.</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    // Theme toggle
+    const themeToggleBtn = document.getElementById('themeToggle');
+    const isDark = localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    if (isDark) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+    themeToggleBtn.addEventListener('click', () => {
+      document.documentElement.classList.toggle('dark');
+      localStorage.setItem('color-theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+    });
+
+    // Mobile drawer
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileDrawer = document.getElementById('mobileDrawer');
+    const closeMobileDrawer = document.getElementById('closeMobileDrawer');
+    mobileMenuBtn?.addEventListener('click', () => mobileDrawer?.classList.remove('hidden'));
+    closeMobileDrawer?.addEventListener('click', () => mobileDrawer?.classList.add('hidden'));
+    mobileDrawer?.addEventListener('click', (e) => {
+      if (e.target === mobileDrawer) mobileDrawer.classList.add('hidden');
+    });
+
+    // Quiz Check
+    function checkQuiz(btn, isCorrect) {
+      const container = btn.closest('article');
+      const allBtns = container.querySelectorAll('.quiz-btn');
+      const feedback = container.querySelector('.quiz-feedback');
+
+      allBtns.forEach(b => {
+        b.disabled = true;
+        b.classList.remove('hover:bg-gray-100', 'dark:hover:bg-gray-700');
+      });
+
+      if (isCorrect) {
+        btn.classList.add('bg-emerald-500', 'text-white', 'border-emerald-600', 'font-bold');
+        feedback.className = 'quiz-feedback mt-4 p-4 rounded-xl text-sm leading-relaxed bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 block';
+        feedback.innerHTML = '<span class="font-bold">✓ Chính xác!</span> Bạn đã nắm rất vững kiến thức bài học.';
+      } else {
+        btn.classList.add('bg-rose-500', 'text-white', 'border-rose-600', 'font-bold');
+        feedback.className = 'quiz-feedback mt-4 p-4 rounded-xl text-sm leading-relaxed bg-rose-50 dark:bg-rose-950/40 text-rose-800 dark:text-rose-300 border border-rose-200 dark:border-rose-800 block';
+        feedback.innerHTML = '<span class="font-bold">✕ Chưa chính xác!</span> Hãy đọc lại phần ghi nhớ trọng tâm và lý thuyết phía trên nhé.';
+      }
+    }
+
+    // Scrollspy active state
+    window.addEventListener('DOMContentLoaded', () => {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const id = entry.target.getAttribute('id');
+            document.querySelectorAll('.sidebar-link').forEach(link => {
+              if (link.getAttribute('href') === '#' + id) {
+                link.classList.add('bg-emerald-50', 'dark:bg-emerald-900/30', 'text-emerald-600', 'dark:text-emerald-400', 'font-bold');
+              } else {
+                link.classList.remove('bg-emerald-50', 'dark:bg-emerald-900/30', 'text-emerald-600', 'dark:text-emerald-400', 'font-bold');
+              }
+            });
+          }
+        });
+      }, { rootMargin: '-20% 0px -70% 0px' });
+
+      document.querySelectorAll('article[id^="bai-"]').forEach(article => {
+        observer.observe(article);
+      });
+    });
+  </script>
+</body>
+</html>
