@@ -1,30 +1,124 @@
-<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Làm Quiz V3.7.24.2 | CodeHub</title>
-<script src="https://cdn.tailwindcss.com"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>window.MathJax={loader:{load:['[tex]/mhchem']},tex:{packages:{'[+]':['mhchem']},inlineMath:[['$','$'],['\\(','\\)']]},options:{skipHtmlTags:['script','noscript','style','textarea','pre','code']}};</script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-<script src="scripts/supabase-config.js"></script><style>.stem-svg svg{max-width:100%;height:auto;display:block;margin:auto}.math-wrap mjx-container{overflow-x:auto;overflow-y:hidden;max-width:100%}</style></head>
-<body class="bg-slate-50"><main class="max-w-5xl mx-auto p-5"><div class="sticky top-0 z-10 bg-white shadow rounded-2xl p-4 mb-5 flex justify-between gap-4"><div><h1 id="h" class="font-bold text-xl">Bài kiểm tra</h1><p id="info" class="text-sm text-slate-500"></p></div><div class="flex items-center gap-3 flex-wrap justify-end"><div id="unansweredBox" class="rounded-xl bg-amber-50 border border-amber-200 px-4 py-2 text-center min-w-[118px]"><div class="text-xs font-bold text-amber-700 uppercase">Chưa làm</div><div id="unanswered" class="text-2xl font-extrabold text-amber-600">0</div></div><div id="timer" class="text-2xl font-bold text-red-600">--:--</div><a href="student-quizzes-v4.html" class="border px-3 py-2 rounded-xl">Thoát</a></div></div><div id="error" class="hidden bg-red-50 text-red-700 p-4 rounded-xl mb-4"></div><form id="form"><div id="list" class="space-y-4"></div><button id="submit" class="w-full mt-5 bg-emerald-600 text-white p-4 rounded-xl font-bold">Nộp bài</button></form></main>
-<script>
-const s=window.supabaseClient,$=x=>document.getElementById(x),aid=new URLSearchParams(location.search).get("assignment");let asg=null,qs=[],started=null,tick=null,submitting=false,isEnglish=false;
+<!doctype html><html lang="vi"><head><meta charset="utf-8"><title>Làm Quiz V4</title><script src="https://cdn.tailwindcss.com"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="scripts/supabase-config.js"></script>
+<style>
+  body.exam-active{user-select:none;-webkit-user-select:none}
+  #examGate{position:fixed;inset:0;z-index:99999;background:rgba(15,23,42,.96);display:flex;align-items:center;justify-content:center;padding:24px}
+  #examGate.hidden{display:none}
+  #examGate .box{max-width:680px;background:#fff;border-radius:24px;padding:30px;box-shadow:0 25px 70px rgba(0,0,0,.35)}
+  #examGate h2{font-size:28px;font-weight:800;margin:0 0 12px}
+  #examGate p{color:#475569;line-height:1.65;margin:8px 0}
+  #startExam{width:100%;margin-top:18px;border:0;border-radius:14px;padding:15px 18px;background:#2563eb;color:#fff;font-weight:800;font-size:18px;cursor:pointer}
+  #examNotice{position:fixed;left:50%;top:18px;transform:translateX(-50%);z-index:99998;background:#fee2e2;color:#991b1b;border:1px solid #fecaca;border-radius:14px;padding:12px 18px;font-weight:700;display:none}
+</style>
+</head><body class="bg-slate-50">
+<div id="examGate">
+  <div class="box">
+    <h2>🔒 Chế độ kiểm tra</h2>
+    <p>Sau khi bấm <b>Bắt đầu làm bài</b>, trình duyệt sẽ chuyển sang toàn màn hình.</p>
+    <p><b>Không chuyển tab, thu nhỏ cửa sổ, thoát toàn màn hình hoặc rời trang.</b> Nếu xảy ra, hệ thống sẽ tự động nộp bài với các đáp án đã chọn và hiển thị kết quả theo cài đặt của bài kiểm tra.</p>
+    <p>Hãy chuẩn bị xong trước khi bắt đầu. Thời gian chỉ tính từ lúc bấm nút bên dưới.</p>
+    <button id="startExam" type="button">Bắt đầu làm bài</button>
+  </div>
+</div>
+<div id="examNotice">Đang nộp bài vì bạn đã rời màn hình kiểm tra…</div>
+<main class="max-w-4xl mx-auto p-5"><div class="sticky top-0 z-10 bg-white shadow rounded-2xl p-4 mb-5 flex justify-between"><div><h1 id="h" class="font-bold text-xl">Bài kiểm tra</h1><p id="info" class="text-sm text-slate-500"></p></div><div id="timer" class="text-2xl font-bold text-red-600">--:--</div></div><form id="form"><div id="list" class="space-y-4"></div><button id="submit" class="w-full mt-5 bg-emerald-600 text-white p-4 rounded-xl font-bold">Nộp bài</button></form></main><script>
+const s=window.supabaseClient,$=x=>document.getElementById(x),aid=new URLSearchParams(location.search).get("assignment");let me,asg,qs=[],started,tick;
 const esc=v=>String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
-function typesetMath(root=document){if(window.MathJax?.typesetPromise)setTimeout(()=>MathJax.typesetPromise([root]).catch(()=>{}),0)}
-function sanitizeSvg(raw){const txt=String(raw||"").trim();if(!txt||!/<svg[\s>]/i.test(txt))return"";try{const d=new DOMParser().parseFromString(txt,"image/svg+xml"),svg=d.documentElement;if(!svg||String(svg.nodeName).toLowerCase()!=="svg")return"";const allowed=new Set(["svg","g","line","polyline","polygon","rect","circle","ellipse","path","text","tspan","defs","marker"]),attrs=new Set(["xmlns","viewBox","width","height","x","y","x1","y1","x2","y2","cx","cy","r","rx","ry","d","points","fill","stroke","stroke-width","stroke-linecap","stroke-linejoin","font-size","font-family","font-weight","text-anchor","dominant-baseline","transform","marker-start","marker-end","orient","refX","refY","markerWidth","markerHeight"]);[...svg.querySelectorAll("*")].forEach(el=>{if(!allowed.has(el.tagName.toLowerCase())){el.remove();return}[...el.attributes].forEach(a=>{if(a.name.toLowerCase().startsWith("on")||!attrs.has(a.name)||/url\s*\(|javascript:|https?:|data:/i.test(a.value))el.removeAttribute(a.name)})});[...svg.attributes].forEach(a=>{if(a.name.toLowerCase().startsWith("on")||!attrs.has(a.name)||/javascript:|https?:|data:/i.test(a.value))svg.removeAttribute(a.name)});svg.setAttribute("xmlns","http://www.w3.org/2000/svg");if(!svg.getAttribute("viewBox")){const w=parseFloat(svg.getAttribute("width")||"800")||800,h=parseFloat(svg.getAttribute("height")||"400")||400;svg.setAttribute("viewBox",`0 0 ${w} ${h}`)}svg.removeAttribute("width");svg.removeAttribute("height");return new XMLSerializer().serializeToString(svg)}catch{return""}}
-function visualHtml(raw){const x=sanitizeSvg(raw);return x?`<div class="stem-svg bg-white border rounded-xl p-3 mb-4">${x}</div>`:""}
-function fail(t){$("error").classList.remove("hidden");$("error").textContent=t;$("form").classList.add("hidden")}
-function qLabel(){return isEnglish?"Question":"Câu"}
-function sectionFallback(){return isEnglish?"QUESTIONS":"PHẦN CÂU HỎI"}
-function inputHtml(q){
- if(q.question_type==="short_answer")return `<input name="q_${q.id}" type="text" autocomplete="off" class="short w-full border rounded-xl p-3" placeholder="${isEnglish?"Type your answer...":"Nhập câu trả lời..."}">`;
- if(q.question_type==="numeric")return `<div><input name="q_${q.id}" type="text" inputmode="decimal" autocomplete="off" class="numeric w-full border rounded-xl p-3" placeholder="${isEnglish?"Enter a number":"Nhập đáp án số"}${q.unit_required&&q.answer_unit?`${isEnglish?" and unit":" và đơn vị"} (${esc(q.answer_unit)})`:""}..."><div class="text-xs text-slate-500 mt-1">${isEnglish?"You may use a comma or decimal point.":"Có thể dùng dấu phẩy hoặc dấu chấm thập phân."}${q.unit_required&&q.answer_unit?` ${isEnglish?"Required unit":"Đơn vị yêu cầu"}: ${esc(q.answer_unit)}.`:""}</div></div>`;
- if(q.question_type==="true_false")return `<div class="grid sm:grid-cols-2 gap-2"><label class="block border rounded-xl p-3 cursor-pointer hover:bg-blue-50"><input type="radio" name="q_${q.id}" value="T"> <b>${isEnglish?"True":"Đúng"}</b></label><label class="block border rounded-xl p-3 cursor-pointer hover:bg-blue-50"><input type="radio" name="q_${q.id}" value="F"> <b>${isEnglish?"False":"Sai"}</b></label></div>`;
- return ["A","B","C","D"].map(k=>`<label class="block border rounded-xl p-3 mb-2 cursor-pointer hover:bg-blue-50"><input type="radio" name="q_${q.id}" value="${k}"> <b>${k}.</b> ${esc(q["option_"+k.toLowerCase()])}</label>`).join("");
+async function init(){me=(await s.auth.getUser()).data.user;if(!me)return location.href="login.html";let p=await s.from("profiles").select("role").eq("id",me.id).single();if(p.data?.role!=="student")return location.href="quizzes.html";let r=await s.from("quiz_assignments").select("*,quizzes(title)").eq("id",aid).single();if(r.error)return location.href="student-quizzes-v4.html";asg=r.data;let now=Date.now();if(asg.open_at&&new Date(asg.open_at).getTime()>now)return alert("Bài chưa mở."),location.href="student-quizzes-v4.html";if(asg.close_at&&new Date(asg.close_at).getTime()<now)return alert("Bài đã hết hạn."),location.href="student-quizzes-v4.html";let old=await s.from("quiz_attempts").select("id").eq("assignment_id",aid).eq("student_id",me.id);if((old.data||[]).length>=asg.max_attempts)return alert("Đã hết lượt làm."),location.href="student-quizzes-v4.html";let q=await s.from("quiz_questions").select("id,question_text,option_a,option_b,option_c,option_d,question_order").eq("quiz_id",asg.quiz_id).order("question_order");qs=q.data||[];if(!qs.length)return alert("Đề chưa có câu hỏi.");
+// V2: đảo thứ tự câu hỏi riêng cho phiên làm bài.
+// Mỗi phương án vẫn mang value = chữ cái GỐC (A/B/C/D), nên chấm tự động không sai.
+function shuffle(a){a=[...a];for(let i=a.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+qs=shuffle(qs);
+h.textContent=asg.quizzes.title;info.textContent=`${qs.length} câu • ${asg.time_limit} phút`;
+list.innerHTML=qs.map((x,i)=>{
+  const opts=shuffle([
+    {orig:"A",text:x.option_a},{orig:"B",text:x.option_b},
+    {orig:"C",text:x.option_c},{orig:"D",text:x.option_d}
+  ]);
+  return `<div class="bg-white shadow rounded-2xl p-5">
+    <div class="font-bold mb-3">Câu ${i+1}. ${esc(x.question_text)}</div>
+    ${opts.map((o,j)=>{
+      const shown=["A","B","C","D"][j];
+      return `<label class="block border rounded-xl p-3 mb-2 cursor-pointer hover:bg-slate-50">
+        <input type="radio" name="q_${x.id}" value="${o.orig}">
+        <b>${shown}.</b> ${esc(o.text)}
+      </label>`;
+    }).join("")}
+  </div>`;
+}).join("");
+prepareExam()}
+
+let examActive=false, submittingViolation=false, examArmedAt=0;
+
+function prepareExam(){
+  const gate=document.getElementById("examGate");
+  const btn=document.getElementById("startExam");
+  btn.onclick=async()=>{
+    try{
+      if(document.documentElement.requestFullscreen) await document.documentElement.requestFullscreen();
+    }catch(e){}
+    gate.classList.add("hidden");
+    document.body.classList.add("exam-active");
+    started=Date.now();
+    examActive=true;
+    examArmedAt=Date.now();
+    runTimer();
+  };
 }
-function renderQuestions(){let h="",lastSec="__",lastStim="__";qs.forEach((q,i)=>{const sec=q.section_key||q.section_title||"FREE";if(sec!==lastSec){h+=`<section class="bg-slate-900 text-white rounded-2xl p-4 mt-6"><div class="font-bold text-lg">${esc(q.section_title||sectionFallback())}</div>${q.section_instruction?`<div class="text-sm mt-1">${esc(q.section_instruction)}</div>`:""}</section>`;lastSec=sec;lastStim="__"}if(q.stimulus&&q.stimulus!==lastStim){h+=`<section class="bg-blue-50 border border-blue-200 rounded-2xl p-5 whitespace-pre-wrap leading-relaxed math-wrap">${esc(q.stimulus)}</section>`;lastStim=q.stimulus}h+=`<div class="bg-white shadow rounded-2xl p-5 math-wrap">${visualHtml(q.visual_svg)}<div class="font-bold mb-3">${qLabel()} ${i+1}. ${esc(q.question_text)}</div>${inputHtml(q)}</div>`});$("list").innerHTML=h;$("list").addEventListener("change",updateUnanswered);$("list").addEventListener("input",updateUnanswered);typesetMath($("list"))}
-async function init(){try{const u=(await s.auth.getUser()).data.user;if(!u)return location.href="login.html";if(!aid){fail("Thiếu mã bài kiểm tra.");return}const r=await s.rpc("codehub_v3724_student_quiz_open",{p_assignment:aid});if(r.error)throw r.error;asg=r.data;qs=asg.questions||[];isEnglish=!!asg.is_english;$("h").textContent=asg.title||"Bài kiểm tra";$("info").textContent=isEnglish?`${qs.length} questions • ${asg.time_limit} minutes • attempt ${Number(asg.attempts_used||0)+1}/${asg.max_attempts}`:`${qs.length} câu • ${asg.time_limit} phút • lượt ${Number(asg.attempts_used||0)+1}/${asg.max_attempts}`;renderQuestions();updateUnanswered();started=new Date().toISOString();runTimer()}catch(e){console.error(e);fail("Không mở được bài kiểm tra: "+(e?.message||String(e)))}}
-function answerValue(q){if(q.question_type==="short_answer"||q.question_type==="numeric")return document.querySelector(`input[name="q_${q.id}"]`)?.value?.trim()||"";return document.querySelector(`input[name="q_${q.id}"]:checked`)?.value||""}
-function getUnansweredCount(){return qs.reduce((n,q)=>n+(answerValue(q)?0:1),0)}
-function updateUnanswered(){const n=getUnansweredCount(),box=$("unansweredBox");$("unanswered").textContent=`${n}/${qs.length}`;if(n===0){box.className="rounded-xl bg-emerald-50 border border-emerald-200 px-4 py-2 text-center min-w-[118px]";box.querySelector("div:first-child").className="text-xs font-bold text-emerald-700 uppercase";$("unanswered").className="text-2xl font-extrabold text-emerald-600"}else{box.className="rounded-xl bg-amber-50 border border-amber-200 px-4 py-2 text-center min-w-[118px]";box.querySelector("div:first-child").className="text-xs font-bold text-amber-700 uppercase";$("unanswered").className="text-2xl font-extrabold text-amber-600"}}
-function runTimer(){const end=Date.now()+Number(asg.time_limit||15)*60000;tick=setInterval(()=>{const d=Math.max(0,end-Date.now()),m=Math.floor(d/60000),ss=Math.floor((d%60000)/1000);$("timer").textContent=`${String(m).padStart(2,"0")}:${String(ss).padStart(2,"0")}`;if(!d){clearInterval(tick);submitQuiz(true)}},1000)}
-$("form").onsubmit=e=>{e.preventDefault();submitQuiz(false)};
-async function submitQuiz(auto){if(submitting)return;if(!auto){const n=getUnansweredCount(),text=n>0?`Em còn ${n}/${qs.length} câu chưa làm. Vẫn nộp bài?`:"Em đã trả lời đủ câu. Nộp bài ngay?";if(!confirm(text))return}submitting=true;$("submit").disabled=true;clearInterval(tick);const ans={};qs.forEach(q=>{const v=answerValue(q);if(v)ans[q.id]=v});try{const r=await s.rpc("codehub_v3724_student_quiz_submit",{p_assignment:aid,p_answers:ans,p_started_at:started});if(r.error)throw r.error;const x=r.data||{};alert(x.show_result?`Đã nộp. Điểm: ${x.score}/10 • Đúng ${x.correct_count}/${x.total_questions}`:"Đã nộp bài.");location.href=x.show_result?`student-quiz-result-v4-2.html?assignment=${encodeURIComponent(aid)}`:"student-quizzes-v4.html"}catch(e){submitting=false;$("submit").disabled=false;alert("Không nộp được bài: "+(e?.message||String(e)));runTimer()}}
-init();
-</script></body></html>
+
+function inFullscreen(){
+  return !!(document.fullscreenElement || document.webkitFullscreenElement);
+}
+
+async function forceSubmit(reason){
+  if(!examActive || submittingViolation || submit.disabled) return;
+  // Ignore browser focus/fullscreen transition immediately after entering exam mode.
+  if(Date.now()-examArmedAt < 1200) return;
+  submittingViolation=true;
+  examActive=false;
+  const n=document.getElementById("examNotice");
+  if(n){ n.style.display="block"; n.textContent="Đang nộp bài: "+reason; }
+  await submitQuiz(true, reason);
+}
+
+// Switching tab / minimizing / opening another app normally makes the page hidden.
+document.addEventListener("visibilitychange",()=>{
+  if(examActive && document.visibilityState==="hidden") forceSubmit("Rời khỏi màn hình kiểm tra");
+});
+
+// Exiting fullscreen during the exam is treated as leaving the exam.
+document.addEventListener("fullscreenchange",()=>{
+  if(examActive && !inFullscreen()) forceSubmit("Thoát chế độ toàn màn hình");
+});
+
+// Extra desktop protection: losing window focus while the page remains visible.
+window.addEventListener("blur",()=>{
+  setTimeout(()=>{
+    if(examActive && document.visibilityState==="visible" && !document.hasFocus())
+      forceSubmit("Chuyển sang cửa sổ/ứng dụng khác");
+  },250);
+});
+
+// Prevent common page-leaving shortcuts/context menu. This cannot block OS-level screenshots.
+document.addEventListener("contextmenu",e=>{ if(examActive) e.preventDefault(); });
+document.addEventListener("keydown",e=>{
+  if(!examActive) return;
+  const k=e.key.toLowerCase();
+  if(e.key==="F11" || e.key==="Escape" || (e.altKey && (k==="tab" || k==="f4")) ||
+     (e.ctrlKey && (k==="l" || k==="t" || k==="n" || k==="w" || k==="r")) ||
+     (e.ctrlKey && e.shiftKey && (k==="i" || k==="j" || k==="c"))){
+    e.preventDefault();
+  }
+});
+
+// Warn on direct close/reload. Browser security prevents guaranteed async submission here;
+// visibility/fullscreen/blur handlers above perform the actual auto-submit in normal cases.
+window.addEventListener("beforeunload",e=>{
+  if(examActive){
+    e.preventDefault();
+    e.returnValue="";
+  }
+});
+
+function runTimer(){let end=started+asg.time_limit*60000;tick=setInterval(()=>{let d=Math.max(0,end-Date.now()),m=Math.floor(d/60000),ss=Math.floor((d%60000)/1000);timer.textContent=`${String(m).padStart(2,"0")}:${String(ss).padStart(2,"0")}`;if(!d){clearInterval(tick);submitQuiz(true)}},1000)}
+form.onsubmit=e=>{e.preventDefault();submitQuiz(false)};
+async function submitQuiz(auto, reason="manual_submit"){if(submit.disabled)return;if(!auto&&!confirm("Nộp bài ngay?"))return; examActive=false;submit.disabled=true;clearInterval(tick);let ans={};qs.forEach(q=>{let x=document.querySelector(`input[name="q_${q.id}"]:checked`);if(x)ans[q.id]=x.value});let keys=await s.from("quiz_questions").select("id,correct_answer").eq("quiz_id",asg.quiz_id);let correct=0;(keys.data||[]).forEach(q=>{if(ans[q.id]===q.correct_answer)correct++});let total=qs.length,score=Math.round(correct/total*1000)/100;let row={quiz_id:asg.quiz_id,assignment_id:aid,student_id:me.id,score,correct_count:correct,total_questions:total,started_at:new Date(started).toISOString(),submitted_at:new Date().toISOString(),answers:ans};let r=await s.from("quiz_attempts").insert(row);if(r.error){submit.disabled=false;return alert(r.error.message)}try{if(document.fullscreenElement)await document.exitFullscreen()}catch(e){};alert(asg.show_result?`Đã nộp. Điểm: ${score}/10 • Đúng ${correct}/${total}`:"Đã nộp bài.");location.href="student-quizzes-v4.html"}init();</script></body></html>
