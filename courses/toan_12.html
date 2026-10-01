@@ -29,7 +29,13 @@
     ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
     .smooth-scroll { scroll-behavior: smooth; }
   </style>
+  <!-- KaTeX for beautiful Math Rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
 </head>
+  <!-- Reading Progress Bar -->
+  <div id="progressBar" class="fixed top-0 left-0 h-1 bg-gradient-to-r from-sky-500 via-blue-500 to-indigo-600 z-50 transition-all duration-150" style="width: 0%;"></div>
 <body class="bg-gray-50 text-gray-900 dark:bg-dark dark:text-gray-100 transition-colors duration-200 smooth-scroll">
   
   <nav class="sticky top-0 z-50 bg-white/80 dark:bg-dark-surface/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-700">
@@ -62,6 +68,12 @@
           </div>
         </div>
         <div class="flex items-center gap-4">
+          <!-- Exam Modal Button -->
+          <button onclick="openCourseQuizModal()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gradient-to-r from-sky-600 to-indigo-600 hover:from-sky-700 hover:to-indigo-700 text-white text-xs font-semibold shadow-sm transition">
+            <i class="fa-solid fa-file-signature"></i>
+            <span class="hidden sm:inline">Kiểm tra toàn khóa</span>
+            <span>(10 câu)</span>
+          </button>
           <button id="themeToggle" class="p-2 text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-primary transition-colors" aria-label="Đổi giao diện sáng/tối">
             <i class="fa-solid fa-moon text-lg dark:hidden"></i>
             <i class="fa-solid fa-sun text-lg hidden dark:block"></i>
@@ -126,6 +138,16 @@
               <i class="fa-solid fa-list-ol text-sky-600"></i> Mục lục bài học
             </span>
             <span class="text-xs bg-sky-100 text-sky-700 dark:bg-sky-900/40 dark:text-sky-300 px-2 py-0.5 rounded-full font-bold">19 Bài</span>
+          </div>
+          <!-- Search Bar -->
+          <div class="mb-3">
+            <div class="relative">
+              <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-gray-400 text-xs"></i>
+              <input type="text" 
+                     id="lessonSearch" 
+                     placeholder="Tìm kiếm bài học toán 12..." 
+                     class="w-full pl-8 pr-3 py-1.5 text-xs rounded-xl bg-gray-50 dark:bg-dark border border-gray-200 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-sky-500 text-gray-900 dark:text-gray-100 placeholder-gray-400">
+            </div>
           </div>
           <nav>
             
@@ -468,6 +490,38 @@
           <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
           <input type="hidden" class="quiz-expl" value="Đạo hàm y&#39; = -3x² + 3. Cho y&#39; = 0 ⇔ x = 1 hoặc x = -1. Hệ số a = -3 < 0 nên trong khoảng (-1; 1) thì y&#39; > 0, ngoài khoảng y&#39; < 0. Do đó qua x = -1 đạo hàm đổi dấu từ (-) sang (+) nên x = -1 là điểm cực tiểu; qua x = 1 đạo hàm đổi dấu từ (+) sang (-) nên x = 1 là điểm cực đại.">
         </div>
+      
+        <!-- Câu hỏi 2 -->
+        <div class="p-4 bg-gray-50 dark:bg-gray-800/80 rounded-xl border border-gray-200 dark:border-gray-700 mt-4">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold uppercase tracking-wider text-sky-600 dark:text-sky-400 flex items-center gap-1.5">
+              <i class="fa-solid fa-circle-question"></i> Câu hỏi trắc nghiệm củng cố (Câu 2)
+            </span>
+            <span class="text-[11px] text-gray-400">Chọn 1 đáp án đúng</span>
+          </div>
+          <p class="text-xs sm:text-sm font-medium text-gray-800 dark:text-gray-200 mb-3">Cho hàm số $y = f(x)$ xác định trên $\mathbb{R}$ có bảng xét dấu đạo hàm: $f'(x)$ đổi dấu qua các điểm $x = -2$ (từ âm sang dương), $x = 0$ (từ dương sang âm) và $x = 3$ (từ âm sang dương). Số điểm cực trị của hàm số là:</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+            
+              <button onclick="checkQuiz(this, true)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">A</span>
+                <span class="text-gray-700 dark:text-gray-300">3 điểm cực trị (2 cực tiểu và 1 cực đại)</span>
+              </button>
+              <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">B</span>
+                <span class="text-gray-700 dark:text-gray-300">2 điểm cực trị</span>
+              </button>
+              <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">C</span>
+                <span class="text-gray-700 dark:text-gray-300">1 điểm cực trị</span>
+              </button>
+              <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">D</span>
+                <span class="text-gray-700 dark:text-gray-300">4 điểm cực trị</span>
+              </button>
+          </div>
+          <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
+          <input type="hidden" class="quiz-expl" value="Đạo hàm $f'(x)$ đổi dấu khi đi qua 3 điểm phân biệt $x = -2, x = 0, x = 3$. Do đó hàm số có đúng 3 điểm cực trị (tại $x = -2$ và $x = 3$ là điểm cực tiểu, tại $x = 0$ là điểm cực đại).">
+        </div>
       </article>
     
       <article id="bai-2" class="bg-white dark:bg-dark-surface rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 border-t-4 border-emerald-500 p-6 sm:p-8 transition-all hover:shadow-md">
@@ -610,6 +664,38 @@
           </div>
           <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
           <input type="hidden" class="quiz-expl" value="Áp dụng BĐT AM-GM (Cauchy) cho hai số dương x và 4/x: y = x + 4/x ≥ 2√(x · 4/x) = 2 · 2 = 4. Dấu &#39;=&#39; xảy ra khi x = 4/x ⇔ x² = 4 ⇔ x = 2 (do x > 0). Vậy min = 4 tại x = 2.">
+        </div>
+      
+        <!-- Câu hỏi 2 -->
+        <div class="p-4 bg-gray-50 dark:bg-gray-800/80 rounded-xl border border-gray-200 dark:border-gray-700 mt-4">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold uppercase tracking-wider text-sky-600 dark:text-sky-400 flex items-center gap-1.5">
+              <i class="fa-solid fa-circle-question"></i> Câu hỏi trắc nghiệm củng cố (Câu 2)
+            </span>
+            <span class="text-[11px] text-gray-400">Chọn 1 đáp án đúng</span>
+          </div>
+          <p class="text-xs sm:text-sm font-medium text-gray-800 dark:text-gray-200 mb-3">Giá trị lớn nhất của hàm số $f(x) = \frac{x + 1}{x - 1}$ trên đoạn $[2; 4]$ bằng:</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+            
+              <button onclick="checkQuiz(this, true)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">A</span>
+                <span class="text-gray-700 dark:text-gray-300">3 (đạt tại $x = 2$)</span>
+              </button>
+              <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">B</span>
+                <span class="text-gray-700 dark:text-gray-300">\frac{5}{3}</span>
+              </button>
+              <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">C</span>
+                <span class="text-gray-700 dark:text-gray-300">1</span>
+              </button>
+              <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">D</span>
+                <span class="text-gray-700 dark:text-gray-300">4</span>
+              </button>
+          </div>
+          <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
+          <input type="hidden" class="quiz-expl" value="Đạo hàm $f'(x) = \frac{-2}{(x-1)^2} < 0, \forall x \in [2; 4]$. Do đó hàm số nghịch biến trên $[2; 4]$, giá trị lớn nhất đạt tại đầu mút bên trái: $\max_{[2; 4]} f(x) = f(2) = \frac{2+1}{2-1} = 3$.">
         </div>
       </article>
     
@@ -754,6 +840,38 @@
           <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
           <input type="hidden" class="quiz-expl" value="Phân tích tử số: 2x² - 5x + 3 = (x - 1)(2x - 3). Với x ≠ 1, hàm số triệt tiêu thành y = 2x - 3 (đồ thị là một đường thẳng khuyết điểm (1; -1)), do đó đồ thị không có đường tiệm cận xiên.">
         </div>
+      
+        <!-- Câu hỏi 2 -->
+        <div class="p-4 bg-gray-50 dark:bg-gray-800/80 rounded-xl border border-gray-200 dark:border-gray-700 mt-4">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold uppercase tracking-wider text-sky-600 dark:text-sky-400 flex items-center gap-1.5">
+              <i class="fa-solid fa-circle-question"></i> Câu hỏi trắc nghiệm củng cố (Câu 2)
+            </span>
+            <span class="text-[11px] text-gray-400">Chọn 1 đáp án đúng</span>
+          </div>
+          <p class="text-xs sm:text-sm font-medium text-gray-800 dark:text-gray-200 mb-3">Phương trình đường tiệm cận xiên của đồ thị hàm số $y = \frac{x^2 + 2x - 1}{x - 1}$ là:</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+            
+              <button onclick="checkQuiz(this, true)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">A</span>
+                <span class="text-gray-700 dark:text-gray-300">$y = x + 3$</span>
+              </button>
+              <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">B</span>
+                <span class="text-gray-700 dark:text-gray-300">$y = x - 1$</span>
+              </button>
+              <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">C</span>
+                <span class="text-gray-700 dark:text-gray-300">$y = x + 1$</span>
+              </button>
+              <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">D</span>
+                <span class="text-gray-700 dark:text-gray-300">$y = 2x + 1$</span>
+              </button>
+          </div>
+          <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
+          <input type="hidden" class="quiz-expl" value="Chia đa thức: $\frac{x^2 + 2x - 1}{x - 1} = x + 3 + \frac{2}{x - 1}$. Vì $\lim_{x \to \pm\infty} \frac{2}{x - 1} = 0$ nên tiệm cận xiên là đường thẳng $y = x + 3$.">
+        </div>
       </article>
     
       <article id="bai-4" class="bg-white dark:bg-dark-surface rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 border-t-4 border-purple-500 p-6 sm:p-8 transition-all hover:shadow-md">
@@ -895,6 +1013,38 @@
           <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
           <input type="hidden" class="quiz-expl" value="Tiệm cận đứng là x = -2, tiệm cận ngang là y = 2/1 = 2. Giao điểm của hai đường tiệm cận là I(-2; 2), đây chính là tâm đối xứng của đồ thị hypebol.">
         </div>
+      
+        <!-- Câu hỏi 2 -->
+        <div class="p-4 bg-gray-50 dark:bg-gray-800/80 rounded-xl border border-gray-200 dark:border-gray-700 mt-4">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold uppercase tracking-wider text-sky-600 dark:text-sky-400 flex items-center gap-1.5">
+              <i class="fa-solid fa-circle-question"></i> Câu hỏi trắc nghiệm củng cố (Câu 2)
+            </span>
+            <span class="text-[11px] text-gray-400">Chọn 1 đáp án đúng</span>
+          </div>
+          <p class="text-xs sm:text-sm font-medium text-gray-800 dark:text-gray-200 mb-3">Đồ thị hàm số bậc ba $y = ax^3 + bx^2 + cx + d$ ($a \ne 0$) có hệ số $a > 0$ và có 2 điểm cực trị. Hình dạng nhánh ngoài cùng bên phải của đồ thị sẽ:</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+            
+              <button onclick="checkQuiz(this, true)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">A</span>
+                <span class="text-gray-700 dark:text-gray-300">Đi lên phía trên ($+\infty$) khi $x \to +\infty$</span>
+              </button>
+              <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">B</span>
+                <span class="text-gray-700 dark:text-gray-300">Đi xuống phía dưới ($-\infty$)</span>
+              </button>
+              <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">C</span>
+                <span class="text-gray-700 dark:text-gray-300">Nằm ngang song song với trục hoành</span>
+              </button>
+              <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">D</span>
+                <span class="text-gray-700 dark:text-gray-300">Tiệm cận với trục tung</span>
+              </button>
+          </div>
+          <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
+          <input type="hidden" class="quiz-expl" value="Vì $a > 0$ nên khi $x \to +\infty$, $y \to +\infty$. Do đó nhánh ngoài cùng bên phải của đồ thị luôn hướng lên trên.">
+        </div>
       </article>
     
       <article id="bai-5" class="bg-white dark:bg-dark-surface rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 border-t-4 border-rose-500 p-6 sm:p-8 transition-all hover:shadow-md">
@@ -1027,6 +1177,38 @@
           </div>
           <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
           <input type="hidden" class="quiz-expl" value="Doanh thu R(x) = 50x. Lợi nhuận P(x) = R(x) - C(x) = 50x - (0,01x² + 20x + 5000) = -0,01x² + 30x - 5000. Đạo hàm P&#39;(x) = -0,02x + 30 = 0 ⇔ x = 30 / 0,02 = 1500 sản phẩm. Vì a = -0,01 < 0 nên đồ thị là parabol bề lõm quay xuống, đạt cực đại tại x = 1500.">
+        </div>
+      
+        <!-- Câu hỏi 2 -->
+        <div class="p-4 bg-gray-50 dark:bg-gray-800/80 rounded-xl border border-gray-200 dark:border-gray-700 mt-4">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold uppercase tracking-wider text-sky-600 dark:text-sky-400 flex items-center gap-1.5">
+              <i class="fa-solid fa-circle-question"></i> Câu hỏi trắc nghiệm củng cố (Câu 2)
+            </span>
+            <span class="text-[11px] text-gray-400">Chọn 1 đáp án đúng</span>
+          </div>
+          <p class="text-xs sm:text-sm font-medium text-gray-800 dark:text-gray-200 mb-3">Một hộp không nắp được làm từ tấm bìa hình vuông cạnh $a = 24\text{ cm}$ bằng cách cắt đi 4 hình vuông cạnh $x$ ở bốn góc rồi gập lại. Thể tích hộp đạt cực đại khi $x$ bằng:</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+            
+              <button onclick="checkQuiz(this, true)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">A</span>
+                <span class="text-gray-700 dark:text-gray-300">$x = 4\text{ cm}$</span>
+              </button>
+              <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">B</span>
+                <span class="text-gray-700 dark:text-gray-300">$x = 6\text{ cm}$</span>
+              </button>
+              <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">C</span>
+                <span class="text-gray-700 dark:text-gray-300">$x = 3\text{ cm}$</span>
+              </button>
+              <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">D</span>
+                <span class="text-gray-700 dark:text-gray-300">$x = 8\text{ cm}$</span>
+              </button>
+          </div>
+          <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
+          <input type="hidden" class="quiz-expl" value="Thể tích $V(x) = x(24 - 2x)^2 = 4x(12 - x)^2$ với $0 < x < 12$. Đạo hàm $V'(x) = 4(12 - x)(12 - 3x) = 0 \Leftrightarrow x = 4\text{ cm}$. Khi đó thể tích cực đại là $V(4) = 4 \times 16^2 = 1024\text{ cm}^3$.">
         </div>
       </article>
     
@@ -1180,6 +1362,38 @@
           <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
           <input type="hidden" class="quiz-expl" value="Trong hình hộp, B&#39;C&#39; = AD và DD&#39; = AA&#39;. Do đó AB + B&#39;C&#39; + DD&#39; = AB + AD + AA&#39;. Theo quy tắc hình hộp, AB + AD + AA&#39; = AC&#39;.">
         </div>
+      
+        <!-- Câu hỏi 2 -->
+        <div class="p-4 bg-gray-50 dark:bg-gray-800/80 rounded-xl border border-gray-200 dark:border-gray-700 mt-4">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold uppercase tracking-wider text-sky-600 dark:text-sky-400 flex items-center gap-1.5">
+              <i class="fa-solid fa-circle-question"></i> Câu hỏi trắc nghiệm củng cố (Câu 2)
+            </span>
+            <span class="text-[11px] text-gray-400">Chọn 1 đáp án đúng</span>
+          </div>
+          <p class="text-xs sm:text-sm font-medium text-gray-800 dark:text-gray-200 mb-3">Cho hình hộp $ABCD.A'B'C'D'$. Quy tắc hình hộp trong không gian khẳng định tổng ba vectơ $\vec{AB} + \vec{AD} + \vec{AA'}$ bằng vectơ nào?</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+            
+              <button onclick="checkQuiz(this, true)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">A</span>
+                <span class="text-gray-700 dark:text-gray-300">$\vec{AC'}$ (vectơ đường chéo xuất phát từ đỉnh A)</span>
+              </button>
+              <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">B</span>
+                <span class="text-gray-700 dark:text-gray-300">$\vec{AC}$</span>
+              </button>
+              <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">C</span>
+                <span class="text-gray-700 dark:text-gray-300">$\vec{BD'}$</span>
+              </button>
+              <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">D</span>
+                <span class="text-gray-700 dark:text-gray-300">$\vec{A'C}$</span>
+              </button>
+          </div>
+          <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
+          <input type="hidden" class="quiz-expl" value="Theo quy tắc hình hộp trong không gian: tổng 3 vectơ xuất phát từ cùng một đỉnh trên 3 cạnh của hình hộp bằng vectơ đường chéo xuất phát từ đỉnh đó: $\vec{AB} + \vec{AD} + \vec{AA'} = \vec{AC'}$.">
+        </div>
       </article>
     
       <article id="bai-7" class="bg-white dark:bg-dark-surface rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 border-t-4 border-teal-500 p-6 sm:p-8 transition-all hover:shadow-md">
@@ -1295,6 +1509,38 @@
           </div>
           <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
           <input type="hidden" class="quiz-expl" value="Hình chiếu của điểm M(x; y; z) lên mặt phẳng (Oxy) có z = 0, giữ nguyên hoành độ và tung độ, tức là (2; -3; 0).">
+        </div>
+      
+        <!-- Câu hỏi 2 -->
+        <div class="p-4 bg-gray-50 dark:bg-gray-800/80 rounded-xl border border-gray-200 dark:border-gray-700 mt-4">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold uppercase tracking-wider text-sky-600 dark:text-sky-400 flex items-center gap-1.5">
+              <i class="fa-solid fa-circle-question"></i> Câu hỏi trắc nghiệm củng cố (Câu 2)
+            </span>
+            <span class="text-[11px] text-gray-400">Chọn 1 đáp án đúng</span>
+          </div>
+          <p class="text-xs sm:text-sm font-medium text-gray-800 dark:text-gray-200 mb-3">Trong không gian $Oxyz$, hình chiếu vuông góc của điểm $M(2; -3; 5)$ lên mặt phẳng toạ độ $(Oxy)$ có toạ độ là:</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+            
+              <button onclick="checkQuiz(this, true)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">A</span>
+                <span class="text-gray-700 dark:text-gray-300">$M_1(2; -3; 0)$</span>
+              </button>
+              <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">B</span>
+                <span class="text-gray-700 dark:text-gray-300">$M_2(0; 0; 5)$</span>
+              </button>
+              <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">C</span>
+                <span class="text-gray-700 dark:text-gray-300">$M_3(2; 0; 5)$</span>
+              </button>
+              <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">D</span>
+                <span class="text-gray-700 dark:text-gray-300">$M_4(0; -3; 5)$</span>
+              </button>
+          </div>
+          <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
+          <input type="hidden" class="quiz-expl" value="Khi chiếu vuông góc lên mặt phẳng $(Oxy)$, hoành độ $x$ và tung độ $y$ giữ nguyên, cao độ $z$ bằng 0. Do đó điểm ảnh là $(2; -3; 0)$.">
         </div>
       </article>
     
@@ -1428,6 +1674,38 @@
           </div>
           <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
           <input type="hidden" class="quiz-expl" value="Áp dụng công thức toạ độ trung điểm: x_M = (1+3)/2 = 2; y_M = (2+0)/2 = 1; z_M = (-1+1)/2 = 0. Vậy M(2; 1; 0).">
+        </div>
+      
+        <!-- Câu hỏi 2 -->
+        <div class="p-4 bg-gray-50 dark:bg-gray-800/80 rounded-xl border border-gray-200 dark:border-gray-700 mt-4">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold uppercase tracking-wider text-sky-600 dark:text-sky-400 flex items-center gap-1.5">
+              <i class="fa-solid fa-circle-question"></i> Câu hỏi trắc nghiệm củng cố (Câu 2)
+            </span>
+            <span class="text-[11px] text-gray-400">Chọn 1 đáp án đúng</span>
+          </div>
+          <p class="text-xs sm:text-sm font-medium text-gray-800 dark:text-gray-200 mb-3">Trong không gian Oxyz, cho hai vectơ $\vec{u} = (1; 2; -1)$ và $\vec{v} = (2; -1; 3)$. Tích vô hướng $\vec{u} \cdot \vec{v}$ bằng:</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+            
+              <button onclick="checkQuiz(this, true)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">A</span>
+                <span class="text-gray-700 dark:text-gray-300">-3</span>
+              </button>
+              <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">B</span>
+                <span class="text-gray-700 dark:text-gray-300">3</span>
+              </button>
+              <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">C</span>
+                <span class="text-gray-700 dark:text-gray-300">7</span>
+              </button>
+              <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">D</span>
+                <span class="text-gray-700 dark:text-gray-300">0</span>
+              </button>
+          </div>
+          <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
+          <input type="hidden" class="quiz-expl" value="Áp dụng biểu thức toạ độ tích vô hướng: $\vec{u} \cdot \vec{v} = x_1 x_2 + y_1 y_2 + z_1 z_2 = 1(2) + 2(-1) + (-1)(3) = 2 - 2 - 3 = -3$.">
         </div>
       </article>
     
@@ -1600,6 +1878,38 @@
           <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
           <input type="hidden" class="quiz-expl" value="Khoảng tứ phân vị Δ_Q chỉ phụ thuộc vào 50% số liệu ở giữa mẫu (từ Q₁ đến Q₃), do đó nó không bị tác động bởi các giá trị bất thường (ngoại lệ) nằm ở hai đầu mẫu số liệu.">
         </div>
+      
+        <!-- Câu hỏi 2 -->
+        <div class="p-4 bg-gray-50 dark:bg-gray-800/80 rounded-xl border border-gray-200 dark:border-gray-700 mt-4">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold uppercase tracking-wider text-sky-600 dark:text-sky-400 flex items-center gap-1.5">
+              <i class="fa-solid fa-circle-question"></i> Câu hỏi trắc nghiệm củng cố (Câu 2)
+            </span>
+            <span class="text-[11px] text-gray-400">Chọn 1 đáp án đúng</span>
+          </div>
+          <p class="text-xs sm:text-sm font-medium text-gray-800 dark:text-gray-200 mb-3">Khoảng tứ phân vị $\Delta_Q$ của mẫu số liệu ghép nhóm được tính bằng công thức nào sau đây?</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+            
+              <button onclick="checkQuiz(this, true)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">A</span>
+                <span class="text-gray-700 dark:text-gray-300">$\Delta_Q = Q_3 - Q_1$</span>
+              </button>
+              <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">B</span>
+                <span class="text-gray-700 dark:text-gray-300">$\Delta_Q = Q_2 - Q_1$</span>
+              </button>
+              <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">C</span>
+                <span class="text-gray-700 dark:text-gray-300">$\Delta_Q = Q_3 - Q_2$</span>
+              </button>
+              <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">D</span>
+                <span class="text-gray-700 dark:text-gray-300">$\Delta_Q = \frac{Q_1 + Q_3}{2}$</span>
+              </button>
+          </div>
+          <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
+          <input type="hidden" class="quiz-expl" value="Khoảng tứ phân vị đo độ phân tán của 50% số liệu chính giữa, được định nghĩa là hiệu giữa tứ phân vị thứ ba và tứ phân vị thứ nhất: $\Delta_Q = Q_3 - Q_1$.">
+        </div>
       </article>
     
       <article id="bai-10" class="bg-white dark:bg-dark-surface rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 border-t-4 border-fuchsia-500 p-6 sm:p-8 transition-all hover:shadow-md">
@@ -1715,6 +2025,38 @@
           </div>
           <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
           <input type="hidden" class="quiz-expl" value="Vì cả hai xạ thủ đều có cùng điểm trung bình x̄ = 8,5, nhưng độ lệch chuẩn của A (s_A = 0,6) nhỏ hơn nhiều so với B (s_B = 1,2), chứng tỏ các phát bắn của A tập trung sát điểm 8,5 hơn, tức là phong độ của A ổn định hơn nhiều.">
+        </div>
+      
+        <!-- Câu hỏi 2 -->
+        <div class="p-4 bg-gray-50 dark:bg-gray-800/80 rounded-xl border border-gray-200 dark:border-gray-700 mt-4">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold uppercase tracking-wider text-sky-600 dark:text-sky-400 flex items-center gap-1.5">
+              <i class="fa-solid fa-circle-question"></i> Câu hỏi trắc nghiệm củng cố (Câu 2)
+            </span>
+            <span class="text-[11px] text-gray-400">Chọn 1 đáp án đúng</span>
+          </div>
+          <p class="text-xs sm:text-sm font-medium text-gray-800 dark:text-gray-200 mb-3">Khi so sánh mức độ phân tán của hai mẫu số liệu ghép nhóm có cùng đơn vị đo và số trung bình xấp xỉ nhau, mẫu số liệu nào có độ biến động, bấp bênh lớn hơn?</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+            
+              <button onclick="checkQuiz(this, true)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">A</span>
+                <span class="text-gray-700 dark:text-gray-300">Mẫu số liệu có phương sai và độ lệch chuẩn lớn hơn</span>
+              </button>
+              <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">B</span>
+                <span class="text-gray-700 dark:text-gray-300">Mẫu số liệu có phương sai nhỏ hơn</span>
+              </button>
+              <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">C</span>
+                <span class="text-gray-700 dark:text-gray-300">Mẫu số liệu có cỡ mẫu nhỏ hơn</span>
+              </button>
+              <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">D</span>
+                <span class="text-gray-700 dark:text-gray-300">Hai mẫu số liệu có độ biến động như nhau</span>
+              </button>
+          </div>
+          <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
+          <input type="hidden" class="quiz-expl" value="Phương sai $s^2$ và độ lệch chuẩn $s$ đo lường độ phân tán quanh số trung bình. Giá trị $s$ càng lớn chứng tỏ số liệu càng phân tán rộng, bấp bênh và rủi ro cao hơn.">
         </div>
       </article>
     
@@ -1898,6 +2240,38 @@
           <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
           <input type="hidden" class="quiz-expl" value="Ta có: ∫(3x² + sin x)dx = 3 · (x³/3) + (-cos x) + C = x³ - cos x + C.">
         </div>
+      
+        <!-- Câu hỏi 2 -->
+        <div class="p-4 bg-gray-50 dark:bg-gray-800/80 rounded-xl border border-gray-200 dark:border-gray-700 mt-4">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold uppercase tracking-wider text-sky-600 dark:text-sky-400 flex items-center gap-1.5">
+              <i class="fa-solid fa-circle-question"></i> Câu hỏi trắc nghiệm củng cố (Câu 2)
+            </span>
+            <span class="text-[11px] text-gray-400">Chọn 1 đáp án đúng</span>
+          </div>
+          <p class="text-xs sm:text-sm font-medium text-gray-800 dark:text-gray-200 mb-3">Họ nguyên hàm của hàm số $f(x) = e^{2x} + \frac{1}{x}$ trên khoảng $(0; +\infty)$ là:</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+            
+              <button onclick="checkQuiz(this, true)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">A</span>
+                <span class="text-gray-700 dark:text-gray-300">$\frac{1}{2}e^{2x} + \ln x + C$</span>
+              </button>
+              <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">B</span>
+                <span class="text-gray-700 dark:text-gray-300">$2e^{2x} - \frac{1}{x^2} + C$</span>
+              </button>
+              <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">C</span>
+                <span class="text-gray-700 dark:text-gray-300">$e^{2x} + \ln x + C$</span>
+              </button>
+              <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">D</span>
+                <span class="text-gray-700 dark:text-gray-300">$\frac{1}{2}e^{2x} - \ln x + C$</span>
+              </button>
+          </div>
+          <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
+          <input type="hidden" class="quiz-expl" value="Ta có $\int e^{2x} dx = \frac{1}{2}e^{2x}$ và $\int \frac{1}{x} dx = \ln|x| = \ln x$ (với $x > 0$). Do đó $\int f(x) dx = \frac{1}{2}e^{2x} + \ln x + C$.">
+        </div>
       </article>
     
       <article id="bai-12" class="bg-white dark:bg-dark-surface rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 border-t-4 border-red-500 p-6 sm:p-8 transition-all hover:shadow-md">
@@ -2028,6 +2402,38 @@
           </div>
           <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
           <input type="hidden" class="quiz-expl" value="Theo tính chất cộng đoạn: ∫₁³ f(x)dx = ∫₁² f(x)dx + ∫₂³ f(x)dx ⇒ ∫₁² f(x)dx = ∫₁³ f(x)dx - ∫₂³ f(x)dx = 5 - 2 = 3.">
+        </div>
+      
+        <!-- Câu hỏi 2 -->
+        <div class="p-4 bg-gray-50 dark:bg-gray-800/80 rounded-xl border border-gray-200 dark:border-gray-700 mt-4">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold uppercase tracking-wider text-sky-600 dark:text-sky-400 flex items-center gap-1.5">
+              <i class="fa-solid fa-circle-question"></i> Câu hỏi trắc nghiệm củng cố (Câu 2)
+            </span>
+            <span class="text-[11px] text-gray-400">Chọn 1 đáp án đúng</span>
+          </div>
+          <p class="text-xs sm:text-sm font-medium text-gray-800 dark:text-gray-200 mb-3">Giá trị của tích phân $I = \int_0^1 (3x^2 + 2x) dx$ bằng:</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+            
+              <button onclick="checkQuiz(this, true)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">A</span>
+                <span class="text-gray-700 dark:text-gray-300">2</span>
+              </button>
+              <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">B</span>
+                <span class="text-gray-700 dark:text-gray-300">5</span>
+              </button>
+              <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">C</span>
+                <span class="text-gray-700 dark:text-gray-300">1</span>
+              </button>
+              <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">D</span>
+                <span class="text-gray-700 dark:text-gray-300">3</span>
+              </button>
+          </div>
+          <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
+          <input type="hidden" class="quiz-expl" value="Nguyên hàm của $3x^2 + 2x$ là $x^3 + x^2$. Áp dụng công thức Newton-Leibniz: $I = [x^3 + x^2]_0^1 = (1 + 1) - 0 = 2$.">
         </div>
       </article>
     
@@ -2164,6 +2570,38 @@
           <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
           <input type="hidden" class="quiz-expl" value="Phương trình hoành độ giao điểm: x² - 4 = 0 ⇔ x = ±2. Diện tích S = ∫₋₂² |x² - 4|dx = -∫₋₂² (x² - 4)dx = -(x³/3 - 4x)|₋₂² = -[(8/3 - 8) - (-8/3 + 8)] = -(-32/3) = 32/3.">
         </div>
+      
+        <!-- Câu hỏi 2 -->
+        <div class="p-4 bg-gray-50 dark:bg-gray-800/80 rounded-xl border border-gray-200 dark:border-gray-700 mt-4">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold uppercase tracking-wider text-sky-600 dark:text-sky-400 flex items-center gap-1.5">
+              <i class="fa-solid fa-circle-question"></i> Câu hỏi trắc nghiệm củng cố (Câu 2)
+            </span>
+            <span class="text-[11px] text-gray-400">Chọn 1 đáp án đúng</span>
+          </div>
+          <p class="text-xs sm:text-sm font-medium text-gray-800 dark:text-gray-200 mb-3">Thể tích khối tròn xoay sinh ra khi quay hình phẳng giới hạn bởi đồ thị $y = f(x)$, trục hoành $Ox$ và hai đường thẳng $x = a, x = b$ quanh trục $Ox$ được tính theo công thức:</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+            
+              <button onclick="checkQuiz(this, true)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">A</span>
+                <span class="text-gray-700 dark:text-gray-300">$V = \pi \int_a^b [f(x)]^2 dx$</span>
+              </button>
+              <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">B</span>
+                <span class="text-gray-700 dark:text-gray-300">$V = \int_a^b [f(x)]^2 dx$</span>
+              </button>
+              <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">C</span>
+                <span class="text-gray-700 dark:text-gray-300">$V = \pi \int_a^b |f(x)| dx$</span>
+              </button>
+              <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">D</span>
+                <span class="text-gray-700 dark:text-gray-300">$V = 2\pi \int_a^b f(x) dx$</span>
+              </button>
+          </div>
+          <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
+          <input type="hidden" class="quiz-expl" value="Theo công thức thể tích khối tròn xoay chuẩn trong SGK Giải tích 12: $V = \pi \int_a^b y^2 dx = \pi \int_a^b [f(x)]^2 dx$.">
+        </div>
       </article>
     
       </div>
@@ -2292,6 +2730,38 @@
           <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
           <input type="hidden" class="quiz-expl" value="Áp dụng phương trình mặt phẳng theo đoạn chắn đi qua A(a;0;0), B(0;b;0), C(0;0;c): x/a + y/b + z/c = 1 với a = 2, b = -3, c = 4 ta được phương trình: x/2 + y/(-3) + z/4 = 1.">
         </div>
+      
+        <!-- Câu hỏi 2 -->
+        <div class="p-4 bg-gray-50 dark:bg-gray-800/80 rounded-xl border border-gray-200 dark:border-gray-700 mt-4">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold uppercase tracking-wider text-sky-600 dark:text-sky-400 flex items-center gap-1.5">
+              <i class="fa-solid fa-circle-question"></i> Câu hỏi trắc nghiệm củng cố (Câu 2)
+            </span>
+            <span class="text-[11px] text-gray-400">Chọn 1 đáp án đúng</span>
+          </div>
+          <p class="text-xs sm:text-sm font-medium text-gray-800 dark:text-gray-200 mb-3">Mặt phẳng đi qua điểm $M(1; 2; 3)$ và nhận vectơ $\vec{n} = (2; -1; 4)$ làm vectơ pháp tuyến có phương trình tổng quát là:</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+            
+              <button onclick="checkQuiz(this, true)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">A</span>
+                <span class="text-gray-700 dark:text-gray-300">$2x - y + 4z - 12 = 0$</span>
+              </button>
+              <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">B</span>
+                <span class="text-gray-700 dark:text-gray-300">$2x - y + 4z + 12 = 0$</span>
+              </button>
+              <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">C</span>
+                <span class="text-gray-700 dark:text-gray-300">$x + 2y + 3z - 12 = 0$</span>
+              </button>
+              <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">D</span>
+                <span class="text-gray-700 dark:text-gray-300">$2x - y + 4z = 0$</span>
+              </button>
+          </div>
+          <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
+          <input type="hidden" class="quiz-expl" value="Phương trình mặt phẳng: $2(x - 1) - 1(y - 2) + 4(z - 3) = 0 \Leftrightarrow 2x - 2 - y + 2 + 4z - 12 = 0 \Leftrightarrow 2x - y + 4z - 12 = 0$.">
+        </div>
       </article>
     
       <article id="bai-15" class="bg-white dark:bg-dark-surface rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 border-t-4 border-lime-500 p-6 sm:p-8 transition-all hover:shadow-md">
@@ -2407,6 +2877,38 @@
           <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
           <input type="hidden" class="quiz-expl" value="Phương trình tham số của đường thẳng đi qua M(x₀; y₀; z₀) với VTCP (a; b; c) là: x = x₀ + at, y = y₀ + bt, z = z₀ + ct. Thay toạ độ M(1; -2; 3) và u(2; -1; 4) thu được { x = 1 + 2t, y = -2 - t, z = 3 + 4t }.">
         </div>
+      
+        <!-- Câu hỏi 2 -->
+        <div class="p-4 bg-gray-50 dark:bg-gray-800/80 rounded-xl border border-gray-200 dark:border-gray-700 mt-4">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold uppercase tracking-wider text-sky-600 dark:text-sky-400 flex items-center gap-1.5">
+              <i class="fa-solid fa-circle-question"></i> Câu hỏi trắc nghiệm củng cố (Câu 2)
+            </span>
+            <span class="text-[11px] text-gray-400">Chọn 1 đáp án đúng</span>
+          </div>
+          <p class="text-xs sm:text-sm font-medium text-gray-800 dark:text-gray-200 mb-3">Vectơ nào sau đây là một vectơ chỉ phương của đường thẳng $d: \frac{x - 1}{2} = \frac{y + 3}{-1} = \frac{z - 4}{5}$?</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+            
+              <button onclick="checkQuiz(this, true)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">A</span>
+                <span class="text-gray-700 dark:text-gray-300">$\vec{u} = (2; -1; 5)$</span>
+              </button>
+              <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">B</span>
+                <span class="text-gray-700 dark:text-gray-300">$\vec{u} = (1; -3; 4)$</span>
+              </button>
+              <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">C</span>
+                <span class="text-gray-700 dark:text-gray-300">$\vec{u} = (-1; 3; -4)$</span>
+              </button>
+              <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">D</span>
+                <span class="text-gray-700 dark:text-gray-300">$\vec{u} = (2; 1; 5)$</span>
+              </button>
+          </div>
+          <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
+          <input type="hidden" class="quiz-expl" value="Phương trình chính tắc $\frac{x - x_0}{a} = \frac{y - y_0}{b} = \frac{z - z_0}{c}$ có VTCP là $\vec{u} = (a; b; c) = (2; -1; 5)$.">
+        </div>
       </article>
     
       <article id="bai-16" class="bg-white dark:bg-dark-surface rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 border-t-4 border-sky-500 p-6 sm:p-8 transition-all hover:shadow-md">
@@ -2501,6 +3003,38 @@
           </div>
           <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
           <input type="hidden" class="quiz-expl" value="Mặt phẳng (Oxy) có VTPT là k⃗ = (0; 0; 1). Ta có: sin(d, (Oxy)) = |u⃗ · k⃗| / (|u⃗| · |k⃗|) = |1·0 + 0·0 + 1·1| / (√(1² + 0² + 1²) · 1) = 1/√2. Suy ra góc φ = 45°.">
+        </div>
+      
+        <!-- Câu hỏi 2 -->
+        <div class="p-4 bg-gray-50 dark:bg-gray-800/80 rounded-xl border border-gray-200 dark:border-gray-700 mt-4">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold uppercase tracking-wider text-sky-600 dark:text-sky-400 flex items-center gap-1.5">
+              <i class="fa-solid fa-circle-question"></i> Câu hỏi trắc nghiệm củng cố (Câu 2)
+            </span>
+            <span class="text-[11px] text-gray-400">Chọn 1 đáp án đúng</span>
+          </div>
+          <p class="text-xs sm:text-sm font-medium text-gray-800 dark:text-gray-200 mb-3">Góc $\varphi$ giữa đường thẳng $d$ có VTCP $\vec{u}$ và mặt phẳng $(P)$ có VTPT $\vec{n}$ được tính theo công thức lượng giác nào?</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+            
+              <button onclick="checkQuiz(this, true)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">A</span>
+                <span class="text-gray-700 dark:text-gray-300">$\sin \varphi = \frac{|\vec{u} \cdot \vec{n}|}{|\vec{u}| \cdot |\vec{n}|}$</span>
+              </button>
+              <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">B</span>
+                <span class="text-gray-700 dark:text-gray-300">$\cos \varphi = \frac{\vec{u} \cdot \vec{n}}{|\vec{u}| \cdot |\vec{n}|}$</span>
+              </button>
+              <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">C</span>
+                <span class="text-gray-700 dark:text-gray-300">$\tan \varphi = \frac{|\vec{u} \cdot \vec{n}|}{|\vec{u}| \cdot |\vec{n}|}$</span>
+              </button>
+              <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">D</span>
+                <span class="text-gray-700 dark:text-gray-300">$\cos \varphi = \frac{|\vec{u} \cdot \vec{n}|}{|\vec{u}| \cdot |\vec{n}|}$</span>
+              </button>
+          </div>
+          <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
+          <input type="hidden" class="quiz-expl" value="Vì góc giữa đường thẳng và mặt phẳng là góc phụ với góc giữa VTCP và VTPT ($90^\circ - \theta$) nên $\sin \varphi = |\cos \theta| = \frac{|\vec{u} \cdot \vec{n}|}{|\vec{u}| \cdot |\vec{n}|}$.">
         </div>
       </article>
     
@@ -2611,6 +3145,38 @@
           </div>
           <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
           <input type="hidden" class="quiz-expl" value="Ta có: a = -(-4)/2 = 2; b = -(2)/2 = -1; c = -(-6)/2 = 3; d = -2. Tâm I(2; -1; 3). Bán kính R = √(a² + b² + c² - d) = √(2² + (-1)² + 3² - (-2)) = √(4 + 1 + 9 + 2) = √16 = 4.">
+        </div>
+      
+        <!-- Câu hỏi 2 -->
+        <div class="p-4 bg-gray-50 dark:bg-gray-800/80 rounded-xl border border-gray-200 dark:border-gray-700 mt-4">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold uppercase tracking-wider text-sky-600 dark:text-sky-400 flex items-center gap-1.5">
+              <i class="fa-solid fa-circle-question"></i> Câu hỏi trắc nghiệm củng cố (Câu 2)
+            </span>
+            <span class="text-[11px] text-gray-400">Chọn 1 đáp án đúng</span>
+          </div>
+          <p class="text-xs sm:text-sm font-medium text-gray-800 dark:text-gray-200 mb-3">Mặt cầu $(S)$ có phương trình $(x + 1)^2 + (y - 2)^2 + (z + 3)^2 = 25$ có toạ độ tâm $I$ và bán kính $R$ lần lượt là:</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+            
+              <button onclick="checkQuiz(this, true)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">A</span>
+                <span class="text-gray-700 dark:text-gray-300">$I(-1; 2; -3)$ và $R = 5$</span>
+              </button>
+              <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">B</span>
+                <span class="text-gray-700 dark:text-gray-300">$I(1; -2; 3)$ và $R = 25$</span>
+              </button>
+              <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">C</span>
+                <span class="text-gray-700 dark:text-gray-300">$I(-1; 2; -3)$ và $R = 25$</span>
+              </button>
+              <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">D</span>
+                <span class="text-gray-700 dark:text-gray-300">$I(1; -2; 3)$ và $R = 5$</span>
+              </button>
+          </div>
+          <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
+          <input type="hidden" class="quiz-expl" value="Phương trình $(x - a)^2 + (y - b)^2 + (z - c)^2 = R^2$ cho tâm $I(a; b; c) = (-1; 2; -3)$ và bán kính $R = \sqrt{25} = 5$.">
         </div>
       </article>
     
@@ -2750,6 +3316,38 @@
           <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
           <input type="hidden" class="quiz-expl" value="Biến cố điều kiện B: &#39;Xuất hiện số chẵn&#39; = {2, 4, 6} gồm 3 phần tử. Biến cố A: &#39;Số chia hết cho 3&#39; = {3, 6}. Khi đó A ∩ B = {6} có 1 phần tử. Vậy P(A|B) = 1/3.">
         </div>
+      
+        <!-- Câu hỏi 2 -->
+        <div class="p-4 bg-gray-50 dark:bg-gray-800/80 rounded-xl border border-gray-200 dark:border-gray-700 mt-4">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold uppercase tracking-wider text-sky-600 dark:text-sky-400 flex items-center gap-1.5">
+              <i class="fa-solid fa-circle-question"></i> Câu hỏi trắc nghiệm củng cố (Câu 2)
+            </span>
+            <span class="text-[11px] text-gray-400">Chọn 1 đáp án đúng</span>
+          </div>
+          <p class="text-xs sm:text-sm font-medium text-gray-800 dark:text-gray-200 mb-3">Cho hai biến cố $A$ và $B$ có $P(B) = 0.5$ và $P(A \cap B) = 0.2$. Xác suất có điều kiện $P(A|B)$ bằng:</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+            
+              <button onclick="checkQuiz(this, true)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">A</span>
+                <span class="text-gray-700 dark:text-gray-300">0.4</span>
+              </button>
+              <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">B</span>
+                <span class="text-gray-700 dark:text-gray-300">0.1</span>
+              </button>
+              <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">C</span>
+                <span class="text-gray-700 dark:text-gray-300">0.7</span>
+              </button>
+              <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">D</span>
+                <span class="text-gray-700 dark:text-gray-300">0.25</span>
+              </button>
+          </div>
+          <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
+          <input type="hidden" class="quiz-expl" value="Theo định nghĩa xác suất có điều kiện: $P(A|B) = \frac{P(A \cap B)}{P(B)} = \frac{0.2}{0.5} = 0.4$.">
+        </div>
       </article>
     
       <article id="bai-19" class="bg-white dark:bg-dark-surface rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 border-t-4 border-indigo-500 p-6 sm:p-8 transition-all hover:shadow-md">
@@ -2881,6 +3479,38 @@
           <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
           <input type="hidden" class="quiz-expl" value="Theo định nghĩa biến cố đối: B ∩ B̄ = ∅ và B ∪ B̄ = Ω, do đó {B, B̄} luôn là một hệ đầy đủ hai thành phần đơn giản và thông dụng nhất.">
         </div>
+      
+        <!-- Câu hỏi 2 -->
+        <div class="p-4 bg-gray-50 dark:bg-gray-800/80 rounded-xl border border-gray-200 dark:border-gray-700 mt-4">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold uppercase tracking-wider text-sky-600 dark:text-sky-400 flex items-center gap-1.5">
+              <i class="fa-solid fa-circle-question"></i> Câu hỏi trắc nghiệm củng cố (Câu 2)
+            </span>
+            <span class="text-[11px] text-gray-400">Chọn 1 đáp án đúng</span>
+          </div>
+          <p class="text-xs sm:text-sm font-medium text-gray-800 dark:text-gray-200 mb-3">Cho $\{B_1, B_2\}$ là một hệ đầy đủ các biến cố với $P(B_1) = 0.6, P(B_2) = 0.4$. Biết $P(A|B_1) = 0.1$ và $P(A|B_2) = 0.2$. Theo công thức xác suất toàn phần, $P(A)$ bằng:</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+            
+              <button onclick="checkQuiz(this, true)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">A</span>
+                <span class="text-gray-700 dark:text-gray-300">0.14</span>
+              </button>
+              <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">B</span>
+                <span class="text-gray-700 dark:text-gray-300">0.30</span>
+              </button>
+              <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">C</span>
+                <span class="text-gray-700 dark:text-gray-300">0.08</span>
+              </button>
+              <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">D</span>
+                <span class="text-gray-700 dark:text-gray-300">0.12</span>
+              </button>
+          </div>
+          <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
+          <input type="hidden" class="quiz-expl" value="Áp dụng công thức xác suất toàn phần: $P(A) = P(B_1)P(A|B_1) + P(B_2)P(A|B_2) = 0.6 \times 0.1 + 0.4 \times 0.2 = 0.06 + 0.08 = 0.14$.">
+        </div>
       </article>
     
       </div>
@@ -2897,6 +3527,265 @@
     </div>
   </footer>
 
+    
+
+  <!-- Course Exam Modal -->
+  <div id="courseQuizModal" class="hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white dark:bg-gray-800 rounded-3xl max-w-3xl w-full max-h-[90vh] overflow-y-auto p-6 sm:p-8 shadow-2xl border border-gray-200 dark:border-gray-700">
+      <div class="flex items-center justify-between pb-4 border-b border-gray-200 dark:border-gray-700 mb-6">
+        <div>
+          <span class="px-2.5 py-0.5 rounded-full bg-sky-100 dark:bg-sky-950/70 text-sky-700 dark:text-sky-300 font-bold text-xs">
+            Bài thi đánh giá tổng kết
+          </span>
+          <h3 class="text-xl sm:text-2xl font-black text-gray-900 dark:text-white mt-1">
+            Đánh Giá Toàn Khóa: Toán Học Lớp 12
+          </h3>
+        </div>
+        <button onclick="closeCourseQuizModal()" class="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-500 hover:text-gray-900 dark:hover:text-white flex items-center justify-center transition">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- Exam Form -->
+      <form id="courseExamForm" onsubmit="submitCourseExam(event)" class="space-y-6 text-sm text-gray-700 dark:text-gray-300">
+        <!-- Q1 -->
+        <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600">
+          <p class="font-bold text-gray-900 dark:text-white mb-2">
+            1. Cho hàm số $y = x^3 - 3x + 2$. Điểm cực đại của hàm số là:
+          </p>
+          <div class="space-y-2">
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq1" value="A" required class="text-sky-600">
+              <span>A. $x = -1$</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq1" value="B" class="text-sky-600">
+              <span>B. $x = 1$</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq1" value="C" class="text-sky-600">
+              <span>C. $x = 0$</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600">
+          <p class="font-bold text-gray-900 dark:text-white mb-2">
+            2. Giá trị nhỏ nhất của hàm số $f(x) = x^4 - 2x^2 + 5$ trên đoạn $[0; 2]$ bằng:
+          </p>
+          <div class="space-y-2">
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq2" value="A" required class="text-sky-600">
+              <span>A. 4 (tại $x = 1$)</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq2" value="B" class="text-sky-600">
+              <span>B. 5</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq2" value="C" class="text-sky-600">
+              <span>C. 13</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600">
+          <p class="font-bold text-gray-900 dark:text-white mb-2">
+            3. Tiệm cận ngang của đồ thị hàm số $y = \frac{3x - 1}{x + 2}$ là đường thẳng:
+          </p>
+          <div class="space-y-2">
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq3" value="A" required class="text-sky-600">
+              <span>A. $y = 3$</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq3" value="B" class="text-sky-600">
+              <span>B. $x = -2$</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq3" value="C" class="text-sky-600">
+              <span>C. $y = -\frac{1}{2}$</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600">
+          <p class="font-bold text-gray-900 dark:text-white mb-2">
+            4. Tiệm cận xiên của đồ thị hàm số $y = \frac{2x^2 - x + 1}{x - 1}$ là:
+          </p>
+          <div class="space-y-2">
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq4" value="A" required class="text-sky-600">
+              <span>A. $y = 2x + 1$</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq4" value="B" class="text-sky-600">
+              <span>B. $y = 2x - 1$</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq4" value="C" class="text-sky-600">
+              <span>C. $y = x + 2$</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q5 -->
+        <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600">
+          <p class="font-bold text-gray-900 dark:text-white mb-2">
+            5. Trong không gian Oxyz, toạ độ của vectơ $\vec{u} = 2\vec{i} - 3\vec{j} + 4\vec{k}$ là:
+          </p>
+          <div class="space-y-2">
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq5" value="A" required class="text-sky-600">
+              <span>A. $(2; -3; 4)$</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq5" value="B" class="text-sky-600">
+              <span>B. $(2; 3; 4)$</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq5" value="C" class="text-sky-600">
+              <span>C. $(-3; 2; 4)$</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q6 -->
+        <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600">
+          <p class="font-bold text-gray-900 dark:text-white mb-2">
+            6. Họ nguyên hàm của hàm số $f(x) = \cos 2x$ là:
+          </p>
+          <div class="space-y-2">
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq6" value="A" required class="text-sky-600">
+              <span>A. $\frac{1}{2}\sin 2x + C$</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq6" value="B" class="text-sky-600">
+              <span>B. $-\frac{1}{2}\sin 2x + C$</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq6" value="C" class="text-sky-600">
+              <span>C. $2\sin 2x + C$</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q7 -->
+        <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600">
+          <p class="font-bold text-gray-900 dark:text-white mb-2">
+            7. Diện tích hình phẳng giới hạn bởi đồ thị $y = x^2 - 4$, trục hoành $Ox$ và hai đường thẳng $x = 0, x = 2$ bằng:
+          </p>
+          <div class="space-y-2">
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq7" value="A" required class="text-sky-600">
+              <span>A. $\frac{16}{3}$</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq7" value="B" class="text-sky-600">
+              <span>B. $-\frac{16}{3}$</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq7" value="C" class="text-sky-600">
+              <span>C. 8</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q8 -->
+        <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600">
+          <p class="font-bold text-gray-900 dark:text-white mb-2">
+            8. Mặt phẳng $(P)$ đi qua $A(1; 0; 0), B(0; 2; 0), C(0; 0; 3)$ có phương trình theo đoạn chắn là:
+          </p>
+          <div class="space-y-2">
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq8" value="A" required class="text-sky-600">
+              <span>A. $\frac{x}{1} + \frac{y}{2} + \frac{z}{3} = 1$</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq8" value="B" class="text-sky-600">
+              <span>B. $\frac{x}{1} + \frac{y}{2} + \frac{z}{3} = 0$</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq8" value="C" class="text-sky-600">
+              <span>C. $x + 2y + 3z = 1$</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q9 -->
+        <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600">
+          <p class="font-bold text-gray-900 dark:text-white mb-2">
+            9. Trong không gian Oxyz, bán kính $R$ của mặt cầu $(S): x^2 + y^2 + z^2 - 2x + 4y - 6z - 2 = 0$ bằng:
+          </p>
+          <div class="space-y-2">
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq9" value="A" required class="text-sky-600">
+              <span>A. $4$ ($R = \sqrt{1^2 + (-2)^2 + 3^2 - (-2)} = \sqrt{16} = 4$)</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq9" value="B" class="text-sky-600">
+              <span>B. $16$</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq9" value="C" class="text-sky-600">
+              <span>C. $\sqrt{12}$</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q10 -->
+        <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600">
+          <p class="font-bold text-gray-900 dark:text-white mb-2">
+            10. Cho hai biến cố A và B độc lập với nhau có $P(A) = 0.4$ và $P(B) = 0.5$. Xác suất của biến cố hợp $P(A \cup B)$ bằng:
+          </p>
+          <div class="space-y-2">
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq10" value="A" required class="text-sky-600">
+              <span>A. $0.7$ ($P(A \cup B) = P(A) + P(B) - P(A)P(B) = 0.9 - 0.2 = 0.7$)</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq10" value="B" class="text-sky-600">
+              <span>B. $0.9$</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq10" value="C" class="text-sky-600">
+              <span>C. $0.2$</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="pt-4 border-t border-gray-200 dark:border-gray-700 flex justify-end gap-3">
+          <button type="button" onclick="closeCourseQuizModal()" class="px-4 py-2 rounded-xl bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 font-semibold hover:bg-gray-200 transition">
+            Đóng
+          </button>
+          <button type="submit" class="px-5 py-2 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-bold transition shadow-sm">
+            Nộp bài & Chấm điểm
+          </button>
+        </div>
+      </form>
+
+      <!-- Exam Result Panel -->
+      <div id="courseExamResult" class="hidden mt-6 p-6 rounded-2xl bg-sky-50 dark:bg-sky-950/50 border border-sky-200 dark:border-sky-800 text-center space-y-3">
+        <div class="w-16 h-16 mx-auto rounded-full bg-sky-600 text-white flex items-center justify-center text-2xl shadow-lg">
+          <i class="fa-solid fa-trophy"></i>
+        </div>
+        <h4 id="examScoreText" class="text-2xl font-black text-gray-900 dark:text-white">
+          Kết quả của bạn: 0/10 điểm
+        </h4>
+        <p id="examCommentText" class="text-sm text-gray-600 dark:text-gray-300 max-w-md mx-auto leading-relaxed">
+          Đang tải đánh giá năng lực...
+        </p>
+        <button onclick="resetCourseExam()" class="mt-4 px-4 py-2 rounded-xl bg-sky-600 text-white text-xs font-bold hover:bg-sky-700 transition">
+          <i class="fa-solid fa-rotate-right mr-1"></i> Làm lại bài thi
+        </button>
+      </div>
+    </div>
+  </div>
+
   <script>
     // Theme toggle
     const themeToggle = document.getElementById('themeToggle');
@@ -2904,14 +3793,55 @@
     if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
       html.classList.add('dark');
     }
-    themeToggle.addEventListener('click', () => {
+    themeToggle?.addEventListener('click', () => {
       html.classList.toggle('dark');
       localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
     });
 
+    // Reading Progress Bar
+    window.addEventListener('scroll', () => {
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      const bar = document.getElementById('progressBar');
+      if (bar) bar.style.width = scrolled + '%';
+    });
+
+    // Search lessons in sidebar
+    const searchInput = document.getElementById('lessonSearch');
+    searchInput?.addEventListener('input', (e) => {
+      const query = e.target.value.toLowerCase().trim();
+      const items = document.querySelectorAll('.sidebar-item');
+      items.forEach(item => {
+        const text = item.textContent.toLowerCase();
+        if (text.includes(query)) {
+          item.style.display = '';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    });
+
+    // Initialize KaTeX on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      renderAllMath();
+    });
+
+    function renderAllMath() {
+      if (typeof renderMathInElement === 'function') {
+        renderMathInElement(document.body, {
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false}
+          ],
+          throwOnError: false
+        });
+      }
+    }
+
     // Quiz evaluation
     function checkQuiz(btn, isCorrect) {
-      const parent = btn.closest('article');
+      const parent = btn.closest('.p-4');
       const feedback = parent.querySelector('.quiz-feedback');
       const expl = parent.querySelector('.quiz-expl').value;
       const allBtns = parent.querySelectorAll('button[onclick^="checkQuiz"]');
@@ -2930,6 +3860,86 @@
         feedback.className = 'quiz-feedback mt-2.5 p-3 rounded-lg text-xs leading-relaxed bg-rose-50 dark:bg-rose-950/30 border border-rose-200 dark:border-rose-800 text-rose-800 dark:text-rose-200 block';
         feedback.innerHTML = '<span class="font-bold flex items-center gap-1.5"><i class="fa-solid fa-circle-xmark text-rose-600"></i> Chưa chính xác!</span>' + '<p class="mt-1">' + expl + '</p>';
       }
+
+      if (typeof renderMathInElement === 'function') {
+        renderMathInElement(feedback, {
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false}
+          ],
+          throwOnError: false
+        });
+      }
+    }
+
+    // Modal Course Quiz
+    function openCourseQuizModal() {
+      const modal = document.getElementById('courseQuizModal');
+      if (modal) modal.classList.remove('hidden');
+      if (typeof renderMathInElement === 'function') {
+        renderMathInElement(modal, {
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false}
+          ],
+          throwOnError: false
+        });
+      }
+    }
+    function closeCourseQuizModal() {
+      const modal = document.getElementById('courseQuizModal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    // Course Exam Submission
+    const examAnswers = {
+      eq1: 'A',
+      eq2: 'A',
+      eq3: 'A',
+      eq4: 'A',
+      eq5: 'A',
+      eq6: 'A',
+      eq7: 'A',
+      eq8: 'A',
+      eq9: 'A',
+      eq10: 'A'
+    };
+
+    function submitCourseExam(e) {
+      e.preventDefault();
+      const form = document.getElementById('courseExamForm');
+      let score = 0;
+
+      for (let i = 1; i <= 10; i++) {
+        const val = form['eq' + i]?.value;
+        if (val === examAnswers['eq' + i]) {
+          score++;
+        }
+      }
+
+      form.classList.add('hidden');
+      const resultBox = document.getElementById('courseExamResult');
+      resultBox.classList.remove('hidden');
+      document.getElementById('examScoreText').innerText = 'Kết quả của bạn: ' + score + '/10 điểm';
+
+      let comment = '';
+      if (score >= 9) {
+        comment = 'Xuất sắc! Bạn nắm rất vững toàn bộ chương trình Toán 12 chuẩn bị cho kỳ thi THPT Quốc gia!';
+      } else if (score >= 7) {
+        comment = 'Rất tốt! Bạn hiểu sâu sắc các kiến thức Đạo hàm, Tích phân, Oxyz và Xác suất Bayes.';
+      } else if (score >= 5) {
+        comment = 'Đạt yêu cầu. Hãy ôn luyện thêm các dạng bài tập hình không gian Oxyz và công thức xác suất toàn phần nhé!';
+      } else {
+        comment = 'Cần cố gắng hơn. Hãy đọc kỹ lại lý thuyết và các ví dụ mẫu của từng bài học nhé!';
+      }
+      document.getElementById('examCommentText').innerText = comment;
+    }
+
+    function resetCourseExam() {
+      const form = document.getElementById('courseExamForm');
+      form.reset();
+      form.classList.remove('hidden');
+      document.getElementById('courseExamResult').classList.add('hidden');
     }
 
     // Active sidebar scrollspy
@@ -2951,10 +3961,13 @@
         sidebarLinks.forEach(link => {
           if (link.getAttribute('href') === '#' + current) {
             link.classList.add('text-sky-600', 'font-bold');
+          } else {
+            link.classList.remove('text-sky-600', 'font-bold');
           }
         });
       }
     });
   </script>
+
 </body>
 </html>

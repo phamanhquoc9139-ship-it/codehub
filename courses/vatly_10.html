@@ -29,7 +29,13 @@
     ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
     .smooth-scroll { scroll-behavior: smooth; }
   </style>
+  <!-- KaTeX for beautiful Math & Physics Formula Rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
 </head>
+  <!-- Reading Progress Bar -->
+  <div id="progressBar" class="fixed top-0 left-0 h-1 bg-gradient-to-r from-sky-500 via-blue-500 to-indigo-500 z-50 transition-all duration-150" style="width: 0%;"></div>
 <body class="bg-gray-50 text-gray-900 dark:bg-dark dark:text-gray-100 transition-colors duration-200 smooth-scroll">
   
   <!-- Navigation Bar -->
@@ -64,6 +70,12 @@
           </div>
         </div>
         <div class="flex items-center gap-4">
+          <!-- Exam Modal Button -->
+          <button onclick="openCourseQuizModal()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gradient-to-r from-sky-600 to-blue-600 hover:from-sky-700 hover:to-blue-700 text-white text-xs font-semibold shadow-sm transition">
+            <i class="fa-solid fa-file-signature"></i>
+            <span class="hidden sm:inline">Kiểm tra toàn khóa</span>
+            <span>(10 câu)</span>
+          </button>
           <button id="themeToggle" class="p-2 text-gray-500 hover:text-sky-600 dark:text-gray-400 dark:hover:text-sky-400 transition-colors" title="Đổi giao diện Sáng/Tối">
             <i class="fa-solid fa-moon text-lg dark:hidden"></i>
             <i class="fa-solid fa-sun text-lg hidden dark:block"></i>
@@ -121,6 +133,19 @@
         <div class="sticky top-20 bg-white dark:bg-dark-surface rounded-2xl shadow-sm border border-gray-200 dark:border-gray-800 p-5 max-h-[calc(100vh-6rem)] overflow-y-auto space-y-5">
           <div class="flex items-center justify-between border-b border-gray-100 dark:border-gray-800 pb-3">
             <h3 class="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">Mục lục khóa học</h3>
+        </div>
+        <!-- Search Bar -->
+          <div class="mb-3">
+            <div class="relative">
+              <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-gray-400 text-xs"></i>
+              <input type="text" 
+                     id="lessonSearch" 
+                     placeholder="Tìm kiếm bài học Vật lí 10..." 
+                     class="w-full pl-8 pr-3 py-1.5 text-xs rounded-xl bg-gray-50 dark:bg-dark border border-gray-200 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-sky-500 text-gray-900 dark:text-gray-100 placeholder-gray-400">
+            </div>
+          </div>
+          
+        <div>
             <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-sky-100 text-sky-700 dark:bg-sky-900/50 dark:text-sky-300">34 bài</span>
           </div>
           
@@ -511,9 +536,9 @@
       <div class="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
         
           <ul class="list-disc pl-6 space-y-1 text-xs mb-2">
-            <li><strong>Cách mạng 1.0 (Thế kỉ XVIII):</strong> Cơ học và Nhiệt học phát triển $ightarrow$ động cơ hơi nước ra đời thay thế sức lao động thủ công.</li>
-            <li><strong>Cách mạng 2.0 (Cuối thế kỉ XIX):</strong> Điện từ học phát triển $ightarrow$ máy phát điện, lưới điện xoay chiều, động cơ điện và dây chuyền sản xuất hàng loạt.</li>
-            <li><strong>Cách mạng 3.0 (Thập niên 1970):</strong> Vật lí lượng tử và bán dẫn $ightarrow$ chip máy tính, công nghệ thông tin và tự động hoá.</li>
+            <li><strong>Cách mạng 1.0 (Thế kỉ XVIII):</strong> Cơ học và Nhiệt học phát triển $\rightarrow$ động cơ hơi nước ra đời thay thế sức lao động thủ công.</li>
+            <li><strong>Cách mạng 2.0 (Cuối thế kỉ XIX):</strong> Điện từ học phát triển $\rightarrow$ máy phát điện, lưới điện xoay chiều, động cơ điện và dây chuyền sản xuất hàng loạt.</li>
+            <li><strong>Cách mạng 3.0 (Thập niên 1970):</strong> Vật lí lượng tử và bán dẫn $\rightarrow$ chip máy tính, công nghệ thông tin và tự động hoá.</li>
             <li><strong>Cách mạng 4.0 (Hiện nay):</strong> Trí tuệ nhân tạo, lượng tử, vật liệu nano mới và năng lượng tái tạo.</li>
           </ul>
         
@@ -851,7 +876,7 @@
       <div class="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
         
           <div class="p-3 bg-gray-50 dark:bg-gray-800 rounded border text-xs">
-            <p><strong>Dạng biểu diễn chuẩn:</strong> <code class="font-mono font-bold text-indigo-600 text-sm">A = Ā ± ΔA</code>  (hoặc $A = ar{A} pm delta A$)</p>
+            <p><strong>Dạng biểu diễn chuẩn:</strong> <code class="font-mono font-bold text-indigo-600 text-sm">A = Ā ± ΔA</code>  (hoặc $A = \bar{A} pm delta A$)</p>
             <p class="mt-1"><em>Quy tắc:</em> Sai số tuyệt đối ΔA thường được viết đến tối đa 1 hoặc 2 chữ số có nghĩa. Giá trị trung bình Ā được làm tròn đến hàng chữ số tương ứng với sai số tuyệt đối ΔA.</p>
             <p class="mt-1 font-mono text-gray-600 dark:text-gray-300">Ví dụ: Chiều dài l = 21,54 ± 0,05 cm (hợp lệ); không viết l = 21,543 ± 0,05 cm.</p>
           </div>
@@ -920,6 +945,42 @@
         <div class="quiz-feedback hidden p-3 rounded-lg text-xs leading-relaxed">
           <div class="feedback-title font-bold mb-1"></div>
           <div class="feedback-text text-gray-700 dark:text-gray-300">Sai số tuyệt đối của phép đo là tổng sai số ngẫu nhiên và sai số dụng cụ: Δl = Δl̄ + Δl_dc = 0,2 + 0,5 = 0,7 mm. Giá trị trung bình l̄ = 152,4 mm. Do đó kết quả đo được viết đúng quy chuẩn là: l = 152,4 ± 0,7 mm.</div>
+        </div>
+      </div>
+    
+      <!-- Self-check Quiz 2 -->
+      <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800">
+        <div class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+          <i class="fa-solid fa-circle-question text-sky-500"></i> Câu hỏi tự kiểm tra (Câu 2)
+        </div>
+        <p class="text-sm font-medium text-gray-900 dark:text-white mb-3">
+          Dùng thước kẹp đo chiều dài thanh kim loại thu được giá trị $\bar{L} = 20.0\text{ cm}$ với sai số tuyệt đối $\Delta L = 0.2\text{ cm}$. Sai số tỉ đối $\delta L$ của phép đo này là:
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs mb-3">
+          
+      <button onclick="checkQuiz(this, true)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">A</span>
+        <span class="text-gray-700 dark:text-gray-300">$\delta L = 1.0\%$</span>
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">B</span>
+        <span class="text-gray-700 dark:text-gray-300">$\delta L = 0.1\%$</span>
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">C</span>
+        <span class="text-gray-700 dark:text-gray-300">$\delta L = 2.0\%$</span>
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">D</span>
+        <span class="text-gray-700 dark:text-gray-300">$\delta L = 0.5\%$</span>
+      </button>
+        </div>
+        <div class="quiz-feedback hidden p-3 rounded-lg text-xs leading-relaxed">
+          <div class="feedback-title font-bold mb-1"></div>
+          <div class="feedback-text text-gray-700 dark:text-gray-300">Sai số tỉ đối được tính theo công thức: $\delta L = \frac{\Delta L}{\bar{L}} \times 100\% = \frac{0.2}{20.0} \times 100\% = 1.0\%$.</div>
         </div>
       </div>
     </article>
@@ -1031,7 +1092,7 @@
                 <tr>
                   <td class="p-2 border font-medium">Bản chất vật lí</td>
                   <td class="p-2 border">Đại lượng <strong>vô hướng</strong>, biểu thị độ dài toàn bộ quỹ đạo vật vạch ra.</td>
-                  <td class="p-2 border">Đại lượng <strong>vectơ</strong> ($ec{d}$), nối vị trí đầu với vị trí cuối của vật.</td>
+                  <td class="p-2 border">Đại lượng <strong>vectơ</strong> ($\vec{d}$), nối vị trí đầu với vị trí cuối của vật.</td>
                 </tr>
                 <tr>
                   <td class="p-2 border font-medium">Giá trị đại số</td>
@@ -1056,11 +1117,11 @@
       </h4>
       <div class="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
         
-          <p class="text-xs mb-1">Khi vật dịch chuyển liên tiếp từ A đến B rồi từ B đến C thì độ dịch chuyển tổng hợp là: <code class="font-mono font-bold text-blue-600">ec{d} = ec{d}_1 + ec{d}_2</code>.</p>
+          <p class="text-xs mb-1">Khi vật dịch chuyển liên tiếp từ A đến B rồi từ B đến C thì độ dịch chuyển tổng hợp là: <code class="font-mono font-bold text-blue-600">\vec{d} = \vec{d}_1 + \vec{d}_2</code>.</p>
           <ul class="list-disc pl-4 space-y-1 text-xs">
-            <li>Nếu $ec{d}_1$ và $ec{d}_2$ cùng hướng: $d = d_1 + d_2$.</li>
-            <li>Nếu $ec{d}_1$ và $ec{d}_2$ ngược hướng: $d = |d_1 - d_2|$.</li>
-            <li>Nếu $ec{d}_1 perp ec{d}_2$ (vuông góc nhau): <code class="font-mono font-bold text-emerald-600">d = sqrt{d_1^2 + d_2^2}</code> (định lí Pythagore).</li>
+            <li>Nếu $\vec{d}_1$ và $\vec{d}_2$ cùng hướng: $d = d_1 + d_2$.</li>
+            <li>Nếu $\vec{d}_1$ và $\vec{d}_2$ ngược hướng: $d = |d_1 - d_2|$.</li>
+            <li>Nếu $\vec{d}_1 perp \vec{d}_2$ (vuông góc nhau): <code class="font-mono font-bold text-emerald-600">d = sqrt{d_1^2 + d_2^2}</code> (định lí Pythagore).</li>
           </ul>
         
       </div>
@@ -1127,6 +1188,42 @@
         <div class="quiz-feedback hidden p-3 rounded-lg text-xs leading-relaxed">
           <div class="feedback-title font-bold mb-1"></div>
           <div class="feedback-text text-gray-700 dark:text-gray-300">Người đó bơi đi 50 m và bơi về 50 m nên tổng độ dài đường bơi (quãng đường) là s = 50 + 50 = 100 m. Do vị trí cuối cùng trùng với vị trí xuất phát ban đầu nên vectơ độ dịch chuyển nối điểm đầu và điểm cuối có độ lớn bằng d = 0 m.</div>
+        </div>
+      </div>
+    
+      <!-- Self-check Quiz 2 -->
+      <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800">
+        <div class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+          <i class="fa-solid fa-circle-question text-sky-500"></i> Câu hỏi tự kiểm tra (Câu 2)
+        </div>
+        <p class="text-sm font-medium text-gray-900 dark:text-white mb-3">
+          Một người đi xe máy từ điểm A đến điểm B cách $40\text{ m}$ về phía Đông, rồi rẽ vuông góc đi tiếp $30\text{ m}$ về phía Bắc đến C. Độ lớn của vectơ độ dịch chuyển $\vec{d}$ từ A đến C là:
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs mb-3">
+          
+      <button onclick="checkQuiz(this, true)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">A</span>
+        <span class="text-gray-700 dark:text-gray-300">$50\text{ m}$</span>
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">B</span>
+        <span class="text-gray-700 dark:text-gray-300">$70\text{ m}$</span>
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">C</span>
+        <span class="text-gray-700 dark:text-gray-300">$10\text{ m}$</span>
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">D</span>
+        <span class="text-gray-700 dark:text-gray-300">$40\text{ m}$</span>
+      </button>
+        </div>
+        <div class="quiz-feedback hidden p-3 rounded-lg text-xs leading-relaxed">
+          <div class="feedback-title font-bold mb-1"></div>
+          <div class="feedback-text text-gray-700 dark:text-gray-300">Vì hai quãng đường vuông góc nhau (Đông và Bắc) nên độ lớn độ dịch chuyển chính là cạnh huyền của tam giác vuông: $d = \sqrt{40^2 + 30^2} = \sqrt{1600 + 900} = 50\text{ m}$.</div>
         </div>
       </div>
     </article>
@@ -1199,7 +1296,7 @@
             <div class="p-3 bg-indigo-50 dark:bg-indigo-950/30 rounded border border-indigo-200 dark:border-indigo-800">
               <h5 class="font-bold text-indigo-700 dark:text-indigo-300 mb-1">Vận tốc trung bình (v⃗_tb)</h5>
               <p>Đặc trưng cho mức độ nhanh chậm <strong>và hướng</strong> của chuyển động, tính bằng tỉ số giữa độ dịch chuyển và thời gian:</p>
-              <div class="font-mono text-center font-bold text-indigo-600 my-1">ec{v}_tb = ec{d} / t</div>
+              <div class="font-mono text-center font-bold text-indigo-600 my-1">\vec{v}_tb = \vec{d} / t</div>
               <p class="text-gray-500">Vận tốc là đại lượng vectơ, có thể dương, âm hoặc bằng 0 tuỳ thuộc vào chiều chuyển động so với chiều dương trục toạ độ.</p>
             </div>
           </div>
@@ -1216,12 +1313,12 @@
         
           <p class="text-xs mb-2">Gọi vật 1 là vật chuyển động (thuyền, máy bay), vật 2 là hệ quy chiếu chuyển động (dòng nước, gió), vật 3 là hệ quy chiếu đứng yên (bờ sông, mặt đất):</p>
           <div class="font-mono text-center font-bold text-purple-600 bg-gray-100 dark:bg-gray-800 p-2.5 rounded text-sm my-1">
-            ec{v}_{13} = ec{v}_{12} + ec{v}_{23}
+            \vec{v}_{13} = \vec{v}_{12} + \vec{v}_{23}
           </div>
           <ul class="list-disc pl-6 space-y-1 text-xs mt-2">
-            <li><code class="font-mono">ec{v}_{13}</code>: Vận tốc tuyệt đối (vận tốc của vật đối với hệ quy chiếu đứng yên).</li>
-            <li><code class="font-mono">ec{v}_{12}</code>: Vận tốc tương đối (vận tốc của vật đối với hệ quy chiếu chuyển động).</li>
-            <li><code class="font-mono">ec{v}_{23}</code>: Vận tốc kéo theo (vận tốc của hệ quy chiếu chuyển động đối với hệ quy chiếu đứng yên).</li>
+            <li><code class="font-mono">\vec{v}_{13}</code>: Vận tốc tuyệt đối (vận tốc của vật đối với hệ quy chiếu đứng yên).</li>
+            <li><code class="font-mono">\vec{v}_{12}</code>: Vận tốc tương đối (vận tốc của vật đối với hệ quy chiếu chuyển động).</li>
+            <li><code class="font-mono">\vec{v}_{23}</code>: Vận tốc kéo theo (vận tốc của hệ quy chiếu chuyển động đối với hệ quy chiếu đứng yên).</li>
           </ul>
           <div class="mt-2 text-xs bg-gray-50 dark:bg-gray-800 p-2.5 rounded border">
             <strong>Trường hợp cụ thể (Thuyền trên sông):</strong><br>
@@ -1296,6 +1393,42 @@
           <div class="feedback-text text-gray-700 dark:text-gray-300">Khi ca nô chạy xuôi dòng nước, vectơ vận tốc tương đối v⃗₁₂ và vận tốc kéo theo v⃗₂₃ cùng hướng nên độ lớn vận tốc tuyệt đối của ca nô đối với bờ là: v₁₃ = v₁₂ + v₂₃ = 30 + 5 = 35 km/h.</div>
         </div>
       </div>
+    
+      <!-- Self-check Quiz 2 -->
+      <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800">
+        <div class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+          <i class="fa-solid fa-circle-question text-sky-500"></i> Câu hỏi tự kiểm tra (Câu 2)
+        </div>
+        <p class="text-sm font-medium text-gray-900 dark:text-white mb-3">
+          Một ô tô chạy trên một đường thẳng. Trong nửa đoạn đường đầu ô tô chạy với tốc độ $v_1 = 40\text{ km/h}$, nửa đoạn đường còn lại chạy với tốc độ $v_2 = 60\text{ km/h}$. Tốc độ trung bình trên cả đoạn đường là:
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs mb-3">
+          
+      <button onclick="checkQuiz(this, true)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">A</span>
+        <span class="text-gray-700 dark:text-gray-300">$48\text{ km/h}$</span>
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">B</span>
+        <span class="text-gray-700 dark:text-gray-300">$50\text{ km/h}$</span>
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">C</span>
+        <span class="text-gray-700 dark:text-gray-300">$45\text{ km/h}$</span>
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">D</span>
+        <span class="text-gray-700 dark:text-gray-300">$52\text{ km/h}$</span>
+      </button>
+        </div>
+        <div class="quiz-feedback hidden p-3 rounded-lg text-xs leading-relaxed">
+          <div class="feedback-title font-bold mb-1"></div>
+          <div class="feedback-text text-gray-700 dark:text-gray-300">Với hai nửa quãng đường bằng nhau, công thức tính tốc độ trung bình: $v_{tb} = \frac{2 v_1 v_2}{v_1 + v_2} = \frac{2 \times 40 \times 60}{40 + 60} = \frac{4800}{100} = 48\text{ km/h}$.</div>
+        </div>
+      </div>
     </article>
   
     <article id="bai-6" class="bg-white dark:bg-dark-surface rounded-2xl shadow-sm border border-gray-200 dark:border-gray-800 p-6 md:p-8 border-t-4 border-amber-500 transition-all hover:shadow-md mb-8">
@@ -1357,7 +1490,7 @@
       <div class="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
         
           <ul class="list-disc pl-6 space-y-1.5 text-xs mb-3">
-            <li><strong>Dụng cụ chính:</strong> Máng nghiêng dẫn hướng, xe thí nghiệm có gắn tấm chắn sáng (rộng d), hai cổng quang điện A và B, đồng hồ đo thời gian hiện số có độ chính xác đến $0,001	ext{ s}$ (miligiây).</li>
+            <li><strong>Dụng cụ chính:</strong> Máng nghiêng dẫn hướng, xe thí nghiệm có gắn tấm chắn sáng (rộng d), hai cổng quang điện A và B, đồng hồ đo thời gian hiện số có độ chính xác đến $0,001\text{ s}$ (miligiây).</li>
             <li><strong>Cổng quang điện:</strong> Gồm một nguồn phát tia hồng ngoại và một cảm biến quang thu nhận. Khi tấm chắn sáng đi qua cổng quang, tia hồng ngoại bị ngắt làm kích hoạt bộ đếm thời gian của đồng hồ.</li>
           </ul>
         
@@ -1527,7 +1660,7 @@
         
           <p class="text-xs mb-2">Độ dốc (slope) của đường thẳng trên đồ thị $d - t$ chính là <strong>vận tốc của chuyển động</strong>:</p>
           <div class="font-mono text-center font-bold text-indigo-600 bg-blue-50 dark:bg-blue-950/30 p-2.5 rounded text-sm my-1">
-            v = 	ext{Độ dốc} = rac{Delta d}{Delta t} = rac{d_2 - d_1}{t_2 - t_1}
+            v = \text{Độ dốc} = \frac{Delta d}{Delta t} = \frac{d_2 - d_1}{t_2 - t_1}
           </div>
           <div class="space-y-1.5 text-xs mt-2">
             <div class="p-2 bg-gray-50 dark:bg-gray-800 rounded border">
@@ -1671,7 +1804,7 @@
             <li><strong>Chuyển động biến đổi:</strong> Là chuyển động có vận tốc thay đổi (về độ lớn hoặc về hướng) theo thời gian.</li>
             <li><strong>Định nghĩa Gia tốc:</strong> Gia tốc là đại lượng vectơ đặc trưng cho <strong>sự biến thiên nhanh hay chậm của vận tốc</strong> theo thời gian:
               <div class="font-mono text-center font-bold text-blue-600 bg-gray-100 dark:bg-gray-800 p-2 rounded my-1 text-sm">
-                ec{a} = rac{Delta ec{v}}{Delta t} = rac{ec{v} - ec{v}_0}{t - t_0}
+                \vec{a} = \frac{Delta \vec{v}}{Delta t} = \frac{\vec{v} - \vec{v}_0}{t - t_0}
               </div>
             </li>
             <li><strong>Đơn vị của gia tốc:</strong> Mét trên giây bình phương (<code class="font-mono font-bold text-indigo-600">m/s²</code>).</li>
@@ -1691,14 +1824,14 @@
           <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
             <div class="p-3 bg-emerald-50 dark:bg-emerald-950/30 rounded border border-emerald-200 dark:border-emerald-800">
               <h5 class="font-bold text-emerald-700 dark:text-emerald-300 mb-1">Chuyển động Nhanh dần đều</h5>
-              <p>Vận tốc tăng đều theo thời gian. Vectơ gia tốc $ec{a}$ <strong>cùng hướng</strong> với vectơ vận tốc $ec{v}$:</p>
-              <div class="font-mono font-bold text-emerald-600 text-center my-1">ec{a} ↑↑ ec{v} quad Longleftrightarrow quad a cdot v &gt; 0</div>
+              <p>Vận tốc tăng đều theo thời gian. Vectơ gia tốc $\vec{a}$ <strong>cùng hướng</strong> với vectơ vận tốc $\vec{v}$:</p>
+              <div class="font-mono font-bold text-emerald-600 text-center my-1">\vec{a} ↑↑ \vec{v} quad Longleftrightarrow quad a cdot v &gt; 0</div>
               <p class="text-gray-500">Nếu chọn chiều dương là chiều chuyển động ($v > 0$) thì gia tốc $a > 0$.</p>
             </div>
             <div class="p-3 bg-rose-50 dark:bg-rose-950/30 rounded border border-rose-200 dark:border-rose-800">
               <h5 class="font-bold text-rose-700 dark:text-rose-300 mb-1">Chuyển động Chậm dần đều</h5>
-              <p>Vận tốc giảm đều theo thời gian. Vectơ gia tốc $ec{a}$ <strong>ngược hướng</strong> với vectơ vận tốc $ec{v}$:</p>
-              <div class="font-mono font-bold text-rose-600 text-center my-1">ec{a} ↑↓ ec{v} quad Longleftrightarrow quad a cdot v &lt; 0</div>
+              <p>Vận tốc giảm đều theo thời gian. Vectơ gia tốc $\vec{a}$ <strong>ngược hướng</strong> với vectơ vận tốc $\vec{v}$:</p>
+              <div class="font-mono font-bold text-rose-600 text-center my-1">\vec{a} ↑↓ \vec{v} quad Longleftrightarrow quad a cdot v &lt; 0</div>
               <p class="text-gray-500">Nếu chọn chiều dương là chiều chuyển động ($v > 0$) thì gia tốc $a < 0$ (gia tốc hãm phanh).</p>
             </div>
           </div>
@@ -1769,6 +1902,42 @@
           <div class="feedback-text text-gray-700 dark:text-gray-300">Vận tốc ban đầu v₀ = 10 m/s, vận tốc lúc sau v = 20 m/s, thời gian t = 5 s. Gia tốc của xe là: a = (v - v₀) / t = (20 - 10) / 5 = 2 m/s².</div>
         </div>
       </div>
+    
+      <!-- Self-check Quiz 2 -->
+      <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800">
+        <div class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+          <i class="fa-solid fa-circle-question text-sky-500"></i> Câu hỏi tự kiểm tra (Câu 2)
+        </div>
+        <p class="text-sm font-medium text-gray-900 dark:text-white mb-3">
+          Một đoàn tàu đang chạy thẳng đều với vận tốc $v_0 = 15\text{ m/s}$ thì người lái tàu hãm phanh. Sau $10\text{ s}$ đoàn tàu dừng hẳn ($v = 0$). Gia tốc của đoàn tàu là:
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs mb-3">
+          
+      <button onclick="checkQuiz(this, true)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">A</span>
+        <span class="text-gray-700 dark:text-gray-300">$a = -1.5\text{ m/s}^2$</span>
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">B</span>
+        <span class="text-gray-700 dark:text-gray-300">$a = 1.5\text{ m/s}^2$</span>
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">C</span>
+        <span class="text-gray-700 dark:text-gray-300">$a = -0.67\text{ m/s}^2$</span>
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">D</span>
+        <span class="text-gray-700 dark:text-gray-300">$a = -15\text{ m/s}^2$</span>
+      </button>
+        </div>
+        <div class="quiz-feedback hidden p-3 rounded-lg text-xs leading-relaxed">
+          <div class="feedback-title font-bold mb-1"></div>
+          <div class="feedback-text text-gray-700 dark:text-gray-300">Áp dụng định nghĩa gia tốc: $a = \frac{v - v_0}{\Delta t} = \frac{0 - 15}{10} = -1.5\text{ m/s}^2$ (dấu âm thể hiện gia tốc ngược chiều vận tốc - chuyển động chậm dần đều).</div>
+        </div>
+      </div>
     </article>
   
     <article id="bai-9" class="bg-white dark:bg-dark-surface rounded-2xl shadow-sm border border-gray-200 dark:border-gray-800 p-6 md:p-8 border-t-4 border-cyan-500 transition-all hover:shadow-md mb-8">
@@ -1836,7 +2005,7 @@
             </div>
             <div class="p-3 bg-indigo-50 dark:bg-indigo-950/30 rounded border border-indigo-200 dark:border-indigo-800">
               <h5 class="font-bold text-indigo-700 dark:text-indigo-300">2. Công thức độ dịch chuyển theo thời gian</h5>
-              <div class="font-mono text-center font-bold text-indigo-600 text-sm my-1">d = v_0 cdot t + rac{1}{2} a cdot t^2</div>
+              <div class="font-mono text-center font-bold text-indigo-600 text-sm my-1">d = v_0 cdot t + \frac{1}{2} a cdot t^2</div>
               <p class="text-gray-500 italic">Khi vật chuyển động thẳng không đổi chiều thì quãng đường s = d = v₀t + 1/2 at².</p>
             </div>
             <div class="p-3 bg-purple-50 dark:bg-purple-950/30 rounded border border-purple-200 dark:border-purple-800">
@@ -1926,6 +2095,42 @@
           <div class="feedback-text text-gray-700 dark:text-gray-300">Đổi v₀ = 72 km/h = 20 m/s; khi dừng hẳn v = 0; quãng đường d = 100 m. Áp dụng hệ thức độc lập: v² - v₀² = 2ad => 0² - 20² = 2 · a · 100 => -400 = 200a => a = -2 m/s² (dấu trừ chứng tỏ chuyển động chậm dần đều ngược chiều dương).</div>
         </div>
       </div>
+    
+      <!-- Self-check Quiz 2 -->
+      <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800">
+        <div class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+          <i class="fa-solid fa-circle-question text-sky-500"></i> Câu hỏi tự kiểm tra (Câu 2)
+        </div>
+        <p class="text-sm font-medium text-gray-900 dark:text-white mb-3">
+          Một vật chuyển động thẳng nhanh dần đều không vận tốc đầu ($v_0 = 0$) với gia tốc $a = 2\text{ m/s}^2$. Quãng đường vật đi được trong $5\text{ s}$ đầu tiên là:
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs mb-3">
+          
+      <button onclick="checkQuiz(this, true)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">A</span>
+        <span class="text-gray-700 dark:text-gray-300">$25\text{ m}$</span>
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">B</span>
+        <span class="text-gray-700 dark:text-gray-300">$10\text{ m}$</span>
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">C</span>
+        <span class="text-gray-700 dark:text-gray-300">$50\text{ m}$</span>
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">D</span>
+        <span class="text-gray-700 dark:text-gray-300">$20\text{ m}$</span>
+      </button>
+        </div>
+        <div class="quiz-feedback hidden p-3 rounded-lg text-xs leading-relaxed">
+          <div class="feedback-title font-bold mb-1"></div>
+          <div class="feedback-text text-gray-700 dark:text-gray-300">Áp dụng công thức đường đi của chuyển động biến đổi đều: $s = v_0 t + \frac{1}{2}at^2 = 0 + \frac{1}{2} \times 2 \times 5^2 = 25\text{ m}$.</div>
+        </div>
+      </div>
     </article>
   
     <article id="bai-10" class="bg-white dark:bg-dark-surface rounded-2xl shadow-sm border border-gray-200 dark:border-gray-800 p-6 md:p-8 border-t-4 border-orange-500 transition-all hover:shadow-md mb-8">
@@ -2008,18 +2213,18 @@
                 <li>Phương: <strong>Thẳng đứng</strong>.</li>
                 <li>Chiều: <strong>Từ trên xuống dưới</strong>.</li>
                 <li>Tính chất: Là chuyển động <strong>thẳng nhanh dần đều</strong> không vận tốc ban đầu ($v_0 = 0$).</li>
-                <li>Gia tốc rơi tự do ($g$): Tại cùng một vị trí trên Trái Đất và gần mặt đất, mọi vật rơi tự do với cùng gia tốc $g approx 9,8	ext{ m/s}^2$ (hoặc lấy xấp xỉ $10	ext{ m/s}^2$).</li>
+                <li>Gia tốc rơi tự do ($g$): Tại cùng một vị trí trên Trái Đất và gần mặt đất, mọi vật rơi tự do với cùng gia tốc $g approx 9,8\text{ m/s}^2$ (hoặc lấy xấp xỉ $10\text{ m/s}^2$).</li>
               </ul>
             </div>
             <div class="p-3 bg-indigo-50 dark:bg-indigo-950/30 rounded border border-indigo-200 dark:border-indigo-800">
               <h5 class="font-bold text-indigo-700 dark:text-indigo-300">Các công thức then chốt (với v₀ = 0)</h5>
               <div class="grid grid-cols-3 gap-2 font-mono text-center font-bold text-indigo-600 mt-1">
                 <div class="p-2 bg-white dark:bg-gray-800 rounded border">v = g cdot t</div>
-                <div class="p-2 bg-white dark:bg-gray-800 rounded border">h = rac{1}{2} g cdot t^2</div>
+                <div class="p-2 bg-white dark:bg-gray-800 rounded border">h = \frac{1}{2} g cdot t^2</div>
                 <div class="p-2 bg-white dark:bg-gray-800 rounded border">v^2 = 2 cdot g cdot h</div>
               </div>
               <p class="mt-2 text-gray-500">Từ đó suy ra:<br>
-              - Thời gian rơi từ độ cao h: <code class="font-mono font-bold text-indigo-600">t = sqrt{rac{2h}{g}}</code>.<br>
+              - Thời gian rơi từ độ cao h: <code class="font-mono font-bold text-indigo-600">t = sqrt{\frac{2h}{g}}</code>.<br>
               - Vận tốc khi chạm đất: <code class="font-mono font-bold text-indigo-600">v_{đất} = sqrt{2gh}</code>.</p>
             </div>
           </div>
@@ -2090,6 +2295,42 @@
           <div class="feedback-text text-gray-700 dark:text-gray-300">Thời gian rơi: t = √(2h / g) = √(2 · 20 / 10) = √4 = 2 s. Vận tốc khi chạm đất: v = gt = 10 · 2 = 20 m/s (hoặc v = √(2gh) = √(2 · 10 · 20) = 20 m/s).</div>
         </div>
       </div>
+    
+      <!-- Self-check Quiz 2 -->
+      <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800">
+        <div class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+          <i class="fa-solid fa-circle-question text-sky-500"></i> Câu hỏi tự kiểm tra (Câu 2)
+        </div>
+        <p class="text-sm font-medium text-gray-900 dark:text-white mb-3">
+          Thả một hòn sỏi rơi tự do từ độ cao $h = 20\text{ m}$ xuống đất tại nơi có $g = 10\text{ m/s}^2$. Vận tốc của hòn sỏi ngay trước khi chạm đất là:
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs mb-3">
+          
+      <button onclick="checkQuiz(this, true)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">A</span>
+        <span class="text-gray-700 dark:text-gray-300">$20\text{ m/s}$</span>
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">B</span>
+        <span class="text-gray-700 dark:text-gray-300">$10\text{ m/s}$</span>
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">C</span>
+        <span class="text-gray-700 dark:text-gray-300">$40\text{ m/s}$</span>
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">D</span>
+        <span class="text-gray-700 dark:text-gray-300">$14.1\text{ m/s}$</span>
+      </button>
+        </div>
+        <div class="quiz-feedback hidden p-3 rounded-lg text-xs leading-relaxed">
+          <div class="feedback-title font-bold mb-1"></div>
+          <div class="feedback-text text-gray-700 dark:text-gray-300">Vận tốc chạm đất trong rơi tự do: $v = \sqrt{2gh} = \sqrt{2 \times 10 \times 20} = \sqrt{400} = 20\text{ m/s}$.</div>
+        </div>
+      </div>
     </article>
   
     <article id="bai-11" class="bg-white dark:bg-dark-surface rounded-2xl shadow-sm border border-gray-200 dark:border-gray-800 p-6 md:p-8 border-t-4 border-violet-500 transition-all hover:shadow-md mb-8">
@@ -2152,7 +2393,7 @@
         
           <ul class="list-disc pl-6 space-y-1.5 text-xs mb-3">
             <li><strong>Dụng cụ:</strong> Giá đỡ thẳng đứng có thước milimet, nam châm điện giữ bi thép (có công tắc ngắt điện tức thì), cổng quang điện đặt ở dưới, đồng hồ đo thời gian hiện số.</li>
-            <li><strong>Cơ sở lí thuyết:</strong> Viên bi rơi tự do từ độ cao $h$ mất thời gian $t$. Ta có: <code class="font-mono font-bold">h = rac{1}{2}gt^2 implies g = rac{2h}{t^2}</code>.</li>
+            <li><strong>Cơ sở lí thuyết:</strong> Viên bi rơi tự do từ độ cao $h$ mất thời gian $t$. Ta có: <code class="font-mono font-bold">h = \frac{1}{2}gt^2 implies g = \frac{2h}{t^2}</code>.</li>
           </ul>
         
       </div>
@@ -2165,10 +2406,10 @@
       </h4>
       <div class="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
         
-          <p class="text-xs mb-2">Thực hiện đo thời gian rơi $t$ ứng với các khoảng cách $h$ khác nhau ($0,2	ext{ m}; 0,4	ext{ m}; 0,6	ext{ m}; 0,8	ext{ m}$), mỗi vị trí đo lặp lại 3 - 5 lần để lấy giá trị trung bình $ar{t}$:</p>
+          <p class="text-xs mb-2">Thực hiện đo thời gian rơi $t$ ứng với các khoảng cách $h$ khác nhau ($0,2\text{ m}; 0,4\text{ m}; 0,6\text{ m}; 0,8\text{ m}$), mỗi vị trí đo lặp lại 3 - 5 lần để lấy giá trị trung bình $\bar{t}$:</p>
           <div class="p-3 bg-gray-50 dark:bg-gray-800 rounded border text-xs">
-            <p><strong>Xử lí đồ thị:</strong> Vẽ đồ thị biểu diễn mối liên hệ giữa độ cao $h$ và $t^2$. Đồ thị là một đường thẳng đi qua gốc toạ độ có phương trình: <code class="font-mono font-bold text-indigo-600">h = (rac{g}{2}) cdot t^2</code>.</p>
-            <p class="mt-1">Từ độ dốc của đồ thị: <code class="font-mono font-bold text-emerald-600">	ext{Độ dốc} = rac{g}{2} implies g = 2 cdot (	ext{Độ dốc})</code>. So sánh giá trị thu được với $g_{chuẩn} = 9,8	ext{ m/s}^2$ để tính sai số phần trăm.</p>
+            <p><strong>Xử lí đồ thị:</strong> Vẽ đồ thị biểu diễn mối liên hệ giữa độ cao $h$ và $t^2$. Đồ thị là một đường thẳng đi qua gốc toạ độ có phương trình: <code class="font-mono font-bold text-indigo-600">h = (\frac{g}{2}) cdot t^2</code>.</p>
+            <p class="mt-1">Từ độ dốc của đồ thị: <code class="font-mono font-bold text-emerald-600">\text{Độ dốc} = \frac{g}{2} implies g = 2 cdot (\text{Độ dốc})</code>. So sánh giá trị thu được với $g_{chuẩn} = 9,8\text{ m/s}^2$ để tính sai số phần trăm.</p>
           </div>
         
       </div>
@@ -2297,7 +2538,7 @@
       </h4>
       <div class="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
         
-          <p class="text-xs mb-2">Vật được ném từ độ cao $h$ với vận tốc ban đầu $ec{v}_0$ theo phương nằm ngang. Chọn hệ toạ độ $Oxy$ với gốc $O$ tại điểm ném, trục $Ox$ hướng ngang theo $ec{v}_0$, trục $Oy$ thẳng đứng hướng xuống:</p>
+          <p class="text-xs mb-2">Vật được ném từ độ cao $h$ với vận tốc ban đầu $\vec{v}_0$ theo phương nằm ngang. Chọn hệ toạ độ $Oxy$ với gốc $O$ tại điểm ném, trục $Ox$ hướng ngang theo $\vec{v}_0$, trục $Oy$ thẳng đứng hướng xuống:</p>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs mb-3">
             <div class="p-3 bg-blue-50 dark:bg-blue-950/30 rounded border border-blue-200 dark:border-blue-800">
               <h5 class="font-bold text-blue-700 dark:text-blue-300 mb-1">Theo phương ngang (Ox)</h5>
@@ -2307,13 +2548,13 @@
             <div class="p-3 bg-emerald-50 dark:bg-emerald-950/30 rounded border border-emerald-200 dark:border-emerald-800">
               <h5 class="font-bold text-emerald-700 dark:text-emerald-300 mb-1">Theo phương thẳng đứng (Oy)</h5>
               <p>Chỉ chịu tác dụng của trọng lực ($a_y = g$):</p>
-              <div class="font-mono font-bold mt-1">v_y = g cdot t  ;  y = rac{1}{2} g cdot t^2  (Rơi tự do)</div>
+              <div class="font-mono font-bold mt-1">v_y = g cdot t  ;  y = \frac{1}{2} g cdot t^2  (Rơi tự do)</div>
             </div>
           </div>
           <div class="p-3 bg-purple-50 dark:bg-purple-950/30 rounded border border-purple-200 dark:border-purple-800 text-xs space-y-1">
-            <p><strong>Phương trình quỹ đạo:</strong> Rút $t = x / v_0$ thay vào $y$ ta được: <code class="font-mono font-bold text-indigo-600">y = rac{g}{2v_0^2} cdot x^2</code> $ightarrow$ Quỹ đạo là <strong>một nhánh của đường parabol</strong>.</p>
-            <p><strong>Thời gian rơi:</strong> <code class="font-mono font-bold text-indigo-600">t = sqrt{rac{2h}{g}}</code> (chỉ phụ thuộc vào độ cao $h$, hoàn toàn <em>không phụ thuộc</em> vào vận tốc ném $v_0$).</p>
-            <p><strong>Tầm ném xa (L):</strong> <code class="font-mono font-bold text-indigo-600">L = x_{max} = v_0 cdot t = v_0 cdot sqrt{rac{2h}{g}}</code>.</p>
+            <p><strong>Phương trình quỹ đạo:</strong> Rút $t = x / v_0$ thay vào $y$ ta được: <code class="font-mono font-bold text-indigo-600">y = \frac{g}{2v_0^2} cdot x^2</code> $\rightarrow$ Quỹ đạo là <strong>một nhánh của đường parabol</strong>.</p>
+            <p><strong>Thời gian rơi:</strong> <code class="font-mono font-bold text-indigo-600">t = sqrt{\frac{2h}{g}}</code> (chỉ phụ thuộc vào độ cao $h$, hoàn toàn <em>không phụ thuộc</em> vào vận tốc ném $v_0$).</p>
+            <p><strong>Tầm ném xa (L):</strong> <code class="font-mono font-bold text-indigo-600">L = x_{max} = v_0 cdot t = v_0 cdot sqrt{\frac{2h}{g}}</code>.</p>
             <p><strong>Vận tốc chạm đất:</strong> <code class="font-mono font-bold text-indigo-600">v = sqrt{v_x^2 + v_y^2} = sqrt{v_0^2 + 2gh}</code>.</p>
           </div>
         
@@ -2329,8 +2570,8 @@
         
           <ul class="list-disc pl-6 space-y-1 text-xs mb-2">
             <li>Ném xiên góc $alpha$ so với phương ngang: $v_{0x} = v_0 cosalpha$ ; $v_{0y} = v_0 sinalpha$.</li>
-            <li><strong>Tầm bay cao cực đại (H):</strong> <code class="font-mono font-bold text-indigo-600">H = rac{v_0^2 sin^2alpha}{2g}</code>.</li>
-            <li><strong>Tầm bay xa cực đại (L):</strong> <code class="font-mono font-bold text-indigo-600">L = rac{v_0^2 sin(2alpha)}{g}</code> $ightarrow$ Tầm xa $L$ đạt giá trị lớn nhất khi $sin(2alpha) = 1 implies mathbf{alpha = 45^circ}$.</li>
+            <li><strong>Tầm bay cao cực đại (H):</strong> <code class="font-mono font-bold text-indigo-600">H = \frac{v_0^2 sin^2alpha}{2g}</code>.</li>
+            <li><strong>Tầm bay xa cực đại (L):</strong> <code class="font-mono font-bold text-indigo-600">L = \frac{v_0^2 sin(2alpha)}{g}</code> $\rightarrow$ Tầm xa $L$ đạt giá trị lớn nhất khi $sin(2alpha) = 1 implies mathbf{alpha = 45^circ}$.</li>
           </ul>
         
       </div>
@@ -2397,6 +2638,42 @@
         <div class="quiz-feedback hidden p-3 rounded-lg text-xs leading-relaxed">
           <div class="feedback-title font-bold mb-1"></div>
           <div class="feedback-text text-gray-700 dark:text-gray-300">Thời gian rơi của vật ném ngang chỉ phụ thuộc vào độ cao ban đầu h và gia tốc g theo công thức t = √(2h/g), hoàn toàn không phụ thuộc vào khối lượng của vật cũng như vận tốc ném ban đầu. Do ném cùng độ cao h nên cả hai vật chạm đất cùng một lúc.</div>
+        </div>
+      </div>
+    
+      <!-- Self-check Quiz 2 -->
+      <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800">
+        <div class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+          <i class="fa-solid fa-circle-question text-sky-500"></i> Câu hỏi tự kiểm tra (Câu 2)
+        </div>
+        <p class="text-sm font-medium text-gray-900 dark:text-white mb-3">
+          Một vật được ném ngang từ độ cao $h = 45\text{ m}$ với vận tốc ban đầu $v_0 = 20\text{ m/s}$, lấy $g = 10\text{ m/s}^2$. Tầm ném xa $L$ của vật là:
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs mb-3">
+          
+      <button onclick="checkQuiz(this, true)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">A</span>
+        <span class="text-gray-700 dark:text-gray-300">$60\text{ m}$</span>
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">B</span>
+        <span class="text-gray-700 dark:text-gray-300">$45\text{ m}$</span>
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">C</span>
+        <span class="text-gray-700 dark:text-gray-300">$90\text{ m}$</span>
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">D</span>
+        <span class="text-gray-700 dark:text-gray-300">$30\text{ m}$</span>
+      </button>
+        </div>
+        <div class="quiz-feedback hidden p-3 rounded-lg text-xs leading-relaxed">
+          <div class="feedback-title font-bold mb-1"></div>
+          <div class="feedback-text text-gray-700 dark:text-gray-300">Thời gian rơi: $t = \sqrt{\frac{2h}{g}} = \sqrt{\frac{2 \times 45}{10}} = 3\text{ s}$. Tầm ném xa: $L = v_0 \cdot t = 20 \times 3 = 60\text{ m}$.</div>
         </div>
       </div>
     </article>
@@ -2482,10 +2759,10 @@
         
           <ul class="list-disc pl-6 space-y-1.5 text-xs mb-3">
             <li><strong>Lực:</strong> Là đại lượng vectơ đặc trưng cho tác dụng của vật này lên vật khác, kết quả là làm thay đổi vận tốc (gây gia tốc) hoặc làm biến dạng vật. Đơn vị là Newton (N).</li>
-            <li><strong>Tổng hợp lực:</strong> Là phép thay thế nhiều lực tác dụng đồng thời vào một vật bằng một lực duy nhất có tác dụng giống hệt các lực đó (gọi là <strong>hợp lực</strong> $ec{F}$):
-              <div class="font-mono text-center font-bold text-blue-600 my-1">ec{F} = ec{F}_1 + ec{F}_2</div>
+            <li><strong>Tổng hợp lực:</strong> Là phép thay thế nhiều lực tác dụng đồng thời vào một vật bằng một lực duy nhất có tác dụng giống hệt các lực đó (gọi là <strong>hợp lực</strong> $\vec{F}$):
+              <div class="font-mono text-center font-bold text-blue-600 my-1">\vec{F} = \vec{F}_1 + \vec{F}_2</div>
             </li>
-            <li><strong>Quy tắc hình bình hành:</strong> Hợp lực của hai lực đồng quy $ec{F}_1$ và $ec{F}_2$ được biểu diễn bằng đường chéo của hình bình hành mà hai cạnh là hai vectơ lực $ec{F}_1$ và $ec{F}_2$.</li>
+            <li><strong>Quy tắc hình bình hành:</strong> Hợp lực của hai lực đồng quy $\vec{F}_1$ và $\vec{F}_2$ được biểu diễn bằng đường chéo của hình bình hành mà hai cạnh là hai vectơ lực $\vec{F}_1$ và $\vec{F}_2$.</li>
           </ul>
         
       </div>
@@ -2498,7 +2775,7 @@
       </h4>
       <div class="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
         
-          <p class="text-xs mb-2">Gọi $alpha$ là góc hợp bởi hai vectơ lực $ec{F}_1$ và $ec{F}_2$:</p>
+          <p class="text-xs mb-2">Gọi $alpha$ là góc hợp bởi hai vectơ lực $\vec{F}_1$ và $\vec{F}_2$:</p>
           <div class="font-mono text-center font-bold text-indigo-600 bg-gray-100 dark:bg-gray-800 p-2.5 rounded text-xs my-1">
             F^2 = F_1^2 + F_2^2 + 2 cdot F_1 cdot F_2 cdot cosalpha
           </div>
@@ -2534,7 +2811,7 @@
           <ul class="list-disc pl-6 space-y-1 text-xs mb-2">
             <li>Hai lực cân bằng là hai lực cùng tác dụng vào một vật, cùng giá, cùng độ lớn nhưng ngược chiều.</li>
             <li><strong>Điều kiện cân bằng của chất điểm:</strong> Hợp lực của tất cả các lực tác dụng lên chất điểm phải bằng vectơ-không:
-              <div class="font-mono font-bold text-center text-emerald-600 my-1">ec{F}_{hl} = sum ec{F}_i = ec{0}</div>
+              <div class="font-mono font-bold text-center text-emerald-600 my-1">\vec{F}_{hl} = sum \vec{F}_i = \vec{0}</div>
             </li>
           </ul>
         
@@ -2602,6 +2879,42 @@
         <div class="quiz-feedback hidden p-3 rounded-lg text-xs leading-relaxed">
           <div class="feedback-title font-bold mb-1"></div>
           <div class="feedback-text text-gray-700 dark:text-gray-300">Vì hai lực vuông góc nhau (α = 90°) nên độ lớn hợp lực tính theo định lí Pythagore: F = √(F₁² + F₂²) = √(6² + 8²) = √(36 + 64) = √100 = 10 N.</div>
+        </div>
+      </div>
+    
+      <!-- Self-check Quiz 2 -->
+      <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800">
+        <div class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+          <i class="fa-solid fa-circle-question text-sky-500"></i> Câu hỏi tự kiểm tra (Câu 2)
+        </div>
+        <p class="text-sm font-medium text-gray-900 dark:text-white mb-3">
+          Hai lực đồng quy $\vec{F}_1$ và $\vec{F}_2$ có phương vuông góc với nhau, độ lớn tương ứng là $F_1 = 6\text{ N}$ và $F_2 = 8\text{ N}$. Độ lớn hợp lực $F$ của chúng bằng:
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs mb-3">
+          
+      <button onclick="checkQuiz(this, true)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">A</span>
+        <span class="text-gray-700 dark:text-gray-300">$10\text{ N}$</span>
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">B</span>
+        <span class="text-gray-700 dark:text-gray-300">$14\text{ N}$</span>
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">C</span>
+        <span class="text-gray-700 dark:text-gray-300">$2\text{ N}$</span>
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">D</span>
+        <span class="text-gray-700 dark:text-gray-300">$48\text{ N}$</span>
+      </button>
+        </div>
+        <div class="quiz-feedback hidden p-3 rounded-lg text-xs leading-relaxed">
+          <div class="feedback-title font-bold mb-1"></div>
+          <div class="feedback-text text-gray-700 dark:text-gray-300">Khi hai lực vuông góc nhau: $F = \sqrt{F_1^2 + F_2^2} = \sqrt{6^2 + 8^2} = \sqrt{36 + 64} = 10\text{ N}$.</div>
         </div>
       </div>
     </article>
@@ -2695,7 +3008,7 @@
       <div class="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
         
           <ul class="list-disc pl-6 space-y-1 text-xs mb-2">
-            <li>Khi xe ô tô phanh đột ngột: phần chân tiếp xúc với sàn xe dừng lại theo xe, nhưng phần thân trên do quán tính vẫn tiếp tục chuyển động về phía trước $ightarrow$ người bị chúi nhào về phía trước. Đây là lí do bắt buộc phải <strong>thắt dây an toàn</strong> khi đi ô tô.</li>
+            <li>Khi xe ô tô phanh đột ngột: phần chân tiếp xúc với sàn xe dừng lại theo xe, nhưng phần thân trên do quán tính vẫn tiếp tục chuyển động về phía trước $\rightarrow$ người bị chúi nhào về phía trước. Đây là lí do bắt buộc phải <strong>thắt dây an toàn</strong> khi đi ô tô.</li>
             <li>Vung tay để giũ sạch nước; gõ cán búa xuống nền đất để đóng chặt đầu búa vào cán.</li>
           </ul>
         
@@ -2829,9 +3142,9 @@
             <strong>Định luật 2 Newton:</strong> Gia tốc của một vật cùng hướng với lực tác dụng lên vật. Độ lớn của gia tốc tỉ lệ thuận với độ lớn của lực tác dụng và tỉ lệ nghịch với khối lượng của vật.
           </div>
           <div class="font-mono text-center font-bold text-blue-600 bg-gray-100 dark:bg-gray-800 p-2.5 rounded text-sm my-1">
-            ec{a} = rac{ec{F}}{m} quad Longleftrightarrow quad ec{F} = m cdot ec{a}
+            \vec{a} = \frac{\vec{F}}{m} quad Longleftrightarrow quad \vec{F} = m cdot \vec{a}
           </div>
-          <p class="text-xs text-gray-500 mt-1">Trường hợp vật chịu tác dụng của nhiều lực đồng thời thì $ec{F}$ trong công thức là <strong>hợp lực</strong> của tất cả các lực tác dụng: <code class="font-mono font-bold">ec{F}_{hl} = sum ec{F}_i = m cdot ec{a}</code>.</p>
+          <p class="text-xs text-gray-500 mt-1">Trường hợp vật chịu tác dụng của nhiều lực đồng thời thì $\vec{F}$ trong công thức là <strong>hợp lực</strong> của tất cả các lực tác dụng: <code class="font-mono font-bold">\vec{F}_{hl} = sum \vec{F}_i = m cdot \vec{a}</code>.</p>
         
       </div>
     </div>
@@ -2844,8 +3157,8 @@
       <div class="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
         
           <div class="p-3 bg-gray-50 dark:bg-gray-800 rounded border text-xs">
-            <p><strong>1 Newton (N):</strong> Là độ lớn của lực truyền cho một vật có khối lượng $1	ext{ kg}$ một gia tốc bằng $1	ext{ m/s}^2$:</p>
-            <div class="font-mono text-center font-bold text-indigo-600 text-sm my-1">1	ext{ N} = 1	ext{ kg} cdot 	ext{m/s}^2</div>
+            <p><strong>1 Newton (N):</strong> Là độ lớn của lực truyền cho một vật có khối lượng $1\text{ kg}$ một gia tốc bằng $1\text{ m/s}^2$:</p>
+            <div class="font-mono text-center font-bold text-indigo-600 text-sm my-1">1\text{ N} = 1\text{ kg} cdot \text{m/s}^2</div>
           </div>
         
       </div>
@@ -2914,6 +3227,42 @@
           <div class="feedback-text text-gray-700 dark:text-gray-300">Áp dụng định luật 2 Newton: F = m · a = 2 · 3 = 6 N.</div>
         </div>
       </div>
+    
+      <!-- Self-check Quiz 2 -->
+      <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800">
+        <div class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+          <i class="fa-solid fa-circle-question text-sky-500"></i> Câu hỏi tự kiểm tra (Câu 2)
+        </div>
+        <p class="text-sm font-medium text-gray-900 dark:text-white mb-3">
+          Một lực $F = 10\text{ N}$ tác dụng vào vật khối lượng $m = 2\text{ kg}$ đang đứng yên trên mặt sàn trơn nhẵn. Gia tốc mà vật thu được có độ lớn là:
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs mb-3">
+          
+      <button onclick="checkQuiz(this, true)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">A</span>
+        <span class="text-gray-700 dark:text-gray-300">$5\text{ m/s}^2$</span>
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">B</span>
+        <span class="text-gray-700 dark:text-gray-300">$20\text{ m/s}^2$</span>
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">C</span>
+        <span class="text-gray-700 dark:text-gray-300">$0.2\text{ m/s}^2$</span>
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">D</span>
+        <span class="text-gray-700 dark:text-gray-300">$8\text{ m/s}^2$</span>
+      </button>
+        </div>
+        <div class="quiz-feedback hidden p-3 rounded-lg text-xs leading-relaxed">
+          <div class="feedback-title font-bold mb-1"></div>
+          <div class="feedback-text text-gray-700 dark:text-gray-300">Theo định luật II Newton: $a = \frac{F}{m} = \frac{10}{2} = 5\text{ m/s}^2$.</div>
+        </div>
+      </div>
     </article>
   
     <article id="bai-16" class="bg-white dark:bg-dark-surface rounded-2xl shadow-sm border border-gray-200 dark:border-gray-800 p-6 md:p-8 border-t-4 border-red-500 transition-all hover:shadow-md mb-8">
@@ -2978,7 +3327,7 @@
             <strong>Định luật 3 Newton:</strong> Trong mọi trường hợp, khi vật A tác dụng lên vật B một lực, thì vật B cũng tác dụng lại vật A một lực. Hai lực này là hai lực trực đối: cùng giá, cùng độ lớn nhưng ngược chiều.
           </div>
           <div class="font-mono text-center font-bold text-purple-600 bg-gray-100 dark:bg-gray-800 p-2.5 rounded text-sm my-1">
-            ec{F}_{BA} = - ec{F}_{AB}
+            \vec{F}_{BA} = - \vec{F}_{AB}
           </div>
           <p class="text-xs text-gray-500">Một trong hai lực gọi là <strong>lực tác dụng</strong>, lực còn lại gọi là <strong>phản lực</strong>.</p>
         
@@ -2995,7 +3344,7 @@
           <ul class="list-disc pl-6 space-y-1.5 text-xs mb-3">
             <li>1. Luôn <strong>xuất hiện và mất đi đồng thời</strong> (không thể có lực tác dụng đơn độc mà không có phản lực).</li>
             <li>2. Là hai lực trực đối: có <strong>cùng giá, cùng độ lớn, ngược chiều</strong>.</li>
-            <li>3. Đặt vào <strong>hai vật khác nhau</strong> (vật này tác dụng lên vật kia) $ightarrow$ do đó chúng <strong>không cân bằng nhau</strong> (không triệt tiêu nhau).</li>
+            <li>3. Đặt vào <strong>hai vật khác nhau</strong> (vật này tác dụng lên vật kia) $\rightarrow$ do đó chúng <strong>không cân bằng nhau</strong> (không triệt tiêu nhau).</li>
             <li>4. Có <strong>cùng bản chất vật lí</strong> (cùng là lực đàn hồi, cùng là lực hấp dẫn hoặc cùng là lực ma sát).</li>
           </ul>
         
@@ -3010,9 +3359,9 @@
       <div class="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
         
           <ul class="list-disc pl-6 space-y-1 text-xs mb-2">
-            <li>Người bơi đạp chân đẩy nước lùi lại phía sau $ightarrow$ phản lực của nước đẩy người tiến lên phía trước.</li>
-            <li>Khi súng bắn: viên đạn bay về phía trước với vận tốc lớn $ightarrow$ súng nhận một phản lực giật lùi về phía sau.</li>
-            <li>Động cơ tên lửa: phụt một luồng khí đốt cháy với tốc độ cực lớn lùi lại phía sau $ightarrow$ phản lực đẩy tên lửa bay vút lên bầu khí quyển.</li>
+            <li>Người bơi đạp chân đẩy nước lùi lại phía sau $\rightarrow$ phản lực của nước đẩy người tiến lên phía trước.</li>
+            <li>Khi súng bắn: viên đạn bay về phía trước với vận tốc lớn $\rightarrow$ súng nhận một phản lực giật lùi về phía sau.</li>
+            <li>Động cơ tên lửa: phụt một luồng khí đốt cháy với tốc độ cực lớn lùi lại phía sau $\rightarrow$ phản lực đẩy tên lửa bay vút lên bầu khí quyển.</li>
           </ul>
         
       </div>
@@ -3081,6 +3430,42 @@
           <div class="feedback-text text-gray-700 dark:text-gray-300">Theo định luật 3 Newton, lực do ngựa tác dụng lên xe và lực do xe tác dụng ngược lại ngựa là một cặp lực và phản lực tương hỗ, do đó chúng luôn luôn có cùng độ lớn ở mọi trạng thái chuyển động.</div>
         </div>
       </div>
+    
+      <!-- Self-check Quiz 2 -->
+      <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800">
+        <div class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+          <i class="fa-solid fa-circle-question text-sky-500"></i> Câu hỏi tự kiểm tra (Câu 2)
+        </div>
+        <p class="text-sm font-medium text-gray-900 dark:text-white mb-3">
+          Khi một con ngựa kéo một cỗ xe chuyển động thẳng trên đường, theo định luật III Newton, nhận định nào sau đây là ĐÚNG?
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs mb-3">
+          
+      <button onclick="checkQuiz(this, true)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">A</span>
+        <span class="text-gray-700 dark:text-gray-300">Lực ngựa kéo xe và lực xe kéo ngựa là hai lực trực đối, tác dụng vào hai vật thể khác nhau</span>
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">B</span>
+        <span class="text-gray-700 dark:text-gray-300">Lực ngựa kéo xe có độ lớn lớn hơn lực xe kéo ngựa nên xe mới chuyển động được</span>
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">C</span>
+        <span class="text-gray-700 dark:text-gray-300">Hai lực này triệt tiêu nhau vì cùng tác dụng lên một vật</span>
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">D</span>
+        <span class="text-gray-700 dark:text-gray-300">Chỉ có ngựa tác dụng lực lên xe, xe không tác dụng lực lên ngựa</span>
+      </button>
+        </div>
+        <div class="quiz-feedback hidden p-3 rounded-lg text-xs leading-relaxed">
+          <div class="feedback-title font-bold mb-1"></div>
+          <div class="feedback-text text-gray-700 dark:text-gray-300">Theo định luật III Newton, hai lực tương tác là hai lực trực đối (cùng phương, ngược chiều, cùng độ lớn) và luôn đặt vào hai vật khác nhau (lực ngựa tác dụng lên xe đặt vào xe, lực phản lực của xe tác dụng vào ngựa đặt vào ngựa).</div>
+        </div>
+      </div>
     </article>
   
     <article id="bai-17" class="bg-white dark:bg-dark-surface rounded-2xl shadow-sm border border-gray-200 dark:border-gray-800 p-6 md:p-8 border-t-4 border-blue-500 transition-all hover:shadow-md mb-8">
@@ -3142,7 +3527,7 @@
       <div class="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
         
           <ul class="list-disc pl-6 space-y-1.5 text-xs mb-3">
-            <li><strong>Trọng lực ($ec{P}$):</strong> Là lực hấp dẫn do Trái Đất tác dụng lên vật, gây ra cho vật gia tốc rơi tự do.
+            <li><strong>Trọng lực ($\vec{P}$):</strong> Là lực hấp dẫn do Trái Đất tác dụng lên vật, gây ra cho vật gia tốc rơi tự do.
               <br>- Điểm đặt: Tại <strong>trọng tâm</strong> của vật (đối với vật đồng tính, đồng chất hình học đối xứng thì trọng tâm trùng tâm đối xứng).
               <br>- Phương: <strong>Thẳng đứng</strong>.
               <br>- Chiều: <strong>Hướng về tâm Trái Đất</strong>.
@@ -3391,6 +3776,42 @@
           <div class="feedback-text text-gray-700 dark:text-gray-300">Vật trượt trên mặt phẳng nằm ngang nên áp lực N = P = mg = 4 · 10 = 40 N. Vì vật trượt đều (a = 0) nên lực kéo cân bằng với lực ma sát trượt: F_mst = F = 8 N. Suy ra hệ số ma sát trượt: μ_t = F_mst / N = 8 / 40 = 0,2.</div>
         </div>
       </div>
+    
+      <!-- Self-check Quiz 2 -->
+      <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800">
+        <div class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+          <i class="fa-solid fa-circle-question text-sky-500"></i> Câu hỏi tự kiểm tra (Câu 2)
+        </div>
+        <p class="text-sm font-medium text-gray-900 dark:text-white mb-3">
+          Một vật có khối lượng $m = 5\text{ kg}$ trượt đều trên sàn ngang nhờ lực kéo ngang $F = 10\text{ N}$, lấy $g = 10\text{ m/s}^2$. Hệ số ma sát trượt $\mu_t$ giữa vật và sàn là:
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs mb-3">
+          
+      <button onclick="checkQuiz(this, true)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">A</span>
+        <span class="text-gray-700 dark:text-gray-300">$\mu_t = 0.2$</span>
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">B</span>
+        <span class="text-gray-700 dark:text-gray-300">$\mu_t = 0.5$</span>
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">C</span>
+        <span class="text-gray-700 dark:text-gray-300">$\mu_t = 0.1$</span>
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">D</span>
+        <span class="text-gray-700 dark:text-gray-300">$\mu_t = 0.02$</span>
+      </button>
+        </div>
+        <div class="quiz-feedback hidden p-3 rounded-lg text-xs leading-relaxed">
+          <div class="feedback-title font-bold mb-1"></div>
+          <div class="feedback-text text-gray-700 dark:text-gray-300">Vì vật trượt đều nên lực kéo cân bằng với lực ma sát: $F_{mst} = F = 10\text{ N}$. Áp lực $N = P = mg = 5 \times 10 = 50\text{ N}$. Suy ra $\mu_t = \frac{F_{mst}}{N} = \frac{10}{50} = 0.2$.</div>
+        </div>
+      </div>
     </article>
   
     <article id="bai-19" class="bg-white dark:bg-dark-surface rounded-2xl shadow-sm border border-gray-200 dark:border-gray-800 p-6 md:p-8 border-t-4 border-indigo-500 transition-all hover:shadow-md mb-8">
@@ -3470,13 +3891,13 @@
           <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs mb-2">
             <div class="p-3 bg-blue-50 dark:bg-blue-950/30 rounded border border-blue-200 dark:border-blue-800">
               <h5 class="font-bold text-blue-700 dark:text-blue-300 mb-1">Lực nâng khí động học (Cánh máy bay)</h5>
-              <p>Mặt trên cánh máy bay cong hơn mặt dưới $ightarrow$ dòng khí mặt trên chảy nhanh hơn dòng khí mặt dưới $ightarrow$ áp suất khí mặt trên nhỏ hơn áp suất mặt dưới $ightarrow$ xuất hiện lực nâng hướng thẳng đứng lên trên nâng máy bay lên bầu trời.</p>
+              <p>Mặt trên cánh máy bay cong hơn mặt dưới $\rightarrow$ dòng khí mặt trên chảy nhanh hơn dòng khí mặt dưới $\rightarrow$ áp suất khí mặt trên nhỏ hơn áp suất mặt dưới $\rightarrow$ xuất hiện lực nâng hướng thẳng đứng lên trên nâng máy bay lên bầu trời.</p>
             </div>
             <div class="p-3 bg-teal-50 dark:bg-teal-950/30 rounded border border-teal-200 dark:border-teal-800">
               <h5 class="font-bold text-teal-700 dark:text-teal-300 mb-1">Lực đẩy Archimedes (F_A)</h5>
               <p>Tác dụng lên mọi vật nhúng chìm trong chất lưu, hướng thẳng đứng từ dưới lên:</p>
-              <div class="font-mono font-bold text-teal-600 text-center my-1">F_A = ho cdot g cdot V</div>
-              <p class="text-gray-500">Với $ho$ là khối lượng riêng của chất lưu, $V$ là thể tích phần chất lưu bị vật chiếm chỗ.</p>
+              <div class="font-mono font-bold text-teal-600 text-center my-1">F_A = \rho cdot g cdot V</div>
+              <p class="text-gray-500">Với $\rho$ là khối lượng riêng của chất lưu, $V$ là thể tích phần chất lưu bị vật chiếm chỗ.</p>
             </div>
           </div>
         
@@ -3607,14 +4028,14 @@
       <div class="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
         
           <div class="p-3 bg-gray-50 dark:bg-gray-800 rounded border text-xs space-y-1.5">
-            <p><strong>Bước 1 (Chọn đối tượng & Phân tích lực):</strong> Xác định rõ vật cần khảo sát, vẽ hình biểu diễn đầy đủ tất cả các lực tác dụng lên vật (trọng lực $ec{P}$, phản lực $ec{N}$, lực kéo $ec{F}_k$, lực ma sát $ec{F}_{ms}$...).</p>
+            <p><strong>Bước 1 (Chọn đối tượng & Phân tích lực):</strong> Xác định rõ vật cần khảo sát, vẽ hình biểu diễn đầy đủ tất cả các lực tác dụng lên vật (trọng lực $\vec{P}$, phản lực $\vec{N}$, lực kéo $\vec{F}_k$, lực ma sát $\vec{F}_{ms}$...).</p>
             <p><strong>Bước 2 (Viết phương trình định luật 2 Newton):</strong>
-              <div class="font-mono text-center font-bold text-blue-600">ec{F}_{hl} = ec{P} + ec{N} + ec{F}_k + ec{F}_{ms} = m cdot ec{a}  quad (*)</div>
+              <div class="font-mono text-center font-bold text-blue-600">\vec{F}_{hl} = \vec{P} + \vec{N} + \vec{F}_k + \vec{F}_{ms} = m cdot \vec{a}  quad (*)</div>
             </p>
             <p><strong>Bước 3 (Chọn hệ trục toạ độ Oxy):</strong> Chọn trục $Ox$ song song với phương chuyển động (chiều dương theo chiều chuyển động), trục $Oy$ vuông góc với phương chuyển động hướng lên.</p>
             <p><strong>Bước 4 (Chiếu phương trình vectơ lên các trục toạ độ):</strong>
               <br>- Chiếu lên trục $Oy$ (vật không chuyển động theo phương $Oy implies a_y = 0$): Tìm áp lực $N implies F_{mst} = mu_t N$.
-              <br>- Chiếu lên trục $Ox$: Tìm gia tốc $a = rac{F_x}{m}$.
+              <br>- Chiếu lên trục $Ox$: Tìm gia tốc $a = \frac{F_x}{m}$.
               <br>- Kết hợp với các công thức động học để tìm $v, s, t$.
             </p>
           </div>
@@ -3633,7 +4054,7 @@
             <div class="p-3 bg-blue-50 dark:bg-blue-950/30 rounded border border-blue-200 dark:border-blue-800">
               <h5 class="font-bold text-blue-700 dark:text-blue-300">Dạng 1: Kéo vật trên mặt phẳng nằm ngang (lực F_k song song sàn)</h5>
               <p>Chiếu Oy: $N - P = 0 implies N = P = mg implies F_{mst} = mu_t mg$.<br>
-              Chiếu Ox: $F_k - F_{mst} = ma implies mathbf{a = rac{F_k - mu_t mg}{m}}$.</p>
+              Chiếu Ox: $F_k - F_{mst} = ma implies mathbf{a = \frac{F_k - mu_t mg}{m}}$.</p>
             </div>
             <div class="p-3 bg-emerald-50 dark:bg-emerald-950/30 rounded border border-emerald-200 dark:border-emerald-800">
               <h5 class="font-bold text-emerald-700 dark:text-emerald-300">Dạng 2: Vật trượt xuống mặt phẳng nghiêng góc α có ma sát</h5>
@@ -3877,6 +4298,42 @@
           <div class="feedback-text text-gray-700 dark:text-gray-300">Đổi cánh tay đòn d = 20 cm = 0,2 m. Vì lực tác dụng vuông góc với mỏ lết nên khoảng cách từ trục quay đến giá của lực chính là chiều dài d = 0,2 m. Moment lực: M = F · d = 50 · 0,2 = 10 N·m.</div>
         </div>
       </div>
+    
+      <!-- Self-check Quiz 2 -->
+      <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800">
+        <div class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+          <i class="fa-solid fa-circle-question text-sky-500"></i> Câu hỏi tự kiểm tra (Câu 2)
+        </div>
+        <p class="text-sm font-medium text-gray-900 dark:text-white mb-3">
+          Một thanh nhẹ có thể quay quanh trục cố định, chịu tác dụng của lực $F = 20\text{ N}$ với cánh tay đòn $d = 0.5\text{ m}$. Moment của lực $F$ đối với trục quay có giá trị là:
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs mb-3">
+          
+      <button onclick="checkQuiz(this, true)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">A</span>
+        <span class="text-gray-700 dark:text-gray-300">$M = 10\text{ N}\cdot\text{m}$</span>
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">B</span>
+        <span class="text-gray-700 dark:text-gray-300">$M = 40\text{ N}\cdot\text{m}$</span>
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">C</span>
+        <span class="text-gray-700 dark:text-gray-300">$M = 10\text{ J}$</span>
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">D</span>
+        <span class="text-gray-700 dark:text-gray-300">$M = 20.5\text{ N}\cdot\text{m}$</span>
+      </button>
+        </div>
+        <div class="quiz-feedback hidden p-3 rounded-lg text-xs leading-relaxed">
+          <div class="feedback-title font-bold mb-1"></div>
+          <div class="feedback-text text-gray-700 dark:text-gray-300">Định nghĩa moment lực: $M = F \cdot d = 20 \times 0.5 = 10\text{ N}\cdot\text{m}$.</div>
+        </div>
+      </div>
     </article>
   
     <article id="bai-22" class="bg-white dark:bg-dark-surface rounded-2xl shadow-sm border border-gray-200 dark:border-gray-800 p-6 md:p-8 border-t-4 border-amber-500 transition-all hover:shadow-md mb-8">
@@ -3939,7 +4396,7 @@
         
           <ul class="list-disc pl-6 space-y-1.5 text-xs mb-3">
             <li><strong>Dụng cụ:</strong> Bảng từ tính gắn giác kế đo góc tròn 360°, hai lực kế lò xo (0 - 5 N), dây chỉ nối qua một vòng khuyên nhỏ (chất điểm O), nam châm giữ cố định lực kế.</li>
-            <li><strong>Nguyên tắc kiểm chứng:</strong> Kéo hai lực kế tạo thành hai lực $ec{F}_1$ và $ec{F}_2$ hợp góc $alpha$ sao cho điểm đồng quy O nằm đúng tâm vòng tròn giác kế. Dùng lực kế thứ ba kéo ngược lại để giữ điểm O đứng yên cân bằng $ightarrow$ Lực kế 3 chỉ độ lớn của lực cân bằng $ec{F}_3 = -ec{F}_{hl}$.</li>
+            <li><strong>Nguyên tắc kiểm chứng:</strong> Kéo hai lực kế tạo thành hai lực $\vec{F}_1$ và $\vec{F}_2$ hợp góc $alpha$ sao cho điểm đồng quy O nằm đúng tâm vòng tròn giác kế. Dùng lực kế thứ ba kéo ngược lại để giữ điểm O đứng yên cân bằng $\rightarrow$ Lực kế 3 chỉ độ lớn của lực cân bằng $\vec{F}_3 = -\vec{F}_{hl}$.</li>
           </ul>
         
       </div>
@@ -4120,11 +4577,11 @@
       </h4>
       <div class="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
         
-          <p class="text-xs mb-2">Khi một lực $ec{F}$ không đổi tác dụng lên một vật làm vật dịch chuyển một quãng đường $s$ theo hướng hợp với hướng của lực một góc $alpha$, công cơ học do lực sinh ra là:</p>
+          <p class="text-xs mb-2">Khi một lực $\vec{F}$ không đổi tác dụng lên một vật làm vật dịch chuyển một quãng đường $s$ theo hướng hợp với hướng của lực một góc $alpha$, công cơ học do lực sinh ra là:</p>
           <div class="font-mono text-center font-bold text-blue-600 bg-gray-100 dark:bg-gray-800 p-2.5 rounded text-sm my-1">
             A = F cdot s cdot cosalpha
           </div>
-          <p class="text-xs text-gray-500">Đơn vị chuẩn: <strong>Joule (J)</strong>. $1	ext{ J} = 1	ext{ N} cdot 1	ext{ m}$.</p>
+          <p class="text-xs text-gray-500">Đơn vị chuẩn: <strong>Joule (J)</strong>. $1\text{ J} = 1\text{ N} cdot 1\text{ m}$.</p>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-2 text-xs mt-2">
             <div class="p-2.5 bg-emerald-50 dark:bg-emerald-950/30 rounded border border-emerald-200 dark:border-emerald-800">
               <h5 class="font-bold text-emerald-700 dark:text-emerald-300">Công phát động (A &gt; 0)</h5>
@@ -4206,6 +4663,42 @@
           <div class="feedback-text text-gray-700 dark:text-gray-300">Áp dụng công thức tính công cơ học: A = F · s · cosα = 100 · 10 · cos(60°) = 1000 · 0,5 = 500 J.</div>
         </div>
       </div>
+    
+      <!-- Self-check Quiz 2 -->
+      <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800">
+        <div class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+          <i class="fa-solid fa-circle-question text-sky-500"></i> Câu hỏi tự kiểm tra (Câu 2)
+        </div>
+        <p class="text-sm font-medium text-gray-900 dark:text-white mb-3">
+          Một lực $F = 50\text{ N}$ kéo một kiện hàng chuyển dịch quãng đường $s = 10\text{ m}$ trên mặt sàn nằm ngang. Hướng của lực hợp với phương chuyển dời một góc $60^\circ$. Công của lực đó thực hiện là:
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs mb-3">
+          
+      <button onclick="checkQuiz(this, true)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">A</span>
+        <span class="text-gray-700 dark:text-gray-300">$250\text{ J}$</span>
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">B</span>
+        <span class="text-gray-700 dark:text-gray-300">$500\text{ J}$</span>
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">C</span>
+        <span class="text-gray-700 dark:text-gray-300">$433\text{ J}$</span>
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">D</span>
+        <span class="text-gray-700 dark:text-gray-300">$300\text{ J}$</span>
+      </button>
+        </div>
+        <div class="quiz-feedback hidden p-3 rounded-lg text-xs leading-relaxed">
+          <div class="feedback-title font-bold mb-1"></div>
+          <div class="feedback-text text-gray-700 dark:text-gray-300">Công cơ học: $A = F \cdot s \cdot \cos\alpha = 50 \times 10 \times \cos 60^\circ = 500 \times 0.5 = 250\text{ J}$.</div>
+        </div>
+      </div>
     </article>
   
     <article id="bai-24" class="bg-white dark:bg-dark-surface rounded-2xl shadow-sm border border-gray-200 dark:border-gray-800 p-6 md:p-8 border-t-4 border-sky-500 transition-all hover:shadow-md mb-8">
@@ -4269,12 +4762,12 @@
           <ul class="list-disc pl-6 space-y-1.5 text-xs mb-3">
             <li><strong>Công suất:</strong> Là đại lượng đặc trưng cho <strong>tốc độ sinh công</strong> của người hoặc máy móc, được đo bằng công thực hiện được trong một đơn vị thời gian:
               <div class="font-mono text-center font-bold text-blue-600 bg-gray-100 dark:bg-gray-800 p-2.5 rounded text-sm my-1">
-                mathcal{P} = rac{A}{t}
+                mathcal{P} = \frac{A}{t}
               </div>
             </li>
-            <li><strong>Đơn vị công suất:</strong> Oát (Watt, kí hiệu <code class="font-mono font-bold">W</code>). $1	ext{ W} = 1	ext{ J/s}$.
-              <br>- Các bội số: $1	ext{ kW} = 1000	ext{ W}$ ; $1	ext{ MW} = 10^6	ext{ W}$.
-              <br>- Đơn vị mã lực (Sức ngựa): Mã lực Anh ($1	ext{ HP} approx 746	ext{ W}$); Mã lực Pháp ($1	ext{ CV} approx 736	ext{ W}$).
+            <li><strong>Đơn vị công suất:</strong> Oát (Watt, kí hiệu <code class="font-mono font-bold">W</code>). $1\text{ W} = 1\text{ J/s}$.
+              <br>- Các bội số: $1\text{ kW} = 1000\text{ W}$ ; $1\text{ MW} = 10^6\text{ W}$.
+              <br>- Đơn vị mã lực (Sức ngựa): Mã lực Anh ($1\text{ HP} approx 746\text{ W}$); Mã lực Pháp ($1\text{ CV} approx 736\text{ W}$).
             </li>
           </ul>
         
@@ -4292,7 +4785,7 @@
           <div class="font-mono text-center font-bold text-emerald-600 bg-blue-50 dark:bg-blue-950/30 p-2.5 rounded text-sm my-1">
             mathcal{P} = F cdot v
           </div>
-          <p class="text-xs text-gray-600 dark:text-gray-300"><strong>Ứng dụng thực tế:</strong> Với động cơ ô tô, xe máy có công suất định mức $mathcal{P}$ không đổi, khi xe lên dốc cần <strong>lực kéo $F$ rất lớn</strong> để thắng trọng lực và ma sát $ightarrow$ người lái xe phải <strong>về số thấp</strong> (số 1, số 2) để giảm vận tốc $v$, nhờ đó tăng được lực kéo $F = mathcal{P} / v$.</p>
+          <p class="text-xs text-gray-600 dark:text-gray-300"><strong>Ứng dụng thực tế:</strong> Với động cơ ô tô, xe máy có công suất định mức $mathcal{P}$ không đổi, khi xe lên dốc cần <strong>lực kéo $F$ rất lớn</strong> để thắng trọng lực và ma sát $\rightarrow$ người lái xe phải <strong>về số thấp</strong> (số 1, số 2) để giảm vận tốc $v$, nhờ đó tăng được lực kéo $F = mathcal{P} / v$.</p>
         
       </div>
     </div>
@@ -4360,6 +4853,42 @@
           <div class="feedback-text text-gray-700 dark:text-gray-300">Công nâng hàng: A = P · h = 10.000 · 12 = 120.000 J. Công suất của cần cẩu: P = A / t = 120.000 / 30 = 4.000 W = 4 kW.</div>
         </div>
       </div>
+    
+      <!-- Self-check Quiz 2 -->
+      <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800">
+        <div class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+          <i class="fa-solid fa-circle-question text-sky-500"></i> Câu hỏi tự kiểm tra (Câu 2)
+        </div>
+        <p class="text-sm font-medium text-gray-900 dark:text-white mb-3">
+          Một động cơ điện thực hiện được một công $A = 36000\text{ J}$ trong thời gian $1\text{ phút}$. Công suất của động cơ đó là:
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs mb-3">
+          
+      <button onclick="checkQuiz(this, true)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">A</span>
+        <span class="text-gray-700 dark:text-gray-300">$\mathcal{P} = 600\text{ W}$</span>
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">B</span>
+        <span class="text-gray-700 dark:text-gray-300">$\mathcal{P} = 36000\text{ W}$</span>
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">C</span>
+        <span class="text-gray-700 dark:text-gray-300">$\mathcal{P} = 60\text{ W}$</span>
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">D</span>
+        <span class="text-gray-700 dark:text-gray-300">$\mathcal{P} = 360\text{ W}$</span>
+      </button>
+        </div>
+        <div class="quiz-feedback hidden p-3 rounded-lg text-xs leading-relaxed">
+          <div class="feedback-title font-bold mb-1"></div>
+          <div class="feedback-text text-gray-700 dark:text-gray-300">Đổi thời gian: $1\text{ phút} = 60\text{ s}$. Công suất: $\mathcal{P} = \frac{A}{t} = \frac{36000}{60} = 600\text{ W}$.</div>
+        </div>
+      </div>
     </article>
   
     <article id="bai-25" class="bg-white dark:bg-dark-surface rounded-2xl shadow-sm border border-gray-200 dark:border-gray-800 p-6 md:p-8 border-t-4 border-cyan-500 transition-all hover:shadow-md mb-8">
@@ -4423,13 +4952,13 @@
           <ul class="list-disc pl-6 space-y-1.5 text-xs mb-3">
             <li><strong>Định nghĩa Động năng:</strong> Là dạng năng lượng mà một vật có được do nó đang <strong>chuyển động</strong>:
               <div class="font-mono text-center font-bold text-blue-600 bg-gray-100 dark:bg-gray-800 p-2 rounded my-1 text-sm">
-                W_đ = rac{1}{2} m cdot v^2
+                W_đ = \frac{1}{2} m cdot v^2
               </div>
               Động năng là đại lượng vô hướng luôn không âm ($W_đ ge 0$), đơn vị là Joule (J).
             </li>
             <li><strong>Định lí động năng:</strong> Độ biến thiên động năng của một vật bằng tổng công của các ngoại lực tác dụng lên vật:
               <div class="font-mono text-center font-bold text-indigo-600 bg-blue-50 dark:bg-blue-950/30 p-2 rounded my-1 text-sm">
-                A = Delta W_đ = W_{đ2} - W_{đ1} = rac{1}{2} m v_2^2 - rac{1}{2} m v_1^2
+                A = Delta W_đ = W_{đ2} - W_{đ1} = \frac{1}{2} m v_2^2 - \frac{1}{2} m v_1^2
               </div>
               Khi lực sinh công dương ($A > 0$), động năng tăng; khi lực sinh công âm ($A < 0$), động năng giảm.
             </li>
@@ -4523,6 +5052,42 @@
           <div class="feedback-text text-gray-700 dark:text-gray-300">Đổi khối lượng m = 10 g = 0,01 kg. Động năng của viên đạn là: W_đ = 1/2 m · v² = 1/2 · 0,01 · 600² = 0,005 · 360.000 = 1.800 J.</div>
         </div>
       </div>
+    
+      <!-- Self-check Quiz 2 -->
+      <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800">
+        <div class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+          <i class="fa-solid fa-circle-question text-sky-500"></i> Câu hỏi tự kiểm tra (Câu 2)
+        </div>
+        <p class="text-sm font-medium text-gray-900 dark:text-white mb-3">
+          Một ô tô có khối lượng $m = 1000\text{ kg}$ đang di chuyển với vận tốc $v = 20\text{ m/s}$ (tương đương $72\text{ km/h}$). Động năng của ô tô bằng:
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs mb-3">
+          
+      <button onclick="checkQuiz(this, true)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">A</span>
+        <span class="text-gray-700 dark:text-gray-300">$200\text{ kJ}$</span>
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">B</span>
+        <span class="text-gray-700 dark:text-gray-300">$100\text{ kJ}$</span>
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">C</span>
+        <span class="text-gray-700 dark:text-gray-300">$400\text{ kJ}$</span>
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">D</span>
+        <span class="text-gray-700 dark:text-gray-300">$20\text{ kJ}$</span>
+      </button>
+        </div>
+        <div class="quiz-feedback hidden p-3 rounded-lg text-xs leading-relaxed">
+          <div class="feedback-title font-bold mb-1"></div>
+          <div class="feedback-text text-gray-700 dark:text-gray-300">Động năng: $W_đ = \frac{1}{2}mv^2 = \frac{1}{2} \times 1000 \times 20^2 = 500 \times 400 = 200\,000\text{ J} = 200\text{ kJ}$.</div>
+        </div>
+      </div>
     </article>
   
     <article id="bai-26" class="bg-white dark:bg-dark-surface rounded-2xl shadow-sm border border-gray-200 dark:border-gray-800 p-6 md:p-8 border-t-4 border-orange-500 transition-all hover:shadow-md mb-8">
@@ -4586,12 +5151,12 @@
           <ul class="list-disc pl-6 space-y-1.5 text-xs mb-3">
             <li><strong>Cơ năng (W):</strong> Bằng tổng động năng và thế năng của vật:
               <div class="font-mono text-center font-bold text-blue-600 bg-gray-100 dark:bg-gray-800 p-2 rounded my-1 text-sm">
-                W = W_đ + W_t = rac{1}{2} m cdot v^2 + m cdot g cdot z
+                W = W_đ + W_t = \frac{1}{2} m cdot v^2 + m cdot g cdot z
               </div>
             </li>
             <li><strong>Định luật bảo toàn cơ năng:</strong> Khi một vật chuyển động trong trọng trường <strong>chỉ chịu tác dụng của trọng lực</strong> (bỏ qua ma sát và lực cản), cơ năng của vật là một đại lượng bảo toàn (không đổi theo thời gian):
               <div class="font-mono text-center font-bold text-emerald-600 bg-blue-50 dark:bg-blue-950/30 p-2.5 rounded my-1 text-sm">
-                W = W_đ + W_t = 	ext{const} quad Longleftrightarrow quad rac{1}{2} m v_1^2 + m g z_1 = rac{1}{2} m v_2^2 + m g z_2
+                W = W_đ + W_t = \text{const} quad Longleftrightarrow quad \frac{1}{2} m v_1^2 + m g z_1 = \frac{1}{2} m v_2^2 + m g z_2
               </div>
             </li>
             <li><strong>Hệ quả:</strong> Trong quá trình chuyển động, động năng và thế năng có thể chuyển hoá qua lại lẫn nhau: khi động năng tăng thì thế năng giảm và ngược lại (tại vị trí cao nhất thế năng cực đại thì động năng bằng 0; tại vị trí thấp nhất chạm đất động năng cực đại thì thế năng bằng 0).</li>
@@ -4680,6 +5245,42 @@
           <div class="feedback-text text-gray-700 dark:text-gray-300">Áp dụng định luật bảo toàn cơ năng giữa mặt đất và vị trí cao nhất: W_{đất} = W_{max} => 1/2 m · v₀² = m · g · h_{max} => h_{max} = v₀² / (2g) = 10² / (2 · 10) = 100 / 20 = 5 m.</div>
         </div>
       </div>
+    
+      <!-- Self-check Quiz 2 -->
+      <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800">
+        <div class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+          <i class="fa-solid fa-circle-question text-sky-500"></i> Câu hỏi tự kiểm tra (Câu 2)
+        </div>
+        <p class="text-sm font-medium text-gray-900 dark:text-white mb-3">
+          Thả rơi một vật khối lượng $m = 0.5\text{ kg}$ từ độ cao $h = 10\text{ m}$ xuống đất, bỏ qua lực cản không khí, lấy $g = 10\text{ m/s}^2$. Vị trí mà tại đó động năng bằng thế năng ($W_đ = W_t$) có độ cao so với mặt đất là:
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs mb-3">
+          
+      <button onclick="checkQuiz(this, true)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">A</span>
+        <span class="text-gray-700 dark:text-gray-300">$z = 5\text{ m}$</span>
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">B</span>
+        <span class="text-gray-700 dark:text-gray-300">$z = 2.5\text{ m}$</span>
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">C</span>
+        <span class="text-gray-700 dark:text-gray-300">$z = 7.5\text{ m}$</span>
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">D</span>
+        <span class="text-gray-700 dark:text-gray-300">$z = 4\text{ m}$</span>
+      </button>
+        </div>
+        <div class="quiz-feedback hidden p-3 rounded-lg text-xs leading-relaxed">
+          <div class="feedback-title font-bold mb-1"></div>
+          <div class="feedback-text text-gray-700 dark:text-gray-300">Bảo toàn cơ năng: $W = W_t + W_đ = 2W_t \Leftrightarrow mgh = 2mgz \Rightarrow z = \frac{h}{2} = 5\text{ m}$.</div>
+        </div>
+      </div>
     </article>
   
     <article id="bai-27" class="bg-white dark:bg-dark-surface rounded-2xl shadow-sm border border-gray-200 dark:border-gray-800 p-6 md:p-8 border-t-4 border-violet-500 transition-all hover:shadow-md mb-8">
@@ -4746,7 +5347,7 @@
             </li>
             <li><strong>Công thức tính Hiệu suất (H):</strong>
               <div class="font-mono text-center font-bold text-emerald-600 bg-gray-100 dark:bg-gray-800 p-2.5 rounded text-sm my-1">
-                H = rac{A_{ích}}{A_{tp}} cdot 100% = rac{mathcal{P}_{ích}}{mathcal{P}_{tp}} cdot 100%
+                H = \frac{A_{ích}}{A_{tp}} cdot 100% = \frac{mathcal{P}_{ích}}{mathcal{P}_{tp}} cdot 100%
               </div>
               Vì $A_{ích} < A_{tp}$ nên hiệu suất của mọi cỗ máy thực tế luôn luôn <strong>nhỏ hơn 100%</strong> ($H < 100%$).
             </li>
@@ -4917,12 +5518,12 @@
       <div class="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
         
           <ul class="list-disc pl-6 space-y-1.5 text-xs mb-3">
-            <li><strong>Định nghĩa:</strong> Động lượng của một vật là một đại lượng vectơ bằng tích của khối lượng $m$ và vận tốc $ec{v}$ của vật:
+            <li><strong>Định nghĩa:</strong> Động lượng của một vật là một đại lượng vectơ bằng tích của khối lượng $m$ và vận tốc $\vec{v}$ của vật:
               <div class="font-mono text-center font-bold text-blue-600 bg-gray-100 dark:bg-gray-800 p-2.5 rounded text-sm my-1">
-                ec{p} = m cdot ec{v}
+                \vec{p} = m cdot \vec{v}
               </div>
             </li>
-            <li><strong>Đặc điểm:</strong> Vectơ động lượng $ec{p}$ luôn <strong>cùng hướng với vectơ vận tốc $ec{v}$</strong>.</li>
+            <li><strong>Đặc điểm:</strong> Vectơ động lượng $\vec{p}$ luôn <strong>cùng hướng với vectơ vận tốc $\vec{v}$</strong>.</li>
             <li><strong>Đơn vị:</strong> Kilôgam mét trên giây (<code class="font-mono font-bold text-indigo-600">kg · m/s</code>) hoặc Newton giây (<code class="font-mono font-bold text-indigo-600">N · s</code>).</li>
           </ul>
         
@@ -4937,11 +5538,11 @@
       <div class="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
         
           <div class="p-3 bg-blue-50 dark:bg-blue-950/30 rounded border border-blue-200 dark:border-blue-800 text-xs">
-            <p>Từ định luật 2 Newton: $ec{F} = m cdot ec{a} = m cdot rac{ec{v}_2 - ec{v}_1}{Delta t} implies$</p>
+            <p>Từ định luật 2 Newton: $\vec{F} = m cdot \vec{a} = m cdot \frac{\vec{v}_2 - \vec{v}_1}{Delta t} implies$</p>
             <div class="font-mono text-center font-bold text-blue-600 text-sm my-1">
-              ec{F} cdot Delta t = Delta ec{p} = ec{p}_2 - ec{p}_1
+              \vec{F} cdot Delta t = Delta \vec{p} = \vec{p}_2 - \vec{p}_1
             </div>
-            <p class="mt-1">Tích số $ec{F} cdot Delta t$ được gọi là <strong>xung lượng của lực</strong> trong khoảng thời gian $Delta t$.</p>
+            <p class="mt-1">Tích số $\vec{F} cdot Delta t$ được gọi là <strong>xung lượng của lực</strong> trong khoảng thời gian $Delta t$.</p>
             <p class="mt-1"><em>Phát biểu:</em> Xung lượng của lực tác dụng lên vật trong một khoảng thời gian bằng <strong>độ biến thiên động lượng</strong> của vật trong khoảng thời gian đó.</p>
           </div>
           <p class="text-xs text-gray-500 mt-2"><strong>Ứng dụng túi khí trên ô tô:</strong> Khi va chạm, túi khí bung ra giúp kéo dài thời gian va chạm $Delta t$, từ biểu thức $F = Delta p / Delta t$ cho thấy $Delta t$ càng lớn thì lực va đập $F$ tác dụng lên hành khách càng nhỏ, giảm chấn thương nguy hiểm.</p>
@@ -5010,6 +5611,42 @@
         <div class="quiz-feedback hidden p-3 rounded-lg text-xs leading-relaxed">
           <div class="feedback-title font-bold mb-1"></div>
           <div class="feedback-text text-gray-700 dark:text-gray-300">Độ lớn động lượng của vật là: p = m · v = 2 · 5 = 10 kg·m/s.</div>
+        </div>
+      </div>
+    
+      <!-- Self-check Quiz 2 -->
+      <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800">
+        <div class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+          <i class="fa-solid fa-circle-question text-sky-500"></i> Câu hỏi tự kiểm tra (Câu 2)
+        </div>
+        <p class="text-sm font-medium text-gray-900 dark:text-white mb-3">
+          Một viên đạn có khối lượng $m = 20\text{ g} = 0.02\text{ kg}$ bay với vận tốc $v = 600\text{ m/s}$. Độ lớn động lượng của viên đạn là:
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs mb-3">
+          
+      <button onclick="checkQuiz(this, true)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">A</span>
+        <span class="text-gray-700 dark:text-gray-300">$12\text{ kg}\cdot\text{m/s}$</span>
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">B</span>
+        <span class="text-gray-700 dark:text-gray-300">$12000\text{ kg}\cdot\text{m/s}$</span>
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">C</span>
+        <span class="text-gray-700 dark:text-gray-300">$6\text{ kg}\cdot\text{m/s}$</span>
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">D</span>
+        <span class="text-gray-700 dark:text-gray-300">$24\text{ kg}\cdot\text{m/s}$</span>
+      </button>
+        </div>
+        <div class="quiz-feedback hidden p-3 rounded-lg text-xs leading-relaxed">
+          <div class="feedback-title font-bold mb-1"></div>
+          <div class="feedback-text text-gray-700 dark:text-gray-300">Độ lớn động lượng: $p = mv = 0.02 \times 600 = 12\text{ kg}\cdot\text{m/s}$.</div>
         </div>
       </div>
     </article>
@@ -5090,7 +5727,7 @@
           <div class="bg-indigo-50 dark:bg-indigo-950/40 p-3 rounded-lg border-l-4 border-indigo-500 mb-3 text-xs leading-relaxed">
             <strong>Định luật bảo toàn động lượng:</strong> Tổng động lượng của một hệ kín là một đại lượng bảo toàn (không đổi cả về hướng và độ lớn theo thời gian):
             <div class="font-mono text-center font-bold text-indigo-600 my-1 text-sm">
-              sum ec{p}_{trước} = sum ec{p}_{sau} quad Longleftrightarrow quad m_1 ec{v}_1 + m_2 ec{v}_2 = m_1 ec{v}'_1 + m_2 ec{v}'_2
+              sum \vec{p}_{trước} = sum \vec{p}_{sau} quad Longleftrightarrow quad m_1 \vec{v}_1 + m_2 \vec{v}_2 = m_1 \vec{v}'_1 + m_2 \vec{v}'_2
             </div>
           </div>
         
@@ -5107,16 +5744,16 @@
           <div class="space-y-2 text-xs">
             <div class="p-3 bg-blue-50 dark:bg-blue-950/30 rounded border border-blue-200 dark:border-blue-800">
               <h5 class="font-bold text-blue-700 dark:text-blue-300">1. Va chạm mềm (Inelastic collision)</h5>
-              <p>Sau va chạm, hai vật dính liền vào nhau và chuyển động cùng vận tốc $ec{V}$:</p>
+              <p>Sau va chạm, hai vật dính liền vào nhau và chuyển động cùng vận tốc $\vec{V}$:</p>
               <div class="font-mono font-bold text-blue-600 my-1">
-                m_1 ec{v}_1 + m_2 ec{v}_2 = (m_1 + m_2) ec{V} implies mathbf{ec{V} = rac{m_1 ec{v}_1 + m_2 ec{v}_2}{m_1 + m_2}}
+                m_1 \vec{v}_1 + m_2 \vec{v}_2 = (m_1 + m_2) \vec{V} implies mathbf{\vec{V} = \frac{m_1 \vec{v}_1 + m_2 \vec{v}_2}{m_1 + m_2}}
               </div>
             </div>
             <div class="p-3 bg-emerald-50 dark:bg-emerald-950/30 rounded border border-emerald-200 dark:border-emerald-800">
               <h5 class="font-bold text-emerald-700 dark:text-emerald-300">2. Chuyển động bằng phản lực (Súng giật khi bắn)</h5>
-              <p>Hệ ban đầu đứng yên ($P = 0$). Khi bắn, đạn bay về trước với vận tốc $ec{v}$, súng giật lùi với vận tốc $ec{V}$:</p>
+              <p>Hệ ban đầu đứng yên ($P = 0$). Khi bắn, đạn bay về trước với vận tốc $\vec{v}$, súng giật lùi với vận tốc $\vec{V}$:</p>
               <div class="font-mono font-bold text-emerald-600 my-1">
-                M ec{V} + m ec{v} = ec{0} implies mathbf{ec{V} = - rac{m}{M} cdot ec{v}}
+                M \vec{V} + m \vec{v} = \vec{0} implies mathbf{\vec{V} = - \frac{m}{M} cdot \vec{v}}
               </div>
               <p class="text-gray-500">Dấu trừ cho biết súng giật lùi ngược chiều chuyển động của viên đạn.</p>
             </div>
@@ -5186,6 +5823,42 @@
         <div class="quiz-feedback hidden p-3 rounded-lg text-xs leading-relaxed">
           <div class="feedback-title font-bold mb-1"></div>
           <div class="feedback-text text-gray-700 dark:text-gray-300">Đổi m = 50 g = 0,05 kg. Đây là bài toán va chạm mềm: m · v = (m + M) · V => V = (m · v) / (m + M) = (0,05 · 400) / (0,05 + 4,95) = 20 / 5 = 4 m/s.</div>
+        </div>
+      </div>
+    
+      <!-- Self-check Quiz 2 -->
+      <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800">
+        <div class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+          <i class="fa-solid fa-circle-question text-sky-500"></i> Câu hỏi tự kiểm tra (Câu 2)
+        </div>
+        <p class="text-sm font-medium text-gray-900 dark:text-white mb-3">
+          Một khẩu súng có khối lượng $M = 4\text{ kg}$ bắn ra một viên đạn khối lượng $m = 20\text{ g} = 0.02\text{ kg}$ với vận tốc $v = 400\text{ m/s}$. Vận tốc giật lùi $V$ của khẩu súng ngay sau khi bắn là:
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs mb-3">
+          
+      <button onclick="checkQuiz(this, true)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">A</span>
+        <span class="text-gray-700 dark:text-gray-300">$V = -2\text{ m/s}$</span>
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">B</span>
+        <span class="text-gray-700 dark:text-gray-300">$V = 2\text{ m/s}$</span>
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">C</span>
+        <span class="text-gray-700 dark:text-gray-300">$V = -0.2\text{ m/s}$</span>
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">D</span>
+        <span class="text-gray-700 dark:text-gray-300">$V = -4\text{ m/s}$</span>
+      </button>
+        </div>
+        <div class="quiz-feedback hidden p-3 rounded-lg text-xs leading-relaxed">
+          <div class="feedback-title font-bold mb-1"></div>
+          <div class="feedback-text text-gray-700 dark:text-gray-300">Theo định luật bảo toàn động lượng cho hệ kín (súng + đạn): $M\vec{V} + m\vec{v} = \vec{0} \Rightarrow V = -\frac{mv}{M} = -\frac{0.02 \times 400}{4} = -2\text{ m/s}$ (dấu trừ chứng tỏ súng bị giật ngược chiều bay của đạn).</div>
         </div>
       </div>
     </article>
@@ -5266,7 +5939,7 @@
           <div class="p-3 bg-gray-50 dark:bg-gray-800 rounded border text-xs space-y-1">
             <p>1. Tính vận tốc trước va chạm: $v_1 = d / Delta t_1$ ; $v_2 = 0$ (nếu xe 2 đứng yên). Động lượng ban đầu: <code class="font-mono font-bold text-blue-600">p_{trước} = m_1 v_1</code>.</p>
             <p>2. Tính vận tốc sau va chạm: Xe 1 và xe 2 dính vào nhau chuyển động qua cổng quang: $V = d / Delta t'$. Động lượng lúc sau: <code class="font-mono font-bold text-emerald-600">p_{sau} = (m_1 + m_2) V</code>.</p>
-            <p>3. So sánh $p_{trước}$ và $p_{sau}$: Sai số tỉ đối $rac{|p_{trước} - p_{sau}|}{p_{trước}} 	imes 100% < 5%$ khẳng định định luật bảo toàn động lượng nghiệm đúng trong giới hạn sai số thực nghiệm.</p>
+            <p>3. So sánh $p_{trước}$ và $p_{sau}$: Sai số tỉ đối $\frac{|p_{trước} - p_{sau}|}{p_{trước}} 	imes 100% < 5%$ khẳng định định luật bảo toàn động lượng nghiệm đúng trong giới hạn sai số thực nghiệm.</p>
           </div>
         
       </div>
@@ -5418,9 +6091,9 @@
         
           <ul class="list-disc pl-6 space-y-1.5 text-xs mb-3">
             <li><strong>Chuyển động tròn đều:</strong> Là chuyển động có quỹ đạo là đường tròn và có <strong>tốc độ không đổi</strong> theo thời gian (vật đi được những cung tròn có độ dài bằng nhau trong những khoảng thời gian bằng nhau bất kì).</li>
-            <li><strong>Tốc độ góc (ω):</strong> Đại lượng đặc trưng cho tốc độ quay nhanh hay chậm của bán kính nối tâm với chất điểm, bằng góc quay $Delta	heta$ quét được trong khoảng thời gian $Delta t$:
+            <li><strong>Tốc độ góc (ω):</strong> Đại lượng đặc trưng cho tốc độ quay nhanh hay chậm của bán kính nối tâm với chất điểm, bằng góc quay $Delta\theta$ quét được trong khoảng thời gian $Delta t$:
               <div class="font-mono text-center font-bold text-blue-600 bg-gray-100 dark:bg-gray-800 p-2 rounded my-1 text-sm">
-                omega = rac{Delta	heta}{Delta t}
+                omega = \frac{Delta\theta}{Delta t}
               </div>
               Đơn vị chuẩn của tốc độ góc là radian trên giây (<code class="font-mono font-bold text-indigo-600">rad/s</code>).
             </li>
@@ -5440,14 +6113,14 @@
             <div class="p-3 bg-blue-50 dark:bg-blue-950/30 rounded border border-blue-200 dark:border-blue-800">
               <h5 class="font-bold text-blue-700 dark:text-blue-300 mb-1">Chu kì (T) & Tần số (f)</h5>
               <p>&bull; <strong>Chu kì (T):</strong> Thời gian để vật quay hết đúng một vòng tròn (đơn vị giây - s):</p>
-              <div class="font-mono font-bold text-blue-600 text-center my-0.5">T = rac{2pi}{omega}</div>
+              <div class="font-mono font-bold text-blue-600 text-center my-0.5">T = \frac{2pi}{omega}</div>
               <p>&bull; <strong>Tần số (f):</strong> Số vòng quay vật thực hiện được trong 1 giây (đơn vị Hertz - Hz hoặc vòng/s):</p>
-              <div class="font-mono font-bold text-blue-600 text-center my-0.5">f = rac{1}{T} = rac{omega}{2pi}</div>
+              <div class="font-mono font-bold text-blue-600 text-center my-0.5">f = \frac{1}{T} = \frac{omega}{2pi}</div>
             </div>
             <div class="p-3 bg-emerald-50 dark:bg-emerald-950/30 rounded border border-emerald-200 dark:border-emerald-800">
               <h5 class="font-bold text-emerald-700 dark:text-emerald-300 mb-1">Tốc độ dài (v)</h5>
               <p>Có phương luôn <strong>tiếp tuyến với quỹ đạo tròn</strong>, độ lớn bằng:</p>
-              <div class="font-mono font-bold text-emerald-600 text-center my-1 text-sm">v = omega cdot r = rac{2pi r}{T} = 2pi r f</div>
+              <div class="font-mono font-bold text-emerald-600 text-center my-1 text-sm">v = omega cdot r = \frac{2pi r}{T} = 2pi r f</div>
               <p class="text-gray-500">Trong đó $r$ là bán kính của quỹ đạo tròn (m). Trên cùng một vật quay, điểm càng xa trục quay (r lớn) thì tốc độ dài v càng lớn.</p>
             </div>
           </div>
@@ -5518,6 +6191,42 @@
           <div class="feedback-text text-gray-700 dark:text-gray-300">Tần số quay f = 300 vòng/phút = 300 / 60 = 5 vòng/s (5 Hz). Tốc độ góc của cánh quạt: ω = 2π · f = 2π · 5 = 10π rad/s (≈ 31,4 rad/s).</div>
         </div>
       </div>
+    
+      <!-- Self-check Quiz 2 -->
+      <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800">
+        <div class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+          <i class="fa-solid fa-circle-question text-sky-500"></i> Câu hỏi tự kiểm tra (Câu 2)
+        </div>
+        <p class="text-sm font-medium text-gray-900 dark:text-white mb-3">
+          Một chất điểm chuyển động tròn đều trên quỹ đạo bán kính $r = 0.5\text{ m}$ với tốc độ góc $\omega = 10\text{ rad/s}$. Tốc độ dài $v$ của chất điểm bằng:
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs mb-3">
+          
+      <button onclick="checkQuiz(this, true)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">A</span>
+        <span class="text-gray-700 dark:text-gray-300">$v = 5\text{ m/s}$</span>
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">B</span>
+        <span class="text-gray-700 dark:text-gray-300">$v = 20\text{ m/s}$</span>
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">C</span>
+        <span class="text-gray-700 dark:text-gray-300">$v = 2\text{ m/s}$</span>
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">D</span>
+        <span class="text-gray-700 dark:text-gray-300">$v = 50\text{ m/s}$</span>
+      </button>
+        </div>
+        <div class="quiz-feedback hidden p-3 rounded-lg text-xs leading-relaxed">
+          <div class="feedback-title font-bold mb-1"></div>
+          <div class="feedback-text text-gray-700 dark:text-gray-300">Mối liên hệ giữa tốc độ dài và tốc độ góc: $v = \omega \cdot r = 10 \times 0.5 = 5\text{ m/s}$.</div>
+        </div>
+      </div>
     </article>
   
     <article id="bai-32" class="bg-white dark:bg-dark-surface rounded-2xl shadow-sm border border-gray-200 dark:border-gray-800 p-6 md:p-8 border-t-4 border-red-500 transition-all hover:shadow-md mb-8">
@@ -5579,13 +6288,13 @@
       <div class="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
         
           <ul class="list-disc pl-6 space-y-1.5 text-xs mb-3">
-            <li>Trong chuyển động tròn đều, mặc dù độ lớn vận tốc $v$ không đổi nhưng <strong>hướng của vectơ vận tốc luôn thay đổi</strong> liên tục $ightarrow$ chuyển động tròn đều luôn có gia tốc.</li>
-            <li><strong>Đặc điểm của vectơ gia tốc hướng tâm ($ec{a}_{ht}$):</strong>
+            <li>Trong chuyển động tròn đều, mặc dù độ lớn vận tốc $v$ không đổi nhưng <strong>hướng của vectơ vận tốc luôn thay đổi</strong> liên tục $\rightarrow$ chuyển động tròn đều luôn có gia tốc.</li>
+            <li><strong>Đặc điểm của vectơ gia tốc hướng tâm ($\vec{a}_{ht}$):</strong>
               <br>- Phương: Trùng với bán kính đường tròn quỹ đạo.
               <br>- Chiều: Luôn <strong>hướng vào tâm</strong> của đường tròn.
               <br>- Độ lớn:
               <div class="font-mono text-center font-bold text-blue-600 bg-gray-100 dark:bg-gray-800 p-2 rounded my-1 text-sm">
-                a_{ht} = rac{v^2}{r} = omega^2 cdot r
+                a_{ht} = \frac{v^2}{r} = omega^2 cdot r
               </div>
             </li>
           </ul>
@@ -5603,14 +6312,14 @@
           <div class="bg-indigo-50 dark:bg-indigo-950/40 p-3 rounded-lg border-l-4 border-indigo-500 mb-3 text-xs leading-relaxed">
             <strong>Lực hướng tâm:</strong> Hợp lực của tất cả các lực tác dụng lên vật chuyển động tròn đều giữ cho vật chuyển động theo quỹ đạo tròn gây ra cho vật gia tốc hướng tâm, gọi là lực hướng tâm:
             <div class="font-mono text-center font-bold text-indigo-600 my-1 text-sm">
-              F_{ht} = m cdot a_{ht} = m cdot rac{v^2}{r} = m cdot omega^2 cdot r
+              F_{ht} = m cdot a_{ht} = m cdot \frac{v^2}{r} = m cdot omega^2 cdot r
             </div>
           </div>
           <p class="text-xs text-rose-600 font-bold mb-1">Lưu ý quan trọng:</p>
           <p class="text-xs text-gray-700 dark:text-gray-300">Lực hướng tâm <strong>không phải là một loại lực mới</strong> trong tự nhiên. Nó chính là một lực cụ thể hoặc hợp lực của các lực thực tế đóng vai trò hướng tâm:<br>
           - Vệ tinh quay quanh Trái Đất: Lực hấp dẫn của Trái Đất đóng vai trò lực hướng tâm.<br>
           - Ô tô rẽ ở đoạn đường cua phẳng: <strong>Lực ma sát nghỉ</strong> giữa lốp xe và mặt đường đóng vai trò lực hướng tâm (nếu đường trơn ướt, ma sát không đủ xe sẽ bị trượt li tâm ra mép đường gây tai nạn).<br>
-          - Đoạn đường cua cao tốc: Thiết kế <strong>mặt đường nghiêng vào tâm cong</strong> để hợp lực của phản lực $ec{N}$ và trọng lực $ec{P}$ tạo thành lực hướng tâm giúp xe rẽ an toàn ở tốc độ cao mà không cần phụ thuộc hoàn toàn vào ma sát lốp.</p>
+          - Đoạn đường cua cao tốc: Thiết kế <strong>mặt đường nghiêng vào tâm cong</strong> để hợp lực của phản lực $\vec{N}$ và trọng lực $\vec{P}$ tạo thành lực hướng tâm giúp xe rẽ an toàn ở tốc độ cao mà không cần phụ thuộc hoàn toàn vào ma sát lốp.</p>
         
       </div>
     </div>
@@ -5676,6 +6385,42 @@
         <div class="quiz-feedback hidden p-3 rounded-lg text-xs leading-relaxed">
           <div class="feedback-title font-bold mb-1"></div>
           <div class="feedback-text text-gray-700 dark:text-gray-300">Đổi v = 36 km/h = 10 m/s. Độ lớn lực hướng tâm giữ xe chạy trên cung tròn là: F_ht = m · v² / r = 1000 · 10² / 50 = 1000 · 100 / 50 = 2.000 N.</div>
+        </div>
+      </div>
+    
+      <!-- Self-check Quiz 2 -->
+      <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800">
+        <div class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+          <i class="fa-solid fa-circle-question text-sky-500"></i> Câu hỏi tự kiểm tra (Câu 2)
+        </div>
+        <p class="text-sm font-medium text-gray-900 dark:text-white mb-3">
+          Một ô tô có khối lượng $m = 1200\text{ kg}$ chuyển động tròn đều qua đoạn đường cong có bán kính cong $r = 50\text{ m}$ với tốc độ $v = 10\text{ m/s}$. Lực hướng tâm cần thiết để giữ ô tô không bị trượt ra ngoài cung đường là:
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs mb-3">
+          
+      <button onclick="checkQuiz(this, true)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">A</span>
+        <span class="text-gray-700 dark:text-gray-300">$2400\text{ N}$</span>
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">B</span>
+        <span class="text-gray-700 dark:text-gray-300">$1200\text{ N}$</span>
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">C</span>
+        <span class="text-gray-700 dark:text-gray-300">$4800\text{ N}$</span>
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">D</span>
+        <span class="text-gray-700 dark:text-gray-300">$600\text{ N}$</span>
+      </button>
+        </div>
+        <div class="quiz-feedback hidden p-3 rounded-lg text-xs leading-relaxed">
+          <div class="feedback-title font-bold mb-1"></div>
+          <div class="feedback-text text-gray-700 dark:text-gray-300">Lực hướng tâm: $F_{ht} = m\frac{v^2}{r} = 1200 \times \frac{10^2}{50} = 1200 \times 2 = 2400\text{ N}$.</div>
         </div>
       </div>
     </article>
@@ -5852,6 +6597,42 @@
           <div class="feedback-text text-gray-700 dark:text-gray-300">Độ dãn của lò xo là: Δl = l - l₀ = 25 - 20 = 5 cm = 0,05 m. Độ lớn lực đàn hồi theo định luật Hooke: F_đh = k · Δl = 100 · 0,05 = 5 N.</div>
         </div>
       </div>
+    
+      <!-- Self-check Quiz 2 -->
+      <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800">
+        <div class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+          <i class="fa-solid fa-circle-question text-sky-500"></i> Câu hỏi tự kiểm tra (Câu 2)
+        </div>
+        <p class="text-sm font-medium text-gray-900 dark:text-white mb-3">
+          Một lò xo nhẹ có độ cứng $k = 100\text{ N/m}$. Khi treo một quả cân có trọng lượng $P = 5\text{ N}$ thì khi cân bằng, độ biến dạng $\Delta l$ của lò xo là:
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs mb-3">
+          
+      <button onclick="checkQuiz(this, true)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">A</span>
+        <span class="text-gray-700 dark:text-gray-300">$5\text{ cm}$</span>
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">B</span>
+        <span class="text-gray-700 dark:text-gray-300">$0.5\text{ cm}$</span>
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">C</span>
+        <span class="text-gray-700 dark:text-gray-300">$20\text{ cm}$</span>
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">D</span>
+        <span class="text-gray-700 dark:text-gray-300">$2\text{ cm}$</span>
+      </button>
+        </div>
+        <div class="quiz-feedback hidden p-3 rounded-lg text-xs leading-relaxed">
+          <div class="feedback-title font-bold mb-1"></div>
+          <div class="feedback-text text-gray-700 dark:text-gray-300">Khi cân bằng, lực đàn hồi cân bằng trọng lực: $F_{đh} = P \Leftrightarrow k \cdot \Delta l = P \Rightarrow \Delta l = \frac{P}{k} = \frac{5}{100} = 0.05\text{ m} = 5\text{ cm}$.</div>
+        </div>
+      </div>
     </article>
   
     <article id="bai-34" class="bg-white dark:bg-dark-surface rounded-2xl shadow-sm border border-gray-200 dark:border-gray-800 p-6 md:p-8 border-t-4 border-emerald-500 transition-all hover:shadow-md mb-8">
@@ -5913,16 +6694,16 @@
       <div class="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
         
           <ul class="list-disc pl-6 space-y-1.5 text-xs mb-3">
-            <li><strong>Khối lượng riêng ($ho$):</strong> Đại lượng đặc trưng cho mật độ khối lượng trên một đơn vị thể tích của chất:
+            <li><strong>Khối lượng riêng ($\rho$):</strong> Đại lượng đặc trưng cho mật độ khối lượng trên một đơn vị thể tích của chất:
               <div class="font-mono text-center font-bold text-blue-600 bg-gray-100 dark:bg-gray-800 p-2 rounded my-1 text-sm">
-                ho = rac{m}{V}  quad (	ext{đơn vị } 	ext{kg/m}^3)
+                \rho = \frac{m}{V}  quad (\text{đơn vị } \text{kg/m}^3)
               </div>
             </li>
             <li><strong>Áp suất (p):</strong> Là độ lớn áp lực $F$ tác dụng vuông góc lên một đơn vị diện tích bề mặt $S$ bị ép:
               <div class="font-mono text-center font-bold text-indigo-600 bg-gray-100 dark:bg-gray-800 p-2 rounded my-1 text-sm">
-                p = rac{F}{S}  quad (	ext{đơn vị Pascal, } 1	ext{ Pa} = 1	ext{ N/m}^2)
+                p = \frac{F}{S}  quad (\text{đơn vị Pascal, } 1\text{ Pa} = 1\text{ N/m}^2)
               </div>
-              Các đơn vị áp suất khác: $1	ext{ bar} = 10^5	ext{ Pa}$ ; $1	ext{ atm} approx 1,013 cdot 10^5	ext{ Pa} approx 760	ext{ mmHg}$.
+              Các đơn vị áp suất khác: $1\text{ bar} = 10^5\text{ Pa}$ ; $1\text{ atm} approx 1,013 cdot 10^5\text{ Pa} approx 760\text{ mmHg}$.
             </li>
           </ul>
         
@@ -5938,9 +6719,9 @@
         
           <p class="text-xs mb-2">Chất lỏng gây áp suất theo mọi phương lên các vật nhúng trong nó và lên thành bình, đáy bình. Tại điểm ở độ sâu $h$ dưới mặt thoáng chất lỏng:</p>
           <div class="font-mono text-center font-bold text-emerald-600 bg-blue-50 dark:bg-blue-950/30 p-2.5 rounded text-sm my-1">
-            p = p_0 + ho cdot g cdot h
+            p = p_0 + \rho cdot g cdot h
           </div>
-          <p class="text-xs text-gray-600 dark:text-gray-300">Trong đó: $p_0$ là áp suất khí quyển trên mặt thoáng; $ho$ là khối lượng riêng của chất lỏng ($	ext{kg/m}^3$); $h$ là độ sâu tính từ mặt thoáng (m).<br>
+          <p class="text-xs text-gray-600 dark:text-gray-300">Trong đó: $p_0$ là áp suất khí quyển trên mặt thoáng; $\rho$ là khối lượng riêng của chất lỏng ($\text{kg/m}^3$); $h$ là độ sâu tính từ mặt thoáng (m).<br>
           $implies$ Độ sâu $h$ càng lớn thì áp suất chất lỏng càng tăng (đây là lí do thợ lặn biển sâu phải mặc bộ đồ lặn chịu áp suất cao và đập thuỷ điện phải xây chân đập dày hơn đỉnh đập rất nhiều).</p>
         
       </div>
@@ -5957,7 +6738,7 @@
             <p><strong>Nguyên lí Pascal:</strong> Độ tăng áp suất tác dụng lên một chất lỏng kín được truyền nguyên vẹn tới mọi điểm của chất lỏng và tới thành bình chứa.</p>
             <p class="mt-1"><strong>Nguyên lí hoạt động của Máy nén thuỷ lực (Kích ô tô, Phanh đĩa thuỷ lực):</strong></p>
             <div class="font-mono font-bold text-purple-600 text-center my-1 text-sm">
-              rac{F_2}{F_1} = rac{S_2}{S_1} implies F_2 = F_1 cdot rac{S_2}{S_1}
+              \frac{F_2}{F_1} = \frac{S_2}{S_1} implies F_2 = F_1 cdot \frac{S_2}{S_1}
             </div>
             <p>Nhờ piston lớn có diện tích $S_2$ lớn gấp hàng trăm lần piston nhỏ $S_1$, ta chỉ cần tác dụng một lực ấn nhỏ $F_1$ vào bàn đạp phanh là có thể tạo ra một lực nâng $F_2$ khổng lồ đủ sức nâng cả chiếc ô tô tải nặng vài tấn lên cao.</p>
           </div>
@@ -6028,6 +6809,42 @@
           <div class="feedback-text text-gray-700 dark:text-gray-300">Áp dụng công thức máy nén thuỷ lực theo nguyên lí Pascal: F₂ / F₁ = S₂ / S₁ = 50 => F₁ = F₂ / 50 = 15.000 / 50 = 300 N.</div>
         </div>
       </div>
+    
+      <!-- Self-check Quiz 2 -->
+      <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800">
+        <div class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+          <i class="fa-solid fa-circle-question text-sky-500"></i> Câu hỏi tự kiểm tra (Câu 2)
+        </div>
+        <p class="text-sm font-medium text-gray-900 dark:text-white mb-3">
+          Biết khối lượng riêng của nước là $\rho = 1000\text{ kg/m}^3$ và $g = 10\text{ m/s}^2$. Áp suất thuỷ tĩnh tác dụng lên một thợ lặn ở độ sâu $h = 15\text{ m}$ dưới mặt nước (bỏ qua áp suất khí quyển) là:
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs mb-3">
+          
+      <button onclick="checkQuiz(this, true)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">A</span>
+        <span class="text-gray-700 dark:text-gray-300">$150\,000\text{ Pa}$</span>
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">B</span>
+        <span class="text-gray-700 dark:text-gray-300">$15\,000\text{ Pa}$</span>
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">C</span>
+        <span class="text-gray-700 dark:text-gray-300">$1.5\times 10^6\text{ Pa}$</span>
+      </button>
+    
+      <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">D</span>
+        <span class="text-gray-700 dark:text-gray-300">$75\,000\text{ Pa}$</span>
+      </button>
+        </div>
+        <div class="quiz-feedback hidden p-3 rounded-lg text-xs leading-relaxed">
+          <div class="feedback-title font-bold mb-1"></div>
+          <div class="feedback-text text-gray-700 dark:text-gray-300">Áp suất thuỷ tĩnh: $p = \rho g h = 1000 \times 10 \times 15 = 150\,000\text{ Pa} = 150\text{ kPa}$.</div>
+        </div>
+      </div>
     </article>
   
         </div>
@@ -6047,6 +6864,265 @@
   </footer>
 
   <!-- Interactive Scripts -->
+  
+
+  <!-- Course Exam Modal -->
+  <div id="courseQuizModal" class="hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white dark:bg-gray-800 rounded-3xl max-w-3xl w-full max-h-[90vh] overflow-y-auto p-6 sm:p-8 shadow-2xl border border-gray-200 dark:border-gray-700">
+      <div class="flex items-center justify-between pb-4 border-b border-gray-200 dark:border-gray-700 mb-6">
+        <div>
+          <span class="px-2.5 py-0.5 rounded-full bg-sky-100 dark:bg-sky-950/70 text-sky-700 dark:text-sky-300 font-bold text-xs">
+            Bài thi đánh giá tổng kết
+          </span>
+          <h3 class="text-xl sm:text-2xl font-black text-gray-900 dark:text-white mt-1">
+            Đánh Giá Toàn Khóa: Vật Lí Lớp 10
+          </h3>
+        </div>
+        <button onclick="closeCourseQuizModal()" class="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-500 hover:text-gray-900 dark:hover:text-white flex items-center justify-center transition">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- Exam Form -->
+      <form id="courseExamForm" onsubmit="submitCourseExam(event)" class="space-y-6 text-sm text-gray-700 dark:text-gray-300">
+        <!-- Q1 -->
+        <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600">
+          <p class="font-bold text-gray-900 dark:text-white mb-2">
+            1. Một học sinh đo chiều dài một cuốn sách được giá trị trung bình $\bar{L} = 24.5\text{ cm}$ và sai số tuyệt đối $\Delta L = 0.1\text{ cm}$. Cách ghi kết quả đo đúng quy chuẩn là:
+          </p>
+          <div class="space-y-2">
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq1" value="A" required class="text-sky-600">
+              <span>A. $L = (24.5 \pm 0.1)\text{ cm}$</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq1" value="B" class="text-sky-600">
+              <span>B. $L = 24.5 \pm 0.1$</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq1" value="C" class="text-sky-600">
+              <span>C. $L = 24.5\text{ cm} \pm 1\text{ mm}$</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600">
+          <p class="font-bold text-gray-900 dark:text-white mb-2">
+            2. Một ô tô chạy từ A đến B cách nhau $120\text{ km}$ hết $2\text{ giờ}$, sau đó lập tức quay trở lại A theo đường cũ hết $3\text{ giờ}$. Vận tốc trung bình của ô tô trong cả quá trình là:
+          </p>
+          <div class="space-y-2">
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq2" value="A" required class="text-sky-600">
+              <span>A. $0\text{ km/h}$ (vì điểm đầu và điểm cuối trùng nhau nên độ dịch chuyển $d = 0$)</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq2" value="B" class="text-sky-600">
+              <span>B. $48\text{ km/h}$</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq2" value="C" class="text-sky-600">
+              <span>C. $24\text{ km/h}$</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600">
+          <p class="font-bold text-gray-900 dark:text-white mb-2">
+            3. Công thức độc lập với thời gian liên hệ giữa gia tốc $a$, vận tốc ban đầu $v_0$, vận tốc $v$ và độ dịch chuyển $d$ trong chuyển động thẳng biến đổi đều là:
+          </p>
+          <div class="space-y-2">
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq3" value="A" required class="text-sky-600">
+              <span>A. $v^2 - v_0^2 = 2ad$</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq3" value="B" class="text-sky-600">
+              <span>B. $v^2 + v_0^2 = 2ad$</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq3" value="C" class="text-sky-600">
+              <span>C. $v - v_0 = 2ad$</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600">
+          <p class="font-bold text-gray-900 dark:text-white mb-2">
+            4. Thả rơi tự do một vật từ độ cao $h = 45\text{ m}$ tại nơi có $g = 10\text{ m/s}^2$. Thời gian vật rơi chạm đất và vận tốc khi chạm đất là:
+          </p>
+          <div class="space-y-2">
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq4" value="A" required class="text-sky-600">
+              <span>A. $t = 3\text{ s}$ và $v = 30\text{ m/s}$ (do $t = \sqrt{2h/g} = 3\text{ s}$, $v = gt = 30\text{ m/s}$)</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq4" value="B" class="text-sky-600">
+              <span>B. $t = 4.5\text{ s}$ và $v = 45\text{ m/s}$</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq4" value="C" class="text-sky-600">
+              <span>C. $t = 2\text{ s}$ và $v = 20\text{ m/s}$</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q5 -->
+        <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600">
+          <p class="font-bold text-gray-900 dark:text-white mb-2">
+            5. Tác dụng một lực không đổi $F = 15\text{ N}$ vào một vật khối lượng $m = 3\text{ kg}$ đang đứng yên. Quãng đường vật đi được sau $4\text{ s}$ là:
+          </p>
+          <div class="space-y-2">
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq5" value="A" required class="text-sky-600">
+              <span>A. $40\text{ m}$ (do $a = F/m = 5\text{ m/s}^2 \Rightarrow s = \frac{1}{2}at^2 = 40\text{ m}$)</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq5" value="B" class="text-sky-600">
+              <span>B. $20\text{ m}$</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq5" value="C" class="text-sky-600">
+              <span>C. $60\text{ m}$</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q6 -->
+        <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600">
+          <p class="font-bold text-gray-900 dark:text-white mb-2">
+            6. Một thanh nhẹ quay quanh trục cố định chịu tác dụng lực $F_1 = 30\text{ N}$ với cánh tay đòn $d_1 = 20\text{ cm}$. Để thanh cân bằng, lực $F_2$ tác dụng ngược chiều kim đồng hồ có cánh tay đòn $d_2 = 40\text{ cm}$ phải bằng:
+          </p>
+          <div class="space-y-2">
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq6" value="A" required class="text-sky-600">
+              <span>A. $15\text{ N}$ (theo quy tắc moment: $F_1 d_1 = F_2 d_2 \Rightarrow F_2 = 15\text{ N}$)</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq6" value="B" class="text-sky-600">
+              <span>B. $60\text{ N}$</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq6" value="C" class="text-sky-600">
+              <span>C. $30\text{ N}$</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q7 -->
+        <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600">
+          <p class="font-bold text-gray-900 dark:text-white mb-2">
+            7. Lực kéo $F = 100\text{ N}$ hợp với phương chuyển dời một góc $60^\circ$ làm hòm gỗ trượt trên sàn quãng đường $s = 20\text{ m}$. Công do lực kéo sinh ra là:
+          </p>
+          <div class="space-y-2">
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq7" value="A" required class="text-sky-600">
+              <span>A. $1000\text{ J}$ (do $A = F \cdot s \cdot \cos 60^\circ = 1000\text{ J}$)</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq7" value="B" class="text-sky-600">
+              <span>B. $2000\text{ J}$</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq7" value="C" class="text-sky-600">
+              <span>C. $1732\text{ J}$</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q8 -->
+        <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600">
+          <p class="font-bold text-gray-900 dark:text-white mb-2">
+            8. Ném một vật từ mặt đất thẳng đứng lên cao với vận tốc ban đầu $v_0 = 10\text{ m/s}$ (lấy $g = 10\text{ m/s}^2$, bỏ qua lực cản). Độ cao cực đại vật đạt được là:
+          </p>
+          <div class="space-y-2">
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq8" value="A" required class="text-sky-600">
+              <span>A. $5\text{ m}$ (bảo toàn cơ năng: $h_{\max} = \frac{v_0^2}{2g} = \frac{100}{20} = 5\text{ m}$)</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq8" value="B" class="text-sky-600">
+              <span>B. $10\text{ m}$</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq8" value="C" class="text-sky-600">
+              <span>C. $2.5\text{ m}$</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q9 -->
+        <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600">
+          <p class="font-bold text-gray-900 dark:text-white mb-2">
+            9. Viên đạn khối lượng $m_1 = 0.05\text{ kg}$ bay ngang với vận tốc $400\text{ m/s}$ cắm vào bao cát $m_2 = 4.95\text{ kg}$ đang đứng yên. Vận tốc của hệ ngay sau va chạm là:
+          </p>
+          <div class="space-y-2">
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq9" value="A" required class="text-sky-600">
+              <span>A. $4\text{ m/s}$ (va chạm mềm: $V = \frac{m_1 v_1}{m_1 + m_2} = \frac{20}{5} = 4\text{ m/s}$)</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq9" value="B" class="text-sky-600">
+              <span>B. $2\text{ m/s}$</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq9" value="C" class="text-sky-600">
+              <span>C. $40\text{ m/s}$</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q10 -->
+        <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600">
+          <p class="font-bold text-gray-900 dark:text-white mb-2">
+            10. Vật khối lượng $m = 0.2\text{ kg}$ chuyển động tròn đều trên đường tròn bán kính $R = 0.5\text{ m}$ với tốc độ không đổi $v = 2\text{ m/s}$. Lực hướng tâm tác dụng lên vật là:
+          </p>
+          <div class="space-y-2">
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq10" value="A" required class="text-sky-600">
+              <span>A. $1.6\text{ N}$ (do $F_{ht} = m \frac{v^2}{R} = 0.2 \times \frac{4}{0.5} = 1.6\text{ N}$)</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq10" value="B" class="text-sky-600">
+              <span>B. $0.8\text{ N}$</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq10" value="C" class="text-sky-600">
+              <span>C. $3.2\text{ N}$</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="pt-4 border-t border-gray-200 dark:border-gray-700 flex justify-end gap-3">
+          <button type="button" onclick="closeCourseQuizModal()" class="px-4 py-2 rounded-xl bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 font-semibold hover:bg-gray-200 transition">
+            Đóng
+          </button>
+          <button type="submit" class="px-5 py-2 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-bold transition shadow-sm">
+            Nộp bài & Chấm điểm
+          </button>
+        </div>
+      </form>
+
+      <!-- Exam Result Panel -->
+      <div id="courseExamResult" class="hidden mt-6 p-6 rounded-2xl bg-sky-50 dark:bg-sky-950/50 border border-sky-200 dark:border-sky-800 text-center space-y-3">
+        <div class="w-16 h-16 mx-auto rounded-full bg-sky-600 text-white flex items-center justify-center text-2xl shadow-lg">
+          <i class="fa-solid fa-trophy"></i>
+        </div>
+        <h4 id="examScoreText" class="text-2xl font-black text-gray-900 dark:text-white">
+          Kết quả của bạn: 0/10 điểm
+        </h4>
+        <p id="examCommentText" class="text-sm text-gray-600 dark:text-gray-300 max-w-md mx-auto leading-relaxed">
+          Đang tải đánh giá năng lực...
+        </p>
+        <button onclick="resetCourseExam()" class="mt-4 px-4 py-2 rounded-xl bg-sky-600 text-white text-xs font-bold hover:bg-sky-700 transition">
+          <i class="fa-solid fa-rotate-right mr-1"></i> Làm lại bài thi
+        </button>
+      </div>
+    </div>
+  </div>
+
   <script>
     // Theme toggle logic
     const themeToggle = document.getElementById('themeToggle');
@@ -6058,10 +7134,51 @@
       htmlEl.classList.remove('dark');
     }
 
-    themeToggle.addEventListener('click', () => {
+    themeToggle?.addEventListener('click', () => {
       htmlEl.classList.toggle('dark');
       localStorage.setItem('theme', htmlEl.classList.contains('dark') ? 'dark' : 'light');
     });
+
+    // Reading Progress Bar
+    window.addEventListener('scroll', () => {
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      const bar = document.getElementById('progressBar');
+      if (bar) bar.style.width = scrolled + '%';
+    });
+
+    // Live Search Lessons in Sidebar
+    const searchInput = document.getElementById('lessonSearch');
+    searchInput?.addEventListener('input', (e) => {
+      const query = e.target.value.toLowerCase().trim();
+      const items = document.querySelectorAll('aside ul li');
+      items.forEach(item => {
+        const text = item.textContent.toLowerCase();
+        if (text.includes(query)) {
+          item.style.display = '';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    });
+
+    // Initialize KaTeX on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      renderAllMath();
+    });
+
+    function renderAllMath() {
+      if (typeof renderMathInElement === 'function') {
+        renderMathInElement(document.body, {
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false}
+          ],
+          throwOnError: false
+        });
+      }
+    }
 
     // Quiz interactive logic
     function checkQuiz(button, isCorrect) {
@@ -6088,7 +7205,115 @@
         feedbackTitle.innerHTML = '<i class="fa-solid fa-circle-xmark text-rose-600 mr-1.5"></i> Chưa chính xác. Xem lời giải chi tiết:';
         feedbackTitle.className = 'feedback-title font-bold mb-1 text-rose-700 dark:text-rose-300';
       }
+
+      if (typeof renderMathInElement === 'function') {
+        renderMathInElement(feedback, {
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false}
+          ],
+          throwOnError: false
+        });
+      }
     }
+
+    // Modal Course Quiz
+    function openCourseQuizModal() {
+      const modal = document.getElementById('courseQuizModal');
+      if (modal) modal.classList.remove('hidden');
+      if (typeof renderMathInElement === 'function') {
+        renderMathInElement(modal, {
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false}
+          ],
+          throwOnError: false
+        });
+      }
+    }
+
+    function closeCourseQuizModal() {
+      const modal = document.getElementById('courseQuizModal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    // Course Exam Submission
+    const examAnswers = {
+      eq1: 'A',
+      eq2: 'A',
+      eq3: 'A',
+      eq4: 'A',
+      eq5: 'A',
+      eq6: 'A',
+      eq7: 'A',
+      eq8: 'A',
+      eq9: 'A',
+      eq10: 'A'
+    };
+
+    function submitCourseExam(e) {
+      e.preventDefault();
+      const form = document.getElementById('courseExamForm');
+      let score = 0;
+
+      for (let i = 1; i <= 10; i++) {
+        const val = form['eq' + i]?.value;
+        if (val === examAnswers['eq' + i]) {
+          score++;
+        }
+      }
+
+      form.classList.add('hidden');
+      const resultBox = document.getElementById('courseExamResult');
+      resultBox.classList.remove('hidden');
+      document.getElementById('examScoreText').innerText = 'Kết quả của bạn: ' + score + '/10 điểm';
+
+      let comment = '';
+      if (score >= 9) {
+        comment = 'Xuất sắc! Bạn nắm rất vững toàn bộ kiến thức Vật lí 10 (GDPT 2018 - Kết nối tri thức)!';
+      } else if (score >= 7) {
+        comment = 'Rất tốt! Bạn hiểu sâu sắc các định luật Newton, chuyển động biến đổi đều, công - cơ năng và động lượng!';
+      } else if (score >= 5) {
+        comment = 'Đạt yêu cầu. Hãy ôn luyện thêm các dạng bài chuyển động tròn, lực hướng tâm và moment lực nhé!';
+      } else {
+        comment = 'Cần cố gắng hơn. Hãy đọc kỹ lại phần lý thuyết và ví dụ minh họa của từng bài học nhé!';
+      }
+      document.getElementById('examCommentText').innerText = comment;
+    }
+
+    function resetCourseExam() {
+      const form = document.getElementById('courseExamForm');
+      form.reset();
+      form.classList.remove('hidden');
+      document.getElementById('courseExamResult').classList.add('hidden');
+    }
+
+    // Active sidebar scrollspy
+    const articles = document.querySelectorAll('article[id]');
+    const sidebarLinks = document.querySelectorAll('aside a[href^="#bai-"]');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      const scrollY = window.pageYOffset;
+      articles.forEach(article => {
+        const artHeight = article.offsetHeight;
+        const artTop = article.offsetTop - 160;
+        if (scrollY > artTop && scrollY <= artTop + artHeight) {
+          current = article.getAttribute('id');
+        }
+      });
+
+      if (current) {
+        sidebarLinks.forEach(link => {
+          if (link.getAttribute('href') === '#' + current) {
+            link.classList.add('text-sky-600', 'font-bold', 'bg-sky-50', 'dark:bg-sky-900/30');
+          } else {
+            link.classList.remove('text-sky-600', 'font-bold', 'bg-sky-50', 'dark:bg-sky-900/30');
+          }
+        });
+      }
+    });
   </script>
+
 </body>
 </html>
