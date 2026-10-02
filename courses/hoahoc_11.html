@@ -5,7 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hóa Học 11 (KNTT) - Kết Nối Tri Thức | CodeHub</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- MathJax for rendering math and scientific formulas -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script>
     tailwind.config = {
       darkMode: 'class',
@@ -4241,8 +4252,8 @@
             <li><strong>Khái niệm:</strong> Phenol là những hợp chất hữu cơ trong phân tử có nhóm hydroxy (-OH) liên kết <strong>trực tiếp với nguyên tử carbon của vòng benzene</strong>. Hợp chất đơn giản nhất là phenol: <code class="font-mono font-bold text-indigo-600">C₆H₅OH</code>.</li>
             <li><strong>Tính chất vật lí:</strong> Chất rắn kết tinh không màu, nóng chảy ở 43°C. Để lâu ngoài không khí phenol bị oxi hoá chậm chuyển sang màu hồng nhạt. Ít tan trong nước lạnh, tan vô hạn trong nước ở nhiệt độ trên 66°C và tan tốt trong cồn. Phenol rất độc, gây bỏng nặng khi tiếp xúc trực tiếp với da.</li>
             <li><strong>Ảnh hưởng qua lại trong phân tử:</strong> Cặp electron tự do trên nguyên tử oxygen liên hợp với hệ electron π của vòng benzene:
-              <br>- Làm tăng độ phân cực của liên kết O-H $ightarrow$ nguyên tử H linh động hơn $ightarrow$ Phenol có <strong>tính acid yếu</strong> (yếu hơn H₂CO₃).
-              <br>- Làm tăng mật độ electron ở các vị trí <strong>ortho và para</strong> của vòng benzene $ightarrow$ Phản ứng thế trên nhân thơm xảy ra <em>dễ dàng hơn nhiều so với benzene</em>.
+              <br>- Làm tăng độ phân cực của liên kết O-H &rarr; nguyên tử H linh động hơn &rarr; Phenol có <strong>tính acid yếu</strong> (yếu hơn H₂CO₃).
+              <br>- Làm tăng mật độ electron ở các vị trí <strong>ortho và para</strong> của vòng benzene &rarr; Phản ứng thế trên nhân thơm xảy ra <em>dễ dàng hơn nhiều so với benzene</em>.
             </li>
           </ul>
         
@@ -5212,6 +5223,9 @@
       });
 
       feedback.classList.remove('hidden');
+      if (window.MathJax && window.MathJax.typesetPromise) {
+        window.MathJax.typesetPromise([feedback]);
+      }
 
       if (isCorrect) {
         button.classList.add('bg-emerald-50', 'dark:bg-emerald-950/40', 'border-emerald-500', 'text-emerald-700', 'dark:text-emerald-300');
