@@ -2231,6 +2231,53 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="scripts/supabase-config.js"></script>
     <script src="scripts/auth-ui.js"></script>
+
+    <!-- CodeHub visit counter - Supabase -->
+    <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const countEl = document.getElementById('visit-count');
+      if (!countEl) return;
+
+      // Chờ scripts/supabase-config.js khởi tạo window.supabaseClient
+      let tries = 0;
+      while (!window.supabaseClient && tries < 40) {
+        await new Promise(r => setTimeout(r, 100));
+        tries++;
+      }
+
+      const client = window.supabaseClient;
+      if (!client) {
+        countEl.textContent = '!';
+        countEl.title = 'Chưa khởi tạo được Supabase';
+        return;
+      }
+
+      try {
+        // RPC tự tăng ở phía database => tránh xung đột khi nhiều người truy cập cùng lúc.
+        const { data, error } = await client.rpc('increment_site_visit', {
+          p_page: 'home'
+        });
+        if (error) throw error;
+
+        let value = data;
+        if (Array.isArray(data)) value = data[0]?.visit_count ?? data[0]?.count ?? data[0];
+        if (data && typeof data === 'object' && !Array.isArray(data)) {
+          value = data.visit_count ?? data.count ?? data.value;
+        }
+
+        const n = Number(value);
+        if (!Number.isFinite(n)) throw new Error('RPC không trả về số lượt hợp lệ');
+
+        countEl.textContent = n.toLocaleString('vi-VN');
+        countEl.title = 'Tổng số lượt truy cập trang chủ';
+      } catch (err) {
+        console.error('Supabase visit counter:', err);
+        countEl.textContent = '!';
+        countEl.title = 'Chưa tạo hàm increment_site_visit trong Supabase';
+      }
+    });
+    </script>
+
     <script>
     // CodeHub role-aware navigation patch
     document.addEventListener('DOMContentLoaded', async () => {
@@ -2300,83 +2347,6 @@
     </script>
     <script src="scripts/app.js?v=7"></script>
     <script src="scripts/chatbot.js?v=7"></script>
-
-    <!-- CodeHub visit counter V2 -->
-    <script>
-    (function () {
-        const countEl = document.getElementById('visit-count');
-        if (!countEl) return;
-
-        // Bộ đếm công khai dành cho GitHub Pages.
-        // Mỗi trình duyệt chỉ tăng 1 lần trong một phiên.
-        const alreadyCounted = sessionStorage.getItem('codehub_visit_counted_v2') === '1';
-        const action = alreadyCounted ? 'get' : 'up';
-        const namespace = 'phamanhquoc9139-codehub';
-        const key = 'homepage';
-
-        async function fetchJson(url) {
-            const controller = new AbortController();
-            const timer = setTimeout(() => controller.abort(), 6000);
-            try {
-                const res = await fetch(url, {
-                    method: 'GET',
-                    mode: 'cors',
-                    cache: 'no-store',
-                    signal: controller.signal
-                });
-                if (!res.ok) throw new Error('HTTP ' + res.status);
-                return await res.json();
-            } finally {
-                clearTimeout(timer);
-            }
-        }
-
-        function getNumber(data) {
-            const candidates = [
-                data && data.count,
-                data && data.value,
-                data && data.up_count,
-                data && data.data && data.data.count,
-                data && data.data && data.data.up_count
-            ];
-            for (const v of candidates) {
-                const n = Number(v);
-                if (Number.isFinite(n)) return n;
-            }
-            return null;
-        }
-
-        async function loadVisitCount() {
-            // Endpoint 1
-            const urls = [
-                'https://api.counterapi.dev/v1/' + namespace + '/' + key + '/' + action,
-                // Fallback endpoint. It uses the same public-site pattern.
-                'https://api.countapi.xyz/' + (action === 'up' ? 'hit' : 'get') + '/' + namespace + '/' + key
-            ];
-
-            for (const url of urls) {
-                try {
-                    const data = await fetchJson(url);
-                    const n = getNumber(data);
-                    if (n !== null) {
-                        countEl.textContent = n.toLocaleString('vi-VN');
-                        countEl.removeAttribute('title');
-                        if (!alreadyCounted) sessionStorage.setItem('codehub_visit_counted_v2', '1');
-                        return;
-                    }
-                } catch (e) {
-                    console.warn('Visit counter endpoint failed:', url, e);
-                }
-            }
-
-            // Không để dấu gạch gây hiểu nhầm là lỗi giao diện.
-            countEl.textContent = '0';
-            countEl.title = 'Bộ đếm đang tạm thời không kết nối được máy chủ';
-        }
-
-        loadVisitCount();
-    })();
-    </script>
 
 </body>
 
