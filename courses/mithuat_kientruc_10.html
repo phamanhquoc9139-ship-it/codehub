@@ -103,6 +103,48 @@
     </div>
   </header>
 
+  <!-- Hero Section -->
+  <section class="bg-gradient-to-r from-teal-600 via-emerald-600 to-teal-700 text-white py-10 px-4 sm:px-6 lg:px-8 shadow-inner">
+    <div class="max-w-7xl mx-auto">
+      <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+        <div class="space-y-3 max-w-3xl">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/20 text-white text-xs font-semibold backdrop-blur-sm">
+            <i class="fa-solid fa-landmark"></i> Mĩ Thuật Trung Học Phổ Thông • Lớp 10
+          </div>
+          <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight leading-tight">
+            Chuyên Đề Kiến Trúc Lớp 10: Ngôn Ngữ Kiến Trúc, Không Gian Sống &amp; Di Sản Kiến Trúc Cổ
+          </h1>
+          <p class="text-teal-100 text-sm sm:text-base leading-relaxed">
+            Hệ thống 12 bài học chuyên sâu chuẩn GDPT 2018: từ ngôn ngữ không gian kiến trúc, hình khối và công năng, kiến trúc truyền thống Việt Nam (nhà rông, đình chùa), kiến trúc cổ điển thế giới đến dựng mô hình maquette kiến trúc.
+          </p>
+          <div class="flex flex-wrap items-center gap-3 pt-2 text-xs font-medium">
+            <span class="flex items-center gap-1.5 bg-black/20 px-3 py-1.5 rounded-lg backdrop-blur-sm">
+              <i class="fa-solid fa-book-bookmark text-teal-200"></i> 12 Bài Học Toàn Diện
+            </span>
+            <span class="flex items-center gap-1.5 bg-black/20 px-3 py-1.5 rounded-lg backdrop-blur-sm">
+              <i class="fa-solid fa-circle-question text-teal-200"></i> 48 Câu Hỏi Luyện Tập
+            </span>
+            <span class="flex items-center gap-1.5 bg-black/20 px-3 py-1.5 rounded-lg backdrop-blur-sm">
+              <i class="fa-solid fa-stopwatch text-teal-200"></i> Bài Thi Cuối Khóa 40 Câu (40 Phút)
+            </span>
+            <span class="flex items-center gap-1.5 bg-black/20 px-3 py-1.5 rounded-lg backdrop-blur-sm">
+              <i class="fa-solid fa-certificate text-teal-200"></i> Chuẩn GDPT 2018
+            </span>
+          </div>
+        </div>
+        <div class="hidden lg:flex flex-col items-center bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/20 text-center min-w-[200px]">
+          <i class="fa-solid fa-landmark text-5xl text-teal-200 mb-3"></i>
+          <span class="text-xs uppercase font-semibold text-teal-100 tracking-wider">Tiến Độ Khóa Học</span>
+          <span id="courseProgressText" class="text-2xl font-bold mt-1">0%</span>
+          <div class="w-full bg-white/20 rounded-full h-1.5 mt-2">
+            <div id="courseProgressBar" class="bg-white h-1.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
   <!-- Mobile Drawer Menu -->
   <div id="mobileDrawer" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden lg:hidden flex justify-end">
     <div class="bg-white dark:bg-dark-surface w-80 max-w-full h-full shadow-2xl p-5 flex flex-col overflow-y-auto">
@@ -5763,6 +5805,16 @@
         summary.innerHTML += ' <span class="text-xs text-rose-500">(' + unanswered + ' câu chưa chọn)</span>';
       }
     }
+  
+    const completedLessons = new Set();
+    function updateCourseProgress() {
+      const pct = Math.round((completedLessons.size / 12) * 100);
+      const text = document.getElementById('courseProgressText');
+      const bar = document.getElementById('courseProgressBar');
+      if (text) text.textContent = pct + '%';
+      if (bar) bar.style.width = pct + '%';
+    }
+
   </script>
 </body>
 </html>

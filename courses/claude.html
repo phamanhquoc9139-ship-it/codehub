@@ -1,0 +1,1969 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anthropic Claude (claude.ai) - Làm Chủ Trí Tuệ Nhân Tạo Thông Tuệ & Tinh Tế | CodeHub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            claude: {
+              50: '#fffbeb',
+              100: '#fef3c7',
+              200: '#fde68a',
+              300: '#fcd34d',
+              400: '#fbbf24',
+              500: '#f59e0b',
+              600: '#d97706',
+              700: '#b45309',
+              800: '#92400e',
+              900: '#78350f',
+              terracotta: '#d97757',
+              terracotta_dark: '#c45a38'
+            },
+            dark: {
+              bg: '#0f1115',
+              surface: '#161922',
+              card: '#1e2230',
+              border: '#2c3245'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .sidebar-scroll::-webkit-scrollbar { width: 6px; }
+    .sidebar-scroll::-webkit-scrollbar-track { background: transparent; }
+    .sidebar-scroll::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 4px; }
+    .dark .sidebar-scroll::-webkit-scrollbar-thumb { background: #475569; }
+    .claude-gradient {
+      background: linear-gradient(135deg, #451a03 0%, #7c2d12 35%, #b45309 70%, #1c1917 100%);
+    }
+  </style>
+</head>
+<body class="bg-gray-50 dark:bg-dark-bg text-gray-900 dark:text-gray-100 min-h-screen flex flex-col font-sans transition-colors duration-200">
+
+  <!-- Header Navigation -->
+  <header class="sticky top-0 z-50 bg-white/90 dark:bg-dark-surface/90 backdrop-blur border-b border-gray-200 dark:border-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <a href="../index.html" class="flex items-center gap-2 text-amber-600 dark:text-amber-500 font-bold text-lg hover:opacity-90">
+          <i class="fa-solid fa-graduation-cap text-xl"></i>
+          <span class="hidden sm:inline">CodeHub</span>
+        </a>
+        <div class="h-5 w-px bg-gray-300 dark:bg-gray-700"></div>
+        <div class="flex items-center gap-1.5 bg-gray-100 dark:bg-gray-800 p-1 rounded-xl text-xs sm:text-sm font-semibold">
+          <span class="px-2.5 py-1 rounded-lg bg-white dark:bg-gray-700 shadow-sm text-amber-600 dark:text-amber-400 flex items-center gap-1.5">
+            <i class="fa-solid fa-feather-pointed"></i> Claude
+          </span>
+          <a href="chatgpt.html" class="px-2.5 py-1 rounded-lg text-emerald-600 dark:text-emerald-400 hover:bg-white dark:hover:bg-gray-700 flex items-center gap-1">
+            <i class="fa-solid fa-robot"></i> ChatGPT
+          </a>
+          <a href="gemini_google.html" class="px-2.5 py-1 rounded-lg text-indigo-600 dark:text-indigo-400 hover:bg-white dark:hover:bg-gray-700 flex items-center gap-1">
+            <i class="fa-solid fa-wand-magic-sparkles"></i> Gemini
+          </a>
+          <a href="notebook_google.html" class="px-2.5 py-1 rounded-lg text-teal-600 dark:text-teal-400 hover:bg-white dark:hover:bg-gray-700 flex items-center gap-1">
+            <i class="fa-solid fa-book-bookmark"></i> NotebookLM
+          </a>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <a href="https://claude.ai" target="_blank" rel="noopener noreferrer" class="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-600 hover:bg-amber-700 text-white text-xs font-semibold shadow-sm transition">
+          <span>Truy cập claude.ai</span>
+          <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+        </a>
+        <!-- Dark/Light Mode Button -->
+        <button id="theme-toggle" class="p-2 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-300 transition" aria-label="Đổi giao diện">
+          <i id="theme-icon" class="fa-solid fa-moon"></i>
+        </button>
+        <!-- Mobile Drawer Button -->
+        <button id="mobile-menu-btn" class="lg:hidden p-2 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-300 transition" aria-label="Menu bài học">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="claude-gradient text-white py-12 sm:py-16 px-4 sm:px-6 lg:px-8 border-b border-amber-900/40 relative overflow-hidden">
+    <div class="max-w-7xl mx-auto relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
+      <div class="space-y-4 max-w-3xl">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 text-amber-200 border border-amber-400/30 text-xs font-semibold tracking-wide">
+          <i class="fa-solid fa-sparkles"></i> Nền Tảng AI Tiên Phong Của Anthropic
+        </div>
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight">
+          Làm Chủ Anthropic Claude (<span class="text-amber-300">claude.ai</span>)
+        </h1>
+        <p class="text-gray-200 text-sm sm:text-base leading-relaxed">
+          Khóa học toàn diện từ cơ bản đến chuyên sâu: Khám phá sức mạnh của dòng mô hình <strong>Claude 3.5 & 3.7 Sonnet</strong>, nghệ thuật cấu trúc Prompt với <strong>XML tags</strong>, không gian làm việc trực quan tương tác <strong>Artifacts</strong>, quản lý kho tri thức khổng lồ <strong>Projects</strong>, siêu ngữ cảnh <strong>200,000 tokens</strong>, chế độ tư duy chuỗi <strong>Extended Thinking</strong> và công nghệ điều khiển máy tính <strong>Computer Use</strong>.
+        </p>
+        <div class="flex flex-wrap items-center gap-4 pt-2 text-xs text-gray-300">
+          <span class="flex items-center gap-1.5"><i class="fa-solid fa-book-open text-amber-400"></i> 10 Bài Học Chuyên Sâu</span>
+          <span class="flex items-center gap-1.5"><i class="fa-solid fa-circle-question text-amber-400"></i> 40 Bài Tập Trắc Nghiệm Tương Tác</span>
+          <span class="flex items-center gap-1.5"><i class="fa-solid fa-microchip text-amber-400"></i> Claude 3.5 & 3.7 Sonnet / Haiku / Opus</span>
+          <span class="flex items-center gap-1.5"><i class="fa-solid fa-code text-amber-400"></i> React & SVG Artifacts</span>
+        </div>
+      </div>
+
+      <!-- Quick Progress Card -->
+      <div class="w-full md:w-80 bg-white/10 dark:bg-dark-surface/80 backdrop-blur-md p-5 rounded-2xl border border-white/15 text-white shadow-xl shrink-0">
+        <div class="flex items-center justify-between mb-3">
+          <span class="text-xs uppercase tracking-wider font-bold text-amber-200">Tiến độ khóa học</span>
+          <span id="progress-percent" class="text-lg font-black text-amber-300">0%</span>
+        </div>
+        <div class="w-full bg-black/30 rounded-full h-2.5 overflow-hidden mb-4">
+          <div id="progress-bar" class="bg-gradient-to-r from-amber-400 to-orange-400 h-2.5 rounded-full w-0 transition-all duration-300"></div>
+        </div>
+        <div class="flex justify-between items-center text-xs text-gray-300 border-t border-white/10 pt-3">
+          <span>Đã hoàn thành:</span>
+          <span class="font-bold text-white"><span id="quiz-completed-count">0</span> / 40 câu hỏi</span>
+        </div>
+        <button onclick="resetAllQuizzes()" class="mt-4 w-full py-2 px-3 rounded-xl bg-white/10 hover:bg-white/20 text-xs text-center font-semibold text-gray-200 transition flex items-center justify-center gap-1.5">
+          <i class="fa-solid fa-rotate-left text-[11px]"></i> Đặt lại tiến độ bài tập
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Container: Sidebar + Content -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+      <!-- Desktop Sidebar Sticky Navigation -->
+      <aside class="hidden lg:block lg:col-span-3 sticky top-24 space-y-4">
+        <div class="bg-white dark:bg-dark-card rounded-2xl p-4 border border-gray-200 dark:border-gray-800 shadow-sm">
+          <h3 class="text-xs font-bold uppercase tracking-wider text-gray-400 dark:text-gray-500 mb-3 px-2 flex items-center justify-between">
+            <span>Mục lục 10 bài học</span>
+            <i class="fa-solid fa-list-ol text-amber-500"></i>
+          </h3>
+          <nav class="space-y-1 text-xs font-medium sidebar-scroll max-h-[calc(100vh-160px)] overflow-y-auto pr-1">
+            <a href="#bai1" class="nav-link flex items-center gap-2.5 p-2.5 rounded-xl hover:bg-amber-500/10 text-gray-700 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-400 transition">
+              <span class="w-6 h-6 rounded-lg bg-amber-500/10 text-amber-600 flex items-center justify-center font-bold text-[11px] shrink-0">1</span>
+              <span class="truncate">Bài 1: Giới thiệu & Triết lý Anthropic</span>
+            </a>
+            <a href="#bai2" class="nav-link flex items-center gap-2.5 p-2.5 rounded-xl hover:bg-amber-500/10 text-gray-700 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-400 transition">
+              <span class="w-6 h-6 rounded-lg bg-amber-500/10 text-amber-600 flex items-center justify-center font-bold text-[11px] shrink-0">2</span>
+              <span class="truncate">Bài 2: Prompt với XML Tags & Prefill</span>
+            </a>
+            <a href="#bai3" class="nav-link flex items-center gap-2.5 p-2.5 rounded-xl hover:bg-amber-500/10 text-gray-700 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-400 transition">
+              <span class="w-6 h-6 rounded-lg bg-amber-500/10 text-amber-600 flex items-center justify-center font-bold text-[11px] shrink-0">3</span>
+              <span class="truncate">Bài 3: Đột phá Trực quan Artifacts</span>
+            </a>
+            <a href="#bai4" class="nav-link flex items-center gap-2.5 p-2.5 rounded-xl hover:bg-amber-500/10 text-gray-700 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-400 transition">
+              <span class="w-6 h-6 rounded-lg bg-amber-500/10 text-amber-600 flex items-center justify-center font-bold text-[11px] shrink-0">4</span>
+              <span class="truncate">Bài 4: Không gian Claude Projects</span>
+            </a>
+            <a href="#bai5" class="nav-link flex items-center gap-2.5 p-2.5 rounded-xl hover:bg-amber-500/10 text-gray-700 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-400 transition">
+              <span class="w-6 h-6 rounded-lg bg-amber-500/10 text-amber-600 flex items-center justify-center font-bold text-[11px] shrink-0">5</span>
+              <span class="truncate">Bài 5: Thị giác Vision & Mockup UI</span>
+            </a>
+            <a href="#bai6" class="nav-link flex items-center gap-2.5 p-2.5 rounded-xl hover:bg-amber-500/10 text-gray-700 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-400 transition">
+              <span class="w-6 h-6 rounded-lg bg-amber-500/10 text-amber-600 flex items-center justify-center font-bold text-[11px] shrink-0">6</span>
+              <span class="truncate">Bài 6: Siêu Ngữ Cảnh 200K Tokens</span>
+            </a>
+            <a href="#bai7" class="nav-link flex items-center gap-2.5 p-2.5 rounded-xl hover:bg-amber-500/10 text-gray-700 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-400 transition">
+              <span class="w-6 h-6 rounded-lg bg-amber-500/10 text-amber-600 flex items-center justify-center font-bold text-[11px] shrink-0">7</span>
+              <span class="truncate">Bài 7: Extended Thinking Mode</span>
+            </a>
+            <a href="#bai8" class="nav-link flex items-center gap-2.5 p-2.5 rounded-xl hover:bg-amber-500/10 text-gray-700 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-400 transition">
+              <span class="w-6 h-6 rounded-lg bg-amber-500/10 text-amber-600 flex items-center justify-center font-bold text-[11px] shrink-0">8</span>
+              <span class="truncate">Bài 8: Claude Computer Use</span>
+            </a>
+            <a href="#bai9" class="nav-link flex items-center gap-2.5 p-2.5 rounded-xl hover:bg-amber-500/10 text-gray-700 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-400 transition">
+              <span class="w-6 h-6 rounded-lg bg-amber-500/10 text-amber-600 flex items-center justify-center font-bold text-[11px] shrink-0">9</span>
+              <span class="truncate">Bài 9: Viết lách & Nghiên cứu Học thuật</span>
+            </a>
+            <a href="#bai10" class="nav-link flex items-center gap-2.5 p-2.5 rounded-xl hover:bg-amber-500/10 text-gray-700 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-400 transition">
+              <span class="w-6 h-6 rounded-lg bg-amber-500/10 text-amber-600 flex items-center justify-center font-bold text-[11px] shrink-0">10</span>
+              <span class="truncate">Bài 10: Claude Code CLI & API Safety</span>
+            </a>
+          </nav>
+        </div>
+      </aside>
+
+      <!-- Mobile Drawer Modal -->
+      <div id="mobile-drawer" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex justify-end">
+        <div class="w-4/5 max-w-xs bg-white dark:bg-dark-surface h-full p-6 shadow-2xl flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between pb-4 border-b border-gray-200 dark:border-gray-800 mb-4">
+              <span class="font-bold text-gray-900 dark:text-white flex items-center gap-2 text-sm">
+                <i class="fa-solid fa-feather-pointed text-amber-600"></i> Bài học Claude
+              </span>
+              <button id="close-drawer-btn" class="p-1 rounded-lg text-gray-500 hover:text-gray-900 dark:hover:text-white">
+                <i class="fa-solid fa-xmark text-lg"></i>
+              </button>
+            </div>
+            <nav class="space-y-1.5 text-xs font-semibold overflow-y-auto max-h-[70vh]">
+              <a href="#bai1" onclick="toggleDrawer(false)" class="block p-2 rounded-lg hover:bg-amber-500/10 text-gray-700 dark:text-gray-300">Bài 1: Giới thiệu & Triết lý Anthropic</a>
+              <a href="#bai2" onclick="toggleDrawer(false)" class="block p-2 rounded-lg hover:bg-amber-500/10 text-gray-700 dark:text-gray-300">Bài 2: Prompt với XML Tags & Prefill</a>
+              <a href="#bai3" onclick="toggleDrawer(false)" class="block p-2 rounded-lg hover:bg-amber-500/10 text-gray-700 dark:text-gray-300">Bài 3: Đột phá Trực quan Artifacts</a>
+              <a href="#bai4" onclick="toggleDrawer(false)" class="block p-2 rounded-lg hover:bg-amber-500/10 text-gray-700 dark:text-gray-300">Bài 4: Không gian Claude Projects</a>
+              <a href="#bai5" onclick="toggleDrawer(false)" class="block p-2 rounded-lg hover:bg-amber-500/10 text-gray-700 dark:text-gray-300">Bài 5: Thị giác Vision & Mockup UI</a>
+              <a href="#bai6" onclick="toggleDrawer(false)" class="block p-2 rounded-lg hover:bg-amber-500/10 text-gray-700 dark:text-gray-300">Bài 6: Siêu Ngữ Cảnh 200K Tokens</a>
+              <a href="#bai7" onclick="toggleDrawer(false)" class="block p-2 rounded-lg hover:bg-amber-500/10 text-gray-700 dark:text-gray-300">Bài 7: Extended Thinking Mode</a>
+              <a href="#bai8" onclick="toggleDrawer(false)" class="block p-2 rounded-lg hover:bg-amber-500/10 text-gray-700 dark:text-gray-300">Bài 8: Claude Computer Use</a>
+              <a href="#bai9" onclick="toggleDrawer(false)" class="block p-2 rounded-lg hover:bg-amber-500/10 text-gray-700 dark:text-gray-300">Bài 9: Viết lách & Nghiên cứu Học thuật</a>
+              <a href="#bai10" onclick="toggleDrawer(false)" class="block p-2 rounded-lg hover:bg-amber-500/10 text-gray-700 dark:text-gray-300">Bài 10: Claude Code CLI & API Safety</a>
+            </nav>
+          </div>
+          <div class="pt-4 border-t border-gray-200 dark:border-gray-800 text-center">
+            <a href="https://claude.ai" target="_blank" rel="noopener noreferrer" class="block w-full py-2.5 rounded-xl bg-amber-600 text-white text-xs font-bold shadow">
+              Mở claude.ai <i class="fa-solid fa-arrow-up-right-from-square ml-1"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Content Area: Lessons 1 to 10 -->
+      <div class="lg:col-span-9 space-y-10">
+<!-- BÀI 1 -->
+      <section id="bai1" class="lesson-section bg-white dark:bg-dark-card rounded-2xl p-6 sm:p-8 border border-gray-200 dark:border-gray-800 shadow-sm space-y-6">
+        <div class="flex items-center justify-between border-b border-gray-100 dark:border-gray-800 pb-4">
+          <div class="flex items-center gap-3">
+            <span class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 font-bold flex items-center justify-center text-lg border border-amber-500/20">01</span>
+            <div>
+              <span class="text-xs font-semibold text-amber-600 dark:text-amber-400 uppercase tracking-wider">Nền Tảng Cốt Lõi</span>
+              <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">Bài 1: Giới Thiệu Claude & Triết Lý Constitutional AI Của Anthropic</h2>
+            </div>
+          </div>
+          <span class="text-xs font-medium px-3 py-1 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300">
+            <i class="fa-regular fa-clock mr-1"></i> 35 phút học
+          </span>
+        </div>
+
+        <div class="prose dark:prose-invert max-w-none text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed space-y-4">
+          <p>
+            Được sáng lập bởi các cựu nhà nghiên cứu hàng đầu từ OpenAI (dẫn đầu bởi hai anh em Dario và Daniela Amodei), <strong>Anthropic</strong> phát triển <strong>Claude</strong> (truy cập tại <code class="bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded text-amber-600 font-mono text-xs">claude.ai</code>) với tầm nhìn tạo ra một hệ thống AI an toàn, chân thực, thông tuệ và thấu cảm nhất thế giới.
+          </p>
+
+          <h3 class="text-lg font-bold text-gray-900 dark:text-white mt-4">1. Triết Lý Độc Quyền: Constitutional AI (AI Theo Hiến Pháp)</h3>
+          <p>
+            Khác với các mô hình chỉ dựa vào phản hồi thủ công của con người (RLHF), Anthropic tiên phong áp dụng <strong>Constitutional AI (RLAIF)</strong>:
+          </p>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3 not-prose my-3">
+            <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-dark-surface border border-gray-200 dark:border-gray-700">
+              <div class="font-bold text-amber-600 dark:text-amber-400 text-xs mb-1 flex items-center gap-1.5">
+                <i class="fa-solid fa-hand-holding-heart"></i> Helpful (Hữu ích)
+              </div>
+              <p class="text-[12px] text-gray-600 dark:text-gray-400">Tối đa hóa khả năng giải quyết vấn đề, cung cấp câu trả lời chi tiết, thực tế và dễ ứng dụng.</p>
+            </div>
+            <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-dark-surface border border-gray-200 dark:border-gray-700">
+              <div class="font-bold text-rose-600 dark:text-rose-400 text-xs mb-1 flex items-center gap-1.5">
+                <i class="fa-solid fa-shield-halved"></i> Harmless (Vô hại)
+              </div>
+              <p class="text-[12px] text-gray-600 dark:text-gray-400">Kiên quyết từ chối hỗ trợ các hành vi gây hại, tấn công mạng, vũ khí sinh học hay lan truyền độc hại.</p>
+            </div>
+            <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-dark-surface border border-gray-200 dark:border-gray-700">
+              <div class="font-bold text-emerald-600 dark:text-emerald-400 text-xs mb-1 flex items-center gap-1.5">
+                <i class="fa-solid fa-scale-balanced"></i> Honest (Chân thật)
+              </div>
+              <p class="text-[12px] text-gray-600 dark:text-gray-400">Thừa nhận khi không chắc chắn, hạn chế tối đa ảo giác (hallucination) và không bịa đặt nguồn dẫn.</p>
+            </div>
+          </div>
+
+          <h3 class="text-lg font-bold text-gray-900 dark:text-white mt-6">2. Bản Đồ Dòng Mô Hình Claude</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 not-prose my-3">
+            <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-dark-surface border border-gray-200 dark:border-gray-700">
+              <div class="font-bold text-amber-600 dark:text-amber-400 text-xs mb-1 flex items-center gap-1.5">
+                <i class="fa-solid fa-bolt"></i> Claude 3.5 Haiku
+              </div>
+              <p class="text-[12px] text-gray-600 dark:text-gray-400">Mô hình siêu nhẹ, tốc độ phản hồi chớp mắt, chi phí cực thấp, tối ưu cho tác vụ tự động hóa và hỗ trợ khách hàng nhanh.</p>
+            </div>
+            <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-dark-surface border border-amber-500/50">
+              <div class="font-bold text-amber-700 dark:text-amber-300 text-xs mb-1 flex items-center gap-1.5">
+                <i class="fa-solid fa-crown text-amber-500"></i> Claude 3.5 Sonnet
+              </div>
+              <p class="text-[12px] text-gray-600 dark:text-gray-400">"Vua lập trình & tư duy": Đánh bại hầu hết đối thủ trong viết code, phân tích dữ liệu, đọc biểu đồ và hiểu ngữ cảnh sâu rộng.</p>
+            </div>
+            <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-dark-surface border border-purple-500/40">
+              <div class="font-bold text-purple-600 dark:text-purple-400 text-xs mb-1 flex items-center gap-1.5">
+                <i class="fa-solid fa-brain"></i> Claude 3 Opus
+              </div>
+              <p class="text-[12px] text-gray-600 dark:text-gray-400">Mô hình kỳ cựu dành cho các nghiên cứu triết học, lập luận phản biện đa tầng và viết luận học thuật dài kỳ.</p>
+            </div>
+            <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-dark-surface border border-orange-500/50">
+              <div class="font-bold text-orange-600 dark:text-orange-400 text-xs mb-1 flex items-center gap-1.5">
+                <i class="fa-solid fa-microchip"></i> Claude 3.7 Sonnet
+              </div>
+              <p class="text-[12px] text-gray-600 dark:text-gray-400">Mô hình lai thế hệ mới (Hybrid Reasoning): Vừa phản hồi tức thì vừa có chế độ suy luận mở rộng (Extended Thinking).</p>
+            </div>
+          </div>
+
+          <h3 class="text-lg font-bold text-gray-900 dark:text-white mt-6">3. Các Gói Tài Khoản Trên claude.ai</h3>
+          <ul class="list-disc pl-5 space-y-1.5">
+            <li><strong>Claude Free:</strong> Miễn phí sử dụng Claude 3.5 Sonnet với giới hạn tin nhắn hàng ngày, hỗ trợ tải lên file, tính năng Artifacts cơ bản.</li>
+            <li><strong>Claude Pro ($20/tháng):</strong> Tăng gấp 5 lần giới hạn sử dụng, ưu tiên truy cập giờ cao điểm, mở khóa tính năng <strong>Claude Projects</strong> và được trải nghiệm sớm các mô hình mới nhất.</li>
+            <li><strong>Claude Team ($25/người/tháng):</strong> Hạn mức lớn hơn, quản lý thành viên tập trung, chia sẻ kho tài liệu Projects chung trong toàn tổ chức.</li>
+          </ul>
+        </div>
+
+        <!-- Trắc nghiệm tương tác Bài 1 -->
+        <div class="mt-8 pt-6 border-t border-gray-100 dark:border-gray-800 space-y-4">
+          <h4 class="text-base font-bold text-gray-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-circle-question text-amber-600"></i> Bài tập củng cố kiến thức Bài 1
+          </h4>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Câu 1 -->
+            <div class="bg-gray-50 dark:bg-dark-surface p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">1. Công ty nghiên cứu an toàn AI đứng sau sự ra đời của Claude là ai?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q1-1', 0, 1, 'Sai. OpenAI phát triển ChatGPT.')" class="quiz-btn-q1-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>A. OpenAI</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q1-1', 1, 1, 'Chính xác! Anthropic được thành lập bởi cựu lãnh đạo nghiên cứu an toàn AI của OpenAI.')" class="quiz-btn-q1-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>B. Anthropic</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q1-1', 2, 1, 'Sai. Google DeepMind phát triển Gemini.')" class="quiz-btn-q1-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>C. Google DeepMind</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q1-1', 3, 1, 'Sai. Microsoft phát triển Copilot.')" class="quiz-btn-q1-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>D. Microsoft Research</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q1-1-feedback" class="hidden"></div>
+            </div>
+
+            <!-- Câu 2 -->
+            <div class="bg-gray-50 dark:bg-dark-surface p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">2. Phương pháp huấn luyện độc quyền định hình sự an toàn của Claude có tên là gì?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q1-2', 0, 2, 'Sai. Đây là kỹ thuật chung cho thị giác máy tính.')" class="quiz-btn-q1-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>A. Convolutional Neural Network (CNN)</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q1-2', 1, 2, 'Sai. GAN là mạng đối nghịch tạo ảnh.')" class="quiz-btn-q1-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>B. Generative Adversarial Networks (GAN)</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q1-2', 2, 2, 'Chính xác! Constitutional AI (RLAIF) giúp Claude tự đánh giá hành vi theo bộ hiến pháp nguyên tắc rõ ràng.')" class="quiz-btn-q1-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>C. Constitutional AI (AI Theo Hiến Pháp)</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q1-2', 3, 2, 'Sai. Không phải thuật ngữ của Anthropic.')" class="quiz-btn-q1-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>D. Random Forest Learning</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q1-2-feedback" class="hidden"></div>
+            </div>
+
+            <!-- Câu 3 -->
+            <div class="bg-gray-50 dark:bg-dark-surface p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">3. Ba nguyên tắc vàng của Constitutional AI bao gồm những gì?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q1-3', 0, 0, 'Chính xác! Helpful (Hữu ích), Harmless (Vô hại) và Honest (Chân thật) là bộ ba trụ cột của Anthropic.')" class="quiz-btn-q1-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>A. Helpful, Harmless, Honest</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q1-3', 1, 0, 'Sai. Tốc độ và giá cả không phải nguyên tắc hiến pháp an toàn.')" class="quiz-btn-q1-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>B. Fast, Cheap, Strong</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q1-3', 2, 0, 'Sai. Không phải bộ nguyên tắc cốt lõi của Claude.')" class="quiz-btn-q1-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>C. Open-source, Local, Uncensored</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q1-3', 3, 0, 'Sai. Khái niệm này không đại diện cho triết lý Anthropic.')" class="quiz-btn-q1-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>D. Smart, Quick, Automated</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q1-3-feedback" class="hidden"></div>
+            </div>
+
+            <!-- Câu 4 -->
+            <div class="bg-gray-50 dark:bg-dark-surface p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">4. Mô hình nào trong gia đình Claude nổi tiếng nhất về năng lực lập trình và suy luận logic?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q1-4', 0, 1, 'Sai. Haiku tối ưu về tốc độ và chi phí rẻ.')" class="quiz-btn-q1-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>A. Claude 3.5 Haiku</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q1-4', 1, 1, 'Chính xác! Claude 3.5 Sonnet được mệnh danh là tiêu chuẩn vàng của ngành công nghiệp về lập trình và giải toán logic.')" class="quiz-btn-q1-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>B. Claude 3.5 Sonnet</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q1-4', 2, 1, 'Sai. Claude 1.0 là phiên bản sơ khai ban đầu.')" class="quiz-btn-q1-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>C. Claude 1.0</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q1-4', 3, 1, 'Sai. Claude Instant là dòng cũ đã ngừng nâng cấp.')" class="quiz-btn-q1-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>D. Claude Instant</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q1-4-feedback" class="hidden"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- BÀI 2 -->
+      <section id="bai2" class="lesson-section bg-white dark:bg-dark-card rounded-2xl p-6 sm:p-8 border border-gray-200 dark:border-gray-800 shadow-sm space-y-6">
+        <div class="flex items-center justify-between border-b border-gray-100 dark:border-gray-800 pb-4">
+          <div class="flex items-center gap-3">
+            <span class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 font-bold flex items-center justify-center text-lg border border-amber-500/20">02</span>
+            <div>
+              <span class="text-xs font-semibold text-amber-600 dark:text-amber-400 uppercase tracking-wider">Kỹ Thuật Độc Quyền</span>
+              <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">Bài 2: Nghệ Thuật Prompt Engineering Với Thẻ XML & Kỹ Thuật Prefilling</h2>
+            </div>
+          </div>
+          <span class="text-xs font-medium px-3 py-1 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300">
+            <i class="fa-regular fa-clock mr-1"></i> 40 phút học
+          </span>
+        </div>
+
+        <div class="prose dark:prose-invert max-w-none text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed space-y-4">
+          <p>
+            Trong khi các mô hình khác xử lý câu lệnh một cách phẳng và dễ nhầm lẫn dữ liệu đầu vào với chỉ dẫn hệ thống, <strong>Anthropic đã tối ưu hóa Claude để hiểu sâu sắc cấu trúc thẻ XML</strong> (như <code class="text-amber-600 font-mono text-xs">&lt;instructions&gt;</code>, <code class="text-amber-600 font-mono text-xs">&lt;context&gt;</code>). Đây là bí quyết số một của các kỹ sư AI hàng đầu khi tương tác với Claude.
+          </p>
+
+          <h3 class="text-lg font-bold text-gray-900 dark:text-white mt-4">1. Tại Sao Nên Dùng Thẻ XML Với Claude?</h3>
+          <ul class="list-disc pl-5 space-y-1.5">
+            <li><strong>Phân tách ranh giới rõ ràng:</strong> Giúp Claude phân biệt rạch ròi giữa đâu là dữ liệu tài liệu cần đọc (<code class="font-mono text-xs">&lt;documents&gt;</code>) và đâu là yêu cầu thực thi (<code class="font-mono text-xs">&lt;instructions&gt;</code>).</li>
+            <li><strong>Chống Prompt Injection:</strong> Ngăn ngừa người dùng hoặc tài liệu đầu vào có chứa câu lệnh phá vỡ quy tắc bảo mật.</li>
+            <li><strong>Tăng độ chính xác cấu trúc đầu ra:</strong> Khi bạn yêu cầu xuất ra trong thẻ <code class="font-mono text-xs">&lt;analysis&gt;</code> hoặc <code class="font-mono text-xs">&lt;result&gt;</code>, Claude sẽ tuân thủ tuyệt đối.</li>
+          </ul>
+
+          <div class="my-4 p-4 rounded-xl bg-gray-900 text-gray-100 font-mono text-xs overflow-x-auto border border-gray-800 not-prose">
+            <div class="text-amber-400 font-bold mb-2">// Ví dụ Cấu Trúc Prompt Chuẩn Anthropic:</div>
+            <div class="text-gray-300 leading-relaxed">
+              <span class="text-amber-500">&lt;context&gt;</span><br/>
+              &nbsp;&nbsp;Công ty chúng tôi đang chuẩn bị ra mắt giải pháp quản lý kho hàng SaaS B2B.<br/>
+              <span class="text-amber-500">&lt;/context&gt;</span><br/><br/>
+              <span class="text-amber-500">&lt;instructions&gt;</span><br/>
+              &nbsp;&nbsp;1. Phân tích 3 rủi ro bảo mật chính theo tiêu chuẩn SOC 2.<br/>
+              &nbsp;&nbsp;2. Trả lời bằng văn phong súc tích, không dùng các từ sáo rỗng như "trong thế giới phát triển nhanh chóng".<br/>
+              &nbsp;&nbsp;3. Bắt buộc đặt kết luận trong thẻ &lt;recommendation&gt;.<br/>
+              <span class="text-amber-500">&lt;/instructions&gt;</span><br/><br/>
+              <span class="text-amber-500">&lt;input_data&gt;</span><br/>
+              &nbsp;&nbsp;[Dữ liệu mô tả kiến trúc đám mây AWS gắn ở đây...]<br/>
+              <span class="text-amber-500">&lt;/input_data&gt;</span>
+            </div>
+          </div>
+
+          <h3 class="text-lg font-bold text-gray-900 dark:text-white mt-6">2. Kỹ Thuật Prefilling Assistant Response (Điền Trước Đầu Ra)</h3>
+          <p>
+            Đây là tính năng độc nhất vô nhị chỉ có ở Claude: Bạn có thể "mớm" sẵn ký tự khởi đầu cho câu trả lời của AI. Ví dụ:
+          </p>
+          <div class="p-4 rounded-xl bg-amber-500/10 border border-amber-500/20 text-gray-800 dark:text-gray-200 text-xs sm:text-sm space-y-2 not-prose">
+            <p class="font-bold text-amber-700 dark:text-amber-400"><i class="fa-solid fa-lightbulb"></i> Mẹo Ép Định Dạng JSON Chuẩn 100%:</p>
+            <p>Trong phần kết thúc câu lệnh hoặc khi gọi qua API, hãy điền sẵn cho Assistant ký tự mở ngoặc nhọn <code class="font-mono text-xs bg-amber-100 dark:bg-amber-950 px-1 py-0.5 rounded font-bold">{</code>. Claude sẽ hiểu ngay lập tức là không được nói lời chào mở đầu (như <em>"Dưới đây là file JSON của bạn..."</em>) mà sẽ viết tiếp ngay lập tức nội dung JSON hợp lệ!</p>
+          </div>
+        </div>
+
+        <!-- Trắc nghiệm tương tác Bài 2 -->
+        <div class="mt-8 pt-6 border-t border-gray-100 dark:border-gray-800 space-y-4">
+          <h4 class="text-base font-bold text-gray-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-circle-question text-amber-600"></i> Bài tập củng cố kiến thức Bài 2
+          </h4>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Câu 1 -->
+            <div class="bg-gray-50 dark:bg-dark-surface p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">1. Tại sao Anthropic khuyến nghị mạnh mẽ việc sử dụng thẻ XML (e.g. &lt;instructions&gt;) khi viết prompt cho Claude?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q2-1', 0, 1, 'Sai. XML không làm giảm số lượng token.')" class="quiz-btn-q2-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>A. Để giảm 50% số lượng token tiêu thụ</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q2-1', 1, 1, 'Chính xác! Thẻ XML phân tách rõ ràng ngữ cảnh, chỉ thị và dữ liệu đầu vào, giúp Claude hiểu cấu trúc chính xác tuyệt đối.')" class="quiz-btn-q2-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>B. Phân tách rõ ràng giữa ngữ cảnh, dữ liệu và chỉ thị, ngăn ngừa nhầm lẫn</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q2-1', 2, 1, 'Sai. Trình duyệt không biên dịch prompt thành trang web.')" class="quiz-btn-q2-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>C. Bắt buộc phải có XML thì trình duyệt web mới đọc được câu chat</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q2-1', 3, 1, 'Sai. Claude vẫn hiểu văn bản thường nhưng dùng XML sẽ tối ưu vượt trội.')" class="quiz-btn-q2-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>D. Nếu không dùng thẻ XML Claude sẽ từ chối trả lời</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q2-1-feedback" class="hidden"></div>
+            </div>
+
+            <!-- Câu 2 -->
+            <div class="bg-gray-50 dark:bg-dark-surface p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">2. Kỹ thuật "Prefilling Assistant Response" trong Claude mang lại lợi ích gì lớn nhất?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q2-2', 0, 0, 'Chính xác! Điền trước phần đầu phản hồi giúp ép kiểu đầu ra (như JSON) và loại bỏ lời dạo đầu thừa thãi.')" class="quiz-btn-q2-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>A. Ép định dạng đầu ra chuẩn xác (như JSON) và triệt tiêu lời chào hỏi rườm rà</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q2-2', 1, 0, 'Sai. Prefilling không phải là công cụ dịch thuật đa ngữ.')" class="quiz-btn-q2-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>B. Tự động dịch câu trả lời sang 10 ngôn ngữ khác nhau</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q2-2', 2, 0, 'Sai. Prefilling không liên quan đến kiểm tra lỗi chính tả máy khách.')" class="quiz-btn-q2-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>C. Tự động sửa lỗi chính tả trên máy tính người dùng</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q2-2', 3, 0, 'Sai. Đây là kỹ thuật ra lệnh nâng cao.')" class="quiz-btn-q2-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>D. Tự động hủy lệnh nếu thời gian chờ quá 5 giây</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q2-2-feedback" class="hidden"></div>
+            </div>
+
+            <!-- Câu 3 -->
+            <div class="bg-gray-50 dark:bg-dark-surface p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">3. Khi bạn muốn Claude đưa ra suy nghĩ phân tích trước khi đưa ra câu trả lời chốt, bạn nên yêu cầu điều gì?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q2-3', 0, 2, 'Sai. Không cần khởi động lại phiên chat.')" class="quiz-btn-q2-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>A. Thoát phiên chat và mở lại 3 lần liên tiếp</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q2-3', 1, 2, 'Sai. Việc này không giúp phân tách logic suy nghĩ.')" class="quiz-btn-q2-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>B. Gõ in hoa toàn bộ câu hỏi</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q2-3', 2, 2, 'Chính xác! Yêu cầu Claude viết lập luận phân tích vào thẻ &lt;thinking&gt; rồi mới đưa ra kết luận vào thẻ &lt;answer&gt;.')" class="quiz-btn-q2-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>C. Yêu cầu lập luận suy nghĩ trong thẻ &lt;thinking&gt; trước khi xuất ra &lt;answer&gt;</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q2-3', 3, 2, 'Sai. Đây không phải cách tiếp cận chuẩn.')" class="quiz-btn-q2-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>D. Chèn 50 dấu chấm than vào cuối câu lệnh</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q2-3-feedback" class="hidden"></div>
+            </div>
+
+            <!-- Câu 4 -->
+            <div class="bg-gray-50 dark:bg-dark-surface p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">4. Thẻ XML nào dưới đây là chuẩn thường dùng để gói dữ liệu tài liệu mẫu cần tham chiếu?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q2-4', 0, 1, 'Sai. Thẻ này dùng cho đoạn mã nguồn.')" class="quiz-btn-q2-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>A. &lt;code_only&gt;</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q2-4', 1, 1, 'Chính xác! Thẻ &lt;documents&gt; hoặc &lt;context&gt; là chuẩn được Anthropic khuyến nghị trong tài liệu chính thức.')" class="quiz-btn-q2-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>B. &lt;documents&gt; hoặc &lt;context&gt;</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q2-4', 2, 1, 'Sai. Thẻ này thường dùng trong HTML cho video.')" class="quiz-btn-q2-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>C. &lt;iframe&gt;</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q2-4', 3, 1, 'Sai. Thẻ này dùng định dạng kiểu chữ.')" class="quiz-btn-q2-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>D. &lt;font_size&gt;</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q2-4-feedback" class="hidden"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- BÀI 3 -->
+      <section id="bai3" class="lesson-section bg-white dark:bg-dark-card rounded-2xl p-6 sm:p-8 border border-gray-200 dark:border-gray-800 shadow-sm space-y-6">
+        <div class="flex items-center justify-between border-b border-gray-100 dark:border-gray-800 pb-4">
+          <div class="flex items-center gap-3">
+            <span class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 font-bold flex items-center justify-center text-lg border border-amber-500/20">03</span>
+            <div>
+              <span class="text-xs font-semibold text-amber-600 dark:text-amber-400 uppercase tracking-wider">Tính Năng Đột Phá</span>
+              <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">Bài 3: Đột Phá Trực Quan Với Claude Artifacts (Cửa Sổ Song Song)</h2>
+            </div>
+          </div>
+          <span class="text-xs font-medium px-3 py-1 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300">
+            <i class="fa-regular fa-clock mr-1"></i> 45 phút học
+          </span>
+        </div>
+
+        <div class="prose dark:prose-invert max-w-none text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed space-y-4">
+          <p>
+            Vào mùa hè năm 2024, Anthropic đã tạo nên một chuẩn mực giao diện mới cho toàn bộ ngành công nghiệp AI với sự ra mắt của <strong>Claude Artifacts</strong>. Thay vì ép các đoạn mã code dài lê thê, tài liệu đồ sộ hay sơ đồ phức tạp vào một dòng chat cuộn dài, Claude tự động mở ra một <strong>cửa sổ tương tác chuyên dụng bên phải màn hình</strong>.
+          </p>
+
+          <h3 class="text-lg font-bold text-gray-900 dark:text-white mt-4">1. Các Loại Nội Dung Được Tự Động Tạo Thành Artifacts</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 not-prose my-3">
+            <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-dark-surface border border-gray-200 dark:border-gray-700">
+              <div class="font-bold text-cyan-600 dark:text-cyan-400 text-xs mb-1 flex items-center gap-1.5">
+                <i class="fa-brands fa-react text-sm"></i> Ứng dụng React / Tailwind
+              </div>
+              <p class="text-[12px] text-gray-600 dark:text-gray-400">Claude tự động biên dịch và chạy trực tiếp component React tương tác (bấm nút, nhập dữ liệu, hiệu ứng) ngay trong trình duyệt mà không cần cài đặt node_modules!</p>
+            </div>
+            <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-dark-surface border border-gray-200 dark:border-gray-700">
+              <div class="font-bold text-orange-600 dark:text-orange-400 text-xs mb-1 flex items-center gap-1.5">
+                <i class="fa-brands fa-html5 text-sm"></i> Game & Trang Web HTML5/JS
+              </div>
+              <p class="text-[12px] text-gray-600 dark:text-gray-400">Tạo trò chơi mini trực tiếp (như Flappy Bird, Snake, Bắn bóng) hoặc trang landing page hoàn chỉnh có thể tương tác chơi ngay lập tức.</p>
+            </div>
+            <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-dark-surface border border-gray-200 dark:border-gray-700">
+              <div class="font-bold text-emerald-600 dark:text-emerald-400 text-xs mb-1 flex items-center gap-1.5">
+                <i class="fa-solid fa-diagram-project text-sm"></i> Sơ đồ Mermaid.js
+              </div>
+              <p class="text-[12px] text-gray-600 dark:text-gray-400">Vẽ lưu đồ thuật toán (Flowchart), biểu đồ tuần tự (Sequence Diagram), kiến trúc hệ thống và sơ đồ Gantt trực quan sắc nét.</p>
+            </div>
+            <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-dark-surface border border-gray-200 dark:border-gray-700">
+              <div class="font-bold text-purple-600 dark:text-purple-400 text-xs mb-1 flex items-center gap-1.5">
+                <i class="fa-solid fa-bezier-curve text-sm"></i> Vector SVG & Báo cáo MD
+              </div>
+              <p class="text-[12px] text-gray-600 dark:text-gray-400">Thiết kế logo vector SVG sống động và tài liệu định dạng Markdown chuyên nghiệp sẵn sàng sao chép tải về.</p>
+            </div>
+          </div>
+
+          <h3 class="text-lg font-bold text-gray-900 dark:text-white mt-6">2. Quy Trình Làm Việc Với Artifacts: Code & Preview Song Song</h3>
+          <p>
+            Giao diện Artifacts cung cấp hai tab chuyển đổi mượt mà:
+          </p>
+          <ul class="list-disc pl-5 space-y-1.5">
+            <li><strong>Preview Tab:</strong> Xem kết quả hiển thị thực tế (chạy app, chơi game, xem sơ đồ).</li>
+            <li><strong>Code Tab:</strong> Xem toàn bộ mã nguồn bên dưới, có nút một chạm <em>Copy to Clipboard</em> hoặc tải về máy (<code class="text-xs font-mono">Download</code>).</li>
+            <li><strong>Version History:</strong> Mỗi lần bạn yêu cầu chỉnh sửa (ví dụ: <em>"Đổi màu nút bấm sang cam và thêm bộ đếm điểm"</em>), Claude sẽ lưu lại thành Version 2, Version 3 và bạn có thể bấm lùi lại phiên bản cũ bất cứ khi nào!</li>
+          </ul>
+        </div>
+
+        <!-- Trắc nghiệm tương tác Bài 3 -->
+        <div class="mt-8 pt-6 border-t border-gray-100 dark:border-gray-800 space-y-4">
+          <h4 class="text-base font-bold text-gray-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-circle-question text-amber-600"></i> Bài tập củng cố kiến thức Bài 3
+          </h4>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Câu 1 -->
+            <div class="bg-gray-50 dark:bg-dark-surface p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">1. Tính năng "Artifacts" trong giao diện Claude có mục đích chính là gì?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q3-1', 0, 1, 'Sai. Artifacts không phải công cụ nén file ZIP.')" class="quiz-btn-q3-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>A. Nén các tập tin vào file ZIP</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q3-1', 1, 1, 'Chính xác! Artifacts mở khung làm việc song song để kết xuất, xem trước và chỉnh sửa độc lập các đoạn mã code, website, game hoặc tài liệu lớn.')" class="quiz-btn-q3-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>B. Mở cửa sổ bên cạnh để hiển thị, xem trước và chạy trực tiếp code, game, sơ đồ</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q3-1', 2, 1, 'Sai. Không liên quan đến kiểm tra kết nối mạng LAN.')" class="quiz-btn-q3-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>C. Đo tốc độ mạng internet của thiết bị</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q3-1', 3, 1, 'Sai. Claude Artifacts không xóa tin nhắn cũ.')" class="quiz-btn-q3-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>D. Tự động xóa sạch lịch sử trò chuyện sau 10 phút</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q3-1-feedback" class="hidden"></div>
+            </div>
+
+            <!-- Câu 2 -->
+            <div class="bg-gray-50 dark:bg-dark-surface p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">2. Loại mã nguồn giao diện tương tác nào có thể được Claude biên dịch và chạy xem trước trực tiếp ngay trong Artifact?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q3-2', 0, 0, 'Chính xác! Claude hỗ trợ chạy trực tiếp React Component (với Tailwind CSS) và HTML5/JavaScript mà không cần backend.')" class="quiz-btn-q3-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>A. React Component (kèm Tailwind CSS) & HTML5/JS</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q3-2', 1, 0, 'Sai. C++ desktop không thể chạy trực tiếp trong iframe browser nếu không qua WebAssembly chuyên biệt.')" class="quiz-btn-q3-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>B. Ứng dụng Desktop C++ Win32</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q3-2', 2, 0, 'Sai. Driver nhân Linux không thể chạy trên giao diện web.')" class="quiz-btn-q3-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>C. Driver điều khiển phần cứng Linux Kernel</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q3-2', 3, 0, 'Sai. App di động iOS cần môi trường Xcode mô phỏng.')" class="quiz-btn-q3-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>D. Ứng dụng iOS native viết bằng Objective-C</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q3-2-feedback" class="hidden"></div>
+            </div>
+
+            <!-- Câu 3 -->
+            <div class="bg-gray-50 dark:bg-dark-surface p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">3. Khi bạn yêu cầu Claude cải tiến một Artifact đã tạo trước đó, điều gì xảy ra với các phiên bản cũ?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q3-3', 0, 2, 'Sai. Phiên bản cũ không bị xóa mất.')" class="quiz-btn-q3-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>A. Bị xóa vĩnh viễn và không thể khôi phục lại</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q3-3', 1, 2, 'Sai. Không có tính năng gửi email này.')" class="quiz-btn-q3-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>B. Tự động gửi email thông báo về máy</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q3-3', 2, 2, 'Chính xác! Claude lưu lịch sử phiên bản (Version History: v1, v2, v3...) cho phép bạn xem lại hoặc quay lại phiên bản trước bất kỳ lúc nào.')" class="quiz-btn-q3-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>C. Được lưu lại theo lịch sử phiên bản (v1, v2, v3...) để xem lại hoặc phục hồi</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q3-3', 3, 2, 'Sai. Bạn không phải trả thêm tiền để lưu phiên bản.')" class="quiz-btn-q3-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>D. Bắt buộc phải trả phí 1$ cho mỗi phiên bản mới</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q3-3-feedback" class="hidden"></div>
+            </div>
+
+            <!-- Câu 4 -->
+            <div class="bg-gray-50 dark:bg-dark-surface p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">4. Thư viện nào được Claude sử dụng trong Artifacts để vẽ các sơ đồ tuần tự và lưu đồ thuật toán chuyên nghiệp?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q3-4', 0, 0, 'Chính xác! Mermaid.js là thư viện dựa trên cú pháp văn bản được tích hợp trực tiếp để vẽ sơ đồ trong Claude Artifacts.')" class="quiz-btn-q3-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>A. Mermaid.js</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q3-4', 1, 0, 'Sai. jQuery là thư viện thao tác DOM.')" class="quiz-btn-q3-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>B. jQuery</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q3-4', 2, 0, 'Sai. OpenGL là chuẩn đồ họa máy tính bậc thấp.')" class="quiz-btn-q3-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>C. OpenGL</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q3-4', 3, 0, 'Sai. WordPress là hệ quản trị nội dung CMS.')" class="quiz-btn-q3-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>D. WordPress</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q3-4-feedback" class="hidden"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+<!-- BÀI 4 -->
+      <section id="bai4" class="lesson-section bg-white dark:bg-dark-card rounded-2xl p-6 sm:p-8 border border-gray-200 dark:border-gray-800 shadow-sm space-y-6">
+        <div class="flex items-center justify-between border-b border-gray-100 dark:border-gray-800 pb-4">
+          <div class="flex items-center gap-3">
+            <span class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 font-bold flex items-center justify-center text-lg border border-amber-500/20">04</span>
+            <div>
+              <span class="text-xs font-semibold text-amber-600 dark:text-amber-400 uppercase tracking-wider">Tổ Chức Công Việc Chuyên Sâu</span>
+              <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">Bài 4: Không Gian Quản Lý Dự Án Claude Projects (Kho Tri Thức 200K Token)</h2>
+            </div>
+          </div>
+          <span class="text-xs font-medium px-3 py-1 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300">
+            <i class="fa-regular fa-clock mr-1"></i> 40 phút học
+          </span>
+        </div>
+
+        <div class="prose dark:prose-invert max-w-none text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed space-y-4">
+          <p>
+            Khi xử lý các dự án phức tạp kéo dài nhiều tuần (như viết sách, phát triển ứng dụng di động, phân tích tài chính công ty), việc phải tải lại tài liệu và gõ lại ngữ cảnh trong mỗi cuộc hội thoại mới là vô cùng tốn thời gian. <strong>Claude Projects</strong> (dành cho gói Pro và Team) ra đời để giải quyết triệt để vấn đề này.
+          </p>
+
+          <h3 class="text-lg font-bold text-gray-900 dark:text-white mt-4">1. Ba Trụ Cột Của Một Claude Project</h3>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 not-prose my-3">
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-surface border border-gray-200 dark:border-gray-700">
+              <div class="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-600 flex items-center justify-center font-bold text-sm mb-2">1</div>
+              <h4 class="font-bold text-gray-900 dark:text-white text-sm mb-1">Project Knowledge</h4>
+              <p class="text-xs text-gray-600 dark:text-gray-400">Kho tài liệu dùng chung lên tới 200,000 tokens (tương đương ~500 trang sách hoặc toàn bộ mã nguồn). Mọi cuộc chat bên trong Project đều tự động kế thừa kho tri thức này.</p>
+            </div>
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-surface border border-gray-200 dark:border-gray-700">
+              <div class="w-8 h-8 rounded-lg bg-orange-500/10 text-orange-600 flex items-center justify-center font-bold text-sm mb-2">2</div>
+              <h4 class="font-bold text-gray-900 dark:text-white text-sm mb-1">Custom Instructions</h4>
+              <p class="text-xs text-gray-600 dark:text-gray-400">Chỉ thị tùy biến riêng cho dự án: Quy định vai trò chuyên gia, chuẩn mực mã nguồn, định dạng trả lời và đối tượng độc giả mục tiêu.</p>
+            </div>
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-surface border border-gray-200 dark:border-gray-700">
+              <div class="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-600 flex items-center justify-center font-bold text-sm mb-2">3</div>
+              <h4 class="font-bold text-gray-900 dark:text-white text-sm mb-1">Shared Artifacts & Chats</h4>
+              <p class="text-xs text-gray-600 dark:text-gray-400">Tập hợp toàn bộ các đoạn hội thoại chuyên biệt và thư viện Artifacts được sinh ra trong khuôn khổ dự án để dễ dàng tra cứu.</p>
+            </div>
+          </div>
+
+          <h3 class="text-lg font-bold text-gray-900 dark:text-white mt-6">2. Quy Trình 3 Bước Xây Dựng Dự Án Chuyên Nghiệp</h3>
+          <ol class="list-decimal pl-5 space-y-1.5">
+            <li><strong>Tạo Project & Đặt Tên:</strong> Bấm <em>Projects &rarr; Create Project</em>, đặt tên rõ ràng (ví dụ: "Dự Án Tái Cấu Trúc App E-Commerce").</li>
+            <li><strong>Tải Tài Liệu Nền Tảng (Project Knowledge):</strong> Nạp các tệp PDF tài liệu yêu cầu (PRD), file thiết kế API, cấu trúc cơ sở dữ liệu SQL hoặc thư viện component React.</li>
+            <li><strong>Thiết Lập System Instructions Cho Dự Án:</strong> Viết quy tắc: <em>"Bạn là Lead Frontend Architect. Luôn sử dụng Next.js App Router, Tailwind CSS v3 và TypeScript nghiêm ngặt (Strict mode). Không dùng any."</em></li>
+          </ol>
+        </div>
+
+        <!-- Trắc nghiệm tương tác Bài 4 -->
+        <div class="mt-8 pt-6 border-t border-gray-100 dark:border-gray-800 space-y-4">
+          <h4 class="text-base font-bold text-gray-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-circle-question text-amber-600"></i> Bài tập củng cố kiến thức Bài 4
+          </h4>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Câu 1 -->
+            <div class="bg-gray-50 dark:bg-dark-surface p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">1. Lợi ích vượt trội nhất của việc sử dụng Claude Projects thay vì các phiên chat thông thường là gì?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q4-1', 0, 1, 'Sai. Projects không can thiệp vào card đồ họa.')" class="quiz-btn-q4-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>A. Ép xung card đồ họa của máy tính</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q4-1', 1, 1, 'Chính xác! Claude Projects cho phép đính kèm kho tài liệu dùng chung (Project Knowledge) và chỉ thị riêng biệt cho mọi cuộc trò chuyện bên trong dự án.')" class="quiz-btn-q4-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>B. Duy trì kho tri thức chung (Project Knowledge) và quy tắc riêng mà không cần nạp lại mỗi lần chat</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q4-1', 2, 1, 'Sai. Claude không tự động đăng bài lên mạng xã hội.')" class="quiz-btn-q4-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>C. Tự động đăng nội dung lên Facebook và Twitter</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q4-1', 3, 1, 'Sai. Claude Projects dành cho công việc học tập và nghiên cứu thực tế.')" class="quiz-btn-q4-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>D. Tắt toàn bộ tính năng bảo mật của Anthropic</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q4-1-feedback" class="hidden"></div>
+            </div>
+
+            <!-- Câu 2 -->
+            <div class="bg-gray-50 dark:bg-dark-surface p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">2. Dung lượng kho tri thức (Project Knowledge) của một Claude Project có thể chứa tương đương bao nhiêu tài liệu?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q4-2', 0, 2, 'Sai. 2 trang giấy là quá nhỏ.')" class="quiz-btn-q4-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>A. Tối đa chỉ khoảng 2 trang A4</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q4-2', 1, 2, 'Sai. Chỉ tính theo token và tệp văn bản hợp lệ.')" class="quiz-btn-q4-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>B. Chỉ tải được ảnh, không cho phép tải file văn bản</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q4-2', 2, 2, 'Chính xác! Lên tới 200,000 tokens (tương đương khoảng 500 trang sách hoặc toàn bộ tài liệu dự án lớn).')" class="quiz-btn-q4-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>C. Lên tới 200,000 tokens (tương đương khoảng 500 trang sách tài liệu)</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q4-2', 3, 2, 'Sai. Claude không giới hạn chỉ 10 từ.')" class="quiz-btn-q4-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>D. Chỉ được gõ tối đa 10 dòng chữ ngắn</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q4-2-feedback" class="hidden"></div>
+            </div>
+
+            <!-- Câu 3 -->
+            <div class="bg-gray-50 dark:bg-dark-surface p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">3. Khi bạn cập nhật một tệp tin mới vào mục Project Knowledge, các phiên chat mới tạo trong Project sẽ phản ứng thế nào?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q4-3', 0, 0, 'Chính xác! Mọi cuộc hội thoại mới trong Project ngay lập tức nhận biết và tra cứu được dữ liệu mới cập nhật.')" class="quiz-btn-q4-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>A. Tự động nhận diện và cập nhật ngay lập tức vào ngữ cảnh tri thức chung</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q4-3', 1, 0, 'Sai. Claude không yêu cầu bạn tạo lại tài khoản.')" class="quiz-btn-q4-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>B. Phải xóa tài khoản Anthropic và đăng ký lại</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q4-3', 2, 0, 'Sai. Hệ thống cập nhật gần như tức thì trong vài giây.')" class="quiz-btn-q4-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>C. Phải chờ 3 ngày để AI nạp xong tài liệu</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q4-3', 3, 0, 'Sai. File mới không xóa file cũ nếu còn dung lượng.')" class="quiz-btn-q4-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>D. Tự động xóa sạch toàn bộ các file cũ trước đó</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q4-3-feedback" class="hidden"></div>
+            </div>
+
+            <!-- Câu 4 -->
+            <div class="bg-gray-400/10 dark:bg-dark-surface p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">4. Trong gói Claude Team, thành viên trong nhóm có thể làm gì với các Project được chia sẻ?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q4-4', 0, 1, 'Sai. Gói Team hỗ trợ chia sẻ cộng tác nhóm.')" class="quiz-btn-q4-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>A. Chỉ xem được tên dự án, không được truy cập</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q4-4', 1, 1, 'Chính xác! Các thành viên có thể cùng truy cập kho Knowledge chung, đọc Artifacts và trao đổi trong cùng một dự án.')" class="quiz-btn-q4-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>B. Cùng truy cập chung kho tài liệu Knowledge, chia sẻ Artifacts và phối hợp làm việc</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q4-4', 2, 1, 'Sai. Thành viên có quyền xem nội dung chia sẻ.')" class="quiz-btn-q4-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>C. Hoàn toàn không nhìn thấy dự án của nhau</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q4-4', 3, 1, 'Sai. Không có tính năng khóa màn hình thành viên.')" class="quiz-btn-q4-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>D. Tự động khóa màn hình của người khác trong nhóm</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q4-4-feedback" class="hidden"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- BÀI 5 -->
+      <section id="bai5" class="lesson-section bg-white dark:bg-dark-card rounded-2xl p-6 sm:p-8 border border-gray-200 dark:border-gray-800 shadow-sm space-y-6">
+        <div class="flex items-center justify-between border-b border-gray-100 dark:border-gray-800 pb-4">
+          <div class="flex items-center gap-3">
+            <span class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 font-bold flex items-center justify-center text-lg border border-amber-500/20">05</span>
+            <div>
+              <span class="text-xs font-semibold text-amber-600 dark:text-amber-400 uppercase tracking-wider">Đa Phương Thức Tiên Tiến</span>
+              <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">Bài 5: Thị Giác Vision & Biến Bản Vẽ Mockup UI Thành Mã Nguồn Hoàn Chỉnh</h2>
+            </div>
+          </div>
+          <span class="text-xs font-medium px-3 py-1 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300">
+            <i class="fa-regular fa-clock mr-1"></i> 40 phút học
+          </span>
+        </div>
+
+        <div class="prose dark:prose-invert max-w-none text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed space-y-4">
+          <p>
+            Mô hình <strong>Claude 3.5 Sonnet</strong> sở hữu khả năng thị giác máy tính (Vision) được đánh giá cao nhất thế giới hiện nay. Claude không chỉ "nhìn thấy" bức ảnh, mà còn thấu hiểu sâu sắc cấu trúc không gian, tỷ lệ thị giác và kiến trúc phần mềm đằng sau hình ảnh đó.
+          </p>
+
+          <h3 class="text-lg font-bold text-gray-900 dark:text-white mt-4">1. Biến Bản Phác Thảo (Wireframe / Mockup) Thành Ứng Dụng Sống</h3>
+          <p>
+            Một trong những "phép màu" năng suất lớn nhất của Claude là biến ảnh chụp bản vẽ tay trên giấy hoặc ảnh chụp màn hình Figma thành code chạy được ngay:
+          </p>
+          <div class="p-4 rounded-xl bg-gray-900 text-gray-100 font-mono text-xs overflow-x-auto border border-gray-800 not-prose my-3">
+            <div class="text-amber-400 font-bold mb-1">// Mẹo Prompt Thị Giác Đỉnh Cao:</div>
+            <div class="text-gray-300 leading-relaxed">
+              [Đính kèm ảnh chụp bản phác thảo giao diện Dashboard]<br/>
+              "Hãy phân tích ảnh giao diện đính kèm và tạo một component React hoàn chỉnh bằng Tailwind CSS trong một Artifact. Đảm bảo hỗ trợ Dark Mode, bố cục responsive đầy đủ trên mobile và có dữ liệu mẫu trực quan."
+            </div>
+          </div>
+
+          <h3 class="text-lg font-bold text-gray-900 dark:text-white mt-6">2. Phân Tích Biểu Đồ Kỹ Thuật & Tài Liệu Scan Phức Tạp</h3>
+          <ul class="list-disc pl-5 space-y-1.5">
+            <li><strong>Đọc biểu đồ tài chính & khoa học:</strong> Nhận diện chính xác giá trị trục tung, trục hoành, các đường xu hướng (trends) và điểm dị biệt (anomalies).</li>
+            <li><strong>Trích xuất bảng biểu từ tài liệu quét (OCR thông minh):</strong> Chuyển các bảng biểu trong file PDF quét mờ thành bảng Markdown hoặc CSV có cấu trúc chuẩn xác mà không bị lệch hàng, cột.</li>
+            <li><strong>Giải mã sơ đồ kiến trúc hệ thống:</strong> Đọc sơ đồ mạng AWS/GCP dạng ảnh và tự động sinh mã Terraform tương ứng.</li>
+          </ul>
+        </div>
+
+        <!-- Trắc nghiệm tương tác Bài 5 -->
+        <div class="mt-8 pt-6 border-t border-gray-100 dark:border-gray-800 space-y-4">
+          <h4 class="text-base font-bold text-gray-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-circle-question text-amber-600"></i> Bài tập củng cố kiến thức Bài 5
+          </h4>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Câu 1 -->
+            <div class="bg-gray-50 dark:bg-dark-surface p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">1. Khi bạn tải lên một bức ảnh chụp bản vẽ phác thảo giao diện (Wireframe), Claude 3.5 Sonnet có thể làm gì?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q5-1', 0, 0, 'Chính xác! Claude 3.5 Sonnet có thể phân tích cấu trúc bố cục và viết mã nguồn React/Tailwind hoàn chỉnh để chạy xem trước ngay trong Artifact.')" class="quiz-btn-q5-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>A. Phân tích bố cục và viết thành code React/HTML/CSS hoạt động được ngay trong Artifact</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q5-1', 1, 0, 'Sai. Claude không in ra giấy vật lý.')" class="quiz-btn-q5-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>B. Tự động kết nối với máy in văn phòng để in ra giấy màu</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q5-1', 2, 0, 'Sai. Claude không bán bản quyền hình ảnh.')" class="quiz-btn-q5-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>C. Đăng ký bản quyền thương hiệu cho bức tranh</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q5-1', 3, 0, 'Sai. Claude có thị giác máy tính xuất sắc.')" class="quiz-btn-q5-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>D. Từ chối xem hình ảnh vì không hỗ trợ file ảnh</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q5-1-feedback" class="hidden"></div>
+            </div>
+
+            <!-- Câu 2 -->
+            <div class="bg-gray-50 dark:bg-dark-surface p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">2. Claude hỗ trợ những định dạng tệp hình ảnh phổ biến nào để phân tích thị giác?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q5-2', 0, 1, 'Sai. File EXE là file thực thi, không phải ảnh.')" class="quiz-btn-q5-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>A. Chỉ hỗ trợ file .EXE và .BAT</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q5-2', 1, 1, 'Chính xác! Claude hỗ trợ JPEG, PNG, GIF tĩnh và WEBP.')" class="quiz-btn-q5-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>B. PNG, JPEG, WEBP và GIF</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q5-2', 2, 1, 'Sai. MP3 là âm thanh.')" class="quiz-btn-q5-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>C. Chỉ hỗ trợ MP3 và WAV</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q5-2', 3, 1, 'Sai. Claude không giới hạn chỉ định dạng BMP.')" class="quiz-btn-q5-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>D. Chỉ duy nhất định dạng BMP từ năm 1995</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q5-2-feedback" class="hidden"></div>
+            </div>
+
+            <!-- Câu 3 -->
+            <div class="bg-gray-50 dark:bg-dark-surface p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">3. Khi trích xuất bảng số liệu từ hình ảnh scan tài liệu chất lượng thấp, bạn nên chỉ thị Claude điều gì?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q5-3', 0, 2, 'Sai. Bịa số liệu sẽ gây hậu quả nghiêm trọng.')" class="quiz-btn-q5-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>A. Tự đoán mò các con số bị mờ để làm tròn số</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q5-3', 1, 2, 'Sai. Không cần dịch sang tiếng La-tinh.')" class="quiz-btn-q5-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>B. Dịch toàn bộ số sang số La Mã cổ</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q5-3', 2, 2, 'Chính xác! Yêu cầu giữ nguyên định dạng Markdown/CSV và đánh dấu rõ ràng ô nào bị mờ hoặc không đọc chắc chắn để con người kiểm tra lại.')" class="quiz-btn-q5-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>C. Định dạng thành bảng Markdown/CSV và đánh dấu ô mờ không chắc chắn để kiểm tra</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q5-3', 3, 2, 'Sai. Không cần xóa số liệu.')" class="quiz-btn-q5-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>D. Xóa sạch mọi số chẵn trong bảng</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q5-3-feedback" class="hidden"></div>
+            </div>
+
+            <!-- Câu 4 -->
+            <div class="bg-gray-50 dark:bg-dark-surface p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">4. Claude có khả năng phân tích bao nhiêu bức ảnh trong cùng một câu lệnh prompt?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q5-4', 0, 1, 'Sai. Claude hỗ trợ nhiều ảnh cùng lúc.')" class="quiz-btn-q5-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>A. Chỉ duy nhất 1 ảnh mỗi ngày</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q5-4', 1, 1, 'Chính xác! Bạn có thể tải lên cùng lúc nhiều hình ảnh (lên tới 5 - 20 ảnh tùy hạn mức) để Claude đối chiếu, so sánh sự khác biệt.')" class="quiz-btn-q5-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>B. Nhiều hình ảnh cùng lúc để so sánh, đối chiếu sự khác biệt giữa các phiên bản</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q5-4', 2, 1, 'Sai. Claude không hạn chế mức 0 ảnh.')" class="quiz-btn-q5-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>C. Không cho phép tải ảnh nào</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q5-4', 3, 1, 'Sai. Claude xử lý ảnh trực tiếp trong phiên chat.')" class="quiz-btn-q5-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>D. Bắt buộc phải chuyển ảnh thành video 3D mới đọc được</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q5-4-feedback" class="hidden"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- BÀI 6 -->
+      <section id="bai6" class="lesson-section bg-white dark:bg-dark-card rounded-2xl p-6 sm:p-8 border border-gray-200 dark:border-gray-800 shadow-sm space-y-6">
+        <div class="flex items-center justify-between border-b border-gray-100 dark:border-gray-800 pb-4">
+          <div class="flex items-center gap-3">
+            <span class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 font-bold flex items-center justify-center text-lg border border-amber-500/20">06</span>
+            <div>
+              <span class="text-xs font-semibold text-amber-600 dark:text-amber-400 uppercase tracking-wider">Xử Lý Dữ Liệu Khổng Lồ</span>
+              <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">Bài 6: Phân Tích Văn Bản Dài & Cơ Chế Siêu Ngữ Cảnh 200,000 Tokens</h2>
+            </div>
+          </div>
+          <span class="text-xs font-medium px-3 py-1 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300">
+            <i class="fa-regular fa-clock mr-1"></i> 40 phút học
+          </span>
+        </div>
+
+        <div class="prose dark:prose-invert max-w-none text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed space-y-4">
+          <p>
+            Anthropic là công ty tiên phong trên thế giới thương mại hóa <strong>Context Window 200K Tokens</strong>. Với khả năng "tiêu hóa" cùng lúc ~150,000 từ vựng trong một lần gửi, Claude có thể phân tích trọn vẹn cả một tập tài liệu tài chính hàng năm, một cuốn tiểu thuyết hoàn chỉnh hoặc hàng chục file mã nguồn dự án.
+          </p>
+
+          <h3 class="text-lg font-bold text-gray-900 dark:text-white mt-4">1. Thử Thách "Cây Kim Đáy Bể" (Needle In A Haystack)</h3>
+          <p>
+            Nhiều mô hình ngôn ngữ lớn khi nhận văn bản quá dài sẽ gặp phải hiện tượng <em>Lost in the Middle</em> (quên mất thông tin nằm ở đoạn giữa văn bản). Tuy nhiên, các bài kiểm thử độc lập cho thấy Claude 3.5 Sonnet đạt độ chính xác gần như <strong>99.9%</strong> khi truy tìm một thông tin cực nhỏ được giấu ngẫu nhiên ở bất kỳ vị trí nào trong 200,000 token.
+          </p>
+
+          <h3 class="text-lg font-bold text-gray-900 dark:text-white mt-6">2. Chiến Lược Xử Lý Tài Liệu Khổng Lồ Hiệu Quả</h3>
+          <ul class="list-disc pl-5 space-y-1.5">
+            <li><strong>Tải tệp đa định dạng:</strong> Claude đọc trực tiếp PDF, DOCX, TXT, CSV, RTF, JSON, code files (.py, .ts, .js, .cpp).</li>
+            <li><strong>Rà soát hợp đồng pháp lý:</strong> Tìm kiếm các điều khoản phạt tiềm ẩn, so sánh sự khác biệt giữa hai bản thảo hợp đồng 100 trang.</li>
+            <li><strong>Tổng hợp tài liệu y khoa & nghiên cứu:</strong> So sánh các phương pháp điều trị từ 10 bài báo khoa học PubMed khác nhau.</li>
+          </ul>
+        </div>
+
+        <!-- Trắc nghiệm tương tác Bài 6 -->
+        <div class="mt-8 pt-6 border-t border-gray-100 dark:border-gray-800 space-y-4">
+          <h4 class="text-base font-bold text-gray-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-circle-question text-amber-600"></i> Bài tập củng cố kiến thức Bài 6
+          </h4>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Câu 1 -->
+            <div class="bg-gray-50 dark:bg-dark-surface p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">1. Ngữ cảnh 200,000 tokens của Claude tương đương với khối lượng nội dung nào dưới đây?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q6-1', 0, 1, 'Sai. 10 dòng chữ chỉ khoảng 100 token.')" class="quiz-btn-q6-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>A. Khoảng 10 dòng tin nhắn ngắn</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q6-1', 1, 1, 'Chính xác! 200K tokens tương đương khoảng 150,000 từ vựng hoặc cuốn sách dày 500 trang.')" class="quiz-btn-q6-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>B. Khoảng 150,000 từ vựng hay cuốn sách dày 500 trang</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q6-1', 2, 1, 'Sai. 200K token không tương đương video 10 giờ.')" class="quiz-btn-q6-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>C. Video 4K dài 10 tiếng</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q6-1', 3, 1, 'Sai. Đây là dung lượng rất lớn đối với văn bản.')" class="quiz-btn-q6-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>D. Chỉ tương đương 1 bài đăng Facebook ngắn</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q6-1-feedback" class="hidden"></div>
+            </div>
+
+            <!-- Câu 2 -->
+            <div class="bg-gray-50 dark:bg-dark-surface p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">2. Thuật ngữ bài kiểm tra "Needle In A Haystack" trong đánh giá mô hình LLM có nghĩa là gì?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q6-2', 0, 0, 'Chính xác! Kiểm tra xem mô hình có tìm thấy một chi tiết nhỏ được giấu ngẫu nhiên trong cả kho văn bản khổng lồ hay không.')" class="quiz-btn-q6-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>A. Khả năng truy tìm một mẩu thông tin nhỏ giấu trong kho văn bản dài hàng trăm ngàn từ</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q6-2', 1, 0, 'Sai. Không liên quan đến đồ họa game.')" class="quiz-btn-q6-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>B. Khả năng vẽ hình chiếc kim khâu trong trò chơi 3D</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q6-2', 2, 0, 'Sai. Đây không phải thuật ngữ may mặc.')" class="quiz-btn-q6-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>C. Thử thách thêu thùa may vá cho robot</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q6-2', 3, 0, 'Sai. Đây là bài test trí nhớ ngữ cảnh của AI.')" class="quiz-btn-q6-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>D. Kiểm tra xem máy tính có bị nhiễm virus hay không</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q6-2-feedback" class="hidden"></div>
+            </div>
+
+            <!-- Câu 3 -->
+            <div class="bg-gray-50 dark:bg-dark-surface p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">3. Khi tải lên 10 tệp mã nguồn của một dự án phần mềm, Claude có thể hỗ trợ điều gì?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q6-3', 0, 2, 'Sai. Claude không tự động xóa mã nguồn.')" class="quiz-btn-q6-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>A. Tự ý xóa sạch các file trên máy tính</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q6-3', 1, 2, 'Sai. Claude không hack máy chủ.')" class="quiz-btn-q6-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>B. Đánh sập máy chủ của đối thủ cạnh tranh</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q6-3', 2, 2, 'Chính xác! Claude có thể phân tích luồng dữ liệu liên file, tìm lỗi tiềm ẩn, gợi ý tái cấu trúc và viết tài liệu hướng dẫn kỹ thuật.')" class="quiz-btn-q6-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>C. Phân tích luồng dữ liệu chéo giữa các tệp, phát hiện lỗi kiến trúc và viết tài liệu kỹ thuật</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q6-3', 3, 2, 'Sai. Claude hỗ trợ phân tích code chuyên sâu.')" class="quiz-btn-q6-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>D. Chỉ biết đếm tổng số dòng code mà không đọc hiểu được</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q6-3-feedback" class="hidden"></div>
+            </div>
+
+            <!-- Câu 4 -->
+            <div class="bg-gray-50 dark:bg-dark-surface p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">4. Khi làm việc với văn bản rất dài, để đảm bảo Claude trích dẫn chính xác và không bị ảo giác, bạn nên yêu cầu gì?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q6-4', 0, 1, 'Sai. Thêm từ hoa mỹ không giúp tăng tính chuẩn xác.')" class="quiz-btn-q6-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>A. Yêu cầu Claude viết bằng phong cách thơ ca</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q6-4', 1, 1, 'Chính xác! Yêu cầu Claude trích dẫn trực tiếp nguyên văn câu từ (direct quotes) trong tài liệu để chứng minh luận điểm.')" class="quiz-btn-q6-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>B. Yêu cầu trích dẫn trực tiếp câu chữ gốc từ tài liệu để đối chiếu bằng chứng</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q6-4', 2, 1, 'Sai. Việc này không đảm bảo nguồn gốc dữ liệu.')" class="quiz-btn-q6-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>C. Yêu cầu Claude tự sáng tác thêm các ví dụ ngoài đời</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q6-4', 3, 1, 'Sai. Đây không phải cách tiếp cận hiệu quả.')" class="quiz-btn-q6-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>D. Chỉ tải trang đầu tiên và bỏ 99 trang còn lại</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q6-4-feedback" class="hidden"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- BÀI 7 -->
+      <section id="bai7" class="lesson-section bg-white dark:bg-dark-card rounded-2xl p-6 sm:p-8 border border-gray-200 dark:border-gray-800 shadow-sm space-y-6">
+        <div class="flex items-center justify-between border-b border-gray-100 dark:border-gray-800 pb-4">
+          <div class="flex items-center gap-3">
+            <span class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 font-bold flex items-center justify-center text-lg border border-amber-500/20">07</span>
+            <div>
+              <span class="text-xs font-semibold text-amber-600 dark:text-amber-400 uppercase tracking-wider">Tư Duy Suy Luận Minh Bạch</span>
+              <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">Bài 7: Chế Độ Suy Luận Nâng Cao & Tư Duy Chuỗi Minh Bạch (Extended Thinking)</h2>
+            </div>
+          </div>
+          <span class="text-xs font-medium px-3 py-1 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300">
+            <i class="fa-regular fa-clock mr-1"></i> 45 phút học
+          </span>
+        </div>
+
+        <div class="prose dark:prose-invert max-w-none text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed space-y-4">
+          <p>
+            Với thế hệ mô hình mới (tiêu biểu là <strong>Claude 3.7 Sonnet</strong>), Anthropic mang tới bước tiến mang tính cách mạng: <strong>Hybrid Reasoning (Suy Luận Lai)</strong> kết hợp giữa phản hồi tốc độ cao và chế độ <strong>Extended Thinking (Tư Duy Mở Rộng)</strong>.
+          </p>
+
+          <h3 class="text-lg font-bold text-gray-900 dark:text-white mt-4">1. Sự Khác Biệt: Tư Duy Chuỗi Minh Bạch (Transparent CoT)</h3>
+          <p>
+            Trong khi một số mô hình suy luận ẩn hoàn toàn quá trình tư duy của mình, Claude cho phép người dùng <strong>bấm mở xem trọn vẹn từng bước tư duy chuỗi (Thinking Process)</strong>:
+          </p>
+          <ul class="list-disc pl-5 space-y-1.5">
+            <li><strong>Tự phản biện và kiểm tra lỗi:</strong> Bạn có thể thấy rõ Claude cân nhắc các phương án giải, tự phát hiện lỗ hổng logic và tự sửa trước khi đưa ra câu trả lời cuối.</li>
+            <li><strong>Điều chỉnh ngân sách suy luận (Thinking Budget):</strong> Lập trình viên có thể chỉ định chính xác số lượng token dùng cho suy nghĩ (từ vài trăm đến tối đa 64,000 tokens) tùy thuộc vào độ khó của bài toán.</li>
+            <li><strong>Khắc phục bài toán hóc búa:</strong> Chuyên trị các bài toán thi học sinh giỏi, chứng minh định lý toán học, gỡ lỗi thuật toán đệ quy phức tạp và kiến trúc phân tán.</li>
+          </ul>
+        </div>
+
+        <!-- Trắc nghiệm tương tác Bài 7 -->
+        <div class="mt-8 pt-6 border-t border-gray-100 dark:border-gray-800 space-y-4">
+          <h4 class="text-base font-bold text-gray-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-circle-question text-amber-600"></i> Bài tập củng cố kiến thức Bài 7
+          </h4>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Câu 1 -->
+            <div class="bg-gray-50 dark:bg-dark-surface p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">1. Đặc điểm độc đáo nhất của tính năng "Extended Thinking" trong Claude 3.7 Sonnet là gì?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q7-1', 0, 0, 'Chính xác! Người dùng có thể bấm mở xem quy trình suy nghĩ minh bạch, theo dõi từng bước tự phản biện và tự sửa sai của AI.')" class="quiz-btn-q7-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>A. Quá trình tư duy chuỗi minh bạch, người dùng có thể mở xem từng bước suy luận</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q7-1', 1, 0, 'Sai. Tính năng này nhằm tăng cường độ chính xác.')" class="quiz-btn-q7-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>B. Làm cho câu trả lời bị che giấu vĩnh viễn không xem được</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q7-1', 2, 0, 'Sai. Claude không cần thêm phần cứng gắn ngoài.')" class="quiz-btn-q7-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>C. Bắt buộc người dùng phải gắn thêm ổ cứng ngoài</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q7-1', 3, 0, 'Sai. Đây là năng lực tư duy logic.')" class="quiz-btn-q7-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>D. Chỉ trả lời bằng cách hát rap</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q7-1-feedback" class="hidden"></div>
+            </div>
+
+            <!-- Câu 2 -->
+            <div class="bg-gray-50 dark:bg-dark-surface p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">2. Khái niệm "Hybrid Reasoning" (Suy luận lai) trong Claude mô tả điều gì?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q7-2', 0, 1, 'Sai. Đây không phải sự kết hợp với máy tính lượng tử.')" class="quiz-btn-q7-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>A. Kết hợp giữa máy tính lượng tử và máy tính sinh học</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q7-2', 1, 1, 'Chính xác! Mô hình có thể linh hoạt chuyển đổi giữa phản hồi tốc độ cao tức thì và chế độ suy luận suy nghĩ sâu tùy theo độ phức tạp của bài toán.')" class="quiz-btn-q7-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>B. Một mô hình duy nhất vừa có thể phản hồi siêu tốc, vừa có thể bật chế độ suy nghĩ sâu</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q7-2', 2, 1, 'Sai. Không liên quan đến xe chạy xăng điện.')" class="quiz-btn-q7-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>C. Công nghệ điều khiển xe ô tô hybrid</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q7-2', 3, 1, 'Sai. Đây là bước tiến công nghệ LLM.')" class="quiz-btn-q7-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>D. Chế độ chỉ dùng được khi mất điện</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q7-2-feedback" class="hidden"></div>
+            </div>
+
+            <!-- Câu 3 -->
+            <div class="bg-gray-50 dark:bg-dark-surface p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">3. Khi nào bạn nên kích hoạt chế độ Extended Thinking?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q7-3', 0, 2, 'Sai. Hỏi thời tiết câu hỏi đơn giản không cần tốn thời gian suy luận sâu.')" class="quiz-btn-q7-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>A. Khi chỉ hỏi ngày hôm nay là thứ mấy</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q7-3', 1, 2, 'Sai. Chào hỏi thông thường phản hồi tức thì là đủ.')" class="quiz-btn-q7-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>B. Khi chỉ muốn chào hỏi xã giao</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q7-3', 2, 2, 'Chính xác! Khi giải bài toán thuật toán hóc búa, thiết kế kiến trúc bảo mật hoặc chứng minh toán học phức tạp cần tránh ảo giác.')" class="quiz-btn-q7-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>C. Khi giải các bài toán thuật toán khó, thiết kế hệ thống phân tán hoặc chứng minh logic</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q7-3', 3, 2, 'Sai. Đây là công cụ chuyên sâu.')" class="quiz-btn-q7-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>D. Khi muốn làm máy tính bị quá tải nhiệt</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q7-3-feedback" class="hidden"></div>
+            </div>
+
+            <!-- Câu 4 -->
+            <div class="bg-gray-50 dark:bg-dark-surface p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">4. Lập trình viên có thể điều khiển thời lượng suy nghĩ của Claude thông qua thông số nào qua API?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q7-4', 0, 0, 'Chính xác! Thông số thinking budget (số lượng token tối đa dành cho chuỗi suy nghĩ nội tâm).')" class="quiz-btn-q7-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>A. Thinking Budget (ngân sách token suy nghĩ)</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q7-4', 1, 0, 'Sai. Tần số quét màn hình không liên quan đến token.')" class="quiz-btn-q7-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>B. Refresh rate màn hình (Hz)</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q7-4', 2, 0, 'Sai. Độ sáng màn hình máy tính không điều khiển LLM.')" class="quiz-btn-q7-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>C. Độ sáng màn hình máy tính</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q7-4', 3, 0, 'Sai. Đây là tham số phần mềm.')" class="quiz-btn-q7-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>D. Số lần nhấn chuột trong 1 phút</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q7-4-feedback" class="hidden"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+<!-- BÀI 8 -->
+      <section id="bai8" class="lesson-section bg-white dark:bg-dark-card rounded-2xl p-6 sm:p-8 border border-gray-200 dark:border-gray-800 shadow-sm space-y-6">
+        <div class="flex items-center justify-between border-b border-gray-100 dark:border-gray-800 pb-4">
+          <div class="flex items-center gap-3">
+            <span class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 font-bold flex items-center justify-center text-lg border border-amber-500/20">08</span>
+            <div>
+              <span class="text-xs font-semibold text-amber-600 dark:text-amber-400 uppercase tracking-wider">Kỷ Nguyên Tác Tử Tự Hành</span>
+              <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">Bài 8: Đột Phá Tự Động Hóa Với Claude Computer Use (Điều Khiển Máy Tính)</h2>
+            </div>
+          </div>
+          <span class="text-xs font-medium px-3 py-1 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300">
+            <i class="fa-regular fa-clock mr-1"></i> 45 phút học
+          </span>
+        </div>
+
+        <div class="prose dark:prose-invert max-w-none text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed space-y-4">
+          <p>
+            Vào tháng 10/2024, Anthropic đã tạo nên cú sốc công nghệ toàn cầu khi công bố <strong>Computer Use</strong> cho Claude 3.5 Sonnet: Khả năng nhìn màn hình, di chuyển con trỏ chuột, nhấp chuột và gõ bàn phím hệt như một con người đang ngồi thao tác trước máy vi tính.
+          </p>
+
+          <h3 class="text-lg font-bold text-gray-900 dark:text-white mt-4">1. Vòng Lặp Hoạt Động (Agent Loop) Của Computer Use</h3>
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-3 not-prose my-3">
+            <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-dark-surface border border-gray-200 dark:border-gray-700">
+              <div class="font-bold text-amber-600 dark:text-amber-400 text-xs mb-1 flex items-center gap-1.5">
+                <i class="fa-solid fa-camera"></i> 1. Chụp màn hình
+              </div>
+              <p class="text-[12px] text-gray-600 dark:text-gray-400">Claude nhận ảnh chụp màn hình máy tính (screenshot) để nhận diện các nút bấm, ô nhập liệu và cửa sổ ứng dụng.</p>
+            </div>
+            <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-dark-surface border border-gray-200 dark:border-gray-700">
+              <div class="font-bold text-orange-600 dark:text-orange-400 text-xs mb-1 flex items-center gap-1.5">
+                <i class="fa-solid fa-crosshairs"></i> 2. Tính toán tọa độ
+              </div>
+              <p class="text-[12px] text-gray-600 dark:text-gray-400">Xác định chính xác tọa độ pixel (x, y) của nút bấm hoặc menu cần tương tác.</p>
+            </div>
+            <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-dark-surface border border-gray-200 dark:border-gray-700">
+              <div class="font-bold text-emerald-600 dark:text-emerald-400 text-xs mb-1 flex items-center gap-1.5">
+                <i class="fa-solid fa-mouse-pointer"></i> 3. Thực thi hành động
+              </div>
+              <p class="text-[12px] text-gray-600 dark:text-gray-400">Phát lệnh di chuột (mouse_move), nhấp chuột (left_click), gõ phím (type) hoặc cuộn trang (scroll).</p>
+            </div>
+            <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-dark-surface border border-gray-200 dark:border-gray-700">
+              <div class="font-bold text-indigo-600 dark:text-indigo-400 text-xs mb-1 flex items-center gap-1.5">
+                <i class="fa-solid fa-arrows-rotate"></i> 4. Đánh giá kết quả
+              </div>
+              <p class="text-[12px] text-gray-600 dark:text-gray-400">Chụp lại ảnh màn hình mới để xác nhận thao tác đã thành công và tiếp tục bước tiếp theo.</p>
+            </div>
+          </div>
+
+          <h3 class="text-lg font-bold text-gray-900 dark:text-white mt-6">2. Ứng Dụng Thực Tế Đột Phá</h3>
+          <ul class="list-disc pl-5 space-y-1.5">
+            <li><strong>Điền biểu mẫu tự động giữa các phần mềm không có API:</strong> Đọc bảng tính Excel &rarr; mở trình duyệt &rarr; đăng nhập hệ thống CRM nội bộ &rarr; điền từng trường thông tin.</li>
+            <li><strong>Kiểm thử phần mềm tự động (End-to-End QA Testing):</strong> Tự mở trang web, bấm thử từng nút bấm, phát hiện các trang bị lỗi 404 hoặc giao diện vỡ.</li>
+            <li><strong>Đặt vé và nghiên cứu dữ liệu đa nguồn:</strong> So sánh giá trên nhiều trang web du lịch khác nhau và tổng hợp bảng báo cáo.</li>
+          </ul>
+        </div>
+
+        <!-- Trắc nghiệm tương tác Bài 8 -->
+        <div class="mt-8 pt-6 border-t border-gray-100 dark:border-gray-800 space-y-4">
+          <h4 class="text-base font-bold text-gray-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-circle-question text-amber-600"></i> Bài tập củng cố kiến thức Bài 8
+          </h4>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Câu 1 -->
+            <div class="bg-gray-50 dark:bg-dark-surface p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">1. Tính năng "Computer Use" của Anthropic cho phép Claude thực hiện điều gì?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q8-1', 0, 1, 'Sai. Computer Use là phần mềm tác tử, không sản xuất chip máy tính.')" class="quiz-btn-q8-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>A. Tự động sản xuất linh kiện bán dẫn và CPU máy tính</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q8-1', 1, 1, 'Chính xác! Claude có thể nhìn màn hình, di chuyển chuột, bấm chuột và gõ bàn phím để tương tác với mọi ứng dụng như con người.')" class="quiz-btn-q8-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>B. Nhìn màn hình, di chuyển chuột, click và gõ bàn phím để thao tác ứng dụng</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q8-1', 2, 1, 'Sai. Claude không phải là thợ sửa chữa máy cơ học.')" class="quiz-btn-q8-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>C. Tự động vặn ốc vít vỏ máy tính</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q8-1', 3, 1, 'Sai. Đây là công nghệ điều khiển phần mềm.')" class="quiz-btn-q8-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>D. Làm cho màn hình máy tính biến thành màu đen vĩnh viễn</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q8-1-feedback" class="hidden"></div>
+            </div>
+
+            <!-- Câu 2 -->
+            <div class="bg-gray-50 dark:bg-dark-surface p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">2. Trong cơ chế Computer Use, làm thế nào Claude biết được mình cần bấm vào vị trí nào trên màn hình?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q8-2', 0, 0, 'Chính xác! Claude nhận ảnh chụp màn hình, phân tích thị giác và tính toán tọa độ điểm ảnh pixel (x, y) để phát lệnh di chuột.')" class="quiz-btn-q8-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>A. Phân tích ảnh chụp màn hình và tính toán tọa độ điểm ảnh (x, y)</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q8-2', 1, 0, 'Sai. Claude không bấm ngẫu nhiên mà có thị giác định vị chuẩn xác.')" class="quiz-btn-q8-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>B. Bấm ngẫu nhiên vào các góc màn hình cho đến khi trúng</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q8-2', 2, 0, 'Sai. Claude không yêu cầu con người dán nhãn thủ công.')" class="quiz-btn-q8-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>C. Nhờ người dùng cầm tay chỉ chuột vào màn hình</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q8-2', 3, 0, 'Sai. Đây là công nghệ Vision-Language-Action hiện đại.')" class="quiz-btn-q8-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>D. Nghe âm thanh quạt tản nhiệt của máy tính</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q8-2-feedback" class="hidden"></div>
+            </div>
+
+            <!-- Câu 3 -->
+            <div class="bg-gray-50 dark:bg-dark-surface p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">3. Vấn đề an toàn quan trọng nhất khi triển khai tác tử điều khiển máy tính tự động là gì?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q8-3', 0, 2, 'Sai. Giá thành không phải là mối lo an ninh.')" class="quiz-btn-q8-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>A. Chuột máy tính bị mòn đế nhựa</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q8-3', 1, 2, 'Sai. Bàn phím không bị nóng do thao tác phần mềm.')" class="quiz-btn-q8-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>B. Bàn phím bị nóng lên</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q8-3', 2, 2, 'Chính xác! Cần môi trường cách ly (sandbox) và sự giám sát của con người đối với các hành động nhạy cảm (như chuyển tiền, xóa file hệ thống).')" class="quiz-btn-q8-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>C. Chạy trong môi trường cô lập (Sandbox) và cần con người xác nhận các thao tác nhạy cảm</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q8-3', 3, 2, 'Sai. Môi trường an toàn là ưu tiên hàng đầu của Anthropic.')" class="quiz-btn-q8-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>D. Cấp toàn quyền truy cập tài khoản ngân hàng không cần giám sát</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q8-3-feedback" class="hidden"></div>
+            </div>
+
+            <!-- Câu 4 -->
+            <div class="bg-gray-50 dark:bg-dark-surface p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">4. Thao tác nào sau đây là ví dụ kinh điển về sức mạnh của Computer Use?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q8-4', 0, 1, 'Sai. Việc này không cần Computer Use.')" class="quiz-btn-q8-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>A. Tắt màn hình khi đi ngủ</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q8-4', 1, 1, 'Chính xác! Tự động hóa xuyên suốt giữa các ứng dụng không có API: đọc dữ liệu một nơi và nhập sang phần mềm khác qua giao diện đồ họa GUI.')" class="quiz-btn-q8-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>B. Tự mở bảng tính, đọc dữ liệu và đăng nhập vào cổng nội bộ để điền hồ sơ tự động</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q8-4', 2, 1, 'Sai. Đây không phải tác vụ của AI.')" class="quiz-btn-q8-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>C. Tháo rời dây nguồn máy tính</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q8-4', 3, 1, 'Sai. Đây là chức năng tự động hóa quy trình.')" class="quiz-btn-q8-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>D. Tự động đổi màu hình nền desktop mỗi giây</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q8-4-feedback" class="hidden"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- BÀI 9 -->
+      <section id="bai9" class="lesson-section bg-white dark:bg-dark-card rounded-2xl p-6 sm:p-8 border border-gray-200 dark:border-gray-800 shadow-sm space-y-6">
+        <div class="flex items-center justify-between border-b border-gray-100 dark:border-gray-800 pb-4">
+          <div class="flex items-center gap-3">
+            <span class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 font-bold flex items-center justify-center text-lg border border-amber-500/20">09</span>
+            <div>
+              <span class="text-xs font-semibold text-amber-600 dark:text-amber-400 uppercase tracking-wider">Văn Phong Tự Nhiên & Học Thuật</span>
+              <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">Bài 9: Viết Lách Đỉnh Cao, Văn Phong Tự Nhiên & Nghiên Cứu Học Thuật</h2>
+            </div>
+          </div>
+          <span class="text-xs font-medium px-3 py-1 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300">
+            <i class="fa-regular fa-clock mr-1"></i> 40 phút học
+          </span>
+        </div>
+
+        <div class="prose dark:prose-invert max-w-none text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed space-y-4">
+          <p>
+            Một trong những lý do khiến các nhà văn, nhà báo, học giả và nhà nghiên cứu yêu thích Claude hơn mọi mô hình AI khác là <strong>văn phong tự nhiên, sâu sắc và tinh tế</strong>. Claude nổi tiếng với khả năng loại bỏ các mô-típ "sáo rỗng kiểu AI" (anti-AI cliches).
+          </p>
+
+          <h3 class="text-lg font-bold text-gray-900 dark:text-white mt-4">1. Thoát Khỏi Các Cụm Từ "Sáo Rỗng Kiểu AI"</h3>
+          <p>
+            Các chatbot thông thường hay mở đầu bài viết bằng những câu sáo rỗng như: <em>"Trong bức tranh toàn cảnh không ngừng biến đổi của thế giới hiện đại..."</em> hoặc lạm dụng từ <em>"minh chứng", "bước ngoặt mang tính cách mạng"</em>. Claude được huấn luyện để viết văn có nhịp điệu sinh động, trung thực và sát thực tế.
+          </p>
+
+          <h3 class="text-lg font-bold text-gray-900 dark:text-white mt-6">2. Trợ Lý Nghiên Cứu Luận Văn & Bài Báo Khoa Học</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 not-prose my-3">
+            <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-dark-surface border border-gray-200 dark:border-gray-700">
+              <h4 class="font-bold text-amber-600 dark:text-amber-400 text-xs mb-1"><i class="fa-solid fa-glasses"></i> Tổng quan tài liệu (Lit Review)</h4>
+              <p class="text-[12px] text-gray-600 dark:text-gray-400">Đối chiếu và tổng hợp các công trình nghiên cứu trước đó, chỉ ra khoảng trống học thuật (research gap).</p>
+            </div>
+            <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-dark-surface border border-gray-200 dark:border-gray-700">
+              <h4 class="font-bold text-orange-600 dark:text-orange-400 text-xs mb-1"><i class="fa-solid fa-arrows-split-up-and-left"></i> Phản biện luận điểm</h4>
+              <p class="text-[12px] text-gray-600 dark:text-gray-400">Đóng vai "Người phản biện số 2" (Reviewer 2) khó tính để chất vấn các giả định và phương pháp nghiên cứu.</p>
+            </div>
+            <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-dark-surface border border-gray-200 dark:border-gray-700">
+              <h4 class="font-bold text-emerald-600 dark:text-emerald-400 text-xs mb-1"><i class="fa-solid fa-language"></i> Dịch thuật bản địa hóa</h4>
+              <p class="text-[12px] text-gray-600 dark:text-gray-400">Dịch thuật văn chương và tài liệu kỹ thuật giữ nguyên được sắc thái cảm xúc và thuật ngữ chuyên ngành.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Trắc nghiệm tương tác Bài 9 -->
+        <div class="mt-8 pt-6 border-t border-gray-100 dark:border-gray-800 space-y-4">
+          <h4 class="text-base font-bold text-gray-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-circle-question text-amber-600"></i> Bài tập củng cố kiến thức Bài 9
+          </h4>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Câu 1 -->
+            <div class="bg-gray-50 dark:bg-dark-surface p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">1. Điểm mạnh nổi bật nhất của văn phong Claude so với các mô hình ngôn ngữ thông thường là gì?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q9-1', 0, 0, 'Chính xác! Claude có văn phong tự nhiên, chân thực, giàu sắc thái cảm xúc và hạn chế tối đa các khuôn mẫu từ ngữ sáo rỗng thường thấy ở AI.')" class="quiz-btn-q9-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>A. Văn phong tự nhiên, sâu sắc, chân thực và ít sáo rỗng khuôn sáo</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q9-1', 1, 0, 'Sai. Lặp từ là nhược điểm của các model kém chất lượng.')" class="quiz-btn-q9-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>B. Lặp đi lặp lại một từ duy nhất 100 lần</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q9-1', 2, 0, 'Sai. Claude không viết sai chính tả cố ý.')" class="quiz-btn-q9-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>C. Cố tình viết sai chính tả để đánh lừa người đọc</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q9-1', 3, 0, 'Sai. Văn phong Claude được đánh giá hàng đầu thế giới.')" class="quiz-btn-q9-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>D. Chỉ biết dùng các từ ngữ thô lỗ</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q9-1-feedback" class="hidden"></div>
+            </div>
+
+            <!-- Câu 2 -->
+            <div class="bg-gray-50 dark:bg-dark-surface p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">2. Khi nhờ Claude đóng vai phản biện bài nghiên cứu học thuật của bạn, vai trò nào thường được mô phỏng?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q9-2', 0, 1, 'Sai. Em bé 3 tuổi không thể phản biện nghiên cứu.')" class="quiz-btn-q9-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>A. Một em bé 3 tuổi đang tập nói</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q9-2', 1, 1, 'Chính xác! Đóng vai Reviewer 2 - nhà phản biện đồng cấp khắt khe giúp tìm ra các lỗ hổng phương pháp trước khi nộp bài.')" class="quiz-btn-q9-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>B. Một nhà phản biện học thuật khó tính (Reviewer) chất vấn các giả định phương pháp</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q9-2', 2, 1, 'Sai. Nhân vật hoạt hình không có tính học thuật.')" class="quiz-btn-q9-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>C. Nhân vật hoạt hình Chuột Mickey</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q9-2', 3, 1, 'Sai. Đây là ứng dụng thực tế của giới nghiên cứu.')" class="quiz-btn-q9-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>D. Người bán hàng rong</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q9-2-feedback" class="hidden"></div>
+            </div>
+
+            <!-- Câu 3 -->
+            <div class="bg-gray-50 dark:bg-dark-surface p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">3. Để bài viết tạo ra bởi Claude có văn phong giống giọng văn riêng của bạn nhất, bạn nên cung cấp điều gì?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q9-3', 0, 2, 'Sai. Giọng nói âm thanh không định hình ngữ pháp văn bản.')" class="quiz-btn-q9-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>A. File ghi âm tiếng ho của bạn</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q9-3', 1, 2, 'Sai. Số đo chiều cao không liên quan đến văn chương.')" class="quiz-btn-q9-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>B. Số đo chiều cao và cân nặng cá nhân</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q9-3', 2, 2, 'Chính xác! Cung cấp 2-3 bài viết mẫu trước đây của bạn trong thẻ &lt;writing_samples&gt; để Claude học cách ngắt câu, từ vựng và nhịp điệu.')" class="quiz-btn-q9-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>C. Đính kèm 2 - 3 bài viết mẫu của bạn trong thẻ &lt;writing_samples&gt; để AI học phong cách</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q9-3', 3, 2, 'Sai. Đây là kỹ thuật Few-shot Style Transfer.')" class="quiz-btn-q9-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>D. Đổi ảnh đại diện tài khoản thành màu đỏ</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q9-3-feedback" class="hidden"></div>
+            </div>
+
+            <!-- Câu 4 -->
+            <div class="bg-gray-50 dark:bg-dark-surface p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">4. Tại sao các dịch giả đánh giá rất cao Claude trong dịch thuật tác phẩm văn học?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q9-4', 0, 1, 'Sai. Dịch từng từ một (word-by-word) là lối dịch thô cứng.')" class="quiz-btn-q9-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>A. Vì Claude dịch cứng nhắc từng từ một theo từ điển</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q9-4', 1, 1, 'Chính xác! Claude hiểu được ẩn dụ, điển tích điển cố, thành ngữ và chuyển dịch mượt mà phù hợp với văn hóa bản địa.')" class="quiz-btn-q9-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>B. Nhờ khả năng hiểu ngữ cảnh văn hóa, thành ngữ và giữ trọn sắc thái cảm xúc</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q9-4', 2, 1, 'Sai. Claude không tự ý xóa bỏ các đoạn văn.')" class="quiz-btn-q9-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>C. Tự động xóa bỏ các câu văn khó dịch</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q9-4', 3, 1, 'Sai. Claude hỗ trợ tiếng Việt và hơn 100 ngôn ngữ phong phú.')" class="quiz-btn-q9-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>D. Chỉ dịch được đúng 3 từ tiếng Anh mỗi lần</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q9-4-feedback" class="hidden"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- BÀI 10 -->
+      <section id="bai10" class="lesson-section bg-white dark:bg-dark-card rounded-2xl p-6 sm:p-8 border border-gray-200 dark:border-gray-800 shadow-sm space-y-6">
+        <div class="flex items-center justify-between border-b border-gray-100 dark:border-gray-800 pb-4">
+          <div class="flex items-center gap-3">
+            <span class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 font-bold flex items-center justify-center text-lg border border-amber-500/20">10</span>
+            <div>
+              <span class="text-xs font-semibold text-amber-600 dark:text-amber-400 uppercase tracking-wider">Chuyên Nghiệp & Bảo Mật</span>
+              <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">Bài 10: Quy Trình Pro, Anthropic Console, Claude Code CLI & Bảo Mật Dữ Liệu</h2>
+            </div>
+          </div>
+          <span class="text-xs font-medium px-3 py-1 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300">
+            <i class="fa-regular fa-clock mr-1"></i> 45 phút học
+          </span>
+        </div>
+
+        <div class="prose dark:prose-invert max-w-none text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed space-y-4">
+          <p>
+            Để đưa Claude vào quy trình công việc chuyên nghiệp quy mô lớn, bạn cần làm quen với hệ sinh thái dành cho lập trình viên và doanh nghiệp của Anthropic: <strong>Anthropic Console</strong>, <strong>Prompt Workbench</strong>, công cụ dòng lệnh <strong>Claude Code (CLI)</strong> và chính sách bảo mật dữ liệu nghiêm ngặt.
+          </p>
+
+          <h3 class="text-lg font-bold text-gray-900 dark:text-white mt-4">1. Anthropic Console & Prompt Workbench</h3>
+          <p>
+            Truy cập tại <code class="bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded text-amber-600 font-mono text-xs">console.anthropic.com</code>:
+          </p>
+          <ul class="list-disc pl-5 space-y-1.5">
+            <li><strong>Prompt Generator:</strong> Tính năng tự động biến một câu mô tả ngắn của bạn thành một Prompt hoàn chỉnh dài 500 từ có cấu trúc thẻ XML chuẩn mực.</li>
+            <li><strong>Workbench:</strong> Phòng thí nghiệm tinh chỉnh System Prompts, điều chỉnh nhiệt độ (Temperature), kiểm tra độ trễ (latency) và chi phí token trước khi triển khai vào mã nguồn.</li>
+            <li><strong>Prompt Caching (Bộ nhớ đệm câu lệnh):</strong> Đột phá kỹ thuật giúp <em>giảm 90% chi phí</em> và <em>tăng 80% tốc độ phản hồi</em> đối với các đoạn prompt dài hoặc tài liệu được tái sử dụng nhiều lần!</li>
+          </ul>
+
+          <h3 class="text-lg font-bold text-gray-900 dark:text-white mt-6">2. Claude Code CLI: Trợ Lý Lập Trình Dòng Lệnh</h3>
+          <p>
+            Công cụ dòng lệnh trực tiếp (CLI) giúp lập trình viên triệu hồi Claude ngay trong Terminal của Visual Studio Code hay máy tính:
+          </p>
+          <div class="p-4 rounded-xl bg-gray-900 text-gray-100 font-mono text-xs overflow-x-auto border border-gray-800 not-prose my-3">
+            <span class="text-emerald-400">$</span> npm install -g @anthropic-ai/claude-code<br/>
+            <span class="text-emerald-400">$</span> claude<br/>
+            <span class="text-amber-400">// Claude Code tự động quét repo git, sửa lỗi file, chạy test và tạo commit git tự động!</span>
+          </div>
+
+          <h3 class="text-lg font-bold text-gray-900 dark:text-white mt-6">3. Cam Kết Bảo Mật Dữ Liệu Của Anthropic</h3>
+          <div class="p-4 rounded-xl bg-amber-500/10 border border-amber-500/20 text-gray-800 dark:text-gray-200 text-xs sm:text-sm space-y-2 not-prose">
+            <p class="font-bold text-amber-700 dark:text-amber-400"><i class="fa-solid fa-lock"></i> Nguyên tắc bảo vệ quyền riêng tư:</p>
+            <ul class="list-disc pl-5 space-y-1 text-xs">
+              <li>Mặc định, dữ liệu gửi qua <strong>API Anthropic không bao giờ bị sử dụng để huấn luyện mô hình</strong> (zero-data-retention training policy).</li>
+              <li>Trên <code class="font-mono">claude.ai</code>, người dùng có toàn quyền kiểm soát lịch sử trò chuyện và có thể xóa vĩnh viễn bất kỳ lúc nào.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Trắc nghiệm tương tác Bài 10 -->
+        <div class="mt-8 pt-6 border-t border-gray-100 dark:border-gray-800 space-y-4">
+          <h4 class="text-base font-bold text-gray-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-circle-question text-amber-600"></i> Bài tập củng cố kiến thức Bài 10
+          </h4>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Câu 1 -->
+            <div class="bg-gray-50 dark:bg-dark-surface p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">1. Tính năng "Prompt Caching" trong Anthropic API mang lại lợi ích lớn nhất nào cho nhà phát triển?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q10-1', 0, 1, 'Sai. Prompt Caching không làm tăng giá tiền.')" class="quiz-btn-q10-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>A. Tăng giá cước token lên gấp 10 lần</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q10-1', 1, 1, 'Chính xác! Giảm tới 90% chi phí token và tăng tốc độ xử lý câu lệnh tới 80% bằng cách lưu bộ nhớ đệm đoạn ngữ cảnh dài dùng chung.')" class="quiz-btn-q10-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>B. Giảm tới 90% chi phí token và tăng tốc độ phản hồi tới 80% cho văn bản dài tái sử dụng</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q10-1', 2, 1, 'Sai. Prompt Caching không liên quan đến pin máy.')" class="quiz-btn-q10-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>C. Tự động sạc đầy pin cho máy tính xách tay</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q10-1', 3, 1, 'Sai. Đây là tính năng đột phá của Anthropic API.')" class="quiz-btn-q10-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>D. Xóa toàn bộ mã nguồn trên Github</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q10-1-feedback" class="hidden"></div>
+            </div>
+
+            <!-- Câu 2 -->
+            <div class="bg-gray-50 dark:bg-dark-surface p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">2. "Claude Code" là công cụ gì được Anthropic cung cấp cho cộng đồng lập trình viên?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q10-2', 0, 0, 'Chính xác! Claude Code là công cụ CLI dòng lệnh trong terminal giúp lập trình viên phân tích codebase, viết test và commit git tự động.')" class="quiz-btn-q10-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>A. Công cụ dòng lệnh (CLI) chạy trực tiếp trong Terminal hỗ trợ viết code và quản lý Git</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q10-2', 1, 0, 'Sai. Claude Code không phải game xếp hình.')" class="quiz-btn-q10-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>B. Một trò chơi xếp hình trí tuệ</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q10-2', 2, 0, 'Sai. Không phải phần mềm nghe nhạc.')" class="quiz-btn-q10-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>C. Ứng dụng nghe nhạc trực tuyến</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q10-2', 3, 0, 'Sai. Đây là công cụ đắc lực cho Software Engineer.')" class="quiz-btn-q10-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>D. Trình duyệt web mới</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q10-2-feedback" class="hidden"></div>
+            </div>
+
+            <!-- Câu 3 -->
+            <div class="bg-gray-50 dark:bg-dark-surface p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">3. Chính sách bảo mật dữ liệu của Anthropic đối với các yêu cầu gửi qua API thương mại quy định điều gì?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q10-3', 0, 2, 'Sai. Dữ liệu API được bảo vệ nghiêm ngặt.')" class="quiz-btn-q10-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>A. Đăng công khai toàn bộ dữ liệu người dùng lên website</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q10-3', 1, 2, 'Sai. Anthropic cam kết không dùng dữ liệu API để huấn luyện model.')" class="quiz-btn-q10-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>B. Bắt buộc dùng toàn bộ dữ liệu khách hàng để huấn luyện AI</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q10-3', 2, 2, 'Chính xác! Anthropic cam kết mặc định không bao giờ sử dụng dữ liệu doanh nghiệp gửi qua API để huấn luyện mô hình nền tảng.')" class="quiz-btn-q10-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>C. Mặc định không bao giờ dùng dữ liệu API của khách hàng để huấn luyện mô hình</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q10-3', 3, 2, 'Sai. Đây là cam kết uy tín doanh nghiệp lớn.')" class="quiz-btn-q10-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>D. Chia sẻ dữ liệu khách hàng cho mọi đối thủ</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q10-3-feedback" class="hidden"></div>
+            </div>
+
+            <!-- Câu 4 -->
+            <div class="bg-gray-50 dark:bg-dark-surface p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">4. Tư duy làm chủ công nghệ Claude hiệu quả và chuyên nghiệp nhất là gì?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q10-4', 0, 1, 'Sai. Phụ thuộc tuyệt đối không phải là làm chủ.')" class="quiz-btn-q10-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>A. Phó mặc hoàn toàn và không kiểm tra lại kết quả</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q10-4', 1, 1, 'Chính xác! Kết hợp tư duy cấu trúc rõ ràng với thẻ XML, tận dụng Artifacts và các dự án chuyên biệt, đồng thời duy trì sự kiểm chứng chuyên môn.')" class="quiz-btn-q10-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>B. Cấu trúc câu lệnh chuẩn mực với thẻ XML, tận dụng Artifacts & Projects để giải quyết bài toán phức tạp</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q10-4', 2, 1, 'Sai. Claude là công cụ tối ưu cho tư duy sâu sắc.')" class="quiz-btn-q10-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>C. Từ chối sử dụng vì sợ AI quá thông minh</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q10-4', 3, 1, 'Sai. Đây là kỹ năng tương lai.')" class="quiz-btn-q10-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 transition flex items-center justify-between">
+                  <span>D. Chỉ gõ các câu cụt lủn không rõ mục đích</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q10-4-feedback" class="hidden"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TỔNG KẾT & CHỨNG NHẬN -->
+      <section class="p-8 sm:p-10 rounded-2xl bg-gradient-to-br from-amber-950 via-orange-950 to-stone-950 text-white shadow-xl relative overflow-hidden">
+        <div class="relative z-10 max-w-3xl space-y-4">
+          <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-bold border border-amber-500/30">
+            <i class="fa-solid fa-award"></i> Hoàn Thành Xuất Sắc Khóa Học
+          </span>
+          <h2 class="text-2xl sm:text-3xl font-black">Chúc Mừng Bạn Đã Tốt Nghiệp Khóa Học Làm Chủ Anthropic Claude!</h2>
+          <p class="text-gray-300 text-xs sm:text-sm leading-relaxed">
+            Từ việc thấu hiểu cấu trúc thẻ XML, làm chủ không gian tương tác Artifacts, quản lý tri thức khổng lồ với Claude Projects, cho đến chế độ tư duy chuỗi Extended Thinking và tự động hóa với Computer Use, bạn đã nắm giữ toàn bộ bí quyết của một chuyên gia AI tiên phong.
+          </p>
+          <div class="flex flex-wrap items-center gap-3 pt-2">
+            <a href="../index.html" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs sm:text-sm transition-all shadow-lg hover:-translate-y-0.5">
+              <i class="fa-solid fa-house"></i> Về Trang Chủ Khóa Học
+            </a>
+            <button onclick="resetAllQuizzes()" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs sm:text-sm backdrop-blur transition-all">
+              <i class="fa-solid fa-rotate-left"></i> Làm Lại Tất Cả Bài Tập
+            </button>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer class="mt-16 border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-dark-card py-10 transition-colors">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center sm:text-left flex flex-col sm:flex-row justify-between items-center gap-4">
+    <div class="flex items-center gap-3">
+      <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-amber-600 to-orange-500 flex items-center justify-center text-white shadow-md">
+        <i class="fa-solid fa-graduation-cap"></i>
+      </div>
+      <div>
+        <span class="font-bold text-gray-900 dark:text-white text-sm">Nền Tảng Học Tập Số</span>
+        <p class="text-xs text-gray-400">Khóa học chuyên sâu Làm chủ Anthropic Claude (claude.ai)</p>
+      </div>
+    </div>
+    <p class="text-xs text-gray-500 dark:text-gray-400">
+      &copy; 2026 Nền Tảng Học Tập Trực Tuyến. Thiết kế chuẩn tương tác và trải nghiệm người dùng tối ưu.
+    </p>
+  </div>
+</footer>
+
+<!-- SCRIPT XỬ LÝ TƯƠNG TÁC -->
+<script>
+  // 1. Quản lý Dark / Light mode
+  const themeToggleBtn = document.getElementById('theme-toggle');
+  const themeIcon = document.getElementById('theme-icon');
+
+  function applyTheme(isDark) {
+    if (isDark) {
+      document.documentElement.classList.add('dark');
+      if (themeIcon) themeIcon.className = 'fa-solid fa-sun text-yellow-400';
+    } else {
+      document.documentElement.classList.remove('dark');
+      if (themeIcon) themeIcon.className = 'fa-solid fa-moon text-gray-600';
+    }
+  }
+
+  if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+    applyTheme(true);
+  } else {
+    applyTheme(false);
+  }
+
+  if (themeToggleBtn) {
+    themeToggleBtn.addEventListener('click', () => {
+      const isDark = document.documentElement.classList.contains('dark');
+      if (isDark) {
+        localStorage.theme = 'light';
+        applyTheme(false);
+      } else {
+        localStorage.theme = 'dark';
+        applyTheme(true);
+      }
+    });
+  }
+
+  // 2. Mobile Drawer Navigation
+  const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+  const closeDrawerBtn = document.getElementById('close-drawer-btn');
+  const mobileDrawer = document.getElementById('mobile-drawer');
+
+  function toggleDrawer(open) {
+    if (!mobileDrawer) return;
+    if (open) {
+      mobileDrawer.classList.remove('hidden');
+    } else {
+      mobileDrawer.classList.add('hidden');
+    }
+  }
+
+  if (mobileMenuBtn) mobileMenuBtn.addEventListener('click', () => toggleDrawer(true));
+  if (closeDrawerBtn) closeDrawerBtn.addEventListener('click', () => toggleDrawer(false));
+
+  // 3. Quản lý Quiz & Tiến độ học tập với LocalStorage
+  const TOTAL_QUIZZES = 40;
+  const STORAGE_KEY = 'claude_solved_quizzes';
+
+  function getSolvedQuizzes() {
+    try {
+      return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+    } catch (e) {
+      return {};
+    }
+  }
+
+  function saveSolvedQuiz(quizId, isCorrect) {
+    const solved = getSolvedQuizzes();
+    solved[quizId] = isCorrect;
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(solved));
+    updateProgressDisplay();
+  }
+
+  function checkQuiz(quizId, selectedIdx, correctIdx, explanation) {
+    const buttons = document.querySelectorAll('.quiz-btn-' + quizId);
+    const feedbackEl = document.getElementById(quizId + '-feedback');
+    const isCorrect = (selectedIdx === correctIdx);
+
+    buttons.forEach((btn, idx) => {
+      const icon = btn.querySelector('i');
+      btn.classList.remove('border-amber-500', 'bg-amber-50', 'dark:bg-amber-950/40', 'border-rose-500', 'bg-rose-50', 'dark:bg-rose-950/40');
+      if (idx === correctIdx) {
+        btn.classList.add('border-amber-500', 'bg-amber-50', 'dark:bg-amber-950/40');
+        if (icon) icon.className = 'fa-solid fa-circle-check text-amber-600 dark:text-amber-400';
+      } else if (idx === selectedIdx && !isCorrect) {
+        btn.classList.add('border-rose-500', 'bg-rose-50', 'dark:bg-rose-950/40');
+        if (icon) icon.className = 'fa-solid fa-circle-xmark text-rose-500';
+      }
+    });
+
+    if (feedbackEl) {
+      feedbackEl.classList.remove('hidden', 'text-amber-700', 'dark:text-amber-400', 'bg-amber-50', 'dark:bg-amber-950/30', 'border-amber-500/30', 'text-rose-700', 'dark:text-rose-400', 'bg-rose-50', 'dark:bg-rose-950/30', 'border-rose-500/30');
+      feedbackEl.className = 'mt-3 p-3 rounded-lg text-xs font-medium border leading-relaxed ' + 
+        (isCorrect ? 'text-amber-700 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/30 border-amber-500/30' : 'text-rose-700 dark:text-rose-300 bg-rose-50 dark:bg-rose-950/30 border-rose-500/30');
+      feedbackEl.innerHTML = (isCorrect ? '<i class="fa-solid fa-circle-check mr-1.5"></i>' : '<i class="fa-solid fa-circle-xmark mr-1.5"></i>') + explanation;
+    }
+
+    saveSolvedQuiz(quizId, isCorrect);
+  }
+
+  function updateProgressDisplay() {
+    const solved = getSolvedQuizzes();
+    const count = Object.values(solved).filter(v => v === true).length;
+    const pct = Math.round((count / TOTAL_QUIZZES) * 100);
+
+    const countEl = document.getElementById('quiz-completed-count');
+    const progressPercentEl = document.getElementById('progress-percent');
+    const progressBarEl = document.getElementById('progress-bar');
+
+    if (countEl) countEl.innerText = count;
+    if (progressPercentEl) progressPercentEl.innerText = pct + '%';
+    if (progressBarEl) progressBarEl.style.width = pct + '%';
+  }
+
+  function resetAllQuizzes() {
+    if (confirm('Bạn có chắc muốn đặt lại toàn bộ kết quả bài tập để làm lại từ đầu?')) {
+      localStorage.removeItem(STORAGE_KEY);
+      location.reload();
+    }
+  }
+
+  // Khôi phục trạng thái quiz khi tải trang
+  document.addEventListener('DOMContentLoaded', () => {
+    updateProgressDisplay();
+
+    // ScrollSpy cho Sidebar navigation
+    const sections = document.querySelectorAll('.lesson-section');
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      const scrollPos = window.pageYOffset || document.documentElement.scrollTop;
+
+      sections.forEach(section => {
+        const top = section.offsetTop - 140;
+        const height = section.offsetHeight;
+        if (scrollPos >= top && scrollPos < top + height) {
+          current = section.getAttribute('id');
+        }
+      });
+
+      navLinks.forEach(link => {
+        link.classList.remove('bg-amber-500/10', 'text-amber-600', 'dark:text-amber-400', 'font-bold');
+        if (link.getAttribute('href') === '#' + current) {
+          link.classList.add('bg-amber-500/10', 'text-amber-600', 'dark:text-amber-400', 'font-bold');
+        }
+      });
+    });
+  });
+</script>
+</body>
+</html>

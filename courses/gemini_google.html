@@ -1,0 +1,1890 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Google Gemini (gemini.google.com) - Trợ Lý AI Đa Phương Thức Toàn Năng | CodeHub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            gemini: { 50: '#eef2ff', 100: '#e0e7ff', 200: '#c7d2fe', 300: '#a5b4fc', 400: '#818cf8', 500: '#6366f1', 600: '#4f46e5', 700: '#4338ca', 800: '#3730a3', 900: '#312e81' },
+            dark: { bg: '#090d16', surface: '#111827', card: '#1b2438', border: '#29354f' }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .sidebar-scroll::-webkit-scrollbar { width: 6px; }
+    .sidebar-scroll::-webkit-scrollbar-track { background: transparent; }
+    .sidebar-scroll::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 4px; }
+    .dark .sidebar-scroll::-webkit-scrollbar-thumb { background: #475569; }
+    .gemini-gradient {
+      background: linear-gradient(135deg, #1e3a8a 0%, #4338ca 40%, #701a75 80%, #9d174d 100%);
+    }
+    .gemini-sparkle {
+      background: linear-gradient(90deg, #60a5fa, #c084fc, #f472b6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 dark:bg-dark-bg text-gray-900 dark:text-gray-100 min-h-screen flex flex-col font-sans transition-colors duration-200">
+
+  <!-- Header Navigation -->
+  <header class="sticky top-0 z-50 bg-white/90 dark:bg-dark-surface/90 backdrop-blur border-b border-gray-200 dark:border-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <a href="../index.html" class="flex items-center gap-2 text-indigo-600 dark:text-indigo-400 font-bold text-lg hover:opacity-90">
+          <i class="fa-solid fa-graduation-cap text-xl"></i>
+          <span class="hidden sm:inline">CodeHub</span>
+        </a>
+        <div class="h-5 w-px bg-gray-300 dark:bg-gray-700"></div>
+        <div class="flex items-center gap-1.5 bg-gray-100 dark:bg-gray-800 p-1 rounded-xl text-xs sm:text-sm font-semibold">
+          <span class="px-2.5 py-1 rounded-lg bg-white dark:bg-gray-700 shadow-sm text-indigo-600 dark:text-indigo-400 flex items-center gap-1.5">
+            <i class="fa-solid fa-wand-magic-sparkles"></i> Google Gemini
+          </span>
+          <a href="notebook_google.html" class="px-2.5 py-1 rounded-lg text-teal-600 dark:text-teal-400 hover:bg-white dark:hover:bg-gray-700 flex items-center gap-1">
+            <i class="fa-solid fa-book-bookmark"></i> NotebookLM
+          </a>
+          <a href="google_flow.html" class="px-2.5 py-1 rounded-lg text-violet-600 dark:text-violet-400 hover:bg-white dark:hover:bg-gray-700 flex items-center gap-1">
+            <i class="fa-solid fa-film"></i> Flow AI
+          </a>
+          <a href="ai_12.html" class="px-2.5 py-1 rounded-lg text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white flex items-center gap-1">
+            <i class="fa-solid fa-robot"></i> AI 12
+          </a>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <a href="https://gemini.google.com" target="_blank" rel="noopener noreferrer" class="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold shadow-sm transition">
+          <i class="fa-solid fa-arrow-up-right-from-square"></i> Mở gemini.google.com
+        </a>
+        <button id="themeToggle" class="p-2 rounded-xl text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none" title="Chuyển chế độ sáng/tối">
+          <i class="fa-solid fa-moon dark:hidden text-lg"></i>
+          <i class="fa-solid fa-sun hidden dark:inline text-lg text-amber-400"></i>
+        </button>
+        <button id="mobileMenuBtn" class="lg:hidden p-2 rounded-xl text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800">
+          <i class="fa-solid fa-bars text-lg"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="gemini-gradient text-white py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+    <div class="absolute -right-16 -top-16 w-80 h-80 bg-pink-500/20 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute left-1/4 -bottom-16 w-72 h-72 bg-blue-500/20 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto text-center relative z-10">
+      <span class="inline-flex items-center gap-2 px-3.5 py-1 bg-white/15 backdrop-blur rounded-full text-xs sm:text-sm font-semibold mb-3 border border-white/20">
+        <i class="fa-solid fa-sparkles text-pink-300"></i> Google AI Flagship - gemini.google.com
+      </span>
+      <h1 class="text-2xl sm:text-4xl md:text-5xl font-black tracking-tight mb-3">
+        Làm Chủ Google Gemini Toàn Năng
+      </h1>
+      <p class="text-indigo-100 text-sm sm:text-base max-w-3xl mx-auto font-light leading-relaxed mb-6">
+        Khai phá sức mạnh mô hình AI đa phương thức nguyên bản hàng đầu của Google: Văn bản, Lập trình, Phân tích Hình ảnh, Video, Trình chạy mã Python trong thời gian thực, Tùy biến trợ lý chuyên biệt (Gemini Gems), Tiện ích Google Workspace (@Drive, @Gmail, @YouTube) và Không gian sáng tạo trực quan Canvas.
+      </p>
+
+      <div class="flex flex-wrap items-center justify-center gap-3 text-xs sm:text-sm font-medium">
+        <div class="flex items-center gap-2 bg-black/30 px-3.5 py-2 rounded-xl backdrop-blur border border-white/10">
+          <i class="fa-solid fa-shapes text-indigo-300"></i> Native Multimodal (Text/Img/Video)
+        </div>
+        <div class="flex items-center gap-2 bg-black/30 px-3.5 py-2 rounded-xl backdrop-blur border border-white/10">
+          <i class="fa-solid fa-gem text-pink-300"></i> Custom Gemini Gems
+        </div>
+        <div class="flex items-center gap-2 bg-black/30 px-3.5 py-2 rounded-xl backdrop-blur border border-white/10">
+          <i class="fa-solid fa-at text-teal-300"></i> Workspace Extensions (@)
+        </div>
+        <div class="flex items-center gap-2 bg-black/30 px-3.5 py-2 rounded-xl backdrop-blur border border-white/10">
+          <i class="fa-solid fa-code text-amber-300"></i> Python Code Execution
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mobile Drawer Backdrop -->
+  <div id="drawerBackdrop" class="fixed inset-0 bg-black/50 z-40 hidden lg:hidden transition-opacity"></div>
+
+  <!-- Main Container with Sidebar + Content -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 flex gap-8">
+    
+    <!-- Sidebar Navigation -->
+    <aside id="sidebarDrawer" class="fixed inset-y-0 left-0 z-50 w-72 bg-white dark:bg-dark-surface p-6 shadow-xl transform -translate-x-full transition-transform lg:translate-x-0 lg:static lg:w-80 lg:p-0 lg:shadow-none lg:bg-transparent lg:dark:bg-transparent shrink-0">
+      <div class="flex items-center justify-between pb-4 border-b border-gray-200 dark:border-gray-800 lg:hidden mb-4">
+        <h2 class="text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2">
+          <i class="fa-solid fa-list-check text-indigo-600"></i> Mục lục khóa học
+        </h2>
+        <button id="closeDrawerBtn" class="p-2 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <div class="sticky top-24 max-h-[calc(100vh-7rem)] overflow-y-auto sidebar-scroll pr-2 space-y-2">
+        <div class="hidden lg:flex items-center justify-between px-3 py-2 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+          <span>Giáo trình 10 Bài học</span>
+          <span class="bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300 py-0.5 px-2 rounded-full text-[11px]">gemini.google.com</span>
+        </div>
+
+        <nav class="space-y-1 text-sm font-medium">
+          <a href="#bai1" class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-indigo-950/40 hover:text-indigo-600 dark:hover:text-indigo-400 transition">
+            <span class="w-6 h-6 rounded-lg bg-indigo-100 dark:bg-indigo-900/60 text-indigo-700 dark:text-indigo-300 flex items-center justify-center text-xs font-bold shrink-0">01</span>
+            <span class="truncate">Bài 1: Giới thiệu Gemini & Hệ Sinh Thái AI</span>
+          </a>
+          <a href="#bai2" class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-indigo-950/40 hover:text-indigo-600 dark:hover:text-indigo-400 transition">
+            <span class="w-6 h-6 rounded-lg bg-indigo-100 dark:bg-indigo-900/60 text-indigo-700 dark:text-indigo-300 flex items-center justify-center text-xs font-bold shrink-0">02</span>
+            <span class="truncate">Bài 2: Phân Tích Hình Ảnh & Thị Giác Máy</span>
+          </a>
+          <a href="#bai3" class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-indigo-950/40 hover:text-indigo-600 dark:hover:text-indigo-400 transition">
+            <span class="w-6 h-6 rounded-lg bg-indigo-100 dark:bg-indigo-900/60 text-indigo-700 dark:text-indigo-300 flex items-center justify-center text-xs font-bold shrink-0">03</span>
+            <span class="truncate">Bài 3: Xử Lý Video & Tài Liệu Triệu Token</span>
+          </a>
+          <a href="#bai4" class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-indigo-950/40 hover:text-indigo-600 dark:hover:text-indigo-400 transition">
+            <span class="w-6 h-6 rounded-lg bg-indigo-100 dark:bg-indigo-900/60 text-indigo-700 dark:text-indigo-300 flex items-center justify-center text-xs font-bold shrink-0">04</span>
+            <span class="truncate">Bài 4: Tiện Ích Mở Rộng Workspace (@)</span>
+          </a>
+          <a href="#bai5" class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-indigo-950/40 hover:text-indigo-600 dark:hover:text-indigo-400 transition">
+            <span class="w-6 h-6 rounded-lg bg-indigo-100 dark:bg-indigo-900/60 text-indigo-700 dark:text-indigo-300 flex items-center justify-center text-xs font-bold shrink-0">05</span>
+            <span class="truncate">Bài 5: Lập Trình & Chạy Python Trực Tiếp</span>
+          </a>
+          <a href="#bai6" class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-indigo-950/40 hover:text-indigo-600 dark:hover:text-indigo-400 transition">
+            <span class="w-6 h-6 rounded-lg bg-indigo-100 dark:bg-indigo-900/60 text-indigo-700 dark:text-indigo-300 flex items-center justify-center text-xs font-bold shrink-0">06</span>
+            <span class="truncate">Bài 6: Xây Dựng Trợ Lý Riêng (Gemini Gems)</span>
+          </a>
+          <a href="#bai7" class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-indigo-950/40 hover:text-indigo-600 dark:hover:text-indigo-400 transition">
+            <span class="w-6 h-6 rounded-lg bg-indigo-100 dark:bg-indigo-900/60 text-indigo-700 dark:text-indigo-300 flex items-center justify-center text-xs font-bold shrink-0">07</span>
+            <span class="truncate">Bài 7: Không Gian Sáng Tạo Gemini Canvas</span>
+          </a>
+          <a href="#bai8" class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-indigo-950/40 hover:text-indigo-600 dark:hover:text-indigo-400 transition">
+            <span class="w-6 h-6 rounded-lg bg-indigo-100 dark:bg-indigo-900/60 text-indigo-700 dark:text-indigo-300 flex items-center justify-center text-xs font-bold shrink-0">08</span>
+            <span class="truncate">Bài 8: Kiểm Chứng Đúp (Double Check)</span>
+          </a>
+          <a href="#bai9" class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-indigo-950/40 hover:text-indigo-600 dark:hover:text-indigo-400 transition">
+            <span class="w-6 h-6 rounded-lg bg-indigo-100 dark:bg-indigo-900/60 text-indigo-700 dark:text-indigo-300 flex items-center justify-center text-xs font-bold shrink-0">09</span>
+            <span class="truncate">Bài 9: Sáng Tạo Hình Ảnh Imagen 3 & Voice</span>
+          </a>
+          <a href="#bai10" class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-indigo-950/40 hover:text-indigo-600 dark:hover:text-indigo-400 transition">
+            <span class="w-6 h-6 rounded-lg bg-indigo-100 dark:bg-indigo-900/60 text-indigo-700 dark:text-indigo-300 flex items-center justify-center text-xs font-bold shrink-0">10</span>
+            <span class="truncate">Bài 10: Quy Trình Pro & Tích Hợp AI Studio</span>
+          </a>
+        </nav>
+
+        <div class="pt-4 border-t border-gray-200 dark:border-gray-800">
+          <div class="bg-indigo-50 dark:bg-indigo-950/30 p-3.5 rounded-2xl border border-indigo-200 dark:border-indigo-900/50">
+            <div class="text-xs font-bold text-indigo-800 dark:text-indigo-300 flex items-center justify-between mb-1.5">
+              <span>Tiến độ học tập</span>
+              <span id="progressPercent">0%</span>
+            </div>
+            <div class="w-full bg-gray-200 dark:bg-gray-700 h-2 rounded-full overflow-hidden">
+              <div id="progressBar" class="bg-indigo-600 h-full w-0 transition-all duration-300"></div>
+            </div>
+            <p class="text-[11px] text-gray-500 dark:text-gray-400 mt-2">Hoàn thành 40 câu trắc nghiệm để mở khóa Huy hiệu Gemini Master.</p>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 min-w-0 space-y-12">
+
+      <!-- ========================================== -->
+      <!-- BÀI 1: GIỚI THIỆU GEMINI & HỆ SINH THÁI AI -->
+      <!-- ========================================== -->
+      <section id="bai1" class="lesson-section bg-white dark:bg-dark-surface rounded-2xl p-6 sm:p-8 border border-gray-200 dark:border-gray-800 shadow-sm space-y-6">
+        <div class="flex items-center gap-3 border-b border-gray-100 dark:border-gray-800 pb-4">
+          <span class="w-10 h-10 rounded-xl bg-indigo-100 dark:bg-indigo-900/60 text-indigo-700 dark:text-indigo-300 flex items-center justify-center font-bold text-lg shrink-0">01</span>
+          <div>
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">Bài 1: Giới Thiệu Google Gemini & Hệ Sinh Thái AI Đa Phương Thức Của Google</h2>
+            <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">Khám phá mô hình AI chiến lược của Google (gemini.google.com), các phân cấp mô hình và kiến trúc đa phương thức nguyên bản</p>
+          </div>
+        </div>
+
+        <div class="prose dark:prose-invert max-w-none text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed space-y-4">
+          <p>
+            <strong>Google Gemini</strong> (truy cập tại <code class="bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded text-indigo-600 font-mono text-xs">gemini.google.com</code>) là nền tảng trí tuệ nhân tạo thế hệ mới được Google nghiên cứu và phát triển bởi liên minh Google DeepMind và Google Research.
+          </p>
+          <p>
+            Khác với các thế hệ AI trước đây (vốn chỉ là mô hình ngôn ngữ dạng văn bản rồi sau đó được ghép thêm các bộ chuyển đổi hình ảnh hoặc âm thanh riêng lẻ), <strong>Gemini được thiết kế từ gốc rễ là một mô hình Đa phương thức nguyên bản (Natively Multimodal)</strong>. Điều này cho phép Gemini hiểu, kết hợp và vận hành trơn tru giữa văn bản, mã nguồn, hình ảnh, âm thanh và video ngay từ quá trình tiền huấn luyện.
+          </p>
+
+          <h3 class="text-lg font-bold text-gray-900 dark:text-white mt-4">Phân Cấp Gia Đình Mô Hình Gemini</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 not-prose my-4">
+            <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <div class="font-bold text-blue-600 dark:text-blue-400 text-xs mb-1 flex items-center gap-1.5">
+                <i class="fa-solid fa-mobile-screen"></i> Gemini Nano
+              </div>
+              <p class="text-[12px] text-gray-600 dark:text-gray-400">Mô hình siêu nhẹ chạy trực tiếp trên thiết bị đầu cuối (On-device như Google Pixel, Samsung Galaxy) mà không cần kết nối Internet.</p>
+            </div>
+            <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <div class="font-bold text-emerald-600 dark:text-emerald-400 text-xs mb-1 flex items-center gap-1.5">
+                <i class="fa-solid fa-bolt"></i> Gemini Flash (1.5 / 2.0)
+              </div>
+              <p class="text-[12px] text-gray-600 dark:text-gray-400">Tối ưu cho tốc độ phản hồi cực nhanh, độ trễ thấp và chi phí tối thiểu, phù hợp cho các tác vụ hỏi đáp thường nhật và tóm tắt nhanh.</p>
+            </div>
+            <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-dark-card border border-indigo-500/40">
+              <div class="font-bold text-indigo-600 dark:text-indigo-400 text-xs mb-1 flex items-center gap-1.5">
+                <i class="fa-solid fa-brain"></i> Gemini Pro (1.5 / 2.0)
+              </div>
+              <p class="text-[12px] text-gray-600 dark:text-gray-400">Mô hình mạnh mẽ toàn diện: tư duy toán học, phân tích ngữ cảnh lớn (Context Window lên tới 2 triệu token) và lập trình chuyên sâu.</p>
+            </div>
+            <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-dark-card border border-purple-500/40">
+              <div class="font-bold text-purple-600 dark:text-purple-400 text-xs mb-1 flex items-center gap-1.5">
+                <i class="fa-solid fa-crown"></i> Gemini Advanced
+              </div>
+              <p class="text-[12px] text-gray-600 dark:text-gray-400">Gói cao cấp (Google One AI Premium) tích hợp mô hình đỉnh cao nhất, quyền tạo Gems riêng, Canvas và tích hợp sâu trong Gmail, Docs.</p>
+            </div>
+          </div>
+
+          <h3 class="text-lg font-bold text-gray-900 dark:text-white mt-6">Cấu Trúc Giao Diện Web Tại gemini.google.com</h3>
+          <p>
+            Giao diện làm việc của Gemini được bố trí tinh giản nhưng chứa đầy sức mạnh:
+          </p>
+          <ul class="list-disc pl-5 space-y-1.5">
+            <li><strong>Thanh nhập Prompt đa năng:</strong> Hỗ trợ gõ lệnh, bấm micro thu âm giọng nói, dán hình ảnh hoặc bấm dấu <code>+</code> để tải tệp PDF, video, code.</li>
+            <li><strong>Bộ chuyển đổi Mô hình (Model Selector):</strong> Lựa chọn giữa Gemini Flash (tốc độ cao) hoặc Gemini Advanced (tư duy sâu).</li>
+            <li><strong>Thanh bên trái (Sidebar):</strong> Quản lý danh sách các cuộc trò chuyện (Chats), Không gian sáng tạo (Canvas), và Kho trợ lý chuyên biệt (Gemini Gems).</li>
+          </ul>
+        </div>
+
+        <!-- Trắc nghiệm tương tác Bài 1 -->
+        <div class="mt-8 pt-6 border-t border-gray-100 dark:border-gray-800 space-y-4">
+          <h4 class="text-base font-bold text-gray-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-circle-question text-indigo-600"></i> Bài tập củng cố kiến thức Bài 1
+          </h4>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Câu 1 -->
+            <div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">1. Đặc điểm cốt lõi tạo nên sự khác biệt của kiến trúc mô hình Gemini là gì?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q1-1', 0, 1, 'Sai. Gemini do Google phát triển độc lập.')" class="quiz-btn-q1-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>A. Sử dụng lại 100% mã nguồn mở từ Facebook</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q1-1', 1, 1, 'Chính xác! Gemini được huấn luyện đa phương thức nguyên bản (Natively Multimodal) trên văn bản, hình ảnh, âm thanh, video và code cùng lúc.')" class="quiz-btn-q1-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>B. Đa phương thức nguyên bản (Natively Multimodal) xử lý văn bản, ảnh, âm thanh, video từ gốc</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q1-1', 2, 1, 'Sai. Gemini hỗ trợ hàng chục ngôn ngữ toàn cầu bao gồm tiếng Việt.')" class="quiz-btn-q1-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>C. Chỉ hỗ trợ duy nhất ngôn ngữ tiếng Anh cổ</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q1-1', 3, 1, 'Sai. Gemini hoạt động trên trình duyệt web và di động.')" class="quiz-btn-q1-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>D. Phải cài đặt đĩa mềm mềm MS-DOS mới chạy được</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q1-1-feedback" class="hidden"></div>
+            </div>
+
+            <!-- Câu 2 -->
+            <div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">2. Phiên bản Gemini nào được tối ưu để chạy trực tiếp trên thiết bị (On-device) mà không cần mạng?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q1-2', 0, 0, 'Chính xác! Gemini Nano là mô hình siêu gọn nhẹ dành riêng cho phần cứng di động.')" class="quiz-btn-q1-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>A. Gemini Nano</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q1-2', 1, 0, 'Sai. Gemini Ultra là mô hình trung tâm dữ liệu khổng lồ.')" class="quiz-btn-q1-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>B. Gemini Ultra</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q1-2', 2, 0, 'Sai. Gemini Flash vận hành trên đám mây.')" class="quiz-btn-q1-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>C. Gemini Flash</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q1-2', 3, 0, 'Sai. Gemini Pro chạy trên hệ thống đám mây của Google.')" class="quiz-btn-q1-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>D. Gemini Pro</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q1-2-feedback" class="hidden"></div>
+            </div>
+
+            <!-- Câu 3 -->
+            <div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">3. Trước khi đổi tên thành Google Gemini vào đầu năm 2024, dự án AI này có tên gọi là gì?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q1-3', 0, 2, 'Sai. Google Allo là ứng dụng nhắn tin trước đây.')" class="quiz-btn-q1-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>A. Google Allo</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q1-3', 1, 2, 'Sai. Google Wave là dịch vụ cộng tác email cũ.')" class="quiz-btn-q1-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>B. Google Wave</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q1-3', 2, 2, 'Chính xác! Google ban đầu ra mắt AI đàm thoại với tên gọi Google Bard, sau đó tái cấu trúc và đổi tên thành Gemini.')" class="quiz-btn-q1-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>C. Google Bard</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q1-3', 3, 2, 'Sai. Google Glass là kính thông minh.')" class="quiz-btn-q1-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>D. Google Glass</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q1-3-feedback" class="hidden"></div>
+            </div>
+
+            <!-- Câu 4 -->
+            <div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">4. Địa chỉ web chính thức để truy cập sử dụng Google Gemini là gì?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q1-4', 0, 0, 'Chính xác! Địa chỉ chính thức là gemini.google.com.')" class="quiz-btn-q1-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>A. gemini.google.com</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q1-4', 1, 0, 'Sai. Đây là địa chỉ giả mạo.')" class="quiz-btn-q1-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>B. gemini-download-free.net</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q1-4', 2, 0, 'Sai. Đây không phải tên miền của Google.')" class="quiz-btn-q1-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>C. google.gemini.ai.org</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q1-4', 3, 0, 'Sai. Địa chỉ chính thống là gemini.google.com.')" class="quiz-btn-q1-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>D. geminichat.xyz</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q1-4-feedback" class="hidden"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- BÀI 2: PHÂN TÍCH HÌNH ẢNH & THỊ GIÁC MÁY -->
+      <!-- ========================================== -->
+      <section id="bai2" class="lesson-section bg-white dark:bg-dark-surface rounded-2xl p-6 sm:p-8 border border-gray-200 dark:border-gray-800 shadow-sm space-y-6">
+        <div class="flex items-center gap-3 border-b border-gray-100 dark:border-gray-800 pb-4">
+          <span class="w-10 h-10 rounded-xl bg-indigo-100 dark:bg-indigo-900/60 text-indigo-700 dark:text-indigo-300 flex items-center justify-center font-bold text-lg shrink-0">02</span>
+          <div>
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">Bài 2: Phân Tích Hình Ảnh & Thị Giác Máy Tính (Vision & Visual Reasoning)</h2>
+            <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">Cách tải ảnh lên Gemini để giải toán, đọc biểu đồ, dịch thực đơn và biến bản vẽ nháp thành mã giao diện web</p>
+          </div>
+        </div>
+
+        <div class="prose dark:prose-invert max-w-none text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed space-y-4">
+          <p>
+            Nhờ kiến trúc thị giác tích hợp sâu, Gemini không chỉ "đọc" chữ trong ảnh mà còn hiểu được <strong>mối quan hệ không gian, cấu trúc hình học và ý nghĩa logic</strong> của các đối tượng trong ảnh.
+          </p>
+
+          <h3 class="text-lg font-bold text-gray-900 dark:text-white">Các Kịch Bản Sử Dụng Thị Giác Máy Tính Đỉnh Cao</h3>
+          <div class="space-y-3 not-prose my-4">
+            <div class="p-4 bg-gray-50 dark:bg-dark-card rounded-xl border border-gray-200 dark:border-gray-700">
+              <div class="font-bold text-indigo-600 dark:text-indigo-400 text-sm mb-1 flex items-center gap-2">
+                <i class="fa-solid fa-code"></i> 1. Chuyển Phác Thảo Tay (Wireframe Sketch) Sang Code Web
+              </div>
+              <p class="text-xs text-gray-600 dark:text-gray-300">
+                Vẽ nhanh bố cục trang web lên giấy $ightarrow$ Chụp ảnh tải lên Gemini $ightarrow$ Kèm lệnh: <em>"Hãy viết mã HTML5 và Tailwind CSS hoàn chỉnh tái tạo lại chính xác giao diện trong bức vẽ này."</em> Gemini sẽ sinh ra mã nguồn sạch, có responsive cho di động.
+              </p>
+            </div>
+
+            <div class="p-4 bg-gray-50 dark:bg-dark-card rounded-xl border border-gray-200 dark:border-gray-700">
+              <div class="font-bold text-blue-600 dark:text-blue-400 text-sm mb-1 flex items-center gap-2">
+                <i class="fa-solid fa-chart-pie"></i> 2. Phân Tích Biểu Đồ & Infographic Phức Tạp
+              </div>
+              <p class="text-xs text-gray-600 dark:text-gray-300">
+                Tải biểu đồ phân bố thị phần, biểu đồ nến chứng khoán hoặc đồ thị toán học. Gemini có thể rút trích toàn bộ số liệu ẩn trong biểu đồ thành bảng dữ liệu Markdown và đưa ra nhận xét xu hướng.
+              </p>
+            </div>
+
+            <div class="p-4 bg-gray-50 dark:bg-dark-card rounded-xl border border-gray-200 dark:border-gray-700">
+              <div class="font-bold text-purple-600 dark:text-purple-400 text-sm mb-1 flex items-center gap-2">
+                <i class="fa-solid fa-square-root-variable"></i> 3. Giải Toán & Vật Lý Viết Tay
+              </div>
+              <p class="text-xs text-gray-600 dark:text-gray-300">
+                Chụp đề thi viết tay chứa tích phân, đạo hàm hay sơ đồ mạch điện. Gemini nhận diện công thức, giải từng bước chi tiết (Step-by-step reasoning) và chỉ ra các lỗi sai trong bài làm của học sinh.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Trắc nghiệm tương tác Bài 2 -->
+        <div class="mt-8 pt-6 border-t border-gray-100 dark:border-gray-800 space-y-4">
+          <h4 class="text-base font-bold text-gray-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-circle-question text-indigo-600"></i> Bài tập củng cố kiến thức Bài 2
+          </h4>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Câu 1 -->
+            <div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">1. Khi bạn chụp một bức vẽ phác thảo giao diện web trên giấy và gửi cho Gemini, AI có thể làm gì?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q2-1', 0, 0, 'Chính xác! Gemini có thể đọc cấu trúc không gian của bản vẽ và sinh ra mã nguồn HTML/Tailwind CSS tương ứng.')" class="quiz-btn-q2-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>A. Chuyển đổi bản vẽ thành mã nguồn HTML/CSS/JavaScript hoàn chỉnh</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q2-1', 1, 0, 'Sai. Gemini hiểu được hình ảnh phác thảo rất tốt.')" class="quiz-btn-q2-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>B. Báo lỗi vì AI chỉ đọc được văn bản thuần túy</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q2-1', 2, 0, 'Sai. AI không gửi giấy về nhà.')" class="quiz-btn-q2-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>C. Tự động gửi giấy vẽ qua đường bưu điện</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q2-1', 3, 0, 'Sai. Đây không phải tính năng của Gemini.')" class="quiz-btn-q2-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>D. Xóa sạch mọi ảnh trong thư viện điện thoại</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q2-1-feedback" class="hidden"></div>
+            </div>
+
+            <!-- Câu 2 -->
+            <div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">2. Để phân tích một biểu đồ cột chứa số liệu phức tạp bằng Gemini, cách làm nào tối ưu nhất?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q2-2', 0, 1, 'Sai. Gõ tay vừa mất thời gian vừa dễ sai sót.')" class="quiz-btn-q2-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>A. Tự gõ lại toàn bộ từng con số bằng bàn phím</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q2-2', 1, 1, 'Chính xác! Tải thẳng ảnh biểu đồ lên và yêu cầu trích xuất dữ liệu kèm phân tích xu hướng.')" class="quiz-btn-q2-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>B. Tải ảnh biểu đồ lên và yêu cầu trích xuất bảng dữ liệu kèm nhận xét xu hướng</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q2-2', 2, 1, 'Sai. Không cần thiết và gây méo mó ảnh.')" class="quiz-btn-q2-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>C. Cắt nhỏ ảnh thành 100 mảnh rồi gửi từng mảnh</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q2-2', 3, 1, 'Sai. Gemini đọc ảnh màu cực kỳ tốt.')" class="quiz-btn-q2-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>D. Sơn đen trắng toàn bộ màn hình máy tính</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q2-2-feedback" class="hidden"></div>
+            </div>
+
+            <!-- Câu 3 -->
+            <div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">3. Khi chụp bài toán viết tay chữ xấu, Gemini xử lý như thế nào?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q2-3', 0, 1, 'Sai. AI không buông lời chê bai người dùng.')" class="quiz-btn-q2-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>A. AI từ chối và chê chữ viết của bạn xấu</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q2-3', 1, 1, 'Chính xác! Mô hình thị giác có khả năng nhận dạng chữ viết tay và công thức toán học rất ấn tượng để suy luận lời giải.')" class="quiz-btn-q2-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>B. Nhận diện công thức viết tay và giải thích các bước giải toán chi tiết</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q2-3', 2, 1, 'Sai. Không có tính năng này.')" class="quiz-btn-q2-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>C. Tự động gửi điểm 0 về cho giáo viên chủ nhiệm</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q2-3', 3, 1, 'Sai. Gemini là trợ lý học tập.')" class="quiz-btn-q2-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>D. Tắt nguồn điện của máy tính</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q2-3-feedback" class="hidden"></div>
+            </div>
+
+            <!-- Câu 4 -->
+            <div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">4. Bạn có thể tải lên nhiều hình ảnh trong cùng một phiên hội thoại với Gemini không?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q2-4', 0, 0, 'Chính xác! Bạn có thể tải nhiều ảnh cùng lúc để so sánh hai sản phẩm, hai bản vẽ hoặc tìm điểm khác biệt.')" class="quiz-btn-q2-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>A. Hoàn toàn được, có thể tải nhiều ảnh để so sánh đối chiếu</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q2-4', 1, 0, 'Sai. Gemini hỗ trợ đa ảnh hoàn toàn bình thường.')" class="quiz-btn-q2-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>B. Chỉ tải được 1 ảnh duy nhất trong suốt cuộc đời tài khoản</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q2-4', 2, 0, 'Sai. Không có quy định này.')" class="quiz-btn-q2-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>C. Phải trả thêm 1 triệu đồng cho mỗi bức ảnh thứ hai</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q2-4', 3, 0, 'Sai. Người dùng tải ảnh dễ dàng qua nút đính kèm.')" class="quiz-btn-q2-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>D. Chỉ tải được nếu là nhân viên của Google</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q2-4-feedback" class="hidden"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- BÀI 3: XỬ LÝ VIDEO & TÀI LIỆU TRIỆU TOKEN -->
+      <!-- ========================================== -->
+      <section id="bai3" class="lesson-section bg-white dark:bg-dark-surface rounded-2xl p-6 sm:p-8 border border-gray-200 dark:border-gray-800 shadow-sm space-y-6">
+        <div class="flex items-center gap-3 border-b border-gray-100 dark:border-gray-800 pb-4">
+          <span class="w-10 h-10 rounded-xl bg-indigo-100 dark:bg-indigo-900/60 text-indigo-700 dark:text-indigo-300 flex items-center justify-center font-bold text-lg shrink-0">03</span>
+          <div>
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">Bài 3: Xử Lý Video & Tài Liệu Dài Hàng Triệu Token (Long-Context Reasoning)</h2>
+            <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">Khai thác cửa sổ ngữ cảnh khổng lồ 1-2 triệu token để đọc trọn cuốn sách 1.000 trang và phân tích video theo mốc thời gian</p>
+          </div>
+        </div>
+
+        <div class="prose dark:prose-invert max-w-none text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed space-y-4">
+          <p>
+            Trước khi Gemini 1.5 ra đời, giới hạn lớn nhất của hầu hết các mô hình AI là chỉ nhớ được vài chục nghìn token (tương đương 10-20 trang sách). Google đã tạo ra một bước nhảy vọt lịch sử khi mở rộng <strong>Cửa sổ ngữ cảnh (Context Window) lên tới 1.000.000 - 2.000.000 token</strong>.
+          </p>
+
+          <h3 class="text-lg font-bold text-gray-900 dark:text-white">1. Cửa Sổ 2 Triệu Token Tương Đương Với Những Gì?</h3>
+          <ul class="list-disc pl-5 space-y-2">
+            <li><strong>Về sách vở:</strong> Khoảng <strong>1.500.000 từ</strong> — tương đương 6-8 cuốn tiểu thuyết dày cộm như <em>Chiến Tranh và Hòa Bình</em> hoặc toàn bộ hồ sơ vụ án pháp lý.</li>
+            <li><strong>Về lập trình:</strong> Hơn <strong>60.000 dòng code</strong> — bạn có thể nạp toàn bộ một kho mã nguồn (Codebase) hoàn chỉnh của một ứng dụng phần mềm lớn vào một câu lệnh duy nhất.</li>
+            <li><strong>Về video & âm thanh:</strong> Khoảng <strong>1 giờ video</strong> hoặc <strong>11 giờ ghi âm giọng nói</strong> liền mạch.</li>
+          </ul>
+
+          <h3 class="text-lg font-bold text-gray-900 dark:text-white mt-6">2. Phân Tích Video Thông Minh Với Mốc Thời Gian (Timecodes)</h3>
+          <p>
+            Bạn có thể tải một tệp video bài giảng hoặc dán đường link video YouTube trực tiếp vào Gemini:
+          </p>
+          <div class="p-4 bg-gray-50 dark:bg-dark-card rounded-xl border border-gray-200 dark:border-gray-700 not-prose text-xs sm:text-sm space-y-2 font-mono">
+            <div class="text-indigo-600 dark:text-indigo-400 font-bold">// Ví dụ câu lệnh phân tích video:</div>
+            <p class="text-gray-800 dark:text-gray-200">
+              "Hãy xem video dài 45 phút này và cho tôi biết: Người diễn giả bắt đầu nói về vi xử lý đồ họa ở phút thứ mấy? Tóm tắt 3 luận điểm chính từ phút 15:20 đến 28:40."
+            </p>
+            <p class="text-emerald-600 dark:text-emerald-400">
+              ==> Gemini sẽ chỉ ra chính xác mốc thời gian: <span class="underline">[18:34] Diễn giả chuyển slide sang kiến trúc GPU</span> và trích xuất đúng nội dung được trình chiếu!
+            </p>
+          </div>
+        </div>
+
+        <!-- Trắc nghiệm tương tác Bài 3 -->
+        <div class="mt-8 pt-6 border-t border-gray-100 dark:border-gray-800 space-y-4">
+          <h4 class="text-base font-bold text-gray-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-circle-question text-indigo-600"></i> Bài tập củng cố kiến thức Bài 3
+          </h4>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Câu 1 -->
+            <div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">1. Cửa sổ ngữ cảnh (Context Window) lên tới 2 triệu token của Gemini Pro cho phép xử lý khối lượng dữ liệu nào?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q3-1', 0, 1, 'Sai. 2 triệu token lớn hơn 1 trang rất nhiều.')" class="quiz-btn-q3-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>A. Tối đa 1 trang giấy A4</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q3-1', 1, 1, 'Chính xác! 2 triệu token tương đương khoảng 1.5 triệu từ, hàng chục nghìn dòng code hoặc 1 giờ video.')" class="quiz-btn-q3-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>B. Khoảng 1.5 triệu từ văn bản, hơn 60.000 dòng code hoặc 1 giờ video</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q3-1', 2, 1, 'Sai. Không có giới hạn 10 chữ.')" class="quiz-btn-q3-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>C. Tối đa 10 chữ cái</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q3-1', 3, 1, 'Sai. Đây là một con số khổng lồ.')" class="quiz-btn-q3-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>D. Bằng dung lượng của một chiếc đĩa mềm 1.44MB</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q3-1-feedback" class="hidden"></div>
+            </div>
+
+            <!-- Câu 2 -->
+            <div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">2. Khi bạn cung cấp một video dài cho Gemini, tính năng phân tích video giúp ích gì nhất?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q3-2', 0, 0, 'Chính xác! Giúp tiết kiệm thời gian xem hàng giờ video bằng cách tìm nhanh chính xác thời điểm sự việc diễn ra.')" class="quiz-btn-q3-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>A. Định vị chính xác mốc thời gian (Timecode) và tóm tắt sự kiện trong từng phân đoạn</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q3-2', 1, 0, 'Sai. Gemini không tự ý xóa kênh của tác giả.')" class="quiz-btn-q3-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>B. Xóa vĩnh viễn kênh YouTube của tác giả</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q3-2', 2, 0, 'Sai. Gemini không dùng để tăng lượt xem ảo.')" class="quiz-btn-q3-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>C. Tự động tăng 1 triệu lượt xem giả mạo cho video</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q3-2', 3, 0, 'Sai. Mô hình phân tích cả âm thanh và hình ảnh của video.')" class="quiz-btn-q3-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>D. Biến màn hình máy tính thành kính 3D</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q3-2-feedback" class="hidden"></div>
+            </div>
+
+            <!-- Câu 3 -->
+            <div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">3. Khi tải toàn bộ mã nguồn của một dự án phần mềm gồm 50 tệp code vào Gemini, AI có thể làm gì?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q3-3', 0, 1, 'Sai. AI không làm hỏng máy tính.')" class="quiz-btn-q3-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>A. Làm nổ tung vi xử lý của máy tính</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q3-3', 1, 1, 'Chính xác! Cửa sổ ngữ cảnh khổng lồ cho phép Gemini nắm toàn bộ kiến trúc dự án và sửa lỗi logic đa tệp.')" class="quiz-btn-q3-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>B. Hiểu toàn bộ luồng dữ liệu kiến trúc, phát hiện lỗi bảo mật và đề xuất tối ưu</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q3-3', 2, 1, 'Sai. Mô hình có thể xử lý liền mạch hàng chục tệp cùng lúc.')" class="quiz-btn-q3-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>C. Từ chối đọc vì chỉ nhận tối đa 3 dòng code</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q3-3', 3, 1, 'Sai. Code của bạn được bảo mật trong phiên làm việc.')" class="quiz-btn-q3-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>D. Tự động rao bán mã nguồn của bạn lên mạng</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q3-3-feedback" class="hidden"></div>
+            </div>
+
+            <!-- Câu 4 -->
+            <div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">4. Thử nghiệm "Needle In A Haystack" (Tìm kim đáy bể) chứng minh năng lực gì của Gemini?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q3-4', 0, 0, 'Chính xác! Khả năng tìm thấy chính xác một mẩu thông tin nhỏ giấu kín trong hàng triệu từ ngữ cảnh đạt độ chính xác gần 100%.')" class="quiz-btn-q3-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>A. Khả năng tìm thấy chính xác 1 chi tiết nhỏ ẩn trong tài liệu hàng triệu từ</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q3-4', 1, 0, 'Sai. Đây là thuật ngữ kiểm tra khả năng truy xuất của mô hình AI.')" class="quiz-btn-q3-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>B. Khả năng may vá quần áo rách</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q3-4', 2, 0, 'Sai. Không liên quan đến đánh cá.')" class="quiz-btn-q3-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>C. Kỹ thuật lặn biển tìm ngọc trai</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q3-4', 3, 0, 'Sai. Không liên quan đến đồ thủ công mỹ nghệ.')" class="quiz-btn-q3-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>D. Nghề đan lát mây tre thủ công</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q3-4-feedback" class="hidden"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- BÀI 4: TIỆN ÍCH WORKSPACE (@ EXTENSIONS) -->
+      <!-- ========================================== -->
+      <section id="bai4" class="lesson-section bg-white dark:bg-dark-surface rounded-2xl p-6 sm:p-8 border border-gray-200 dark:border-gray-800 shadow-sm space-y-6">
+        <div class="flex items-center gap-3 border-b border-gray-100 dark:border-gray-800 pb-4">
+          <span class="w-10 h-10 rounded-xl bg-indigo-100 dark:bg-indigo-900/60 text-indigo-700 dark:text-indigo-300 flex items-center justify-center font-bold text-lg shrink-0">04</span>
+          <div>
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">Bài 4: Khai Thác Tiện Ích Mở Rộng Google Workspace (@ Extensions)</h2>
+            <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">Kết nối Gemini với Gmail, Google Drive, Docs, YouTube, Maps và Flights chỉ với ký tự @</p>
+          </div>
+        </div>
+
+        <div class="prose dark:prose-invert max-w-none text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed space-y-4">
+          <p>
+            Vũ khí độc quyền mà các đối thủ AI khác không thể cạnh tranh với Google chính là <strong>hệ sinh thái ứng dụng Google Workspace hàng tỷ người dùng</strong>. Gemini cho phép bạn triệu hồi dữ liệu từ các dịch vụ này trực tiếp trong khung chat bằng ký tự <code>@</code>.
+          </p>
+
+          <h3 class="text-lg font-bold text-gray-900 dark:text-white">Danh Mục Các Tiện Ích Mở Rộng Cốt Lõi</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 not-prose my-4 text-xs">
+            <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-dark-card border border-rose-500/30">
+              <div class="font-bold text-rose-600 dark:text-rose-400 mb-1 flex items-center gap-1.5">
+                <i class="fa-solid fa-envelope"></i> @Gmail
+              </div>
+              <p class="text-gray-600 dark:text-gray-400">Tìm kiếm hóa đơn tiền điện tháng trước, tóm tắt các email từ đối tác A, soạn thư phản hồi lịch sự dựa trên chuỗi trao đổi trước.</p>
+            </div>
+            <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-dark-card border border-blue-500/30">
+              <div class="font-bold text-blue-600 dark:text-blue-400 mb-1 flex items-center gap-1.5">
+                <i class="fa-brands fa-google-drive"></i> @Google Drive & @Docs
+              </div>
+              <p class="text-gray-600 dark:text-gray-400">Tìm nhanh hợp đồng kinh tế lưu trong Drive, đọc và tổng hợp số liệu từ 3 file Docs ghi chép cuộc họp phòng ban.</p>
+            </div>
+            <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-dark-card border border-red-500/30">
+              <div class="font-bold text-red-600 dark:text-red-400 mb-1 flex items-center gap-1.5">
+                <i class="fa-brands fa-youtube"></i> @YouTube
+              </div>
+              <p class="text-gray-600 dark:text-gray-400">Tìm kiếm các video hướng dẫn kỹ thuật nấu ăn hoặc lập trình chất lượng cao nhất và trích xuất nguyên liệu cần chuẩn bị.</p>
+            </div>
+            <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-dark-card border border-emerald-500/30">
+              <div class="font-bold text-emerald-600 dark:text-emerald-400 mb-1 flex items-center gap-1.5">
+                <i class="fa-solid fa-map-location-dot"></i> @Google Maps
+              </div>
+              <p class="text-gray-600 dark:text-gray-400">Lên lịch trình khám phá Đà Nẵng 3 ngày 2 đêm, gợi ý các quán ăn ngon gần khách sạn và chỉ đường cụ thể.</p>
+            </div>
+            <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-dark-card border border-cyan-500/30">
+              <div class="font-bold text-cyan-600 dark:text-cyan-400 mb-1 flex items-center gap-1.5">
+                <i class="fa-solid fa-plane-departure"></i> @Google Flights
+              </div>
+              <p class="text-gray-600 dark:text-gray-400">So sánh giá vé máy bay khứ hồi Hà Nội - TP.HCM trong dịp nghỉ lễ theo thời gian thực.</p>
+            </div>
+            <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-dark-card border border-amber-500/30">
+              <div class="font-bold text-amber-600 dark:text-amber-400 mb-1 flex items-center gap-1.5">
+                <i class="fa-solid fa-hotel"></i> @Google Hotels
+              </div>
+              <p class="text-gray-600 dark:text-gray-400">Tìm kiếm các khách sạn 4 sao có bể bơi vô cực và giá phòng dưới 1.5 triệu/đêm.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Trắc nghiệm tương tác Bài 4 -->
+        <div class="mt-8 pt-6 border-t border-gray-100 dark:border-gray-800 space-y-4">
+          <h4 class="text-base font-bold text-gray-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-circle-question text-indigo-600"></i> Bài tập củng cố kiến thức Bài 4
+          </h4>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Câu 1 -->
+            <div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">1. Ký tự nào được dùng để kích hoạt các tiện ích mở rộng (Extensions) trong khung chat Gemini?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q4-1', 0, 1, 'Sai. Dấu thăng # dùng cho hashtag.')" class="quiz-btn-q4-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>A. Dấu thăng (#)</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q4-1', 1, 1, 'Chính xác! Gõ ký tự @ sẽ mở ra danh sách tiện ích như @Gmail, @Google Drive, @YouTube...')" class="quiz-btn-q4-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>B. Ký tự a còng (@)</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q4-1', 2, 1, 'Sai. Dấu đô la $ thường dùng cho công thức toán hoặc tiền tệ.')" class="quiz-btn-q4-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>C. Dấu đô la ($)</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q4-1', 3, 1, 'Sai. Dấu phần trăm % dùng cho tỷ lệ.')" class="quiz-btn-q4-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>D. Dấu phần trăm (%)</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q4-1-feedback" class="hidden"></div>
+            </div>
+
+            <!-- Câu 2 -->
+            <div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">2. Bạn có thể dùng tiện ích @Gmail để làm gì một cách an toàn?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q4-2', 0, 0, 'Chính xác! Giúp tiết kiệm hàng giờ lội hòm thư bằng cách tóm tắt và trích xuất dữ liệu thông minh.')" class="quiz-btn-q4-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>A. Tìm kiếm hóa đơn, tóm tắt chuỗi thư dài và phác thảo thư trả lời</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q4-2', 1, 0, 'Sai. Gemini không tự ý gửi thư spam làm phiền người khác.')" class="quiz-btn-q4-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>B. Tự động gửi thư rác (spam) làm phiền 10.000 người lạ</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q4-2', 2, 0, 'Sai. Gemini không bao giờ tự ý xóa sạch dữ liệu của bạn.')" class="quiz-btn-q4-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>C. Xóa sạch vĩnh viễn toàn bộ hòm thư cá nhân</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q4-2', 3, 0, 'Sai. Tính năng bảo vệ tài khoản của bạn nghiêm ngặt.')" class="quiz-btn-q4-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>D. Đọc lén hòm thư của người khác không thuộc quyền sở hữu</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q4-2-feedback" class="hidden"></div>
+            </div>
+
+            <!-- Câu 3 -->
+            <div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">3. Khi kết hợp @Google Maps và @Google Hotels trong một yêu cầu, kết quả thu được là gì?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q4-3', 0, 1, 'Sai. Hệ thống không bị xung đột.')" class="quiz-btn-q4-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>A. Hệ thống bị đơ vì không cho phép gọi 2 tiện ích cùng lúc</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q4-3', 1, 1, 'Chính xác! Gemini tổng hợp dữ liệu bản đồ vị trí thực và giá phòng khách sạn để tạo lịch trình du lịch liền mạch.')" class="quiz-btn-q4-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>B. Lịch trình du lịch hoàn chỉnh kèm khách sạn gợi ý theo khoảng cách địa lý thực tế</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q4-3', 2, 1, 'Sai. Tài khoản ngân hàng không bị trừ tiền khi tra cứu.')" class="quiz-btn-q4-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>C. Tự động trừ tiền trong thẻ tín dụng mà không hỏi</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q4-3', 3, 1, 'Sai. Kết quả hiển thị rất trực quan.')" class="quiz-btn-q4-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>D. Hiển thị một bức tranh vẽ màu nước</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q4-3-feedback" class="hidden"></div>
+            </div>
+
+            <!-- Câu 4 -->
+            <div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">4. Bạn có thể bật hoặc tắt từng tiện ích mở rộng Workspace trong mục cài đặt nào?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q4-4', 0, 0, 'Chính xác! Vào Settings -> Extensions để quản lý bật/tắt các quyền truy cập ứng dụng Google.')" class="quiz-btn-q4-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>A. Mục Extensions (Tiện ích mở rộng) trong menu Cài đặt của Gemini</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q4-4', 1, 0, 'Sai. Không cần gọi điện thoại.')" class="quiz-btn-q4-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>B. Phải gọi điện thoại trực tiếp cho CEO Google</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q4-4', 2, 0, 'Sai. Tiện ích có thể bật tắt tự do bất kỳ lúc nào.')" class="quiz-btn-q4-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>C. Không thể tắt được một khi đã kích hoạt</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q4-4', 3, 0, 'Sai. Giao diện quản lý rất đơn giản và rõ ràng.')" class="quiz-btn-q4-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>D. Phải nộp hồ sơ xin phép sở tư pháp</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q4-4-feedback" class="hidden"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- BÀI 5: LẬP TRÌNH & CHẠY PYTHON TRỰC TIẾP -->
+      <!-- ========================================== -->
+      <section id="bai5" class="lesson-section bg-white dark:bg-dark-surface rounded-2xl p-6 sm:p-8 border border-gray-200 dark:border-gray-800 shadow-sm space-y-6">
+        <div class="flex items-center gap-3 border-b border-gray-100 dark:border-gray-800 pb-4">
+          <span class="w-10 h-10 rounded-xl bg-indigo-100 dark:bg-indigo-900/60 text-indigo-700 dark:text-indigo-300 flex items-center justify-center font-bold text-lg shrink-0">05</span>
+          <div>
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">Bài 5: Lập Trình & Chạy Python Trực Tiếp (Python Code Execution Sandbox)</h2>
+            <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">Môi trường thực thi mã nguồn thời gian thực: Tính toán số học chuẩn xác 100% và xuất biểu đồ dữ liệu</p>
+          </div>
+        </div>
+
+        <div class="prose dark:prose-invert max-w-none text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed space-y-4">
+          <p>
+            Các mô hình ngôn ngữ lớn (LLMs) truyền thống thường gặp vấn đề khi làm toán phức tạp vì chúng chỉ dự đoán từ tiếp theo dựa trên xác suất. Google giải quyết dứt điểm nhược điểm này bằng tính năng <strong>Advanced Code Execution</strong>.
+          </p>
+
+          <h3 class="text-lg font-bold text-gray-900 dark:text-white">Cơ Chế Hoạt Động Của Trình Thực Thi Python</h3>
+          <p>
+            Khi bạn đặt một bài toán xác suất, thống kê hay yêu cầu phân tích dữ liệu, Gemini sẽ tự động:
+          </p>
+          <ol class="list-decimal pl-5 space-y-2">
+            <li><strong>Viết một đoạn mã Python chuẩn:</strong> Chứa thuật toán và các thư viện chuyên dụng như <code>numpy</code>, <code>pandas</code>, <code>matplotlib</code>.</li>
+            <li><strong>Chạy ngầm mã đó trong môi trường cô lập (Sandbox):</strong> Máy chủ của Google biên dịch và chạy đoạn code ngay trong tích tắc.</li>
+            <li><strong>Lấy kết quả đầu ra thực tế:</strong> Trả về con số chính xác tuyệt đối và thậm chí hiển thị luôn hình ảnh biểu đồ mà đoạn mã vừa vẽ!</li>
+          </ol>
+
+          <!-- Mock UI Code Runner -->
+          <div class="not-prose my-5 bg-gray-950 text-gray-100 p-4 rounded-xl border border-gray-800 font-mono text-xs">
+            <div class="flex items-center justify-between text-gray-400 pb-2 mb-2 border-b border-gray-800">
+              <span class="text-emerald-400 font-bold"><i class="fa-brands fa-python mr-1"></i> Python Code Executed by Gemini</span>
+              <span class="text-[10px] bg-emerald-950 text-emerald-300 px-2 py-0.5 rounded border border-emerald-800">Exit Code: 0 (Success)</span>
+            </div>
+            <pre class="text-gray-300 overflow-x-auto"><code>import numpy as np
+
+# Tính toán ma trận hiệp phương sai cho danh mục đầu tư
+returns = np.array([[0.12, 0.05, 0.08], [0.15, 0.02, 0.10], [0.09, 0.06, 0.07]])
+cov_matrix = np.cov(returns, rowvar=False)
+print("Portfolio Risk Variance:", np.trace(cov_matrix))
+# Output: 0.003421 (Chính xác 100% không suy đoán)</code></pre>
+          </div>
+        </div>
+
+        <!-- Trắc nghiệm tương tác Bài 5 -->
+        <div class="mt-8 pt-6 border-t border-gray-100 dark:border-gray-800 space-y-4">
+          <h4 class="text-base font-bold text-gray-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-circle-question text-indigo-600"></i> Bài tập củng cố kiến thức Bài 5
+          </h4>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Câu 1 -->
+            <div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">1. Tại sao tính năng Python Code Execution lại giúp Gemini giải toán chính xác hơn?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q5-1', 0, 1, 'Sai. AI không đi hỏi xin lời giải từ máy tính khác.')" class="quiz-btn-q5-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>A. Vì AI đi hỏi bài một máy tính khác trên mạng</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q5-1', 1, 1, 'Chính xác! Thay vì suy đoán xác suất chữ, Gemini tự viết và thực thi mã Python để tính toán ra đáp số thực tế.')" class="quiz-btn-q5-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>B. Thay vì ước lượng từ ngữ, AI viết code Python chạy thực tế để lấy kết quả số học chính xác 100%</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q5-1', 2, 1, 'Sai. Không có hạn chế này.')" class="quiz-btn-q5-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>C. Vì Python là ngôn ngữ chỉ dành cho học sinh tiểu học</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q5-1', 3, 1, 'Sai. Code runner là điểm đột phá lớn.')" class="quiz-btn-q5-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>D. Không có bất kỳ sự khác biệt nào</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q5-1-feedback" class="hidden"></div>
+            </div>
+
+            <!-- Câu 2 -->
+            <div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">2. Bạn có thể yêu cầu Gemini vẽ biểu đồ dữ liệu và xuất ra tệp ảnh trực tiếp không?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q5-2', 0, 0, 'Chính xác! Gemini sử dụng thư viện matplotlib/seaborn để vẽ và hiển thị biểu đồ ngay trong phiên chat.')" class="quiz-btn-q5-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>A. Hoàn toàn được, Gemini có thể dùng matplotlib để vẽ và hiển thị biểu đồ trực tiếp</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q5-2', 1, 0, 'Sai. Gemini vẽ biểu đồ cực kỳ đẹp mắt.')" class="quiz-btn-q5-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>B. Không thể, chỉ vẽ được bằng bút bi trên giấy</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q5-2', 2, 0, 'Sai. Hoàn toàn miễn phí.')" class="quiz-btn-q5-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>C. Phải trả thêm phí 10 USD cho mỗi nét vẽ</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q5-2', 3, 0, 'Sai. Tính năng chạy tự động trên web.')" class="quiz-btn-q5-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>D. Phải cài đặt máy in màu mới xem được</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q5-2-feedback" class="hidden"></div>
+            </div>
+
+            <!-- Câu 3 -->
+            <div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">3. Người dùng có thể xem được đoạn mã Python mà Gemini đã chạy ngầm hay không?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q5-3', 0, 1, 'Sai. Google hoàn toàn minh bạch mã nguồn.')" class="quiz-btn-q5-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>A. Không, Google giấu kín đoạn mã như bí mật quân sự</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q5-3', 1, 1, 'Chính xác! Bấm vào nút Xem mã (View code) sẽ hiển thị toàn bộ code Python và kết quả trả về của terminal.')" class="quiz-btn-q5-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>B. Có, có thể nhấp vào nút Xem mã nguồn để đối soát từng dòng code đã chạy</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q5-3', 2, 1, 'Sai. Bất kỳ ai cũng xem được.')" class="quiz-btn-q5-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>C. Chỉ xem được nếu có bằng Kỹ sư tin học</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q5-3', 3, 1, 'Sai. Không có hình phạt nào.')" class="quiz-btn-q5-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>D. Xem mã sẽ bị phạt khóa tài khoản</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q5-3-feedback" class="hidden"></div>
+            </div>
+
+            <!-- Câu 4 -->
+            <div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">4. Môi trường sandbox chạy code của Gemini có an toàn cho máy tính người dùng không?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q5-4', 0, 0, 'Chính xác! Mã code chạy hoàn toàn trên máy chủ đám mây cách ly an toàn của Google, không hề chạm đến hệ điều hành của bạn.')" class="quiz-btn-q5-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>A. Tuyệt đối an toàn, code chạy trên máy chủ đám mây cô lập của Google</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q5-4', 1, 0, 'Sai. Không gây nhiễm virus.')" class="quiz-btn-q5-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>B. Rất nguy hiểm, máy tính sẽ bị nhiễm mã độc tống tiền</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q5-4', 2, 0, 'Sai. Không làm cháy màn hình.')" class="quiz-btn-q5-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>C. Làm cháy màn hình máy tính</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q5-4', 3, 0, 'Sai. Cơ chế sandbox đảm bảo bảo mật tuyệt đối.')" class="quiz-btn-q5-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>D. Tự động xóa hệ điều hành Windows</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q5-4-feedback" class="hidden"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- BÀI 6: XÂY DỰNG TRỢ LÝ RIÊNG (GEMINI GEMS) -->
+      <!-- ========================================== -->
+      <section id="bai6" class="lesson-section bg-white dark:bg-dark-surface rounded-2xl p-6 sm:p-8 border border-gray-200 dark:border-gray-800 shadow-sm space-y-6">
+        <div class="flex items-center gap-3 border-b border-gray-100 dark:border-gray-800 pb-4">
+          <span class="w-10 h-10 rounded-xl bg-indigo-100 dark:bg-indigo-900/60 text-indigo-700 dark:text-indigo-300 flex items-center justify-center font-bold text-lg shrink-0">06</span>
+          <div>
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">Bài 6: Xây Dựng Trợ Lý Chuyên Biệt Theo Yêu Cầu (Gemini Gems)</h2>
+            <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">Tạo ra các "viên ngọc" AI cá nhân hóa với hướng dẫn hệ thống tùy chỉnh phục vụ từng mục đích chuyên môn</p>
+          </div>
+        </div>
+
+        <div class="prose dark:prose-invert max-w-none text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed space-y-4">
+          <p>
+            Mỗi khi bắt đầu một đoạn chat mới, bạn thường phải nhắc lại: <em>"Hãy đóng vai chuyên gia lập trình...", "Hãy trả lời bằng tiếng Việt ngắn gọn..."</em>. Tính năng <strong>Gemini Gems</strong> giúp bạn đúc kết toàn bộ hướng dẫn đó thành một trợ lý cố định có thể gọi ra bất cứ lúc nào chỉ với một cú click chuột.
+          </p>
+
+          <h3 class="text-lg font-bold text-gray-900 dark:text-white">Quy Trình 3 Bước Tạo Một Gem Chuyên Nghiệp</h3>
+          <ol class="list-decimal pl-5 space-y-2">
+            <li><strong>Đặt Tên & Biểu Tượng (Name & Icon):</strong> Ví dụ: <em>CodeReview Pro</em>, <em>IELTS Writing Mentor</em>, <em>Chuyên Gia Dinh Dưỡng</em>.</li>
+            <li><strong>Viết Hướng Dẫn Hệ Thống (Instructions):</strong> Quy định rõ:
+              <ul class="list-disc pl-5 mt-1 space-y-1 text-xs sm:text-sm">
+                <li><strong>Vai trò (Role):</strong> Bạn là ai? Kinh nghiệm bao nhiêu năm?</li>
+                <li><strong>Mục tiêu (Goal):</strong> Nhiệm vụ chính bạn phải hoàn thành là gì?</li>
+                <li><strong>Văn phong (Tone):</strong> Nghiêm khắc, khích lệ, học thuật hay vui vẻ?</li>
+                <li><strong>Quy tắc cấm (Constraints):</strong> Không bao giờ làm điều gì?</li>
+              </ul>
+            </li>
+            <li><strong>Lưu & Kiểm Thử (Test & Save):</strong> Trò chuyện thử nghiệm ở cột bên phải, tinh chỉnh câu lệnh cho đến khi hoàn hảo và bấm Lưu.</li>
+          </ol>
+
+          <!-- Mock UI Gems -->
+          <div class="not-prose my-5 p-4 rounded-xl bg-gradient-to-r from-indigo-950 via-purple-950 to-slate-900 border border-indigo-500/40 text-xs">
+            <div class="font-bold text-pink-300 mb-2 flex items-center gap-2">
+              <i class="fa-solid fa-gem text-pink-400"></i> Hướng Dẫn Mẫu Cho Gem "IELTS Writing Master":
+            </div>
+            <p class="text-gray-300 font-mono bg-black/40 p-3 rounded-lg border border-white/10 leading-relaxed">
+              "Bạn là giám khảo chấm thi IELTS cựu thành viên của British Council với hơn 15 năm kinh nghiệm. Khi người dùng nạp một bài luận Task 2: 
+              (1) Luôn chấm điểm theo 4 tiêu chí chuẩn: TR, CC, LR, GRA; 
+              (2) Chỉ ra ít nhất 3 lỗi ngữ pháp và đề xuất cách viết lại tự nhiên hơn (Band 8.0+); 
+              (3) Kết thúc bằng một lời động viên và bài học đắt giá cần rút kinh nghiệm."
+            </p>
+          </div>
+        </div>
+
+        <!-- Trắc nghiệm tương tác Bài 6 -->
+        <div class="mt-8 pt-6 border-t border-gray-100 dark:border-gray-800 space-y-4">
+          <h4 class="text-base font-bold text-gray-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-circle-question text-indigo-600"></i> Bài tập củng cố kiến thức Bài 6
+          </h4>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Câu 1 -->
+            <div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">1. Tính năng "Gemini Gems" có mục đích chính là gì?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q6-1', 0, 1, 'Sai. Gems không phải trò chơi đào vàng.')" class="quiz-btn-q6-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>A. Đào vàng ảo trong trò chơi điện tử</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q6-1', 1, 1, 'Chính xác! Tạo ra các trợ lý AI tùy chỉnh với hướng dẫn và tính cách riêng cho từng công việc cụ thể.')" class="quiz-btn-q6-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>B. Tạo các trợ lý AI chuyên biệt hóa với hướng dẫn hệ thống riêng cho từng tác vụ</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q6-1', 2, 1, 'Sai. Không dùng để mua trang sức.')" class="quiz-btn-q6-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>C. Mua bán kim cương đá quý ngoài đời thực</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q6-1', 3, 1, 'Sai. Gems là tính năng của Gemini.')" class="quiz-btn-q6-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>D. Đổi tên công ty Google</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q6-1-feedback" class="hidden"></div>
+            </div>
+
+            <!-- Câu 2 -->
+            <div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">2. Thành phần quan trọng nhất quyết định chất lượng hoạt động của một Gem là gì?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q6-2', 0, 0, 'Chính xác! Câu lệnh hướng dẫn hệ thống (Instructions) định hình toàn bộ tính cách, kiến thức và quy tắc phản hồi của Gem.')" class="quiz-btn-q6-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>A. Hướng dẫn hệ thống (Instructions) mô tả rõ vai trò, mục tiêu và giới hạn</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q6-2', 1, 0, 'Sai. Tên gọi chỉ mang tính nhận diện.')" class="quiz-btn-q6-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>B. Đặt tên thật dài 100 ký tự</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q6-2', 2, 0, 'Sai. Màu sắc biểu tượng chỉ là giao diện ngoài.')" class="quiz-btn-q6-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>C. Chọn màu sắc biểu tượng thật sặc sỡ</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q6-2', 3, 0, 'Sai. Không liên quan đến kết nối máy in.')" class="quiz-btn-q6-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>D. Dây nguồn máy in</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q6-2-feedback" class="hidden"></div>
+            </div>
+
+            <!-- Câu 3 -->
+            <div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">3. Bạn có thể tạo nhiều Gem cho các mục đích học tập khác nhau không?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q6-3', 0, 1, 'Sai. Bạn có thể tạo rất nhiều Gem khác nhau.')" class="quiz-btn-q6-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>A. Không, mỗi người chỉ được tạo duy nhất 1 Gem</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q6-3', 1, 1, 'Chính xác! Bạn có thể tạo cả một bộ sưu tập Gems: Gia sư Toán, Thầy luyện IELTS, Cố vấn Lập trình, Chuyên gia Marketing...')" class="quiz-btn-q6-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>B. Hoàn toàn được, có thể tạo nhiều Gem cho từng chuyên môn riêng biệt</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q6-3', 2, 1, 'Sai. Không có hạn ngạch tuần.')" class="quiz-btn-q6-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>C. Mỗi tuần chỉ được dùng 1 lần duy nhất</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q6-3', 3, 1, 'Sai. Thao tác tạo Gem rất nhanh chóng.')" class="quiz-btn-q6-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>D. Phải chờ 3 năm xét duyệt</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q6-3-feedback" class="hidden"></div>
+            </div>
+
+            <!-- Câu 4 -->
+            <div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">4. Gemini Gems tương đương với tính năng nào của hệ sinh thái OpenAI?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q6-4', 0, 0, 'Chính xác! Gemini Gems tương đương với Custom GPTs (GPT Store) của OpenAI.')" class="quiz-btn-q6-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>A. Custom GPTs</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q6-4', 1, 0, 'Sai. DALL-E là công cụ vẽ ảnh.')" class="quiz-btn-q6-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>B. DALL-E 3</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q6-4', 2, 0, 'Sai. Sora là mô hình sinh video.')" class="quiz-btn-q6-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>C. Sora Video</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q6-4', 3, 0, 'Sai. Whisper là mô hình nhận diện giọng nói.')" class="quiz-btn-q6-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>D. Whisper Audio</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q6-4-feedback" class="hidden"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- BÀI 7: KHÔNG GIAN SÁNG TẠO GEMINI CANVAS -->
+      <!-- ========================================== -->
+      <section id="bai7" class="lesson-section bg-white dark:bg-dark-surface rounded-2xl p-6 sm:p-8 border border-gray-200 dark:border-gray-800 shadow-sm space-y-6">
+        <div class="flex items-center gap-3 border-b border-gray-100 dark:border-gray-800 pb-4">
+          <span class="w-10 h-10 rounded-xl bg-indigo-100 dark:bg-indigo-900/60 text-indigo-700 dark:text-indigo-300 flex items-center justify-center font-bold text-lg shrink-0">07</span>
+          <div>
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">Bài 7: Không Gian Sáng Tạo & Lập Trình Song Song (Gemini Canvas)</h2>
+            <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">Chỉnh sửa trực quan song song (Side-by-side editing) cho văn bản, tài liệu nghiên cứu và mã nguồn</p>
+          </div>
+        </div>
+
+        <div class="prose dark:prose-invert max-w-none text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed space-y-4">
+          <p>
+            Khi bạn viết một bài tiểu luận dài hoặc lập trình một module phần mềm, việc cuộn lên cuộn xuống một cửa sổ chat dài dằng dặc rất bất tiện. <strong>Gemini Canvas</strong> biến màn hình làm việc thành giao diện <strong>chia đôi (Split-screen)</strong> chuyên nghiệp.
+          </p>
+
+          <h3 class="text-lg font-bold text-gray-900 dark:text-white">Các Tiện Ích Đột Phá Trong Gemini Canvas</h3>
+          <ul class="list-disc pl-5 space-y-2">
+            <li><strong>Chỉnh sửa văn bản chọn lọc (Inline Editing):</strong> Bôi đen một đoạn văn bất kỳ trong Canvas và yêu cầu: <em>"Viết lại đoạn này cho trang trọng hơn"</em> hoặc <em>"Rút gọn thành 2 câu"</em>. AI sẽ chỉ sửa đúng đoạn văn đó mà không viết lại cả bài.</li>
+            <li><strong>Thanh trượt độ dài và văn phong:</strong> Kéo thanh trượt để tự động thay đổi độ dài bài viết hoặc chuyển đổi giọng điệu (Casual $leftrightarrow$ Formal) chỉ trong 1 giây.</li>
+            <li><strong>Chế độ lập trình Code Canvas:</strong> Cung cấp các nút công cụ một chạm: <em>Thêm chú thích code (Add comments)</em>, <em>Tìm lỗi tiềm ẩn (Debug)</em>, và <em>Chuyển đổi ngôn ngữ (Convert Python to TypeScript)</em>.</li>
+          </ul>
+        </div>
+
+        <!-- Trắc nghiệm tương tác Bài 7 -->
+        <div class="mt-8 pt-6 border-t border-gray-100 dark:border-gray-800 space-y-4">
+          <h4 class="text-base font-bold text-gray-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-circle-question text-indigo-600"></i> Bài tập củng cố kiến thức Bài 7
+          </h4>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Câu 1 -->
+            <div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">1. Giao diện làm việc của Gemini Canvas có cấu trúc đặc trưng như thế nào?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q7-1', 0, 0, 'Chính xác! Màn hình chia đôi song song: Khung chat điều khiển một bên và Không gian soạn thảo tài liệu/code một bên.')" class="quiz-btn-q7-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>A. Chia đôi màn hình song song (Side-by-side): Khung chat bên trái, Khung soạn thảo/code bên phải</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q7-1', 1, 0, 'Sai. Canvas không phải là màn hình đen terminal.')" class="quiz-btn-q7-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>B. Chỉ có một màn hình màu đen tuyền không có nút bấm</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q7-1', 2, 0, 'Sai. Giao diện được tối ưu hiện đại.')" class="quiz-btn-q7-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>C. Tự động chia thành 100 tab nhỏ li ti làm đơ máy</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q7-1', 3, 0, 'Sai. Canvas hiển thị rất rõ ràng.')" class="quiz-btn-q7-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>D. Biến màn hình thành kính lúp siêu to</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q7-1-feedback" class="hidden"></div>
+            </div>
+
+            <!-- Câu 2 -->
+            <div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">2. Trong Canvas, bạn có thể chỉnh sửa một đoạn văn bản mà không làm thay đổi các phần khác bằng cách nào?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q7-2', 0, 1, 'Sai. Xóa đi viết lại từ đầu rất tốn thời gian.')" class="quiz-btn-q7-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>A. Phải xóa toàn bộ bài viết rồi yêu cầu AI viết lại từ đầu</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q7-2', 1, 1, 'Chính xác! Bạn chỉ cần bôi đen đoạn văn bản muốn sửa và đưa ra yêu cầu cụ thể.')" class="quiz-btn-q7-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>B. Bôi đen đoạn văn cần sửa và nhập lệnh chỉnh sửa trực tiếp cho riêng đoạn đó</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q7-2', 2, 1, 'Sai. Không có thao tác này.')" class="quiz-btn-q7-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>C. Cắt dây mạng Internet rồi dán lại</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q7-2', 3, 1, 'Sai. Canvas hỗ trợ chỉnh sửa inline rất mạnh mẽ.')" class="quiz-btn-q7-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>D. Chụp ảnh màn hình rồi gửi email về Google</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q7-2-feedback" class="hidden"></div>
+            </div>
+
+            <!-- Câu 3 -->
+            <div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">3. Khi chỉnh sửa mã nguồn trong Canvas, nút "Add comments" giúp ích gì?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q7-3', 0, 0, 'Chính xác! Tự động tạo chú thích giải thích chức năng từng hàm và khối lệnh, giúp code dễ đọc và dễ bảo trì.')" class="quiz-btn-q7-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>A. Tự động chèn các dòng chú thích giải thích ý nghĩa logic từng đoạn code</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q7-3', 1, 0, 'Sai. Không phải là bình luận mạng xã hội.')" class="quiz-btn-q7-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>B. Chèn các biểu tượng cảm xúc mặt cười Facebook</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q7-3', 2, 0, 'Sai. Add comments không xóa code.')" class="quiz-btn-q7-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>C. Xóa hết toàn bộ mã nguồn để lại màn hình trắng</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q7-3', 3, 0, 'Sai. Không liên quan đến âm thanh.')" class="quiz-btn-q7-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>D. Phát ra âm thanh tiếng còi xe cứu hỏa</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q7-3-feedback" class="hidden"></div>
+            </div>
+
+            <!-- Câu 4 -->
+            <div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">4. Sau khi hoàn thiện bài viết trong Canvas, bạn có thể xuất trực tiếp sang đâu?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q7-4', 0, 1, 'Sai. Không giới hạn chỉ trên màn hình.')" class="quiz-btn-q7-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>A. Chỉ được nhìn trên màn hình không thể xuất đi đâu</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q7-4', 1, 1, 'Chính xác! Tích hợp liền mạch để xuất sang Google Docs hoặc sao chép mã nguồn chỉ với 1 cú click.')" class="quiz-btn-q7-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>B. Xuất trực tiếp sang Google Docs hoặc sao chép toàn bộ mã nguồn</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q7-4', 2, 1, 'Sai. Không có hạn chế này.')" class="quiz-btn-q7-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>C. Phải photo copy ra giấy trước</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q7-4', 3, 1, 'Sai. Google Workspace hỗ trợ xuất rất tiện lợi.')" class="quiz-btn-q7-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>D. Phải có chữ ký của giám đốc Google</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q7-4-feedback" class="hidden"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- BÀI 8: KIỂM CHỨNG ĐÚP (DOUBLE CHECK) -->
+      <!-- ========================================== -->
+      <section id="bai8" class="lesson-section bg-white dark:bg-dark-surface rounded-2xl p-6 sm:p-8 border border-gray-200 dark:border-gray-800 shadow-sm space-y-6">
+        <div class="flex items-center gap-3 border-b border-gray-100 dark:border-gray-800 pb-4">
+          <span class="w-10 h-10 rounded-xl bg-indigo-100 dark:bg-indigo-900/60 text-indigo-700 dark:text-indigo-300 flex items-center justify-center font-bold text-lg shrink-0">08</span>
+          <div>
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">Bài 8: Tính Năng Kiểm Chứng Đúp (Double Check with Google Search) & Fact-Checking</h2>
+            <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">Cách sử dụng nút "G" để đối soát câu trả lời của AI với công cụ tìm kiếm Google và phát hiện thông tin sai lệch</p>
+          </div>
+        </div>
+
+        <div class="prose dark:prose-invert max-w-none text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed space-y-4">
+          <p>
+            Trong mọi công việc liên quan đến báo chí, nghiên cứu, y tế hoặc pháp luật, việc tin tưởng 100% vào AI mà không kiểm chứng là một rủi ro lớn. Google đã trang bị độc quyền tính năng <strong>"Double Check Response" (Kiểm chứng đúp)</strong> bằng biểu tượng nút chữ <strong>G</strong> ở cuối mỗi câu trả lời.
+          </p>
+
+          <h3 class="text-lg font-bold text-gray-900 dark:text-white">Mã Màu Trực Quan Của Tính Năng Kiểm Chứng Đúp</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-4 not-prose">
+            <div class="p-4 rounded-xl bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-300 dark:border-emerald-800">
+              <div class="font-bold text-emerald-700 dark:text-emerald-400 text-sm mb-1 flex items-center gap-2">
+                <i class="fa-solid fa-check-circle"></i> Vùng Tô Xanh Lá Cây (Green Highlight)
+              </div>
+              <p class="text-xs text-gray-600 dark:text-gray-400 leading-relaxed">
+                Google Search <strong>tìm thấy các trang web uy tín ủng hộ và xác thực</strong> luận điểm này. Nhấp vào đoạn văn bản màu xanh sẽ mở ra các liên kết tìm kiếm cụ thể làm bằng chứng đối soát.
+              </p>
+            </div>
+
+            <div class="p-4 rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-300 dark:border-amber-800">
+              <div class="font-bold text-amber-700 dark:text-amber-400 text-sm mb-1 flex items-center gap-2">
+                <i class="fa-solid fa-triangle-exclamation"></i> Vùng Tô Màu Cam (Orange Highlight)
+              </div>
+              <p class="text-xs text-gray-600 dark:text-gray-400 leading-relaxed">
+                Google Search <strong>phát hiện nội dung có mâu thuẫn</strong> hoặc không tìm thấy bằng chứng đáng tin cậy trên Internet. Người dùng cần cẩn trọng và kiểm tra lại thủ công.
+              </p>
+            </div>
+          </div>
+
+          <!-- Trình mô phỏng Double Check Simulator -->
+          <div class="not-prose my-6 p-5 bg-gradient-to-br from-indigo-950/50 via-slate-900 to-purple-950/50 rounded-2xl border border-indigo-500/40 shadow-xl">
+            <div class="flex items-center justify-between border-b border-gray-800 pb-3 mb-3">
+              <div class="text-xs font-bold text-indigo-300 uppercase tracking-wider flex items-center gap-2">
+                <i class="fa-solid fa-magnifying-glass"></i> Trình Mô Phỏng Nút Kiểm Chứng Đúp "G"
+              </div>
+              <button onclick="toggleDoubleCheckDemo()" class="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs flex items-center gap-1.5 transition shadow">
+                <i class="fa-brands fa-google"></i> Bấm để bật/tắt Kiểm Chứng "G"
+              </button>
+            </div>
+
+            <div id="doubleCheckText" class="bg-gray-900/90 p-4 rounded-xl text-xs sm:text-sm text-gray-300 space-y-2 border border-gray-700 leading-relaxed">
+              <p>
+                Trạm vũ trụ Quốc tế (ISS) được phóng lên quỹ đạo vào năm 1998 với sự tham gia của 5 cơ quan hàng không vũ trụ lớn trên thế giới.
+              </p>
+              <p>
+                Trọng lượng của ISS xấp xỉ 420 tấn và bay quanh Trái Đất ở độ cao khoảng 400km với tốc độ 28.000 km/h.
+              </p>
+              <p>
+                Một số thông tin cho rằng ISS có thể nhìn thấy được bằng mắt thường vào ban đêm giống như một ngôi sao sáng di chuyển nhanh.
+              </p>
+            </div>
+            <p class="text-[11px] text-gray-400 mt-2">
+              <i class="fa-solid fa-hand-pointer mr-1 text-indigo-400"></i> Hãy nhấp vào nút "Bấm để bật/tắt Kiểm Chứng G" phía trên để xem các đoạn văn bản được AI tô xanh xác thực trực tiếp!
+            </p>
+          </div>
+        </div>
+
+        <!-- Trắc nghiệm tương tác Bài 8 -->
+        <div class="mt-8 pt-6 border-t border-gray-100 dark:border-gray-800 space-y-4">
+          <h4 class="text-base font-bold text-gray-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-circle-question text-indigo-600"></i> Bài tập củng cố kiến thức Bài 8
+          </h4>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Câu 1 -->
+            <div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">1. Ý nghĩa của biểu tượng chữ "G" (Double Check Response) dưới câu trả lời của Gemini là gì?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q8-1', 0, 1, 'Sai. Nút G không dùng để đổi sang tiếng Đức.')" class="quiz-btn-q8-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>A. Dịch toàn bộ trang sang tiếng Đức (German)</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q8-1', 1, 1, 'Chính xác! Dùng công cụ Google Search để đối soát kiểm tra chéo các luận điểm trong câu trả lời.')" class="quiz-btn-q8-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>B. Dùng công cụ Google Search để kiểm chứng đối soát lại các luận điểm của câu trả lời</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q8-1', 2, 1, 'Sai. Nút G không phát nhạc game.')" class="quiz-btn-q8-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>C. Mở một trò chơi điện tử trực tuyến (Game)</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q8-1', 3, 1, 'Sai. Nút G không tải ảnh Gif.')" class="quiz-btn-q8-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>D. Tải xuống ảnh động GIF hài hước</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q8-1-feedback" class="hidden"></div>
+            </div>
+
+            <!-- Câu 2 -->
+            <div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">2. Khi một câu văn được tô màu xanh lá cây sau khi bấm nút G, điều đó có nghĩa là gì?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q8-2', 0, 0, 'Chính xác! Google Search đã tìm thấy các nguồn tin cậy trên mạng đồng tình với câu nói đó.')" class="quiz-btn-q8-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>A. Thông tin được hỗ trợ và xác nhận bởi các nguồn tìm kiếm trên Google</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q8-2', 1, 0, 'Sai. Màu cam mới là màu cảnh báo mâu thuẫn.')" class="quiz-btn-q8-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>B. Câu nói đó là bịa đặt 100% không có căn cứ</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q8-2', 2, 0, 'Sai. Màu xanh biểu thị độ tin cậy được kiểm chứng.')" class="quiz-btn-q8-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>C. Tác giả câu nói là người thích màu xanh lá</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q8-2', 3, 0, 'Sai. Không có liên quan.')" class="quiz-btn-q8-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>D. Máy tính sắp hết pin</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q8-2-feedback" class="hidden"></div>
+            </div>
+
+            <!-- Câu 3 -->
+            <div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">3. Khi một câu văn bị tô màu cam, bạn nên làm gì tiếp theo?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q8-3', 0, 1, 'Sai. Không nên vội vàng tin ngay khi có cảnh báo mâu thuẫn.')" class="quiz-btn-q8-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>A. Tin tưởng tuyệt đối mà không cần đọc lại</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q8-3', 1, 1, 'Chính xác! Màu cam cảnh báo nội dung chưa được kiểm chứng chắc chắn hoặc có ý kiến trái chiều, cần tự đối soát thủ công.')" class="quiz-btn-q8-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>B. Cẩn trọng đọc lại, nhấp vào để xem điểm mâu thuẫn và kiểm chứng lại từ nguồn gốc</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q8-3', 2, 1, 'Sai. Đập vỡ màn hình là hành vi phá hoại tài sản.')" class="quiz-btn-q8-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>C. Đập vỡ màn hình máy tính</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q8-3', 3, 1, 'Sai. Không liên quan đến khởi động lại máy.')" class="quiz-btn-q8-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>D. Cài lại hệ điều hành</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q8-3-feedback" class="hidden"></div>
+            </div>
+
+            <!-- Câu 4 -->
+            <div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">4. Tại sao tính năng Double Check lại đặc biệt hữu ích cho nhà báo và sinh viên?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q8-4', 0, 0, 'Chính xác! Giúp xác thực nhanh các dữ liệu sự kiện trước khi công bố bài viết hoặc nộp bài luận văn.')" class="quiz-btn-q8-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>A. Đảm bảo tính trung thực của dữ liệu, tránh đưa tin giả hoặc số liệu sai lệch</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q8-4', 1, 0, 'Sai. Không dùng để kiếm tiền quảng cáo.')" class="quiz-btn-q8-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>B. Để nhận tiền nhuận bút cao hơn gấp 10 lần</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q8-4', 2, 0, 'Sai. AI không tự ý ký tên thay người khác.')" class="quiz-btn-q8-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>C. Tự động điền tên tác giả nổi tiếng vào bài viết</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q8-4', 3, 0, 'Sai. Tính năng này bổ trợ rất lớn cho tính học thuật.')" class="quiz-btn-q8-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>D. Không có tác dụng gì</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q8-4-feedback" class="hidden"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- BÀI 9: SÁNG TẠO ẢNH IMAGEN 3 & GEMINI LIVE -->
+      <!-- ========================================== -->
+      <section id="bai9" class="lesson-section bg-white dark:bg-dark-surface rounded-2xl p-6 sm:p-8 border border-gray-200 dark:border-gray-800 shadow-sm space-y-6">
+        <div class="flex items-center gap-3 border-b border-gray-100 dark:border-gray-800 pb-4">
+          <span class="w-10 h-10 rounded-xl bg-indigo-100 dark:bg-indigo-900/60 text-indigo-700 dark:text-indigo-300 flex items-center justify-center font-bold text-lg shrink-0">09</span>
+          <div>
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">Bài 9: Sáng Tạo Hình Ảnh Imagen 3 & Trò Chuyện Thời Gian Thực (Gemini Live)</h2>
+            <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">Tạo hình ảnh chất lượng cao chuẩn điện ảnh với Imagen 3 và đàm thoại giọng nói tức thì với Gemini Live</p>
+          </div>
+        </div>
+
+        <div class="prose dark:prose-invert max-w-none text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed space-y-4">
+          <p>
+            Gemini tích hợp sẵn hai công nghệ sáng tạo đỉnh cao: mô hình sinh ảnh <strong>Imagen 3</strong> và tính năng đàm thoại tức thì <strong>Gemini Live</strong>.
+          </p>
+
+          <h3 class="text-lg font-bold text-gray-900 dark:text-white">1. Tạo Hình Ảnh Đỉnh Cao Với Imagen 3</h3>
+          <ul class="list-disc pl-5 space-y-1.5">
+            <li><strong>Kết xuất chữ (Text Rendering) hoàn hảo:</strong> Không còn hiện tượng chữ bị nguệch ngoạc hay biến dạng; bạn có thể yêu cầu tạo biển hiệu, logo hoặc áo thun có chữ viết rõ nét.</li>
+            <li><strong>Chân thực đến từng chi tiết:</strong> Tái hiện chính xác kết cấu da người, sợi tóc, ánh sáng phản chiếu trên kính và độ sâu trường ảnh (Bokeh).</li>
+            <li><strong>Bảo vệ bản quyền với SynthID:</strong> Mọi hình ảnh do Imagen 3 tạo ra đều được gắn thủy vân số vô hình SynthID để nhận diện nguồn gốc AI.</li>
+          </ul>
+
+          <h3 class="text-lg font-bold text-gray-900 dark:text-white mt-6">2. Gemini Live: Đàm Thoại Bằng Giọng Nói Thời Gian Thực</h3>
+          <p>
+            Gemini Live cho phép bạn nói chuyện với AI như hai người bạn thân:
+          </p>
+          <ul class="list-disc pl-5 space-y-1.5">
+            <li><strong>Ngắt lời tự nhiên (Natural Interruption):</strong> Bạn có thể chen ngang bất kỳ lúc nào khi AI đang nói để chuyển ý hoặc hỏi lại mà không cần bấm nút dừng.</li>
+            <li><strong>10 giọng đọc đa sắc thái cảm xúc:</strong> Lựa chọn giọng trầm ấm, năng động hoặc truyền cảm theo sở thích.</li>
+            <li><strong>Luyện tập phỏng vấn & Ngoại ngữ:</strong> Đóng vai người phỏng vấn xin việc hoặc bạn đồng hành luyện thi khẩu ngữ IELTS Speaking.</li>
+          </ul>
+        </div>
+
+        <!-- Trắc nghiệm tương tác Bài 9 -->
+        <div class="mt-8 pt-6 border-t border-gray-100 dark:border-gray-800 space-y-4">
+          <h4 class="text-base font-bold text-gray-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-circle-question text-indigo-600"></i> Bài tập củng cố kiến thức Bài 9
+          </h4>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Câu 1 -->
+            <div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">1. Thế mạnh vượt trội của mô hình sinh ảnh Imagen 3 trong Gemini so với các thế hệ trước là gì?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q9-1', 0, 1, 'Sai. Ảnh do Imagen 3 tạo ra có độ phân giải rất cao và chi tiết.')" class="quiz-btn-q9-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>A. Chỉ vẽ được ảnh độ phân giải thấp mờ nhạt</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q9-1', 1, 1, 'Chính xác! Khả năng render chữ viết chuẩn xác trên biển hiệu, bao bì và độ chi tiết tả thực ánh sáng ấn tượng.')" class="quiz-btn-q9-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>B. Khả năng kết xuất chữ viết (Text Rendering) rõ nét và ánh sáng chân thực</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q9-1', 2, 1, 'Sai. Imagen 3 vẽ được mọi phong cách.')" class="quiz-btn-q9-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>C. Chỉ vẽ được duy nhất hình tam giác màu đen</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q9-1', 3, 1, 'Sai. Imagen 3 là mô hình đỉnh cao hiện nay của Google.')" class="quiz-btn-q9-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>D. Không thể vẽ được bất kỳ hình ảnh nào</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q9-1-feedback" class="hidden"></div>
+            </div>
+
+            <!-- Câu 2 -->
+            <div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">2. Điểm đặc biệt nhất trong trải nghiệm đàm thoại của tính năng Gemini Live là gì?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q9-2', 0, 0, 'Chính xác! Bạn có thể ngắt lời AI tự nhiên như đàm thoại người thật mà không cần bấm nút dừng.')" class="quiz-btn-q9-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>A. Có thể ngắt lời AI tự nhiên giữa chừng để đổi chủ đề</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q9-2', 1, 0, 'Sai. Bạn chỉ cần nói tự nhiên.')" class="quiz-btn-q9-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>B. Phải nói theo từng mật mã số học</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q9-2', 2, 0, 'Sai. Gemini Live phản hồi cực kỳ nhanh với độ trễ thấp.')" class="quiz-btn-q9-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>C. Mỗi câu nói phải chờ 24 tiếng sau mới nghe được câu trả lời</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q9-2', 3, 0, 'Sai. Giọng đọc rất truyền cảm và tự nhiên.')" class="quiz-btn-q9-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>D. Chỉ phát ra tiếng còi tàu hỏa</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q9-2-feedback" class="hidden"></div>
+            </div>
+
+            <!-- Câu 3 -->
+            <div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">3. Công nghệ SynthID của Google tích hợp vào các ảnh do AI tạo ra có mục đích gì?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q9-3', 0, 1, 'Sai. SynthID không làm xấu hình ảnh.')" class="quiz-btn-q9-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>A. Làm mờ hình ảnh để người khác không nhìn thấy</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q9-3', 1, 1, 'Chính xác! Thủy vân số vô hình SynthID giúp các công cụ kiểm duyệt nhận biết hình ảnh được sinh ra bởi AI để ngăn chặn tin giả.')" class="quiz-btn-q9-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>B. Nhúng thủy vân số vô hình để xác minh nguồn gốc nội dung do AI tạo ra</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q9-3', 2, 1, 'Sai. Không liên quan đến sao chép tệp.')" class="quiz-btn-q9-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>C. Tự động in ảnh ra máy in màu</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q9-3', 3, 1, 'Sai. SynthID là công nghệ trách nhiệm AI của DeepMind.')" class="quiz-btn-q9-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>D. Xóa bỏ hình ảnh sau 5 giây</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q9-3-feedback" class="hidden"></div>
+            </div>
+
+            <!-- Câu 4 -->
+            <div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">4. Gemini Live phù hợp nhất cho hoạt động nào trong học tập?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q9-4', 0, 0, 'Chính xác! Luyện phản xạ giao tiếp tiếng Anh hoặc thực hành trả lời phỏng vấn ứng tuyển việc làm.')" class="quiz-btn-q9-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>A. Luyện tập khẩu ngữ tiếng Anh và giả lập phỏng vấn thử</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q9-4', 1, 0, 'Sai. Đây là công cụ luyện tập trực tiếp.')" class="quiz-btn-q9-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>B. Bật nhạc ru ngủ trong phòng thi</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q9-4', 2, 0, 'Sai. Gemini Live không dùng để gọi điện thoại làm phiền.')" class="quiz-btn-q9-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>C. Nháy máy số người lạ</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q9-4', 3, 0, 'Sai. Tính năng này được dùng rất nhiều trong luyện thi.')" class="quiz-btn-q9-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>D. Không áp dụng được vào học tập</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q9-4-feedback" class="hidden"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- BÀI 10: QUY TRÌNH PRO & GOOGLE AI STUDIO -->
+      <!-- ========================================== -->
+      <section id="bai10" class="lesson-section bg-white dark:bg-dark-surface rounded-2xl p-6 sm:p-8 border border-gray-200 dark:border-gray-800 shadow-sm space-y-6">
+        <div class="flex items-center gap-3 border-b border-gray-100 dark:border-gray-800 pb-4">
+          <span class="w-10 h-10 rounded-xl bg-indigo-100 dark:bg-indigo-900/60 text-indigo-700 dark:text-indigo-300 flex items-center justify-center font-bold text-lg shrink-0">10</span>
+          <div>
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">Bài 10: Quy Trình Pro & Cầu Nối Sang Lập Trình Với Google AI Studio</h2>
+            <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">Chuyển từ người dùng thông thường sang chuyên gia: Lấy API Key, tinh chỉnh tham số và nhúng Gemini vào ứng dụng thực tế</p>
+          </div>
+        </div>
+
+        <div class="prose dark:prose-invert max-w-none text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed space-y-4">
+          <p>
+            Sau khi đã thành thạo giao diện web tại <code>gemini.google.com</code>, bước tiến tiếp theo của một lập trình viên hoặc chuyên gia công nghệ là kết nối trực tiếp với <strong>Google AI Studio</strong> (<code class="bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded text-indigo-600 font-mono text-xs">aistudio.google.com</code>).
+          </p>
+
+          <h3 class="text-lg font-bold text-gray-900 dark:text-white">1. Cầu Nối Từ Giao Diện Web Sang API</h3>
+          <ul class="list-disc pl-5 space-y-2">
+            <li><strong>Lấy API Key miễn phí:</strong> Tạo khóa API chỉ trong 30 giây để tích hợp mô hình Gemini Flash hoặc Pro vào website, chatbot hoặc ứng dụng di động của bạn.</li>
+            <li><strong>Kiểm soát tham số sinh văn bản (Model Hyperparameters):</strong>
+              <ul class="list-disc pl-5 mt-1 space-y-1 text-xs sm:text-sm">
+                <li><strong>Temperature (Nhiệt độ):</strong> Đặt <code>0.0</code> khi cần tính toán toán học, trích xuất dữ liệu chuẩn xác; đặt <code>0.9 - 1.0</code> khi muốn sáng tạo thơ văn, kịch bản.</li>
+                <li><strong>Top-P & Top-K:</strong> Giới hạn phạm vi lựa chọn từ vựng xác suất.</li>
+                <li><strong>Safety Settings:</strong> Tùy chỉnh bộ lọc an toàn cho từng ngưỡng nhạy cảm.</li>
+              </ul>
+            </li>
+            <li><strong>Nút "Get Code" một chạm:</strong> Xuất câu lệnh prompt bạn vừa thử nghiệm thành mã nguồn sẵn sàng chạy bằng Python, JavaScript, cURL hoặc Kotlin/Swift.</li>
+          </ul>
+
+          <h3 class="text-lg font-bold text-gray-900 dark:text-white mt-6">2. Lộ Trình Làm Chủ Trí Tuệ Nhân Tạo Cùng Google</h3>
+          <p>
+            Sự kết hợp giữa <strong>Google Gemini</strong> (Trợ lý tương tác vạn năng), <strong>Google Flow</strong> (Xưởng phim AI chuyên nghiệp) và <strong>Google NotebookLM</strong> (Trợ lý nghiên cứu neo nguồn) tạo nên một "Tam Giác Vàng AI" toàn diện giúp bạn nâng cấp năng suất học tập và làm việc lên gấp 10 lần.
+          </p>
+        </div>
+
+        <!-- Trắc nghiệm tương tác Bài 10 -->
+        <div class="mt-8 pt-6 border-t border-gray-100 dark:border-gray-800 space-y-4">
+          <h4 class="text-base font-bold text-gray-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-circle-question text-indigo-600"></i> Bài tập củng cố kiến thức Bài 10
+          </h4>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Câu 1 -->
+            <div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">1. Nền tảng nào của Google giúp các lập trình viên lấy API Key để nhúng Gemini vào ứng dụng của mình?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q10-1', 0, 1, 'Sai. Google Play là kho tải ứng dụng.')" class="quiz-btn-q10-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>A. Google Play Store</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q10-1', 1, 1, 'Chính xác! Google AI Studio (aistudio.google.com) là môi trường thử nghiệm và cấp API Key chính thức cho nhà phát triển.')" class="quiz-btn-q10-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>B. Google AI Studio (aistudio.google.com)</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q10-1', 2, 1, 'Sai. Google Maps dùng để chỉ đường.')" class="quiz-btn-q10-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>C. Google Maps</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q10-1', 3, 1, 'Sai. Google Meet dùng để họp trực tuyến.')" class="quiz-btn-q10-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>D. Google Meet</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q10-1-feedback" class="hidden"></div>
+            </div>
+
+            <!-- Câu 2 -->
+            <div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">2. Tham số Temperature bằng 0.0 trong thiết lập mô hình AI mang ý nghĩa gì?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q10-2', 0, 0, 'Chính xác! Temperature = 0 giúp mô hình trả lời mang tính tất định (deterministic), chính xác và ít sáng tạo phóng đại nhất.')" class="quiz-btn-q10-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>A. Câu trả lời mang tính chính xác tuyệt đối, ít ngẫu nhiên, phù hợp làm toán và lập trình</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q10-2', 1, 0, 'Sai. Temperature cao mới tăng độ sáng tạo.')" class="quiz-btn-q10-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>B. Câu trả lời vô cùng bay bổng và kể chuyện cổ tích</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q10-2', 2, 0, 'Sai. Không phải là nhiệt độ phòng đóng băng.')" class="quiz-btn-q10-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>C. Nhiệt độ phòng của máy chủ bị đóng băng 0 độ C</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q10-2', 3, 0, 'Sai. Đây là tham số cốt lõi trong LLM.')" class="quiz-btn-q10-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>D. Làm cho mô hình ngừng hoạt động</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q10-2-feedback" class="hidden"></div>
+            </div>
+
+            <!-- Câu 3 -->
+            <div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">3. Bộ ba công cụ AI của Google gồm Gemini, Google Flow và NotebookLM tạo thành giải pháp toàn diện nào?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q10-3', 0, 1, 'Sai. Các công cụ này phục vụ đa mục đích học tập và làm việc.')" class="quiz-btn-q10-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>A. Chỉ dùng để xem phim hoạt hình</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q10-3', 1, 1, 'Chính xác! Trợ lý đàm thoại vạn năng (Gemini), Xưởng làm phim AI (Flow), và Trợ lý nghiên cứu đọc hiểu tài liệu neo nguồn (NotebookLM).')" class="quiz-btn-q10-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>B. Hệ sinh thái toàn diện: Trợ lý đa năng (Gemini) + Xưởng phim AI (Flow) + Nghiên cứu học thuật (NotebookLM)</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q10-3', 2, 1, 'Sai. Hệ sinh thái AI Google rất đa dạng.')" class="quiz-btn-q10-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>C. Không có liên hệ gì với nhau</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q10-3', 3, 1, 'Sai. Chúng hoàn toàn có thể kết hợp bổ trợ cho nhau.')" class="quiz-btn-q10-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>D. Cạnh tranh triệt tiêu lẫn nhau</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q10-3-feedback" class="hidden"></div>
+            </div>
+
+            <!-- Câu 4 -->
+            <div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+              <p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">4. Sau khi hoàn thành toàn bộ khóa học, kỹ năng quan trọng nhất để làm chủ Gemini trong kỷ nguyên AI là gì?</p>
+              <div class="space-y-1.5 text-xs">
+                <button onclick="checkQuiz('q10-4', 0, 0, 'Chính xác! Biết kết hợp đa phương thức (chữ, ảnh, video), tận dụng tiện ích Workspace, tùy biến Gems và luôn kiểm chứng thông tin cẩn trọng.')" class="quiz-btn-q10-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>A. Phối hợp linh hoạt đa phương thức, tạo Gems chuyên biệt, tận dụng tiện ích và luôn kiểm chứng dữ liệu</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q10-4', 1, 0, 'Sai. Người học cần làm chủ công nghệ thay vì phụ thuộc thụ động.')" class="quiz-btn-q10-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>B. Phó mặc 100% mọi suy nghĩ và quyết định cho AI làm thay</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q10-4', 2, 0, 'Sai. Ngừng học tập sẽ bị tụt hậu.')" class="quiz-btn-q10-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>C. Ngừng đọc sách và ngừng rèn luyện tư duy phản biện</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+                <button onclick="checkQuiz('q10-4', 3, 0, 'Sai. Công nghệ AI mang lại giá trị to lớn.')" class="quiz-btn-q10-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between">
+                  <span>D. Xóa bỏ tài khoản mạng Internet</span>
+                  <i class="fa-regular fa-circle text-gray-400"></i>
+                </button>
+              </div>
+              <div id="q10-4-feedback" class="hidden"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-white dark:bg-dark-surface border-t border-gray-200 dark:border-gray-800 py-8 px-4 text-center text-xs text-gray-500 dark:text-gray-400 mt-12">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <i class="fa-solid fa-graduation-cap text-indigo-600 text-lg"></i>
+        <span class="font-bold text-gray-900 dark:text-white">CodeHub Academy</span> &bull; 
+        <span>Khóa học Thực hành Toàn diện Google Gemini (gemini.google.com)</span>
+      </div>
+      <div class="flex items-center gap-4">
+        <a href="../index.html" class="hover:text-indigo-600 transition">Trang chủ</a>
+        <a href="notebook_google.html" class="hover:text-indigo-600 transition">NotebookLM</a>
+        <a href="google_flow.html" class="hover:text-indigo-600 transition">Google Flow AI</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts: Theme, Drawer, DoubleCheck Demo, Quiz, ScrollSpy -->
+  <script>
+    // Theme Toggle
+    const themeToggleBtn = document.getElementById('themeToggle');
+    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+    if (themeToggleBtn) {
+      themeToggleBtn.addEventListener('click', () => {
+        if (document.documentElement.classList.contains('dark')) {
+          document.documentElement.classList.remove('dark');
+          localStorage.theme = 'light';
+        } else {
+          document.documentElement.classList.add('dark');
+          localStorage.theme = 'dark';
+        }
+      });
+    }
+
+    // Mobile Drawer
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const closeDrawerBtn = document.getElementById('closeDrawerBtn');
+    const sidebarDrawer = document.getElementById('sidebarDrawer');
+    const drawerBackdrop = document.getElementById('drawerBackdrop');
+
+    function openDrawer() {
+      sidebarDrawer.classList.remove('-translate-x-full');
+      drawerBackdrop.classList.remove('hidden');
+    }
+    function closeDrawer() {
+      sidebarDrawer.classList.add('-translate-x-full');
+      drawerBackdrop.classList.add('hidden');
+    }
+
+    if (mobileMenuBtn) mobileMenuBtn.addEventListener('click', openDrawer);
+    if (closeDrawerBtn) closeDrawerBtn.addEventListener('click', closeDrawer);
+    if (drawerBackdrop) drawerBackdrop.addEventListener('click', closeDrawer);
+
+    document.querySelectorAll('.sidebar-link').forEach(link => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth < 1024) {
+          closeDrawer();
+        }
+      });
+    });
+
+    // Double Check Demo Simulator
+    let isDoubleCheckActive = false;
+    function toggleDoubleCheckDemo() {
+      isDoubleCheckActive = !isDoubleCheckActive;
+      const textContainer = document.getElementById('doubleCheckText');
+      if (!textContainer) return;
+
+      if (isDoubleCheckActive) {
+        textContainer.innerHTML = `
+          <p class="p-2 rounded bg-emerald-950/70 border border-emerald-500/80 text-emerald-100 transition">
+            <span class="inline-block bg-emerald-600 text-white font-bold text-[10px] px-1.5 py-0.5 rounded mr-1">Xác thực Google</span>
+            Trạm vũ trụ Quốc tế (ISS) được phóng lên quỹ đạo vào năm 1998 với sự tham gia của 5 cơ quan hàng không vũ trụ lớn trên thế giới (NASA, Roscosmos, JAXA, ESA, CSA).
+          </p>
+          <p class="p-2 rounded bg-emerald-950/70 border border-emerald-500/80 text-emerald-100 transition">
+            <span class="inline-block bg-emerald-600 text-white font-bold text-[10px] px-1.5 py-0.5 rounded mr-1">Xác thực Google</span>
+            Trọng lượng của ISS xấp xỉ 420 tấn và bay quanh Trái Đất ở độ cao khoảng 400km với tốc độ 28.000 km/h (chu kỳ 90 phút/vòng).
+          </p>
+          <p class="p-2 rounded bg-emerald-950/70 border border-emerald-500/80 text-emerald-100 transition">
+            <span class="inline-block bg-emerald-600 text-white font-bold text-[10px] px-1.5 py-0.5 rounded mr-1">Xác thực Google</span>
+            Có thể nhìn thấy ISS bằng mắt thường từ mặt đất khi bầu trời quang đãng, xuất hiện như một đốm sáng trắng lướt qua bầu trời.
+          </p>
+        `;
+      } else {
+        textContainer.innerHTML = `
+          <p>Trạm vũ trụ Quốc tế (ISS) được phóng lên quỹ đạo vào năm 1998 với sự tham gia của 5 cơ quan hàng không vũ trụ lớn trên thế giới.</p>
+          <p>Trọng lượng của ISS xấp xỉ 420 tấn và bay quanh Trái Đất ở độ cao khoảng 400km với tốc độ 28.000 km/h.</p>
+          <p>Một số thông tin cho rằng ISS có thể nhìn thấy được bằng mắt thường vào ban đêm giống như một ngôi sao sáng di chuyển nhanh.</p>
+        `;
+      }
+    }
+
+    // Quiz and Progress Handler
+    const totalQuizzes = 40;
+    let solvedQuizzes = new Set(JSON.parse(localStorage.getItem('gemini_solved_quizzes') || '[]'));
+
+    function updateProgress() {
+      const count = solvedQuizzes.size;
+      const pct = Math.min(100, Math.round((count / totalQuizzes) * 100));
+      const pBar = document.getElementById('progressBar');
+      const pText = document.getElementById('progressPercent');
+      if (pBar) pBar.style.width = pct + '%';
+      if (pText) pText.innerText = pct + '% (' + count + '/' + totalQuizzes + ')';
+    }
+
+    function checkQuiz(quizId, selectedIdx, correctIdx, explanation) {
+      const feedbackEl = document.getElementById(quizId + '-feedback');
+      const buttons = document.querySelectorAll('.quiz-btn-' + quizId);
+      
+      buttons.forEach((btn, idx) => {
+        btn.disabled = true;
+        const icon = btn.querySelector('i');
+        if (idx === correctIdx) {
+          btn.classList.add('bg-indigo-50', 'dark:bg-indigo-950/40', 'border-indigo-500', 'text-indigo-700', 'dark:text-indigo-300', 'font-semibold');
+          btn.classList.remove('border-gray-200', 'dark:border-gray-700');
+          if (icon) {
+            icon.className = 'fa-solid fa-circle-check text-indigo-600 dark:text-indigo-400 text-sm';
+          }
+        } else if (idx === selectedIdx && selectedIdx !== correctIdx) {
+          btn.classList.add('bg-rose-50', 'dark:bg-rose-950/40', 'border-rose-500', 'text-rose-700', 'dark:text-rose-300');
+          btn.classList.remove('border-gray-200', 'dark:border-gray-700');
+          if (icon) {
+            icon.className = 'fa-solid fa-circle-xmark text-rose-500 text-sm';
+          }
+        } else {
+          btn.classList.add('opacity-60');
+        }
+      });
+
+      if (feedbackEl) {
+        feedbackEl.classList.remove('hidden');
+        if (selectedIdx === correctIdx) {
+          feedbackEl.className = 'text-xs p-3 rounded-lg border bg-indigo-50 dark:bg-indigo-950/50 border-indigo-300 dark:border-indigo-800 text-indigo-800 dark:text-indigo-200 mt-2 block';
+          feedbackEl.innerHTML = '<div class="font-bold mb-1 flex items-center gap-1.5"><i class="fa-solid fa-check"></i> Chính xác!</div>' + explanation;
+          solvedQuizzes.add(quizId);
+          localStorage.setItem('gemini_solved_quizzes', JSON.stringify(Array.from(solvedQuizzes)));
+          updateProgress();
+        } else {
+          feedbackEl.className = 'text-xs p-3 rounded-lg border bg-rose-50 dark:bg-rose-950/50 border-rose-300 dark:border-rose-800 text-rose-800 dark:text-rose-200 mt-2 block';
+          feedbackEl.innerHTML = '<div class="font-bold mb-1 flex items-center gap-1.5"><i class="fa-solid fa-xmark"></i> Chưa chính xác!</div>' + explanation;
+        }
+      }
+    }
+
+    // ScrollSpy active link highlighter
+    window.addEventListener('DOMContentLoaded', () => {
+      updateProgress();
+
+      const sections = document.querySelectorAll('.lesson-section');
+      const navLinks = document.querySelectorAll('.sidebar-link');
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const id = entry.target.getAttribute('id');
+            navLinks.forEach(link => {
+              if (link.getAttribute('href') === '#' + id) {
+                link.classList.add('bg-indigo-50', 'dark:bg-indigo-950/60', 'text-indigo-700', 'dark:text-indigo-300', 'font-bold');
+                link.classList.remove('text-gray-700', 'dark:text-gray-300');
+              } else {
+                link.classList.remove('bg-indigo-50', 'dark:bg-indigo-950/60', 'text-indigo-700', 'dark:text-indigo-300', 'font-bold');
+                link.classList.add('text-gray-700', 'dark:text-gray-300');
+              }
+            });
+          }
+        });
+      }, { rootMargin: '-10% 0px -70% 0px' });
+
+      sections.forEach(section => {
+        observer.observe(section);
+      });
+    });
+  </script>
+</body>
+</html>
