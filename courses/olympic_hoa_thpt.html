@@ -1,0 +1,1386 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Luyện Thi Olympic Hóa Học Cấp 3 (THPT & Chuyên) - Đội Tuyển IChO & Quốc Tế | CodeHub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            olychem: {
+              primary: '#0d9488', // Teal 600
+              secondary: '#0284c7', // Sky 600
+              accent: '#f59e0b', // Amber 500
+              dark: '#042f2e', // Teal 950
+              card: '#0f3c3a'
+            },
+            dark: {
+              bg: '#051918',
+              surface: '#092523',
+              card: '#0e3431',
+              border: '#154e4a'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .sidebar-scroll::-webkit-scrollbar { width: 6px; }
+    .sidebar-scroll::-webkit-scrollbar-track { background: transparent; }
+    .sidebar-scroll::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 4px; }
+    .dark .sidebar-scroll::-webkit-scrollbar-thumb { background: #334155; }
+    .olychem-gradient {
+      background: linear-gradient(135deg, #022c22 0%, #064e3b 30%, #0f766e 70%, #0284c7 100%);
+    }
+    .olychem-badge-gradient {
+      background: linear-gradient(135deg, #14b8a6 0%, #06b6d4 50%, #3b82f6 100%);
+    }
+      .katex-display {
+      overflow-x: auto;
+      overflow-y: hidden;
+      padding: 6px 0;
+      max-width: 100%;
+    }
+    .katex {
+      font-size: 1.05em;
+    }
+  </style>
+  <!-- KaTeX for beautiful Math & Chemistry Formula Rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+</head>
+<body class="bg-gray-50 dark:bg-dark-bg text-gray-900 dark:text-gray-100 min-h-screen flex flex-col font-sans transition-colors duration-200">
+
+  <!-- Header Navigation -->
+  <header class="sticky top-0 z-50 bg-white/90 dark:bg-dark-surface/90 backdrop-blur border-b border-gray-200 dark:border-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <a href="../index.html" class="flex items-center gap-2 text-teal-600 dark:text-teal-400 font-bold text-lg hover:opacity-90">
+          <i class="fa-solid fa-graduation-cap text-xl"></i>
+          <span>CodeHub</span>
+        </a>
+        <span class="text-gray-300 dark:text-gray-700">|</span>
+        <div class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
+          <span class="px-2 py-0.5 rounded bg-teal-100 dark:bg-teal-900/60 text-teal-800 dark:text-teal-300 text-xs font-semibold">Olympic THPT & Chuyên</span>
+          <span class="hidden sm:inline font-medium">Bồi Dưỡng Olympic Hóa Học Cấp 3</span>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <button id="themeToggle" class="p-2 rounded-lg bg-gray-100 dark:bg-dark-card text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-dark-border transition" aria-label="Toggle theme">
+          <i class="fa-solid fa-moon dark:hidden"></i>
+          <i class="fa-solid fa-sun hidden dark:inline"></i>
+        </button>
+        <button id="mobileMenuBtn" class="lg:hidden p-2 rounded-lg bg-gray-100 dark:bg-dark-card text-gray-600 dark:text-gray-300">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="olychem-gradient text-white py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+    <div class="max-w-7xl mx-auto relative z-10">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full olychem-badge-gradient text-white text-xs font-bold mb-4 shadow-sm">
+        <i class="fa-solid fa-medal"></i> HUẤN LUYỆN ĐỘI TUYỂN OLYMPIC QUỐC GIA & QUỐC TẾ (IChO / MENDELEEV)
+      </div>
+      <h1 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight mb-4">
+        Luyện Thi Olympic Hóa Học Cấp 3 (THPT & Chuyên)
+      </h1>
+      <p class="text-base sm:text-lg text-teal-100 max-w-3xl mb-6 leading-relaxed">
+        Giáo trình học thuật tinh hoa dành cho Đội tuyển Olympic Hóa học THPT (IChO, Mendeleev, Olympic 30/4, Duyên Hải Bắc Bộ, Trại hè Hùng Vương). Nghiên cứu cơ học lượng tử, nhiệt động thống kê, phương trình Eyring, thuyết trường tinh thể, giản đồ Pourbaix, phản ứng Pericyclic Woodward-Hoffmann và tổng hợp hữu cơ hiện đại.
+      </p>
+      
+      <!-- Progress Bar Tracker -->
+      <div class="bg-black/30 backdrop-blur rounded-xl p-4 max-w-2xl border border-white/10">
+        <div class="flex justify-between items-center text-xs sm:text-sm font-semibold mb-2">
+          <span>Tiến độ hoàn thành 40 thử thách Olympic</span>
+          <span id="quizProgressText">0 / 40 (0%)</span>
+        </div>
+        <div class="w-full bg-black/40 h-2.5 rounded-full overflow-hidden">
+          <div id="quizProgressBar" class="h-full bg-gradient-to-r from-teal-400 via-cyan-400 to-amber-400 transition-all duration-500" style="width: 0%"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Container -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 flex gap-8">
+    
+    <!-- Desktop Sticky Sidebar -->
+    <aside class="hidden lg:block w-72 flex-shrink-0">
+      <div class="sticky top-24 space-y-4">
+        <div class="bg-white dark:bg-dark-surface rounded-2xl border border-gray-200 dark:border-gray-800 p-4 shadow-sm">
+          <h3 class="font-bold text-sm text-gray-900 dark:text-white uppercase tracking-wider mb-3 flex items-center gap-2">
+            <i class="fa-solid fa-atom text-teal-600"></i> Mục Lục 10 Chuyên Đề
+          </h3>
+          <nav class="space-y-1 text-sm sidebar-scroll max-h-[calc(100vh-180px)] overflow-y-auto pr-1">
+            <a href="#bai1" class="nav-link block px-2.5 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-teal-50 dark:hover:bg-teal-950/40 hover:text-teal-600 dark:hover:text-teal-400 transition font-medium">1. Lượng Tử & Hộp Thế 1D</a>
+            <a href="#bai2" class="nav-link block px-2.5 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-teal-50 dark:hover:bg-teal-950/40 hover:text-teal-600 dark:hover:text-teal-400 transition font-medium">2. Nhiệt Động Thống Kê & Boltzmann</a>
+            <a href="#bai3" class="nav-link block px-2.5 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-teal-50 dark:hover:bg-teal-950/40 hover:text-teal-600 dark:hover:text-teal-400 transition font-medium">3. Phương Trình Eyring & Chuỗi Gốc</a>
+            <a href="#bai4" class="nav-link block px-2.5 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-teal-50 dark:hover:bg-teal-950/40 hover:text-teal-600 dark:hover:text-teal-400 transition font-medium">4. Hấp Phụ Langmuir & Hóa Keo</a>
+            <a href="#bai5" class="nav-link block px-2.5 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-teal-50 dark:hover:bg-teal-950/40 hover:text-teal-600 dark:hover:text-teal-400 transition font-medium">5. Thuyết Trường Tinh Thể & CFSE</a>
+            <a href="#bai6" class="nav-link block px-2.5 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-teal-50 dark:hover:bg-teal-950/40 hover:text-teal-600 dark:hover:text-teal-400 transition font-medium">6. Giản Đồ Latimer, Frost & Pourbaix</a>
+            <a href="#bai7" class="nav-link block px-2.5 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-teal-50 dark:hover:bg-teal-950/40 hover:text-teal-600 dark:hover:text-teal-400 transition font-medium">7. Hiệu Ứng Đồng Vị & Phóng Xạ</a>
+            <a href="#bai8" class="nav-link block px-2.5 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-teal-50 dark:hover:bg-teal-950/40 hover:text-teal-600 dark:hover:text-teal-400 transition font-medium">8. Phản Ứng Pericyclic & FMO</a>
+            <a href="#bai9" class="nav-link block px-2.5 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-teal-50 dark:hover:bg-teal-950/40 hover:text-teal-600 dark:hover:text-teal-400 transition font-medium">9. Tổng Hợp Lùi & Khớp Nối C-C</a>
+            <a href="#bai10" class="nav-link block px-2.5 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-teal-50 dark:hover:bg-teal-950/40 hover:text-teal-600 dark:hover:text-teal-400 transition font-medium">10. Động Học Enzym & Chiến Thuật IChO</a>
+          </nav>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 min-w-0 space-y-12">
+
+      <!-- ==================== BÀI 1 ==================== -->
+      <section id="bai1" class="lesson-section bg-white dark:bg-dark-surface rounded-2xl border border-gray-200 dark:border-gray-800 p-6 sm:p-8 shadow-sm">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="w-10 h-10 rounded-xl bg-teal-600 text-white flex items-center justify-center font-bold text-lg shadow-md shadow-teal-500/20">01</span>
+          <div>
+            <span class="text-xs font-semibold tracking-wider text-teal-600 dark:text-teal-400 uppercase">Olympic Chuyên Đề 1 • Cơ học lượng tử</span>
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">Cơ Học Lượng Tử, Mô Hình Hạt Trong Hộp Thế & Thuyết Hückel MO</h2>
+          </div>
+        </div>
+
+        <div class="prose dark:prose-invert max-w-none space-y-6 text-sm sm:text-base leading-relaxed">
+          <p class="text-gray-700 dark:text-gray-300">
+            Trong các đề thi Olympic Hóa học Quốc tế (IChO), mô hình hạt chuyển động tự do trong hộp thế một chiều (1D Particle in a Box) và lý thuyết obitan phân tử Hückel (HMO) thường xuyên được sử dụng để mô hình hóa trạng thái electron $\pi$ trong các phân tử liên hợp mạch dài và vòng thơm.
+          </p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
+            <div class="p-4 rounded-xl bg-teal-50/70 dark:bg-teal-950/30 border border-teal-200 dark:border-teal-900/50">
+              <h4 class="font-bold text-teal-900 dark:text-teal-300 flex items-center gap-2 mb-2 text-sm sm:text-base">
+                <i class="fa-solid fa-cube text-teal-600"></i> Mô Hình Hạt Trong Hộp Thế 1D
+              </h4>
+              <p class="text-xs sm:text-sm text-gray-700 dark:text-gray-300 space-y-2">
+                Phương trình Schrödinger vi phân 1 chiều: $-\frac{\hbar^2}{2m} \frac{d^2\psi}{dx^2} = E\psi$.
+                <br>Với điều kiện biên: thế năng $V(x) = 0$ khi $0 \le x \le L$ và $V(x) = \infty$ ở ngoài hộp thế ($x < 0$ hoặc $x > L$):
+                <br>• <strong>Hàm sóng lượng tử hóa chuẩn hóa:</strong>
+                $$\psi_n(x) = \sqrt{\frac{2}{L}} \sin\left(\frac{n\pi x}{L}\right) \quad (n = 1, 2, 3, \dots)$$
+                • <strong>Năng lượng lượng tử hóa</strong> biểu diễn tương đương qua hằng số Planck $h$ hoặc $\hbar = \frac{h}{2\pi}$:
+                $$E_n = \frac{n^2 h^2}{8 m L^2} = \frac{n^2 \pi^2 \hbar^2}{2 m L^2}$$
+                • <strong>Chuyển mức điện tử HOMO $\rightarrow$ LUMO</strong> của hệ polyene liên hợp chứa $N$ electron $\pi$ ($N$ chẵn, điền từ $n = 1$ đến $n_{\text{HOMO}} = N/2$, mức trống thấp nhất $n_{\text{LUMO}} = N/2 + 1$):
+                $$\Delta E = E_{\text{LUMO}} - E_{\text{HOMO}} = \frac{(N + 1) h^2}{8 m L^2} = \frac{hc}{\lambda_{\max}} \implies \lambda_{\max} = \frac{8 m c L^2}{(N + 1) h}$$
+              </p>
+            </div>
+            <div class="p-4 rounded-xl bg-cyan-50/70 dark:bg-cyan-950/30 border border-cyan-200 dark:border-cyan-900/50">
+              <h4 class="font-bold text-cyan-900 dark:text-cyan-300 flex items-center gap-2 mb-2 text-sm sm:text-base">
+                <i class="fa-solid fa-circle-nodes text-cyan-600"></i> Thuyết Hückel MO (HMO) & Năng Lượng Cộng Hưởng
+              </h4>
+              <p class="text-xs sm:text-sm text-gray-700 dark:text-gray-300 space-y-2">
+                Định thức thế kỷ $|H_{ij} - E S_{ij}| = 0$ cho hệ electron $\pi$ phẳng với tích phân Coulomb $H_{ii} = \alpha$ và tích phân cộng hưởng $H_{ij} = \beta$ kề nhau (trong gần đúng Hückel chuẩn $S_{ij}=\delta_{ij}$, thường chọn $\beta<0$; dấu của $\alpha$ phụ thuộc mốc năng lượng):
+                <br>• <strong>Etylen ($\text{C}_2\text{H}_4$, 2 electron $\pi$):</strong> $E_1 = \alpha + \beta$ (liên kết), $E_2 = \alpha - \beta$ (phản liên kết).
+                $$E_\pi(\text{etylen}) = 2(\alpha + \beta) = 2\alpha + 2\beta$$
+                • <strong>Benzen ($\text{C}_6\text{H}_6$, 6 electron $\pi$):</strong> 6 mức MO gồm $\alpha + 2\beta$ (1 MO), $\alpha + \beta$ (2 MO suy biến), $\alpha - \beta$ (2 MO suy biến), $\alpha - 2\beta$ (1 MO). Sáu electron điền vào 3 MO liên kết:
+                $$E_\pi(\text{benzen}) = 2(\alpha + 2\beta) + 4(\alpha + \beta) = 6\alpha + 8\beta$$
+                • <strong>Năng lượng giải tỏa cộng hưởng (Delocalization / Resonance Energy):</strong> So sánh benzen với hệ gồm 3 liên kết đôi etylen cô lập ($E_\pi = 3(2\alpha + 2\beta) = 6\alpha + 6\beta$):
+                $$\Delta E_{\text{deloc}} = E_\pi(\text{benzen}) - 3 E_\pi(\text{etylen}) = (6\alpha + 8\beta) - (6\alpha + 6\beta) = 2\beta$$
+                Vì $\beta < 0$, độ bền giải tỏa có độ lớn $2|\beta|$. Giá trị $2|\beta|$ là năng lượng làm bền trong mô hình Hückel; không được đồng nhất trực tiếp với năng lượng cộng hưởng thực nghiệm khoảng $150\text{ kJ/mol}$ hay dùng giá trị này để suy ra chính xác $\beta$ vì hai mô hình có những giả thiết khác nhau.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quizzes Bài 1 -->
+        <div class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-800">
+          <h3 class="font-bold text-base sm:text-lg text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+            <i class="fa-solid fa-list-check text-teal-600"></i> Bài Tập Học Thuật Chuyên Sâu (Bài 1)
+          </h3>
+          <div class="space-y-4">
+            <!-- Q1-1 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 1.1:</strong> Một electron chuyển động tự do trong hộp thế một chiều có chiều dài $L$. Khi electron nhảy từ mức kích thích thứ nhất ($n = 2$) xuống trạng thái cơ bản ($n = 1$), bước sóng photon phát ra tỷ lệ với $L$ như thế nào?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q1-1', 0, false, 'Sai. Bước sóng không tỷ lệ thuận bậc nhất.')" class="quiz-btn-q1-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">A. Tỷ lệ thuận với $L$</button>
+                <button onclick="checkQuiz('q1-1', 1, true, 'Chính xác! Năng lượng chuyển mức ΔE = E2 - E1 = (2^2 - 1^2)h^2/(8mL^2) = 3h^2/(8mL^2). Vì ΔE = hc/λ nên λ = (8mc/3h) * L^2, tức bước sóng λ tỷ lệ thuận với L^2.')" class="quiz-btn-q1-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">B. Tỷ lệ thuận với $L^2$ ($\lambda \propto L^2$)</button>
+                <button onclick="checkQuiz('q1-1', 2, false, 'Sai. λ không tỷ lệ nghịch với L.')" class="quiz-btn-q1-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">C. Tỷ lệ nghịch với $L$ ($\lambda \propto 1/L$)</button>
+                <button onclick="checkQuiz('q1-1', 3, false, 'Sai. Không tỷ lệ nghịch với L^2.')" class="quiz-btn-q1-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">D. Tỷ lệ nghịch với $L^2$ ($\lambda \propto 1/L^2$)</button>
+              </div>
+              <div id="feedback-q1-1" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+
+            <!-- Q1-2 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 1.2:</strong> Trong mô hình Hückel của cyclobutadien hình vuông lý tưởng (chưa xét biến dạng Jahn–Teller), cách điền 4 electron $\pi$ theo quy tắc Hund là:
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q1-2', 0, false, 'Sai. Cyclobutadien có mức suy biến mang 2 electron độc thân.')" class="quiz-btn-q1-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">A. Tất cả electron đều ghép đôi, là phân tử thơm nghịch từ</button>
+                <button onclick="checkQuiz('q1-2', 1, true, 'Chính xác! Giản đồ Frost cho cyclobutadien có 4 mức: α + 2β (1 MO), α (2 MO suy biến), α - 2β (1 MO). Với 4 electron π, có 2 e ghép đôi ở mức thấp nhất và 2 e độc thân phân bố vào 2 MO suy biến không liên kết theo quy tắc Hund, cho cấu hình triplet của mô hình vuông lý tưởng; cyclobutadien thực tế biến dạng hình chữ nhật và trạng thái cơ bản là singlet, nên không thể coi triplet là trạng thái cơ bản thực nghiệm.')" class="quiz-btn-q1-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">B. Hai electron độc thân chiếm hai MO không liên kết suy biến (theo Hund trong mô hình vuông lý tưởng)</button>
+                <button onclick="checkQuiz('q1-2', 2, false, 'Sai. Cyclobutadien có 4 electron pi.')" class="quiz-btn-q1-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">C. Chứa 3 mức liên kết và 1 mức phản liên kết</button>
+                <button onclick="checkQuiz('q1-2', 3, false, 'Sai.')" class="quiz-btn-q1-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">D. Năng lượng cộng hưởng aromaticity bằng 2β</button>
+              </div>
+              <div id="feedback-q1-2" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+
+            <!-- Q1-3 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 1.3:</strong> Trong mô hình hạt trong hộp thế 1D, xác suất tìm thấy hạt tại trung điểm hộp ($x = L/2$) ở trạng thái kích thích đầu tiên ($n = 2$) bằng:
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q1-3', 0, true, 'Chính xác! Với n = 2, hàm sóng là ψ_2(x) = √(2/L) * \sin(2πx/L). Tại x = L/2, \sin(2π*(L/2)/L) = \sin(π) = 0. Do đó mật độ xác suất |ψ_2(L/2)|^2 = 0, đây chính là một nút sóng (node)!')" class="quiz-btn-q1-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">A. Bằng 0 (Nút sóng - Node)</button>
+                <button onclick="checkQuiz('q1-3', 1, false, 'Sai. Đó là giá trị tại cực đại của n=1.')" class="quiz-btn-q1-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">B. Cực đại và bằng 2/L</button>
+                <button onclick="checkQuiz('q1-3', 2, false, 'Sai.')" class="quiz-btn-q1-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">C. Bằng 0.5</button>
+                <button onclick="checkQuiz('q1-3', 3, false, 'Sai.')" class="quiz-btn-q1-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">D. Bằng 1/L</button>
+              </div>
+              <div id="feedback-q1-3" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+
+            <!-- Q1-4 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 1.4:</strong> Phân tử octatetraen ($\text{CH}_2=\text{CH}-\text{CH}=\text{CH}-\text{CH}=\text{CH}-\text{CH}=\text{CH}_2$) có 8 electron $\pi$. Trong mô hình hạt trong hộp thế 1D, bước nhảy HOMO $\rightarrow$ LUMO tương ứng với sự chuyển dịch electron giữa các mức lượng tử:
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q1-4', 0, false, 'Sai. 8 electron điền đầy vào 4 obitan đầu tiên.')" class="quiz-btn-q1-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">A. Từ mức $n = 3$ lên mức $n = 4$</button>
+                <button onclick="checkQuiz('q1-4', 1, true, 'Chính xác! Có 8 electron π, mỗi mức năng lượng chứa tối đa 2 electron ngược spin. Do đó 8 electron chiếm các mức n = 1, 2, 3, 4. Mức bị chiếm cao nhất (HOMO) là n = 4, và mức trống thấp nhất (LUMO) là n = 5!')" class="quiz-btn-q1-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">B. Từ mức $n = 4$ lên mức $n = 5$</button>
+                <button onclick="checkQuiz('q1-4', 2, false, 'Sai. HOMO là n = 4 chứ không phải n = 8.')" class="quiz-btn-q1-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">C. Từ mức $n = 8$ lên mức $n = 9$</button>
+                <button onclick="checkQuiz('q1-4', 3, false, 'Sai.')" class="quiz-btn-q1-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">D. Từ mức $n = 2$ lên mức $n = 3$</button>
+              </div>
+              <div id="feedback-q1-4" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== BÀI 2 ==================== -->
+      <section id="bai2" class="lesson-section bg-white dark:bg-dark-surface rounded-2xl border border-gray-200 dark:border-gray-800 p-6 sm:p-8 shadow-sm">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="w-10 h-10 rounded-xl bg-teal-600 text-white flex items-center justify-center font-bold text-lg shadow-md shadow-teal-500/20">02</span>
+          <div>
+            <span class="text-xs font-semibold tracking-wider text-teal-600 dark:text-teal-400 uppercase">Olympic Chuyên Đề 2 • Nhiệt động thống kê</span>
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">Nhiệt Động Học Thống Kê, Hàm Phân Giải Boltzmann & Thế Hóa Học</h2>
+          </div>
+        </div>
+
+        <div class="prose dark:prose-invert max-w-none space-y-6 text-sm sm:text-base leading-relaxed">
+          <p class="text-gray-700 dark:text-gray-300">
+            Nhiệt động học thống kê (Statistical Thermodynamics) là cầu nối giữa thế giới vi mô của cơ học lượng tử và thế giới vĩ mô của nhiệt động lực học cổ điển, giải thích bản chất thực sự của Entropy, Nội năng và Năng lượng tự do Gibbs.
+          </p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
+            <div class="p-4 rounded-xl bg-teal-50/70 dark:bg-teal-950/30 border border-teal-200 dark:border-teal-900/50">
+              <h4 class="font-bold text-teal-900 dark:text-teal-300 flex items-center gap-2 mb-2 text-sm sm:text-base">
+                <i class="fa-solid fa-chart-line text-teal-600"></i> Phân Bố Boltzmann & Hàm Phân Giải $q$
+              </h4>
+              <p class="text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+                Xác suất phân tử thuộc mức năng lượng $\varepsilon_i$ có độ suy biến $g_i$ (nếu xét từng vi trạng thái riêng lẻ thì không nhân $g_i$):
+                $$P_i = \frac{g_i e^{-\varepsilon_i / (k_B T)}}{q}$$
+                Trong đó hàm phân giải phân tử (molecular partition function):
+                $$q = \sum_i g_i e^{-\varepsilon_i / (k_B T)} = q_{\text{trans}} \cdot q_{\text{rot}} \cdot q_{\text{vib}} \cdot q_{\text{elec}} \quad \text{(khi các chuyển động gần độc lập)}$$
+                Công thức Boltzmann cho Entropy: $S = k_B \ln W$.
+              </p>
+            </div>
+            <div class="p-4 rounded-xl bg-cyan-50/70 dark:bg-cyan-950/30 border border-cyan-200 dark:border-cyan-900/50">
+              <h4 class="font-bold text-cyan-900 dark:text-cyan-300 flex items-center gap-2 mb-2 text-sm sm:text-base">
+                <i class="fa-solid fa-scale-balanced text-cyan-600"></i> Thế Hóa Học $\mu_i$ & Phương Trình Gibbs-Duhem
+              </h4>
+              <p class="text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+                Thế hóa học của cấu tử $i$ trong hệ đa cấu tử:
+                $$\mu_i = \left(\frac{\partial G}{\partial n_i}\right)_{T, P, n_{j \ne i}} = \mu_i^\circ + RT \ln a_i$$
+                Điều kiện cân bằng phản ứng hóa học: $\sum_i \nu_i\mu_i = 0$ (với $\nu_i$ là hệ số tỉ lượng có dấu). Cân bằng pha của cấu tử $i$ giữa hai pha: $\mu_i^{(\alpha)}=\mu_i^{(\beta)}$.
+                <br>Phương trình Gibbs-Duhem liên hệ thế hóa học:
+                $$\sum_i n_i d\mu_i = -S dT + V dP$$
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quizzes Bài 2 -->
+        <div class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-800">
+          <h3 class="font-bold text-base sm:text-lg text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+            <i class="fa-solid fa-list-check text-teal-600"></i> Bài Tập Học Thuật Chuyên Sâu (Bài 2)
+          </h3>
+          <div class="space-y-4">
+            <!-- Q2-1 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 2.1:</strong> Đối với tinh thể cacbon monoxit ($\text{CO}$) ở $0\text{ K}$, do mômen lưỡng cực rất nhỏ nên các phân tử sắp xếp ngẫu nhiên theo 2 hướng ($\text{C-O}$ hoặc $\text{O-C}$). Entropy dư (residual entropy) của 1 mol tinh thể $\text{CO}$ ở $0\text{ K}$ là:
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q2-1', 0, false, 'Sai. Theo định luật 3 cổ điển chỉ đúng với tinh thể hoàn hảo không hỗn loạn định hướng.')" class="quiz-btn-q2-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">A. Bằng 0 J/(mol·K)</button>
+                <button onclick="checkQuiz('q2-1', 1, true, 'Chính xác! Số vi trạng thái W = 2^(N_A). Áp dụng S = k_B * \ln(W) = k_B * \ln(2^N_A) = N_A * k_B * \ln(2) = R * \ln(2) ≈ 8.314 * 0.693 = 5.76 J/(mol·K)!')" class="quiz-btn-q2-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">B. $R \ln 2 \approx 5.76\text{ J/(mol}\cdot\text{K)}$</button>
+                <button onclick="checkQuiz('q2-1', 2, false, 'Sai. W không phải là N_A^2.')" class="quiz-btn-q2-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">C. $2 R \approx 16.63\text{ J/(mol}\cdot\text{K)}$</button>
+                <button onclick="checkQuiz('q2-1', 3, false, 'Sai.')" class="quiz-btn-q2-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">D. $R \ln 3 \approx 9.13\text{ J/(mol}\cdot\text{K)}$</button>
+              </div>
+              <div id="feedback-q2-1" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+
+            <!-- Q2-2 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 2.2:</strong> Khi nhiệt độ $T \rightarrow 0\text{ K}$, hàm phân giải phân tử $q$ của một hệ có trạng thái cơ bản không suy biến ($g_0 = 1$) sẽ tiến tới giá trị:
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q2-2', 0, false, 'Sai. Khi T tiến về 0, số hạng trạng thái cơ bản là e^0 = 1.')" class="quiz-btn-q2-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">A. Bằng 0</button>
+                <button onclick="checkQuiz('q2-2', 1, true, 'Chính xác! Khi T → 0 K, các số hạng e^(-ε_i/k_BT) với ε_i > ε_0 đều tiến tới 0. Chỉ còn lại trạng thái cơ bản ε_0 = 0 (lấy làm chuẩn): q → g_0 * e^0 = 1!')" class="quiz-btn-q2-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">B. Bằng 1</button>
+                <button onclick="checkQuiz('q2-2', 2, false, 'Sai. q chỉ tiến về vô cùng khi T -> vô cùng.')" class="quiz-btn-q2-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">C. Tiến ra vô cùng ($\infty$)</button>
+                <button onclick="checkQuiz('q2-2', 3, false, 'Sai.')" class="quiz-btn-q2-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">D. Bằng hằng số khí $R$</button>
+              </div>
+              <div id="feedback-q2-2" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+
+            <!-- Q2-3 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 2.3:</strong> Trong dung dịch lỏng lý tưởng nhị phân gồm chất $A$ và chất $B$ ở nhiệt độ và áp suất không đổi, nếu thế hóa học của chất $A$ thay đổi một lượng $d\mu_A$ thì theo phương trình Gibbs-Duhem, $d\mu_B$ liên hệ với $d\mu_A$ như thế nào?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q2-3', 0, true, 'Chính xác! Ở T và P không đổi, n_A dμ_A + n_B dμ_B = 0 => x_A dμ_A + x_B dμ_B = 0 => dμ_B = -(x_A / x_B) dμ_A!')" class="quiz-btn-q2-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">A. $d\mu_B = -\frac{x_A}{x_B} d\mu_A$ (với $x_A, x_B$ là phân số mol)</button>
+                <button onclick="checkQuiz('q2-3', 1, false, 'Sai. Dấu phải là âm.')" class="quiz-btn-q2-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">B. $d\mu_B = \frac{x_A}{x_B} d\mu_A$</button>
+                <button onclick="checkQuiz('q2-3', 2, false, 'Sai.')" class="quiz-btn-q2-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">C. $d\mu_B = -d\mu_A$</button>
+                <button onclick="checkQuiz('q2-3', 3, false, 'Sai.')" class="quiz-btn-q2-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">D. $d\mu_B = 0$</button>
+              </div>
+              <div id="feedback-q2-3" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+
+            <!-- Q2-4 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 2.4:</strong> Đại lượng nhiệt động nào sau đây là hàm vi phân toàn phần bằng $dU - T dS - S dT$ biểu diễn công hữu ích cực đại ở nhiệt độ và thể tích không đổi?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q2-4', 0, false, 'Sai. G = H - TS ở T, P không đổi.')" class="quiz-btn-q2-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">A. Năng lượng tự do Gibbs ($G$)</button>
+                <button onclick="checkQuiz('q2-4', 1, true, 'Chính xác! Năng lượng Helmholtz A = U - TS (hay hàm công F). Vi phân dA = dU - TdS - SdT = -SdT - PdV. Ở điều kiện đẳng nhiệt đẳng tích (dT = 0, dV = 0), dA <= 0 biểu thị chiều tự diễn biến và công cực đại!')" class="quiz-btn-q2-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">B. Năng lượng Helmholtz ($A = U - TS$)</button>
+                <button onclick="checkQuiz('q2-4', 2, false, 'Sai. Entanpy là H = U + PV.')" class="quiz-btn-q2-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">C. Entanpy ($H = U + PV$)</button>
+                <button onclick="checkQuiz('q2-4', 3, false, 'Sai.')" class="quiz-btn-q2-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">D. Nhiệt dung mol đẳng áp ($C_p$)</button>
+              </div>
+              <div id="feedback-q2-4" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== BÀI 3 ==================== -->
+      <section id="bai3" class="lesson-section bg-white dark:bg-dark-surface rounded-2xl border border-gray-200 dark:border-gray-800 p-6 sm:p-8 shadow-sm">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="w-10 h-10 rounded-xl bg-teal-600 text-white flex items-center justify-center font-bold text-lg shadow-md shadow-teal-500/20">03</span>
+          <div>
+            <span class="text-xs font-semibold tracking-wider text-teal-600 dark:text-teal-400 uppercase">Olympic Chuyên Đề 3 • Động học nâng cao</span>
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">Thuyết Trạng Thái Chuyển Tiếp Eyring & Động Học Phản Ứng Chuỗi Gốc</h2>
+          </div>
+        </div>
+
+        <div class="prose dark:prose-invert max-w-none space-y-6 text-sm sm:text-base leading-relaxed">
+          <p class="text-gray-700 dark:text-gray-300">
+            Khác với thuyết va chạm đơn thuần, phương trình Eyring-Polanyi (Transition State Theory - TST) tiếp cận động học dưới góc độ phức hoạt động và các thông số nhiệt động hoạt hóa ($\Delta H^\ddagger, \Delta S^\ddagger$), kết hợp nguyên lý nồng độ dừng Bodenstein (PSSA) trong các phản ứng chuỗi nổ.
+          </p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
+            <div class="p-4 rounded-xl bg-teal-50/70 dark:bg-teal-950/30 border border-teal-200 dark:border-teal-900/50">
+              <h4 class="font-bold text-teal-900 dark:text-teal-300 flex items-center gap-2 mb-2 text-sm sm:text-base">
+                <i class="fa-solid fa-bolt text-teal-600"></i> Phương Trình Eyring - Polanyi
+              </h4>
+              <p class="text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+                Hằng số tốc độ phản ứng:
+                $$k = \kappa \frac{k_B T}{h} e^{-\Delta G^\ddagger / (RT)} = \kappa \frac{k_B T}{h} e^{\Delta S^\ddagger / R} e^{-\Delta H^\ddagger / (RT)}$$
+                $\kappa \approx 1$ là hệ số truyền qua.
+                <br>Liên hệ với năng lượng hoạt hóa Arrhenius $E_a$:
+                <br>• Khi các thông số hoạt hóa và $\kappa$ gần như không đổi theo nhiệt độ, biểu thức Eyring chuẩn cho $E_a \approx \Delta H^\ddagger + RT$ (với hằng số tốc độ được định nghĩa nhất quán theo trạng thái chuẩn).
+                <br>• Với phản ứng khí lưỡng phân tử, quan hệ có thể khác do quy ước trạng thái chuẩn và cách định nghĩa hằng số tốc độ; không dùng $+2RT$ như một công thức phổ quát.
+              </p>
+            </div>
+            <div class="p-4 rounded-xl bg-cyan-50/70 dark:bg-cyan-950/30 border border-cyan-200 dark:border-cyan-900/50">
+              <h4 class="font-bold text-cyan-900 dark:text-cyan-300 flex items-center gap-2 mb-2 text-sm sm:text-base">
+                <i class="fa-solid fa-burst text-cyan-600"></i> Phản Ứng Chuỗi Gốc & Giới Hạn Nổ
+              </h4>
+              <p class="text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+                Phản ứng chuỗi nổ phân nhánh giữa $H_2$ và $O_2$:
+                <br>1. Khơi mào: tạo gốc tự do $H^\bullet, OH^\bullet$.
+                <br>2. Phát triển & Phân nhánh: $H^\bullet + O_2 \rightarrow OH^\bullet + O^{\bullet\bullet}$ (1 gốc sinh 2 gốc mới!).
+                <br>3. Đứt mạch: Va chạm thành bình (áp suất thấp - giới hạn nổ I) hoặc va chạm 3 vật thể trong thể tích $H^\bullet + O_2 + M \rightarrow HO_2^\bullet + M$ (áp suất cao - giới hạn nổ II).
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quizzes Bài 3 -->
+        <div class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-800">
+          <h3 class="font-bold text-base sm:text-lg text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+            <i class="fa-solid fa-list-check text-teal-600"></i> Bài Tập Học Thuật Chuyên Sâu (Bài 3)
+          </h3>
+          <div class="space-y-4">
+            <!-- Q3-1 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 3.1:</strong> Một phản ứng lưỡng phân tử trong pha dung dịch có entropy hoạt hóa $\Delta S^\ddagger < 0$ (rất âm, khoảng $-120\text{ J/(mol}\cdot\text{K)}$). Điều này chỉ ra đặc điểm gì về cấu trúc của trạng thái chuyển tiếp (phức hoạt động)?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q3-1', 0, false, 'Sai. Phân ly làm tăng số phân tử tự do, entropy hoạt hóa sẽ dương.')" class="quiz-btn-q3-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">A. Trạng thái chuyển tiếp có sự đứt gãy liên kết phân ly mạnh</button>
+                <button onclick="checkQuiz('q3-1', 1, true, 'Chính xác! Khi hai phân tử kết hợp tạo phức hoạt động có trật tự cao và mất các bậc tự do tịnh tiến, quay (associative mechanism), biến thiên entropy hoạt hóa ΔS‡ sẽ mang giá trị âm rất lớn!')" class="quiz-btn-q3-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">B. Trạng thái chuyển tiếp có cấu trúc liên kết trật tự, gò bó (cơ chế kết hợp - associative)</button>
+                <button onclick="checkQuiz('q3-1', 2, false, 'Sai. Không có mối liên hệ trực tiếp với tỏa nhiệt tổng thể.')" class="quiz-btn-q3-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">C. Phản ứng có hiệu ứng nhiệt tỏa ra cực lớn</button>
+                <button onclick="checkQuiz('q3-1', 3, false, 'Sai.')" class="quiz-btn-q3-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">D. Hằng số tốc độ phản ứng không phụ thuộc vào nhiệt độ</button>
+              </div>
+              <div id="feedback-q3-1" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+
+            <!-- Q3-2 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 3.2:</strong> Theo thuyết trạng thái chuyển tiếp Eyring, đồ thị biểu diễn $\ln(k/T)$ theo $1/T$ là một đường thẳng. Độ dốc (slope) của đường thẳng này bằng:
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q3-2', 0, true, 'Chính xác! Lấy ln hai vế phương trình Eyring: \ln(k/T) = \ln(k_B/h) + ΔS‡/R - ΔH‡/(RT). Đồ thị \ln(k/T) theo 1/T có độ dốc slope = -ΔH‡/R!')" class="quiz-btn-q3-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">A. $-\frac{\Delta H^\ddagger}{R}$</button>
+                <button onclick="checkQuiz('q3-2', 1, false, 'Sai. -E_a/R là độ dốc của đồ thị \ln(k) theo 1/T trong Arrhenius.')" class="quiz-btn-q3-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">B. $-\frac{E_a}{R}$</button>
+                <button onclick="checkQuiz('q3-2', 2, false, 'Sai.')" class="quiz-btn-q3-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">C. $\frac{\Delta S^\ddagger}{R}$</button>
+                <button onclick="checkQuiz('q3-2', 3, false, 'Sai.')" class="quiz-btn-q3-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">D. $-\frac{\Delta G^\ddagger}{RT}$</button>
+              </div>
+              <div id="feedback-q3-2" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+
+            <!-- Q3-3 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 3.3:</strong> Trong phản ứng chuỗi nổ phân nhánh hỗn hợp $2\text{H}_2 + \text{O}_2$, nguyên nhân chính dẫn đến hiện tượng nổ ở <strong>giới hạn nổ thứ nhất</strong> (khi tăng áp suất vượt qua áp suất tới hạn $P_1$) là:
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q3-3', 0, false, 'Sai. Va chạm 3 vật thể xảy ra ở áp suất cao (giới hạn nổ 2).')" class="quiz-btn-q3-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">A. Va chạm 3 vật thể trong pha khí triệt tiêu gốc tự do</button>
+                <button onclick="checkQuiz('q3-3', 1, true, 'Chính xác! Ở áp suất rất thấp, các gốc tự do khuếch tán nhanh tới thành bình và bị đứt mạch. Khi tăng áp suất vượt qua P1, quãng đường tự do trung bình giảm, sự khuếch tán ra thành bình chậm lại, tốc độ phân nhánh vượt trội tốc độ đứt mạch ở thành bình dẫn tới bùng nổ phân nhánh!')" class="quiz-btn-q3-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">B. Tốc độ phân nhánh mạch vượt qua tốc độ đứt mạch do khuếch tán ra thành bình</button>
+                <button onclick="checkQuiz('q3-3', 2, false, 'Sai. H2 và O2 không phân hủy nhiệt ở áp suất thấp.')" class="quiz-btn-q3-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">C. Phản ứng phân hủy nhiệt trực tiếp của nước</button>
+                <button onclick="checkQuiz('q3-3', 3, false, 'Sai.')" class="quiz-btn-q3-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">D. Sự tỏa nhiệt làm bốc hơi toàn bộ hỗn hợp lỏng</button>
+              </div>
+              <div id="feedback-q3-3" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+
+            <!-- Q3-4 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 3.4:</strong> Áp dụng nguyên lý nồng độ dừng Bodenstein (PSSA) cho tiểu phân trung gian hoạt động $I^\bullet$, giả thiết cơ bản là:
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q3-4', 0, true, 'Chính xác! Tiểu phân trung gian có hoạt tính cực cao, nồng độ rất nhỏ, tốc độ sinh ra xấp xỉ bằng tốc độ mất đi nên d[I]/dt ≈ 0!')" class="quiz-btn-q3-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">A. Đạo hàm nồng độ theo thời gian bằng 0: $\frac{d[I^\bullet]}{dt} \approx 0$</button>
+                <button onclick="checkQuiz('q3-4', 1, false, 'Sai. Nồng độ của nó không bằng 0, chỉ là rất nhỏ và không đổi theo thời gian.')" class="quiz-btn-q3-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">B. Nồng độ $[I^\bullet] = 0$ tại mọi thời điểm</button>
+                <button onclick="checkQuiz('q3-4', 2, false, 'Sai.')" class="quiz-btn-q3-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">C. Hằng số tốc độ của mọi giai đoạn đều bằng nhau</button>
+                <button onclick="checkQuiz('q3-4', 3, false, 'Sai.')" class="quiz-btn-q3-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">D. Tốc độ phản ứng không phụ thuộc nhiệt độ</button>
+              </div>
+              <div id="feedback-q3-4" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- ==================== BÀI 4 ==================== -->
+      <section id="bai4" class="lesson-section bg-white dark:bg-dark-surface rounded-2xl border border-gray-200 dark:border-gray-800 p-6 sm:p-8 shadow-sm">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="w-10 h-10 rounded-xl bg-teal-600 text-white flex items-center justify-center font-bold text-lg shadow-md shadow-teal-500/20">04</span>
+          <div>
+            <span class="text-xs font-semibold tracking-wider text-teal-600 dark:text-teal-400 uppercase">Olympic Chuyên Đề 4 • Hóa lý bề mặt</span>
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">Hóa Keo, Đường Đẳng Nhiệt Hấp Phụ Langmuir & Động Học Xúc Tác Dị Thể</h2>
+          </div>
+        </div>
+
+        <div class="prose dark:prose-invert max-w-none space-y-6 text-sm sm:text-base leading-relaxed">
+          <p class="text-gray-700 dark:text-gray-300">
+            Hóa học bề mặt và xúc tác dị thể (Heterogeneous Catalysis) đóng vai trò trung tâm trong công nghiệp hóa học hiện đại và các bài toán hóa lý IChO. Việc mô hình hóa hấp phụ đơn lớp, đa lớp và cơ chế phản ứng trên tâm xúc tác là kỹ năng cốt lõi.
+          </p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
+            <div class="p-4 rounded-xl bg-teal-50/70 dark:bg-teal-950/30 border border-teal-200 dark:border-teal-900/50">
+              <h4 class="font-bold text-teal-900 dark:text-teal-300 flex items-center gap-2 mb-2 text-sm sm:text-base">
+                <i class="fa-solid fa-layer-group text-teal-600"></i> Đường Đẳng Nhiệt Hấp Phụ Langmuir
+              </h4>
+              <p class="text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+                Giả thiết: Hấp phụ đơn lớp (monolayer), các tâm hấp phụ đồng nhất và không tương tác lẫn nhau.
+                <br>Độ che phủ bề mặt $\theta$:
+                $$\theta = \frac{K P}{1 + K P} \iff \frac{P}{V} = \frac{1}{K V_{\text{mon}}} + \frac{P}{V_{\text{mon}}}$$
+                • Ở áp suất rất thấp ($K P \ll 1$): $\theta \approx K P$ (độ che phủ tỉ lệ bậc nhất với $P$; chỉ suy ra bậc phản ứng nếu tốc độ tỉ lệ với $\theta$).
+                <br>• Ở áp suất rất cao ($K P \gg 1$): $\theta \approx 1$ (độ che phủ bão hòa; bậc động học phụ thuộc cơ chế phản ứng).
+              </p>
+            </div>
+            <div class="p-4 rounded-xl bg-cyan-50/70 dark:bg-cyan-950/30 border border-cyan-200 dark:border-cyan-900/50">
+              <h4 class="font-bold text-cyan-900 dark:text-cyan-300 flex items-center gap-2 mb-2 text-sm sm:text-base">
+                <i class="fa-solid fa-dna text-cyan-600"></i> Cơ Chế Langmuir-Hinshelwood vs Eley-Rideal
+              </h4>
+              <p class="text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+                • <strong>Langmuir - Hinshelwood (L-H):</strong> Cả hai chất phản ứng $A$ và $B$ đều phải bị hấp phụ lên bề mặt xúc tác rồi mới tương tác: $v = k \theta_A \theta_B = \frac{k K_A K_B P_A P_B}{(1 + K_A P_A + K_B P_B)^2}$.
+                <br>• <strong>Eley - Rideal (E-R):</strong> Chất $A$ bị hấp phụ trên bề mặt, còn chất $B$ từ pha khí va chạm trực tiếp với $A_{\text{ads}}$: $v = k \theta_A P_B = \frac{k K_A P_A P_B}{1 + K_A P_A}$.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quizzes Bài 4 -->
+        <div class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-800">
+          <h3 class="font-bold text-base sm:text-lg text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+            <i class="fa-solid fa-list-check text-teal-600"></i> Bài Tập Học Thuật Chuyên Sâu (Bài 4)
+          </h3>
+          <div class="space-y-4">
+            <!-- Q4-1 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 4.1:</strong> Sự hấp phụ của khí $A$ lên bề mặt chất xúc tác rắn tuân theo phương trình đẳng nhiệt Langmuir với $K = 0.25\text{ bar}^{-1}$. Ở áp suất $P = 3.0\text{ bar}$, phần trăm tâm hấp phụ bị che phủ ($\theta \times 100%$) bằng:
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q4-1', 0, false, 'Sai. 25% là sai công thức.')" class="quiz-btn-q4-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">A. 25.0%</button>
+                <button onclick="checkQuiz('q4-1', 1, true, 'Chính xác! Áp dụng θ = KP / (1 + KP) = (0.25 * 3.0) / (1 + 0.25 * 3.0) = 0.75 / 1.75 = 3/7 ≈ 42.86%!')" class="quiz-btn-q4-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">B. 42.86%</button>
+                <button onclick="checkQuiz('q4-1', 2, false, 'Sai.')" class="quiz-btn-q4-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">C. 75.0%</button>
+                <button onclick="checkQuiz('q4-1', 3, false, 'Sai.')" class="quiz-btn-q4-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">D. 60.0%</button>
+              </div>
+              <div id="feedback-q4-1" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+
+            <!-- Q4-2 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 4.2:</strong> Khi nghiên cứu phản ứng dị thể giữa hai chất khí $A$ và $B$ trên xúc tác rắn theo cơ chế Langmuir-Hinshelwood, nếu giữ nguyên áp suất của $B$ và tăng liên tục áp suất của $A$ lên rất cao ($P_A \rightarrow \infty$), tốc độ phản ứng sẽ:
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q4-2', 0, false, 'Sai. Tốc độ không tăng mãi.')" class="quiz-btn-q4-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">A. Tăng vô hạn theo hàm tuyến tính</button>
+                <button onclick="checkQuiz('q4-2', 1, true, 'Chính xác! Theo cơ chế L-H, khi PA quá lớn, chất A chiếm lĩnh gần như toàn bộ bề mặt xúc tác (θA → 1, θB → 0), khiến các phân tử B không còn chỗ trống để hấp phụ. Biểu thức tốc độ có mẫu số (KA*PA)^2 triệt tiêu tử số, làm tốc độ phản ứng giảm dần về 0 (hiện tượng ức chế bởi chất phản ứng)!')" class="quiz-btn-q4-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">B. Giảm dần về 0 do chất A chiếm lĩnh toàn bộ bề mặt xúc tác, đẩy chất B ra khỏi các tâm</button>
+                <button onclick="checkQuiz('q4-2', 2, false, 'Sai. Bị giảm chứ không tiến tới hằng số cực đại.')" class="quiz-btn-q4-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">C. Tiến tới giá trị cực đại không đổi</button>
+                <button onclick="checkQuiz('q4-2', 3, false, 'Sai.')" class="quiz-btn-q4-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">D. Đổi dấu thành phản ứng nghịch</button>
+              </div>
+              <div id="feedback-q4-2" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+
+            <!-- Q4-3 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 4.3:</strong> Trong hóa keo, theo quy tắc Schulze-Hardy, khả năng gây keo tụ một hệ keo mang điện tích âm của các ion $\text{Al}^{3+}, \text{Mg}^{2+}, \text{Na}^+$ tỷ lệ với:
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q4-3', 0, false, 'Sai. Khả năng keo tụ không chỉ tỷ lệ bậc 1 với điện tích.')" class="quiz-btn-q4-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">A. Điện tích bậc nhất: $1 : 2 : 3$</button>
+                <button onclick="checkQuiz('q4-3', 1, true, 'Chính xác! Định luật Schulze-Hardy chỉ ra khả năng gây keo tụ của ion trái dấu tỷ lệ với lũy thừa bậc 6 của điện tích ion (z^6): 1^6 : 2^6 : 3^6 = 1 : 64 : 729! Ion Al3+ có hiệu quả keo tụ vượt trội ion Na+ hàng trăm lần!')" class="quiz-btn-q4-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">B. Lũy thừa bậc 6 của điện tích ion ($z^6$), tức $\text{Al}^{3+} gg \text{Mg}^{2+} gg \text{Na}^+$</button>
+                <button onclick="checkQuiz('q4-3', 2, false, 'Sai. Bán kính hydrat hóa không phải yếu tố quyết định chính ở đây.')" class="quiz-btn-q4-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">C. Tỷ lệ nghịch với bán kính nguyên tử</button>
+                <button onclick="checkQuiz('q4-3', 3, false, 'Sai.')" class="quiz-btn-q4-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">D. Như nhau nếu cùng nồng độ mol</button>
+              </div>
+              <div id="feedback-q4-3" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+
+            <!-- Q4-4 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 4.4:</strong> Đại lượng điện thế nào đo được tại mặt trượt (slipping plane) giữa lớp Stern liên kết chặt và lớp khuếch tán của hạt keo, quyết định độ bền phân tán của hệ keo?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q4-4', 0, false, 'Sai. Thế Nernst là thế bề mặt nhiệt động.')" class="quiz-btn-q4-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">A. Thế Nernst ($\psi_0$)</button>
+                <button onclick="checkQuiz('q4-4', 1, true, 'Chính xác! Thế điện động học Zeta (ζ) là điện thế tại mặt trượt. Nếu |ζ| > 30 mV, lực đẩy tĩnh điện đủ mạnh giúp hệ keo bền vững chống lại sự keo tụ tự phát!')" class="quiz-btn-q4-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">B. Thế điện động Zeta ($\zeta$ - potential)</button>
+                <button onclick="checkQuiz('q4-4', 2, false, 'Sai.')" class="quiz-btn-q4-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">C. Thế hóa học tiêu chuẩn</button>
+                <button onclick="checkQuiz('q4-4', 3, false, 'Sai.')" class="quiz-btn-q4-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">D. Thế oxy hóa khử tiêu chuẩn</button>
+              </div>
+              <div id="feedback-q4-4" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== BÀI 5 ==================== -->
+      <section id="bai5" class="lesson-section bg-white dark:bg-dark-surface rounded-2xl border border-gray-200 dark:border-gray-800 p-6 sm:p-8 shadow-sm">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="w-10 h-10 rounded-xl bg-teal-600 text-white flex items-center justify-center font-bold text-lg shadow-md shadow-teal-500/20">05</span>
+          <div>
+            <span class="text-xs font-semibold tracking-wider text-teal-600 dark:text-teal-400 uppercase">Olympic Chuyên Đề 5 • Hóa vô cơ phức chất</span>
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">Thuyết Trường Tinh Thể (CFT), Năng Lượng CFSE & Hiệu Ứng Jahn-Teller</h2>
+          </div>
+        </div>
+
+        <div class="prose dark:prose-invert max-w-none space-y-6 text-sm sm:text-base leading-relaxed">
+          <p class="text-gray-700 dark:text-gray-300">
+            Thuyết trường tinh thể (Crystal Field Theory - CFT) giải thích xuất sắc màu sắc, từ tính và cấu trúc không gian của phức chất kim loại chuyển tiếp thông qua sự phân tách các obitan $d$ dưới tác dụng của trường phối tử tĩnh điện.
+          </p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
+            <div class="p-4 rounded-xl bg-teal-50/70 dark:bg-teal-950/30 border border-teal-200 dark:border-teal-900/50">
+              <h4 class="font-bold text-teal-900 dark:text-teal-300 flex items-center gap-2 mb-2 text-sm sm:text-base">
+                <i class="fa-solid fa-gem text-teal-600"></i> Phân Tách Bát Diện & Năng Lượng CFSE
+              </h4>
+              <p class="text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+                Trong trường bát diện $O_h$, 5 obitan $d$ phân tách thành:
+                <br>• $t_{2g}$ ($d_{xy}, d_{yz}, d_{xz}$) có năng lượng hạ $-0.4\Delta_o$.
+                <br>• $e_g$ ($d_{z^2}, d_{x^2-y^2}$) có năng lượng nâng $+0.6\Delta_o$.
+                <br>$$\text{CFSE} = (-0.4 n_{t_{2g}} + 0.6 n_{e_g})\Delta_o + m P$$
+                So sánh thông số tách trường $\Delta_o$ với năng lượng ghép đôi electron $P$:
+                <br>• $\Delta_o < P$: Phối tử trường yếu $\rightarrow$ Phức Spin cao (High-Spin).
+                <br>• $\Delta_o > P$: Phối tử trường mạnh $\rightarrow$ Phức Spin thấp (Low-Spin).
+              </p>
+            </div>
+            <div class="p-4 rounded-xl bg-cyan-50/70 dark:bg-cyan-950/30 border border-cyan-200 dark:border-cyan-900/50">
+              <h4 class="font-bold text-cyan-900 dark:text-cyan-300 flex items-center gap-2 mb-2 text-sm sm:text-base">
+                <i class="fa-solid fa-compress text-cyan-600"></i> Định Lý Méo Lập Thể Jahn - Teller
+              </h4>
+              <p class="text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+                "Mọi hệ phân tử phi tuyến tính có trạng thái electron suy biến đều trải qua sự biến dạng hình học để giải tỏa suy biến và hạ thấp năng lượng".
+                <br>• Méo mạnh nhất ở hệ bát diện có obitan $e_g$ bị chiếm bất đối xứng:
+                <br>Cấu hình $d^9$ ($\text{Cu}^{2+}$, $t_{2g}^6 e_g^3$) và $d^4$ Spin cao ($\text{Cr}^{2+}$, $\text{Mn}^{3+}$, $t_{2g}^3 e_g^1$).
+                <br>Dẫn đến kéo dài (tetragonal elongation) 2 liên kết trục $z$ so với 4 liên kết mặt phẳng $xy$.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quizzes Bài 5 -->
+        <div class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-800">
+          <h3 class="font-bold text-base sm:text-lg text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+            <i class="fa-solid fa-list-check text-teal-600"></i> Bài Tập Học Thuật Chuyên Sâu (Bài 5)
+          </h3>
+          <div class="space-y-4">
+            <!-- Q5-1 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 5.1:</strong> Tổng độ thay đổi năng lượng gồm năng lượng trường tinh thể và chi phí ghép đôi bổ sung so với trạng thái spin cao của ion phức bát diện $[\text{Fe}(\text{CN})_6]^{4-}$ (biết $\text{CN}^-$ là phối tử trường mạnh, năng lượng ghép đôi $P$) bằng:
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q5-1', 0, false, 'Sai. Đó là phức spin cao.')" class="quiz-btn-q5-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">A. $-0.4\Delta_o$</button>
+                <button onclick="checkQuiz('q5-1', 1, true, 'Chính xác! Fe2+ có cấu hình d6. Do CN- là phối tử trường mạnh (Δo > P), phức ở trạng thái Spin thấp: cả 6 electron đều điền vào obitan t2g (t2g^6 eg^0). Phần năng lượng trường tinh thể thuần túy là CFSE = -2.4Δo. Nếu tính thêm năng lượng ghép đôi tăng thêm so với cấu hình spin cao d6, tổng chênh lệch là -2.4Δo + 2P!')" class="quiz-btn-q5-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">B. $-2.4\Delta_o + 2P$</button>
+                <button onclick="checkQuiz('q5-1', 2, false, 'Sai. CFSE không thể bằng 0.')" class="quiz-btn-q5-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">C. $0\Delta_o$</button>
+                <button onclick="checkQuiz('q5-1', 3, false, 'Sai.')" class="quiz-btn-q5-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">D. $-1.2\Delta_o + P$</button>
+              </div>
+              <div id="feedback-q5-1" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+
+            <!-- Q5-2 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 5.2:</strong> Ion phức nào sau đây thể hiện hiệu ứng biến dạng Jahn - Teller <strong>rõ rệt nhất</strong> trong cấu trúc không gian?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q5-2', 0, false, 'Sai. Cr3+ có d3 (t2g^3 eg^0), phân bố đối xứng hoàn hảo trong t2g.')" class="quiz-btn-q5-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">A. $[\text{Cr}(\text{H}_2\text{O})_6]^{3+}$</button>
+                <button onclick="checkQuiz('q5-2', 1, true, 'Chính xác! Cu2+ có cấu hình d9 (t2g^6 eg^3). Mức eg có 3 electron (bất đối xứng giữa dz2 và dx2-y2), tương tác trực tiếp với các phối tử dọc trục tọa độ tạo nên hiệu ứng Jahn-Teller mạnh mẽ: 2 liên kết trục Cu-O kéo dài rõ rệt so với 4 liên kết phẳng!')" class="quiz-btn-q5-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">B. $[\text{Cu}(\text{H}_2\text{O})_6]^{2+}$</button>
+                <button onclick="checkQuiz('q5-2', 2, false, 'Sai. Ni2+ có d8 (t2g^6 eg^2) với eg điền đều 2 e độc thân đối xứng.')" class="quiz-btn-q5-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">C. $[\text{Ni}(\text{H}_2\text{O})_6]^{2+}$</button>
+                <button onclick="checkQuiz('q5-2', 3, false, 'Sai. Fe3+ spin cao d5 có tất cả obitan nửa bão hòa đối xứng bát diện cầu.')" class="quiz-btn-q5-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">D. $[\text{Fe}(\text{H}_2\text{O})_6]^{3+}$</button>
+              </div>
+              <div id="feedback-q5-2" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+
+            <!-- Q5-3 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 5.3:</strong> Mối liên hệ xấp xỉ giữa thông số tách trường bát diện $\Delta_o$ và thông số tách trường tứ diện $\Delta_t$ khi cùng kim loại và phối tử là:
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q5-3', 0, true, 'Chính xác! Do phức tứ diện chỉ có 4 phối tử (thay vì 6) và hướng phối tử không trùng khớp trực tiếp với các thùy obitan d nên Δt ≈ (4/9)Δo. Vì Δt nhỏ nên gần như mọi phức tứ diện đều là Spin cao (High-Spin)!')" class="quiz-btn-q5-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">A. $\Delta_t \approx \frac{4}{9} \Delta_o$</button>
+                <button onclick="checkQuiz('q5-3', 1, false, 'Sai. Tứ diện có độ tách nhỏ hơn bát diện.')" class="quiz-btn-q5-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">B. $\Delta_t \approx \frac{9}{4} \Delta_o$</button>
+                <button onclick="checkQuiz('q5-3', 2, false, 'Sai.')" class="quiz-btn-q5-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">C. $\Delta_t \approx \frac{2}{3} \Delta_o$</button>
+                <button onclick="checkQuiz('q5-3', 3, false, 'Sai.')" class="quiz-btn-q5-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">D. $\Delta_t = \Delta_o$</button>
+              </div>
+              <div id="feedback-q5-3" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+
+            <!-- Q5-4 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 5.4:</strong> Sắp xếp các phối tử sau theo chiều tăng dần trường phối tử (dãy quang phổ hóa học Spectrochemical Series): $\text{I}^-, \text{H}_2\text{O}, \text{NH}_3, \text{CN}^-$:
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q5-4', 0, true, 'Chính xác! Thứ tự quang phổ hóa học thực nghiệm: I- < Br- < Cl- < F- < OH- < H2O < NH3 < en < NO2- < CN- < CO. I- là phối tử trường yếu nhất, CN- là phối tử trường mạnh do có liên kết nhận pi ngược!')" class="quiz-btn-q5-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">A. $\text{I}^- < \text{H}_2\text{O} < \text{NH}_3 < \text{CN}^-$</button>
+                <button onclick="checkQuiz('q5-4', 1, false, 'Sai. I- là trường yếu nhất.')" class="quiz-btn-q5-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">B. $\text{CN}^- < \text{NH}_3 < \text{H}_2\text{O} < \text{I}^-$</button>
+                <button onclick="checkQuiz('q5-4', 2, false, 'Sai.')" class="quiz-btn-q5-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">C. $\text{H}_2\text{O} < \text{I}^- < \text{NH}_3 < \text{CN}^-$</button>
+                <button onclick="checkQuiz('q5-4', 3, false, 'Sai.')" class="quiz-btn-q5-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">D. $\text{I}^- < \text{CN}^- < \text{NH}_3 < \text{H}_2\text{O}$</button>
+              </div>
+              <div id="feedback-q5-4" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== BÀI 6 ==================== -->
+      <section id="bai6" class="lesson-section bg-white dark:bg-dark-surface rounded-2xl border border-gray-200 dark:border-gray-800 p-6 sm:p-8 shadow-sm">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="w-10 h-10 rounded-xl bg-teal-600 text-white flex items-center justify-center font-bold text-lg shadow-md shadow-teal-500/20">06</span>
+          <div>
+            <span class="text-xs font-semibold tracking-wider text-teal-600 dark:text-teal-400 uppercase">Olympic Chuyên Đề 6 • Điện hóa học lý thuyết</span>
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">Cân Bằng Oxy Hóa Khử Nâng Cao: Giản Đồ Latimer, Frost & Pourbaix</h2>
+          </div>
+        </div>
+
+        <div class="prose dark:prose-invert max-w-none space-y-6 text-sm sm:text-base leading-relaxed">
+          <p class="text-gray-700 dark:text-gray-300">
+            Giản đồ điện thế Latimer, giản đồ thế oxy hóa Frost và giản đồ Pourbaix ($E - pH$) là ba công cụ then chốt trong các đề thi tuyển chọn đội tuyển Quốc gia và Olympic IChO để khảo sát độ bền nhiệt động, phản ứng dị nghị (disproportionation) và tính ăn mòn kim loại.
+          </p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
+            <div class="p-4 rounded-xl bg-teal-50/70 dark:bg-teal-950/30 border border-teal-200 dark:border-teal-900/50">
+              <h4 class="font-bold text-teal-900 dark:text-teal-300 flex items-center gap-2 mb-2 text-sm sm:text-base">
+                <i class="fa-solid fa-diagram-project text-teal-600"></i> Giản Đồ Latimer & Frost
+              </h4>
+              <p class="text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+                • <strong>Latimer:</strong> Biểu diễn theo thứ tự số oxi hóa giảm dần: $A \xrightarrow{E_1^\circ} B \xrightarrow{E_2^\circ} C$.
+                $$E_{AC}^\circ = \frac{n_1 E_1^\circ + n_2 E_2^\circ}{n_1 + n_2}$$
+                Nếu $E_{\text{phải}}^\circ > E_{\text{trái}}^\circ$, chất trung gian sẽ tự dị nghị thành 2 dạng lân cận.
+                <br>• <strong>Frost:</strong> Đồ thị $\Delta G^\circ / F = -nE^\circ$ theo số oxi hóa $N$.
+                Điểm trung gian nằm <strong>phía trên</strong> đoạn thẳng nối hai trạng thái lân cận có xu hướng dị phân về mặt nhiệt động; nằm dưới đoạn nối thì bền hơn đối với quá trình dị phân đó. Điểm nằm đúng trên đoạn nối biểu thị cân bằng nhiệt động.
+              </p>
+            </div>
+            <div class="p-4 rounded-xl bg-cyan-50/70 dark:bg-cyan-950/30 border border-cyan-200 dark:border-cyan-900/50">
+              <h4 class="font-bold text-cyan-900 dark:text-cyan-300 flex items-center gap-2 mb-2 text-sm sm:text-base">
+                <i class="fa-solid fa-water text-cyan-600"></i> Giản Đồ Pourbaix ($E - pH$)
+              </h4>
+              <p class="text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+                • Đường phân chia nằm ngang: Phản ứng chỉ trao đổi electron, không phụ thuộc pH (ví dụ $\text{Fe}^{3+} + e^- \rightleftharpoons \text{Fe}^{2+}$).
+                <br>• Đường dốc nghiêng: Phản ứng trao đổi cả electron và proton $\text{H}^+$ (độ dốc thường là $-0.0592 \times \frac{m}{n}$ V/pH).
+                <br>• Đường thẳng đứng: Phản ứng axit - bazơ trao đổi $\text{H}^+$, không đổi số oxi hóa.
+                <br>• Vùng bền của nước: Giới hạn bởi đường thoát $\text{H}_2$ ($E = -0.0592 pH$) và đường thoát $\text{O}_2$ ($E = 1.229 - 0.0592 pH$).
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quizzes Bài 6 -->
+        <div class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-800">
+          <h3 class="font-bold text-base sm:text-lg text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+            <i class="fa-solid fa-list-check text-teal-600"></i> Bài Tập Học Thuật Chuyên Sâu (Bài 6)
+          </h3>
+          <div class="space-y-4">
+            <!-- Q6-1 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 6.1:</strong> Cho giản đồ Latimer của oxy trong môi trường axit: $\text{O}_2 \xrightarrow{+0.695\text{ V}} \text{H}_2\text{O}_2 \xrightarrow{+1.763\text{ V}} \text{H}_2\text{O}$. Kết luận nào sau đây là <strong>ĐÚNG NHẤT</strong> về độ bền của hiđro peoxit $\text{H}_2\text{O}_2$?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q6-1', 0, true, 'Chính xác! Vì E°(phải) = +1.763 V > E°(trái) = +0.695 V nên thế của phản ứng tự oxi hóa - khử 2H2O2 -> 2H2O + O2 là E°_pư = 1.763 - 0.695 = +1.068 V > 0. H2O2 không bền nhiệt động và tự dị nghị!')" class="quiz-btn-q6-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">A. $\text{H}_2\text{O}_2$ tự dị nghị tự phát thành $\text{H}_2\text{O}$ và $\text{O}_2$ vì $E^\circ_{\text{phải}} > E^\circ_{\text{trái}}$ ($E^\circ_{\text{pư}} = +1.068\text{ V}$)</button>
+                <button onclick="checkQuiz('q6-1', 1, false, 'Sai. E_phải > E_trái nên nó tự phân hủy.')" class="quiz-btn-q6-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">B. $\text{H}_2\text{O}_2$ hoàn toàn bền vững nhiệt động trong môi trường axit</button>
+                <button onclick="checkQuiz('q6-1', 2, false, 'Sai.')" class="quiz-btn-q6-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">C. $\text{H}_2\text{O}_2$ chỉ có tính khử, không thể có tính oxy hóa</button>
+                <button onclick="checkQuiz('q6-1', 3, false, 'Sai.')" class="quiz-btn-q6-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">D. Thế oxy hóa khử chuẩn của cặp $\text{O}_2/\text{H}_2\text{O}$ bằng $+2.458\text{ V}$</button>
+              </div>
+              <div id="feedback-q6-1" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+
+            <!-- Q6-2 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 6.2:</strong> Trên giản đồ Frost, độ dốc của đoạn thẳng nối hai điểm tương ứng với hai trạng thái oxy hóa khác nhau của cùng một nguyên tố biểu diễn đại lượng nào?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q6-2', 0, true, 'Chính xác! Trục tung là -nE° = ΔG°/F, trục hoành là N. Độ dốc slope = Δ(-nE°) / ΔN = -E° (hoặc thế điện cực chuẩn E° của cặp oxy hóa khử tương ứng)!')" class="quiz-btn-q6-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">A. Thế điện cực chuẩn $E^\circ$ của cặp oxy hóa khử tương ứng</button>
+                <button onclick="checkQuiz('q6-2', 1, false, 'Sai. Độ dốc không phải hằng số cân bằng K.')" class="quiz-btn-q6-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">B. Hằng số tốc độ phản ứng $k$</button>
+                <button onclick="checkQuiz('q6-2', 2, false, 'Sai.')" class="quiz-btn-q6-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">C. Năng lượng hoạt hóa $E_a$</button>
+                <button onclick="checkQuiz('q6-2', 3, false, 'Sai.')" class="quiz-btn-q6-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">D. Số electron trao đổi $n$</button>
+              </div>
+              <div id="feedback-q6-2" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+
+            <!-- Q6-3 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 6.3:</strong> Trong giản đồ Pourbaix ($E - pH$), ranh giới giữa hai dạng $\text{Fe}^{3+}$ và $\text{Fe}_2\text{O}_3\cdot 3\text{H}_2\text{O}$ (kết tủa hiđroxit) là một đường thẳng:
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q6-3', 0, false, 'Sai. Đường nằm ngang là khi phản ứng chỉ trao đổi electron, không đổi proton.')" class="quiz-btn-q6-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">A. Nằm ngang song song với trục hoành pH</button>
+                <button onclick="checkQuiz('q6-3', 1, true, 'Chính xác! Cân bằng 2Fe3+ + 6H2O <=> Fe2O3.3H2O + 6H+ là phản ứng thủy phân axit - bazơ, Fe giữ nguyên số oxi hóa +3 (không trao đổi electron). Do đó thế E không ảnh hưởng, ranh giới là đường thẳng đứng phụ thuộc duy nhất vào pH và nồng độ Fe3+!')" class="quiz-btn-q6-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">B. Thẳng đứng vuông góc với trục hoành pH (không phụ thuộc vào thế $E$)</button>
+                <button onclick="checkQuiz('q6-3', 2, false, 'Sai.')" class="quiz-btn-q6-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">C. Xiên dốc xuống với độ dốc -0.0592 V/pH</button>
+                <button onclick="checkQuiz('q6-3', 3, false, 'Sai.')" class="quiz-btn-q6-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">D. Đường cong hypebol</button>
+              </div>
+              <div id="feedback-q6-3" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+
+            <!-- Q6-4 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 6.4:</strong> Một kim loại $M$ nằm trong vùng có thế điện cực cao hơn đường thoát khí oxy của nước ($E > 1.229 - 0.0592 pH$) trong dung dịch nước có hiện tượng gì xảy ra?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q6-4', 0, true, 'Chính xác! Dạng oxy hóa của kim loại có thế lớn hơn thế oxi hóa của nước sẽ tự phát oxy hóa nước giải phóng khí O2!')" class="quiz-btn-q6-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">A. Dạng oxy hóa của nó có khả năng oxy hóa nước sinh ra khí $\text{O}_2$</button>
+                <button onclick="checkQuiz('q6-4', 1, false, 'Sai. Giải phóng H2 xảy ra khi E < đường thoát H2.')" class="quiz-btn-q6-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">B. Kim loại tự khử nước giải phóng khí $\text{H}_2$</button>
+                <button onclick="checkQuiz('q6-4', 2, false, 'Sai.')" class="quiz-btn-q6-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">C. Nước hoàn toàn trơ và không có phản ứng</button>
+                <button onclick="checkQuiz('q6-4', 3, false, 'Sai.')" class="quiz-btn-q6-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">D. pH dung dịch luôn giữ cố định ở 7.0</button>
+              </div>
+              <div id="feedback-q6-4" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== BÀI 7 ==================== -->
+      <section id="bai7" class="lesson-section bg-white dark:bg-dark-surface rounded-2xl border border-gray-200 dark:border-gray-800 p-6 sm:p-8 shadow-sm">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="w-10 h-10 rounded-xl bg-teal-600 text-white flex items-center justify-center font-bold text-lg shadow-md shadow-teal-500/20">07</span>
+          <div>
+            <span class="text-xs font-semibold tracking-wider text-teal-600 dark:text-teal-400 uppercase">Olympic Chuyên Đề 7 • Hóa đồng vị & Hạt nhân</span>
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">Hiệu Ứng Đồng Vị Động Học (KIE) & Động Học Phóng Xạ Hạt Nhân</h2>
+          </div>
+        </div>
+
+        <div class="prose dark:prose-invert max-w-none space-y-6 text-sm sm:text-base leading-relaxed">
+          <p class="text-gray-700 dark:text-gray-300">
+            Hiệu ứng đồng vị động học (Kinetic Isotope Effect - KIE) là bằng chứng thực nghiệm tối cao để làm sáng tỏ cơ chế phản ứng hữu cơ, trong khi động học hạt nhân mở rộng việc xác định niên đại khảo cổ và năng lượng liên kết hạt nhân.
+          </p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
+            <div class="p-4 rounded-xl bg-teal-50/70 dark:bg-teal-950/30 border border-teal-200 dark:border-teal-900/50">
+              <h4 class="font-bold text-teal-900 dark:text-teal-300 flex items-center gap-2 mb-2 text-sm sm:text-base">
+                <i class="fa-solid fa-atom text-teal-600"></i> Hiệu Ứng Đồng Vị Động Học (KIE)
+              </h4>
+              <p class="text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+                Năng lượng dao động điểm không (Zero-Point Energy - ZPE):
+                $$E_0 = \frac{1}{2} h 
+u = \frac{h}{4\pi} \sqrt{\frac{k_{\text{force}}}{\mu_{\text{mass}}}}$$
+                Khối lượng rút gọn $\mu = \frac{m_1 m_2}{m_1 + m_2}$. Vì $\mu_{\text{C-D}} > \mu_{\text{C-H}}$ nên liên kết $\text{C-D}$ có ZPE thấp hơn, bền hơn và cần năng lượng hoạt hóa $E_a$ lớn hơn để phá vỡ.
+                <br>• KIE sơ cấp ($k_H / k_D \approx 2 - 7$): Liên kết $\text{C-H}$ bị đứt ở giai đoạn quyết định tốc độ (rds).
+                <br>• KIE thứ cấp ($k_H / k_D \approx 0.7 - 1.4$): Liên kết $\text{C-H}$ không bị đứt nhưng có sự thay đổi trạng thái lai hóa ($sp^3 leftr\rightarrow sp^2$).
+              </p>
+            </div>
+            <div class="p-4 rounded-xl bg-cyan-50/70 dark:bg-cyan-950/30 border border-cyan-200 dark:border-cyan-900/50">
+              <h4 class="font-bold text-cyan-900 dark:text-cyan-300 flex items-center gap-2 mb-2 text-sm sm:text-base">
+                <i class="fa-solid fa-radiation text-cyan-600"></i> Động Học Phân Rã & Định Tuổi Đồng Vị
+              </h4>
+              <p class="text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+                Mọi quá trình phân rã hạt nhân đều tuân theo động học bậc 1:
+                $$N(t) = N_0 e^{-\lambda t} \implies t = \frac{1}{\lambda} \ln\left(\frac{N_0}{N(t)}\right), \quad t_{1/2} = \frac{\ln 2}{\lambda}$$
+                Định tuổi bằng cacbon-14: $^{14}_{6}\text{C} \rightarrow ^{14}_{7}\text{N} + \beta^-$ ($t_{1/2} = 5730\text{ năm}$).
+                <br>Hụt khối $\Delta m = [Z \cdot m_p + (A - Z) \cdot m_n] - m_{\text{hạt nhân}}$, Năng lượng liên kết $E_b = \Delta m \cdot c^2$.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quizzes Bài 7 -->
+        <div class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-800">
+          <h3 class="font-bold text-base sm:text-lg text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+            <i class="fa-solid fa-list-check text-teal-600"></i> Bài Tập Học Thuật Chuyên Sâu (Bài 7)
+          </h3>
+          <div class="space-y-4">
+            <!-- Q7-1 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 7.1:</strong> Khi tiến hành phản ứng nitro hóa benzen ($\text{C}_6\text{H}_6$) và hexadeuterobenzen ($\text{C}_6\text{D}_6$) bằng hỗn hợp $\text{HNO}_3 / \text{H}_2\text{SO}_4$, người ta nhận thấy tỷ số tốc độ $k_H / k_D \approx 1.0$. Thí nghiệm này chứng minh điều gì?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q7-1', 0, false, 'Sai. Nếu đứt C-H là rds thì k_H/k_D phải ~ 6 - 7.')" class="quiz-btn-q7-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">A. Sự đứt liên kết C-H là giai đoạn quyết định tốc độ phản ứng (rds)</button>
+                <button onclick="checkQuiz('q7-1', 1, true, 'Chính xác! Giai đoạn quyết định tốc độ (rds) của phản ứng thế electrophil thơm SEAr là sự tấn công của electrophil NO2+ vào vòng benzen tạo phức sigma. Sự đứt liên kết C-H/C-D nhường proton diễn ra ở giai đoạn sau rất nhanh nên không có hiệu ứng KIE sơ cấp (k_H/k_D ≈ 1.0)!')" class="quiz-btn-q7-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">B. Giai đoạn tạo phức sigma (tấn công của $\text{NO}_2^+$) là rds, sự đứt liên kết $\text{C-H}$ diễn ra sau đó rất nhanh</button>
+                <button onclick="checkQuiz('q7-1', 2, false, 'Sai.')" class="quiz-btn-q7-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">C. Hexadeuterobenzen không thể tham gia phản ứng nitro hóa</button>
+                <button onclick="checkQuiz('q7-1', 3, false, 'Sai.')" class="quiz-btn-q7-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">D. Phản ứng xảy ra theo cơ chế gốc tự do</button>
+              </div>
+              <div id="feedback-q7-1" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+
+            <!-- Q7-2 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 7.2:</strong> Một mẫu gỗ cổ khai quật từ lăng mộ có hoạt độ phóng xạ của đồng vị $^{14}\text{C}$ bằng $25%$ so với mẫu gỗ tươi đang sống cùng khối lượng. Biết chu kỳ bán rã của $^{14}\text{C}$ là 5730 năm. Tuổi của mẫu gỗ cổ xấp xỉ là:
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q7-2', 0, false, 'Sai. 5730 năm là khi còn 50%.')" class="quiz-btn-q7-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">A. 5730 năm</button>
+                <button onclick="checkQuiz('q7-2', 1, true, 'Chính xác! 25% = (1/2)^2, tức đã trải qua đúng 2 chu kỳ bán rã: t = 2 * t_1/2 = 2 * 5730 = 11460 năm!')" class="quiz-btn-q7-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">B. 11460 năm</button>
+                <button onclick="checkQuiz('q7-2', 2, false, 'Sai.')" class="quiz-btn-q7-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">C. 17190 năm</button>
+                <button onclick="checkQuiz('q7-2', 3, false, 'Sai.')" class="quiz-btn-q7-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">D. 22920 năm</button>
+              </div>
+              <div id="feedback-q7-2" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+
+            <!-- Q7-3 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 7.3:</strong> Quá trình phân rã hạt nhân nào sau đây làm tăng điện tích hạt nhân $Z$ lên 1 đơn vị nhưng giữ nguyên số khối $A$?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q7-3', 0, false, 'Sai. Phân rã alpha làm giảm Z đi 2, giảm A đi 4.')" class="quiz-btn-q7-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">A. Phân rã alpha ($\alpha$)</button>
+                <button onclick="checkQuiz('q7-3', 1, true, 'Chính xác! Phân rã beta trừ (β-) biến một nơtron thành một proton và phát ra một electron (e-) và antineutrino: n -> p + e- + ν̄. Do đó Z tăng 1, A không đổi!')" class="quiz-btn-q7-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">B. Phân rã beta trừ ($\beta^-$)</button>
+                <button onclick="checkQuiz('q7-3', 2, false, 'Sai. Beta cộng làm giảm Z đi 1.')" class="quiz-btn-q7-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">C. Phân rã beta cộng ($\beta^+$)</button>
+                <button onclick="checkQuiz('q7-3', 3, false, 'Sai. Phân rã gamma chỉ thay đổi mức năng lượng kích thích.')" class="quiz-btn-q7-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">D. Phân rã tia gamma ($\gamma$)</button>
+              </div>
+              <div id="feedback-q7-3" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+
+            <!-- Q7-4 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 7.4:</strong> Đại lượng nào sau đây là thước đo độ bền nhiệt động trực tiếp của hạt nhân nguyên tử?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q7-4', 0, true, 'Chính xác! Năng lượng liên kết riêng E_b/A (năng lượng liên kết tính trên một nuclon) càng lớn thì hạt nhân càng bền vững. Giá trị này đạt cực đại quanh hạt nhân 56_Fe và 62_Ni (~8.8 MeV/nuclon)!')" class="quiz-btn-q7-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">A. Năng lượng liên kết trên một nuclon ($E_b / A$)</button>
+                <button onclick="checkQuiz('q7-4', 1, false, 'Sai. Tổng số nuclon lớn chưa chắc đã bền (như U, Pu).')" class="quiz-btn-q7-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">B. Tổng khối lượng hạt nhân</button>
+                <button onclick="checkQuiz('q7-4', 2, false, 'Sai.')" class="quiz-btn-q7-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">C. Số nơtron trong hạt nhân</button>
+                <button onclick="checkQuiz('q7-4', 3, false, 'Sai.')" class="quiz-btn-q7-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">D. Chu kỳ bán rã $t_{1/2}$</button>
+              </div>
+              <div id="feedback-q7-4" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- ==================== BÀI 8 ==================== -->
+      <section id="bai8" class="lesson-section bg-white dark:bg-dark-surface rounded-2xl border border-gray-200 dark:border-gray-800 p-6 sm:p-8 shadow-sm">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="w-10 h-10 rounded-xl bg-teal-600 text-white flex items-center justify-center font-bold text-lg shadow-md shadow-teal-500/20">08</span>
+          <div>
+            <span class="text-xs font-semibold tracking-wider text-teal-600 dark:text-teal-400 uppercase">Olympic Chuyên Đề 8 • Hữu cơ lý thuyết</span>
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">Phản Ứng Pericyclic, Quy Tắc Woodward-Hoffmann & Thuyết Obitan Biên (FMO)</h2>
+          </div>
+        </div>
+
+        <div class="prose dark:prose-invert max-w-none space-y-6 text-sm sm:text-base leading-relaxed">
+          <p class="text-gray-700 dark:text-gray-300">
+            Phản ứng Pericyclic (phản ứng phối hợp qua trạng thái chuyển tiếp vòng kín) là đỉnh cao lý thuyết hóa học hữu cơ hiện đại đạt giải Nobel của Woodward và Hoffmann, được giải thích hoàn hảo bằng sự tương tác các obitan biên FMO (Frontier Molecular Orbital: HOMO và LUMO).
+          </p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
+            <div class="p-4 rounded-xl bg-teal-50/70 dark:bg-teal-950/30 border border-teal-200 dark:border-teal-900/50">
+              <h4 class="font-bold text-teal-900 dark:text-teal-300 flex items-center gap-2 mb-2 text-sm sm:text-base">
+                <i class="fa-solid fa-circle-notch text-teal-600"></i> Phản Ứng Cộng Vòng Diels-Alder [4+2]
+              </h4>
+              <p class="text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+                Phản ứng giữa dien liên hợp ở cấu dạng $s\text{-cis}$ và dienophil:
+                <br>• Tương tác FMO thuận lợi nhiệt học: $\mathrm{HOMO}_{\text{dien}} \longrightarrow \mathrm{LUMO}_{\text{dienophil}}$.
+                <br>• <strong>Quy tắc Endo (Alder Rule):</strong> Do tương tác obitan thứ cấp (secondary orbital interaction) giữa các nhóm hút electron trên dienophil và dien, sản phẩm cộng lập thể <strong>Endo</strong> được hình thành với tốc độ nhanh hơn (sản phẩm kiểm soát động học).
+              </p>
+            </div>
+            <div class="p-4 rounded-xl bg-cyan-50/70 dark:bg-cyan-950/30 border border-cyan-200 dark:border-cyan-900/50">
+              <h4 class="font-bold text-cyan-900 dark:text-cyan-300 flex items-center gap-2 mb-2 text-sm sm:text-base">
+                <i class="fa-solid fa-arrows-spin text-cyan-600"></i> Phản Ứng Điện Vòng Hóa & Chuyển Vị Sigmatropic
+              </h4>
+              <p class="text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+                • <strong>Điện vòng hóa (Electrocyclic):</strong>
+                <br>- Hệ $4n$ electron $\pi$ (butadien): Nhiệt học quay đồng chiều (conrotatory); Quang hóa quay ngược chiều (disrotatory).
+                <br>- Hệ $(4n+2)$ electron $\pi$ (hexatrien): Nhiệt học quay ngược chiều (disrotatory); Quang hóa quay đồng chiều (conrotatory).
+                <br>• <strong>Chuyển vị Sigmatropic [3,3]:</strong> Chuyển vị Cope (1,5-dien) và Claisen (allyl vinyl ete) thường ưu tiên trạng thái chuyển tiếp dạng ghế (chair-like TS), nhưng cấu dạng thuyền cũng có thể xuất hiện.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quizzes Bài 8 -->
+        <div class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-800">
+          <h3 class="font-bold text-base sm:text-lg text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+            <i class="fa-solid fa-list-check text-teal-600"></i> Bài Tập Học Thuật Chuyên Sâu (Bài 8)
+          </h3>
+          <div class="space-y-4">
+            <!-- Q8-1 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 8.1:</strong> Khi đóng vòng nhiệt phân phân tử $(2E, 4Z, 6E)\text{-octa-2,4,6-trien}$ (hệ $6\pi$ electron), cấu hình lập thể tương đối của hai nhóm metyl trên vòng xiclohexa-1,3-dien tạo thành là:
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q8-1', 0, true, 'Chính xác! Hệ 6 electron π (4n + 2) dưới tác dụng nhiệt đóng vòng theo quy tắc Woodward-Hoffmann bằng chuyển động ngược chiều (disrotatory). Nhóm metyl E quay vào trong, nhóm Z quay ra ngoài (hoặc ngược lại) dẫn tới hai nhóm metyl nằm cùng phía (cấu hình cis)!')" class="quiz-btn-q8-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">A. Dạng Cis (hai nhóm metyl cùng hướng)</button>
+                <button onclick="checkQuiz('q8-1', 1, false, 'Sai. Trans là khi đóng vòng đồng chiều conrotatory.')" class="quiz-btn-q8-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">B. Dạng Trans (hai nhóm metyl ngược hướng)</button>
+                <button onclick="checkQuiz('q8-1', 2, false, 'Sai.')" class="quiz-btn-q8-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">C. Hỗn hợp raxemic 50:50 không chọn lọc</button>
+                <button onclick="checkQuiz('q8-1', 3, false, 'Sai.')" class="quiz-btn-q8-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">D. Không có phản ứng đóng vòng xảy ra</button>
+              </div>
+              <div id="feedback-q8-1" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+
+            <!-- Q8-2 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 8.2:</strong> Trong phản ứng Diels-Alder giữa xiclopentadien và anhidrit maleic ở nhiệt độ phòng, sản phẩm ưu thế chính là đồng phân Endo. Nguyên nhân chính là:
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q8-2', 0, false, 'Sai. Sản phẩm Endo có sức căng lập thể lớn hơn Exo nhưng tạo thành nhanh hơn do động học.')" class="quiz-btn-q8-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">A. Sản phẩm Endo có năng lượng tự do Gibbs thấp hơn bền vững hơn về nhiệt động</button>
+                <button onclick="checkQuiz('q8-2', 1, true, 'Chính xác! Tương tác obitan thứ cấp (secondary orbital overlap) giữa obitan π của nhóm carbonyl C=O trên dienophil với thùy obitan π của dien ở trạng thái chuyển tiếp làm hạ thấp thế năng rào cản, giúp sản phẩm Endo hình thành với tốc độ vượt trội (kiểm soát động học)!')" class="quiz-btn-q8-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">B. Có tương tác obitan thứ cấp thuận lợi ở trạng thái chuyển tiếp hạ thấp năng lượng hoạt hóa (kiểm soát động học)</button>
+                <button onclick="checkQuiz('q8-2', 2, false, 'Sai.')" class="quiz-btn-q8-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">C. Hiệu ứng cảm ứng đẩy electron của nhóm carbonyl</button>
+                <button onclick="checkQuiz('q8-2', 3, false, 'Sai.')" class="quiz-btn-q8-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">D. Do anhidrit maleic chỉ có thể phản ứng ở dạng trans</button>
+              </div>
+              <div id="feedback-q8-2" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+
+            <!-- Q8-3 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 8.3:</strong> Phản ứng chuyển vị Claisen kinh điển là quá trình chuyển vị sigmatropic loại nào và diễn ra qua trạng thái chuyển tiếp có cấu dạng ưu tiên nào?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q8-3', 0, true, 'Chính xác! Chuyển vị Claisen của allyl vinyl ete là chuyển vị sigmatropic [3,3] diễn ra qua trạng thái chuyển tiếp 6 cạnh dạng ghế (chair-like transition state) có năng lượng thấp nhất!')" class="quiz-btn-q8-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">A. Chuyển vị sigmatropic [3,3] qua trạng thái chuyển tiếp dạng ghế (chair-like TS)</button>
+                <button onclick="checkQuiz('q8-3', 1, false, 'Sai. Dạng thuyền có sức căng lớn hơn dạng ghế.')" class="quiz-btn-q8-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">B. Chuyển vị sigmatropic [1,5] qua trạng thái chuyển tiếp dạng thuyền</button>
+                <button onclick="checkQuiz('q8-3', 2, false, 'Sai.')" class="quiz-btn-q8-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">C. Chuyển vị sigmatropic [2,3] phẳng</button>
+                <button onclick="checkQuiz('q8-3', 3, false, 'Sai.')" class="quiz-btn-q8-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">D. Chuyển vị sigmatropic [1,3] đối mặt (antarafacial)</button>
+              </div>
+              <div id="feedback-q8-3" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+
+            <!-- Q8-4 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 8.4:</strong> Phản ứng cộng vòng [2+2] giữa hai phân tử anken ($\pi^2_s + \pi^2_s$) bị cấm về mặt nhiệt học theo quy tắc bảo toàn đối xứng obitan Woodward-Hoffmann, nhưng có thể diễn ra thuận lợi dưới điều kiện nào?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q8-4', 0, false, 'Sai. Tăng nhiệt độ không làm thay đổi tính đối xứng obitan.')" class="quiz-btn-q8-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">A. Nung nóng ở nhiệt độ rất cao trên 500°C</button>
+                <button onclick="checkQuiz('q8-4', 1, true, 'Chính xác! Chiếu xạ quang hóa (hν) kích thích 1 electron từ HOMO (π) lên LUMO (π*), biến obitan này thành SOMO có tính đối xứng đảo ngược, cho phép phản ứng cộng vòng [2+2] diễn ra thuận lợi theo cơ chế cùng mặt (suprafacial)!')" class="quiz-btn-q8-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">B. Chiếu xạ quang hóa ($h
+u$) kích thích electron tạo trạng thái kích thích</button>
+                <button onclick="checkQuiz('q8-4', 2, false, 'Sai.')" class="quiz-btn-q8-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">C. Thêm xúc tác axit vô cơ đặc</button>
+                <button onclick="checkQuiz('q8-4', 3, false, 'Sai.')" class="quiz-btn-q8-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">D. Tăng áp suất lên 1000 atm trong bóng tối</button>
+              </div>
+              <div id="feedback-q8-4" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== BÀI 9 ==================== -->
+      <section id="bai9" class="lesson-section bg-white dark:bg-dark-surface rounded-2xl border border-gray-200 dark:border-gray-800 p-6 sm:p-8 shadow-sm">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="w-10 h-10 rounded-xl bg-teal-600 text-white flex items-center justify-center font-bold text-lg shadow-md shadow-teal-500/20">09</span>
+          <div>
+            <span class="text-xs font-semibold tracking-wider text-teal-600 dark:text-teal-400 uppercase">Olympic Chuyên Đề 9 • Tổng hợp hữu cơ</span>
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">Phân Tích Tổng Hợp Lùi (Retrosynthesis) & Các Phản Ứng Ghép Nối C-C Hiện Đại</h2>
+          </div>
+        </div>
+
+        <div class="prose dark:prose-invert max-w-none space-y-6 text-sm sm:text-base leading-relaxed">
+          <p class="text-gray-700 dark:text-gray-300">
+            Tư duy thiết kế tổng hợp toàn phần (Total Synthesis) theo trường phái E.J. Corey sử dụng phân tích tổng hợp lùi (Retrosynthetic Analysis) kết hợp với các phản ứng ghép chéo (cross-coupling) xúc tác Paladi đoạt giải Nobel là thước đo năng lực hóa học đỉnh cao ở đấu trường Olympic Quốc tế.
+          </p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
+            <div class="p-4 rounded-xl bg-teal-50/70 dark:bg-teal-950/30 border border-teal-200 dark:border-teal-900/50">
+              <h4 class="font-bold text-teal-900 dark:text-teal-300 flex items-center gap-2 mb-2 text-sm sm:text-base">
+                <i class="fa-solid fa-scissors text-teal-600"></i> Phân Tích Tổng Hợp Lùi (Corey)
+              </h4>
+              <p class="text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+                • Target Molecule (TM) $R\rightarrow$ Cắt liên kết chiến lược (Disconnection) $R\rightarrow$ Synthons $R\rightarrow$ Synthetic Equivalents.
+                <br>• Synthon dương ($d^1, d^2, d^3$) đại diện cho tác nhân electrophil (alkyl halogenua, este, anđehit).
+                <br>• Synthon âm ($a^1, a^2$) đại diện cho nucleophil (thuốc thử Grignard, ion enolat).
+                <br>• Đảo cực phân tử (Umpolung): Chuyển synthon $d^1$ của carbonyl thành nucleophil $a^1$ qua dẫn xuất dithiane (Corey-Seebach).
+              </p>
+            </div>
+            <div class="p-4 rounded-xl bg-cyan-50/70 dark:bg-cyan-950/30 border border-cyan-200 dark:border-cyan-900/50">
+              <h4 class="font-bold text-cyan-900 dark:text-cyan-300 flex items-center gap-2 mb-2 text-sm sm:text-base">
+                <i class="fa-solid fa-link text-cyan-600"></i> Các Phản Ứng Ghép Nối Xúc Tác Paladi
+              </h4>
+              <p class="text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+                Chu trình xúc tác chung $\text{Pd}(0)/\text{Pd}(\text{II})$:
+                <br>1. Cộng oxy hóa (Oxidative Addition): $\text{R-X} + \text{Pd}(0) \rightarrow \text{R-Pd(II)-X}$.
+                <br>2. Chuyển hóa kim loại (Transmetalation) hoặc phối trí liên kết đôi.
+                <br>3. Tách hoàn nguyên (Reductive Elimination): tạo liên kết $\text{C-C}$ và giải phóng $\text{Pd}(0)$.
+                <br>• <strong>Suzuki - Miyaura:</strong> Ghép $\text{R-X}$ với axit boronic $\text{R'-B(OH)}_2$ (có bazơ).
+                <br>• <strong>Heck:</strong> Ghép $\text{R-X}$ với anken.
+                <br>• <strong>Sonogashira:</strong> Ghép $\text{R-X}$ với ankin đầu mạch (đồng xúc tác $\text{CuI}$).
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quizzes Bài 9 -->
+        <div class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-800">
+          <h3 class="font-bold text-base sm:text-lg text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+            <i class="fa-solid fa-list-check text-teal-600"></i> Bài Tập Học Thuật Chuyên Sâu (Bài 9)
+          </h3>
+          <div class="space-y-4">
+            <!-- Q9-1 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 9.1:</strong> Trong chu trình xúc tác của phản ứng ghép mạch Suzuki-Miyaura sử dụng phức chất $\text{Pd}(0)$, vai trò quan trọng của bazơ ($\text{K}_2\text{CO}_3, \text{Cs}_2\text{CO}_3, \text{NaOH}$) là gì?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q9-1', 0, false, 'Sai. Bước cộng oxy hóa không cần bazơ.')" class="quiz-btn-q9-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">A. Đóng vai trò xúc tác cho giai đoạn cộng oxy hóa (Oxidative Addition)</button>
+                <button onclick="checkQuiz('q9-1', 1, true, 'Chính xác! Bazơ tấn công vào nguyên tử Bo trung hòa của axit boronic RB(OH)2 tạo phức chất ate mang điện tích âm [RB(OH)3]-, làm tăng đáng kể tính nucleophil của nhóm R để thúc đẩy giai đoạn chuyển hóa kim loại (Transmetalation) lên tâm Pd(II)!')" class="quiz-btn-q9-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">B. Tạo phức chất borat mang điện âm ($\text{R-B(OH)}_3^-$) để thúc đẩy giai đoạn chuyển hóa kim loại (Transmetalation)</button>
+                <button onclick="checkQuiz('q9-1', 2, false, 'Sai.')" class="quiz-btn-q9-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">C. Ngăn cản quá trình tách hoàn nguyên</button>
+                <button onclick="checkQuiz('q9-1', 3, false, 'Sai.')" class="quiz-btn-q9-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">D. Hòa tan hoàn toàn chất xúc tác trong nước</button>
+              </div>
+              <div id="feedback-q9-1" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+
+            <!-- Q9-2 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 9.2:</strong> Nhóm bảo vệ nào sau đây được sử dụng phổ biến để bảo vệ nhóm chức ancol ($\text{-OH}$) và có thể được giải bảo vệ (deprotect) một cách chọn lọc bằng ion florua ($\text{F}^-$, ví dụ $\text{TBAF}$)?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q9-2', 0, false, 'Sai. Acetal mở bằng môi trường axit nước.')" class="quiz-btn-q9-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">A. Vòng axetal / xêtal</button>
+                <button onclick="checkQuiz('q9-2', 1, true, 'Chính xác! Các nhóm bảo vệ silyl ete như TBS (tert-butyldimethylsilyl) hoặc TBDPS liên kết Si-O rất bền nhưng có ái lực cực mạnh với flo (liên kết Si-F có năng lượng liên kết rất lớn ~ 570 kJ/mol). Do đó TBAF giải bảo vệ silyl ete siêu chọn lọc trong điều kiện êm dịu!')')" class="quiz-btn-q9-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">B. Nhóm Silyl ete (như $\text{TBS}$ hoặc $\text{TBDPS}$)</button>
+                <button onclick="checkQuiz('q9-2', 2, false, 'Sai. Boc bảo vệ nhóm amin.')" class="quiz-btn-q9-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">C. Nhóm Boc (tert-butyloxycarbonyl)</button>
+                <button onclick="checkQuiz('q9-2', 3, false, 'Sai. Este benzyl giải bảo vệ bằng hydro hóa H2/Pd.')" class="quiz-btn-q9-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">D. Este benzyl ($\text{-OBn}$)</button>
+              </div>
+              <div id="feedback-q9-2" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+
+            <!-- Q9-3 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 9.3:</strong> Phản ứng tổng hợp Umpolung Corey-Seebach biến đổi nguyên tử cacbon carbonyl mang điện tích dương ($delta^+$) của anđehit thành tâm nucleophil mang điện âm ($delta^-$) bằng cách chuyển hóa qua chất trung gian nào?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q9-3', 0, true, 'Chính xác! Cho anđehit phản ứng với propan-1,3-dithiol tạo 1,3-dithiane. Nguyên tử hydro ở vị trí C2 có tính axit yếu (pKa ~ 31), bị khử proton bởi n-BuLi tạo carbanion nucleophil mạnh, sau đó tấn công electrophil rồi thủy phân bằng HgCl2/H2O để thu lại carbonyl!')" class="quiz-btn-q9-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">A. Dẫn xuất 1,3-dithiane (với propan-1,3-dithiol và $n\text{-BuLi}$)</button>
+                <button onclick="checkQuiz('q9-3', 1, false, 'Sai. Oxim không dùng cho đảo cực Umpolung.')" class="quiz-btn-q9-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">B. Oxim</button>
+                <button onclick="checkQuiz('q9-3', 2, false, 'Sai.')" class="quiz-btn-q9-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">C. Hemiacetal</button>
+                <button onclick="checkQuiz('q9-3', 3, false, 'Sai.')" class="quiz-btn-q9-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">D. Axit cacboxylic</button>
+              </div>
+              <div id="feedback-q9-3" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+
+            <!-- Q9-4 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 9.4:</strong> Trong phân tích tổng hợp lùi hợp chất 1,3-dicarbonyl ($\beta\text{-dicarbonyl}$ như este axetoaxetic), phép cắt liên kết chiến lược phù hợp nhất là dẫn về phản ứng ngưng tụ nào?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q9-4', 0, false, 'Sai. Ngưng tụ Aldol tạo hợp chất beta-hydroxy hoặc alpha,beta-không no.')" class="quiz-btn-q9-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">A. Ngưng tụ Aldol</button>
+                <button onclick="checkQuiz('q9-4', 1, true, 'Chính xác! Hợp chất 1,3-dicarbonyl là sản phẩm kinh điển của phản ứng ngưng tụ Claisen giữa hai phân tử este (hoặc một xeton và một este) dưới tác dụng của bazơ mạnh như EtONa!')" class="quiz-btn-q9-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">B. Ngưng tụ Claisen este (tạo $\beta\text{-ceto este}$)</button>
+                <button onclick="checkQuiz('q9-4', 2, false, 'Sai.')" class="quiz-btn-q9-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">C. Phản ứng Wittig</button>
+                <button onclick="checkQuiz('q9-4', 3, false, 'Sai.')" class="quiz-btn-q9-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">D. Phản ứng Friedel-Crafts</button>
+              </div>
+              <div id="feedback-q9-4" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== BÀI 10 ==================== -->
+      <section id="bai10" class="lesson-section bg-white dark:bg-dark-surface rounded-2xl border border-gray-200 dark:border-gray-800 p-6 sm:p-8 shadow-sm">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="w-10 h-10 rounded-xl bg-teal-600 text-white flex items-center justify-center font-bold text-lg shadow-md shadow-teal-500/20">10</span>
+          <div>
+            <span class="text-xs font-semibold tracking-wider text-teal-600 dark:text-teal-400 uppercase">Olympic Chuyên Đề 10 • Hóa sinh & Chiến thuật IChO</span>
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">Động Học Enzym Michaelis-Menten, Hóa Sinh Cấu Trúc & Chiến Lược Đề Thi Olympic</h2>
+          </div>
+        </div>
+
+        <div class="prose dark:prose-invert max-w-none space-y-6 text-sm sm:text-base leading-relaxed">
+          <p class="text-gray-700 dark:text-gray-300">
+            Các kỳ thi Olympic Hóa học Quốc tế (IChO) hiện đại luôn dành từ 10% đến 15% tổng số điểm cho các bài toán động học enzym, cấu trúc hợp chất thiên nhiên (carbohydrate, peptide) và biện luận phổ tích hợp ($^1\text{H-NMR}, ^{13}\text{C-NMR}, \text{MS, IR}$).
+          </p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
+            <div class="p-4 rounded-xl bg-teal-50/70 dark:bg-teal-950/30 border border-teal-200 dark:border-teal-900/50">
+              <h4 class="font-bold text-teal-900 dark:text-teal-300 flex items-center gap-2 mb-2 text-sm sm:text-base">
+                <i class="fa-solid fa-microscope text-teal-600"></i> Động Học Enzym Michaelis - Menten
+              </h4>
+              <p class="text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+                Phương trình tốc độ ban đầu trong điều kiện Michaelis–Menten (đơn cơ chất, trạng thái dừng, bỏ qua phản ứng ngược sản phẩm):
+                $$v_0 = \frac{V_{\text{max}} [S]}{K_m + [S]}$$
+                • $K_m$ (Hằng số Michaelis): Nồng độ cơ chất $[S]$ tại đó tốc độ đạt $v_0 = \frac{V_{\text{max}}}{2}$.
+                <br>• Đồ thị Lineweaver - Burk (đồ thị nghịch đảo đôi):
+                $$\frac{1}{v_0} = \frac{K_m}{V_{\text{max}}} \cdot \frac{1}{[S]} + \frac{1}{V_{\text{max}}}$$
+                - Giao điểm với trục tung: $1 / V_{\text{max}}$.
+                <br>- Giao điểm với trục hoành: $-1 / K_m$.
+                <br>- Ức chế cạnh tranh: $K_m$ tăng ($K_m' > K_m$), $V_{\text{max}}$ không đổi.
+              </p>
+            </div>
+            <div class="p-4 rounded-xl bg-cyan-50/70 dark:bg-cyan-950/30 border border-cyan-200 dark:border-cyan-900/50">
+              <h4 class="font-bold text-cyan-900 dark:text-cyan-300 flex items-center gap-2 mb-2 text-sm sm:text-base">
+                <i class="fa-solid fa-stopwatch text-cyan-600"></i> Chiến Lược Làm Bài Thi IChO (300 Phút)
+              </h4>
+              <p class="text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+                Đề thi lý thuyết IChO kéo dài 5 giờ (300 phút) với 8 - 9 bài tập độc lập:
+                <br>• <strong>15 phút đầu:</strong> Đọc lướt toàn bộ đề, phân loại bài: Hóa lý (Lượng tử, Động học), Vô cơ (Phức chất), Hữu cơ (Tổng hợp lùi), Hóa sinh.
+                <br>• <strong>Tối ưu hóa điểm số:</strong> Làm trước các câu tính toán nhiệt động và tinh thể học rõ ràng.
+                <br>• <strong>Giải mã phổ NMR:</strong> Đếm số tín hiệu đối xứng, độ chuyển dịch hóa học $\delta$ (ppm), độ chẻ spin-spin (quy tắc $n+1$) và tích phân diện tích mũi phổ để xác định khung cacbon.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quizzes Bài 10 -->
+        <div class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-800">
+          <h3 class="font-bold text-base sm:text-lg text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+            <i class="fa-solid fa-list-check text-teal-600"></i> Bài Tập Học Thuật Chuyên Sâu (Bài 10)
+          </h3>
+          <div class="space-y-4">
+            <!-- Q10-1 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 10.1:</strong> Một chất ức chế enzym làm tăng hằng số $K_m$ biểu kiến của phản ứng nhưng không làm thay đổi vận tốc cực đại $V_{\text{max}}$. Chất này thuộc loại ức chế nào?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q10-1', 0, true, 'Chính xác! Chất ức chế cạnh tranh (Competitive inhibitor) gắn trực tiếp vào trung tâm hoạt động của enzym, cạnh tranh với cơ chất. Khi nồng độ cơ chất [S] rất lớn, cơ chất sẽ đẩy chất ức chế ra nên V_max không đổi, nhưng cần [S] cao hơn để đạt nửa tốc độ cực đại (Km tăng)!')" class="quiz-btn-q10-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">A. Ức chế cạnh tranh (Competitive inhibition)</button>
+                <button onclick="checkQuiz('q10-1', 1, false, 'Sai. Ức chế không cạnh tranh làm giảm V_max.')" class="quiz-btn-q10-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">B. Ức chế không cạnh tranh (Non-competitive inhibition)</button>
+                <button onclick="checkQuiz('q10-1', 2, false, 'Sai. Ức chế phi cạnh tranh làm giảm cả Km và V_max.')" class="quiz-btn-q10-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">C. Ức chế phi cạnh tranh (Uncompetitive inhibition)</button>
+                <button onclick="checkQuiz('q10-1', 3, false, 'Sai.')" class="quiz-btn-q10-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">D. Ức chế không thuận nghịch (Irreversible inhibition)</button>
+              </div>
+              <div id="feedback-q10-1" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+
+            <!-- Q10-2 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 10.2:</strong> Một phản ứng enzym có $V_{\text{max}} = 100\text{ }\mu\text{mol/(L}\cdot\text{s)}$ và $K_m = 2.0\text{ mmol/L}$. Tốc độ phản ứng $v_0$ khi nồng độ cơ chất $[S] = 6.0\text{ mmol/L}$ bằng:
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q10-2', 0, false, 'Sai. 50 là khi [S] = Km.')" class="quiz-btn-q10-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">A. $50\text{ }\mu\text{mol/(L}\cdot\text{s)}$</button>
+                <button onclick="checkQuiz('q10-2', 1, true, 'Chính xác! v_0 = V_max * [S] / (K_m + [S]) = 100 * 6.0 / (2.0 + 6.0) = 600 / 8 = 75 μmol/(L·s)!')" class="quiz-btn-q10-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">B. $75\text{ }\mu\text{mol/(L}\cdot\text{s)}$</button>
+                <button onclick="checkQuiz('q10-2', 2, false, 'Sai.')" class="quiz-btn-q10-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">C. $85\text{ }\mu\text{mol/(L}\cdot\text{s)}$</button>
+                <button onclick="checkQuiz('q10-2', 3, false, 'Sai.')" class="quiz-btn-q10-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">D. $100\text{ }\mu\text{mol/(L}\cdot\text{s)}$</button>
+              </div>
+              <div id="feedback-q10-2" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+
+            <!-- Q10-3 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 10.3:</strong> Phổ $^1\text{H-NMR}$ của một hợp chất hữu cơ có công thức phân tử $\text{C}_4\text{H}_8\text{O}_2$ cho thấy 3 tín hiệu: một mũi đơn (singlet, 3H) ở $\delta = 2.0\text{ ppm}$, một mũi ba (triplet, 3H) ở $\delta = 1.2\text{ ppm}$ và một mũi bốn (quartet, 2H) ở $\delta = 4.1\text{ ppm}$. Hợp chất này là:
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q10-3', 0, true, 'Chính xác! Etyl axetat CH3-COO-CH2-CH3: Nhóm acetyl CH3CO cho 1 mũi đơn (3H) ở ~2.0 ppm. Nhóm etyl gắn với oxi (-O-CH2-CH3) có nhóm CH2 chuyển dịch về phía trường yếu 4.1 ppm bị chẻ 4 (quartet do lân cận 3 proton của CH3) và nhóm CH3 ở 1.2 ppm bị chẻ 3 (triplet)!')" class="quiz-btn-q10-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">A. Etyl axetat ($\text{CH}_3\text{COOCH}_2\text{CH}_3$)</button>
+                <button onclick="checkQuiz('q10-3', 1, false, 'Sai. Metyl propionat CH3CH2COOCH3 sẽ có mũi đơn O-CH3 ở khoảng 3.7 ppm.')" class="quiz-btn-q10-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">B. Metyl propionat ($\text{CH}_3\text{CH}_2\text{COOCH}_3$)</button>
+                <button onclick="checkQuiz('q10-3', 2, false, 'Sai. Axit butanoic có proton COOH ở ~12 ppm.')" class="quiz-btn-q10-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">C. Axit butanoic ($\text{CH}_3\text{CH}_2\text{CH}_2\text{COOH}$)</button>
+                <button onclick="checkQuiz('q10-3', 3, false, 'Sai.')" class="quiz-btn-q10-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">D. 1,4-dioxan</button>
+              </div>
+              <div id="feedback-q10-3" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+
+            <!-- Q10-4 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 10.4:</strong> Trong một bài thi IChO kéo dài 300 phút, nếu gặp một bài toán hóa hữu cơ tổng hợp lùi nhiều giai đoạn phức tạp mà bạn chưa thể đoán ra toàn bộ sơ đồ phản ứng, chiến thuật tối ưu nhất là:
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q10-4', 0, false, 'Sai. Cố chấp dừng lại một bài quá lâu sẽ dẫn tới thiếu thời gian cho các bài khác.')" class="quiz-btn-q10-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">A. Dành toàn bộ 90 phút tiếp theo suy nghĩ cho đến khi ra hết chuỗi phản ứng</button>
+                <button onclick="checkQuiz('q10-4', 1, true, 'Chính xác! Đề thi IChO chấm điểm độc lập từng ý. Đọc kỹ dữ kiện phổ NMR/MS để xác định các chất trung gian chìa khóa, điền các chất đã chắc chắn, và nếu bế tắc ở 1 nhánh thì chuyển sang làm bài khác để tối ưu hóa tổng điểm số 300 phút!')" class="quiz-btn-q10-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">B. Biện luận giải quyết các chất độc lập có dữ kiện phổ rõ ràng, ghi rõ công thức cấu trúc từng chất rồi chuyển bài khác để quay lại sau</button>
+                <button onclick="checkQuiz('q10-4', 2, false, 'Sai.')" class="quiz-btn-q10-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">C. Bỏ trống toàn bộ bài hữu cơ</button>
+                <button onclick="checkQuiz('q10-4', 3, false, 'Sai.')" class="quiz-btn-q10-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-teal-950/30 transition">D. Chỉ viết cơ chế mà không vẽ công thức chất</button>
+              </div>
+              <div id="feedback-q10-4" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Course Summary Banner -->
+      <section class="rounded-2xl olychem-gradient p-8 text-white text-center shadow-lg">
+        <h3 class="text-2xl font-bold mb-3">Chúc mừng bạn đã hoàn thành Giáo trình Olympic Hóa Học Cấp 3!</h3>
+        <p class="text-teal-100 max-w-2xl mx-auto text-sm sm:text-base mb-6 leading-relaxed">
+          Nền tảng kiến thức lượng tử, nhiệt động học thống kê, thuyết trường tinh thể và phản ứng Pericyclic là hành trang vững chắc để bạn chinh phục các huy chương danh giá tại kỳ thi HSG Quốc gia, Tuyển chọn đội tuyển Quốc tế, Olympic 30/4, Duyên Hải và IChO.
+        </p>
+        <div class="flex flex-wrap justify-center gap-4">
+          <a href="../index.html" class="px-6 py-3 rounded-xl bg-white text-teal-900 font-bold hover:bg-teal-50 transition shadow">
+            <i class="fa-solid fa-arrow-left mr-2"></i> Trở Về Trang Chủ
+          </a>
+          <a href="hsg_hoa_thpt.html" class="px-6 py-3 rounded-xl bg-teal-800/80 border border-teal-500 text-white font-bold hover:bg-teal-700/80 transition">
+            <i class="fa-solid fa-flask mr-2"></i> Luyện Thi HSG Hóa Học THPT
+          </a>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Mobile Drawer Menu -->
+  <div id="mobileDrawer" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex">
+    <div class="w-4/5 max-w-sm bg-white dark:bg-dark-surface h-full p-6 flex flex-col shadow-2xl">
+      <div class="flex items-center justify-between pb-4 border-b border-gray-200 dark:border-gray-800">
+        <div class="flex items-center gap-2 font-bold text-teal-600 dark:text-teal-400">
+          <i class="fa-solid fa-medal text-lg"></i>
+          <span>Olympic Hóa Học Cấp 3</span>
+        </div>
+        <button id="closeDrawerBtn" class="p-2 text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+      <nav class="mt-4 space-y-1 overflow-y-auto flex-1 text-sm">
+        <a href="#bai1" class="drawer-link block px-3 py-2.5 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-teal-50 dark:hover:bg-teal-950/40">1. Lượng Tử & Hộp Thế 1D</a>
+        <a href="#bai2" class="drawer-link block px-3 py-2.5 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-teal-50 dark:hover:bg-teal-950/40">2. Nhiệt Động Thống Kê & Boltzmann</a>
+        <a href="#bai3" class="drawer-link block px-3 py-2.5 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-teal-50 dark:hover:bg-teal-950/40">3. Phương Trình Eyring & Chuỗi Gốc</a>
+        <a href="#bai4" class="drawer-link block px-3 py-2.5 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-teal-50 dark:hover:bg-teal-950/40">4. Hấp Phụ Langmuir & Hóa Keo</a>
+        <a href="#bai5" class="drawer-link block px-3 py-2.5 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-teal-50 dark:hover:bg-teal-950/40">5. Thuyết Trường Tinh Thể & CFSE</a>
+        <a href="#bai6" class="drawer-link block px-3 py-2.5 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-teal-50 dark:hover:bg-teal-950/40">6. Giản Đồ Latimer, Frost & Pourbaix</a>
+        <a href="#bai7" class="drawer-link block px-3 py-2.5 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-teal-50 dark:hover:bg-teal-950/40">7. Hiệu Ứng Đồng Vị & Phóng Xạ</a>
+        <a href="#bai8" class="drawer-link block px-3 py-2.5 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-teal-50 dark:hover:bg-teal-950/40">8. Phản Ứng Pericyclic & FMO</a>
+        <a href="#bai9" class="drawer-link block px-3 py-2.5 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-teal-50 dark:hover:bg-teal-950/40">9. Tổng Hợp Lùi & Khớp Nối C-C</a>
+        <a href="#bai10" class="drawer-link block px-3 py-2.5 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-teal-50 dark:hover:bg-teal-950/40">10. Động Học Enzym & Chiến Thuật IChO</a>
+      </nav>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-white dark:bg-dark-surface border-t border-gray-200 dark:border-gray-800 py-8 mt-12 transition-colors">
+    <div class="max-w-7xl mx-auto px-4 text-center text-xs sm:text-sm text-gray-500 dark:text-gray-400">
+      <p>© 2026 CodeHub Educational Platform. Giảng dạy & Bồi dưỡng Chuyên sâu Olympic Hóa học THPT Quốc gia & Quốc tế.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts: Theme, KaTeX, Quiz Tracker -->
+  <script>
+    // Theme toggle
+    const themeToggleBtn = document.getElementById('themeToggle');
+    if (themeToggleBtn) {
+      themeToggleBtn.addEventListener('click', () => {
+        document.documentElement.classList.toggle('dark');
+        const isDark = document.documentElement.classList.contains('dark');
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      });
+    }
+    if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+
+    // Mobile Drawer
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const closeDrawerBtn = document.getElementById('closeDrawerBtn');
+    const mobileDrawer = document.getElementById('mobileDrawer');
+    if (mobileMenuBtn && mobileDrawer) {
+      mobileMenuBtn.addEventListener('click', () => mobileDrawer.classList.remove('hidden'));
+    }
+    if (closeDrawerBtn && mobileDrawer) {
+      closeDrawerBtn.addEventListener('click', () => mobileDrawer.classList.add('hidden'));
+    }
+    document.querySelectorAll('.drawer-link').forEach(link => {
+      link.addEventListener('click', () => {
+        if (mobileDrawer) mobileDrawer.classList.add('hidden');
+      });
+    });
+
+    // Quiz Tracker: persist answered questions and restore selections.
+    const totalQuizzes = 40;
+    const progressKey = 'olympic_hoa_thpt_answers_v2';
+    let quizAnswers = {};
+    try { quizAnswers = JSON.parse(localStorage.getItem(progressKey) || '{}') || {}; }
+    catch (_) { quizAnswers = {}; }
+
+    function updateProgress() {
+      const count = Object.keys(quizAnswers).length;
+      const percent = Math.round((count / totalQuizzes) * 100);
+      const text = document.getElementById('quizProgressText');
+      const bar = document.getElementById('quizProgressBar');
+      if (text) text.innerText = count + ' / ' + totalQuizzes + ' (' + percent + '%)';
+      if (bar) bar.style.width = percent + '%';
+    }
+
+    function checkQuiz(quizId, chosenIndex, isCorrect, explanation, restoring = false) {
+      const feedback = document.getElementById('feedback-' + quizId);
+      const buttons = document.querySelectorAll('.quiz-btn-' + quizId);
+      buttons.forEach((btn, idx) => {
+        btn.classList.remove('border-emerald-500', 'bg-emerald-50', 'dark:bg-emerald-950/40', 'border-red-500', 'bg-red-50', 'dark:bg-red-950/40', 'text-emerald-900', 'dark:text-emerald-200', 'text-red-900', 'dark:text-red-200');
+        if (idx === chosenIndex) btn.classList.add(...(isCorrect
+          ? ['border-emerald-500', 'bg-emerald-50', 'dark:bg-emerald-950/40', 'text-emerald-900', 'dark:text-emerald-200']
+          : ['border-red-500', 'bg-red-50', 'dark:bg-red-950/40', 'text-red-900', 'dark:text-red-200']));
+      });
+      if (feedback) {
+        feedback.className = 'mt-3 p-3 rounded-lg text-xs font-medium border ' + (isCorrect
+          ? 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-200 border-emerald-300'
+          : 'bg-red-50 dark:bg-red-950/40 text-red-800 dark:text-red-200 border-red-300');
+        feedback.textContent = (isCorrect ? '✓ ' : '✗ ') + explanation;
+        renderAllMath(feedback);
+      }
+      if (!restoring) {
+        quizAnswers[quizId] = chosenIndex;
+        localStorage.setItem(progressKey, JSON.stringify(quizAnswers));
+        updateProgress();
+      }
+    }
+
+    function restoreQuizAnswers() {
+      Object.entries(quizAnswers).forEach(([quizId, index]) => {
+        const btn = document.querySelectorAll('.quiz-btn-' + quizId)[index];
+        if (!btn) return;
+        const handler = btn.getAttribute('onclick') || '';
+        const correct = /^checkQuiz\('[^']+',\s*\d+,\s*true,/.test(handler);
+        const match = handler.match(/^checkQuiz\('[^']+',\s*\d+,\s*(?:true|false),\s*'((?:\\.|[^'])*)'\)/s);
+        const explanation = match ? match[1].replace(/\\'/g, "'") : '';
+        checkQuiz(quizId, Number(index), correct, explanation, true);
+      });
+    }
+
+    function renderAllMath(targetElement) {
+      if (typeof renderMathInElement === 'function') {
+        renderMathInElement(targetElement || document.body, {
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false}
+          ],
+          throwOnError: false
+        });
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      updateProgress();
+      restoreQuizAnswers();
+      renderAllMath();
+      setTimeout(renderAllMath, 200);
+      setTimeout(renderAllMath, 800);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,1728 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ôn Luyện Thi Học Sinh Giỏi Tin Học Cấp 3 (THPT) - Competitive Programming Toàn Diện | CodeHub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            cp: {
+              primary: '#2563eb',
+              cyan: '#06b6d4',
+              emerald: '#10b981',
+              dark: '#0f172a',
+              card: '#1e293b',
+              accent: '#f59e0b',
+              purple: '#8b5cf6'
+            },
+            dark: {
+              bg: '#0b0f19',
+              surface: '#111827',
+              card: '#1f2937',
+              border: '#374151'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .sidebar-scroll::-webkit-scrollbar { width: 6px; }
+    .sidebar-scroll::-webkit-scrollbar-track { background: transparent; }
+    .sidebar-scroll::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 4px; }
+    .dark .sidebar-scroll::-webkit-scrollbar-thumb { background: #475569; }
+    .cp-gradient {
+      background: linear-gradient(135deg, #090d16 0%, #0f172a 40%, #1e3a8a 80%, #0284c7 100%);
+    }
+    .cp-badge-gradient {
+      background: linear-gradient(135deg, #0284c7 0%, #2563eb 50%, #4f46e5 100%);
+    }
+    code { font-family: 'Consolas', 'Fira Code', 'Courier New', monospace; }
+  </style>
+  <!-- KaTeX for beautiful Math Rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+</head>
+<body class="bg-gray-50 dark:bg-dark-bg text-gray-900 dark:text-gray-100 min-h-screen flex flex-col font-sans transition-colors duration-200">
+
+  <!-- Header Navigation -->
+  <header class="sticky top-0 z-50 bg-white/90 dark:bg-dark-surface/90 backdrop-blur border-b border-gray-200 dark:border-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <a href="../index.html" class="flex items-center gap-2 text-blue-600 dark:text-blue-400 font-bold text-lg hover:opacity-90">
+          <i class="fa-solid fa-graduation-cap text-xl"></i>
+          <span class="hidden sm:inline">CodeHub</span>
+        </a>
+        <div class="h-5 w-px bg-gray-300 dark:bg-gray-700"></div>
+        <div class="flex items-center gap-1.5 bg-gray-100 dark:bg-gray-800 p-1 rounded-xl text-xs sm:text-sm font-semibold">
+          <span class="px-2.5 py-1 rounded-lg bg-white dark:bg-gray-700 shadow-sm text-blue-600 dark:text-blue-400 flex items-center gap-1.5">
+            <i class="fa-solid fa-code"></i> HSG Tin THPT
+          </span>
+          <a href="tinhoc_12.html" class="px-2.5 py-1 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-white dark:hover:bg-gray-700 flex items-center gap-1">
+            <i class="fa-solid fa-laptop-code"></i> Tin 12
+          </a>
+          <a href="canva.html" class="px-2.5 py-1 rounded-lg text-purple-600 dark:text-purple-400 hover:bg-white dark:hover:bg-gray-700 flex items-center gap-1">
+            <i class="fa-solid fa-palette"></i> Canva
+          </a>
+          <a href="claude.html" class="px-2.5 py-1 rounded-lg text-amber-600 dark:text-amber-400 hover:bg-white dark:hover:bg-gray-700 flex items-center gap-1">
+            <i class="fa-solid fa-feather-pointed"></i> Claude
+          </a>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <span class="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg cp-badge-gradient text-white text-xs font-semibold shadow-sm">
+          <i class="fa-solid fa-trophy text-amber-300"></i>
+          <span>VNOI • VOI • Olympic Tin học</span>
+        </span>
+        <!-- Dark/Light Mode Button -->
+        <button id="theme-toggle" class="p-2 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-300 transition" aria-label="Đổi giao diện">
+          <i id="theme-icon" class="fa-solid fa-moon"></i>
+        </button>
+        <!-- Mobile Drawer Button -->
+        <button id="mobile-menu-btn" class="lg:hidden p-2 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-300 transition" aria-label="Menu bài học">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="cp-gradient text-white py-12 sm:py-16 px-4 sm:px-6 lg:px-8 border-b border-blue-900/40 relative overflow-hidden">
+    <div class="max-w-7xl mx-auto relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
+      <div class="space-y-4 max-w-3xl">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-400/30 text-xs font-semibold tracking-wide">
+          <i class="fa-solid fa-terminal"></i> Khóa Học Nâng Cao - Lập Trình Thi Đấu (Competitive Programming)
+        </div>
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight">
+          Bồi Dưỡng Học Sinh Giỏi <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-300 to-indigo-300">Tin Học Cấp 3 (THPT)</span>
+        </h1>
+        <p class="text-gray-200 text-sm sm:text-base leading-relaxed">
+          Chương trình huấn luyện toàn diện từ cấp Tỉnh/Thành phố đến Học sinh giỏi Quốc gia (VOI) và Olympic Tin học. Thành thạo C++20 tối ưu, Thuật toán nâng cao, Cấu trúc dữ liệu chuyên sâu (Segment Tree, Fenwick, DSU, Trie), Đồ thị (Dijkstra, Tarjan, LCA), Quy hoạch động đa chiều và Chiến thuật bẻ khóa từng subtask phòng thi.
+        </p>
+        <div class="flex flex-wrap items-center gap-4 pt-2 text-xs text-gray-300">
+          <span class="flex items-center gap-1.5"><i class="fa-solid fa-book-open text-cyan-400"></i> 10 Chuyên đề cốt lõi</span>
+          <span class="flex items-center gap-1.5"><i class="fa-solid fa-circle-question text-emerald-400"></i> 40 Câu trắc nghiệm thuật toán</span>
+          <span class="flex items-center gap-1.5"><i class="fa-solid fa-bolt text-amber-400"></i> Code chuẩn C++20 & Phân tích $O(N)$</span>
+          <span class="flex items-center gap-1.5"><i class="fa-solid fa-shield-halved text-purple-400"></i> Tuyệt chiêu gặt trọn Subtask</span>
+        </div>
+      </div>
+
+      <!-- Quick Progress Card -->
+      <div class="w-full md:w-80 bg-white/10 dark:bg-black/30 backdrop-blur-md rounded-2xl p-5 border border-white/20 dark:border-gray-700/50 shadow-xl">
+        <div class="flex items-center justify-between mb-3">
+          <span class="text-xs font-semibold uppercase tracking-wider text-cyan-300">Tiến Độ Rèn Luyện</span>
+          <span id="progress-percent" class="text-xs font-bold bg-cyan-400/20 text-cyan-200 px-2 py-0.5 rounded-full border border-cyan-400/30">0%</span>
+        </div>
+        <div class="w-full bg-white/20 dark:bg-gray-700 rounded-full h-2.5 mb-3 overflow-hidden">
+          <div id="progress-bar" class="bg-gradient-to-r from-cyan-400 to-blue-500 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+        </div>
+        <div class="flex items-center justify-between text-xs text-gray-200 mb-4">
+          <span>Đã hoàn thành: <b id="quiz-completed-count" class="text-white">0</b>/40 câu</span>
+          <span class="text-cyan-300 font-medium">10 Bài Học</span>
+        </div>
+        <button onclick="resetAllQuizzes()" class="w-full py-2 px-3 text-xs text-center rounded-xl bg-white/15 hover:bg-white/25 transition text-white font-medium border border-white/20 flex items-center justify-center gap-2">
+          <i class="fa-solid fa-rotate-right"></i> Làm lại từ đầu
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mobile Drawer Backdrop -->
+  <div id="drawer-backdrop" class="fixed inset-0 bg-black/60 z-50 hidden transition-opacity lg:hidden" onclick="toggleDrawer(false)"></div>
+
+  <!-- Mobile Drawer Content -->
+  <div id="mobile-drawer" class="fixed top-0 right-0 bottom-0 w-80 max-w-[85vw] bg-white dark:bg-dark-surface z-50 shadow-2xl transform translate-x-full transition-transform duration-300 ease-in-out lg:hidden flex flex-col">
+    <div class="p-4 border-b border-gray-200 dark:border-gray-800 flex items-center justify-between">
+      <div class="flex items-center gap-2 text-blue-600 dark:text-blue-400 font-bold">
+        <i class="fa-solid fa-list-check"></i>
+        <span>Mục Lục Khóa Học</span>
+      </div>
+      <button onclick="toggleDrawer(false)" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+    </div>
+    <div class="overflow-y-auto p-4 space-y-1 text-sm flex-1 sidebar-scroll">
+      <a href="#bai1" onclick="toggleDrawer(false)" class="block px-3 py-2 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20 text-gray-700 dark:text-gray-300 hover:text-blue-600 font-medium transition">Bài 1: Nền Tảng CP & Kỹ Thuật Tối Ưu C++20</a>
+      <a href="#bai2" onclick="toggleDrawer(false)" class="block px-3 py-2 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20 text-gray-700 dark:text-gray-300 hover:text-blue-600 font-medium transition">Bài 2: Mảng Cộng Dồn (Prefix Sum) & Hai Con Trỏ</a>
+      <a href="#bai3" onclick="toggleDrawer(false)" class="block px-3 py-2 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20 text-gray-700 dark:text-gray-300 hover:text-blue-600 font-medium transition">Bài 3: Tìm Kiếm Nhị Phân & Chặt Nhị Phân Kết Quả</a>
+      <a href="#bai4" onclick="toggleDrawer(false)" class="block px-3 py-2 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20 text-gray-700 dark:text-gray-300 hover:text-blue-600 font-medium transition">Bài 4: Số Học & Lý Thuyết Số Trong Thi HSG</a>
+      <a href="#bai5" onclick="toggleDrawer(false)" class="block px-3 py-2 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20 text-gray-700 dark:text-gray-300 hover:text-blue-600 font-medium transition">Bài 5: Quy Hoạch Động Cơ Bản Đến Trung Cấp</a>
+      <a href="#bai6" onclick="toggleDrawer(false)" class="block px-3 py-2 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20 text-gray-700 dark:text-gray-300 hover:text-blue-600 font-medium transition">Bài 6: Quy Hoạch Động Nâng Cao (Bitmask, Tree, Digit)</a>
+      <a href="#bai7" onclick="toggleDrawer(false)" class="block px-3 py-2 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20 text-gray-700 dark:text-gray-300 hover:text-blue-600 font-medium transition">Bài 7: Lý Thuyết Đồ Thị (BFS, DFS, Dijkstra, Kruskal)</a>
+      <a href="#bai8" onclick="toggleDrawer(false)" class="block px-3 py-2 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20 text-gray-700 dark:text-gray-300 hover:text-blue-600 font-medium transition">Bài 8: Đồ Thị Nâng Cao (Tarjan Khớp-Cầu, SCC, LCA)</a>
+      <a href="#bai9" onclick="toggleDrawer(false)" class="block px-3 py-2 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20 text-gray-700 dark:text-gray-300 hover:text-blue-600 font-medium transition">Bài 9: Cấu Trúc Dữ Liệu Nâng Cao (BIT, Segment Tree)</a>
+      <a href="#bai10" onclick="toggleDrawer(false)" class="block px-3 py-2 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20 text-gray-700 dark:text-gray-300 hover:text-blue-600 font-medium transition">Bài 10: Xử Lý Chuỗi, Hình Học & Chiến Thuật Thi Đấu</a>
+    </div>
+  </div>
+
+  <!-- Main Container -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 flex gap-8">
+
+    <!-- Desktop Sticky Sidebar -->
+    <aside class="hidden lg:block w-72 shrink-0">
+      <div class="sticky top-24 space-y-4">
+        <div class="bg-white dark:bg-dark-surface p-4 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm">
+          <div class="flex items-center gap-2 mb-3 pb-2 border-b border-gray-100 dark:border-gray-700/60 font-bold text-sm text-blue-600 dark:text-blue-400">
+            <i class="fa-solid fa-compass"></i>
+            <span>Mục Lục 10 Chuyên Đề</span>
+          </div>
+          <nav class="space-y-1 text-xs sidebar-scroll max-h-[calc(100vh-220px)] overflow-y-auto pr-1">
+            <a href="#bai1" class="nav-link block px-2.5 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-950/40 hover:text-blue-600 dark:hover:text-blue-400 transition font-medium">1. Nền Tảng CP & Tối Ưu C++20</a>
+            <a href="#bai2" class="nav-link block px-2.5 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-950/40 hover:text-blue-600 dark:hover:text-blue-400 transition font-medium">2. Mảng Cộng Dồn & Hai Con Trỏ</a>
+            <a href="#bai3" class="nav-link block px-2.5 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-950/40 hover:text-blue-600 dark:hover:text-blue-400 transition font-medium">3. Tìm Kiếm & Chặt Nhị Phân</a>
+            <a href="#bai4" class="nav-link block px-2.5 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-950/40 hover:text-blue-600 dark:hover:text-blue-400 transition font-medium">4. Số Học & Lý Thuyết Số</a>
+            <a href="#bai5" class="nav-link block px-2.5 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-950/40 hover:text-blue-600 dark:hover:text-blue-400 transition font-medium">5. Quy Hoạch Động Cơ Bản</a>
+            <a href="#bai6" class="nav-link block px-2.5 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-950/40 hover:text-blue-600 dark:hover:text-blue-400 transition font-medium">6. Quy Hoạch Động Nâng Cao</a>
+            <a href="#bai7" class="nav-link block px-2.5 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-950/40 hover:text-blue-600 dark:hover:text-blue-400 transition font-medium">7. Lý Thuyết Đồ Thị Cơ Bản</a>
+            <a href="#bai8" class="nav-link block px-2.5 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-950/40 hover:text-blue-600 dark:hover:text-blue-400 transition font-medium">8. Đồ Thị Nâng Cao & Cây</a>
+            <a href="#bai9" class="nav-link block px-2.5 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-950/40 hover:text-blue-600 dark:hover:text-blue-400 transition font-medium">9. Segment Tree & Fenwick</a>
+            <a href="#bai10" class="nav-link block px-2.5 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-950/40 hover:text-blue-600 dark:hover:text-blue-400 transition font-medium">10. Xử Lý Chuỗi & Chiến Thuật</a>
+          </nav>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 min-w-0 space-y-12">
+
+
+      <!-- ==================== BÀI 1 ==================== -->
+      <section id="bai1" class="lesson-section bg-white dark:bg-dark-surface rounded-2xl border border-gray-200 dark:border-gray-800 p-6 sm:p-8 shadow-sm">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold text-lg shadow-md shadow-blue-500/20">01</span>
+          <div>
+            <span class="text-xs font-semibold tracking-wider text-blue-600 dark:text-blue-400 uppercase">Chuyên đề 1 • Nhập môn thi đấu</span>
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">Nền Tảng Competitive Programming & Kỹ Thuật Tối Ưu C++20</h2>
+          </div>
+        </div>
+
+        <div class="prose dark:prose-invert max-w-none space-y-6 text-sm sm:text-base leading-relaxed">
+          <p class="text-gray-700 dark:text-gray-300">
+            Trong các kỳ thi Học sinh giỏi Tin học THPT (từ cấp Trường, Tỉnh/Thành phố đến Quốc gia VOI), <strong>ngôn ngữ C++</strong> luôn là sự lựa chọn số 1 nhờ tốc độ thực thi vượt trội và thư viện chuẩn <strong>STL (Standard Template Library)</strong> phong phú. Tuy nhiên, để giành trọn vẹn điểm số trong 180 phút, thí sinh phải làm chủ tốc độ vào/ra (Fast I/O), tư duy chặn tràn số và phân tích độ phức tạp thuật toán cực kỳ khắt khe.
+          </p>
+
+          <!-- Key Pillars Grid -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
+            <div class="p-4 rounded-xl bg-blue-50/70 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-900/50">
+              <h4 class="font-bold text-blue-900 dark:text-blue-300 flex items-center gap-2 mb-2 text-sm sm:text-base">
+                <i class="fa-solid fa-gauge-high text-blue-600"></i> Fast I/O & Xử Lý Tràn Số
+              </h4>
+              <p class="text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+                Lệnh <code>cin/cout</code> mặc định đồng bộ với thư viện C nên rất chậm. Bắt buộc thêm <code>cin.tie(NULL); ios_base::sync_with_stdio(false);</code> và dùng <code>\n</code> thay cho <code>endl</code>. Với giá trị lên đến $10^{18}$, dùng <code>long long</code>; với phép nhân có kết quả vượt phạm vi <code>long long</code> nhưng nằm trong khoảng $\pm 1{,}7\times10^{38}$, có thể dùng <code>__int128</code> (mở rộng GCC/Clang, không thuộc ISO C++20).
+              </p>
+            </div>
+            <div class="p-4 rounded-xl bg-cyan-50/70 dark:bg-cyan-950/30 border border-cyan-200 dark:border-cyan-900/50">
+              <h4 class="font-bold text-cyan-900 dark:text-cyan-300 flex items-center gap-2 mb-2 text-sm sm:text-base">
+                <i class="fa-solid fa-calculator text-cyan-600"></i> Quy Tắc Ước Lượng 1.0 Giây
+              </h4>
+              <p class="text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+                Hệ thống chấm thi hiện đại (Themis, CMS, VNOJ, Codeforces) thực hiện được khoảng <strong>$10^7$–$10^8$ thao tác đơn giản / giây</strong> tùy máy chấm, ngôn ngữ và thao tác. Nhìn vào giới hạn $N$ để đoán độ phức tạp:
+                <br>• $N \le 20 \rightarrow O(2^N)$ (còn $O(N!)$ chỉ khả thi với $N$ nhỏ hơn nhiều)$
+                <br>• $N \le 500 \rightarrow O(N^3)$ | $N \le 5000 \rightarrow O(N^2)$
+                <br>• $N \le 2\cdot 10^5 \rightarrow O(N \log N)$ | $N \le 10^7 \rightarrow O(N)$
+                <br>• $N \le 10^{18} \rightarrow O(\log N)$ hoặc $O(1)$
+              </p>
+            </div>
+          </div>
+
+          <!-- Code Example -->
+          <div class="rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 bg-gray-900 text-gray-100 p-4">
+            <div class="flex justify-between items-center pb-2 mb-3 border-b border-gray-700 text-xs text-gray-400">
+              <span class="font-mono text-cyan-400"><i class="fa-solid fa-file-code mr-1"></i> template_cp.cpp - C++20 Skeleton</span>
+              <span>Fast I/O & Debug</span>
+            </div>
+            <pre class="overflow-x-auto text-xs sm:text-sm text-gray-200 leading-relaxed font-mono"><code>#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+#define int long long // Phổ biến trong thi CP để tránh tràn số âm thầm
+#define all(x) (x).begin(), (x).end()
+const int MOD = 1e9 + 7;
+const int INF = 1e18;
+
+void solve() {
+    int n;
+    if (!(cin &gt;&gt; n)) return;
+    vector&lt;int&gt; a(n);
+    for (int &x : a) cin &gt;&gt; x;
+    if (a.empty()) return;
+    sort(all(a));
+    cout &lt;&lt; a.back() &lt;&lt; "\n";
+}
+
+int32_t main() {
+    // Tối ưu hóa I/O: bắt buộc trong mọi bài thi HSG
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    // Chuyển hướng file nếu đề thi yêu cầu tên file (VD: BAI1.INP / BAI1.OUT)
+    #ifndef ONLINE_JUDGE
+    if (fopen("BAI1.INP", "r")) {
+        freopen("BAI1.INP", "r", stdin);
+        freopen("BAI1.OUT", "w", stdout);
+    }
+    #endif
+
+    int t = 1;
+    // cin &gt;&gt; t; // Bỏ comment nếu bài có nhiều bộ test
+    while (t--) solve();
+    return 0;
+}</code></pre>
+          </div>
+
+          <div class="p-4 rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-300 dark:border-amber-800/50 text-xs sm:text-sm text-amber-900 dark:text-amber-200">
+            <strong class="font-bold flex items-center gap-1.5 mb-1"><i class="fa-solid fa-lightbulb text-amber-600"></i> Kinh nghiệm phòng thi:</strong>
+            Không bao giờ dùng <code>endl</code> vì nó gọi kèm hàm <code>flush()</code> làm chậm hàng trăm lần. Trong trường hợp cần dùng <code>unordered_map</code> hoặc <code>unordered_set</code>, phải cấu hình <strong>custom hash</strong> với thời gian thực (time seed) để chống lại các test hack cố tình tạo xung đột hàm băm (Hash collision attack $O(N^2)$).
+          </div>
+        </div>
+
+        <!-- Quizzes Bài 1 -->
+        <div class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-800">
+          <h3 class="font-bold text-base sm:text-lg text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+            <i class="fa-solid fa-list-check text-blue-600"></i> Bài Tập Trắc Nghiệm Thuật Toán (Bài 1)
+          </h3>
+          <div class="space-y-4">
+            <!-- Q1-1 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 1.1:</strong> Cho bài toán với giới hạn $N \le 2 \times 10^5$, thời gian thực thi tối đa $1.0$ giây. Thuật toán có độ phức tạp nào sau đây là phù hợp nhất để đạt điểm tối đa (Full subtask)?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q1-1', 0, false, 'Sai. O(N^2) với N = 2*10^5 sẽ tốn 4*10^10 phép tính, vượt xa giới hạn 1 giây (Time Limit Exceeded - TLE).')" class="quiz-btn-q1-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">A. $O(N^2)$</button>
+                <button onclick="checkQuiz('q1-1', 1, true, 'Chính xác! N = 2*10^5, N log2(N) xấp xỉ 3.6*10^6 phép tính, thường phù hợp, nhưng thời gian thực tế phụ thuộc hằng số, máy chấm và thao tác.')" class="quiz-btn-q1-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">B. $O(N \log N)$</button>
+                <button onclick="checkQuiz('q1-1', 2, false, 'Sai. O(N^3) với N = 2*10^5 là quá lớn.')" class="quiz-btn-q1-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">C. $O(N^3)$</button>
+                <button onclick="checkQuiz('q1-1', 3, false, 'Sai. O(2^N) là thuật toán duyệt nhánh quay lui, chỉ chạy được với N <= 25.')" class="quiz-btn-q1-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">D. $O(2^N)$</button>
+              </div>
+              <div id="feedback-q1-1" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+
+            <!-- Q1-2 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 1.2:</strong> Trong C++, vì sao trong các bài toán yêu cầu đọc/ghi dữ liệu lớn ($N \ge 10^5$), thí sinh nên dùng <code>'\n'</code> thay vì <code>std::endl</code>?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q1-2', 0, false, 'Sai. Cả hai đều xuống dòng như nhau.')" class="quiz-btn-q1-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">A. Vì endl không thể xuống dòng trên hệ điều hành Linux</button>
+                <button onclick="checkQuiz('q1-2', 1, true, 'Chính xác! endl thực hiện thao tác flush trên luồng C++ để xả bộ đệm ra thiết bị ngoại vi sau mỗi lần in, làm giảm tốc độ I/O nghiêm trọng.')" class="quiz-btn-q1-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">B. Vì endl thực hiện thao tác flush buffer liên tục gây chậm trễ</button>
+                <button onclick="checkQuiz('q1-2', 2, false, 'Sai. Không có quy định nào cấm endl.')" class="quiz-btn-q1-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">C. Vì máy chấm Themis tự động coi endl là lỗi biên dịch</button>
+                <button onclick="checkQuiz('q1-2', 3, false, 'Sai. endl không làm sai khác bộ nhớ.')" class="quiz-btn-q1-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">D. Vì endl làm tốn gấp đôi dung lượng bộ nhớ RAM</button>
+              </div>
+              <div id="feedback-q1-2" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+
+            <!-- Q1-3 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 1.3:</strong> Giới hạn giá trị của kiểu số nguyên <code>long long</code> trong C++ tiêu chuẩn là khoảng bao nhiêu?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q1-3', 0, false, 'Sai. Khoảng 2*10^9 là giới hạn của kiểu int (32-bit).')" class="quiz-btn-q1-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">A. Khoảng $2 \times 10^9$</button>
+                <button onclick="checkQuiz('q1-3', 1, true, 'Chính xác! Kiểu số nguyên có dấu 64-bit có giới hạn từ -2^63 đến 2^63 - 1, xấp xỉ 9*10^18.')" class="quiz-btn-q1-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">B. Khoảng $9 \times 10^{18}$ ($2^{63}-1$)</button>
+                <button onclick="checkQuiz('q1-3', 2, false, 'Sai. 10^38 là kích thước của kiểu __int128.')" class="quiz-btn-q1-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">C. Khoảng $3 \times 10^{38}$</button>
+                <button onclick="checkQuiz('q1-3', 3, false, 'Sai. 4*10^9 là của unsigned int.')" class="quiz-btn-q1-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">D. Khoảng $4 \times 10^9$</button>
+              </div>
+              <div id="feedback-q1-3" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+
+            <!-- Q1-4 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 1.4:</strong> Kỹ thuật nào sau đây giúp kiểm thử tính đúng đắn của thuật toán chuẩn bằng cách so sánh kết quả tự động với thuật toán "vét cạn" (Brute-force) trên hàng nghìn bộ dữ liệu ngẫu nhiên?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q1-4', 0, false, 'Sai. Unit testing là thuật ngữ kiểm thử phần mềm thông thường.')" class="quiz-btn-q1-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">A. Unit testing</button>
+                <button onclick="checkQuiz('q1-4', 1, true, 'Chính xác! Stress testing kết hợp viết sinh test tự động (test generator) và script so sánh kết quả 2 giải pháp là vũ khí tối thượng của thí sinh HSG để diệt trừ bug.')" class="quiz-btn-q1-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">B. Stress testing</button>
+                <button onclick="checkQuiz('q1-4', 2, false, 'Sai. Profiling dùng đo thời gian/bộ nhớ.')" class="quiz-btn-q1-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">C. Profiling code</button>
+                <button onclick="checkQuiz('q1-4', 3, false, 'Sai. Code refactoring là tái cấu trúc mã nguồn.')" class="quiz-btn-q1-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">D. Code refactoring</button>
+              </div>
+              <div id="feedback-q1-4" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== BÀI 2 ==================== -->
+      <section id="bai2" class="lesson-section bg-white dark:bg-dark-surface rounded-2xl border border-gray-200 dark:border-gray-800 p-6 sm:p-8 shadow-sm">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold text-lg shadow-md shadow-blue-500/20">02</span>
+          <div>
+            <span class="text-xs font-semibold tracking-wider text-blue-600 dark:text-blue-400 uppercase">Chuyên đề 2 • Kỹ thuật xử lý mảng</span>
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">Mảng Cộng Dồn (Prefix Sum) & Kỹ Thuật Hai Con Trỏ (Two Pointers)</h2>
+          </div>
+        </div>
+
+        <div class="prose dark:prose-invert max-w-none space-y-6 text-sm sm:text-base leading-relaxed">
+          <p class="text-gray-700 dark:text-gray-300">
+            Mảng cộng dồn (Prefix Sum), Mảng hiệu (Difference Array) và Hai con trỏ (Two Pointers / Sliding Window) là những những kỹ thuật nền tảng thường gặp trong các bài thi lập trình. Chúng biến đổi các thao tác tính toán từ độ phức tạp $O(N)$ hoặc $O(N^2)$ xuống chỉ còn $O(1)$ hoặc $O(N)$.
+          </p>
+
+          <!-- Core Concepts Table -->
+          <div class="overflow-x-auto my-4">
+            <table class="w-full text-xs sm:text-sm text-left border-collapse border border-gray-200 dark:border-gray-700">
+              <thead class="bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">
+                <tr>
+                  <th class="p-3 border border-gray-200 dark:border-gray-700">Kỹ thuật</th>
+                  <th class="p-3 border border-gray-200 dark:border-gray-700">Công thức cốt lõi</th>
+                  <th class="p-3 border border-gray-200 dark:border-gray-700">Thời gian tiền xử lý</th>
+                  <th class="p-3 border border-gray-200 dark:border-gray-700">Độ phức tạp truy vấn</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+                <tr>
+                  <td class="p-3 font-semibold text-blue-600 dark:text-blue-400 border border-gray-200 dark:border-gray-700">Prefix Sum 1D</td>
+                  <td class="p-3 font-mono border border-gray-200 dark:border-gray-700">pref[i] = pref[i-1] + a[i]<br>sum(l, r) = pref[r] - pref[l-1]</td>
+                  <td class="p-3 font-mono border border-gray-200 dark:border-gray-700">O(N)</td>
+                  <td class="p-3 font-mono font-bold text-emerald-600 border border-gray-200 dark:border-gray-700">O(1)</td>
+                </tr>
+                <tr>
+                  <td class="p-3 font-semibold text-cyan-600 dark:text-cyan-400 border border-gray-200 dark:border-gray-700">Prefix Sum 2D</td>
+                  <td class="p-3 font-mono border border-gray-200 dark:border-gray-700">pref[i][j] = pref[i-1][j] + pref[i][j-1] - pref[i-1][j-1] + a[i][j]<br>sum(x1,y1,x2,y2) = pref[x2][y2] - pref[x1-1][y2] - pref[x2][y1-1] + pref[x1-1][y1-1]</td>
+                  <td class="p-3 font-mono border border-gray-200 dark:border-gray-700">O(N * M)</td>
+                  <td class="p-3 font-mono font-bold text-emerald-600 border border-gray-200 dark:border-gray-700">O(1)</td>
+                </tr>
+                <tr>
+                  <td class="p-3 font-semibold text-purple-600 dark:text-purple-400 border border-gray-200 dark:border-gray-700">Difference Array (Mảng hiệu)</td>
+                  <td class="p-3 font-mono border border-gray-200 dark:border-gray-700">Cộng đoạn [L, R] thêm V:<br>diff[L] += V; diff[R + 1] -= V;</td>
+                  <td class="p-3 font-mono border border-gray-200 dark:border-gray-700">O(1) mỗi cập nhật</td>
+                  <td class="p-3 font-mono border border-gray-200 dark:border-gray-700">O(N) khôi phục mảng sau Q truy vấn</td>
+                </tr>
+                <tr>
+                  <td class="p-3 font-semibold text-amber-600 dark:text-amber-400 border border-gray-200 dark:border-gray-700">Two Pointers (Hai con trỏ)</td>
+                  <td class="p-3 font-mono border border-gray-200 dark:border-gray-700">Con trỏ L và R chỉ dịch chuyển một chiều (Monotonicity)</td>
+                  <td class="p-3 font-mono border border-gray-200 dark:border-gray-700">O(N log N) nếu cần sort</td>
+                  <td class="p-3 font-mono font-bold text-emerald-600 border border-gray-200 dark:border-gray-700">O(N) duyệt tổng thể</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Code C++ Two Pointers -->
+          <div class="rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 bg-gray-900 text-gray-100 p-4">
+            <div class="flex justify-between items-center pb-2 mb-3 border-b border-gray-700 text-xs text-gray-400">
+              <span class="font-mono text-cyan-400"><i class="fa-solid fa-code mr-1"></i> two_pointers_longest_subarray.cpp</span>
+              <span>Đoạn con dài nhất có tổng $\le S$ (Các phần tử $a_i > 0$)</span>
+            </div>
+            <pre class="overflow-x-auto text-xs sm:text-sm text-gray-200 leading-relaxed font-mono"><code>#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+// Tìm độ dài đoạn con liên tiếp dài nhất có tổng &lt;= S
+int longestSubarraySumAtMostS(const vector&lt;long long&gt;& a, long long S) {
+    int n = a.size();
+    int l = 0, max_len = 0;
+    long long cur_sum = 0;
+
+    for (int r = 0; r &lt; n; ++r) {
+        cur_sum += a[r];
+        // Thu hẹp cửa sổ khi tổng vượt quá S (tính đơn điệu vì a[i] &gt; 0)
+        while (l &lt;= r && cur_sum &gt; S) {
+            cur_sum -= a[l];
+            l++;
+        }
+        max_len = max(max_len, r - l + 1);
+    }
+    return max_len;
+}</code></pre>
+          </div>
+        </div>
+
+        <!-- Quizzes Bài 2 -->
+        <div class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-800">
+          <h3 class="font-bold text-base sm:text-lg text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+            <i class="fa-solid fa-list-check text-blue-600"></i> Bài Tập Trắc Nghiệm Thuật Toán (Bài 2)
+          </h3>
+          <div class="space-y-4">
+            <!-- Q2-1 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 2.1:</strong> Cho mảng $a$ gồm $N$ số nguyên. Có $Q$ truy vấn, mỗi truy vấn yêu cầu cộng thêm giá trị $V$ vào tất cả phần tử từ vị trí $L$ đến $R$ ($1 \le L \le R \le N$). Sau $Q$ truy vấn cần in ra mảng kết quả. Cấu trúc nào tối ưu nhất với $N, Q \le 10^6$?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q2-1', 0, false, 'Sai. Mảng cộng dồn dùng để truy vấn tổng, không tối ưu cho cập nhật đoạn rồi truy vấn mảng cuối.')" class="quiz-btn-q2-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">A. Dùng mảng cộng dồn thông thường</button>
+                <button onclick="checkQuiz('q2-1', 1, true, 'Chính xác! Mảng hiệu (Difference Array) cho phép cập nhật d[L] += V, d[R+1] -= V trong O(1). Sau Q truy vấn, ta khôi phục lại mảng bằng 1 lần prefix sum O(N). Tổng thời gian O(N + Q).')" class="quiz-btn-q2-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">B. Dùng mảng hiệu (Difference Array) trong thời gian $O(N + Q)$</button>
+                <button onclick="checkQuiz('q2-1', 2, false, 'Sai. Vòng lặp mất O(Q * N), với N, Q = 10^6 sẽ mất 10^12 phép tính gây TLE.')" class="quiz-btn-q2-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">C. Chạy vòng lặp for từ L đến R cho mỗi truy vấn</button>
+                <button onclick="checkQuiz('q2-1', 3, false, 'Sai. Cây Segment Tree cài đặt dài hơn và tốn O(Q log N) thời gian, không cần thiết khi chỉ truy vấn kết quả ở bước cuối cùng.')" class="quiz-btn-q2-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">D. Bắt buộc phải dùng Cây Phân Đoạn (Segment Tree with Lazy Propagation)</button>
+              </div>
+              <div id="feedback-q2-1" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+
+            <!-- Q2-2 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 2.2:</strong> Công thức tính tổng các phần tử trong hình chữ nhật từ ô $(x_1, y_1)$ đến ô $(x_2, y_2)$ bằng mảng tiền tố 2D <code>pref[i][j]</code> là gì?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q2-2', 0, false, 'Sai. Quên cộng lại phần giao pref[x1-1][y1-1] bị trừ lặp 2 lần.')" class="quiz-btn-q2-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">A. $pref[x_2][y_2] - pref[x_1-1][y_2] - pref[x_2][y_1-1]$</button>
+                <button onclick="checkQuiz('q2-2', 1, true, 'Chính xác! Theo nguyên lý bù trừ (Inclusion-Exclusion Principle): diện tích hình chữ nhật lớn trừ đi 2 hình chữ nhật thừa, và cộng lại phần giao bị trừ 2 lần.')" class="quiz-btn-q2-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">B. $pref[x_2][y_2] - pref[x_1-1][y_2] - pref[x_2][y_1-1] + pref[x_1-1][y_1-1]$</button>
+                <button onclick="checkQuiz('q2-2', 2, false, 'Sai dấu.')" class="quiz-btn-q2-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">C. $pref[x_2][y_2] + pref[x_1-1][y_1-1]$</button>
+                <button onclick="checkQuiz('q2-2', 3, false, 'Sai. Phải dùng chỉ số x1-1 và y1-1.')" class="quiz-btn-q2-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">D. $pref[x_2][y_2] - pref[x_1][y_1]$</button>
+              </div>
+              <div id="feedback-q2-2" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+
+            <!-- Q2-3 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 2.3:</strong> Điều kiện tiên quyết để kỹ thuật Hai Con Trỏ (Sliding Window / Two Pointers) đạt độ phức tạp $O(N)$ khi tìm đoạn con thỏa mãn tính chất tổng hoặc số lượng là gì?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q2-3', 0, false, 'Sai. Các phần tử không nhất thiết phải là số nguyên tố.')" class="quiz-btn-q2-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">A. Tất cả các phần tử trong mảng phải là số nguyên tố</button>
+                <button onclick="checkQuiz('q2-3', 1, true, 'Chính xác! Tính đơn điệu (Monotonicity) đảm bảo khi con trỏ phải R tiến lên thì con trỏ trái L chỉ tiến lên chứ không bao giờ quay ngược lại, mỗi con trỏ duyệt tối đa N bước.')" class="quiz-btn-q2-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">B. Tính đơn điệu: khi mở rộng hoặc thu hẹp cửa sổ, tính chất thỏa mãn biến thiên một chiều</button>
+                <button onclick="checkQuiz('q2-3', 2, false, 'Sai. Mảng có thể chứa số âm nếu bài toán không phụ thuộc đơn điệu tổng.')" class="quiz-btn-q2-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">C. Mảng phải có kích thước là lũy thừa của 2</button>
+                <button onclick="checkQuiz('q2-3', 3, false, 'Sai. Hai con trỏ không cần ngăn xếp.')" class="quiz-btn-q2-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">D. Cần kết hợp ngăn xếp đơn điệu (Monotonic Stack) bắt buộc</button>
+              </div>
+              <div id="feedback-q2-3" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+
+            <!-- Q2-4 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 2.4:</strong> Cho mảng $A$ chứa cả số âm và số dương. Bài toán yêu cầu đếm số đoạn con liên tiếp có tổng bằng đúng số nguyên $K$. Kỹ thuật nào sau đây giải quyết trong thời gian kỳ vọng $O(N)$?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q2-4', 0, false, 'Sai. Vì mảng có số âm nên tính chất đơn điệu của Two pointers bị phá vỡ.')" class="quiz-btn-q2-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">A. Dùng Hai con trỏ (Two Pointers)</button>
+                <button onclick="checkQuiz('q2-4', 1, true, 'Chính xác! Ta tính tổng tiền tố S[i]. Đoạn [j+1, i] có tổng bằng K khi S[i] - S[j] = K hay S[j] = S[i] - K. Dùng HashMap/unordered_map (thời gian kỳ vọng O(N), trường hợp xấu nhất có thể O(N²)) lưu số lần xuất hiện của các S[j] trước đó.')" class="quiz-btn-q2-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">B. Kết hợp Mảng cộng dồn (Prefix Sum) và Bảng băm (Hash Map / Frequency Map)</button>
+                <button onclick="checkQuiz('q2-4', 2, false, 'Sai. Duyệt trâu tốn O(N^2) gây TLE với N >= 10^5.')" class="quiz-btn-q2-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">C. Duyệt 2 vòng for vét cạn mọi cặp (i, j)</button>
+                <button onclick="checkQuiz('q2-4', 3, false, 'Sai. Sắp xếp mảng sẽ làm mất thứ tự liên tiếp của các phần tử ban đầu.')" class="quiz-btn-q2-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">D. Sắp xếp lại mảng A theo thứ tự tăng dần rồi chặt nhị phân</button>
+              </div>
+              <div id="feedback-q2-4" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== BÀI 3 ==================== -->
+      <section id="bai3" class="lesson-section bg-white dark:bg-dark-surface rounded-2xl border border-gray-200 dark:border-gray-800 p-6 sm:p-8 shadow-sm">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold text-lg shadow-md shadow-blue-500/20">03</span>
+          <div>
+            <span class="text-xs font-semibold tracking-wider text-blue-600 dark:text-blue-400 uppercase">Chuyên đề 3 • Thuật toán tìm kiếm</span>
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">Tìm Kiếm Nhị Phân & Kỹ Thuật "Chặt Nhị Phân Kết Quả" (Binary Search the Answer)</h2>
+          </div>
+        </div>
+
+        <div class="prose dark:prose-invert max-w-none space-y-6 text-sm sm:text-base leading-relaxed">
+          <p class="text-gray-700 dark:text-gray-300">
+            Tìm kiếm nhị phân (Binary Search) không chỉ dùng để tìm phần tử trên mảng đã sắp xếp trong $O(log N)$. Trong các đề thi HSG Quốc gia và Olympic, kỹ thuật quyền năng nhất chính là <strong>"Chặt nhị phân kết quả" (Binary Search on Answer)</strong>: chuyển đổi bài toán tối ưu (tìm giá trị nhỏ nhất hoặc lớn nhất) thành bài toán kiểm tra tính khả thi (Hàm kiểm tra <code>check(val)</code> trả về <code>true/false</code>).
+          </p>
+
+          <!-- Decision Framework -->
+          <div class="p-4 rounded-xl bg-blue-50/70 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-900/50">
+            <h4 class="font-bold text-blue-900 dark:text-blue-300 mb-2 flex items-center gap-2">
+              <i class="fa-solid fa-crosshairs text-blue-600"></i> Dấu hiệu nhận biết bài toán Chặt nhị phân kết quả:
+            </h4>
+            <ul class="list-disc list-inside space-y-1 text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+              <li>Đề bài có cụm từ: <em>"Tìm giá trị lớn nhất sao cho..."</em>, <em>"Tìm chi phí nhỏ nhất để..."</em>, <em>"Độ chênh lệch lớn nhất là nhỏ nhất (Minimax)"</em>.</li>
+              <li>Khoảng giá trị kết quả có thể xác định được chặn dưới $L$ và chặn trên $R$ (ví dụ: $1 \le ans \le 10^{18}$).</li>
+              <li>Tồn tại tính đơn điệu: Nếu giá trị $mid$ thỏa mãn điều kiện thì mọi giá trị $\le mid$ (hoặc $\ge mid$) cũng thỏa mãn.</li>
+              <li>Hàm <code>check(mid)</code> có thể tính toán nhanh bằng thuật toán tham lam (Greedy) trong $O(N)$. Tổng độ phức tạp sẽ là $O(N log(R - L))$.</li>
+            </ul>
+          </div>
+
+          <!-- Code BS on Answer -->
+          <div class="rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 bg-gray-900 text-gray-100 p-4">
+            <div class="flex justify-between items-center pb-2 mb-3 border-b border-gray-700 text-xs text-gray-400">
+              <span class="font-mono text-cyan-400"><i class="fa-solid fa-code mr-1"></i> binary_search_answer.cpp</span>
+              <span>Chia mảng gồm các số không âm thành $K$ đoạn liên tiếp không rỗng ($1 \le K \le N$) sao cho tổng đoạn lớn nhất là nhỏ nhất</span>
+            </div>
+            <pre class="overflow-x-auto text-xs sm:text-sm text-gray-200 leading-relaxed font-mono"><code>#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+// Với a[i] >= 0, 1 <= K <= N; có thể tách thêm để được đúng K đoạn.
+// Hàm kiểm tra: có thể chia mảng thành <= K đoạn mà mỗi đoạn có tổng <= max_sum?
+bool check(long long max_sum, const vector&lt;long long&gt;& a, int k) {
+    int segments = 1;
+    long long cur = 0;
+    for (long long x : a) {
+        if (x &gt; max_sum) return false; // Một phần tử đã vượt giới hạn
+        if (cur + x &gt; max_sum) {
+            segments++;
+            cur = x;
+        } else {
+            cur += x;
+        }
+    }
+    return segments &lt;= k;
+}
+
+long long solve(int n, int k, const vector&lt;long long&gt;& a) {
+    long long low = *max_element(a.begin(), a.end());
+    long long high = accumulate(a.begin(), a.end(), 0LL);
+    long long ans = high;
+
+    while (low &lt;= high) {
+        long long mid = low + (high - low) / 2;
+        if (check(mid, a, k)) {
+            ans = mid;         // Ghi nhận đáp án hợp lệ
+            high = mid - 1;    // Thử tìm giá trị nhỏ hơn nữa
+        } else {
+            low = mid + 1;     // Bắt buộc tăng giới hạn tổng
+        }
+    }
+    return ans;
+}</code></pre>
+          </div>
+        </div>
+
+        <!-- Quizzes Bài 3 -->
+        <div class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-800">
+          <h3 class="font-bold text-base sm:text-lg text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+            <i class="fa-solid fa-list-check text-blue-600"></i> Bài Tập Trắc Nghiệm Thuật Toán (Bài 3)
+          </h3>
+          <div class="space-y-4">
+            <!-- Q3-1 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 3.1:</strong> Khi tính giá trị phần tử giữa <code>mid</code> giữa <code>low</code> và <code>high</code> trong C++, vì sao nên viết <code>mid = low + (high - low) / 2</code> thay vì <code>mid = (low + high) / 2</code>?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q3-1', 0, false, 'Sai. Cả hai cho ra cùng giá trị toán học.')" class="quiz-btn-q3-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">A. Vì công thức này cho kết quả chính xác hơn trên số thực</button>
+                <button onclick="checkQuiz('q3-1', 1, true, 'Chính xác! Khi low và high cùng là các số nguyên lớn gần giới hạn kiểu dữ liệu (VD: 1.5*10^9 với int hoặc 10^18 với long long), phép cộng (low + high) sẽ bị tràn số (Integer Overflow).')" class="quiz-btn-q3-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">B. Tránh lỗi tràn số nguyên (Integer Overflow) khi cộng hai số lớn</button>
+                <button onclick="checkQuiz('q3-1', 2, false, 'Sai. Tốc độ thực thi của hai biểu thức là tương đương.')" class="quiz-btn-q3-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">C. Giúp CPU tối ưu hóa lệnh phân nhánh nhánh rẽ nhanh gấp 2 lần</button>
+                <button onclick="checkQuiz('q3-1', 3, false, 'Sai. Trình biên dịch hiểu cả hai cú pháp.')" class="quiz-btn-q3-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">D. Bắt buộc theo tiêu chuẩn C++20 mới biên dịch được</button>
+              </div>
+              <div id="feedback-q3-1" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+
+            <!-- Q3-2 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 3.2:</strong> Hàm <code>std::lower_bound</code> trong C++ STL trả về con trỏ (iterator) trỏ tới phần tử nào trong một mảng đã sắp xếp tăng dần?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q3-2', 0, false, 'Sai. Đó là hàm upper_bound.')" class="quiz-btn-q3-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">A. Phần tử đầu tiên có giá trị lớn hơn hẳn giá trị cần tìm ($> X$)</button>
+                <button onclick="checkQuiz('q3-2', 1, true, 'Chính xác! lower_bound tìm phần tử đầu tiên >= X. Trong khi upper_bound tìm phần tử đầu tiên > X.')" class="quiz-btn-q3-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">B. Phần tử đầu tiên có giá trị lớn hơn hoặc bằng giá trị cần tìm ($\ge X$)</button>
+                <button onclick="checkQuiz('q3-2', 2, false, 'Sai.')" class="quiz-btn-q3-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">C. Phần tử cuối cùng có giá trị nhỏ hơn giá trị cần tìm</button>
+                <button onclick="checkQuiz('q3-2', 3, false, 'Sai. Nếu không có giá trị bằng X, lower_bound trỏ tới phần tử lớn hơn đầu tiên.')" class="quiz-btn-q3-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">D. Luôn trả về iterator trỏ tới đúng giá trị X, nếu không có thì trả về end()</button>
+              </div>
+              <div id="feedback-q3-2" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+
+            <!-- Q3-3 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 3.3:</strong> Trong bài toán "Chặt nhị phân trên tập số thực" (Binary Search on Reals) tìm nghiệm phương trình hoặc khoảng cách với sai số $\le 10^{-6}$, cách kiểm soát vòng lặp nào sau đây an toàn nhất để tránh vòng lặp vô hạn do sai số dấu phẩy động?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q3-3', 0, false, 'Sai. high > low có thể không bao giờ kết thúc trên số thực.')" class="quiz-btn-q3-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">A. Dùng vòng lặp while (low < high)</button>
+                <button onclick="checkQuiz('q3-3', 1, true, 'Chính xác! Lặp cố định 60 đến 100 lần (for iter = 0; iter < 100; ++iter) sẽ thu hẹp không gian tìm kiếm 2^100 lần, đạt độ chính xác cực cao và tuyệt đối không bao giờ bị Time Limit do lỗi số học.')" class="quiz-btn-q3-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">B. Chạy vòng lặp cố định 60 - 100 lần (Fixed iterations loop)</button>
+                <button onclick="checkQuiz('q3-3', 2, false, 'Sai. Ép kiểu int làm mất thông tin số thực.')" class="quiz-btn-q3-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">C. Ép kiểu số thực về số nguyên rồi dùng tìm kiếm nhị phân thông thường</button>
+                <button onclick="checkQuiz('q3-3', 3, false, 'Sai. Đệ quy không giải quyết được vấn đề sai số float.')" class="quiz-btn-q3-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">D. Dùng đệ quy không giới hạn độ sâu</button>
+              </div>
+              <div id="feedback-q3-3" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+
+            <!-- Q3-4 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 3.4:</strong> Khi một hàm mục tiêu $f(x)$ có tính chất đơn đỉnh (Unimodal - tăng dần đến cực đại rồi giảm dần hoặc ngược lại), thuật toán tìm kiếm nào được áp dụng để tìm điểm cực trị trong $O(log N)$?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q3-4', 0, false, 'Sai. Tìm kiếm nhị phân cần hàm đơn điệu tăng hoặc giảm.')" class="quiz-btn-q3-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">A. Tìm kiếm nhị phân (Binary Search)</button>
+                <button onclick="checkQuiz('q3-4', 1, true, 'Chính xác! Tìm kiếm tam phân (Ternary Search) chia đoạn tìm kiếm thành 3 phần bằng 2 điểm m1, m2 để loại bỏ 1/3 không gian nghiệm ở mỗi bước.')" class="quiz-btn-q3-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">B. Tìm kiếm tam phân (Ternary Search)</button>
+                <button onclick="checkQuiz('q3-4', 2, false, 'Sai. BFS dùng trên đồ thị.')" class="quiz-btn-q3-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">C. Tìm kiếm theo chiều rộng (BFS)</button>
+                <button onclick="checkQuiz('q3-4', 3, false, 'Sai. Thuật toán loang không phù hợp.')" class="quiz-btn-q3-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">D. Thuật toán loang lũ tràn (Flood Fill)</button>
+              </div>
+              <div id="feedback-q3-4" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- ==================== BÀI 4 ==================== -->
+      <section id="bai4" class="lesson-section bg-white dark:bg-dark-surface rounded-2xl border border-gray-200 dark:border-gray-800 p-6 sm:p-8 shadow-sm">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold text-lg shadow-md shadow-blue-500/20">04</span>
+          <div>
+            <span class="text-xs font-semibold tracking-wider text-blue-600 dark:text-blue-400 uppercase">Chuyên đề 4 • Toán học & Số học</span>
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">Số Học & Lý Thuyết Số Trong Thi HSG (Number Theory & Math)</h2>
+          </div>
+        </div>
+
+        <div class="prose dark:prose-invert max-w-none space-y-6 text-sm sm:text-base leading-relaxed">
+          <p class="text-gray-700 dark:text-gray-300">
+            Số học là "mỏ điểm" trong hầu hết các đề thi HSG Tỉnh và Quốc gia. Các bài toán thường yêu cầu kết quả lấy dư theo modulo $10^9 + 7$ hoặc $998244353$. Thí sinh bắt buộc phải nhuần nhuyễn các thuật toán số học có độ phức tạp $O(log N)$ hoặc tiền xử lý $O(N)$ để trả lời truy vấn trong $O(1)$.
+          </p>
+
+          <!-- Core Formulas Grid -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
+            <div class="p-4 rounded-xl bg-blue-50/70 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-900/50">
+              <h4 class="font-bold text-blue-900 dark:text-blue-300 mb-2 text-sm sm:text-base">
+                <i class="fa-solid fa-bolt text-blue-600"></i> Lũy Thừa Nhị Phân & Nghịch Đảo Modulo
+              </h4>
+              <p class="text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+                Tính $A^B \pmod M$ trong $O(\log B)$. Khi $M$ là số nguyên tố (như $10^9+7$) và $A$ không chia hết cho $M$, theo định lý Fermat nhỏ: $A^{M-1} \equiv 1 \pmod M$, do đó nghịch đảo modulo của $A$ là $A^{-1} \equiv A^{M-2} \pmod M$. Với $B$ không chia hết cho $M$, phép chia $(A / B) \pmod M$ được chuyển thành $(A \times B^{M-2}) \pmod M$.
+              </p>
+            </div>
+            <div class="p-4 rounded-xl bg-cyan-50/70 dark:bg-cyan-950/30 border border-cyan-200 dark:border-cyan-900/50">
+              <h4 class="font-bold text-cyan-900 dark:text-cyan-300 mb-2 text-sm sm:text-base">
+                <i class="fa-solid fa-cubes text-cyan-600"></i> Tổ Hợp $C_N^K$ & Sàng Số Nguyên Tố SPF
+              </h4>
+              <p class="text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+                Tiền xử lý mảng giai thừa <code>fact[i]</code> và nghịch đảo giai thừa <code>invFact[i]</code> trong $O(N)$, với $N < M$ khi modulo nguyên tố $M$, cho phép tính $C_N^K = \frac{N!}{K!(N-K)!}$ trong $O(1)$ mỗi truy vấn. Sàng Smallest Prime Factor (SPF) giúp phân tích thừa số nguyên tố của bất kỳ số nào $\le 10^7$ trong $O(\log N)$.
+              </p>
+            </div>
+          </div>
+
+          <!-- Code Modular Arithmetic -->
+          <div class="rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 bg-gray-900 text-gray-100 p-4">
+            <div class="flex justify-between items-center pb-2 mb-3 border-b border-gray-700 text-xs text-gray-400">
+              <span class="font-mono text-cyan-400"><i class="fa-solid fa-code mr-1"></i> math_combinatorics.cpp</span>
+              <span>Lũy thừa nhanh & Tổ hợp $O(1)$ Modulo $10^9+7$</span>
+            </div>
+            <pre class="overflow-x-auto text-xs sm:text-sm text-gray-200 leading-relaxed font-mono"><code>#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+const int MOD = 1e9 + 7;
+const int MAXN = 1e6 + 5;
+long long fact[MAXN], invFact[MAXN];
+
+long long power(long long base, long long exp) {
+    long long res = 1;
+    base %= MOD;
+    while (exp &gt; 0) {
+        if (exp % 2 == 1) res = (res * base) % MOD;
+        base = (base * base) % MOD;
+        exp /= 2;
+    }
+    return res;
+}
+
+long long modInverse(long long n) {
+    return power(n, MOD - 2); // Chỉ đúng nếu n % MOD != 0
+}
+
+void precompute() {
+    fact[0] = 1;
+    invFact[0] = 1;
+    for (int i = 1; i &lt; MAXN; i++) {
+        fact[i] = (fact[i - 1] * i) % MOD;
+    }
+    invFact[MAXN - 1] = modInverse(fact[MAXN - 1]);
+    for (int i = MAXN - 2; i &gt;= 1; i--) {
+        invFact[i] = (invFact[i + 1] * (i + 1)) % MOD;
+    }
+}
+
+long long nCr(int n, int r) {
+    if (r &lt; 0 || r &gt; n) return 0;
+    if (n &gt;= MAXN) throw out_of_range("n exceeds precomputed range");
+    return fact[n] * invFact[r] % MOD * invFact[n - r] % MOD;
+}</code></pre>
+          </div>
+        </div>
+
+        <!-- Quizzes Bài 4 -->
+        <div class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-800">
+          <h3 class="font-bold text-base sm:text-lg text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+            <i class="fa-solid fa-list-check text-blue-600"></i> Bài Tập Trắc Nghiệm Thuật Toán (Bài 4)
+          </h3>
+          <div class="space-y-4">
+            <!-- Q4-1 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 4.1:</strong> Để tính số Fibonacci thứ $N$ ($N \le 10^{18}$) chia lấy dư cho $10^9 + 7$, phương pháp nào sau đây đạt độ phức tạp thời gian tối ưu $O(log N)$?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q4-1', 0, false, 'Sai. Quy hoạch động O(N) với N = 10^18 sẽ tốn hàng nghìn năm.')" class="quiz-btn-q4-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">A. Dùng mảng quy hoạch động 1D lặp từ 1 đến N</button>
+                <button onclick="checkQuiz('q4-1', 1, true, 'Chính xác! Nhân ma trận nhị phân (Matrix Exponentiation) với ma trận cơ sở [[1, 1], [1, 0]] lũy thừa bậc N-1 tính trong O(2^3 * log N) cực kỳ nhanh.')" class="quiz-btn-q4-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">B. Nhân ma trận và lũy thừa nhanh ma trận (Matrix Exponentiation)</button>
+                <button onclick="checkQuiz('q4-1', 2, false, 'Sai. Công thức Binet dùng số thực căn bậc hai sẽ bị sai số lớn và không áp dụng được modulo 10^9+7.')" class="quiz-btn-q4-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">C. Dùng công thức Binet với số thực sqrt(5)</button>
+                <button onclick="checkQuiz('q4-1', 3, false, 'Sai. Đệ quy thông thường có độ phức tạp hàm mũ O(1.618^N).')" class="quiz-btn-q4-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">D. Đệ quy F(N) = F(N-1) + F(N-2)</button>
+              </div>
+              <div id="feedback-q4-1" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+
+            <!-- Q4-2 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 4.2:</strong> Theo Định lý Fermat nhỏ, nếu $P$ là một số nguyên tố và số nguyên $A$ không chia hết cho $P$, nghịch đảo modulo của $A$ theo modulo $P$ bằng:
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q4-2', 0, false, 'Sai. A^(P-1) đồng dư với 1.')" class="quiz-btn-q4-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">A. $A^{P-1} \pmod P$</button>
+                <button onclick="checkQuiz('q4-2', 1, true, 'Chính xác! Do A * A^(P-2) = A^(P-1) ≡ 1 (mod P), nên A^(P-2) chính là nghịch đảo nhân modular của A.')" class="quiz-btn-q4-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">B. $A^{P-2} \pmod P$</button>
+                <button onclick="checkQuiz('q4-2', 2, false, 'Sai.')" class="quiz-btn-q4-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">C. $A^P \pmod P$</button>
+                <button onclick="checkQuiz('q4-2', 3, false, 'Sai.')" class="quiz-btn-q4-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">D. $(P - A) \pmod P$</button>
+              </div>
+              <div id="feedback-q4-2" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+
+            <!-- Q4-3 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 4.3:</strong> Thuật toán Euclid mở rộng (Extended Euclidean Algorithm) tìm nghiệm nguyên $(x, y)$ của phương trình vô định nào?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q4-3', 0, false, 'Sai. Đó là phương trình Fermat.')" class="quiz-btn-q4-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">A. $x^2 + y^2 = z^2$</button>
+                <button onclick="checkQuiz('q4-3', 1, true, 'Chính xác! Euclid mở rộng giải phương trình Ax + By = gcd(A, B), ứng dụng tìm nghịch đảo modulo khi modulo không nhất thiết là số nguyên tố.')" class="quiz-btn-q4-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">B. $A cdot x + B cdot y = gcd(A, B)$</button>
+                <button onclick="checkQuiz('q4-3', 2, false, 'Sai.')" class="quiz-btn-q4-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">C. $A^x \equiv B^y \pmod M$</button>
+                <button onclick="checkQuiz('q4-3', 3, false, 'Sai.')" class="quiz-btn-q4-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">D. $x \pmod A = y \pmod B$</button>
+              </div>
+              <div id="feedback-q4-3" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+
+            <!-- Q4-4 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 4.4:</strong> Sàng phân đoạn (Segmented Sieve) thường được sử dụng trong tình huống nào trong đề thi HSG?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q4-4', 0, false, 'Sai. Khi N <= 10^7 chỉ cần sàng Eratosthenes thông thường.')" class="quiz-btn-q4-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">A. Khi cần đếm số nguyên tố từ 1 đến $10^7$</button>
+                <button onclick="checkQuiz('q4-4', 1, true, 'Chính xác! Khi R lên tới 10^12 không thể tạo mảng bool kích thước 10^12 do tràn bộ nhớ (MLE), nhưng nếu R - L <= 10^6 thì chỉ cần sàng các số nguyên tố nhỏ tới sqrt(R) rồi sàng trên đoạn [L, R].')" class="quiz-btn-q4-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">B. Khi cần tìm các số nguyên tố trong đoạn $[L, R]$ với $R \le 10^{12}$ nhưng $(R - L) \le 10^6$</button>
+                <button onclick="checkQuiz('q4-4', 2, false, 'Sai. Phân tích thừa số N dùng thuật toán Pollard Rho.')" class="quiz-btn-q4-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">C. Khi cần phân tích một số duy nhất $N \le 10^{18}$ thành thừa số nguyên tố</button>
+                <button onclick="checkQuiz('q4-4', 3, false, 'Sai.')" class="quiz-btn-q4-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">D. Khi modulo không phải là số nguyên tố</button>
+              </div>
+              <div id="feedback-q4-4" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== BÀI 5 ==================== -->
+      <section id="bai5" class="lesson-section bg-white dark:bg-dark-surface rounded-2xl border border-gray-200 dark:border-gray-800 p-6 sm:p-8 shadow-sm">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold text-lg shadow-md shadow-blue-500/20">05</span>
+          <div>
+            <span class="text-xs font-semibold tracking-wider text-blue-600 dark:text-blue-400 uppercase">Chuyên đề 5 • Trọng tâm bài thi HSG</span>
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">Quy Hoạch Động Cơ Bản Đến Trung Cấp (Dynamic Programming - DP)</h2>
+          </div>
+        </div>
+
+        <div class="prose dark:prose-invert max-w-none space-y-6 text-sm sm:text-base leading-relaxed">
+          <p class="text-gray-700 dark:text-gray-300">
+            <strong>Quy hoạch động (DP)</strong> là nội dung chiếm tỷ trọng điểm số cao nhất trong các kỳ thi chọn học sinh giỏi. Bản chất của DP là phân rã bài toán lớn thành các bài toán con gối nhau (Overlapping Subproblems) và có cấu trúc con tối ưu (Optimal Substructure), lưu kết quả vào bảng để không bao giờ phải tính toán lại.
+          </p>
+
+          <!-- Core Classic DP Models -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 my-4">
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <h4 class="font-bold text-blue-600 dark:text-blue-400 mb-1 text-sm">1. Dãy Con Tăng Dài Nhất (LIS)</h4>
+              <p class="text-xs text-gray-600 dark:text-gray-400">
+                Thuật toán $O(N^2)$ cơ bản nâng cấp lên <strong>$O(N log N)$</strong> bằng mảng <code>tail[]</code> kết hợp <code>lower_bound</code>.
+              </p>
+            </div>
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <h4 class="font-bold text-cyan-600 dark:text-cyan-400 mb-1 text-sm">2. Bài Toán Ba Lô (0/1 Knapsack)</h4>
+              <p class="text-xs text-gray-600 dark:text-gray-400">
+                Duyệt trọng lượng từ $W$ ngược về $w_i$: <code>dp[j] = max(dp[j], dp[j - w_i] + v_i)</code> trong không gian $O(W)$.
+              </p>
+            </div>
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <h4 class="font-bold text-indigo-600 dark:text-indigo-400 mb-1 text-sm">3. Dãy Con Chung Dài Nhất (LCS)</h4>
+              <p class="text-xs text-gray-600 dark:text-gray-400">
+                So khớp chuỗi $S_1, S_2$ trong $O(N \times M)$. Tối ưu bộ nhớ về 2 dòng luân phiên hoặc chuyển về LIS nếu ký tự đôi một khác nhau.
+              </p>
+            </div>
+          </div>
+
+          <!-- Code LIS O(N log N) -->
+          <div class="rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 bg-gray-900 text-gray-100 p-4">
+            <div class="flex justify-between items-center pb-2 mb-3 border-b border-gray-700 text-xs text-gray-400">
+              <span class="font-mono text-cyan-400"><i class="fa-solid fa-code mr-1"></i> lis_fast.cpp</span>
+              <span>Longest Increasing Subsequence $O(N log N)$ chuẩn thi quốc gia</span>
+            </div>
+            <pre class="overflow-x-auto text-xs sm:text-sm text-gray-200 leading-relaxed font-mono"><code>#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+// Trả về độ dài dãy con tăng dài nhất với N <= 2*10^5
+int lis(const vector&lt;int&gt;& a) {
+    vector&lt;int&gt; tail; // tail[i] lưu phần tử kết thúc nhỏ nhất của dãy con tăng độ dài i + 1
+
+    for (int x : a) {
+        auto it = lower_bound(tail.begin(), tail.end(), x);
+        if (it == tail.end()) {
+            tail.push_back(x); // Tạo dãy con tăng có độ dài mới lớn hơn
+        } else {
+            *it = x;           // Cập nhật giá trị kết thúc nhỏ hơn tối ưu cho tương lai
+        }
+    }
+    return tail.size();
+}</code></pre>
+          </div>
+        </div>
+
+        <!-- Quizzes Bài 5 -->
+        <div class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-800">
+          <h3 class="font-bold text-base sm:text-lg text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+            <i class="fa-solid fa-list-check text-blue-600"></i> Bài Tập Trắc Nghiệm Thuật Toán (Bài 5)
+          </h3>
+          <div class="space-y-4">
+            <!-- Q5-1 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 5.1:</strong> Trong bài toán Ba lô 0/1 (mỗi đồ vật chỉ được chọn tối đa 1 lần) tối ưu không gian trạng thái về mảng 1D <code>dp[j]</code>, vì sao vòng lặp trọng lượng $j$ phải chạy ngược từ $W$ giảm về $w_i$?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q5-1', 0, false, 'Sai. Chạy xuôi hay ngược đều tốn cùng số phép tính.')" class="quiz-btn-q5-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">A. Để tăng tốc độ truy cập bộ nhớ cache của CPU</button>
+                <button onclick="checkQuiz('q5-1', 1, true, 'Chính xác! Nếu duyệt xuôi, giá trị dp[j - w_i] đã được cập nhật bởi đồ vật i hiện tại, dẫn tới một đồ vật bị sử dụng nhiều lần (biến thành bài toán ba lô không giới hạn). Duyệt ngược đảm bảo dp[j - w_i] luôn là giá trị từ bước xét đồ vật trước.')" class="quiz-btn-q5-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">B. Tránh việc một đồ vật bị chọn nhiều lần liên tiếp trong cùng một bước</button>
+                <button onclick="checkQuiz('q5-1', 2, false, 'Sai.')" class="quiz-btn-q5-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">C. Để không phải kiểm tra điều kiện j >= w_i</button>
+                <button onclick="checkQuiz('q5-1', 3, false, 'Sai.')" class="quiz-btn-q5-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">D. Để có thể in ra kết quả truy vết trực tiếp</button>
+              </div>
+              <div id="feedback-q5-1" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+
+            <!-- Q5-2 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 5.2:</strong> Thuật toán tìm Dãy con tăng dài nhất (LIS) cải tiến bằng mảng <code>tail[]</code> và hàm <code>std::lower_bound</code> có độ phức tạp thời gian là bao nhiêu?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q5-2', 0, false, 'Sai. O(N^2) là thuật toán quy hoạch động cổ điển 2 vòng for.')" class="quiz-btn-q5-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">A. $O(N^2)$</button>
+                <button onclick="checkQuiz('q5-2', 1, true, 'Chính xác! Với N phần tử, mỗi phần tử thực hiện 1 lần lower_bound trên mảng tail mất O(log N). Tổng thời gian O(N log N).')" class="quiz-btn-q5-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">B. $O(N \log N)$</button>
+                <button onclick="checkQuiz('q5-2', 2, false, 'Sai. Không thể đạt O(N) trong trường hợp tổng quát so sánh.')" class="quiz-btn-q5-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">C. $O(N)$</button>
+                <button onclick="checkQuiz('q5-2', 3, false, 'Sai.')" class="quiz-btn-q5-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">D. $O(N \sqrt{N})$</button>
+              </div>
+              <div id="feedback-q5-2" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+
+            <!-- Q5-3 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 5.3:</strong> Trong bài toán Balo 0/1 có $N \le 100$, nhưng trọng lượng $W \le 10^9$ và tổng giá trị  $\sum V_i \le 10^5$. Cách đổi chiều trạng thái DP nào giúp giải bài toán này?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q5-3', 0, false, 'Sai. Bảng DP kích thước 10^9 sẽ tràn bộ nhớ (Memory Limit Exceeded).')" class="quiz-btn-q5-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">A. Vẫn duy trì dp[j] là giá trị lớn nhất với trọng lượng j</button>
+                <button onclick="checkQuiz('q5-3', 1, true, 'Chính xác! Đổi trạng thái: dp[v] là trọng lượng nhỏ nhất để đạt được tổng giá trị v. Kích thước mảng chỉ là sum(V) <= 10^5, độ phức tạp O(N * sum(V)). Cuối cùng tìm giá trị v lớn nhất có dp[v] <= W.')" class="quiz-btn-q5-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">B. Đổi trạng thái: $dp[v]$ là trọng lượng nhỏ nhất cần có để thu được tổng giá trị $v$</button>
+                <button onclick="checkQuiz('q5-3', 2, false, 'Sai. Thuật toán tham lam không cho kết quả tối ưu trên Balo 0/1.')" class="quiz-btn-q5-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">C. Áp dụng tham lam chọn vật có đơn giá V/W cao nhất</button>
+                <button onclick="checkQuiz('q5-3', 3, false, 'Sai. 2^100 phép tính không thể hoàn thành trong 1 giây.')" class="quiz-btn-q5-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">D. Dùng đệ quy nhánh cận duyệt qua 2^N trạng thái</button>
+              </div>
+              <div id="feedback-q5-3" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+
+            <!-- Q5-4 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 5.4:</strong> Để truy vết nghiệm tối ưu (tìm danh sách cụ thể các phần tử được chọn) sau khi hoàn tất bảng quy hoạch động, ta thường thực hiện thao tác gì?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q5-4', 0, false, 'Sai. Sắp xếp mảng phá vỡ thứ tự ban đầu.')" class="quiz-btn-q5-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">A. Sắp xếp lại bảng DP theo thứ tự tăng dần</button>
+                <button onclick="checkQuiz('q5-4', 1, true, 'Chính xác! Đi ngược từ trạng thái đích về trạng thái gốc dựa vào việc kiểm tra giá trị dp hiện tại được chuyển đến từ ô trạng thái nào trước đó (hoặc dùng mảng trace[][] lưu lại quyết định).')" class="quiz-btn-q5-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">B. Đi ngược từ kết quả tối ưu về trạng thái ban đầu bằng việc kiểm tra công thức chuyển hoặc mảng vết</button>
+                <button onclick="checkQuiz('q5-4', 2, false, 'Sai.')" class="quiz-btn-q5-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">C. Chạy lại thuật toán từ đầu với tham số gấp đôi</button>
+                <button onclick="checkQuiz('q5-4', 3, false, 'Sai.')" class="quiz-btn-q5-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">D. In trực tiếp phần tử ở góc bảng dp[N][W]</button>
+              </div>
+              <div id="feedback-q5-4" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== BÀI 6 ==================== -->
+      <section id="bai6" class="lesson-section bg-white dark:bg-dark-surface rounded-2xl border border-gray-200 dark:border-gray-800 p-6 sm:p-8 shadow-sm">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold text-lg shadow-md shadow-blue-500/20">06</span>
+          <div>
+            <span class="text-xs font-semibold tracking-wider text-blue-600 dark:text-blue-400 uppercase">Chuyên đề 6 • Thuật toán chuyên sâu</span>
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">Quy Hoạch Động Nâng Cao (Bitmask, Tree DP & Digit DP)</h2>
+          </div>
+        </div>
+
+        <div class="prose dark:prose-invert max-w-none space-y-6 text-sm sm:text-base leading-relaxed">
+          <p class="text-gray-700 dark:text-gray-300">
+            Để đạt giải Nhất Tỉnh hoặc giải Quốc gia (VOI), thí sinh cần bứt phá ở các bài toán Quy hoạch động nâng cao. Dấu hiệu đặc trưng: giới hạn $N$ nhỏ ($N \le 20$) gợi ý <strong>Bitmask DP</strong>, dữ liệu dạng cây tự do gợi ý <strong>Tree DP</strong>, hoặc đếm số lượng số trong khoảng $[A, B]$ thỏa mãn tính chất gợi ý <strong>Digit DP</strong>.
+          </p>
+
+          <!-- Advanced Models -->
+          <div class="space-y-4 my-4">
+            <div class="p-4 rounded-xl bg-blue-50/70 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-900/50">
+              <h4 class="font-bold text-blue-900 dark:text-blue-300 text-sm sm:text-base mb-1">
+                <i class="fa-solid fa-microchip text-blue-600"></i> Quy Hoạch Động Trạng Thái Bit (Bitmask DP)
+              </h4>
+              <p class="text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+                Sử dụng các bit nhị phân $0$ và $1$ của một số nguyên biểu diễn tập hợp con của $N$ phần tử ($N \le 20$). Số trạng thái là $2^N$. Các thao tác bit: kiểm tra phần tử $i$ có trong mask: <code>(mask >> i) & 1</code>; thêm phần tử $i$: <code>mask | (1 << i)</code>; tắt phần tử: <code>mask & ~(1 << i)</code>. Điển hình: Bài toán người du lịch (TSP) $O(2^N \times N^2)$.
+              </p>
+            </div>
+            <div class="p-4 rounded-xl bg-emerald-50/70 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-900/50">
+              <h4 class="font-bold text-emerald-900 dark:text-emerald-300 text-sm sm:text-base mb-1">
+                <i class="fa-solid fa-network-wired text-emerald-600"></i> Quy Hoạch Động Trên Cây (Tree DP & Rerooting)
+              </h4>
+              <p class="text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+                Thực hiện DFS duyệt cây từ dưới lên (Bottom-up). Trạng thái <code>dp[u]</code> được tính dựa trên kết quả của tất cả các nút con <code>dp[v]</code> của $u$. Kỹ thuật <strong>Rerooting DP</strong> (Quy hoạch động đổi gốc) giúp tính đáp án cho mọi đỉnh đóng vai trò là gốc cây trong thời gian tổng $O(N)$ thay vì $O(N^2)$.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quizzes Bài 6 -->
+        <div class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-800">
+          <h3 class="font-bold text-base sm:text-lg text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+            <i class="fa-solid fa-list-check text-blue-600"></i> Bài Tập Trắc Nghiệm Thuật Toán (Bài 6)
+          </h3>
+          <div class="space-y-4">
+            <!-- Q6-1 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 6.1:</strong> Biểu thức thao tác bit nào trong C++ dùng để kiểm tra xem bit thứ $k$ (tính từ 0) của số nguyên <code>mask</code> có đang bật (bằng 1) hay không?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q6-1', 0, false, 'Sai. mask & (1 >> k) luôn bằng 0 nếu k > 0.')" class="quiz-btn-q6-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">A. <code>(mask & (1 &gt;&gt; k)) != 0</code></button>
+                <button onclick="checkQuiz('q6-1', 1, true, 'Chính xác! Dịch phải mask đi k bit rồi AND với 1: ((mask >> k) & 1), hoặc kiểm tra (mask & (1 << k)) != 0.')" class="quiz-btn-q6-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">B. <code>((mask &gt;&gt; k) & 1) == 1</code></button>
+                <button onclick="checkQuiz('q6-1', 2, false, 'Sai. mask | (1 << k) dùng để bật bit thứ k lên 1.')" class="quiz-btn-q6-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">C. <code>(mask | (1 &lt;&lt; k)) != 0</code></button>
+                <button onclick="checkQuiz('q6-1', 3, false, 'Sai. Phép XOR không kiểm tra bit.')" class="quiz-btn-q6-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">D. <code>(mask ^ (1 &lt;&lt; k)) == 0</code></button>
+              </div>
+              <div id="feedback-q6-1" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+
+            <!-- Q6-2 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 6.2:</strong> Trong bài toán đếm số lượng các số nguyên thuộc đoạn $[A, B]$ ($1 \le A \le B \le 10^{18}$) có tổng các chữ số chia hết cho 13, phương pháp nào là chuẩn mực?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q6-2', 0, false, 'Sai. B lên tới 10^18 không thể duyệt lặp.')" class="quiz-btn-q6-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">A. Duyệt vòng for i từ A đến B rồi tính tổng chữ số</button>
+                <button onclick="checkQuiz('q6-2', 1, true, 'Chính xác! Quy hoạch động chữ số (Digit DP) với hàm đếm f(X) tính số lượng số thỏa mãn từ 1 đến X với các trạng thái (vị trí chữ số, tổng dư mod 13, cờ under_limit, cờ leading_zero). Kết quả = f(B) - f(A - 1).')" class="quiz-btn-q6-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">B. Quy hoạch động chữ số (Digit DP) kết hợp tính $f(B) - f(A - 1)$</button>
+                <button onclick="checkQuiz('q6-2', 2, false, 'Sai. Sàng Eratosthenes dùng cho số nguyên tố.')" class="quiz-btn-q6-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">C. Áp dụng sàng phân đoạn</button>
+                <button onclick="checkQuiz('q6-2', 3, false, 'Sai.')" class="quiz-btn-q6-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">D. Dùng công thức tổ hợp Euler phi</button>
+              </div>
+              <div id="feedback-q6-2" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+
+            <!-- Q6-3 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 6.3:</strong> Độ phức tạp thời gian khi giải bài toán Người du lịch (TSP) có $N \le 20$ đỉnh bằng Quy hoạch động Bitmask là:
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q6-3', 0, false, 'Sai. O(N!) là thuật toán quay lui không nhớ, với N = 20 thì 20! = 2.4*10^18 sẽ bị TLE.')" class="quiz-btn-q6-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">A. $O(N!)$</button>
+                <button onclick="checkQuiz('q6-3', 1, true, 'Chính xác! Có 2^N trạng thái tập đỉnh đã thăm và N đỉnh kết thúc hiện tại, mỗi lần chuyển trạng thái duyệt qua N đỉnh kế tiếp, thời gian là O(2^N * N^2). Với N = 20, chặn trên thô là khoảng 4*10^8 lượt chuyển trạng thái; thời gian thực tế phụ thuộc cài đặt và máy chấm.')" class="quiz-btn-q6-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">B. $O(2^N \times N^2)$</button>
+                <button onclick="checkQuiz('q6-3', 2, false, 'Sai.')" class="quiz-btn-q6-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">C. $O(N^3)$</button>
+                <button onclick="checkQuiz('q6-3', 3, false, 'Sai.')" class="quiz-btn-q6-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">D. $O(3^N)$</button>
+              </div>
+              <div id="feedback-q6-3" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+
+            <!-- Q6-4 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 6.4:</strong> Trong một cây tự do $N$ đỉnh, ta cần tính tổng khoảng cách từ đỉnh $u$ đến tất cả các đỉnh còn lại cho mọi $u \in [1, N]$. Kỹ thuật nào tối ưu nhất?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q6-4', 0, false, 'Sai. Chạy BFS từ mỗi đỉnh mất O(N * (N + N)) = O(N^2), sẽ TLE khi N = 2*10^5.')" class="quiz-btn-q6-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">A. Chạy thuật toán BFS/DFS từ từng đỉnh $u$ trong $O(N^2)$</button>
+                <button onclick="checkQuiz('q6-4', 1, true, 'Chính xác! Rerooting Tree DP (Quy hoạch động đổi gốc) gồm 2 lần DFS: DFS 1 tính kích thước cây con và đáp án cho gốc 1; DFS 2 đẩy đáp án sang các nút con v theo công thức: ans[v] = ans[u] - size[v] + (N - size[v]) trong đúng O(N).')" class="quiz-btn-q6-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">B. Kỹ thuật Đổi gốc cây (Rerooting DP) gồm 2 lần duyệt DFS với độ phức tạp $O(N)$</button>
+                <button onclick="checkQuiz('q6-4', 2, false, 'Sai. Floyd-Warshall mất O(N^3) bộ nhớ và thời gian.')" class="quiz-btn-q6-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">C. Áp dụng thuật toán Floyd-Warshall $O(N^3)$</button>
+                <button onclick="checkQuiz('q6-4', 3, false, 'Sai.')" class="quiz-btn-q6-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">D. Tính khoảng cách qua LCA cho mọi cặp đỉnh trong $O(N^2 log N)$</button>
+              </div>
+              <div id="feedback-q6-4" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== BÀI 7 ==================== -->
+      <section id="bai7" class="lesson-section bg-white dark:bg-dark-surface rounded-2xl border border-gray-200 dark:border-gray-800 p-6 sm:p-8 shadow-sm">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold text-lg shadow-md shadow-blue-500/20">07</span>
+          <div>
+            <span class="text-xs font-semibold tracking-wider text-blue-600 dark:text-blue-400 uppercase">Chuyên đề 7 • Đồ thị căn bản</span>
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">Lý Thuyết Đồ Thị Cơ Bản (Graph: BFS, DFS, Dijkstra & Kruskal)</h2>
+          </div>
+        </div>
+
+        <div class="prose dark:prose-invert max-w-none space-y-6 text-sm sm:text-base leading-relaxed">
+          <p class="text-gray-700 dark:text-gray-300">
+            Lý thuyết đồ thị là một nửa linh hồn của lập trình thi đấu. Một bài thi HSG Tin học THPT hầu như luôn có ít nhất 1 bài thuần đồ thị hoặc quy về mô hình đồ thị. Thí sinh phải cài đặt trơn tru danh sách kề <code>vector&lt;pair&lt;int, int&gt;&gt; adj[]</code>, Dijkstra với hàng đợi ưu tiên và cấu trúc dữ liệu các tập không giao nhau DSU.
+          </p>
+
+          <!-- Graph Algorithms Reference Table -->
+          <div class="overflow-x-auto my-4">
+            <table class="w-full text-xs sm:text-sm text-left border-collapse border border-gray-200 dark:border-gray-700">
+              <thead class="bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">
+                <tr>
+                  <th class="p-3 border border-gray-200 dark:border-gray-700">Thuật toán</th>
+                  <th class="p-3 border border-gray-200 dark:border-gray-700">Mục đích bài toán</th>
+                  <th class="p-3 border border-gray-200 dark:border-gray-700">Độ phức tạp</th>
+                  <th class="p-3 border border-gray-200 dark:border-gray-700">Lưu ý quan trọng</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+                <tr>
+                  <td class="p-3 font-semibold text-blue-600 dark:text-blue-400 border border-gray-200 dark:border-gray-700">BFS (Breadth-First Search)</td>
+                  <td class="p-3 border border-gray-200 dark:border-gray-700">Đường đi ngắn nhất trên đồ thị trọng số bằng nhau (hoặc trọng số 0-1 dùng deque)</td>
+                  <td class="p-3 font-mono border border-gray-200 dark:border-gray-700">O(V + E)</td>
+                  <td class="p-3 border border-gray-200 dark:border-gray-700">Dùng <code>std::queue</code>, đánh dấu <code>visited</code> ngay khi đẩy vào queue</td>
+                </tr>
+                <tr>
+                  <td class="p-3 font-semibold text-cyan-600 dark:text-cyan-400 border border-gray-200 dark:border-gray-700">Dijkstra</td>
+                  <td class="p-3 border border-gray-200 dark:border-gray-700">Đường đi ngắn nhất nguồn đơn từ đỉnh S trên đồ thị trọng số không âm</td>
+                  <td class="p-3 font-mono border border-gray-200 dark:border-gray-700">O((V + E) log V)</td>
+                  <td class="p-3 border border-gray-200 dark:border-gray-700">Dùng <code>priority_queue&lt;..., greater&gt;</code>, kiểm tra <code>if (d &gt; dist[u]) continue;</code></td>
+                </tr>
+                <tr>
+                  <td class="p-3 font-semibold text-amber-600 dark:text-amber-400 border border-gray-200 dark:border-gray-700">Kruskal (MST) + DSU</td>
+                  <td class="p-3 border border-gray-200 dark:border-gray-700">Cây khung nhỏ nhất (Minimum Spanning Tree)</td>
+                  <td class="p-3 font-mono border border-gray-200 dark:border-gray-700">O(E log E)</td>
+                  <td class="p-3 border border-gray-200 dark:border-gray-700">Cài DSU với <strong>Path Compression</strong> và <strong>Union by Rank</strong> ($O(\alpha(V))$)</td>
+                </tr>
+                <tr>
+                  <td class="p-3 font-semibold text-purple-600 dark:text-purple-400 border border-gray-200 dark:border-gray-700">Topological Sort (Kahn)</td>
+                  <td class="p-3 border border-gray-200 dark:border-gray-700">Thứ tự thực hiện công việc trên đồ thị có hướng không chu trình (DAG)</td>
+                  <td class="p-3 font-mono border border-gray-200 dark:border-gray-700">O(V + E)</td>
+                  <td class="p-3 border border-gray-200 dark:border-gray-700">Dùng mảng bán bậc vào <code>in_degree[]</code> và hàng đợi</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Quizzes Bài 7 -->
+        <div class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-800">
+          <h3 class="font-bold text-base sm:text-lg text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+            <i class="fa-solid fa-list-check text-blue-600"></i> Bài Tập Trắc Nghiệm Thuật Toán (Bài 7)
+          </h3>
+          <div class="space-y-4">
+            <!-- Q7-1 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 7.1:</strong> Thuật toán Dijkstra tìm đường đi ngắn nhất có thể cho kết quả sai trong trường hợp nào sau đây?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q7-1', 0, false, 'Sai. Đồ thị có hướng Dijkstra xử lý hoàn hảo.')" class="quiz-btn-q7-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">A. Đồ thị có hướng</button>
+                <button onclick="checkQuiz('q7-1', 1, true, 'Chính xác! Dijkstra dựa trên tính chất tham lam: khoảng cách ngắn nhất được chốt ngay khi đỉnh được lấy ra khỏi hàng đợi ưu tiên. Nếu có cạnh mang trọng số âm, giả định này bị phá vỡ. Khi đó phải dùng Bellman-Ford hoặc SPFA.')" class="quiz-btn-q7-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">B. Đồ thị tồn tại cạnh mang trọng số âm</button>
+                <button onclick="checkQuiz('q7-1', 2, false, 'Sai. Dijkstra xử lý tốt chu trình dương.')" class="quiz-btn-q7-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">C. Đồ thị có chu trình dương</button>
+                <button onclick="checkQuiz('q7-1', 3, false, 'Sai. Số đỉnh lớn chỉ ảnh hưởng thời gian, không sai kết quả.')" class="quiz-btn-q7-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">D. Số đỉnh vượt quá 100,000</button>
+              </div>
+              <div id="feedback-q7-1" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+
+            <!-- Q7-2 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 7.2:</strong> Trong Cấu trúc dữ liệu các tập không giao nhau (Disjoint Set Union - DSU), hai kỹ thuật tối ưu hóa nào giúp giảm thời gian mỗi phép tìm kiếm và hợp nhất xuống gần như hằng số $O(alpha(N))$?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q7-2', 0, false, 'Sai.')" class="quiz-btn-q7-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">A. Binary Lifting và Heavy-Light Decomposition</button>
+                <button onclick="checkQuiz('q7-2', 1, true, 'Chính xác! Nén đường đi (Path Compression: parent[u] = find(parent[u])) và Gộp theo hạng/kích thước (Union by Rank / Size) giúp chiều cao cây DSU không bao giờ vượt quá 4-5 bước.')" class="quiz-btn-q7-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">B. Nén đường đi (Path Compression) và Hợp nhất theo hạng (Union by Rank)</button>
+                <button onclick="checkQuiz('q7-2', 2, false, 'Sai. Không liên quan đến Segment Tree.')" class="quiz-btn-q7-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">C. Lazy propagation và Coordinate compression</button>
+                <button onclick="checkQuiz('q7-2', 3, false, 'Sai.')" class="quiz-btn-q7-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">D. Memoization và Bitwise shift</button>
+              </div>
+              <div id="feedback-q7-2" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+
+            <!-- Q7-3 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 7.3:</strong> Trên đồ thị vô hướng có trọng số các cạnh chỉ nhận một trong hai giá trị là $0$ hoặc $1$, thuật toán tìm đường đi ngắn nhất nào tối ưu nhất với độ phức tạp tuyến tính $O(V + E)$?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q7-3', 0, false, 'Sai. Dijkstra mất O((V + E) log V).')" class="quiz-btn-q7-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">A. Dijkstra với priority_queue</button>
+                <button onclick="checkQuiz('q7-3', 1, true, 'Chính xác! 0-1 BFS sử dụng std::deque: cạnh trọng số 0 đẩy vào đầu hàng đợi (push_front), cạnh trọng số 1 đẩy vào cuối (push_back), không cần sắp xếp logarit.')" class="quiz-btn-q7-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">B. Thuật toán 0-1 BFS sử dụng hàng đợi hai đầu <code>std::deque</code></button>
+                <button onclick="checkQuiz('q7-3', 2, false, 'Sai. Bellman-Ford mất O(V * E).')" class="quiz-btn-q7-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">C. Thuật toán Bellman-Ford</button>
+                <button onclick="checkQuiz('q7-3', 3, false, 'Sai.')" class="quiz-btn-q7-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">D. Thuật toán Kruskal</button>
+              </div>
+              <div id="feedback-q7-3" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+
+            <!-- Q7-4 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 7.4:</strong> Để kiểm tra xem một đồ thị vô hướng có phải là Đồ thị hai phía (Bipartite Graph / 2-colorable) hay không, ta sử dụng thuật toán nào?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q7-4', 0, false, 'Sai. Tìm kiếm nhị phân dùng trên mảng sắp xếp.')" class="quiz-btn-q7-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">A. Tìm kiếm nhị phân</button>
+                <button onclick="checkQuiz('q7-4', 1, true, 'Chính xác! Dùng BFS hoặc DFS tô 2 màu xen kẽ (0 và 1). Nếu gặp một cạnh nối 2 đỉnh kề nhau cùng màu thì đồ thị chứa chu trình có độ dài lẻ, kết luận không phải đồ thị hai phía.')" class="quiz-btn-q7-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">B. Duyệt BFS hoặc DFS tô 2 màu (Graph Coloring) và kiểm tra chu trình độ dài lẻ</button>
+                <button onclick="checkQuiz('q7-4', 2, false, 'Sai.')" class="quiz-btn-q7-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">C. Thuật toán tìm bao lồi Graham</button>
+                <button onclick="checkQuiz('q7-4', 3, false, 'Sai.')" class="quiz-btn-q7-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">D. Thuật toán nhân ma trận</button>
+              </div>
+              <div id="feedback-q7-4" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- ==================== BÀI 8 ==================== -->
+      <section id="bai8" class="lesson-section bg-white dark:bg-dark-surface rounded-2xl border border-gray-200 dark:border-gray-800 p-6 sm:p-8 shadow-sm">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold text-lg shadow-md shadow-blue-500/20">08</span>
+          <div>
+            <span class="text-xs font-semibold tracking-wider text-blue-600 dark:text-blue-400 uppercase">Chuyên đề 8 • Đồ thị nâng cao & Cây</span>
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">Đồ Thị Nâng Cao (Tarjan Khớp-Cầu, SCC & Tổ Tiên Chung LCA)</h2>
+          </div>
+        </div>
+
+        <div class="prose dark:prose-invert max-w-none space-y-6 text-sm sm:text-base leading-relaxed">
+          <p class="text-gray-700 dark:text-gray-300">
+            Các chuyên đề đồ thị nâng cao là thước đo phân hóa huy chương trong kỳ thi chọn Học sinh giỏi Quốc gia (VOI) và VNOI Cup. Hai thuật toán nổi bật nhất là <strong>Thuật toán Tarjan</strong> (tìm Khớp, Cầu, Thành phần liên thông mạnh SCC trong $O(V + E)$) và <strong>Nhảy nhị phân (Binary Lifting)</strong> tìm Tổ tiên chung gần nhất (LCA) trên cây trong $O(log N)$.
+          </p>
+
+          <!-- Core Concepts Grid -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
+            <div class="p-4 rounded-xl bg-blue-50/70 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-900/50">
+              <h4 class="font-bold text-blue-900 dark:text-blue-300 text-sm sm:text-base mb-1">
+                <i class="fa-solid fa-bridge text-blue-600"></i> Tarjan: Cầu & Khớp (Bridges & Articulation Points)
+              </h4>
+              <p class="text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+                Xây dựng DFS Tree và gán nhãn thời gian thăm <code>tin[u]</code> cùng giá trị <code>low[u]</code> (thời gian thăm nhỏ nhất của đỉnh mà từ con cháu của $u$ có thể đi tới qua cạnh ngược Back-edge). Cạnh $(u, v)$ là <strong>Cầu</strong> khi và chỉ khi <code>low[v] &gt; tin[u]</code>. Đỉnh $u$ là <strong>Khớp</strong> khi $u$ là gốc có $\ge 2$ con độc lập, hoặc $u$ không là gốc và tồn tại con $v$ sao cho <code>low[v] &ge; tin[u]</code>.
+              </p>
+            </div>
+            <div class="p-4 rounded-xl bg-purple-50/70 dark:bg-purple-950/30 border border-purple-200 dark:border-purple-900/50">
+              <h4 class="font-bold text-purple-900 dark:text-purple-300 text-sm sm:text-base mb-1">
+                <i class="fa-solid fa-sitemap text-purple-600"></i> Nhảy Nhị Phân & LCA (Binary Lifting)
+              </h4>
+              <p class="text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+                Khởi tạo bảng <code>up[u][j]</code> là tổ tiên thứ $2^j$ của đỉnh $u$: <code>up[u][j] = up[up[u][j - 1]][j - 1]</code> trong $O(N \log N)$. Để tìm LCA của $(u, v)$, trước hết nâng đỉnh sâu hơn lên cùng độ cao với đỉnh nông hơn, sau đó đồng thời nhảy các bước lũy thừa của 2 từ lớn đến nhỏ. Thời gian truy vấn mỗi cặp đỉnh chỉ mất <strong>$O(\log N)$</strong>.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quizzes Bài 8 -->
+        <div class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-800">
+          <h3 class="font-bold text-base sm:text-lg text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+            <i class="fa-solid fa-list-check text-blue-600"></i> Bài Tập Trắc Nghiệm Thuật Toán (Bài 8)
+          </h3>
+          <div class="space-y-4">
+            <!-- Q8-1 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 8.1:</strong> Trong thuật toán Tarjan trên đồ thị vô hướng, điều kiện để cạnh nối từ nút cha $u$ đến nút con $v$ ($v$ là con của $u$ trên cây DFS) là một "CẦU" (Bridge) là gì?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q8-1', 0, false, 'Sai. low[v] <= tin[u] nghĩa là con cháu v có đường nối ngược lên u hoặc tổ tiên của u, nên bỏ cạnh u-v đồ thị vẫn liên thông.')" class="quiz-btn-q8-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">A. <code>low[v] &lt;= tin[u]</code></button>
+                <button onclick="checkQuiz('q8-1', 1, true, 'Chính xác! low[v] > tin[u] có nghĩa là từ cây con gốc v không hề có cạnh ngược nào vươn lên tới u hoặc tổ tiên của u. Nếu cắt bỏ cạnh (u, v), thành phần con sẽ bị cô lập.')" class="quiz-btn-q8-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">B. <code>low[v] &gt; tin[u]</code></button>
+                <button onclick="checkQuiz('q8-1', 2, false, 'Sai. Đó là điều kiện cho đỉnh khớp.')" class="quiz-btn-q8-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">C. <code>low[v] == tin[u]</code></button>
+                <button onclick="checkQuiz('q8-1', 3, false, 'Sai.')" class="quiz-btn-q8-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">D. <code>low[u] &gt; tin[v]</code></button>
+              </div>
+              <div id="feedback-q8-1" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+
+            <!-- Q8-2 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 8.2:</strong> Khi thu gọn từng Thành phần liên thông mạnh (SCC) của một đồ thị có hướng thành một siêu đỉnh (Condensation Graph), đồ thị thu được luôn luôn có tính chất gì?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q8-2', 0, false, 'Sai. Đồ thị co cụm không có chu trình.')" class="quiz-btn-q8-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">A. Luôn chứa ít nhất một chu trình Euler</button>
+                <button onclick="checkQuiz('q8-2', 1, true, 'Chính xác! Đồ thị co cụm luôn là một DAG (Directed Acyclic Graph - đồ thị có hướng không chu trình). Ta có thể dễ dàng sắp xếp topo hoặc quy hoạch động trên DAG này.')" class="quiz-btn-q8-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">B. Là một đồ thị có hướng không chu trình (DAG)</button>
+                <button onclick="checkQuiz('q8-2', 2, false, 'Sai.')" class="quiz-btn-q8-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">C. Là một cây nhị phân hoàn hảo</button>
+                <button onclick="checkQuiz('q8-2', 3, false, 'Sai.')" class="quiz-btn-q8-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">D. Là đồ thị vô hướng hai phía</button>
+              </div>
+              <div id="feedback-q8-2" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+
+            <!-- Q8-3 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 8.3:</strong> Cho cây $N$ đỉnh. Để tìm Tổ tiên chung gần nhất (LCA) của $Q$ truy vấn cặp đỉnh $(u, v)$ ($N, Q \le 2 \times 10^5$), phương pháp Nhảy nhị phân (Binary Lifting) có độ phức tạp thời gian là:
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q8-3', 0, false, 'Sai. Tiền xử lý cần O(N log N).')" class="quiz-btn-q8-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">A. Tiền xử lý $O(N)$ và truy vấn $O(1)$</button>
+                <button onclick="checkQuiz('q8-3', 1, true, 'Chính xác! Tiền xử lý DFS và dựng mảng up[N][log N] mất O(N log N). Mỗi truy vấn nâng độ cao và nhảy log N bước mất O(log N). Tổng thời gian O(N log N + Q log N).')" class="quiz-btn-q8-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">B. Tiền xử lý $O(N \log N)$ và mỗi truy vấn mất $O(\log N)$</button>
+                <button onclick="checkQuiz('q8-3', 2, false, 'Sai. Đó là duyệt cha từng bước thông thường.')" class="quiz-btn-q8-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">C. Tiền xử lý $O(1)$ và mỗi truy vấn mất $O(N)$</button>
+                <button onclick="checkQuiz('q8-3', 3, false, 'Sai.')" class="quiz-btn-q8-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">D. Tiền xử lý $O(N^2)$ và mỗi truy vấn mất $O(1)$</button>
+              </div>
+              <div id="feedback-q8-3" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+
+            <!-- Q8-4 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 8.4:</strong> Khoảng cách (số cạnh) giữa hai đỉnh $u$ và $v$ bất kỳ trên cây có gốc với mảng độ sâu <code>depth[]</code> được tính qua LCA là:
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q8-4', 0, false, 'Sai công thức.')" class="quiz-btn-q8-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">A. $depth[u] + depth[v] - depth[LCA(u, v)]$</button>
+                <button onclick="checkQuiz('q8-4', 1, true, 'Chính xác! Đoạn đường từ u đến v đi qua LCA(u, v). Khoảng cách = (depth[u] - depth[LCA]) + (depth[v] - depth[LCA]) = depth[u] + depth[v] - 2 * depth[LCA(u, v)].')" class="quiz-btn-q8-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">B. $depth[u] + depth[v] - 2 \times depth[LCA(u, v)]$</button>
+                <button onclick="checkQuiz('q8-4', 2, false, 'Sai.')" class="quiz-btn-q8-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">C. $|depth[u] - depth[v]|$</button>
+                <button onclick="checkQuiz('q8-4', 3, false, 'Sai.')" class="quiz-btn-q8-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">D. $depth[LCA(u, v)] \times 2$</button>
+              </div>
+              <div id="feedback-q8-4" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== BÀI 9 ==================== -->
+      <section id="bai9" class="lesson-section bg-white dark:bg-dark-surface rounded-2xl border border-gray-200 dark:border-gray-800 p-6 sm:p-8 shadow-sm">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold text-lg shadow-md shadow-blue-500/20">09</span>
+          <div>
+            <span class="text-xs font-semibold tracking-wider text-blue-600 dark:text-blue-400 uppercase">Chuyên đề 9 • Cấu trúc dữ liệu tối thượng</span>
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">Cấu Trúc Dữ Liệu Nâng Cao (Fenwick Tree, Segment Tree & Trie)</h2>
+          </div>
+        </div>
+
+        <div class="prose dark:prose-invert max-w-none space-y-6 text-sm sm:text-base leading-relaxed">
+          <p class="text-gray-700 dark:text-gray-300">
+            Nếu mảng cộng dồn chỉ hỗ trợ truy vấn nhanh khi mảng tĩnh, thì <strong>Cây Fenwick (Binary Indexed Tree - BIT)</strong> và <strong>Cây phân đoạn (Segment Tree / Interval Tree)</strong> cho phép cập nhật phần tử và truy vấn đoạn liên tục trong thời gian $O(log N)$. Đặc biệt, kỹ thuật <strong>Lazy Propagation (Cập nhật lười)</strong> là "chìa khóa vàng" giải các bài toán cập nhật đoạn và truy vấn đoạn trong đề thi VOI.
+          </p>
+
+          <!-- Data Structures Comparison Table -->
+          <div class="overflow-x-auto my-4">
+            <table class="w-full text-xs sm:text-sm text-left border-collapse border border-gray-200 dark:border-gray-700">
+              <thead class="bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">
+                <tr>
+                  <th class="p-3 border border-gray-200 dark:border-gray-700">Cấu trúc</th>
+                  <th class="p-3 border border-gray-200 dark:border-gray-700">Dung lượng bộ nhớ</th>
+                  <th class="p-3 border border-gray-200 dark:border-gray-700">Cập nhật điểm / Truy vấn đoạn</th>
+                  <th class="p-3 border border-gray-200 dark:border-gray-700">Cập nhật đoạn / Truy vấn đoạn</th>
+                  <th class="p-3 border border-gray-200 dark:border-gray-700">Ưu điểm & Nhược điểm</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+                <tr>
+                  <td class="p-3 font-semibold text-blue-600 dark:text-blue-400 border border-gray-200 dark:border-gray-700">Fenwick Tree (BIT)</td>
+                  <td class="p-3 font-mono border border-gray-200 dark:border-gray-700">O(N) (1 mảng duy nhất)</td>
+                  <td class="p-3 font-mono font-bold text-emerald-600 border border-gray-200 dark:border-gray-700">O(log N)</td>
+                  <td class="p-3 font-mono border border-gray-200 dark:border-gray-700">O(log N) (cần 2 cây BIT)</td>
+                  <td class="p-3 border border-gray-200 dark:border-gray-700">Cực kỳ ngắn gọn (chỉ ~10 dòng code), hằng số tốc độ siêu nhỏ; khó áp dụng cho phép toán không có tính khả nghịch.</td>
+                </tr>
+                <tr>
+                  <td class="p-3 font-semibold text-cyan-600 dark:text-cyan-400 border border-gray-200 dark:border-gray-700">Segment Tree thường</td>
+                  <td class="p-3 font-mono border border-gray-200 dark:border-gray-700">O(4N)</td>
+                  <td class="p-3 font-mono font-bold text-emerald-600 border border-gray-200 dark:border-gray-700">O(log N)</td>
+                  <td class="p-3 font-mono border border-gray-200 dark:border-gray-700">O(N log N) nếu lặp từng điểm</td>
+                  <td class="p-3 border border-gray-200 dark:border-gray-700">Đa năng: giải quyết được Max, Min, GCD, Tổng, Matrix Multi; code dài hơn BIT.</td>
+                </tr>
+                <tr>
+                  <td class="p-3 font-semibold text-purple-600 dark:text-purple-400 border border-gray-200 dark:border-gray-700">Segment Tree + Lazy Propagation</td>
+                  <td class="p-3 font-mono border border-gray-200 dark:border-gray-700">O(4N) (cần mảng tree[] và lazy[])</td>
+                  <td class="p-3 font-mono border border-gray-200 dark:border-gray-700">O(log N)</td>
+                  <td class="p-3 font-mono font-bold text-emerald-600 border border-gray-200 dark:border-gray-700">O(log N)</td>
+                  <td class="p-3 border border-gray-200 dark:border-gray-700">Vũ khí tối thượng xử lý Range Update & Range Query; cần cẩn trọng kỹ thuật đẩy nhãn <code>pushDown()</code>.</td>
+                </tr>
+                <tr>
+                  <td class="p-3 font-semibold text-amber-600 dark:text-amber-400 border border-gray-200 dark:border-gray-700">Trie (Cây tiền tố & Bitwise Trie)</td>
+                  <td class="p-3 font-mono border border-gray-200 dark:border-gray-700">O(Tổng độ dài chuỗi) với bảng con truy cập O(1); bộ nhớ có thể O(số nút * Alphabet)</td>
+                  <td class="p-3 font-mono border border-gray-200 dark:border-gray-700">O(|S|) thêm chuỗi</td>
+                  <td class="p-3 font-mono border border-gray-200 dark:border-gray-700">O(31) tìm max XOR cặp số</td>
+                  <td class="p-3 border border-gray-200 dark:border-gray-700">Tra cứu tiền tố từ điển, giải quyết bài toán XOR lớn nhất của 2 số trong mảng $O(31 \times N)$.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Code Fenwick Tree -->
+          <div class="rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 bg-gray-900 text-gray-100 p-4">
+            <div class="flex justify-between items-center pb-2 mb-3 border-b border-gray-700 text-xs text-gray-400">
+              <span class="font-mono text-cyan-400"><i class="fa-solid fa-code mr-1"></i> fenwick_tree.cpp</span>
+              <span>Binary Indexed Tree (BIT) - Cập nhật điểm & Tính tổng tiền tố $O(log N)$</span>
+            </div>
+            <pre class="overflow-x-auto text-xs sm:text-sm text-gray-200 leading-relaxed font-mono"><code>#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+struct FenwickTree {
+    int n;
+    vector&lt;long long&gt; bit;
+    FenwickTree(int n) : n(n), bit(n + 1, 0) {}
+
+    // Cộng thêm delta vào phần tử vị trí idx (1-indexed)
+    void add(int idx, long long delta) {
+        for (; idx &lt;= n; idx += idx & (-idx)) {
+            bit[idx] += delta;
+        }
+    }
+
+    // Tính tổng các phần tử từ vị trí 1 đến idx
+    long long query(int idx) {
+        long long sum = 0;
+        for (; idx &gt; 0; idx -= idx & (-idx)) {
+            sum += bit[idx];
+        }
+        return sum;
+    }
+
+    // Tính tổng đoạn [l, r]
+    long long queryRange(int l, int r) {
+        return query(r) - query(l - 1);
+    }
+};</code></pre>
+          </div>
+        </div>
+
+        <!-- Quizzes Bài 9 -->
+        <div class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-800">
+          <h3 class="font-bold text-base sm:text-lg text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+            <i class="fa-solid fa-list-check text-blue-600"></i> Bài Tập Trắc Nghiệm Thuật Toán (Bài 9)
+          </h3>
+          <div class="space-y-4">
+            <!-- Q9-1 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 9.1:</strong> Biểu thức bitwise <code>idx & (-idx)</code> trong cấu trúc Cây Fenwick (BIT) có ý nghĩa toán học là gì?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q9-1', 0, false, 'Sai. Số bù 2 là -idx.')" class="quiz-btn-q9-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">A. Lấy số bù 2 của biến idx</button>
+                <button onclick="checkQuiz('q9-1', 1, true, 'Chính xác! idx & (-idx) cô lập và trích xuất đúng bit 1 có trọng số thấp nhất (Lowest Set Bit) của số nguyên idx, quyết định độ dài đoạn mà nút idx quản lý.')" class="quiz-btn-q9-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">B. Trích xuất bit 1 có trọng số nhỏ nhất (Lowest Set Bit) của số nguyên <code>idx</code></button>
+                <button onclick="checkQuiz('q9-1', 2, false, 'Sai.')" class="quiz-btn-q9-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">C. Đổi dấu giá trị của biến idx thành số âm</button>
+                <button onclick="checkQuiz('q9-1', 3, false, 'Sai.')" class="quiz-btn-q9-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">D. Đếm số lượng bit 1 trong biểu diễn nhị phân</button>
+              </div>
+              <div id="feedback-q9-1" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+
+            <!-- Q9-2 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 9.2:</strong> Khi cài đặt Cây phân đoạn (Segment Tree) bằng mảng 1D cho mảng dữ liệu ban đầu có $N$ phần tử, kích thước tối thiểu an toàn để khai báo mảng <code>tree[]</code> nhằm tránh lỗi tràn bộ nhớ (Out of bounds) là:
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q9-2', 0, false, 'Sai. 2N chỉ đủ khi N là lũy thừa đúng của 2.')" class="quiz-btn-q9-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">A. $2 \times N$</button>
+                <button onclick="checkQuiz('q9-2', 1, true, 'Chính xác! Trong trường hợp xấu nhất khi N không phải là lũy thừa của 2, cây phân đoạn có thể cần tới 2 * 2^ceil(log2 N) - 1 nút, được chặn trên an toàn bởi 4 * N.')" class="quiz-btn-q9-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">B. $4 \times N$</button>
+                <button onclick="checkQuiz('q9-2', 2, false, 'Sai. N^2 là quá thừa thãi và gây MLE.')" class="quiz-btn-q9-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">C. $N^2$</button>
+                <button onclick="checkQuiz('q9-2', 3, false, 'Sai. Fenwick mới là N + 1.')" class="quiz-btn-q9-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">D. $N + 1$</button>
+              </div>
+              <div id="feedback-q9-2" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+
+            <!-- Q9-3 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 9.3:</strong> Bản chất của kỹ thuật "Lazy Propagation" (Cập nhật lười) trong Cây phân đoạn là gì?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q9-3', 0, false, 'Sai. Nếu không cập nhật sẽ cho ra kết quả sai.')" class="quiz-btn-q9-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">A. Bỏ qua hoàn toàn các thao tác cập nhật để tiết kiệm thời gian</button>
+                <button onclick="checkQuiz('q9-3', 1, true, 'Chính xác! Khi đoạn của nút hiện tại nằm trọn trong đoạn cập nhật, ta lưu giá trị thay đổi vào mảng lazy[] và cập nhật ngay nút này. Chỉ khi nào một truy vấn sau đó cần đi sâu vào 2 nút con, ta mới đẩy giá trị lười xuống (pushDown), giữ độ phức tạp O(log N).')" class="quiz-btn-q9-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">B. Trì hoãn việc đẩy giá trị cập nhật xuống các nút con cho đến khi các nút con đó thực sự được truy cập</button>
+                <button onclick="checkQuiz('q9-3', 2, false, 'Sai. Lazy propagation không dùng luồng.')" class="quiz-btn-q9-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">C. Đẩy thao tác cập nhật vào luồng chạy nền bất đồng bộ</button>
+                <button onclick="checkQuiz('q9-3', 3, false, 'Sai.')" class="quiz-btn-q9-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">D. Tự động chuyển đổi Segment Tree thành Fenwick Tree</button>
+              </div>
+              <div id="feedback-q9-3" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+
+            <!-- Q9-4 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 9.4:</strong> Để tìm cặp 2 số trong mảng $N$ phần tử ($N \le 2 \times 10^5$, $a_i < 2^{30}$) có phép XOR ($a_i \oplus a_j$) đạt giá trị lớn nhất, cấu trúc dữ liệu nào giúp giải trong thời gian $O(30 \times N)$?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q9-4', 0, false, 'Sai. Hai con trỏ không áp dụng được cho phép bitwise XOR.')" class="quiz-btn-q9-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">A. Hai con trỏ (Two Pointers)</button>
+                <button onclick="checkQuiz('q9-4', 1, true, 'Chính xác! Cây tiền tố nhị phân (Bitwise Trie 0/1). Chèn từng số vào Trie dưới dạng chuỗi 30 bit. Với mỗi số x, ta đi trên Trie ưu tiên rẽ sang nhánh có bit đối lập (bit ^ 1) để phép XOR tạo ra bit 1 ở trọng số cao nhất có thể.')" class="quiz-btn-q9-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">B. Cây tiền tố nhị phân (Bitwise Trie) với 2 nhánh rẽ 0 và 1</button>
+                <button onclick="checkQuiz('q9-4', 2, false, 'Sai. Sắp xếp không giúp tìm cặp XOR lớn nhất.')" class="quiz-btn-q9-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">C. Sắp xếp mảng tăng dần rồi lấy hai phần tử đầu và cuối</button>
+                <button onclick="checkQuiz('q9-4', 3, false, 'Sai.')" class="quiz-btn-q9-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">D. Đồ thị luồng cực đại (Max Flow)</button>
+              </div>
+              <div id="feedback-q9-4" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== BÀI 10 ==================== -->
+      <section id="bai10" class="lesson-section bg-white dark:bg-dark-surface rounded-2xl border border-gray-200 dark:border-gray-800 p-6 sm:p-8 shadow-sm">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold text-lg shadow-md shadow-blue-500/20">10</span>
+          <div>
+            <span class="text-xs font-semibold tracking-wider text-blue-600 dark:text-blue-400 uppercase">Chuyên đề 10 • Chuỗi, hình học & Chiến lược thi</span>
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">Xử Lý Chuỗi, Hình Học Tọa Độ & Chiến Lược 180 Phút Phòng Thi</h2>
+          </div>
+        </div>
+
+        <div class="prose dark:prose-invert max-w-none space-y-6 text-sm sm:text-base leading-relaxed">
+          <p class="text-gray-700 dark:text-gray-300">
+            Chuyên đề cuối cùng trang bị 2 mảng kiến thức nâng cao là <strong>Thuật toán chuỗi (Rolling Hash, KMP, Z-algo)</strong>, <strong>Hình học tính toán (Bao lồi Convex Hull, Tích có hướng)</strong> cùng bộ cẩm nang chiến lược quản lý thời gian thi đấu để tối đa hóa từng điểm số subtask.
+          </p>
+
+          <!-- String & Geometry Grid -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
+            <div class="p-4 rounded-xl bg-blue-50/70 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-900/50">
+              <h4 class="font-bold text-blue-900 dark:text-blue-300 text-sm sm:text-base mb-1">
+                <i class="fa-solid fa-lines-leaning text-blue-600"></i> Băm Chuỗi Đa Thức (Double Rolling Hash)
+              </h4>
+              <p class="text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+                Chuyển chuỗi thành mã băm tiền tố $hash[i] = (hash[i-1] \times B + s[i]) \pmod M$. Lấy mã băm đoạn con $[L, R]$ trong $O(1)$: $hash(L, R) = (hash[R] - hash[L-1] \times B^{R-L+1}) \pmod M$. <strong>Nên cân nhắc dùng hai hàm băm độc lập</strong> (ví dụ $M_1 = 10^9+7, M_2 = 10^9+9$) để giảm rủi ro đụng độ trong mô hình băm phù hợp; double hash không loại bỏ hoàn toàn đụng độ hay tấn công có chủ đích.
+              </p>
+            </div>
+            <div class="p-4 rounded-xl bg-cyan-50/70 dark:bg-cyan-950/30 border border-cyan-200 dark:border-cyan-900/50">
+              <h4 class="font-bold text-cyan-900 dark:text-cyan-300 text-sm sm:text-base mb-1">
+                <i class="fa-solid fa-shapes text-cyan-600"></i> Hình Học: Tích Có Hướng (Cross Product)
+              </h4>
+              <p class="text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+                Cho 3 điểm $A, B, C$. Tích có hướng $\vec{AB} \times \vec{AC} = (B_x - A_x)(C_y - A_y) - (B_y - A_y)(C_x - A_x)$. Nếu $> 0$: $C$ rẽ trái; $< 0$: $C$ rẽ phải; $= 0$: thẳng hàng. Đây là nền tảng xây dựng thuật toán Bao lồi (Monotone Chain / Graham Scan) trong $O(N \log N)$.
+              </p>
+            </div>
+          </div>
+
+          <!-- Strategy Box -->
+          <div class="p-5 rounded-2xl bg-gradient-to-r from-blue-900 to-indigo-950 text-white shadow-lg space-y-3">
+            <h4 class="font-bold text-amber-300 text-base sm:text-lg flex items-center gap-2">
+              <i class="fa-solid fa-trophy"></i> Chiến Lược Vàng Phân Bổ 180 Phút Phòng Thi HSG
+            </h4>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs sm:text-sm text-gray-200">
+              <div class="p-3 bg-white/10 rounded-xl">
+                <strong class="text-cyan-300 block mb-1">0 - 20 Phút Đầu</strong>
+                Đọc hết toàn bộ đề (3-4 bài). Viết template, kiểm tra file I/O. Phân loại bài dễ/khó và xác định giới hạn subtask từng bài.
+              </div>
+              <div class="p-3 bg-white/10 rounded-xl">
+                <strong class="text-emerald-300 block mb-1">20 - 140 Phút</strong>
+                Làm dứt điểm bài 1 và bài 2 (bài cơ bản/trung bình). Với bài khó, viết ngay giải pháp Subtask 1 (vét cạn / quy hoạch động đơn giản) để bỏ túi 40-60% điểm chắc chắn.
+              </div>
+              <div class="p-3 bg-white/10 rounded-xl">
+                <strong class="text-amber-300 block mb-1">40 Phút Cuối</strong>
+                Sinh test biên (N = 1, giá trị âm, max limits). Kiểm tra tràn số <code>long long</code>, tên file INP/OUT, xóa lệnh in debug thừa.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quizzes Bài 10 -->
+        <div class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-800">
+          <h3 class="font-bold text-base sm:text-lg text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+            <i class="fa-solid fa-list-check text-blue-600"></i> Bài Tập Trắc Nghiệm Thuật Toán (Bài 10)
+          </h3>
+          <div class="space-y-4">
+            <!-- Q10-1 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 10.1:</strong> Vì sao trong các kỳ thi học sinh giỏi, khi sử dụng thuật toán Băm chuỗi (Rolling Hash) so khớp chuỗi, thí sinh được khuyến cáo nên dùng "Double Hash" (2 mod khác nhau) thay vì "Single Hash" (1 mod như $10^9+7$)?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q10-1', 0, false, 'Sai. Tốc độ sẽ chậm hơn một chút nhưng an toàn hơn nhiều.')" class="quiz-btn-q10-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">A. Để tăng tốc độ so sánh chuỗi gấp đôi</button>
+                <button onclick="checkQuiz('q10-1', 1, true, 'Chính xác! Theo nghịch lý ngày sinh (Birthday Paradox), với 1 modulo ~10^9, sau khoảng sqrt(10^9) ≈ 3*10^4 chuỗi con thì xác suất đụng độ hàm băm (Hash collision) lên tới 50%, rất dễ bị giám khảo sinh test chặn. Double hash làm giảm đáng kể xác suất đụng độ khi hai hàm băm độc lập, nhưng không bảo đảm an toàn tuyệt đối.')" class="quiz-btn-q10-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">B. Tránh xung đột hàm băm (Hash collision) do giám khảo cố tình thiết kế test hack</button>
+                <button onclick="checkQuiz('q10-1', 2, false, 'Sai.')" class="quiz-btn-q10-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">C. Bắt buộc theo quy chế thi quốc gia</button>
+                <button onclick="checkQuiz('q10-1', 3, false, 'Sai.')" class="quiz-btn-q10-1 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">D. Giúp giảm dung lượng bộ nhớ RAM của chương trình</button>
+              </div>
+              <div id="feedback-q10-1" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+
+            <!-- Q10-2 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 10.2:</strong> Thuật toán KMP (Knuth-Morris-Pratt) tìm kiếm chuỗi mẫu độ dài $M$ trong văn bản độ dài $N$ có độ phức tạp thời gian trong trường hợp xấu nhất là bao nhiêu?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q10-2', 0, false, 'Sai. O(N * M) là thuật toán duyệt so khớp thô sơ (Naive search).')" class="quiz-btn-q10-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">A. $O(N \times M)$</button>
+                <button onclick="checkQuiz('q10-2', 1, true, 'Chính xác! KMP tiền xử lý mảng tiền tố pi[] của xâu mẫu trong O(M), sau đó quét xâu văn bản mà con trỏ không bao giờ quay ngược lại, đạt tổng thời gian tuyến tính O(N + M).')" class="quiz-btn-q10-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">B. $O(N + M)$</button>
+                <button onclick="checkQuiz('q10-2', 2, false, 'Sai.')" class="quiz-btn-q10-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">C. $O(N \log M)$</button>
+                <button onclick="checkQuiz('q10-2', 3, false, 'Sai.')" class="quiz-btn-q10-2 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">D. $O(N^2)$</button>
+              </div>
+              <div id="feedback-q10-2" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+
+            <!-- Q10-3 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 10.3:</strong> Trong hình học tính toán, giá trị tích có hướng (Cross Product) của hai vectơ $\vec{u} \times \vec{v} = 0$ mang ý nghĩa gì?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q10-3', 0, false, 'Sai. Vuông góc là tích vô hướng dot product = 0.')" class="quiz-btn-q10-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">A. Hai vectơ vuông góc với nhau</button>
+                <button onclick="checkQuiz('q10-3', 1, true, 'Chính xác! Tích có hướng bằng 0 chứng tỏ hai vectơ cùng phương (nằm trên cùng một đường thẳng hoặc song song nhau). Ứng dụng kiểm tra 3 điểm thẳng hàng.')" class="quiz-btn-q10-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">B. Hai vectơ cùng phương (song song hoặc thẳng hàng)</button>
+                <button onclick="checkQuiz('q10-3', 2, false, 'Sai.')" class="quiz-btn-q10-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">C. Hai vectơ có độ dài bằng nhau</button>
+                <button onclick="checkQuiz('q10-3', 3, false, 'Sai.')" class="quiz-btn-q10-3 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">D. Hai vectơ tạo với nhau góc 45 độ</button>
+              </div>
+              <div id="feedback-q10-3" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+
+            <!-- Q10-4 -->
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100 mb-3">
+                <strong>Câu 10.4:</strong> Trong một bài toán khó của đề thi HSG Quốc gia mà bạn chưa nghĩ ra thuật toán tối ưu $100%$ điểm, chiến thuật khôn ngoan nhất để đạt điểm cao là gì?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <button onclick="checkQuiz('q10-4', 0, false, 'Sai. Bỏ bài là mất trắng điểm số quý giá.')" class="quiz-btn-q10-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">A. Bỏ qua bài đó và ngồi chờ hết giờ</button>
+                <button onclick="checkQuiz('q10-4', 1, true, 'Chính xác! Các bài thi HSG chia điểm theo Subtask độc lập (Subtask 1: N <= 20 được 30-40% điểm; Subtask 2: N <= 2000 được 30% điểm...). Viết vét cạn / quay lui hoặc DP cơ bản cho từng subtask sẽ gặt hái điểm số quyết định để đạt giải!')" class="quiz-btn-q10-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">B. Cài đặt thuật toán "vét cạn" (Brute-force) chuẩn xác để ăn trọn vẹn điểm các Subtask nhỏ ban đầu</button>
+                <button onclick="checkQuiz('q10-4', 2, false, 'Sai. Sinh ngẫu nhiên xác suất ăn điểm gần như bằng 0.')" class="quiz-btn-q10-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">C. In kết quả ngẫu nhiên (Random guess)</button>
+                <button onclick="checkQuiz('q10-4', 3, false, 'Sai.')" class="quiz-btn-q10-4 text-left p-3 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition">D. Viết thuật toán tối ưu chưa hoàn thiện nhưng chạy sai kết quả</button>
+              </div>
+              <div id="feedback-q10-4" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Course Summary Banner -->
+      <section class="bg-gradient-to-br from-blue-900 via-indigo-950 to-slate-900 text-white rounded-3xl p-8 border border-blue-500/30 shadow-2xl relative overflow-hidden">
+        <div class="relative z-10 max-w-3xl space-y-4">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-400/20 text-cyan-300 text-xs font-semibold border border-cyan-400/30">
+            <i class="fa-solid fa-medal text-amber-400"></i> Hoàn Thành Lộ Trình Huấn Luyện
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-black">Sẵn Sàng Chinh Phục Đỉnh Cao Học Sinh Giỏi Tin Học THPT!</h2>
+          <p class="text-gray-300 text-sm sm:text-base leading-relaxed">
+            Bạn đã đi qua toàn bộ 10 chuyên đề thuật toán cốt lõi: từ nền tảng C++20 tối ưu, kỹ thuật hai con trỏ, chặt nhị phân, số học, quy hoạch động đa chiều, lý thuyết đồ thị chuyên sâu, cấu trúc dữ liệu Segment Tree / Fenwick đến xử lý chuỗi và chiến thuật phòng thi 180 phút. Hãy kiên trì luyện tập trên các nền tảng online judge uy tín như <strong>VNOJ</strong>, <strong>Codeforces</strong>, <strong>AtCoder</strong> và <strong>CSES Problem Set</strong> để biến kiến thức thành phản xạ vô điều kiện!
+          </p>
+          <div class="pt-2 flex flex-wrap gap-4">
+            <a href="../index.html" class="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm shadow-lg shadow-blue-500/30 transition flex items-center gap-2">
+              <i class="fa-solid fa-arrow-left"></i> Về Trang Chủ Khóa Học
+            </a>
+            <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-sm border border-white/20 transition flex items-center gap-2">
+              <i class="fa-solid fa-arrow-up"></i> Lên Đầu Trang
+            </button>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Footer -->
+  <footer class="mt-16 bg-white dark:bg-dark-surface border-t border-gray-200 dark:border-gray-800 py-8 text-center text-xs text-gray-500 dark:text-gray-400">
+    <div class="max-w-7xl mx-auto px-4 space-y-2">
+      <p class="font-medium text-gray-700 dark:text-gray-300">
+        Khóa Học Bồi Dưỡng Học Sinh Giỏi Tin Học Cấp 3 (THPT) • CodeHub Learning Platform
+      </p>
+      <p>
+        Biên soạn theo chương trình bồi dưỡng Đội tuyển HSG Tỉnh/Thành phố & Chuẩn kỳ thi Chọn HSG Quốc gia (VOI) môn Tin học.
+      </p>
+    </div>
+  </footer>
+
+  <!-- Interactive Scripts -->
+  <script>
+    const STORAGE_KEY = 'hsg_tin_thpt_solved_quizzes';
+    const TOTAL_QUIZZES = 40;
+
+    // KaTeX Math Rendering
+    function renderAllMath() {
+      if (typeof renderMathInElement === 'function') {
+        renderMathInElement(document.body, {
+          delimiters: [
+            { left: '$$', right: '$$', display: true },
+            { left: '$', right: '$', display: false }
+          ],
+          ignoredTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+          throwOnError: false
+        });
+      }
+    }
+
+    // Theme Toggle
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeIcon = document.getElementById('theme-icon');
+
+    function applyTheme(isDark) {
+      if (isDark) {
+        document.documentElement.classList.add('dark');
+        themeIcon.className = 'fa-solid fa-sun text-amber-400';
+        localStorage.setItem('theme', 'dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+        themeIcon.className = 'fa-solid fa-moon text-gray-600';
+        localStorage.setItem('theme', 'light');
+      }
+    }
+
+    const savedTheme = localStorage.getItem('theme');
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    applyTheme(savedTheme === 'dark' || (!savedTheme && systemPrefersDark));
+
+    themeToggleBtn.addEventListener('click', () => {
+      const isDark = document.documentElement.classList.contains('dark');
+      applyTheme(!isDark);
+    });
+
+    // Mobile Drawer Navigation
+    const mobileDrawer = document.getElementById('mobile-drawer');
+    const drawerBackdrop = document.getElementById('drawer-backdrop');
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+
+    function toggleDrawer(open) {
+      if (open) {
+        mobileDrawer.classList.remove('translate-x-full');
+        drawerBackdrop.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+      } else {
+        mobileDrawer.classList.add('translate-x-full');
+        drawerBackdrop.classList.add('hidden');
+        document.body.style.overflow = '';
+      }
+    }
+
+    if (mobileMenuBtn) {
+      mobileMenuBtn.addEventListener('click', () => toggleDrawer(true));
+    }
+
+    // Quiz LocalStorage & State
+    function getSolvedQuizzes() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+      } catch (e) {
+        return {};
+      }
+    }
+
+    function saveSolvedQuiz(quizId, isCorrect) {
+      const solved = getSolvedQuizzes();
+      solved[quizId] = isCorrect;
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(solved));
+      updateProgressDisplay();
+    }
+
+    function checkQuiz(quizId, optionIndex, isCorrect, explanation) {
+      const buttons = document.querySelectorAll('.quiz-btn-' + quizId);
+      buttons.forEach((btn, idx) => {
+        btn.disabled = true;
+        btn.classList.remove('bg-amber-50', 'dark:bg-amber-950/30', 'border-amber-500', 'bg-blue-50', 'dark:bg-blue-950/30', 'border-blue-500', 'bg-rose-50', 'dark:bg-rose-950/30', 'border-rose-500', 'bg-emerald-50', 'dark:bg-emerald-950/30', 'border-emerald-500');
+        if (idx === optionIndex) {
+          if (isCorrect) {
+            btn.classList.add('bg-emerald-100', 'dark:bg-emerald-950/40', 'border-emerald-500', 'text-emerald-900', 'dark:text-emerald-200', 'font-bold');
+          } else {
+            btn.classList.add('bg-rose-100', 'dark:bg-rose-950/40', 'border-rose-500', 'text-rose-900', 'dark:text-rose-200');
+          }
+        }
+      });
+
+      const feedbackEl = document.getElementById('feedback-' + quizId);
+      if (feedbackEl) {
+        feedbackEl.classList.remove('hidden', 'text-amber-700', 'dark:text-amber-400', 'bg-amber-50', 'dark:bg-amber-950/30', 'border-amber-500/30', 'text-blue-700', 'dark:text-blue-400', 'bg-blue-50', 'dark:bg-blue-950/30', 'border-blue-500/30', 'text-rose-700', 'dark:text-rose-400', 'bg-rose-50', 'dark:bg-rose-950/30', 'border-rose-500/30');
+        feedbackEl.className = 'mt-3 p-3 rounded-lg text-xs font-medium border leading-relaxed ' + 
+          (isCorrect ? 'text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/30 border-emerald-500/30' : 'text-rose-700 dark:text-rose-300 bg-rose-50 dark:bg-rose-950/30 border-rose-500/30');
+        feedbackEl.innerHTML = (isCorrect ? '<i class="fa-solid fa-circle-check mr-1.5 text-emerald-600"></i>' : '<i class="fa-solid fa-circle-xmark mr-1.5 text-rose-600"></i>') + explanation;
+        if (typeof renderMathInElement === 'function') {
+          renderMathInElement(feedbackEl, {
+            delimiters: [
+              { left: '$$', right: '$$', display: true },
+              { left: '$', right: '$', display: false }
+            ],
+            throwOnError: false
+          });
+        }
+      }
+
+      saveSolvedQuiz(quizId, isCorrect);
+    }
+
+    function updateProgressDisplay() {
+      const solved = getSolvedQuizzes();
+      const count = Object.keys(solved).filter(k => /^q\d+-\d+$/.test(k)).length;
+      const pct = Math.round((count / TOTAL_QUIZZES) * 100);
+
+      const countEl = document.getElementById('quiz-completed-count');
+      const progressPercentEl = document.getElementById('progress-percent');
+      const progressBarEl = document.getElementById('progress-bar');
+
+      if (countEl) countEl.innerText = count;
+      if (progressPercentEl) progressPercentEl.innerText = pct + '%';
+      if (progressBarEl) progressBarEl.style.width = pct + '%';
+    }
+
+    function resetAllQuizzes() {
+      if (confirm('Bạn có chắc muốn đặt lại toàn bộ kết quả bài tập để làm lại từ đầu?')) {
+        localStorage.removeItem(STORAGE_KEY);
+        location.reload();
+      }
+    }
+
+    // ScrollSpy cho Sidebar navigation & Render Math
+    document.addEventListener('DOMContentLoaded', () => {
+      renderAllMath();
+      setTimeout(renderAllMath, 200);
+      setTimeout(renderAllMath, 800);
+      updateProgressDisplay();
+
+      const sections = document.querySelectorAll('.lesson-section');
+      const navLinks = document.querySelectorAll('.nav-link');
+
+      window.addEventListener('scroll', () => {
+        let current = '';
+        const scrollPos = window.pageYOffset || document.documentElement.scrollTop;
+
+        sections.forEach(section => {
+          const top = section.offsetTop - 140;
+          const height = section.offsetHeight;
+          if (scrollPos >= top && scrollPos < top + height) {
+            current = section.getAttribute('id');
+          }
+        });
+
+        navLinks.forEach(link => {
+          link.classList.remove('bg-blue-500/10 text-blue-600', 'dark:text-blue-400', 'font-bold');
+          if (link.getAttribute('href') === '#' + current) {
+            link.classList.add('bg-blue-500/10 text-blue-600', 'dark:text-blue-400', 'font-bold');
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
