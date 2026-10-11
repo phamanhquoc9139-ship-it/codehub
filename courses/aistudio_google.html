@@ -61,9 +61,12 @@
 </a>
 </div>
 </div>
-<div class="flex items-center gap-3">
-<a class="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold shadow-sm transition" href="https://aistudio.google.com" rel="noopener noreferrer" target="_blank">
-<i class="fa-solid fa-arrow-up-right-from-square"></i> Mở aistudio.google.com
+<div class="flex items-center gap-2">
+<a class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold shadow-sm transition" href="https://aistudio.google.com/prompts/new_chat" rel="noopener noreferrer" target="_blank" title="Mở trang Playground thử nghiệm Prompt trực tiếp">
+<i class="fa-solid fa-play"></i> Mở Playground (Trang chính)
+</a>
+<a class="hidden md:inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs font-semibold transition border border-gray-200 dark:border-gray-700" href="https://aistudio.google.com/api-keys" rel="noopener noreferrer" target="_blank" title="Mở trang Quản lý API Keys">
+<i class="fa-solid fa-key text-amber-500"></i> API Keys
 </a>
 <button class="p-2 rounded-xl text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none" id="themeToggle" title="Chuyển chế độ sáng/tối">
 <i class="fa-solid fa-moon dark:hidden text-lg"></i>
@@ -142,8 +145,7 @@ Làm Chủ Google AI Studio &amp; Gemini API
 <span class="text-indigo-600 dark:text-indigo-400 font-bold mr-1">04.</span> Siêu tham số &amp; Safety Settings
 </a>
 <a class="sidebar-link block px-3 py-2 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition" href="#bai5">
-<span class="text-indigo-600 dark:text-indigo-400 font-bold mr-1">05.</span> Multimodal &amp; Context Window 2M
-</a>
+<span class="text-indigo-600 dark:text-indigo-400 font-bold mr-1">05.</span> Multimodal &amp; Context Window</a>
 <a class="sidebar-link block px-3 py-2 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition" href="#bai6">
 <span class="text-indigo-600 dark:text-indigo-400 font-bold mr-1">06.</span> System Instructions &amp; Search Grounding
 </a>
@@ -208,7 +210,17 @@ Làm Chủ Google AI Studio &amp; Gemini API
 <li>Ở thanh menu bên trái, nhấp vào nút <strong class="text-indigo-600 dark:text-indigo-400">"Get API key"</strong>.</li>
 <li>Chọn <strong>Create API key</strong> trong một Google Cloud Project mới hoặc dự án có sẵn.</li>
 <li>Sao chép khóa bí mật dạng chuỗi <code class="bg-gray-100 dark:bg-gray-800 px-1 py-0.5 rounded font-mono text-xs text-rose-500">AIzaSy...</code> và lưu vào biến môi trường hệ thống.</li>
-</ol>
+<div class="mt-4 p-4 rounded-xl bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 text-xs sm:text-sm text-blue-950 dark:text-blue-200 space-y-2">
+<div class="font-bold flex items-center gap-2 text-blue-700 dark:text-blue-300">
+<i class="fa-solid fa-compass"></i> Hướng dẫn chuyển giữa trang API Keys và Trang chính (Playground):
+</div>
+<p>Khi bạn truy cập link tạo khóa hoặc đăng nhập lần đầu, Google AI Studio có thể mở sẵn trang quản lý khóa tại <code class="bg-white/80 dark:bg-gray-800 px-1 py-0.5 rounded font-mono text-indigo-600 dark:text-indigo-400">aistudio.google.com/api-keys</code>. Để quay về trang chính chat và thử nghiệm mô hình:</p>
+<ul class="list-disc pl-5 space-y-1">
+<li>Nhấp vào nút <strong>"&lt; Dashboard"</strong> ở góc trên bên trái menu (hoặc mục <strong>"Playground"</strong> dưới phần EXPLORE).</li>
+<li>Hoặc nhấp nút <strong>"+ New app"</strong> / <strong>"Create prompt"</strong> để bắt đầu một phiên thử nghiệm chat mới.</li>
+<li>Đường dẫn trực tiếp vào không gian chat: <code class="bg-white/80 dark:bg-gray-800 px-1.5 py-0.5 rounded font-mono text-indigo-600 dark:text-indigo-400">https://aistudio.google.com/prompts/new_chat</code></li>
+</ul>
+</div>
 <div class="bg-slate-900 text-slate-100 p-4 rounded-xl font-mono text-xs sm:text-sm my-4 overflow-x-auto not-prose border border-slate-800">
 <div class="text-slate-400 mb-2 font-sans font-semibold text-[11px] uppercase tracking-wider flex items-center justify-between">
 <span>Thiết lập biến môi trường an toàn</span>
@@ -227,7 +239,7 @@ GEMINI_API_KEY=AIzaSyYourSecretKeyHere</code></pre>
 <i class="fa-solid fa-triangle-exclamation mr-1.5 text-amber-600"></i>
 <strong>Lưu ý bảo mật quan trọng:</strong> Miễn phí tầng cơ sở (Free Tier) đi kèm chính sách: dữ liệu prompt/response của tài khoản free có thể được Google sử dụng để đánh giá huấn luyện mô hình. Khi bật tính năng tính phí Pay-as-you-go qua GCP Billing, dữ liệu của bạn sẽ có điều khoản sử dụng dữ liệu khác với Free Tier; cần đọc chính sách hiện hành, thiết lập dự án và ngoại lệ áp dụng.
 </div>
-<div class="not-prose mt-6 rounded-xl border border-indigo-200 dark:border-indigo-800 bg-indigo-50/60 dark:bg-indigo-950/30 p-5"><h3 class="text-base font-bold text-indigo-700 dark:text-indigo-300 mb-2">Bổ sung kiến thức: Bảo mật API Key và dữ liệu học sinh</h3><p class="text-sm leading-relaxed text-gray-700 dark:text-gray-200">API key phải được giữ ở máy chủ hoặc dịch vụ bí mật; không đưa vào HTML/JavaScript chạy trên GitHub Pages. Giới hạn quyền, quota và theo dõi chi phí; khi nghi lộ khóa phải thu hồi và tạo khóa mới. Không nhập dữ liệu cá nhân của học sinh vào prompt khi chưa có căn cứ và biện pháp bảo vệ phù hợp. Free Tier, Paid Tier và giao diện AI Studio có thể áp dụng điều khoản dữ liệu khác nhau: cần kiểm tra tài liệu chính thức trước khi xử lý thông tin nhạy cảm.</p></div></div>
+<div class="not-prose mt-6 rounded-xl border border-indigo-200 dark:border-indigo-800 bg-indigo-50/60 dark:bg-indigo-950/30 p-5"><h3 class="text-base font-bold text-indigo-700 dark:text-indigo-300 mb-2">Bổ sung kiến thức: Bảo mật API Key và dữ liệu học sinh</h3><p class="text-sm leading-relaxed text-gray-700 dark:text-gray-200">API key phải được giữ ở máy chủ hoặc dịch vụ bí mật; không đưa vào HTML/JavaScript chạy trên GitHub Pages. Giới hạn quyền, quota và theo dõi chi phí; khi nghi lộ khóa phải thu hồi và tạo khóa mới. Không nhập dữ liệu cá nhân của học sinh vào prompt khi chưa có căn cứ và biện pháp bảo vệ phù hợp. Free Tier, Paid Tier và giao diện AI Studio có thể áp dụng điều khoản dữ liệu khác nhau: cần kiểm tra tài liệu chính thức trước khi xử lý thông tin nhạy cảm.</p></div></ol></div>
 <!-- Trắc nghiệm Bài 1 -->
 <div class="mt-8 pt-6 border-t border-gray-100 dark:border-gray-800 space-y-4">
 <h4 class="text-base font-bold text-gray-900 dark:text-white flex items-center gap-2">
@@ -336,7 +348,7 @@ GEMINI_API_KEY=AIzaSyYourSecretKeyHere</code></pre>
 <div class="flex items-center gap-3 mb-6 pb-4 border-b border-gray-100 dark:border-gray-800">
 <div class="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 flex items-center justify-center font-bold text-lg">02</div>
 <div>
-<h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">Bài 2: Các Thế Hệ Mô Hình Gemini &amp; Chế Độ Suy Luận Thinking Mode</h2>
+<h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">Bài 2: Các Thế Hệ Mô Hình Gemini &amp; Chế Độ Suy Luận Thinking Mode</h2><p class="text-xs text-amber-800 dark:text-amber-200 mt-2">Lưu ý cập nhật: Các model ID, giá, quota và tính năng thay đổi theo thời điểm; luôn tra bảng Models chính thức trước khi viết code.</p>
 <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">Tìm hiểu kiến trúc Gemini 2.0 Flash, 1.5 Pro, 1.5 Flash, Flash-Lite và cơ chế Chain-of-Thought trực quan</p>
 </div>
 </div>
@@ -352,7 +364,7 @@ Trên bảng chọn mô hình (Model Selector) của Google AI Studio, bạn có
 </span>
 <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300">Ví dụ lịch sử</span>
 </div>
-<p class="text-xs text-gray-600 dark:text-gray-400 mb-2">Thế hệ mô hình tiên tiến kế tiếp với tốc độ phản hồi tính bằng mili-giây, khả năng xử lý multimodal theo thời gian thực (realtime) và xuất sắc trong Function Calling.</p>
+<p class="text-xs text-gray-600 dark:text-gray-400 mb-2">Ví dụ mô hình thế hệ 2.0, từng được dùng cho các tác vụ cần phản hồi nhanh, đa phương thức và gọi hàm. Không nên mặc định mọi chế độ realtime đều được hỗ trợ.</p>
 <div class="text-[11px] font-mono text-gray-500 dark:text-gray-400">Context Window: 1,048,576 tokens</div>
 </div>
 <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-purple-500/30">
@@ -362,7 +374,7 @@ Trên bảng chọn mô hình (Model Selector) của Google AI Studio, bạn có
 </span>
 <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-purple-100 dark:bg-purple-950 text-purple-700 dark:text-purple-300">Siêu ngữ cảnh</span>
 </div>
-<p class="text-xs text-gray-600 dark:text-gray-400 mb-2">Đỉnh cao về lý luận phức tạp, phân tích chuyên sâu các tài liệu khổng lồ (sách giáo trình, mã nguồn dự án lớn, video thời lượng dài).</p>
+<p class="text-xs text-gray-600 dark:text-gray-400 mb-2">Ví dụ lịch sử về mô hình Pro có ngữ cảnh dài, phù hợp thử nghiệm phân tích tài liệu lớn; chất lượng thực tế cần đánh giá trên từng tác vụ.</p>
 <div class="text-[11px] font-mono text-gray-500 dark:text-gray-400">Context Window: 2,097,152 tokens</div>
 </div>
 <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-emerald-500/30">
@@ -372,7 +384,7 @@ Trên bảng chọn mô hình (Model Selector) của Google AI Studio, bạn có
 </span>
 <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300">Tiết kiệm &amp; Nhanh</span>
 </div>
-<p class="text-xs text-gray-600 dark:text-gray-400 mb-2">Mô hình làm việc chủ lực (workhorse model) với chi phí thấp nhất cho khối lượng truy vấn lớn (high-volume tasks), độ trễ thấp.</p>
+<p class="text-xs text-gray-600 dark:text-gray-400 mb-2">Ví dụ lịch sử về dòng Flash tối ưu độ trễ và chi phí; không thể kết luận luôn rẻ nhất khi so sánh các phiên bản hiện hành.</p>
 <div class="text-[11px] font-mono text-gray-500 dark:text-gray-400">Context Window: 1,048,576 tokens</div>
 </div>
 <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-amber-500/30">
@@ -382,13 +394,13 @@ Trên bảng chọn mô hình (Model Selector) của Google AI Studio, bạn có
 </span>
 <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-300">Suy luận sâu</span>
 </div>
-<p class="text-xs text-gray-600 dark:text-gray-400 mb-2">Chế độ hiển thị chuỗi tư duy (Chain of Thought), cho phép mô hình suy nghĩ từng bước trước khi trả lời câu hỏi logic, toán học và gỡ lỗi code phức tạp.</p>
+<p class="text-xs text-gray-600 dark:text-gray-400 mb-2">Ví dụ lịch sử về mô hình có khả năng suy luận; một số phiên bản có thể cung cấp tóm tắt suy luận, không phải toàn bộ suy luận nội bộ.</p>
 <div class="text-[11px] font-mono text-gray-500 dark:text-gray-400">Có thể hiển thị bản tóm tắt suy luận tùy mô hình</div>
 </div>
 </div>
 <h3 class="text-lg font-bold text-gray-900 dark:text-white mt-4">Cơ Chế Hoạt Động Của Gemini Thinking Mode</h3>
 <p>
-Khi kích hoạt mô hình <strong>Gemini 2.0 Flash Thinking</strong> trên AI Studio, hệ thống cho phép mô hình tự sinh ra các khối suy nghĩ nội tâm (Reasoning / Thinking Tokens) trước khi đưa ra câu trả lời chính thức:
+Với những mô hình có hỗ trợ chế độ suy luận, hệ thống có thể dành tài nguyên tính toán bổ sung trước khi đưa ra câu trả lời. Tính năng và tên thiết lập phụ thuộc từng phiên bản:
 </p>
 <ul class="list-disc pl-5 space-y-1.5">
 <li><strong>Tự kiểm tra và tự sửa lỗi:</strong> Mô hình tự phân tích câu hỏi, vạch ra kế hoạch giải quyết, thử nghiệm các giả thiết và tự hiệu chỉnh sai lệch trước khi viết mã hay kết luận.</li>
@@ -510,7 +522,7 @@ Khi kích hoạt mô hình <strong>Gemini 2.0 Flash Thinking</strong> trên AI S
 </div>
 <div class="prose dark:prose-invert max-w-none text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed space-y-4">
 <p>
-Google AI Studio cung cấp 3 giao diện nhập liệu chuyên biệt được tinh chỉnh cho các loại tác vụ kỹ thuật khác nhau:
+Trong một số phiên bản trước đây, Google AI Studio có các hình thức Chat, Freeform và Structured Prompt. Giao diện hiện tại có thể thay đổi; ba cách tiếp cận dưới đây vẫn hữu ích để thiết kế prompt:
 </p>
 <div class="space-y-4 not-prose my-6">
 <div class="p-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-dark-card">
@@ -1427,7 +1439,7 @@ Trên Google AI Studio, tính năng <strong>Structured Outputs</strong> (Respons
 <div class="flex items-center gap-3 mb-6 pb-4 border-b border-gray-100 dark:border-gray-800">
 <div class="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 flex items-center justify-center font-bold text-lg">09</div>
 <div>
-<h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">Bài 9: Xuất Mã Nguồn (Get Code) &amp; Tích Hợp SDK Đa Ngôn Ngữ</h2>
+<h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">Bài 9: Xuất Mã Nguồn (Get Code) &amp; Tích Hợp SDK Đa Ngôn Ngữ</h2><p class="text-xs text-amber-800 dark:text-amber-200 mt-2">Lưu ý cập nhật: Ví dụ SDK phải được đối chiếu với phiên bản google-genai hiện hành; tránh sao chép ví dụ thư viện cũ google-generativeai.</p>
 <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">Chuyển đổi tức thì từ thử nghiệm trên giao diện web sang mã Python (google-genai), Node.js, cURL và REST API</p>
 </div>
 </div>
@@ -1590,7 +1602,7 @@ console.log(response.text);</code></pre>
 <div class="flex items-center gap-3 mb-6 pb-4 border-b border-gray-100 dark:border-gray-800">
 <div class="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 flex items-center justify-center font-bold text-lg">10</div>
 <div>
-<h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">Bài 10: Tinh Chỉnh Mô Hình (Model Tuning), Quotas &amp; Triển Khai Thực Tế</h2>
+<h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">Bài 10: Tinh Chỉnh Mô Hình (Model Tuning), Quotas &amp; Triển Khai Thực Tế</h2><p class="text-xs text-amber-800 dark:text-amber-200 mt-2">Lưu ý cập nhật: Không mặc định AI Studio cung cấp chức năng fine-tuning cho mọi mô hình; cần kiểm tra khả năng hỗ trợ theo dịch vụ, phiên bản và tài khoản.</p>
 <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">Fine-tuning mô hình riêng trên AI Studio, quản trị giới hạn RPM/TPD, tính toán chi phí và kiến trúc đưa vào sản phẩm</p>
 </div>
 </div>
@@ -1655,7 +1667,7 @@ Khi bạn tải lên một bộ tài liệu đồ sộ (ví dụ sách luật 50
 </div>
 <div class="not-prose mt-6 rounded-xl border border-indigo-200 dark:border-indigo-800 bg-indigo-50/60 dark:bg-indigo-950/30 p-5"><h3 class="text-base font-bold text-indigo-700 dark:text-indigo-300 mb-2">Bổ sung kiến thức: Tuning, hạn mức và vận hành thực tế</h3><p class="text-sm leading-relaxed text-gray-700 dark:text-gray-200">Không mặc định Google AI Studio hiện cung cấp nút fine-tuning cho mọi mô hình. Khả năng supervised tuning phụ thuộc nền tảng, khu vực và model, thường cần kiểm tra Vertex AI và tài liệu chính thức. Trước khi fine-tune hãy thử system instruction, few-shot, RAG và đánh giá tập test. Quota gồm RPM, TPM, RPD và có thể thay đổi theo tier/model. Cần xử lý HTTP 429 bằng exponential backoff có jitter, caching, giám sát usage và chi phí, đặt ngân sách/cảnh báo, thử tải và có phương án dự phòng.</p></div></div>
 <!-- Trắc nghiệm Bài 10 -->
-<div class="mt-8 pt-6 border-t border-gray-100 dark:border-gray-800 space-y-4">
+<div class="mt-6 p-5 rounded-xl border border-indigo-200 dark:border-indigo-800 bg-indigo-50/60 dark:bg-indigo-950/30"><h3 class="font-bold text-indigo-700 dark:text-indigo-300 mb-2">Checklist trước khi đưa ứng dụng vào sử dụng</h3><ol class="list-decimal pl-5 text-sm space-y-2"><li>Kiểm tra model ID còn hoạt động, input/output modality và giới hạn token trên tài liệu chính thức.</li><li>Chạy bộ test gồm trường hợp bình thường, dữ liệu rỗng, prompt độc hại và phản hồi sai định dạng.</li><li>Giữ API key ở backend/Edge Function; cấu hình xác thực, phân quyền, giới hạn tốc độ và nhật ký lỗi.</li><li>Kiểm soát ngân sách, retry có backoff khi bị rate limit; không gửi dữ liệu cá nhân học sinh nếu chưa đủ điều kiện bảo vệ.</li><li>Đối chiếu <a class="underline" href="https://ai.google.dev/gemini-api/docs" rel="noopener noreferrer" target="_blank">Gemini API docs</a> và <a class="underline" href="https://ai.google.dev/gemini-api/docs/models" rel="noopener noreferrer" target="_blank">danh sách mô hình</a> trước khi triển khai.</li></ol></div><div class="mt-8 pt-6 border-t border-gray-100 dark:border-gray-800 space-y-4">
 <h4 class="text-base font-bold text-gray-900 dark:text-white flex items-center gap-2">
 <i class="fa-solid fa-circle-question text-indigo-600"></i> Trắc nghiệm củng cố Bài 10
 </h4>
@@ -1809,7 +1821,10 @@ Khi bạn tải lên một bộ tài liệu đồ sộ (ví dụ sách luật 50
 
     // Quiz and Progress Handler
     const totalQuizzes = 40;
-    let solvedQuizzes = new Set(JSON.parse(localStorage.getItem('aistudio_google_solved_quizzes') || '[]'));
+    let solvedQuizzes;
+    try { solvedQuizzes = new Set(JSON.parse(localStorage.getItem('aistudio_google_solved_quizzes') || '[]')); }
+    catch (_) { solvedQuizzes = new Set(); }
+    // Correctly answered questions persist; wrong answers can be retried.
 
     function updateProgress() {
       const count = solvedQuizzes.size;
@@ -1822,10 +1837,11 @@ Khi bạn tải lên một bộ tài liệu đồ sộ (ví dụ sách luật 50
 
     function checkQuiz(quizId, selectedIdx, correctIdx, explanation) {
       const feedbackEl = document.getElementById(quizId + '-feedback');
+      if (solvedQuizzes.has(quizId)) return;
       const buttons = document.querySelectorAll('.quiz-btn-' + quizId);
       
       buttons.forEach((btn, idx) => {
-        btn.disabled = true;
+        btn.disabled = selectedIdx === correctIdx;
         const icon = btn.querySelector('i');
         if (idx === correctIdx) {
           btn.classList.add('bg-indigo-50', 'dark:bg-indigo-950/40', 'border-indigo-500', 'text-indigo-700', 'dark:text-indigo-300', 'font-semibold');
@@ -1862,6 +1878,26 @@ Khi bạn tải lên một bộ tài liệu đồ sộ (ví dụ sách luật 50
     // ScrollSpy active link highlighter
     window.addEventListener('DOMContentLoaded', () => {
       updateProgress();
+      // Restore visual state of correctly completed questions after reloading.
+      solvedQuizzes.forEach(id => {
+        const buttons = document.querySelectorAll('.quiz-btn-' + id);
+        if (!buttons.length) return;
+        const correct = [...buttons].findIndex(btn => {
+          const call = btn.getAttribute('onclick') || '';
+          const match = call.match(/checkQuiz\('[^']+',\s*\d+,\s*(\d+),/);
+          return match && Number(match[1]) === [...buttons].indexOf(btn);
+        });
+        buttons.forEach((btn, i) => {
+          btn.disabled = true;
+          if (i === correct) btn.classList.add('bg-indigo-50', 'border-indigo-500', 'font-semibold');
+          else btn.classList.add('opacity-60');
+        });
+        const feedback = document.getElementById(id + '-feedback');
+        if (feedback) {
+          feedback.className = 'text-xs p-3 rounded-lg border bg-indigo-50 dark:bg-indigo-950/50 border-indigo-300 dark:border-indigo-800 text-indigo-800 dark:text-indigo-200 mt-2 block';
+          feedback.textContent = 'Đã trả lời đúng ✓';
+        }
+      });
 
       const sections = document.querySelectorAll('.lesson-section');
       const navLinks = document.querySelectorAll('.sidebar-link');
