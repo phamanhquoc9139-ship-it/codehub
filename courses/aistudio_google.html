@@ -1,0 +1,1892 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="vi">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Google AI Studio (aistudio.google.com) - Nền Tảng Phát Triển &amp; Khai Thác Gemini API Tối Thượng | CodeHub</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            aistudio: { 50: '#eef2ff', 100: '#e0e7ff', 200: '#c7d2fe', 300: '#a5b4fc', 400: '#818cf8', 500: '#6366f1', 600: '#4f46e5', 700: '#4338ca', 800: '#3730a3', 900: '#312e81' },
+            dark: { bg: '#090d16', surface: '#111827', card: '#1b2438', border: '#29354f' }
+          }
+        }
+      }
+    }
+</script>
+<style>
+    .sidebar-scroll::-webkit-scrollbar { width: 6px; }
+    .sidebar-scroll::-webkit-scrollbar-track { background: transparent; }
+    .sidebar-scroll::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 4px; }
+    .dark .sidebar-scroll::-webkit-scrollbar-thumb { background: #475569; }
+    .studio-gradient {
+      background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 30%, #312e81 65%, #1e40af 100%);
+    }
+    .studio-sparkle {
+      background: linear-gradient(90deg, #38bdf8, #818cf8, #c084fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+</style>
+</head>
+<body class="bg-gray-50 dark:bg-dark-bg text-gray-900 dark:text-gray-100 min-h-screen flex flex-col font-sans transition-colors duration-200">
+<!-- Header Navigation -->
+<header class="sticky top-0 z-50 bg-white/90 dark:bg-dark-surface/90 backdrop-blur border-b border-gray-200 dark:border-gray-800">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+<div class="flex items-center gap-4">
+<a class="flex items-center gap-2 text-indigo-600 dark:text-indigo-400 font-bold text-lg hover:opacity-90" href="../index.html">
+<i class="fa-solid fa-graduation-cap text-xl"></i>
+<span class="hidden sm:inline">CodeHub</span>
+</a>
+<div class="h-5 w-px bg-gray-300 dark:bg-gray-700"></div>
+<div class="flex items-center gap-1.5 bg-gray-100 dark:bg-gray-800 p-1 rounded-xl text-xs sm:text-sm font-semibold">
+<span class="px-2.5 py-1 rounded-lg bg-white dark:bg-gray-700 shadow-sm text-indigo-600 dark:text-indigo-400 flex items-center gap-1.5">
+<i class="fa-solid fa-microchip"></i> Google AI Studio
+</span>
+<a class="px-2.5 py-1 rounded-lg text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white flex items-center gap-1" href="gemini_google.html">
+<i class="fa-solid fa-wand-magic-sparkles"></i> Gemini App
+</a>
+<a class="px-2.5 py-1 rounded-lg text-teal-600 dark:text-teal-400 hover:bg-white dark:hover:bg-gray-700 flex items-center gap-1" href="notebook_google.html">
+<i class="fa-solid fa-book-bookmark"></i> NotebookLM
+</a>
+<a class="px-2.5 py-1 rounded-lg text-violet-600 dark:text-violet-400 hover:bg-white dark:hover:bg-gray-700 flex items-center gap-1" href="google_flow.html">
+<i class="fa-solid fa-film"></i> Flow AI
+</a>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<a class="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold shadow-sm transition" href="https://aistudio.google.com" rel="noopener noreferrer" target="_blank">
+<i class="fa-solid fa-arrow-up-right-from-square"></i> Mở aistudio.google.com
+</a>
+<button class="p-2 rounded-xl text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none" id="themeToggle" title="Chuyển chế độ sáng/tối">
+<i class="fa-solid fa-moon dark:hidden text-lg"></i>
+<i class="fa-solid fa-sun hidden dark:inline text-lg text-amber-400"></i>
+</button>
+<button class="lg:hidden p-2 rounded-xl text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800" id="mobileMenuBtn">
+<i class="fa-solid fa-bars text-lg"></i>
+</button>
+</div>
+</div>
+</header>
+<!-- Hero Section -->
+<section class="studio-gradient text-white py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+<div class="absolute -right-16 -top-16 w-80 h-80 bg-indigo-500/20 rounded-full blur-3xl pointer-events-none"></div>
+<div class="absolute left-1/4 -bottom-16 w-72 h-72 bg-blue-500/20 rounded-full blur-3xl pointer-events-none"></div>
+<div class="max-w-7xl mx-auto text-center relative z-10">
+<span class="inline-flex items-center gap-2 px-3.5 py-1 bg-white/15 backdrop-blur rounded-full text-xs sm:text-sm font-semibold mb-3 border border-white/20">
+<i class="fa-solid fa-terminal text-cyan-300"></i> Google AI Developer Sandbox - aistudio.google.com
+</span>
+<h1 class="text-2xl sm:text-4xl md:text-5xl font-black tracking-tight mb-3">
+Làm Chủ Google AI Studio &amp; Gemini API
+</h1>
+<p class="text-indigo-100 text-sm sm:text-base max-w-3xl mx-auto font-light leading-relaxed mb-6">Thực hành Google AI Studio và Gemini API: tạo prompt, phân tích đa phương thức, cấu hình mô hình, JSON Schema, Function Calling, SDK, bảo mật API key và triển khai ứng dụng. Tính năng, model ID, giá và quota thay đổi theo thời điểm.</p>
+<div class="flex flex-wrap items-center justify-center gap-3 text-xs sm:text-sm font-medium">
+<div class="flex items-center gap-2 bg-black/40 px-3.5 py-2 rounded-xl backdrop-blur border border-white/10">
+<i class="fa-solid fa-key text-amber-300"></i> Miễn phí API Key &amp; Free Tier
+</div>
+<div class="flex items-center gap-2 bg-black/40 px-3.5 py-2 rounded-xl backdrop-blur border border-white/10">
+<i class="fa-solid fa-database text-cyan-300"></i> Context tùy mô hình
+</div>
+<div class="flex items-center gap-2 bg-black/40 px-3.5 py-2 rounded-xl backdrop-blur border border-white/10">
+<i class="fa-solid fa-code text-indigo-300"></i> Structured Output &amp; Function Call
+</div>
+<div class="flex items-center gap-2 bg-black/40 px-3.5 py-2 rounded-xl backdrop-blur border border-white/10">
+<i class="fa-solid fa-sliders text-emerald-300"></i> SDK Python, JS &amp; cURL Export
+</div>
+</div>
+</div>
+</section>
+<!-- Mobile Drawer Backdrop -->
+<div class="fixed inset-0 bg-black/50 z-40 hidden lg:hidden transition-opacity" id="drawerBackdrop"></div>
+<!-- Main Container with Sidebar + Content -->
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 flex gap-8">
+<!-- Sidebar Navigation -->
+<aside class="fixed inset-y-0 left-0 z-50 w-72 bg-white dark:bg-dark-surface p-6 shadow-xl transform -translate-x-full transition-transform lg:translate-x-0 lg:static lg:w-80 lg:p-0 lg:shadow-none lg:bg-transparent lg:dark:bg-transparent shrink-0" id="sidebarDrawer">
+<div class="flex items-center justify-between pb-4 border-b border-gray-200 dark:border-gray-800 lg:hidden mb-4">
+<h2 class="text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2">
+<i class="fa-solid fa-list-check text-indigo-600"></i> Mục lục khóa học
+</h2>
+<button class="p-2 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg" id="closeDrawerBtn">
+<i class="fa-solid fa-xmark text-lg"></i>
+</button>
+</div>
+<!-- Sticky Progress Tracker -->
+<div class="sticky top-20 bg-white dark:bg-dark-surface lg:border border-gray-200 dark:border-gray-800 lg:rounded-2xl lg:p-4 space-y-4 shadow-sm">
+<div>
+<div class="flex items-center justify-between text-xs font-semibold text-gray-500 dark:text-gray-400 mb-1.5">
+<span>Tiến độ hoàn thành trắc nghiệm</span>
+<span class="text-indigo-600 dark:text-indigo-400 font-bold" id="progressPercent">0% (0/40)</span>
+</div>
+<div class="w-full bg-gray-200 dark:bg-gray-700 h-2 rounded-full overflow-hidden">
+<div class="bg-gradient-to-r from-blue-500 to-indigo-600 h-full w-0 transition-all duration-300 rounded-full" id="progressBar"></div>
+</div>
+</div>
+<nav class="space-y-1 max-h-[calc(100vh-220px)] overflow-y-auto sidebar-scroll pr-1 text-xs sm:text-sm font-medium">
+<a class="sidebar-link block px-3 py-2 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition" href="#bai1">
+<span class="text-indigo-600 dark:text-indigo-400 font-bold mr-1">01.</span> Tổng quan AI Studio &amp; API Key
+</a>
+<a class="sidebar-link block px-3 py-2 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition" href="#bai2">
+<span class="text-indigo-600 dark:text-indigo-400 font-bold mr-1">02.</span> Các thế hệ Gemini &amp; Thinking Mode
+</a>
+<a class="sidebar-link block px-3 py-2 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition" href="#bai3">
+<span class="text-indigo-600 dark:text-indigo-400 font-bold mr-1">03.</span> 3 Chế độ Prompt &amp; Few-shot Design
+</a>
+<a class="sidebar-link block px-3 py-2 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition" href="#bai4">
+<span class="text-indigo-600 dark:text-indigo-400 font-bold mr-1">04.</span> Siêu tham số &amp; Safety Settings
+</a>
+<a class="sidebar-link block px-3 py-2 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition" href="#bai5">
+<span class="text-indigo-600 dark:text-indigo-400 font-bold mr-1">05.</span> Multimodal &amp; Context Window 2M
+</a>
+<a class="sidebar-link block px-3 py-2 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition" href="#bai6">
+<span class="text-indigo-600 dark:text-indigo-400 font-bold mr-1">06.</span> System Instructions &amp; Search Grounding
+</a>
+<a class="sidebar-link block px-3 py-2 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition" href="#bai7">
+<span class="text-indigo-600 dark:text-indigo-400 font-bold mr-1">07.</span> Function Calling &amp; Tool Use
+</a>
+<a class="sidebar-link block px-3 py-2 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition" href="#bai8">
+<span class="text-indigo-600 dark:text-indigo-400 font-bold mr-1">08.</span> Structured Outputs &amp; JSON Schema
+</a>
+<a class="sidebar-link block px-3 py-2 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition" href="#bai9">
+<span class="text-indigo-600 dark:text-indigo-400 font-bold mr-1">09.</span> Xuất Mã Nguồn &amp; Tích Hợp SDK
+</a>
+<a class="sidebar-link block px-3 py-2 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition" href="#bai10">
+<span class="text-indigo-600 dark:text-indigo-400 font-bold mr-1">10.</span> Model Tuning, Quota &amp; Deployment
+</a>
+</nav>
+<div class="pt-3 border-t border-gray-200 dark:border-gray-800 text-[11px] text-gray-500 dark:text-gray-400">
+<i class="fa-solid fa-lightbulb text-amber-500 mr-1"></i> Mẹo: Tiến độ trắc nghiệm được lưu tự động trên trình duyệt.
+</div>
+</div>
+</aside>
+<!-- Main Course Content -->
+<main class="flex-1 space-y-12 min-w-0">
+<!-- ========================================== -->
+<!-- BÀI 1: TỔNG QUAN AI STUDIO & GET API KEY -->
+<!-- ========================================== -->
+<section class="lesson-section bg-white dark:bg-dark-surface p-6 sm:p-8 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm" id="bai1">
+<div class="flex items-center gap-3 mb-6 pb-4 border-b border-gray-100 dark:border-gray-800">
+<div class="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 flex items-center justify-center font-bold text-lg">01</div>
+<div>
+<h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">Bài 1: Tổng Quan Google AI Studio &amp; Khởi Tạo Gemini API Key</h2>
+<p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">Khám phá môi trường phát triển AI của Google, cách phân biệt với Gemini App, Vertex AI và quy trình lấy API Key an toàn</p>
+</div>
+</div>
+<div class="prose dark:prose-invert max-w-none text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed space-y-4">
+<p>
+<strong>Google AI Studio</strong> (truy cập tại <code class="bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded text-indigo-600 font-mono text-xs">aistudio.google.com</code>) là cổng thử nghiệm (developer sandbox) chính thức được Google thiết kế dành riêng cho lập trình viên và nhà nghiên cứu nhằm tạo mẫu ứng dụng AI nhanh nhất bằng họ mô hình <strong>Gemini</strong>.
+</p>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 not-prose my-6">
+<div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+<div class="font-bold text-blue-600 dark:text-blue-400 text-sm mb-1.5 flex items-center gap-1.5">
+<i class="fa-solid fa-comments"></i> Gemini App (gemini.google.com)
+</div>
+<p class="text-xs text-gray-600 dark:text-gray-400">Ứng dụng trò chuyện dành cho người dùng cuối (B2C), có thể có tính năng lưu lịch sử và cá nhân hóa tùy tài khoản, tích hợp tiện ích Workspace, giao diện hội thoại thông thường.</p>
+</div>
+<div class="p-4 rounded-xl bg-indigo-50/50 dark:bg-indigo-950/40 border border-indigo-300 dark:border-indigo-700">
+<div class="font-bold text-indigo-600 dark:text-indigo-400 text-sm mb-1.5 flex items-center gap-1.5">
+<i class="fa-solid fa-terminal"></i> Google AI Studio (aistudio.google.com)
+</div>
+<p class="text-xs text-gray-600 dark:text-gray-400">Môi trường phát triển AI cấp thấp (Developer Playground): Tùy biến mọi tham số, điều chỉnh các thiết lập sinh nội dung được hỗ trợ, hỗ trợ System Prompt, JSON Mode, Function Calling và trích xuất code trực tiếp.</p>
+</div>
+<div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+<div class="font-bold text-emerald-600 dark:text-emerald-400 text-sm mb-1.5 flex items-center gap-1.5">
+<i class="fa-solid fa-cloud"></i> Google Cloud Vertex AI
+</div>
+<p class="text-xs text-gray-600 dark:text-gray-400">Nền tảng MLOps cấp doanh nghiệp (Enterprise), cung cấp cam kết dịch vụ SLA khắt khe, bảo mật dữ liệu cấp hạ tầng, tính cước qua tài khoản Google Cloud Project có hợp đồng chi tiết.</p>
+</div>
+</div>
+<h3 class="text-lg font-bold text-gray-900 dark:text-white mt-6">Quy Trình Tạo Và Quản Lý Gemini API Key</h3>
+<ol class="list-decimal pl-5 space-y-2">
+<li>Truy cập <code class="bg-gray-100 dark:bg-gray-800 px-1 py-0.5 rounded text-indigo-500 font-mono text-xs">aistudio.google.com</code> và đăng nhập bằng tài khoản Google.</li>
+<li>Ở thanh menu bên trái, nhấp vào nút <strong class="text-indigo-600 dark:text-indigo-400">"Get API key"</strong>.</li>
+<li>Chọn <strong>Create API key</strong> trong một Google Cloud Project mới hoặc dự án có sẵn.</li>
+<li>Sao chép khóa bí mật dạng chuỗi <code class="bg-gray-100 dark:bg-gray-800 px-1 py-0.5 rounded font-mono text-xs text-rose-500">AIzaSy...</code> và lưu vào biến môi trường hệ thống.</li>
+</ol>
+<div class="bg-slate-900 text-slate-100 p-4 rounded-xl font-mono text-xs sm:text-sm my-4 overflow-x-auto not-prose border border-slate-800">
+<div class="text-slate-400 mb-2 font-sans font-semibold text-[11px] uppercase tracking-wider flex items-center justify-between">
+<span>Thiết lập biến môi trường an toàn</span>
+<span class="text-emerald-400"><i class="fa-solid fa-lock"></i> Tuyệt đối không commit vào Git</span>
+</div>
+<pre><code># Linux / macOS
+export GEMINI_API_KEY="AIzaSyYourSecretKeyHere"
+
+# Windows PowerShell
+$env:GEMINI_API_KEY="AIzaSyYourSecretKeyHere"
+
+# File .env trong dự án
+GEMINI_API_KEY=AIzaSyYourSecretKeyHere</code></pre>
+</div>
+<div class="p-4 rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 text-xs sm:text-sm text-amber-900 dark:text-amber-200">
+<i class="fa-solid fa-triangle-exclamation mr-1.5 text-amber-600"></i>
+<strong>Lưu ý bảo mật quan trọng:</strong> Miễn phí tầng cơ sở (Free Tier) đi kèm chính sách: dữ liệu prompt/response của tài khoản free có thể được Google sử dụng để đánh giá huấn luyện mô hình. Khi bật tính năng tính phí Pay-as-you-go qua GCP Billing, dữ liệu của bạn sẽ có điều khoản sử dụng dữ liệu khác với Free Tier; cần đọc chính sách hiện hành, thiết lập dự án và ngoại lệ áp dụng.
+</div>
+<div class="not-prose mt-6 rounded-xl border border-indigo-200 dark:border-indigo-800 bg-indigo-50/60 dark:bg-indigo-950/30 p-5"><h3 class="text-base font-bold text-indigo-700 dark:text-indigo-300 mb-2">Bổ sung kiến thức: Bảo mật API Key và dữ liệu học sinh</h3><p class="text-sm leading-relaxed text-gray-700 dark:text-gray-200">API key phải được giữ ở máy chủ hoặc dịch vụ bí mật; không đưa vào HTML/JavaScript chạy trên GitHub Pages. Giới hạn quyền, quota và theo dõi chi phí; khi nghi lộ khóa phải thu hồi và tạo khóa mới. Không nhập dữ liệu cá nhân của học sinh vào prompt khi chưa có căn cứ và biện pháp bảo vệ phù hợp. Free Tier, Paid Tier và giao diện AI Studio có thể áp dụng điều khoản dữ liệu khác nhau: cần kiểm tra tài liệu chính thức trước khi xử lý thông tin nhạy cảm.</p></div></div>
+<!-- Trắc nghiệm Bài 1 -->
+<div class="mt-8 pt-6 border-t border-gray-100 dark:border-gray-800 space-y-4">
+<h4 class="text-base font-bold text-gray-900 dark:text-white flex items-center gap-2">
+<i class="fa-solid fa-circle-question text-indigo-600"></i> Trắc nghiệm củng cố Bài 1
+</h4>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Q1-1 -->
+<div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+<p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">1. Mục đích trọng tâm nhất của Google AI Studio (aistudio.google.com) là gì?</p>
+<div class="space-y-1.5 text-xs">
+<button class="quiz-btn-q1-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q1-1', 0, 1, 'Chưa đúng. Ứng dụng chat B2C thông thường là gemini.google.com.')">
+<span>A. Ứng dụng chat tiêu dùng giải trí cho người dùng phổ thông</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q1-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q1-1', 1, 1, 'Chính xác! AI Studio là sandbox giúp lập trình viên thử nghiệm mô hình, cấu hình tham số và lấy API key nhanh nhất.')">
+<span>B. Môi trường sandbox tạo mẫu (prototyping) nhanh dành cho lập trình viên để khai thác Gemini API</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q1-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q1-1', 2, 1, 'Sai. Công cụ nghiên cứu học thuật dựa trên tài liệu là Google NotebookLM.')">
+<span>C. Trình biên tập văn bản ghi chú tài liệu tương tự NotebookLM</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q1-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q1-1', 3, 1, 'Sai. AI Studio trực quan trên web, không phải extension cài trong VS Code.')">
+<span>D. Một extension độc quyền chỉ cài đặt được trên Visual Studio Code</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+</div>
+<div class="hidden" id="q1-1-feedback"></div>
+</div>
+<!-- Q1-2 -->
+<div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+<p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">2. Đâu là sự khác biệt cơ bản giữa AI Studio và Vertex AI?</p>
+<div class="space-y-1.5 text-xs">
+<button class="quiz-btn-q1-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q1-2', 0, 0, 'Chính xác! AI Studio hướng đến thử nghiệm linh hoạt, tạo mẫu nhanh; còn Vertex AI là giải pháp doanh nghiệp với hạ tầng MLOps hoàn chỉnh.')">
+<span>A. AI Studio tối ưu cho prototyping nhanh &amp; API key đơn giản; Vertex AI phục vụ quy mô doanh nghiệp với quản trị hạ tầng GCP</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q1-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q1-2', 1, 0, 'Sai. Cả hai đều có thể truy cập mô hình Gemini mới nhất của Google.')">
+<span>B. Vertex AI chỉ dùng được mô hình cũ GPT-2, AI Studio mới có Gemini</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q1-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q1-2', 2, 0, 'Sai. AI Studio cung cấp API key và SDK đầy đủ để tích hợp vào bất kỳ ngôn ngữ lập trình nào.')">
+<span>C. AI Studio không có API để gọi từ code ứng dụng</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q1-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q1-2', 3, 0, 'Sai. Vertex AI đòi hỏi cấu hình tài khoản Google Cloud và thanh toán chặt chẽ hơn.')">
+<span>D. AI Studio bắt buộc phải trả phí trước khi được tạo tài khoản</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+</div>
+<div class="hidden" id="q1-2-feedback"></div>
+</div>
+<!-- Q1-3 -->
+<div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+<p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">3. Thực hành lưu trữ API Key nào sau đây là chuẩn mực an toàn?</p>
+<div class="space-y-1.5 text-xs">
+<button class="quiz-btn-q1-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q1-3', 0, 2, 'Sai! Viết cứng API key trực tiếp trong code frontend sẽ làm lộ key cho bất kỳ ai truy cập website.')">
+<span>A. Viết trực tiếp khóa API vào biến trong file JavaScript giao diện frontend</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q1-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q1-3', 1, 2, 'Sai! Commit key lên GitHub công khai sẽ bị bot quét và chiếm dụng trong vòng vài giây.')">
+<span>B. Commit khóa API lên kho lưu trữ GitHub công khai trong README.md</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q1-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q1-3', 2, 2, 'Chính xác! Luôn đưa API Key vào biến môi trường hệ thống hoặc file .env và thêm .env vào .gitignore.')">
+<span>C. Đưa API Key vào biến môi trường (Environment Variable) phía máy chủ backend và bảo mật file .env</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q1-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q1-3', 3, 2, 'Sai! Gửi key qua email hay chatgroup không mã hóa có nguy cơ lộ lọt cao.')">
+<span>D. Đính kèm khóa API vào tiêu đề email gửi cho toàn bộ thành viên nhóm</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+</div>
+<div class="hidden" id="q1-3-feedback"></div>
+</div>
+<!-- Q1-4 -->
+<div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+<p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">4. Ở gói miễn phí (Free Tier) của Google AI Studio, điều khoản về dữ liệu quy định ra sao?</p>
+<div class="space-y-1.5 text-xs">
+<button class="quiz-btn-q1-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q1-4', 0, 1, 'Chưa đúng, dữ liệu gói Free có thể được xem xét phục vụ huấn luyện mô hình.')">
+<span>A. Dữ liệu tuyệt đối không bao giờ được Google lưu lại dù ở bất kỳ gói dịch vụ nào</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q1-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q1-4', 1, 1, 'Chính xác! Trong gói Free Tier, dữ liệu prompt/response có thể được dùng để cải tiến sản phẩm. Với gói trả phí, cần xem điều khoản xử lý dữ liệu hiện hành; không nên khẳng định bảo mật tuyệt đối.')">
+<span>B. Dữ liệu người dùng ở Free Tier có thể được xem xét và sử dụng để huấn luyện mô hình của Google</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q1-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q1-4', 2, 1, 'Sai! Không có chuyện dữ liệu tự động đăng công khai lên mạng xã hội.')">
+<span>C. Mọi dữ liệu câu hỏi sẽ được chia sẻ tự động lên mạng xã hội Google</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q1-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q1-4', 3, 1, 'Sai! Sau 24h dữ liệu không tự xóa tài khoản của bạn.')">
+<span>D. Dữ liệu sẽ tự động xóa sạch tài khoản Google của bạn sau 24 giờ</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+</div>
+<div class="hidden" id="q1-4-feedback"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- ========================================== -->
+<!-- BÀI 2: CÁC DÒNG MÔ HÌNH VÀ THINKING MODE -->
+<!-- ========================================== -->
+<section class="lesson-section bg-white dark:bg-dark-surface p-6 sm:p-8 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm" id="bai2">
+<div class="flex items-center gap-3 mb-6 pb-4 border-b border-gray-100 dark:border-gray-800">
+<div class="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 flex items-center justify-center font-bold text-lg">02</div>
+<div>
+<h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">Bài 2: Các Thế Hệ Mô Hình Gemini &amp; Chế Độ Suy Luận Thinking Mode</h2>
+<p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">Tìm hiểu kiến trúc Gemini 2.0 Flash, 1.5 Pro, 1.5 Flash, Flash-Lite và cơ chế Chain-of-Thought trực quan</p>
+</div>
+</div>
+<div class="prose dark:prose-invert max-w-none text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed space-y-4">
+<p>
+Trên bảng chọn mô hình (Model Selector) của Google AI Studio, bạn có thể lựa chọn nhiều phiên bản mô hình khác nhau phục vụ từng nhu cầu cụ thể về tốc độ, năng lực suy luận và chi phí:
+</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 not-prose my-6">
+<div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-indigo-500/30">
+<div class="flex items-center justify-between mb-2">
+<span class="font-bold text-indigo-600 dark:text-indigo-400 text-sm flex items-center gap-1.5">
+<i class="fa-solid fa-bolt-lightning"></i> Gemini 2.0 Flash
+</span>
+<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300">Ví dụ lịch sử</span>
+</div>
+<p class="text-xs text-gray-600 dark:text-gray-400 mb-2">Thế hệ mô hình tiên tiến kế tiếp với tốc độ phản hồi tính bằng mili-giây, khả năng xử lý multimodal theo thời gian thực (realtime) và xuất sắc trong Function Calling.</p>
+<div class="text-[11px] font-mono text-gray-500 dark:text-gray-400">Context Window: 1,048,576 tokens</div>
+</div>
+<div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-purple-500/30">
+<div class="flex items-center justify-between mb-2">
+<span class="font-bold text-purple-600 dark:text-purple-400 text-sm flex items-center gap-1.5">
+<i class="fa-solid fa-brain"></i> Gemini 1.5 Pro
+</span>
+<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-purple-100 dark:bg-purple-950 text-purple-700 dark:text-purple-300">Siêu ngữ cảnh</span>
+</div>
+<p class="text-xs text-gray-600 dark:text-gray-400 mb-2">Đỉnh cao về lý luận phức tạp, phân tích chuyên sâu các tài liệu khổng lồ (sách giáo trình, mã nguồn dự án lớn, video thời lượng dài).</p>
+<div class="text-[11px] font-mono text-gray-500 dark:text-gray-400">Context Window: 2,097,152 tokens</div>
+</div>
+<div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-emerald-500/30">
+<div class="flex items-center justify-between mb-2">
+<span class="font-bold text-emerald-600 dark:text-emerald-400 text-sm flex items-center gap-1.5">
+<i class="fa-solid fa-feather-pointed"></i> Gemini 1.5 Flash
+</span>
+<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300">Tiết kiệm &amp; Nhanh</span>
+</div>
+<p class="text-xs text-gray-600 dark:text-gray-400 mb-2">Mô hình làm việc chủ lực (workhorse model) với chi phí thấp nhất cho khối lượng truy vấn lớn (high-volume tasks), độ trễ thấp.</p>
+<div class="text-[11px] font-mono text-gray-500 dark:text-gray-400">Context Window: 1,048,576 tokens</div>
+</div>
+<div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-amber-500/30">
+<div class="flex items-center justify-between mb-2">
+<span class="font-bold text-amber-600 dark:text-amber-400 text-sm flex items-center gap-1.5">
+<i class="fa-solid fa-gauge-high"></i> Gemini 2.0 Flash Thinking
+</span>
+<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-300">Suy luận sâu</span>
+</div>
+<p class="text-xs text-gray-600 dark:text-gray-400 mb-2">Chế độ hiển thị chuỗi tư duy (Chain of Thought), cho phép mô hình suy nghĩ từng bước trước khi trả lời câu hỏi logic, toán học và gỡ lỗi code phức tạp.</p>
+<div class="text-[11px] font-mono text-gray-500 dark:text-gray-400">Có thể hiển thị bản tóm tắt suy luận tùy mô hình</div>
+</div>
+</div>
+<h3 class="text-lg font-bold text-gray-900 dark:text-white mt-4">Cơ Chế Hoạt Động Của Gemini Thinking Mode</h3>
+<p>
+Khi kích hoạt mô hình <strong>Gemini 2.0 Flash Thinking</strong> trên AI Studio, hệ thống cho phép mô hình tự sinh ra các khối suy nghĩ nội tâm (Reasoning / Thinking Tokens) trước khi đưa ra câu trả lời chính thức:
+</p>
+<ul class="list-disc pl-5 space-y-1.5">
+<li><strong>Tự kiểm tra và tự sửa lỗi:</strong> Mô hình tự phân tích câu hỏi, vạch ra kế hoạch giải quyết, thử nghiệm các giả thiết và tự hiệu chỉnh sai lệch trước khi viết mã hay kết luận.</li>
+<li><strong>Minh bạch quá trình tư duy:</strong> Trên giao diện AI Studio, bạn có thể nhấp mở khối <em>"Thought Process"</em> để xem phần giải thích hoặc tóm tắt suy luận được cung cấp (nếu có), không mặc định là toàn bộ suy luận nội bộ.</li>
+<li><strong>Đặc biệt hữu ích:</strong> Giải các bài toán chứng minh, thuật toán phân loại đồ thị, phân tích mã nguồn đa luồng và bài toán logic hóc búa.</li>
+</ul>
+<div class="not-prose mt-6 rounded-xl border border-indigo-200 dark:border-indigo-800 bg-indigo-50/60 dark:bg-indigo-950/30 p-5"><h3 class="text-base font-bold text-indigo-700 dark:text-indigo-300 mb-2">Bổ sung kiến thức: Chọn mô hình theo phiên bản đang hoạt động</h3><p class="text-sm leading-relaxed text-gray-700 dark:text-gray-200">Danh sách Gemini 1.5 và 2.0 trong phần trên dùng để tìm hiểu lịch sử phát triển, không phải danh sách khuyên dùng hiện tại. Vào Model Selector để kiểm tra model ID, trạng thái preview/stable/deprecated, modality, context window, output limit, chi phí và rate limit. Các dòng Pro, Flash, Flash-Lite có đánh đổi về chất lượng, tốc độ và giá. Thinking budget/level và bản tóm tắt suy luận chỉ khả dụng ở một số mô hình; không được đồng nhất với toàn bộ suy luận nội bộ.</p></div></div>
+<!-- Trắc nghiệm Bài 2 -->
+<div class="mt-8 pt-6 border-t border-gray-100 dark:border-gray-800 space-y-4">
+<h4 class="text-base font-bold text-gray-900 dark:text-white flex items-center gap-2">
+<i class="fa-solid fa-circle-question text-indigo-600"></i> Trắc nghiệm củng cố Bài 2
+</h4>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Q2-1 -->
+<div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+<p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">1. Kích thước cửa sổ ngữ cảnh (Context Window) tối đa của Gemini 1.5 Pro theo thông số lịch sử được công bố là bao nhiêu?</p>
+<div class="space-y-1.5 text-xs">
+<button class="quiz-btn-q2-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q2-1', 0, 2, 'Sai. 8k và 32k là giới hạn của các thế hệ LLM cũ như GPT-3.5.')">
+<span>A. 32,000 tokens (khoảng 25 trang văn bản)</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q2-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q2-1', 1, 2, 'Sai. 128k là mức thường thấy của GPT-4o.')">
+<span>B. 128,000 tokens</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q2-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q2-1', 2, 2, 'Chính xác! Gemini 1.5 Pro hỗ trợ lên tới 2 triệu token (khoảng 1.5 triệu từ), tương đương hàng chục cuốn tiểu thuyết hoặc hàng giờ video.')">
+<span>C. Lên đến khoảng 2,000,000 tokens (2 triệu tokens)</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q2-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q2-1', 3, 2, 'Sai. Context window không bị giới hạn chỉ ở 4,000 token.')">
+<span>D. Cố định ở mức 4,096 tokens</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+</div>
+<div class="hidden" id="q2-1-feedback"></div>
+</div>
+<!-- Q2-2 -->
+<div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+<p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">2. Mục đích cốt lõi của dòng mô hình Gemini Flash (1.5 Flash, 2.0 Flash) là gì?</p>
+<div class="space-y-1.5 text-xs">
+<button class="quiz-btn-q2-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q2-2', 0, 1, 'Sai. Vẽ tranh nghệ thuật chuyên sâu là mô hình Imagen của Google.')">
+<span>A. Chuyên dùng để vẽ tranh nghệ thuật và tạo ảnh 3D</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q2-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q2-2', 1, 1, 'Chính xác! Flash được tối ưu hóa cao về tốc độ suy luận, độ trễ cực thấp và chi phí rất rẻ cho hệ thống có tần suất gọi lớn.')">
+<span>B. Tối ưu tốc độ xử lý nhanh, độ trễ cực thấp và hiệu quả kinh tế tối đa cho các tác vụ quy mô lớn</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q2-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q2-2', 2, 1, 'Sai. Dòng Nano mới là mô hình offline không cần mạng.')">
+<span>C. Chạy hoàn toàn offline trong thẻ nhớ điện thoại không cần máy chủ</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q2-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q2-2', 3, 1, 'Sai. Flash hỗ trợ xử lý đa phương thức (hình ảnh, video, âm thanh) cực kỳ mạnh mẽ.')">
+<span>D. Không hỗ trợ đọc dữ liệu hình ảnh hay video</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+</div>
+<div class="hidden" id="q2-2-feedback"></div>
+</div>
+<!-- Q2-3 -->
+<div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+<p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">3. Điểm đặc sắc nhất của mô hình "Gemini 2.0 Flash Thinking" là gì?</p>
+<div class="space-y-1.5 text-xs">
+<button class="quiz-btn-q2-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q2-3', 0, 3, 'Sai. Đó không phải bản dịch mà là chuỗi suy luận logic.')">
+<span>A. Tự động dịch mọi câu hỏi sang tiếng La-tinh</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q2-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q2-3', 1, 3, 'Sai. Mô hình thinking giải quyết logic tốt hơn chứ không chặn câu trả lời.')">
+<span>B. Khóa vĩnh viễn không trả kết quả cho người dùng</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q2-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q2-3', 2, 3, 'Sai. Mô hình thinking không yêu cầu người dùng phải trả lời bằng giọng nói.')">
+<span>C. Bắt buộc người dùng chỉ được hỏi bằng giọng nói âm thanh</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q2-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q2-3', 3, 3, 'Chính xác! Mô hình thực hiện Chain-of-Thought rõ ràng, có thể cung cấp phần tóm tắt suy luận tùy phiên bản; không đồng nghĩa hiển thị đầy đủ suy luận nội bộ.')">
+<span>D. Sinh ra chuỗi tư duy (Thinking Process) từng bước, tự phản biện và kiểm tra lỗi trước khi xuất output</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+</div>
+<div class="hidden" id="q2-3-feedback"></div>
+</div>
+<!-- Q2-4 -->
+<div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+<p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">Trong bối cảnh các mô hình lịch sử, khi nào Gemini 1.5 Pro từng phù hợp hơn Flash?</p>
+<div class="space-y-1.5 text-xs">
+<button class="quiz-btn-q2-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q2-4', 0, 0, 'Chính xác! Khi cần phân tích tài liệu học thuật đồ sộ, codebase toàn diện hoặc so sánh nhiều giờ video, Pro mang lại khả năng nắm bắt ngữ cảnh vượt trội.')">
+<span>A. Khi cần suy luận lý giải sâu sắc trên kho tài liệu khổng lồ (2M tokens) và bài toán mã nguồn phức tạp</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q2-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q2-4', 1, 0, 'Sai. Với bot phân loại đơn giản số lượng lớn, Flash sẽ tiết kiệm chi phí hơn hàng chục lần.')">
+<span>B. Khi làm ứng dụng chatbot phân loại tin rác hàng triệu lượt mỗi phút với ngân sách eo hẹp</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q2-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q2-4', 2, 0, 'Sai. Tốc độ đơn thuần của Flash luôn nhanh hơn Pro.')">
+<span>C. Khi chỉ quan tâm đến tốc độ phản hồi tính bằng micro-giây</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q2-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q2-4', 3, 0, 'Sai. Cả Pro và Flash đều hoạt động tốt trên giao diện web AI Studio.')">
+<span>D. Khi trình duyệt của bạn không hỗ trợ hiển thị biểu tượng Flash</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+</div>
+<div class="hidden" id="q2-4-feedback"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- ========================================== -->
+<!-- BÀI 3: 3 CHẾ ĐỘ PROMPTING TRONG STUDIO -->
+<!-- ========================================== -->
+<section class="lesson-section bg-white dark:bg-dark-surface p-6 sm:p-8 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm" id="bai3">
+<div class="flex items-center gap-3 mb-6 pb-4 border-b border-gray-100 dark:border-gray-800">
+<div class="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 flex items-center justify-center font-bold text-lg">03</div>
+<div>
+<h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">Bài 3: Ba Chế Độ Prompting &amp; Kỹ Thuật Few-Shot Trong Studio</h2>
+<p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">So sánh Chat Prompt, Freeform Prompt, Structured Prompt và ứng dụng mẫu minh họa đa tình huống</p>
+</div>
+</div>
+<div class="prose dark:prose-invert max-w-none text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed space-y-4">
+<p>
+Google AI Studio cung cấp 3 giao diện nhập liệu chuyên biệt được tinh chỉnh cho các loại tác vụ kỹ thuật khác nhau:
+</p>
+<div class="space-y-4 not-prose my-6">
+<div class="p-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-dark-card">
+<h4 class="font-bold text-indigo-600 dark:text-indigo-400 text-sm mb-1 flex items-center gap-2">
+<i class="fa-solid fa-comments"></i> 1. Chat Prompt (Hội thoại nhiều lượt - Multi-turn)
+</h4>
+<p class="text-xs text-gray-600 dark:text-gray-400 leading-relaxed mb-2">
+Mô phỏng trải nghiệm người dùng tương tác với chatbot. Cung cấp hai vai trò rõ ràng: <code>User</code> và <code>Model</code>. Hệ thống tự động duy trì lịch sử các lượt trao đổi trước đó để mô hình duy trì mạch tư duy. Phù hợp cho trợ lý ảo, gia sư hỏi đáp và tư vấn kỹ thuật.
+</p>
+</div>
+<div class="p-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-dark-card">
+<h4 class="font-bold text-purple-600 dark:text-purple-400 text-sm mb-1 flex items-center gap-2">
+<i class="fa-solid fa-file-lines"></i> 2. Freeform Prompt (Khung tự do mở - Single Turn / Document Completion)
+</h4>
+<p class="text-xs text-gray-600 dark:text-gray-400 leading-relaxed mb-2">
+Một khung soạn thảo văn bản trắng thuần túy không có phân chia lượt nói. Bạn có thể tự do kết hợp văn bản mô tả, chèn các tệp hình ảnh, bảng dữ liệu hoặc video ở bất kỳ vị trí nào, rồi để mô hình hoàn thành văn bản tiếp theo. Lý tưởng cho việc viết tài liệu, phân tích mã nguồn và kiểm thử prompt phức hợp.
+</p>
+</div>
+<div class="p-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-dark-card">
+<h4 class="font-bold text-emerald-600 dark:text-emerald-400 text-sm mb-1 flex items-center gap-2">
+<i class="fa-solid fa-table-columns"></i> 3. Structured Prompt (Bảng mẫu Few-Shot có cấu trúc)
+</h4>
+<p class="text-xs text-gray-600 dark:text-gray-400 leading-relaxed mb-2">
+Giao diện trực quan chia thành các cột bảng: <strong>Input</strong> và <strong>Output</strong>. Bạn có thể cung cấp từ 3 đến 10 ví dụ mẫu minh họa cụ thể (Few-shot Examples) để mô hình học theo phong cách, quy tắc chuẩn hóa và cấu trúc đầu ra mong muốn một cách ổn định hơn, nhưng không bảo đảm tuyệt đối.
+</p>
+</div>
+</div>
+<h3 class="text-lg font-bold text-gray-900 dark:text-white mt-6">Sức Mạnh Của Kỹ Thuật Few-Shot Trên Structured Prompt</h3>
+<p>
+Thay vì cố gắng giải thích bằng lời dài dòng một định dạng dữ liệu phức tạp (Zero-shot), việc đưa ra các cặp mẫu trực tiếp giúp mô hình giảm sự mơ hồ nhưng không loại bỏ hoàn toàn lỗi hoặc thông tin bịa đặt:
+</p>
+<div class="overflow-x-auto not-prose my-4">
+<table class="w-full text-xs text-left border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden">
+<thead class="bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-semibold uppercase">
+<tr>
+<th class="p-3 border-b border-gray-200 dark:border-gray-700">Ví dụ (Input)</th>
+<th class="p-3 border-b border-gray-200 dark:border-gray-700">Mẫu mong muốn (Output)</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-gray-200 dark:divide-gray-800 font-mono">
+<tr class="bg-white dark:bg-dark-card">
+<td class="p-3">Giao thức HTTP status 404</td>
+<td class="p-3 text-emerald-600 dark:text-emerald-400">{"code": 404, "status": "Not Found", "category": "Client Error"}</td>
+</tr>
+<tr class="bg-gray-50/50 dark:bg-dark-surface">
+<td class="p-3">Giao thức HTTP status 502</td>
+<td class="p-3 text-emerald-600 dark:text-emerald-400">{"code": 502, "status": "Bad Gateway", "category": "Server Error"}</td>
+</tr>
+<tr class="bg-white dark:bg-dark-card font-semibold text-indigo-600 dark:text-indigo-400">
+<td class="p-3 font-mono">Giao thức HTTP status 200 (Thực tế test)</td>
+<td class="p-3 text-indigo-500 font-mono">-&gt; AI tự động sinh chuẩn: {"code": 200, "status": "OK", "category": "Success"}</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="not-prose mt-6 rounded-xl border border-indigo-200 dark:border-indigo-800 bg-indigo-50/60 dark:bg-indigo-950/30 p-5"><h3 class="text-base font-bold text-indigo-700 dark:text-indigo-300 mb-2">Bổ sung kiến thức: Prompt thực hành và đánh giá đầu ra</h3><p class="text-sm leading-relaxed text-gray-700 dark:text-gray-200">Một prompt hiệu quả nêu rõ vai trò, nhiệm vụ, ngữ cảnh, dữ liệu đầu vào, ràng buộc và định dạng kết quả. Few-shot là cung cấp ví dụ ngay trong ngữ cảnh, không phải huấn luyện trọng số. Không phải phiên bản giao diện nào cũng còn ba chế độ Chat/Freeform/Structured như hình thức cũ. Hãy dùng ví dụ trong một cuộc hội thoại và kiểm tra kết quả trên bộ dữ liệu thử, gồm cả trường hợp ngoại lệ.</p></div></div>
+<!-- Trắc nghiệm Bài 3 -->
+<div class="mt-8 pt-6 border-t border-gray-100 dark:border-gray-800 space-y-4">
+<h4 class="text-base font-bold text-gray-900 dark:text-white flex items-center gap-2">
+<i class="fa-solid fa-circle-question text-indigo-600"></i> Trắc nghiệm củng cố Bài 3
+</h4>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Q3-1 -->
+<div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+<p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">1. Chế độ "Structured Prompt" trong AI Studio được thiết kế tối ưu nhất cho trường hợp nào?</p>
+<div class="space-y-1.5 text-xs">
+<button class="quiz-btn-q3-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q3-1', 0, 1, 'Sai. Trò chuyện dài dùng Chat Prompt.')">
+<span>A. Trò chuyện tâm sự dài không có cấu trúc cố định</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q3-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q3-1', 1, 1, 'Chính xác! Structured Prompt với các cột Input/Output dạng bảng là phương pháp lý tưởng để triển khai Few-shot learning.')">
+<span>B. Kỹ thuật Few-Shot: cung cấp các ví dụ mẫu (cặp Input - Output) để mô hình bám sát cấu trúc</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q3-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q3-1', 2, 1, 'Sai. AI Studio không chỉnh sửa video dạng timeline dựng phim.')">
+<span>C. Cắt ghép hiệu ứng âm thanh và biên tập video ca nhạc</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q3-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q3-1', 3, 1, 'Sai. Kết nối cơ sở dữ liệu backend được thực hiện qua mã code chứ không phải loại prompt.')">
+<span>D. Kết nối trực tiếp máy chủ MySQL mà không cần code backend</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+</div>
+<div class="hidden" id="q3-1-feedback"></div>
+</div>
+<!-- Q3-2 -->
+<div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+<p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">2. Điểm khác biệt lớn nhất giữa Chat Prompt và Freeform Prompt là gì?</p>
+<div class="space-y-1.5 text-xs">
+<button class="quiz-btn-q3-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q3-2', 0, 0, 'Chính xác! Chat Prompt chia rõ ranh giới các lượt hội thoại giữa User và Model; trong khi Freeform là một văn bản mở liên tục.')">
+<span>A. Chat Prompt tổ chức theo từng lượt hội thoại tuần tự (User - Model); Freeform là không gian tài liệu tự do</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q3-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q3-2', 1, 0, 'Sai. Freeform cũng có thể gắn file ảnh, video, âm thanh dễ dàng.')">
+<span>B. Freeform Prompt cấm không cho tải lên hình ảnh</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q3-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q3-2', 2, 0, 'Sai. Cả 2 chế độ đều có thể xuất code SDK.')">
+<span>C. Chat Prompt không thể xuất ra mã nguồn Python</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q3-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q3-2', 3, 0, 'Sai. Không có quy định bắt buộc này.')">
+<span>D. Chat Prompt bắt buộc phải có tài khoản VIP trả phí</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+</div>
+<div class="hidden" id="q3-2-feedback"></div>
+</div>
+<!-- Q3-3 -->
+<div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+<p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">3. Kỹ thuật Zero-Shot Prompting nghĩa là gì?</p>
+<div class="space-y-1.5 text-xs">
+<button class="quiz-btn-q3-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q3-3', 0, 1, 'Sai. Đó là Few-shot prompting.')">
+<span>A. Cung cấp 100 ví dụ mẫu trước khi đặt câu hỏi</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q3-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q3-3', 1, 1, 'Chính xác! Zero-shot là yêu cầu mô hình giải quyết nhiệm vụ ngay lập tức mà không kèm theo bất kỳ ví dụ minh họa mẫu nào.')">
+<span>B. Yêu cầu mô hình thực hiện nhiệm vụ trực tiếp mà không đưa ra bất kỳ ví dụ minh họa nào</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q3-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q3-3', 2, 1, 'Sai. Zero-shot không liên quan đến token = 0.')">
+<span>C. Đặt số lượng token phản hồi bằng 0 để mô hình không tốn chi phí</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q3-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q3-3', 3, 1, 'Sai. Đây không phải định nghĩa zero-shot.')">
+<span>D. Không cho phép mô hình truy cập mạng Internet</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+</div>
+<div class="hidden" id="q3-3-feedback"></div>
+</div>
+<!-- Q3-4 -->
+<div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+<p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">4. Tại sao Few-Shot lại giúp giảm hiện tượng "ảo giác" (hallucination)?</p>
+<div class="space-y-1.5 text-xs">
+<button class="quiz-btn-q3-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q3-4', 0, 2, 'Sai. Few-shot nằm trong prompt, không thay đổi trọng số gốc của model.')">
+<span>A. Vì nó can thiệp và viết lại mạng nơ-ron vĩnh viễn của Gemini</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q3-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q3-4', 1, 2, 'Sai. Few-shot không dùng để dịch thuật.')">
+<span>B. Vì nó buộc mô hình phải dịch mọi dữ liệu sang tiếng Pháp</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q3-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q3-4', 2, 2, 'Chính xác! Các ví dụ mẫu cụ thể cung cấp biên giới rõ ràng (ground truth pattern) giúp định hướng xác suất phân bố từ ngữ đầu ra.')">
+<span>C. Vì các cặp ví dụ cụ thể neo định dạng và ngữ cảnh chuẩn xác, giúp thu hẹp không gian xác suất sai lệch</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q3-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q3-4', 3, 2, 'Sai. Few-shot làm tăng nhẹ số lượng input token.')">
+<span>D. Vì nó làm giảm số lượng input token xuống mức bằng 0</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+</div>
+<div class="hidden" id="q3-4-feedback"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- ========================================== -->
+<!-- BÀI 4: THAM SỐ ĐIỀU KHIỂN & SAFETY SETTINGS -->
+<!-- ========================================== -->
+<section class="lesson-section bg-white dark:bg-dark-surface p-6 sm:p-8 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm" id="bai4">
+<div class="flex items-center gap-3 mb-6 pb-4 border-b border-gray-100 dark:border-gray-800">
+<div class="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 flex items-center justify-center font-bold text-lg">04</div>
+<div>
+<h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">Bài 4: Tinh Chỉnh Siêu Tham Số (Hyperparameters) &amp; Bộ Lọc Safety</h2>
+<p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">Làm chủ thanh trượt Temperature, Top-P, Top-K, Max Tokens, Stop Sequences và cấu hình ngưỡng lọc an toàn</p>
+</div>
+</div>
+<div class="prose dark:prose-invert max-w-none text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed space-y-4">
+<p>
+Tại bảng điều khiển bên phải (Run Settings) của Google AI Studio, bạn có quyền điều chỉnh một số đặc tính của quá trình sinh nội dung và chọn lọc từng token tiếp theo:
+</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 not-prose my-6">
+<div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+<h4 class="font-bold text-indigo-600 dark:text-indigo-400 text-sm mb-1">Temperature (0.0 đến 2.0)</h4>
+<p class="text-xs text-gray-600 dark:text-gray-400 mb-2">Độ "ngẫu nhiên" hay tính sáng tạo của mô hình:</p>
+<ul class="text-xs text-gray-600 dark:text-gray-400 list-disc pl-4 space-y-1">
+<li><strong>0.0 - 0.2:</strong> Có thể ít đa dạng hơn, nhưng không bảo đảm kết quả tất định. Rất thích hợp cho trích xuất dữ liệu JSON, viết code, giải toán, tra cứu sự thật.</li>
+<li><strong>0.7 - 1.0:</strong> Cân bằng tự nhiên giữa tính logic và sự linh hoạt trong hội thoại.</li>
+<li><strong>1.2 - 2.0:</strong> Độ ngẫu nhiên cao, phù hợp cho viết thơ ca, sáng tạo nội dung tiếp thị, brainstorm ý tưởng mới lạ.</li>
+</ul>
+</div>
+<div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+<h4 class="font-bold text-cyan-600 dark:text-cyan-400 text-sm mb-1">Top-P &amp; Top-K Sampling</h4>
+<p class="text-xs text-gray-600 dark:text-gray-400 mb-2">Cơ chế lọc bớt các token có xác suất thấp:</p>
+<ul class="text-xs text-gray-600 dark:text-gray-400 list-disc pl-4 space-y-1">
+<li><strong>Top-K (ví dụ: 40):</strong> Chỉ giữ lại K token có xác suất cao nhất tại mỗi bước dự đoán, loại bỏ hoàn toàn các từ vô nghĩa.</li>
+<li><strong>Top-P (Nucleus Sampling, ví dụ: 0.95):</strong> Cộng dồn xác suất từ cao xuống thấp cho đến khi đạt ngưỡng P, giúp mô hình linh hoạt điều chỉnh số lượng ứng viên theo ngữ cảnh.</li>
+</ul>
+</div>
+<div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+<h4 class="font-bold text-amber-600 dark:text-amber-400 text-sm mb-1">Max Output Tokens &amp; Stop Sequences</h4>
+<p class="text-xs text-gray-600 dark:text-gray-400 mb-2">Kiểm soát độ dài và điểm dừng phản hồi:</p>
+<ul class="text-xs text-gray-600 dark:text-gray-400 list-disc pl-4 space-y-1">
+<li><strong>Max Output Tokens:</strong> Số lượng token tối đa mà AI được phép sinh ra trong một phản hồi (lên tới 8,192 tokens tùy model).</li>
+<li><strong>Stop Sequences:</strong> Danh sách chuỗi ký tự (ví dụ: <code>END</code>, <code>###</code>, <code>\n\n</code>). Ngay khi mô hình dự định sinh ra chuỗi này, phản hồi sẽ dừng ngay lập tức.</li>
+</ul>
+</div>
+<div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+<h4 class="font-bold text-rose-600 dark:text-rose-400 text-sm mb-1">Safety Settings (Bộ Lọc An Toàn)</h4>
+<p class="text-xs text-gray-600 dark:text-gray-400 mb-2">Google AI Studio cho phép tùy chỉnh ngưỡng lọc cho 4 hạng mục nhạy cảm:</p>
+<ul class="text-xs text-gray-600 dark:text-gray-400 list-disc pl-4 space-y-1">
+<li>Hate Speech (Phát ngôn thù hận)</li>
+<li>Sexually Explicit (Nội dung khiêu dâm)</li>
+<li>Dangerous Content (Nội dung nguy hiểm)</li>
+<li>Harassment (Quấy rối)</li>
+<li><em>Có thể điều chỉnh từ "Block None" (cho nghiên cứu, tài khoản trả phí) đến "Block Few / Some / Most".</em></li>
+</ul>
+</div>
+</div>
+<div class="not-prose mt-6 rounded-xl border border-indigo-200 dark:border-indigo-800 bg-indigo-50/60 dark:bg-indigo-950/30 p-5"><h3 class="text-base font-bold text-indigo-700 dark:text-indigo-300 mb-2">Bổ sung kiến thức: Thông số sinh và độ tin cậy</h3><p class="text-sm leading-relaxed text-gray-700 dark:text-gray-200">Temperature, top-p, top-k, seed, max output tokens và stop sequences có thể thay đổi khả dụng theo model. Temperature bằng 0 không bảo đảm đầu ra giống hệt mọi lần. Tăng context hoặc output token có thể tăng độ trễ và chi phí. Safety settings không thay thế việc kiểm duyệt đầu ra và bảo vệ dữ liệu; cần xử lý từ chối, lỗi 429 và timeout.</p></div></div>
+<!-- Trắc nghiệm Bài 4 -->
+<div class="mt-8 pt-6 border-t border-gray-100 dark:border-gray-800 space-y-4">
+<h4 class="text-base font-bold text-gray-900 dark:text-white flex items-center gap-2">
+<i class="fa-solid fa-circle-question text-indigo-600"></i> Trắc nghiệm củng cố Bài 4
+</h4>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Q4-1 -->
+<div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+<p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">1. Khi cần AI trích xuất thông tin thành chuỗi JSON cố định và không được sáng tạo bịa đặt, bạn nên chỉnh Temperature về mức nào?</p>
+<div class="space-y-1.5 text-xs">
+<button class="quiz-btn-q4-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q4-1', 0, 0, 'Chính xác! Temperature rất thấp (gần 0.0) mang lại tính tất định cao nhất, giảm thiểu tối đa sự tùy biến ngẫu nhiên.')">
+<span>A. Rất thấp (khoảng 0.0 - 0.2)</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q4-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q4-1', 1, 0, 'Sai. 1.0 là mức sáng tạo tự nhiên, có thể gây sai lệch schema JSON.')">
+<span>B. Mức 1.0</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q4-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q4-1', 2, 0, 'Sai. 2.0 sẽ khiến mô hình bịa đặt từ ngữ ngẫu nhiên (hallucinate).')">
+<span>C. Mức cao nhất 2.0</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q4-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q4-1', 3, 0, 'Sai. Temperature là số dương từ 0 đến 2.')">
+<span>D. Số âm (-1.0)</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+</div>
+<div class="hidden" id="q4-1-feedback"></div>
+</div>
+<!-- Q4-2 -->
+<div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+<p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">2. Vai trò của "Stop Sequences" trong AI Studio là gì?</p>
+<div class="space-y-1.5 text-xs">
+<button class="quiz-btn-q4-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q4-2', 0, 1, 'Sai. Đó là chức năng xóa cuộc trò chuyện.')">
+<span>A. Xóa vĩnh viễn toàn bộ prompt khỏi lịch sử</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q4-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q4-2', 1, 1, 'Chính xác! Khi mô hình sinh tới chuỗi ký tự được chỉ định trong Stop Sequences, nó sẽ dừng sinh token ngay lập tức.')">
+<span>B. Quy định chuỗi ký tự đặc biệt khiến mô hình lập tức dừng phản hồi khi gặp phải</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q4-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q4-2', 2, 1, 'Sai. Stop sequence không liên quan đến ngắt kết nối mạng.')">
+<span>C. Tự động ngắt kết nối Internet của trình duyệt khi AI trả lời xong</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q4-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q4-2', 3, 1, 'Sai. Stop sequence áp dụng cho text output.')">
+<span>D. Tắt âm thanh phát loa của máy tính tính bảng</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+</div>
+<div class="hidden" id="q4-2-feedback"></div>
+</div>
+<!-- Q4-3 -->
+<div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+<p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">3. Tham số Top-P (Nucleus Sampling) hoạt động theo nguyên lý nào?</p>
+<div class="space-y-1.5 text-xs">
+<button class="quiz-btn-q4-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q4-3', 0, 2, 'Sai. Đó là cố định số lượng token K.')">
+<span>A. Chỉ chọn đúng P từ vựng đầu tiên trong bảng chữ cái tiếng Anh</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q4-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q4-3', 1, 2, 'Sai. Không có quy định lấy ngẫu nhiên 100%.')">
+<span>B. Lấy ngẫu nhiên không cần tính toán xác suất</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q4-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q4-3', 2, 2, 'Chính xác! Top-P chỉ lấy các token trong tập hợp có tổng xác suất tích lũy đạt ngưỡng P.')">
+<span>C. Gom nhóm các token có xác suất cao nhất sao cho tổng xác suất tích lũy của chúng đạt mức P</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q4-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q4-3', 3, 2, 'Sai. Top-P không liên quan đến phần trăm dung lượng pin.')">
+<span>D. Tự động tính tỷ lệ phần trăm dung lượng pin còn lại của thiết bị</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+</div>
+<div class="hidden" id="q4-3-feedback"></div>
+</div>
+<!-- Q4-4 -->
+<div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+<p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">4. Nếu câu trả lời của bạn trong AI Studio bị chặn với thông báo FinishReason: "SAFETY", nguyên nhân là gì?</p>
+<div class="space-y-1.5 text-xs">
+<button class="quiz-btn-q4-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q4-4', 0, 1, 'Sai. Lỗi hết tiền là Quota Exceeded.')">
+<span>A. Tài khoản Google Cloud của bạn bị hết tiền</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q4-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q4-4', 1, 1, 'Chính xác! Mô hình phát hiện nội dung đầu ra vi phạm một trong các ngưỡng an toàn của Safety Filters.')">
+<span>B. Nội dung câu trả lời chạm ngưỡng lọc an toàn trong Safety Settings đã được cài đặt</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q4-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q4-4', 2, 1, 'Sai. Lỗi quá số token đầu ra là MAX_TOKENS.')">
+<span>C. Số lượng token vượt quá ngưỡng Max Output Tokens</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q4-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q4-4', 3, 1, 'Sai. Lỗi mạng là Connection Error.')">
+<span>D. Đường truyền mạng WiFi bị gián đoạn giữa chừng</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+</div>
+<div class="hidden" id="q4-4-feedback"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- ========================================== -->
+<!-- BÀI 5: MULTIMODAL & CONTEXT 2 TRIỆU TOKEN -->
+<!-- ========================================== -->
+<section class="lesson-section bg-white dark:bg-dark-surface p-6 sm:p-8 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm" id="bai5">
+<div class="flex items-center gap-3 mb-6 pb-4 border-b border-gray-100 dark:border-gray-800">
+<div class="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 flex items-center justify-center font-bold text-lg">05</div>
+<div>
+<h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">Bài 5: Khai Thác Đa Phương Thức (Multimodal) &amp; Siêu Ngữ Cảnh 2M Token</h2>
+<p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">Tải lên video dài cả tiếng, audio podcast, toàn bộ mã nguồn repo và tài liệu PDF nghìn trang vào Context Window</p>
+</div>
+</div>
+<div class="prose dark:prose-invert max-w-none text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed space-y-4">
+<p>
+Điểm đột phá nhất của Gemini trên AI Studio là <strong>khả năng tiếp nhận đa phương thức nguyên bản (Native Multimodal)</strong> trong cùng một cửa sổ ngữ cảnh khổng lồ lên tới <strong>2,000,000 tokens</strong>.
+</p>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 not-prose my-6">
+<div class="p-3.5 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+<div class="font-bold text-blue-600 dark:text-blue-400 text-xs mb-1.5 flex items-center gap-1.5">
+<i class="fa-solid fa-file-pdf"></i> Tài liệu PDF &amp; Sách
+</div>
+<p class="text-[12px] text-gray-600 dark:text-gray-400">Tải lên trọn vẹn cuốn sách giáo khoa, báo cáo tài chính hàng trăm trang, hợp đồng pháp lý phức tạp để hỏi đáp đối chiếu tức thì.</p>
+</div>
+<div class="p-3.5 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+<div class="font-bold text-rose-600 dark:text-rose-400 text-xs mb-1.5 flex items-center gap-1.5">
+<i class="fa-solid fa-video"></i> Video Thời Lượng Dài
+</div>
+<p class="text-[12px] text-gray-600 dark:text-gray-400">Gemini phân tích video lên tới 1 giờ (trích xuất 1 khung hình mỗi giây - 1 fps), nhận diện mốc thời gian (timestamp) chính xác của từng hành động.</p>
+</div>
+<div class="p-3.5 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+<div class="font-bold text-purple-600 dark:text-purple-400 text-xs mb-1.5 flex items-center gap-1.5">
+<i class="fa-solid fa-headphones"></i> File Âm Thanh (Audio)
+</div>
+<p class="text-[12px] text-gray-600 dark:text-gray-400">Nghe trực tiếp bản thu âm cuộc họp, bài giảng, podcast nhiều thứ tiếng, phân biệt giọng nói các diễn giả và dịch thuật bám sát sắc thái âm vực.</p>
+</div>
+<div class="p-3.5 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+<div class="font-bold text-emerald-600 dark:text-emerald-400 text-xs mb-1.5 flex items-center gap-1.5">
+<i class="fa-solid fa-folder-tree"></i> Toàn Bộ Codebase
+</div>
+<p class="text-[12px] text-gray-600 dark:text-gray-400">Tải lên hàng chục nghìn dòng code của cả một dự án phần mềm để tìm lỗi bảo mật tiềm ẩn, refactor kiến trúc và tự động sinh test case.</p>
+</div>
+</div>
+<h3 class="text-lg font-bold text-gray-900 dark:text-white mt-4">Kỹ Thuật "Needle In A Haystack" (Tìm Kim Đáy Bể)</h3>
+<p>
+Các bài kiểm tra học thuật độc lập xác nhận dòng Gemini 1.5 đạt tỷ lệ truy xuất <strong>gần như mức cao trong một số thử nghiệm được công bố</strong> đối với một thông tin nhỏ bất kỳ được giấu ngẫu nhiên trong một khối văn bản khổng lồ 1 triệu token. Bạn có thể tự kiểm chứng trong AI Studio bằng cách tải lên file dữ liệu khổng lồ và hỏi: <em>"Tại phút thứ 42:15 trong video, nhân vật chính đã cầm vật gì trên tay trái?"</em>
+</p>
+<div class="not-prose mt-6 rounded-xl border border-indigo-200 dark:border-indigo-800 bg-indigo-50/60 dark:bg-indigo-950/30 p-5"><h3 class="text-base font-bold text-indigo-700 dark:text-indigo-300 mb-2">Bổ sung kiến thức: Multimodal và giới hạn tệp</h3><p class="text-sm leading-relaxed text-gray-700 dark:text-gray-200">Phân tích PDF, hình, âm thanh, video phụ thuộc loại model, giới hạn dung lượng, thời lượng, token và phương thức tải tệp. Không mặc định mọi video được xử lý ở 1 fps hoặc nhận timestamp chính xác. Với tài liệu dài: chia nguồn, đánh số trang, yêu cầu trích dẫn và kiểm chứng trên văn bản gốc. Không suy ra rằng context window lớn bảo đảm tìm đúng mọi thông tin.</p></div></div>
+<!-- Trắc nghiệm Bài 5 -->
+<div class="mt-8 pt-6 border-t border-gray-100 dark:border-gray-800 space-y-4">
+<h4 class="text-base font-bold text-gray-900 dark:text-white flex items-center gap-2">
+<i class="fa-solid fa-circle-question text-indigo-600"></i> Trắc nghiệm củng cố Bài 5
+</h4>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Q5-1 -->
+<div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+<p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">1. Cách Gemini trong AI Studio xử lý một tệp Video tải lên là gì?</p>
+<div class="space-y-1.5 text-xs">
+<button class="quiz-btn-q5-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q5-1', 0, 1, 'Sai. Gemini không chỉ đọc phụ đề mà thực sự nhìn thấy hình ảnh từng khung hình.')">
+<span>A. Chỉ đọc tệp phụ đề .srt đính kèm mà không nhìn thấy hình ảnh</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q5-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q5-1', 1, 1, 'Chính xác! Video được lấy mẫu khung hình (khoảng 1 khung hình/giây - 1 fps) và phân tích đồng thời cùng luồng âm thanh.')">
+<span>B. Lấy mẫu các khung hình (frames) theo chu kỳ thời gian và phân tích phối hợp cùng luồng âm thanh</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q5-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q5-1', 2, 1, 'Sai. Gemini không upload video lên kênh YouTube của người dùng.')">
+<span>C. Đăng video đó công khai lên kênh cá nhân YouTube để dò tìm bản quyền</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q5-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q5-1', 3, 1, 'Sai. Gemini xử lý video lên tới 1 giờ đồng hồ.')">
+<span>D. Từ chối mọi video có thời lượng dài quá 3 giây</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+</div>
+<div class="hidden" id="q5-1-feedback"></div>
+</div>
+<!-- Q5-2 -->
+<div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+<p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">2. Thuật ngữ "Needle In A Haystack" trong đánh giá mô hình LLM đề cập đến khả năng nào?</p>
+<div class="space-y-1.5 text-xs">
+<button class="quiz-btn-q5-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q5-2', 0, 0, 'Chính xác! Kiểm tra khả năng định vị và truy xuất chính xác một mẩu thông tin cụ thể nằm sâu trong một khối dữ liệu khổng lồ.')">
+<span>A. Tìm kiếm và truy xuất chính xác một mẩu sự thật nhỏ ẩn sâu bên trong khối ngữ cảnh cực lớn</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q5-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q5-2', 1, 0, 'Sai. Đó là khả năng nén file zip.')">
+<span>B. Tự động nén dung lượng file hình ảnh về 0 KB</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q5-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q5-2', 2, 0, 'Sai. Đó là benchmark về tốc độ sinh token.')">
+<span>C. Khả năng gõ phím nhanh hơn con người 100 lần</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q5-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q5-2', 3, 0, 'Sai. Đây không phải ý nghĩa của Needle in a haystack.')">
+<span>D. Khả năng phát hiện kim loại qua màn hình điện thoại</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+</div>
+<div class="hidden" id="q5-2-feedback"></div>
+</div>
+<!-- Q5-3 -->
+<div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+<p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">3. Khi tải toàn bộ repo mã nguồn vào AI Studio, lợi thế lớn nhất so với hệ thống RAG truyền thống là gì?</p>
+<div class="space-y-1.5 text-xs">
+<button class="quiz-btn-q5-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q5-3', 0, 2, 'Sai. RAG truyền thống đòi hỏi cắt nhỏ (chunking) và vector database phức tạp.')">
+<span>A. Không có lợi thế gì, RAG cắt nhỏ luôn luôn vượt trội mọi mặt</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q5-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q5-3', 1, 2, 'Sai. Mô hình không tự động deploy lên server.')">
+<span>B. Mô hình sẽ tự động mua tên miền và deploy ứng dụng lên production</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q5-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q5-3', 2, 2, 'Chính xác! Mô hình nhìn thấy toàn bộ kiến trúc tổng thể, không bị mất mối liên hệ chéo giữa các module như khi cắt nhỏ văn bản.')">
+<span>C. Mô hình nắm bắt bức tranh toàn cảnh liên kết giữa tất cả các file mã nguồn mà không gặp lỗi đứt gãy thông tin do chia nhỏ (chunking)</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q5-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q5-3', 3, 2, 'Sai. Chi phí token vẫn được tính theo số lượng nạp vào.')">
+<span>D. Được miễn phí hoàn toàn không tốn bất kỳ token nào</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+</div>
+<div class="hidden" id="q5-3-feedback"></div>
+</div>
+<!-- Q5-4 -->
+<div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+<p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">4. Định dạng tập tin nào sau đây KHÔNG được hỗ trợ tải lên trực tiếp trong giao diện AI Studio?</p>
+<div class="space-y-1.5 text-xs">
+<button class="quiz-btn-q5-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q5-4', 0, 3, 'Sai. PDF được hỗ trợ trực tiếp xuất sắc.')">
+<span>A. File tài liệu .pdf</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q5-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q5-4', 1, 3, 'Sai. MP4 được hỗ trợ tải lên trực tiếp.')">
+<span>B. Video .mp4</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q5-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q5-4', 2, 3, 'Sai. Âm thanh MP3, WAV được tiếp nhận tự nhiên.')">
+<span>C. File ghi âm âm thanh .mp3 hoặc .wav</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q5-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q5-4', 3, 3, 'Chính xác! File thực thi nhị phân máy tính (.exe) bị cấm tải lên vì lý do an toàn bảo mật.')">
+<span>D. File mã thực thi nhị phân hệ điều hành .exe độc hại</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+</div>
+<div class="hidden" id="q5-4-feedback"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- ========================================== -->
+<!-- BÀI 6: SYSTEM INSTRUCTIONS & GROUNDING SEARCH -->
+<!-- ========================================== -->
+<section class="lesson-section bg-white dark:bg-dark-surface p-6 sm:p-8 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm" id="bai6">
+<div class="flex items-center gap-3 mb-6 pb-4 border-b border-gray-100 dark:border-gray-800">
+<div class="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 flex items-center justify-center font-bold text-lg">06</div>
+<div>
+<h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">Bài 6: Thiết Lập System Instructions &amp; Grounding Với Google Search</h2>
+<p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">Định hình tính cách trợ lý, ranh giới phản hồi và kết nối nguồn dữ liệu thời gian thực của Google Search</p>
+</div>
+</div>
+<div class="prose dark:prose-invert max-w-none text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed space-y-4">
+<p>
+<strong>System Instructions</strong> (Chỉ dẫn hệ thống) là khối lệnh ưu tiên cao nhất, được mô hình ghi nhớ xuyên suốt toàn bộ phiên làm việc, có độ ưu tiên cao hơn yêu cầu người dùng nhưng vẫn có thể bị ảnh hưởng bởi prompt injection hoặc giới hạn của mô hình trong quá trình tương tác.
+</p>
+<div class="bg-slate-900 text-slate-100 p-4 rounded-xl font-mono text-xs sm:text-sm my-4 overflow-x-auto not-prose border border-slate-800">
+<div class="text-indigo-400 mb-2 font-sans font-semibold text-[11px] uppercase tracking-wider">
+Ví dụ cấu hình System Instructions chuyên nghiệp
+</div>
+<pre><code>You are a Senior Security Auditor specializing in Python and Cloud Architectures.
+Rules:
+1. Always analyze submitted code for OWASP Top 10 vulnerabilities.
+2. Provide remediations with patched code snippets.
+3. If no vulnerability is detected, explicitly confirm that the pattern conforms to best practices.
+4. Respond in Vietnamese language, technical terms can remain in English.</code></pre>
+</div>
+<h3 class="text-lg font-bold text-gray-900 dark:text-white mt-6">Grounding Với Google Search: Cập Nhật Sự Thật Thời Gian Thực</h3>
+<p>
+Mô hình ngôn ngữ bị giới hạn bởi điểm mốc cắt tri thức (Knowledge Cutoff). Tuy nhiên, trên Google AI Studio, bạn có thể bật công tắc <strong>"Grounding with Google Search"</strong>:
+</p>
+<ul class="list-disc pl-5 space-y-2">
+<li>Khi người dùng hỏi về các sự kiện hiện hành (tỷ số trận đấu hôm nay, giá cổ phiếu vừa cập nhật, tin tức công nghệ mới công bố sáng nay), Gemini sẽ tự động tạo truy vấn tìm kiếm tới công cụ tìm kiếm của Google.</li>
+<li>Trích xuất các kết quả tìm kiếm uy tín và tổng hợp câu trả lời kèm theo các đường liên kết trích dẫn (Grounding Sources / Citations) có thể nhấp vào để kiểm chứng.</li>
+<li>Loại bỏ hoàn toàn rủi ro bịa đặt thông tin về các sự kiện mới phát sinh.</li>
+</ul>
+<div class="not-prose mt-6 rounded-xl border border-indigo-200 dark:border-indigo-800 bg-indigo-50/60 dark:bg-indigo-950/30 p-5"><h3 class="text-base font-bold text-indigo-700 dark:text-indigo-300 mb-2">Bổ sung kiến thức: Grounding và kiểm chứng nguồn</h3><p class="text-sm leading-relaxed text-gray-700 dark:text-gray-200">Grounding with Google Search là công cụ truy xuất thông tin, không tự bảo đảm mọi câu trả lời đúng hoặc mới nhất. Khi có metadata nguồn, hãy kiểm tra đường dẫn, thời gian công bố, nội dung thực tế và quyền truy cập. System instructions giúp định hướng hành vi nhưng không phải cơ chế bảo mật; dữ liệu truy xuất hoặc tài liệu đính kèm có thể chứa prompt injection. Không để mô hình tự ý làm theo lệnh trong nguồn ngoài.</p></div></div>
+<!-- Trắc nghiệm Bài 6 -->
+<div class="mt-8 pt-6 border-t border-gray-100 dark:border-gray-800 space-y-4">
+<h4 class="text-base font-bold text-gray-900 dark:text-white flex items-center gap-2">
+<i class="fa-solid fa-circle-question text-indigo-600"></i> Trắc nghiệm củng cố Bài 6
+</h4>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Q6-1 -->
+<div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+<p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">1. Sự khác nhau giữa System Instructions và User Prompt thông thường là gì?</p>
+<div class="space-y-1.5 text-xs">
+<button class="quiz-btn-q6-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q6-1', 0, 1, 'Sai. Cả hai đều có thể viết bằng bất kỳ ngôn ngữ nào.')">
+<span>A. System Instructions chỉ được viết bằng mã nhị phân máy tính</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q6-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q6-1', 1, 1, 'Chính xác! System Instructions thiết lập vai trò, ranh giới và quy tắc gốc áp dụng cho mọi lượt phản hồi trong phiên.')">
+<span>B. System Instructions đóng vai trò chỉ đạo nền tảng, định hình nhân cách và quy tắc ứng xử bao trùm toàn bộ phiên hội thoại</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q6-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q6-1', 2, 1, 'Sai. System Instructions lưu trong phiên làm việc của bạn.')">
+<span>C. System Instructions sẽ bị xóa sau 1 giây</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q6-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q6-1', 3, 1, 'Sai. User Prompt không thể ghi đè triệt để System Instructions khi được thiết kế chuẩn.')">
+<span>D. Không có bất kỳ sự khác biệt nào</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+</div>
+<div class="hidden" id="q6-1-feedback"></div>
+</div>
+<!-- Q6-2 -->
+<div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+<p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">2. Lợi ích căn bản nhất khi bật tính năng "Grounding with Google Search" trong AI Studio là gì?</p>
+<div class="space-y-1.5 text-xs">
+<button class="quiz-btn-q6-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q6-2', 0, 2, 'Sai. Grounding không liên quan đến tự sửa mã lỗi Python.')">
+<span>A. Tự động debug tất cả lỗi cú pháp Python trong dự án</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q6-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q6-2', 1, 2, 'Sai. Grounding trả về thông tin chứ không phải giảm tốc độ.')">
+<span>B. Giảm tốc độ phản hồi của mô hình xuống 10 lần</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q6-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q6-2', 2, 2, 'Chính xác! Giúp mô hình cập nhật thông tin thời sự mới nhất từ web kèm đường link trích dẫn nguồn xác thực.')">
+<span>C. Cung cấp dữ liệu cập nhật thời gian thực từ Internet kèm nguồn trích dẫn (citations) xác thực để giảm ảo giác</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q6-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q6-2', 3, 2, 'Sai. Grounding dùng Google Search chứ không ép chuyển sang Chrome.')">
+<span>D. Buộc người dùng phải cài đặt trình duyệt Google Chrome</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+</div>
+<div class="hidden" id="q6-2-feedback"></div>
+</div>
+<!-- Q6-3 -->
+<div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+<p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">3. Khi kết quả trả về có Grounding Metadata từ Google Search, nhà phát triển có thể trích xuất thông tin gì qua API?</p>
+<div class="space-y-1.5 text-xs">
+<button class="quiz-btn-q6-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q6-3', 0, 0, 'Chính xác! API trả về danh sách searchQueries, webSearchSources với URL và tiêu đề bài viết nguồn.')">
+<span>A. Các câu truy vấn web đã tìm (searchQueries) và danh sách đường link trang web nguồn (webSearchSources)</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q6-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q6-3', 1, 0, 'Sai. Không có quyền truy cập mật khẩu.')">
+<span>B. Mật khẩu tài khoản Google của tác giả bài viết</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q6-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q6-3', 2, 0, 'Sai. Dữ liệu tài khoản thẻ ngân hàng không nằm trong metadata.')">
+<span>C. Số dư thẻ ngân hàng của quản trị viên website</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q6-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q6-3', 3, 0, 'Sai. Lịch sử duyệt web của khách hàng được bảo mật riêng tư.')">
+<span>D. Toàn bộ lịch sử duyệt web cá nhân của người đọc bài viết</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+</div>
+<div class="hidden" id="q6-3-feedback"></div>
+</div>
+<!-- Q6-4 -->
+<div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+<p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">4. Có nên đưa dữ liệu tài liệu nội bộ tuyệt mật của công ty vào System Prompt trên tài khoản Free Tier không?</p>
+<div class="space-y-1.5 text-xs">
+<button class="quiz-btn-q6-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q6-4', 0, 1, 'Sai! Free Tier có thể được Google dùng để xem xét cải tiến mô hình, không đảm bảo bảo mật dữ liệu tuyệt mật.')">
+<span>A. Rất nên, vì Free Tier hoàn toàn miễn phí và không ai biết</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q6-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q6-4', 1, 1, 'Chính xác! Doanh nghiệp cần sử dụng tài khoản có Billing (hoặc Vertex AI) để có thỏa thuận bảo mật dữ liệu doanh nghiệp không dùng cho training.')">
+<span>B. Không nên. Phải chuyển sang gói Pay-as-you-go hoặc Vertex AI để đảm bảo cam kết bảo mật dữ liệu không dùng để huấn luyện</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q6-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q6-4', 2, 1, 'Sai. Google AI Studio nhận diện được tài liệu mật nhưng bạn phải tuân thủ chính sách.')">
+<span>C. Tùy ý vì Google sẽ tự động xóa ngay sau khi bạn rời trang</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q6-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q6-4', 3, 1, 'Sai. System Instructions lưu trữ cùng prompt.')">
+<span>D. Không sao vì System Instructions không gửi lên máy chủ Google</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+</div>
+<div class="hidden" id="q6-4-feedback"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- ========================================== -->
+<!-- BÀI 7: FUNCTION CALLING (TOOL USE) -->
+<!-- ========================================== -->
+<section class="lesson-section bg-white dark:bg-dark-surface p-6 sm:p-8 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm" id="bai7">
+<div class="flex items-center gap-3 mb-6 pb-4 border-b border-gray-100 dark:border-gray-800">
+<div class="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 flex items-center justify-center font-bold text-lg">07</div>
+<div>
+<h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">Bài 7: Gọi Hàm Hai Chiều - Function Calling &amp; Tool Use</h2>
+<p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">Khai báo công cụ bằng JSON Schema, để Gemini tự động quyết định gọi hàm và nhận kết quả thực thi</p>
+</div>
+</div>
+<div class="prose dark:prose-invert max-w-none text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed space-y-4">
+<p>
+<strong>Function Calling</strong> biến mô hình Gemini từ một cỗ máy sinh văn bản thuần túy trở thành một **Agent hành động thực tế**: có thể tra cứu cơ sở dữ liệu thời gian thực, gửi email, gọi API thời tiết, đặt vé máy bay hoặc điều khiển thiết bị IoT thông minh.
+</p>
+<h3 class="text-lg font-bold text-gray-900 dark:text-white mt-4">Vòng Lặp 4 Bước Của Function Calling</h3>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-3 not-prose my-4 text-xs">
+<div class="p-3 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+<span class="font-bold text-indigo-600 dark:text-indigo-400 block mb-1">Bước 1: Khai báo Tools</span>
+Lập trình viên định nghĩa hàm (tên hàm, mô tả, các tham số đầu vào) bằng JSON Schema trong AI Studio hoặc code SDK.
+</div>
+<div class="p-3 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+<span class="font-bold text-blue-600 dark:text-blue-400 block mb-1">Bước 2: Mô hình phán đoán</span>
+Khi người dùng hỏi (ví dụ: <em>"Thời tiết Hà Nội hôm nay thế nào?"</em>), Gemini nhận thấy cần gọi hàm và trả về một yêu cầu gọi hàm kèm tham số: <code>get_weather(city="Hanoi")</code>.
+</div>
+<div class="p-3 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+<span class="font-bold text-amber-600 dark:text-amber-400 block mb-1">Bước 3: Thực thi mã</span>
+Phía ứng dụng của bạn chạy hàm thực tế, lấy dữ liệu từ API thời tiết và trả về kết quả cho Gemini: <code>{"temp": "26C", "condition": "Sunny"}</code>.
+</div>
+<div class="p-3 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+<span class="font-bold text-emerald-600 dark:text-emerald-400 block mb-1">Bước 4: Tổng hợp tự nhiên</span>
+Gemini nhận dữ liệu thô và trả lời người dùng một cách mạch lạc: <em>"Hôm nay tại Hà Nội trời nắng ráo, nhiệt độ khoảng 26°C."</em>
+</div>
+</div>
+<div class="bg-slate-900 text-slate-100 p-4 rounded-xl font-mono text-xs sm:text-sm my-4 overflow-x-auto not-prose border border-slate-800">
+<div class="text-emerald-400 mb-2 font-sans font-semibold text-[11px] uppercase tracking-wider">
+Khai báo Tool JSON Schema trong AI Studio
+</div>
+<pre><code>{
+  "name": "get_weather",
+  "description": "Lấy thông tin nhiệt độ và thời tiết hiện tại của một thành phố",
+  "parameters": {
+    "type": "OBJECT",
+    "properties": {
+      "city": { "type": "STRING", "description": "Tên thành phố, ví dụ: Hanoi, Ho Chi Minh" }
+    },
+    "required": ["city"]
+  }
+}</code></pre>
+</div>
+<div class="not-prose mt-6 rounded-xl border border-indigo-200 dark:border-indigo-800 bg-indigo-50/60 dark:bg-indigo-950/30 p-5"><h3 class="text-base font-bold text-indigo-700 dark:text-indigo-300 mb-2">Bổ sung kiến thức: Function calling an toàn</h3><p class="text-sm leading-relaxed text-gray-700 dark:text-gray-200">Mô hình thường chỉ đề xuất tên hàm và tham số; ứng dụng phải xác thực schema, phân quyền, thực thi hàm và trả kết quả. Không tự động cấp quyền gửi email, xóa dữ liệu hoặc thanh toán chỉ vì AI yêu cầu. Thiết lập xác nhận người dùng cho hành động nhạy cảm, log kiểm toán, timeout, retry và giới hạn số vòng gọi công cụ. Tên công cụ và định dạng schema phụ thuộc SDK/API.</p></div></div>
+<!-- Trắc nghiệm Bài 7 -->
+<div class="mt-8 pt-6 border-t border-gray-100 dark:border-gray-800 space-y-4">
+<h4 class="text-base font-bold text-gray-900 dark:text-white flex items-center gap-2">
+<i class="fa-solid fa-circle-question text-indigo-600"></i> Trắc nghiệm củng cố Bài 7
+</h4>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Q7-1 -->
+<div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+<p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">1. Gemini có trực tiếp chạy hàm mã nguồn trên máy chủ của bạn không?</p>
+<div class="space-y-1.5 text-xs">
+<button class="quiz-btn-q7-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q7-1', 0, 1, 'Sai. Gemini không có quyền truy cập trực tiếp vào hệ thống nội bộ của bạn.')">
+<span>A. Có, Gemini tự kết nối SSH vào máy chủ của bạn để chạy hàm</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q7-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q7-1', 1, 1, 'Chính xác! Gemini chỉ đóng vai trò phân tích và trả về đối tượng Function Call (tên hàm &amp; đối số). Mã nguồn được thực thi hoàn toàn do phía client/server của bạn kiểm soát.')">
+<span>B. Không. Gemini chỉ chỉ định tên hàm và các đối số (arguments) dưới dạng cấu trúc; ứng dụng của bạn sẽ tự thực thi hàm đó</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q7-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q7-1', 2, 1, 'Sai. Function Calling không yêu cầu phải upload toàn bộ mã server.')">
+<span>C. Có, nhưng chỉ khi bạn gửi toàn bộ mã nguồn của công ty cho Google</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q7-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q7-1', 3, 1, 'Sai. Đây không phải cơ chế hoạt động của Function Calling.')">
+<span>D. Không, Gemini sẽ chuyển câu hỏi cho nhân viên chăm sóc khách hàng của Google trả lời</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+</div>
+<div class="hidden" id="q7-1-feedback"></div>
+</div>
+<!-- Q7-2 -->
+<div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+<p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">2. Chuẩn định dạng nào được sử dụng để định nghĩa công cụ (Tools) trong Gemini API?</p>
+<div class="space-y-1.5 text-xs">
+<button class="quiz-btn-q7-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q7-2', 0, 2, 'Sai. XML không phải chuẩn định nghĩa công cụ chính thức của Gemini SDK.')">
+<span>A. Thẻ XML thuần túy</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q7-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q7-2', 1, 2, 'Sai. CSS dùng để trang trí giao diện.')">
+<span>B. Tệp biểu định kiểu CSS3</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q7-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q7-2', 2, 2, 'Chính xác! Chuẩn JSON Schema (đặc tả OpenAPI Specification) là chuẩn mực định nghĩa cấu trúc hàm, kiểu dữ liệu và trường bắt buộc.')">
+<span>C. JSON Schema (với các trường type, properties, required, description)</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q7-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q7-2', 3, 2, 'Sai. Markdown dùng định dạng văn bản.')">
+<span>D. Bảng định dạng Markdown thô</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+</div>
+<div class="hidden" id="q7-2-feedback"></div>
+</div>
+<!-- Q7-3 -->
+<div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+<p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">3. Chế độ Function Calling Mode: "ANY" nghĩa là gì?</p>
+<div class="space-y-1.5 text-xs">
+<button class="quiz-btn-q7-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q7-3', 0, 0, 'Chính xác! Chế độ ANY bắt buộc mô hình phải chọn và gọi một hàm trong danh sách công cụ, không được tự ý trả lời bằng văn bản thông thường.')">
+<span>A. Bắt buộc mô hình phải gọi ít nhất một hàm trong danh sách công cụ được cung cấp</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q7-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q7-3', 1, 0, 'Sai. Cấm gọi hàm là chế độ NONE.')">
+<span>B. Tuyệt đối cấm không cho mô hình gọi bất kỳ hàm nào</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q7-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q7-3', 2, 0, 'Sai. Chế độ tự quyết định là AUTO.')">
+<span>C. Để mô hình tự ý thích gọi hay không tùy theo ngữ cảnh</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q7-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q7-3', 3, 0, 'Sai. Đây không phải ý nghĩa của ANY.')">
+<span>D. Xóa toàn bộ danh sách hàm</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+</div>
+<div class="hidden" id="q7-3-feedback"></div>
+</div>
+<!-- Q7-4 -->
+<div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+<p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">4. Tại sao phần "description" của hàm trong JSON Schema lại có tính quyết định sống còn?</p>
+<div class="space-y-1.5 text-xs">
+<button class="quiz-btn-q7-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q7-4', 0, 1, 'Sai. Description dùng cho mô hình đọc hiểu chứ không phải hiển thị UI.')">
+<span>A. Vì nó dùng để hiển thị giao diện pop-up chào mừng người dùng</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q7-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q7-4', 1, 1, 'Chính xác! Mô hình dựa vào phần mô tả ngữ nghĩa này để hiểu công dụng của hàm và quyết định xem câu hỏi người dùng có cần dùng đến hàm đó hay không.')">
+<span>B. Vì mô hình dựa vào mô tả ngữ nghĩa để hiểu mục đích của hàm và quyết định thời điểm thích hợp để kích hoạt</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q7-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q7-4', 2, 1, 'Sai. Description không dùng làm mật khẩu bảo mật.')">
+<span>C. Vì đó là nơi lưu trữ mật khẩu bảo vệ API của bạn</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q7-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q7-4', 3, 1, 'Sai. Description là trường quan trọng được khuyến khích bắt buộc.')">
+<span>D. Không có ý nghĩa gì, để trống hoàn toàn cũng chạy tốt</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+</div>
+<div class="hidden" id="q7-4-feedback"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- ========================================== -->
+<!-- BÀI 8: STRUCTURED OUTPUTS & JSON SCHEMA -->
+<!-- ========================================== -->
+<section class="lesson-section bg-white dark:bg-dark-surface p-6 sm:p-8 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm" id="bai8">
+<div class="flex items-center gap-3 mb-6 pb-4 border-b border-gray-100 dark:border-gray-800">
+<div class="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 flex items-center justify-center font-bold text-lg">08</div>
+<div>
+<h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">Bài 8: Ép Kiểu Dữ Liệu Với Structured Outputs &amp; JSON Schema</h2>
+<p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">Bảo đảm 100% dữ liệu trả về đúng định dạng JSON, không kèm râu ria văn bản, dễ dàng parse trong ứng dụng</p>
+</div>
+</div>
+<div class="prose dark:prose-invert max-w-none text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed space-y-4">
+<p>
+Một trong những thách thức lớn nhất của lập trình AI là mô hình thường tự ý chèn thêm các đoạn mở đầu như: <em>"Dưới đây là mã JSON bạn yêu cầu: ```json ... ```"</em> khiến hàm <code>JSON.parse()</code> hoặc <code>json.loads()</code> của lập trình viên bị vỡ (crash).
+</p>
+<p>
+Trên Google AI Studio, tính năng <strong>Structured Outputs</strong> (Response Schema) giúp giảm đáng kể lỗi định dạng bằng cách ép bộ giải mã (constrained decoding) chỉ sinh ra các token thỏa mãn đúng cấu trúc lược đồ JSON Schema hoặc Pydantic class:
+</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 not-prose my-6">
+<div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-indigo-500/30">
+<h4 class="font-bold text-indigo-600 dark:text-indigo-400 text-sm mb-2">Cấu hình JSON Schema trong Studio</h4>
+<div class="bg-slate-900 p-3 rounded-lg text-slate-100 font-mono text-xs overflow-x-auto">
+<pre><code>{
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "product_name": { "type": "string" },
+      "price": { "type": "number" },
+      "in_stock": { "type": "boolean" }
+    },
+    "required": ["product_name", "price"]
+  }
+}</code></pre>
+</div>
+</div>
+<div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-emerald-500/30">
+<h4 class="font-bold text-emerald-600 dark:text-emerald-400 text-sm mb-2">Đầu ra theo schema (vẫn cần kiểm tra) (No markdown blocks)</h4>
+<div class="bg-slate-900 p-3 rounded-lg text-emerald-300 font-mono text-xs overflow-x-auto">
+<pre><code>[
+  {
+    "product_name": "Google Pixel 9 Pro",
+    "price": 999.00,
+    "in_stock": true
+  },
+  {
+    "product_name": "Pixel Watch 3",
+    "price": 349.99,
+    "in_stock": true
+  }
+]</code></pre>
+</div>
+</div>
+</div>
+<ul class="list-disc pl-5 space-y-1.5">
+<li><strong>Vẫn cần kiểm tra dữ liệu:</strong> Ứng dụng của bạn đọc trực tiếp vào cơ sở dữ liệu hoặc API downstream mà không sợ lỗi cú pháp.</li>
+<li><strong>Xác thực trường bắt buộc:</strong> Các trường được liệt kê trong <code>required</code> luôn luôn được tạo đầy đủ.</li>
+<li><strong>Kiểu dữ liệu chặt chẽ:</strong> Đảm bảo số là <code>number</code> thực sự (không phải chuỗi dạng <code>"999"</code>), cờ đúng là <code>boolean</code>.</li>
+</ul>
+<div class="not-prose mt-6 rounded-xl border border-indigo-200 dark:border-indigo-800 bg-indigo-50/60 dark:bg-indigo-950/30 p-5"><h3 class="text-base font-bold text-indigo-700 dark:text-indigo-300 mb-2">Bổ sung kiến thức: JSON Schema và kiểm tra dữ liệu</h3><p class="text-sm leading-relaxed text-gray-700 dark:text-gray-200">Structured outputs tăng khả năng tuân thủ định dạng, nhưng không bảo đảm giá trị đúng thực tế. Không phải mọi tính năng JSON Schema đều được hỗ trợ ở mọi model. Luôn parse JSON, validate kiểu và miền giá trị, kiểm tra required, null, enum và trường hợp thiếu dữ liệu. Ví dụ giá sản phẩm do AI sinh chỉ là dữ liệu minh họa, không phải báo giá hiện hành.</p></div></div>
+<!-- Trắc nghiệm Bài 8 -->
+<div class="mt-8 pt-6 border-t border-gray-100 dark:border-gray-800 space-y-4">
+<h4 class="text-base font-bold text-gray-900 dark:text-white flex items-center gap-2">
+<i class="fa-solid fa-circle-question text-indigo-600"></i> Trắc nghiệm củng cố Bài 8
+</h4>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Q8-1 -->
+<div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+<p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">1. Lợi thế vượt trội của tính năng Structured Outputs (Response Schema) so với việc chỉ dặn AI bằng lời văn thông thường là gì?</p>
+<div class="space-y-1.5 text-xs">
+<button class="quiz-btn-q8-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q8-1', 0, 1, 'Sai. Ép kiểu schema phục vụ độ tin cậy và chính xác của cấu trúc dữ liệu.')">
+<span>A. Làm cho mô hình trả lời dài gấp 10 lần bình thường</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q8-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q8-1', 1, 1, 'Chính xác! Mô hình bị ràng buộc về mặt cú pháp sinh token, đảm bảo 100% tuân thủ cấu trúc JSON mà không thêm văn bản râu ria.')">
+<span>B. Đảm bảo cấu trúc đầu ra tuân thủ chính xác 100% theo schema, không bao giờ bị chèn thêm câu dẫn dắt gây lỗi phân tích cú pháp</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q8-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q8-1', 2, 1, 'Sai. Structured output vẫn tính phí theo token bình thường.')">
+<span>C. Miễn phí hoàn toàn toàn bộ chi phí token</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q8-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q8-1', 3, 1, 'Sai. Không liên quan đến mã hóa file zip.')">
+<span>D. Tự động mã hóa kết quả bằng file nén zip có mật khẩu</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+</div>
+<div class="hidden" id="q8-1-feedback"></div>
+</div>
+<!-- Q8-2 -->
+<div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+<p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">2. Trong Python SDK mới (`google-genai`), bạn có thể dùng thư viện nào để định nghĩa Response Schema thuận tiện nhất?</p>
+<div class="space-y-1.5 text-xs">
+<button class="quiz-btn-q8-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q8-2', 0, 0, 'Chính xác! Pydantic BaseModel được SDK hỗ trợ nguyên bản, tự động chuyển đổi class Python thành JSON Schema.')">
+<span>A. Pydantic (BaseModel)</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q8-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q8-2', 1, 0, 'Sai. Tkinter là thư viện làm giao diện desktop GUI.')">
+<span>B. Tkinter</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q8-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q8-2', 2, 0, 'Sai. Matplotlib dùng để vẽ đồ thị số liệu.')">
+<span>C. Matplotlib</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q8-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q8-2', 3, 0, 'Sai. Pygame là thư viện làm game.')">
+<span>D. Pygame</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+</div>
+<div class="hidden" id="q8-2-feedback"></div>
+</div>
+<!-- Q8-3 -->
+<div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+<p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">3. Thiết lập mime-type nào sau đây được sử dụng để kích hoạt chế độ trả về JSON trong Gemini API?</p>
+<div class="space-y-1.5 text-xs">
+<button class="quiz-btn-q8-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q8-3', 0, 2, 'Sai. text/plain là văn bản tự do mặc định.')">
+<span>A. text/plain</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q8-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q8-3', 1, 2, 'Sai. text/html là tài liệu web.')">
+<span>B. text/html</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q8-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q8-3', 2, 2, 'Chính xác! Thiết lập response_mime_type=&quot;application/json&quot; yêu cầu mô hình sinh JSON thuần túy.')">
+<span>C. application/json</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q8-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q8-3', 3, 2, 'Sai. image/png là định dạng hình ảnh.')">
+<span>D. image/png</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+</div>
+<div class="hidden" id="q8-3-feedback"></div>
+</div>
+<!-- Q8-4 -->
+<div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+<p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">4. Nếu trong schema bạn đặt mảng `required: ["email", "phone"]`, điều gì sẽ xảy ra nếu mô hình không tìm thấy số điện thoại trong văn bản?</p>
+<div class="space-y-1.5 text-xs">
+<button class="quiz-btn-q8-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q8-4', 0, 0, 'Chính xác! Vì trường bắt buộc không thể bỏ qua, mô hình sẽ gán giá trị null/rỗng hoặc bạn cần thiết kế schema có kiểu nullable.')">
+<span>A. Mô hình vẫn phải sinh trường "phone" với giá trị null hoặc chuỗi rỗng theo quy định kiểu của schema</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q8-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q8-4', 1, 0, 'Sai. Server không tự động bốc cháy.')">
+<span>B. Máy chủ của Google sẽ tự bốc cháy</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q8-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q8-4', 2, 0, 'Sai. Schema bắt buộc mô hình phải xuất hiện trường đó.')">
+<span>C. Mô hình tự động xóa bỏ hoàn toàn trường email</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q8-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q8-4', 3, 0, 'Sai. Trình duyệt không bị thoát đột ngột.')">
+<span>D. Trình duyệt người dùng sẽ tự động thoát ra màn hình desktop</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+</div>
+<div class="hidden" id="q8-4-feedback"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- ========================================== -->
+<!-- BÀI 9: GET CODE & TÍCH HỢP SDK -->
+<!-- ========================================== -->
+<section class="lesson-section bg-white dark:bg-dark-surface p-6 sm:p-8 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm" id="bai9">
+<div class="flex items-center gap-3 mb-6 pb-4 border-b border-gray-100 dark:border-gray-800">
+<div class="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 flex items-center justify-center font-bold text-lg">09</div>
+<div>
+<h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">Bài 9: Xuất Mã Nguồn (Get Code) &amp; Tích Hợp SDK Đa Ngôn Ngữ</h2>
+<p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">Chuyển đổi tức thì từ thử nghiệm trên giao diện web sang mã Python (google-genai), Node.js, cURL và REST API</p>
+</div>
+</div>
+<div class="prose dark:prose-invert max-w-none text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed space-y-4">
+<p>
+Một tính năng được các kỹ sư yêu thích nhất trên Google AI Studio là nút <strong class="text-indigo-600 dark:text-indigo-400 font-bold">&lt;&gt; "Get Code"</strong> ở góc trên bên phải màn hình. Sau khi tinh chỉnh xong prompt, nhiệt độ, schema và system instructions, nhấp nút này sẽ xuất ngay đoạn mã hoàn chỉnh có thể copy-paste vào dự án của bạn.
+</p>
+<h3 class="text-lg font-bold text-gray-900 dark:text-white mt-4">1. Tích Hợp Bằng Thư Viện Mới Google GenAI SDK (Python)</h3>
+<div class="bg-slate-900 text-slate-100 p-4 rounded-xl font-mono text-xs sm:text-sm my-4 overflow-x-auto not-prose border border-slate-800">
+<div class="text-indigo-400 mb-2 font-sans font-semibold text-[11px] uppercase tracking-wider flex items-center justify-between">
+<span>Python: pip install google-genai</span>
+<span class="text-slate-400">google-genai SDK 2025/2026</span>
+</div>
+<pre><code>from google import genai
+import os
+
+# Khởi tạo client đọc trực tiếp từ biến môi trường GEMINI_API_KEY
+client = genai.Client(api_key=os.environ.get("GEMINI_API_KEY"))
+
+# Gửi yêu cầu tới mô hình Gemini 2.0 Flash
+response = client.models.generate_content(
+    model="gemini-2.0-flash",
+    contents="Hãy giải thích cơ chế Long Context Window trong 3 gạch đầu dòng.",
+)
+
+print(response.text)</code></pre>
+</div>
+<h3 class="text-lg font-bold text-gray-900 dark:text-white mt-6">2. Tích Hợp Với Node.js / TypeScript</h3>
+<div class="bg-slate-900 text-slate-100 p-4 rounded-xl font-mono text-xs sm:text-sm my-4 overflow-x-auto not-prose border border-slate-800">
+<div class="text-cyan-400 mb-2 font-sans font-semibold text-[11px] uppercase tracking-wider">
+<span>Node.js: npm install @google/genai</span>
+</div>
+<pre><code>import { GoogleGenAI } from '@google/genai';
+
+const ai = new GoogleGenAI({});
+const response = await ai.models.generateContent({
+  model: 'gemini-2.0-flash',
+  contents: 'Tạo danh sách 3 bài tập lập trình cơ bản cho học sinh lớp 10.'
+});
+
+console.log(response.text);</code></pre>
+</div>
+<h3 class="text-lg font-bold text-gray-900 dark:text-white mt-6">3. Gọi Trực Tiếp Qua cURL (REST API Thuần)</h3>
+<div class="bg-slate-900 text-slate-100 p-4 rounded-xl font-mono text-xs sm:text-sm my-4 overflow-x-auto not-prose border border-slate-800">
+<pre><code>curl "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=$GEMINI_API_KEY" \
+  -H 'Content-Type: application/json' \
+  -X POST \
+  -d '{
+    "contents": [{
+      "parts": [{"text": "Xin chào Gemini API!"}]
+    }]
+  }'</code></pre>
+</div>
+<div class="not-prose mt-6 rounded-xl border border-indigo-200 dark:border-indigo-800 bg-indigo-50/60 dark:bg-indigo-950/30 p-5"><h3 class="text-base font-bold text-indigo-700 dark:text-indigo-300 mb-2">Bổ sung kiến thức: Ví dụ SDK và triển khai máy chủ</h3><p class="text-sm leading-relaxed text-gray-700 dark:text-gray-200">Ưu tiên tài liệu Google GenAI SDK chính thức để lấy model ID còn hoạt động. Với Python: pip install -U google-genai; đọc khóa từ GEMINI_API_KEY; gọi client.models.generate_content(model=..., contents=...). Với JS/TS dùng @google/genai trên máy chủ. Không nhúng khóa bí mật vào website tĩnh, kể cả mã xuất từ Get Code. Đối với GitHub Pages, tạo backend/Edge Function để gọi Gemini API; thêm xác thực, giới hạn truy cập và giám sát chi phí.</p></div></div>
+<!-- Trắc nghiệm Bài 9 -->
+<div class="mt-8 pt-6 border-t border-gray-100 dark:border-gray-800 space-y-4">
+<h4 class="text-base font-bold text-gray-900 dark:text-white flex items-center gap-2">
+<i class="fa-solid fa-circle-question text-indigo-600"></i> Trắc nghiệm củng cố Bài 9
+</h4>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Q9-1 -->
+<div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+<p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">1. Nút "Get Code" trong Google AI Studio mang lại tiện ích chính là gì?</p>
+<div class="space-y-1.5 text-xs">
+<button class="quiz-btn-q9-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q9-1', 0, 1, 'Sai. Get Code không cài đặt Python vào máy.')">
+<span>A. Cài đặt tự động phần mềm Python vào máy tính của bạn</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q9-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q9-1', 1, 1, 'Chính xác! Xuất toàn bộ cấu hình prompt, tham số và schema thành mã nguồn sẵn sàng chạy bằng Python, JavaScript, cURL.')">
+<span>B. Tự động chuyển đổi toàn bộ prompt, tham số, tools và schema thành mã nguồn thực tế (Python, Node.js, cURL) để lập trình viên tích hợp ngay</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q9-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q9-1', 2, 1, 'Sai. Đó là tải file APK.')">
+<span>C. Đóng gói prompt thành ứng dụng Android .apk</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q9-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q9-1', 3, 1, 'Sai. Lịch sử thanh toán nằm trong phần Billing.')">
+<span>D. In biên lai thanh toán cước hàng tháng</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+</div>
+<div class="hidden" id="q9-1-feedback"></div>
+</div>
+<!-- Q9-2 -->
+<div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+<p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">2. Tên gói thư viện Python chính thức được khuyến nghị cho Gemini API thế hệ mới nhất là gì?</p>
+<div class="space-y-1.5 text-xs">
+<button class="quiz-btn-q9-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q9-2', 0, 0, 'Chính xác! google-genai là thư viện hợp nhất thế hệ mới nhất của Google dành cho Gemini.')">
+<span>A. google-genai</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q9-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q9-2', 1, 0, 'Sai. openai là thư viện của bên thứ ba.')">
+<span>B. openai</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q9-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q9-2', 2, 0, 'Sai. google-gemini-free-unlimited không tồn tại.')">
+<span>C. google-gemini-free-unlimited</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q9-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q9-2', 3, 0, 'Sai. numpy là thư viện toán ma trận.')">
+<span>D. numpy</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+</div>
+<div class="hidden" id="q9-2-feedback"></div>
+</div>
+<!-- Q9-3 -->
+<div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+<p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">3. Điểm cuối (endpoint) REST API chính thức của Gemini API có tiền tố URL là gì?</p>
+<div class="space-y-1.5 text-xs">
+<button class="quiz-btn-q9-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q9-3', 0, 1, 'Sai. google.com/api không phải endpoint Gemini.')">
+<span>A. https://google.com/api</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q9-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q9-3', 1, 1, 'Chính xác! generativelanguage.googleapis.com là API Gateway chính thức của Gemini Developer API.')">
+<span>B. https://generativelanguage.googleapis.com</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q9-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q9-3', 2, 1, 'Sai. api.gemini.ai không phải domain của Google.')">
+<span>C. https://api.gemini.ai</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q9-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q9-3', 3, 1, 'Sai. localhost chỉ chạy nội bộ trên máy bạn.')">
+<span>D. http://localhost:8000</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+</div>
+<div class="hidden" id="q9-3-feedback"></div>
+</div>
+<!-- Q9-4 -->
+<div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+<p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">4. Khi phát triển ứng dụng di động (Flutter / React Native), bạn nên gọi Gemini API như thế nào để đảm bảo bảo mật?</p>
+<div class="space-y-1.5 text-xs">
+<button class="quiz-btn-q9-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q9-4', 0, 2, 'Sai! Bất kỳ ai cũng có thể dịch ngược file APK/IPA và lấy cắp API Key của bạn.')">
+<span>A. Nhúng cứng API Key trực tiếp vào code nguồn ứng dụng di động</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q9-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q9-4', 1, 2, 'Sai. Đưa vào text chat sẽ lộ cho người dùng.')">
+<span>B. Bắt người dùng nhập tay khóa API mỗi khi mở app</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q9-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q9-4', 2, 2, 'Chính xác! App di động chỉ nên gọi về máy chủ backend trung gian an toàn (BFF pattern), backend sẽ giữ API key và chuyển tiếp yêu cầu sang Google.')">
+<span>C. Gọi qua máy chủ trung gian (Backend API / Firebase Cloud Functions) để giữ kín tuyệt đối API Key ở máy chủ</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q9-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q9-4', 3, 2, 'Sai. Không liên quan đến quyền SMS.')">
+<span>D. Cấp quyền gửi tin nhắn SMS để gửi key đi</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+</div>
+<div class="hidden" id="q9-4-feedback"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- ========================================== -->
+<!-- BÀI 10: MODEL TUNING, QUOTA & DEPLOYMENT -->
+<!-- ========================================== -->
+<section class="lesson-section bg-white dark:bg-dark-surface p-6 sm:p-8 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm" id="bai10">
+<div class="flex items-center gap-3 mb-6 pb-4 border-b border-gray-100 dark:border-gray-800">
+<div class="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 flex items-center justify-center font-bold text-lg">10</div>
+<div>
+<h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">Bài 10: Tinh Chỉnh Mô Hình (Model Tuning), Quotas &amp; Triển Khai Thực Tế</h2>
+<p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">Fine-tuning mô hình riêng trên AI Studio, quản trị giới hạn RPM/TPD, tính toán chi phí và kiến trúc đưa vào sản phẩm</p>
+</div>
+</div>
+<div class="prose dark:prose-invert max-w-none text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed space-y-4">
+<p>
+Khi prompt thông thường không còn đủ đáp ứng yêu cầu khắt khe về định dạng hoặc bạn cần dạy mô hình phong cách viết độc quyền từ hàng nghìn ví dụ mẫu, tính năng <strong>Model Tuning (Supervised Fine-tuning)</strong> tích hợp sẵn trong Google AI Studio là công cụ quyền lực nhất.
+</p>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 not-prose my-6">
+<div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+<h4 class="font-bold text-indigo-600 dark:text-indigo-400 text-sm mb-1 flex items-center gap-1.5">
+<i class="fa-solid fa-sliders"></i> 1. Chuẩn bị tập dữ liệu
+</h4>
+<p class="text-xs text-gray-600 dark:text-gray-400">Chuẩn bị từ hàng chục đến hàng nghìn cặp Input/Output dưới định dạng bảng Google Sheets hoặc file JSON Lines (JSONL). Tải trực tiếp lên AI Studio chỉ bằng vài cú nhấp chuột.</p>
+</div>
+<div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+<h4 class="font-bold text-purple-600 dark:text-purple-400 text-sm mb-1 flex items-center gap-1.5">
+<i class="fa-solid fa-microchip"></i> 2. Huấn luyện tự động
+</h4>
+<p class="text-xs text-gray-600 dark:text-gray-400">Google sẽ cấp phát tài nguyên TPU/GPU trên đám mây để huấn luyện tinh chỉnh mô hình nền (như Gemini Flash). Tiến trình hiển thị trực quan biểu đồ hàm mất mát (Loss Curve).</p>
+</div>
+<div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700">
+<h4 class="font-bold text-emerald-600 dark:text-emerald-400 text-sm mb-1 flex items-center gap-1.5">
+<i class="fa-solid fa-rocket"></i> 3. Triển khai mô hình riêng
+</h4>
+<p class="text-xs text-gray-600 dark:text-gray-400">Sau khi hoàn tất, bạn nhận được mã định danh mô hình riêng: <code>tunedModels/my-custom-model-id</code>, gọi trực tiếp từ SDK tương tự như mô hình gốc mà không cần thuê GPU riêng duy trì.</p>
+</div>
+</div>
+<h3 class="text-lg font-bold text-gray-900 dark:text-white mt-6">Hiểu Rõ Hạn Mức Tần Suất (Rate Limits &amp; Quotas)</h3>
+<div class="overflow-x-auto not-prose my-4">
+<table class="w-full text-xs text-left border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden">
+<thead class="bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-semibold uppercase">
+<tr>
+<th class="p-3 border-b border-gray-200 dark:border-gray-700">Chỉ số hạn mức</th>
+<th class="p-3 border-b border-gray-200 dark:border-gray-700">Ý nghĩa kỹ thuật</th>
+<th class="p-3 border-b border-gray-200 dark:border-gray-700">Cách xử lý tối ưu</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-gray-200 dark:divide-gray-800">
+<tr class="bg-white dark:bg-dark-card">
+<td class="p-3 font-mono font-bold text-indigo-600">RPM (Requests Per Minute)</td>
+<td class="p-3">Số lượng lượt gọi API tối đa trong 1 phút</td>
+<td class="p-3">Áp dụng thuật toán Exponential Backoff &amp; Retry khi gặp mã lỗi HTTP 429</td>
+</tr>
+<tr class="bg-gray-50/50 dark:bg-dark-surface">
+<td class="p-3 font-mono font-bold text-purple-600">TPM (Tokens Per Minute)</td>
+<td class="p-3">Tổng số token nạp và xuất tối đa trong 1 phút</td>
+<td class="p-3">Rút gọn văn bản dư thừa, sử dụng Context Caching cho tài liệu lớn đọc nhiều lần</td>
+</tr>
+<tr class="bg-white dark:bg-dark-card">
+<td class="p-3 font-mono font-bold text-emerald-600">RPD (Requests Per Day)</td>
+<td class="p-3">Tổng số lượt gọi tối đa trong 24 giờ của gói Free Tier</td>
+<td class="p-3">Bật liên kết GCP Billing Pay-as-you-go để mở rộng hạn mức theo nhu cầu thực tế</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="mt-6 p-5 rounded-2xl border border-indigo-200 dark:border-indigo-800 bg-indigo-50/60 dark:bg-indigo-950/20 space-y-3">
+<h3 class="font-bold text-lg text-indigo-800 dark:text-indigo-300">Công nghệ Context Caching: Tiết kiệm 75% chi phí</h3>
+<p class="text-sm leading-relaxed text-gray-700 dark:text-gray-300">
+Khi bạn tải lên một bộ tài liệu đồ sộ (ví dụ sách luật 500 trang ~ 500,000 tokens) để hàng trăm người dùng cùng hỏi đáp lặp lại, thay vì phải trả phí 500k token cho mỗi lượt hỏi, <strong>Context Caching</strong> của Gemini cho phép lưu trữ trạng thái token hóa trong bộ nhớ đệm đám mây. Các lượt hỏi tiếp theo chỉ tốn chi phí đọc cache cực rẻ (giảm tới 75% chi phí và độ trễ giảm ngoạn mục).
+</p>
+</div>
+<div class="not-prose mt-6 rounded-xl border border-indigo-200 dark:border-indigo-800 bg-indigo-50/60 dark:bg-indigo-950/30 p-5"><h3 class="text-base font-bold text-indigo-700 dark:text-indigo-300 mb-2">Bổ sung kiến thức: Tuning, hạn mức và vận hành thực tế</h3><p class="text-sm leading-relaxed text-gray-700 dark:text-gray-200">Không mặc định Google AI Studio hiện cung cấp nút fine-tuning cho mọi mô hình. Khả năng supervised tuning phụ thuộc nền tảng, khu vực và model, thường cần kiểm tra Vertex AI và tài liệu chính thức. Trước khi fine-tune hãy thử system instruction, few-shot, RAG và đánh giá tập test. Quota gồm RPM, TPM, RPD và có thể thay đổi theo tier/model. Cần xử lý HTTP 429 bằng exponential backoff có jitter, caching, giám sát usage và chi phí, đặt ngân sách/cảnh báo, thử tải và có phương án dự phòng.</p></div></div>
+<!-- Trắc nghiệm Bài 10 -->
+<div class="mt-8 pt-6 border-t border-gray-100 dark:border-gray-800 space-y-4">
+<h4 class="text-base font-bold text-gray-900 dark:text-white flex items-center gap-2">
+<i class="fa-solid fa-circle-question text-indigo-600"></i> Trắc nghiệm củng cố Bài 10
+</h4>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Q10-1 -->
+<div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+<p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">1. Mã lỗi HTTP nào được trả về khi hệ thống của bạn gửi request vượt quá giới hạn tần suất (Rate Limit)?</p>
+<div class="space-y-1.5 text-xs">
+<button class="quiz-btn-q10-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q10-1', 0, 2, 'Sai. 200 OK là thành công.')">
+<span>A. 200 OK</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q10-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q10-1', 1, 2, 'Sai. 404 là không tìm thấy tài nguyên.')">
+<span>B. 404 Not Found</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q10-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q10-1', 2, 2, 'Chính xác! Mã HTTP 429 Too Many Requests báo hiệu bạn đã chạm ngưỡng RPM hoặc TPM.')">
+<span>C. 429 Too Many Requests</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q10-1 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q10-1', 3, 2, 'Sai. 500 là lỗi máy chủ nội bộ.')">
+<span>D. 500 Internal Server Error</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+</div>
+<div class="hidden" id="q10-1-feedback"></div>
+</div>
+<!-- Q10-2 -->
+<div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+<p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">2. Lợi ích lớn nhất của công nghệ "Context Caching" trong Gemini API là gì?</p>
+<div class="space-y-1.5 text-xs">
+<button class="quiz-btn-q10-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q10-2', 0, 0, 'Chính xác! Context Caching lưu trạng thái token của tài liệu lớn vào cache, giúp giảm tới 75% chi phí và tăng tốc độ xử lý câu hỏi lặp lại trên cùng nguồn ngữ cảnh.')">
+<span>A. Tiết kiệm đáng kể chi phí token (lên đến 75%) và giảm độ trễ khi hỏi nhiều câu trên cùng một khối dữ liệu lớn</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q10-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q10-2', 1, 0, 'Sai. Context caching không dùng để xóa cache trình duyệt Chrome.')">
+<span>B. Tự động xóa lịch sử web của trình duyệt Chrome</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q10-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q10-2', 2, 0, 'Sai. Context caching không biến chữ thành file mp3.')">
+<span>C. Biến văn bản chữ thành file ghi âm mp3</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q10-2 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q10-2', 3, 0, 'Sai. Không có liên quan đến đồ họa GPU render phim 3D.')">
+<span>D. Hỗ trợ card màn hình chơi game 3D mượt mà hơn</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+</div>
+<div class="hidden" id="q10-2-feedback"></div>
+</div>
+<!-- Q10-3 -->
+<div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+<p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">3. Khi nào bạn nên quyết định Fine-tuning (Model Tuning) trên AI Studio?</p>
+<div class="space-y-1.5 text-xs">
+<button class="quiz-btn-q10-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q10-3', 0, 1, 'Sai. Câu hỏi thường nhật chỉ cần dùng prompt thông thường.')">
+<span>A. Khi chỉ cần hỏi vài câu giao tiếp xã giao thông thường hàng ngày</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q10-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q10-3', 1, 1, 'Chính xác! Khi có hàng trăm ví dụ mẫu đặc thù và cần mô hình học sâu phong cách, giọng văn hoặc định dạng chuyên biệt mà kỹ thuật few-shot thông thường tốn quá nhiều token.')">
+<span>B. Khi cần dạy mô hình phong cách, thuật ngữ hoặc cú pháp đặc thù chuyên sâu từ một tập dữ liệu mẫu lớn nhằm tiết kiệm chi phí prompt lặp lại</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q10-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q10-3', 2, 1, 'Sai. Fine-tuning không thể thay thế card mạng Internet.')">
+<span>C. Khi máy tính của bạn bị hỏng card mạng Internet</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q10-3 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q10-3', 3, 1, 'Sai. Dữ liệu thời sự thời gian thực nên dùng Search Grounding.')">
+<span>D. Khi muốn mô hình cập nhật kết quả bóng đá đá tối hôm qua</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+</div>
+<div class="hidden" id="q10-3-feedback"></div>
+</div>
+<!-- Q10-4 -->
+<div class="bg-gray-50 dark:bg-dark-card p-4 rounded-xl border border-gray-200 dark:border-gray-700/80 space-y-3">
+<p class="font-semibold text-xs sm:text-sm text-gray-800 dark:text-gray-200">4. Chiến lược xử lý chuẩn kỹ thuật khi gặp lỗi quá tải tần suất gọi API (HTTP 429) là gì?</p>
+<div class="space-y-1.5 text-xs">
+<button class="quiz-btn-q10-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q10-4', 0, 2, 'Sai. Spam vòng lặp vô tận lập tức sẽ khiến hệ thống bị block IP.')">
+<span>A. Gửi liên tiếp 1000 request ngay lập tức trong vòng lặp vô tận</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q10-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q10-4', 1, 2, 'Sai. Xóa project là phá hủy toàn bộ hệ thống.')">
+<span>B. Xóa vĩnh viễn Google Cloud Project của bạn</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q10-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q10-4', 2, 2, 'Chính xác! Thuật toán Exponential Backoff với Jitter tăng dần thời gian chờ sau mỗi lần thử lại (1s, 2s, 4s, 8s...) là tiêu chuẩn vàng xử lý rate limit.')">
+<span>C. Áp dụng cơ chế thử lại có khoảng chờ tăng theo cấp số nhân (Exponential Backoff with Jitter)</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+<button class="quiz-btn-q10-4 w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-center justify-between" onclick="checkQuiz('q10-4', 3, 2, 'Sai. Không nên giấu nhẹm lỗi mà cần xử lý retry an toàn.')">
+<span>D. Tắt toàn bộ máy chủ và không bao giờ bật lại</span>
+<i class="fa-regular fa-circle text-gray-400"></i>
+</button>
+</div>
+<div class="hidden" id="q10-4-feedback"></div>
+</div>
+</div>
+</div>
+</section>
+<p class="text-xs text-gray-500 dark:text-gray-400 text-center pb-6">Tài liệu được hiệu đính theo nguyên tắc tránh khẳng định tuyệt đối. Kiểm tra thông số và tính năng đang hỗ trợ tại ai.google.dev/gemini-api/docs và aistudio.google.com trước khi thực hành.</p></main>
+</div>
+<!-- Footer -->
+<footer class="mt-16 border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-dark-surface py-8">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-xs text-gray-500 dark:text-gray-400 space-y-2">
+<p>© 2026 CodeHub - Khóa Học Google AI Studio &amp; Gemini API Toàn Diện.</p>
+<p>Dành riêng cho cộng đồng lập trình viên, nghiên cứu sinh AI và kỹ sư công nghệ Việt Nam.</p>
+</div>
+</footer>
+<!-- Interactive Scripts -->
+<script>
+    // Theme Switcher
+    const themeToggle = document.getElementById('themeToggle');
+    if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+    if (themeToggle) {
+      themeToggle.addEventListener('click', () => {
+        document.documentElement.classList.toggle('dark');
+        localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+      });
+    }
+
+    // Drawer Mobile
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const closeDrawerBtn = document.getElementById('closeDrawerBtn');
+    const sidebarDrawer = document.getElementById('sidebarDrawer');
+    const drawerBackdrop = document.getElementById('drawerBackdrop');
+
+    function openDrawer() {
+      sidebarDrawer.classList.remove('-translate-x-full');
+      drawerBackdrop.classList.remove('hidden');
+    }
+    function closeDrawer() {
+      sidebarDrawer.classList.add('-translate-x-full');
+      drawerBackdrop.classList.add('hidden');
+    }
+
+    if (mobileMenuBtn) mobileMenuBtn.addEventListener('click', openDrawer);
+    if (closeDrawerBtn) closeDrawerBtn.addEventListener('click', closeDrawer);
+    if (drawerBackdrop) drawerBackdrop.addEventListener('click', closeDrawer);
+
+    document.querySelectorAll('.sidebar-link').forEach(link => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth < 1024) {
+          closeDrawer();
+        }
+      });
+    });
+
+    // Quiz and Progress Handler
+    const totalQuizzes = 40;
+    let solvedQuizzes = new Set(JSON.parse(localStorage.getItem('aistudio_google_solved_quizzes') || '[]'));
+
+    function updateProgress() {
+      const count = solvedQuizzes.size;
+      const pct = Math.min(100, Math.round((count / totalQuizzes) * 100));
+      const pBar = document.getElementById('progressBar');
+      const pText = document.getElementById('progressPercent');
+      if (pBar) pBar.style.width = pct + '%';
+      if (pText) pText.innerText = pct + '% (' + count + '/' + totalQuizzes + ')';
+    }
+
+    function checkQuiz(quizId, selectedIdx, correctIdx, explanation) {
+      const feedbackEl = document.getElementById(quizId + '-feedback');
+      const buttons = document.querySelectorAll('.quiz-btn-' + quizId);
+      
+      buttons.forEach((btn, idx) => {
+        btn.disabled = true;
+        const icon = btn.querySelector('i');
+        if (idx === correctIdx) {
+          btn.classList.add('bg-indigo-50', 'dark:bg-indigo-950/40', 'border-indigo-500', 'text-indigo-700', 'dark:text-indigo-300', 'font-semibold');
+          btn.classList.remove('border-gray-200', 'dark:border-gray-700');
+          if (icon) {
+            icon.className = 'fa-solid fa-circle-check text-indigo-600 dark:text-indigo-400 text-sm';
+          }
+        } else if (idx === selectedIdx && selectedIdx !== correctIdx) {
+          btn.classList.add('bg-rose-50', 'dark:bg-rose-950/40', 'border-rose-500', 'text-rose-700', 'dark:text-rose-300');
+          btn.classList.remove('border-gray-200', 'dark:border-gray-700');
+          if (icon) {
+            icon.className = 'fa-solid fa-circle-xmark text-rose-500 text-sm';
+          }
+        } else {
+          btn.classList.add('opacity-60');
+        }
+      });
+
+      if (feedbackEl) {
+        feedbackEl.classList.remove('hidden');
+        if (selectedIdx === correctIdx) {
+          feedbackEl.className = 'text-xs p-3 rounded-lg border bg-indigo-50 dark:bg-indigo-950/50 border-indigo-300 dark:border-indigo-800 text-indigo-800 dark:text-indigo-200 mt-2 block';
+          feedbackEl.innerHTML = '<div class="font-bold mb-1 flex items-center gap-1.5"><i class="fa-solid fa-check"></i> Chính xác!</div>' + explanation;
+          solvedQuizzes.add(quizId);
+          localStorage.setItem('aistudio_google_solved_quizzes', JSON.stringify(Array.from(solvedQuizzes)));
+          updateProgress();
+        } else {
+          feedbackEl.className = 'text-xs p-3 rounded-lg border bg-rose-50 dark:bg-rose-950/50 border-rose-300 dark:border-rose-800 text-rose-800 dark:text-rose-200 mt-2 block';
+          feedbackEl.innerHTML = '<div class="font-bold mb-1 flex items-center gap-1.5"><i class="fa-solid fa-xmark"></i> Chưa chính xác!</div>' + explanation;
+        }
+      }
+    }
+
+    // ScrollSpy active link highlighter
+    window.addEventListener('DOMContentLoaded', () => {
+      updateProgress();
+
+      const sections = document.querySelectorAll('.lesson-section');
+      const navLinks = document.querySelectorAll('.sidebar-link');
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const id = entry.target.getAttribute('id');
+            navLinks.forEach(link => {
+              if (link.getAttribute('href') === '#' + id) {
+                link.classList.add('bg-indigo-50', 'dark:bg-indigo-950/60', 'text-indigo-700', 'dark:text-indigo-300', 'font-bold');
+                link.classList.remove('text-gray-700', 'dark:text-gray-300');
+              } else {
+                link.classList.remove('bg-indigo-50', 'dark:bg-indigo-950/60', 'text-indigo-700', 'dark:text-indigo-300', 'font-bold');
+                link.classList.add('text-gray-700', 'dark:text-gray-300');
+              }
+            });
+          }
+        });
+      }, { rootMargin: '-10% 0px -70% 0px' });
+
+      sections.forEach(section => {
+        observer.observe(section);
+      });
+    });
+</script>
+</body>
+</html>
