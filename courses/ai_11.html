@@ -9,6 +9,10 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- FontAwesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- KaTeX for Math Rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
   <script>
     tailwind.config = {
       darkMode: 'class',
@@ -1414,7 +1418,7 @@
                       <ul class="text-xs sm:text-sm text-gray-700 dark:text-gray-300 space-y-2 list-disc list-inside">
                         <li><strong>Forward Propagation:</strong> Dữ liệu đi từ lớp đầu vào qua các lớp ẩn để đưa ra dự đoán $\hat{y}$.</li>
                         <li><strong>Loss Function:</strong> Đo lường sai lệch giữa dự đoán $\hat{y}$ và nhãn thực tế $y$ (ví dụ: Mean Squared Error cho hồi quy, Cross-Entropy cho phân loại).</li>
-                        <li><strong>Backpropagation & Gradient Descent:</strong> Sử dụng quy tắc đạo hàm chuỗi (Chain Rule) để tính gradient sai số ngược từ lớp cuối về lớp đầu, sau đó cập nhật trọng số: $W_{mới} = W_{cũ} - \alpha \frac{\partial L}{\partial W}$, trong đó $\alpha$ là tốc độ học (Learning Rate).</li>
+                        <li><strong>Backpropagation & Gradient Descent:</strong> Sử dụng quy tắc đạo hàm chuỗi (Chain Rule) để tính gradient sai số ngược từ lớp cuối về lớp đầu, sau đó cập nhật trọng số: $W_{\text{mới}} = W_{\text{cũ}} - \alpha \frac{\partial L}{\partial W}$, trong đó $\alpha$ là tốc độ học (Learning Rate).</li>
                       </ul>
                     </div>
                   </div>
@@ -4395,6 +4399,19 @@
       form.classList.remove('hidden');
       document.getElementById('courseExamResult').classList.add('hidden');
     }
+
+    // Auto-render KaTeX Math
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof renderMathInElement === 'function') {
+        renderMathInElement(document.body, {
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false}
+          ],
+          throwOnError: false
+        });
+      }
+    });
   </script>
 </body>
 </html>
