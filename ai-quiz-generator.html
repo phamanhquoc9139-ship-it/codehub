@@ -7,10 +7,10 @@
 <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/docx@9.7.2/dist/index.iife.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
-<script>window.MathJax={loader:{load:['[tex]/mhchem']},tex:{packages:{'[+]':['mhchem']},inlineMath:[['$','$'],['\\(','\\)']]},options:{skipHtmlTags:['script','noscript','style','textarea','pre','code']}};</script>
+<script>window.MathJax={loader:{load:['[tex]/mhchem']},tex:{packages:{'[+]':['mhchem']},inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']]},options:{skipHtmlTags:['script','noscript','style','textarea','pre','code']}};</script>
 <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script src="scripts/supabase-config.js"></script>
-<style>.drop.drag{border-color:#7c3aed;background:#f5f3ff}.busy{opacity:.6;pointer-events:none}.stem-svg svg{max-width:100%;height:auto;display:block;margin:auto}.math-wrap mjx-container{overflow-x:auto;overflow-y:hidden;max-width:100%}</style></head>
+<style>.drop.drag{border-color:#7c3aed;background:#f5f3ff}.busy{opacity:.6;pointer-events:none}.stem-svg svg{max-width:100%;height:auto;display:block;margin:auto}.math-wrap mjx-container{overflow-x:auto;overflow-y:hidden;max-width:100%}.math-live{margin-top:6px;padding:9px 12px;border:1px solid #dbeafe;border-radius:10px;background:#f8fbff;font-size:14px;white-space:pre-wrap;overflow-wrap:anywhere}.math-live:empty{display:none}.math-live-label{font-size:11px;color:#64748b;font-weight:600;margin-bottom:3px}</style></head>
 <body class="bg-slate-50 text-slate-900"><main class="max-w-7xl mx-auto p-5">
 <div class="flex justify-between gap-4 mb-5"><div><h1 class="text-3xl font-bold">✨ AI Quiz Generator V3.7.30 • AI TEST MASTER</h1><p class="text-slate-500">Ma trận • Đặc tả • Đề kiểm tra • Đáp án • 4 mã đề theo khối • Chấm tự động • Word .docx</p></div><a href="quizzes.html" class="border bg-white rounded-xl px-4 py-2 h-fit">← Quiz</a></div>
 <div id="msg" class="hidden mb-4 p-3 rounded-xl"></div>
@@ -558,10 +558,35 @@ function editorByType(x,i){
  if(x.question_type==="true_false")return `<div class="mt-2">Đáp án <select class="tfans border p-2 rounded" data-i="${i}"><option value="T" ${String(x.correct_answer).toUpperCase()==="T"?"selected":""}>Đúng</option><option value="F" ${String(x.correct_answer).toUpperCase()==="F"?"selected":""}>Sai</option></select></div>`;
  return ["a","b","c","d"].map(k=>`<div class="flex gap-2 mt-2"><b>${k.toUpperCase()}.</b><input class="op w-full border p-2 rounded" data-i="${i}" data-k="${k}" value="${esc(x["option_"+k]||"")}"></div>`).join("")+`<div class="mt-2">Đáp án <select class="ans border p-2 rounded" data-i="${i}">${["A","B","C","D"].map(a=>`<option ${a===x.correct_answer?"selected":""}>${a}</option>`).join("")}</select></div>`;
 }
+// MathJax cannot render inside editable textarea/input; use a live preview outside the field.
+function mathPreviewText(value){return esc(value||"")}
+function updateMathLive(card){
+ if(!card)return;
+ const fields=[...card.querySelectorAll('textarea.q,textarea.stim,input.op,input.exp,input.txtans,input.accepted,input.unit,input.units')];
+ for(const field of fields){
+  let panel=field.nextElementSibling;
+  if(!panel?.classList?.contains('math-live')){panel=document.createElement('div');panel.className='math-live';field.insertAdjacentElement('afterend',panel)}
+  const value=field.value||'';
+  const hasMath=/\$[^\$]+\$|\\\(|\\\[|\\(?:frac|sqrt|ce|times|cdot|pi|Delta|leq|geq|neq|rightarrow|text|mathrm|sum|int|alpha|beta|theta|omega)\b/.test(value);
+  panel.innerHTML=hasMath?`<div class="math-live-label">Xem trước công thức</div><div class="math-live-content">${mathPreviewText(value)}</div>`:'';
+  if(hasMath&&window.MathJax?.typesetPromise){
+   try{window.MathJax.typesetClear?.([panel]);window.MathJax.typesetPromise([panel]).catch(()=>{})}catch(e){console.warn('MathJax preview:',e)}
+  }
+ }
+}
+let mathLiveTimer;
+function setupMathLive(){
+ document.querySelectorAll('#list .card').forEach(updateMathLive);
+}
+$('list').addEventListener('input',e=>{
+ if(!e.target.matches('textarea.q,textarea.stim,input.op,input.exp,input.txtans,input.accepted,input.unit,input.units'))return;
+ const card=e.target.closest('.card');clearTimeout(mathLiveTimer);
+ mathLiveTimer=setTimeout(()=>updateMathLive(card),220);
+});
 function render(){
  const c={},tc={};generated.forEach(x=>{c[x.level]=(c[x.level]||0)+1;tc[x.question_type]=(tc[x.question_type]||0)+1});$("stats").textContent=`NB ${c["Nhận biết"]||0} • TH ${c["Thông hiểu"]||0} • VD ${c["Vận dụng"]||0} • A–D ${tc.mcq4||0} • Đ/S ${tc.true_false||0} • Ngắn ${tc.short_answer||0} • Số ${tc.numeric||0} • Tổng ${generated.length}`;$("tools").classList.toggle("hidden",!generated.length);
  $("list").innerHTML=generated.map((x,i)=>`<div class="card bg-white shadow rounded-2xl p-5 math-wrap" data-card="${i}"><div class="flex flex-wrap justify-between gap-2"><label><input class="pick" data-i="${i}" type="checkbox" checked> <b>${questionWord()} ${i+1}</b> • ${esc(x.level||"")} • <span class="text-blue-700">${typeLabel(x.question_type)}</span>${x.section_title?` • ${esc(localizeSectionTitle(x.section_title))}`:""}</label><div class="flex gap-2">${x.question_type==="mcq4"?`<button data-sh="${i}" class="border px-2 py-1 rounded-lg text-sm">🔀 Xáo A–D</button>`:""}<button data-re="${i}" class="border border-violet-300 text-violet-700 px-2 py-1 rounded-lg text-sm">✨ Tạo lại</button></div></div>${x.stimulus?`<label class="block text-xs font-bold mt-2">Ngữ liệu<textarea class="stim w-full border bg-blue-50 p-2 mt-1 rounded" rows="4" data-i="${i}">${esc(x.stimulus)}</textarea></label>`:""}${visualHtml(x.visual_svg)}${x.visual_svg?`<details class="mt-2"><summary class="text-xs cursor-pointer text-slate-500">SVG hình/đồ thị</summary><textarea class="svgsrc w-full border p-2 rounded mt-1 text-xs font-mono" rows="3" data-i="${i}">${esc(sanitizeSvg(x.visual_svg))}</textarea></details>`:""}<textarea class="q w-full border p-2 mt-2 rounded" data-i="${i}">${esc(cleanQuestion(x.question_text))}</textarea>${editorByType(x,i)}<input class="exp w-full border p-2 mt-2 rounded" data-i="${i}" value="${esc(x.explanation||"")}"><div class="bg-amber-50 p-2 mt-2 text-sm rounded">Căn cứ: ${esc(x.source_evidence||"")}</div>${dossierMetadataEditor(x,i)}</div>`).join("");
- document.querySelectorAll("[data-sh]").forEach(b=>b.onclick=()=>shuffleOne(+b.dataset.sh));document.querySelectorAll("[data-re]").forEach(b=>b.onclick=()=>regenerateOne(+b.dataset.re));typesetMath($("list"));
+ document.querySelectorAll("[data-sh]").forEach(b=>b.onclick=()=>shuffleOne(+b.dataset.sh));document.querySelectorAll("[data-re]").forEach(b=>b.onclick=()=>regenerateOne(+b.dataset.re));setupMathLive();typesetMath($("list"));
 }
 async function regenerateOne(i){syncAll();const old=generated[i],ratios={remember:old.level==="Nhận biết"?100:0,understand:old.level==="Thông hiểu"?100:0,apply:old.level==="Vận dụng"?100:0},card=document.querySelector(`[data-card="${i}"]`);card?.classList.add("busy");try{const p=sourcePayload(1,ratios);p.questionTypes=[old.question_type||"mcq4"];p.extraText+=`\n\nTạo lại đúng 1 câu, không trùng với: ${generated.filter((_,n)=>n!==i).map(q=>q.question_text).join(" | ")}`;if(isStructured()){const sec=(activeStructure?.sections||[]).find(s=>s.key===old.section_key)||{key:old.section_key||"S1",title:old.section_title||"",instruction:old.section_instruction||"",question_type:old.question_type||"mcq4",question_count:1};p.structure={title_hint:activeStructure?.title_hint||"",sections:[{...sec,question_count:1}],target_count:1};p.generationMode="structure"}const x=await callAI(p),q=x.questions?.[0];if(!q)throw Error("AI chưa tạo được câu thay thế.");generated[i]={...q,report_points:old.report_points,section_key:q.section_key||old.section_key,section_title:q.section_title||old.section_title,section_instruction:q.section_instruction||old.section_instruction,question_type:q.question_type||old.question_type};render();show(`Đã tạo lại câu ${i+1}.`,true)}catch(e){show(e.message)}finally{card?.classList.remove("busy")}}
 $("all").onclick=()=>document.querySelectorAll(".pick").forEach(x=>x.checked=true);$("none").onclick=()=>document.querySelectorAll(".pick").forEach(x=>x.checked=false);$("shuffleAll").onclick=()=>{syncAll();generated.forEach((q,i)=>{if(q.question_type==="mcq4")shuffleOne(i)});render();show("Đã xáo đáp án các câu A–D.",true)};
