@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>AI Quiz Generator V3.7.30 TEST MASTER - CodeHub</title>
+<title>AI Quiz Generator V3.7.31 GRAPH TEST - CodeHub</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/mammoth@1.8.0/mammoth.browser.min.js"></script>
@@ -12,7 +12,7 @@
 <script src="scripts/supabase-config.js"></script>
 <style>.drop.drag{border-color:#7c3aed;background:#f5f3ff}.busy{opacity:.6;pointer-events:none}.stem-svg svg{max-width:100%;height:auto;display:block;margin:auto}.math-wrap mjx-container{overflow-x:auto;overflow-y:hidden;max-width:100%}.math-live{margin-top:6px;padding:9px 12px;border:1px solid #dbeafe;border-radius:10px;background:#f8fbff;font-size:14px;white-space:pre-wrap;overflow-wrap:anywhere}.math-live:empty{display:none}.math-live-label{font-size:11px;color:#64748b;font-weight:600;margin-bottom:3px}</style></head>
 <body class="bg-slate-50 text-slate-900"><main class="max-w-7xl mx-auto p-5">
-<div class="flex justify-between gap-4 mb-5"><div><h1 class="text-3xl font-bold">✨ AI Quiz Generator V3.7.30 • AI TEST MASTER</h1><p class="text-slate-500">Ma trận • Đặc tả • Đề kiểm tra • Đáp án • 4 mã đề theo khối • Chấm tự động • Word .docx</p></div><a href="quizzes.html" class="border bg-white rounded-xl px-4 py-2 h-fit">← Quiz</a></div>
+<div class="flex justify-between gap-4 mb-5"><div><h1 class="text-3xl font-bold">✨ AI Quiz Generator V3.7.31 • GRAPH TEST</h1><p class="text-slate-500">Ma trận • Đặc tả • Đề kiểm tra • Đáp án • 4 mã đề theo khối • Chấm tự động • Word .docx</p></div><a href="quizzes.html" class="border bg-white rounded-xl px-4 py-2 h-fit">← Quiz</a></div>
 <div id="msg" class="hidden mb-4 p-3 rounded-xl"></div>
 <div class="grid lg:grid-cols-4 gap-5">
 <aside class="bg-white rounded-2xl shadow p-5 space-y-3">
@@ -72,7 +72,7 @@
     <label class="flex items-center gap-2"><input id="typeShort" type="checkbox"> Trả lời ngắn</label>
     <label class="flex items-center gap-2"><input id="typeNumeric" type="checkbox"> Đáp án số</label>
   </div>
-  <label class="flex items-center gap-2 mt-3 text-xs"><input id="allowVisuals" type="checkbox"> Cho phép AI dựng sơ đồ/đồ thị SVG khi thực sự cần</label>
+  <label class="flex items-center gap-2 mt-3 text-xs"><input id="allowVisuals" type="checkbox" checked> Cho phép AI dựng sơ đồ/đồ thị SVG khi thực sự cần</label>
   <div class="text-[11px] text-cyan-800 mt-2">Chế độ “Theo file cấu trúc đề” sẽ ưu tiên dạng câu phát hiện trong file mẫu. A–D vẫn là mặc định để không làm thay đổi AI Quiz cũ.</div>
 </details>
 
@@ -131,6 +131,36 @@ function sanitizeSvg(raw){
  const allowed=new Set(["svg","g","line","polyline","polygon","rect","circle","ellipse","path","text","tspan","defs","marker"]),attrs=new Set(["xmlns","viewBox","width","height","x","y","x1","y1","x2","y2","cx","cy","r","rx","ry","d","points","fill","stroke","stroke-width","stroke-linecap","stroke-linejoin","font-size","font-family","font-weight","text-anchor","dominant-baseline","transform","marker-start","marker-end","orient","refX","refY","markerWidth","markerHeight"]);
  [...svg.querySelectorAll("*")].forEach(el=>{if(!allowed.has(el.tagName.toLowerCase())){el.remove();return}[...el.attributes].forEach(a=>{const n=a.name,v=a.value;if(n.toLowerCase().startsWith("on")||!attrs.has(n)||/url\s*\(|javascript:|https?:|data:/i.test(v))el.removeAttribute(n)})});
  [...svg.attributes].forEach(a=>{if(a.name.toLowerCase().startsWith("on")||!attrs.has(a.name)||/javascript:|https?:|data:/i.test(a.value))svg.removeAttribute(a.name)});svg.setAttribute("xmlns","http://www.w3.org/2000/svg");if(!svg.getAttribute("viewBox")){const w=parseFloat(svg.getAttribute("width")||"800")||800,h=parseFloat(svg.getAttribute("height")||"400")||400;svg.setAttribute("viewBox",`0 0 ${w} ${h}`)}svg.removeAttribute("width");svg.removeAttribute("height");return new XMLSerializer().serializeToString(svg)}catch{return""}
+}
+// V3.7.31: deterministic SVG graph generator (no extra AI/API calls).
+function graphSvg(kind,coeffs){
+ const [a,b,c,d]=coeffs.map(Number);if(coeffs.some(v=>!Number.isFinite(Number(v))))throw Error("Hệ số phải là số hợp lệ.");
+ const fn=kind==="linear"?(x=>a*x+b):kind==="quadratic"?(x=>a*x*x+b*x+c):(x=>a*x*x*x+b*x*x+c*x+d);
+ const W=720,H=420,xmin=-6,xmax=6,ymin=-8,ymax=8,px=x=>(x-xmin)/(xmax-xmin)*W,py=y=>(ymax-y)/(ymax-ymin)*H;
+ let elements=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}"><rect x="0" y="0" width="720" height="420" fill="white"/>`;
+ for(let x=-6;x<=6;x++)elements+=`<line x1="${px(x)}" y1="0" x2="${px(x)}" y2="420" stroke="#e2e8f0" stroke-width="1"/>`;
+ for(let y=-8;y<=8;y++)elements+=`<line x1="0" y1="${py(y)}" x2="720" y2="${py(y)}" stroke="#e2e8f0" stroke-width="1"/>`;
+ elements+=`<line x1="0" y1="${py(0)}" x2="720" y2="${py(0)}" stroke="#334155" stroke-width="2"/><line x1="${px(0)}" y1="0" x2="${px(0)}" y2="420" stroke="#334155" stroke-width="2"/>`;
+ for(let x=-6;x<=6;x+=2)if(x)elements+=`<text x="${px(x)+3}" y="${py(0)+16}" font-size="14" fill="#334155">${x}</text>`;
+ for(let y=-8;y<=8;y+=2)if(y)elements+=`<text x="${px(0)+5}" y="${py(y)-5}" font-size="14" fill="#334155">${y}</text>`;
+ let paths=[],part="",prev=null;
+ for(let i=0;i<=2400;i++){const x=xmin+(xmax-xmin)*i/2400,y=fn(x),visible=Number.isFinite(y)&&y>=ymin&&y<=ymax;
+ if(!visible){if(part)paths.push(part);part="";prev=null;continue}
+ const coord=`${px(x).toFixed(2)} ${py(y).toFixed(2)}`;
+ part+=(prev?" L":"M")+coord;prev=y;
+ }
+ if(part)paths.push(part);
+ for(const path of paths)elements+=`<path d="${path}" stroke="#2563eb" stroke-width="3" fill="none"/>`;
+ return sanitizeSvg(elements+`<text x="698" y="${py(0)-8}" font-size="16" fill="#334155">x</text><text x="${px(0)+8}" y="18" font-size="16" fill="#334155">y</text></svg>`);
+}
+function addGraphToQuestion(i){
+ syncAll();const q=generated[i];if(!q)return;
+ const kind=prompt("Chọn loại hàm số: 1 = bậc nhất, 2 = bậc hai, 3 = bậc ba", "2");if(kind===null)return;
+ const types={"1":"linear","2":"quadratic","3":"cubic"};if(!types[kind])return show("Chọn 1, 2 hoặc 3.");
+ const sample=kind==="1"?"2,1":kind==="2"?"1,-2,-3":"1,0,-3,0";
+ const raw=prompt(kind==="1"?"Nhập a,b cho y=ax+b":kind==="2"?"Nhập a,b,c cho y=ax²+bx+c":"Nhập a,b,c,d cho y=ax³+bx²+cx+d",sample);if(raw===null)return;
+ const vals=raw.split(/[;,]/).map(v=>v.trim().replace(/\s/g,""));if(vals.length!==Number(kind)+1&&!(kind==="3"&&vals.length===4))return show("Số lượng hệ số không đúng.");
+ try{q.visual_svg=graphSvg(types[kind],vals);render();show(`Đã vẽ đồ thị cho câu ${i+1}. Kiểm tra công thức và đáp án trước khi lưu.`,true)}catch(e){show(e.message)}
 }
 function visualHtml(raw){const x=sanitizeSvg(raw);return x?`<div class="stem-svg math-wrap bg-white border rounded-xl p-3 my-3">${x}</div>`:""}
 function wordPlain(v){return String(v??"").replace(/\$([^$]+)\$/g,"$1").replace(/\\\((.*?)\\\)/g,"$1").replace(/\\ce\{([^{}]+)\}/g,"$1").replace(/\\frac\{([^{}]+)\}\{([^{}]+)\}/g,"($1)/($2)").replace(/\\sqrt\{([^{}]+)\}/g,"√($1)").replace(/\\cdot/g,"·").replace(/\\times/g,"×").replace(/\\leq/g,"≤").replace(/\\geq/g,"≥").replace(/\\neq/g,"≠").replace(/\\rightarrow/g,"→").replace(/\\Delta/g,"Δ").replace(/\\pi/g,"π");}
@@ -584,8 +614,10 @@ $('list').addEventListener('input',e=>{
  mathLiveTimer=setTimeout(()=>updateMathLive(card),220);
 });
 function render(){
+ if(!$('list').dataset.graphWired){$('list').dataset.graphWired="1";$('list').addEventListener("click",e=>{const btn=e.target.closest("[data-graph]");if(btn)addGraphToQuestion(Number(btn.dataset.graph))})}
+
  const c={},tc={};generated.forEach(x=>{c[x.level]=(c[x.level]||0)+1;tc[x.question_type]=(tc[x.question_type]||0)+1});$("stats").textContent=`NB ${c["Nhận biết"]||0} • TH ${c["Thông hiểu"]||0} • VD ${c["Vận dụng"]||0} • A–D ${tc.mcq4||0} • Đ/S ${tc.true_false||0} • Ngắn ${tc.short_answer||0} • Số ${tc.numeric||0} • Tổng ${generated.length}`;$("tools").classList.toggle("hidden",!generated.length);
- $("list").innerHTML=generated.map((x,i)=>`<div class="card bg-white shadow rounded-2xl p-5 math-wrap" data-card="${i}"><div class="flex flex-wrap justify-between gap-2"><label><input class="pick" data-i="${i}" type="checkbox" checked> <b>${questionWord()} ${i+1}</b> • ${esc(x.level||"")} • <span class="text-blue-700">${typeLabel(x.question_type)}</span>${x.section_title?` • ${esc(localizeSectionTitle(x.section_title))}`:""}</label><div class="flex gap-2">${x.question_type==="mcq4"?`<button data-sh="${i}" class="border px-2 py-1 rounded-lg text-sm">🔀 Xáo A–D</button>`:""}<button data-re="${i}" class="border border-violet-300 text-violet-700 px-2 py-1 rounded-lg text-sm">✨ Tạo lại</button></div></div>${x.stimulus?`<label class="block text-xs font-bold mt-2">Ngữ liệu<textarea class="stim w-full border bg-blue-50 p-2 mt-1 rounded" rows="4" data-i="${i}">${esc(x.stimulus)}</textarea></label>`:""}${visualHtml(x.visual_svg)}${x.visual_svg?`<details class="mt-2"><summary class="text-xs cursor-pointer text-slate-500">SVG hình/đồ thị</summary><textarea class="svgsrc w-full border p-2 rounded mt-1 text-xs font-mono" rows="3" data-i="${i}">${esc(sanitizeSvg(x.visual_svg))}</textarea></details>`:""}<textarea class="q w-full border p-2 mt-2 rounded" data-i="${i}">${esc(cleanQuestion(x.question_text))}</textarea>${editorByType(x,i)}<input class="exp w-full border p-2 mt-2 rounded" data-i="${i}" value="${esc(x.explanation||"")}"><div class="bg-amber-50 p-2 mt-2 text-sm rounded">Căn cứ: ${esc(x.source_evidence||"")}</div>${dossierMetadataEditor(x,i)}</div>`).join("");
+ $("list").innerHTML=generated.map((x,i)=>`<div class="card bg-white shadow rounded-2xl p-5 math-wrap" data-card="${i}"><div class="flex flex-wrap justify-between gap-2"><label><input class="pick" data-i="${i}" type="checkbox" checked> <b>${questionWord()} ${i+1}</b> • ${esc(x.level||"")} • <span class="text-blue-700">${typeLabel(x.question_type)}</span>${x.section_title?` • ${esc(localizeSectionTitle(x.section_title))}`:""}</label><div class="flex gap-2">${x.question_type==="mcq4"?`<button data-sh="${i}" class="border px-2 py-1 rounded-lg text-sm">🔀 Xáo A–D</button>`:""}<button data-graph="${i}" class="border border-blue-300 text-blue-700 px-2 py-1 rounded-lg text-sm">📈 Vẽ đồ thị</button><button data-re="${i}" class="border border-violet-300 text-violet-700 px-2 py-1 rounded-lg text-sm">✨ Tạo lại</button></div></div>${x.stimulus?`<label class="block text-xs font-bold mt-2">Ngữ liệu<textarea class="stim w-full border bg-blue-50 p-2 mt-1 rounded" rows="4" data-i="${i}">${esc(x.stimulus)}</textarea></label>`:""}${visualHtml(x.visual_svg)}${x.visual_svg?`<details class="mt-2"><summary class="text-xs cursor-pointer text-slate-500">SVG hình/đồ thị</summary><textarea class="svgsrc w-full border p-2 rounded mt-1 text-xs font-mono" rows="3" data-i="${i}">${esc(sanitizeSvg(x.visual_svg))}</textarea></details>`:""}<textarea class="q w-full border p-2 mt-2 rounded" data-i="${i}">${esc(cleanQuestion(x.question_text))}</textarea>${editorByType(x,i)}<input class="exp w-full border p-2 mt-2 rounded" data-i="${i}" value="${esc(x.explanation||"")}"><div class="bg-amber-50 p-2 mt-2 text-sm rounded">Căn cứ: ${esc(x.source_evidence||"")}</div>${dossierMetadataEditor(x,i)}</div>`).join("");
  document.querySelectorAll("[data-sh]").forEach(b=>b.onclick=()=>shuffleOne(+b.dataset.sh));document.querySelectorAll("[data-re]").forEach(b=>b.onclick=()=>regenerateOne(+b.dataset.re));setupMathLive();typesetMath($("list"));
 }
 async function regenerateOne(i){syncAll();const old=generated[i],ratios={remember:old.level==="Nhận biết"?100:0,understand:old.level==="Thông hiểu"?100:0,apply:old.level==="Vận dụng"?100:0},card=document.querySelector(`[data-card="${i}"]`);card?.classList.add("busy");try{const p=sourcePayload(1,ratios);p.questionTypes=[old.question_type||"mcq4"];p.extraText+=`\n\nTạo lại đúng 1 câu, không trùng với: ${generated.filter((_,n)=>n!==i).map(q=>q.question_text).join(" | ")}`;if(isStructured()){const sec=(activeStructure?.sections||[]).find(s=>s.key===old.section_key)||{key:old.section_key||"S1",title:old.section_title||"",instruction:old.section_instruction||"",question_type:old.question_type||"mcq4",question_count:1};p.structure={title_hint:activeStructure?.title_hint||"",sections:[{...sec,question_count:1}],target_count:1};p.generationMode="structure"}const x=await callAI(p),q=x.questions?.[0];if(!q)throw Error("AI chưa tạo được câu thay thế.");generated[i]={...q,report_points:old.report_points,section_key:q.section_key||old.section_key,section_title:q.section_title||old.section_title,section_instruction:q.section_instruction||old.section_instruction,question_type:q.question_type||old.question_type};render();show(`Đã tạo lại câu ${i+1}.`,true)}catch(e){show(e.message)}finally{card?.classList.remove("busy")}}
@@ -639,7 +671,7 @@ async function makeWord(includeAnswers=false){
 }
 
 // ===============================
-// V3.7.30 TEST MASTER: Ma trận • Đặc tả • 4 mã đề
+// V3.7.31 GRAPH TEST: Ma trận • Đặc tả • 4 mã đề
 // ===============================
 function academicYearFromCourse(){
  const txt=$("course").selectedOptions[0]?.textContent||"";
