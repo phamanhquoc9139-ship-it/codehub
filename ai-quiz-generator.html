@@ -12,7 +12,7 @@
 <script src="scripts/supabase-config.js"></script>
 <style>.drop.drag{border-color:#7c3aed;background:#f5f3ff}.busy{opacity:.6;pointer-events:none}.stem-svg svg{max-width:100%;height:auto;display:block;margin:auto}.math-wrap mjx-container{overflow-x:auto;overflow-y:hidden;max-width:100%}.math-live{margin-top:6px;padding:9px 12px;border:1px solid #dbeafe;border-radius:10px;background:#f8fbff;font-size:14px;white-space:pre-wrap;overflow-wrap:anywhere}.math-live:empty{display:none}.math-live-label{font-size:11px;color:#64748b;font-weight:600;margin-bottom:3px}</style></head>
 <body class="bg-slate-50 text-slate-900"><main class="max-w-7xl mx-auto p-5">
-<div class="flex justify-between gap-4 mb-5"><div><h1 class="text-3xl font-bold">✨ AI Quiz Generator V3.7.34 • GRAPH + WORD MATH</h1><p class="text-slate-500">Ma trận • Đặc tả • Đề kiểm tra • Đáp án • 4 mã đề theo khối • Chấm tự động • Word .docx</p></div><a href="quizzes.html" class="border bg-white rounded-xl px-4 py-2 h-fit">← Quiz</a></div>
+<div class="flex justify-between gap-4 mb-5"><div><h1 class="text-3xl font-bold">✨ AI Quiz Generator V3.7.36 • GRAPH + WORD MATH</h1><p class="text-slate-500">Ma trận • Đặc tả • Đề kiểm tra • Đáp án • 4 mã đề theo khối • Chấm tự động • Word .docx</p></div><a href="quizzes.html" class="border bg-white rounded-xl px-4 py-2 h-fit">← Quiz</a></div>
 <div id="msg" class="hidden mb-4 p-3 rounded-xl"></div>
 <div class="grid lg:grid-cols-4 gap-5">
 <aside class="bg-white rounded-2xl shadow p-5 space-y-3">
@@ -153,6 +153,20 @@ function graphSvg(kind,coeffs){
  for(const path of paths)elements+=`<path d="${path}" stroke="#2563eb" stroke-width="3" fill="none"/>`;
  return sanitizeSvg(elements+`<text x="698" y="${py(0)-8}" font-size="16" fill="#334155">x</text><text x="${px(0)+8}" y="18" font-size="16" fill="#334155">y</text></svg>`);
 }
+// V3.7.36: recover automatic graphs from structured Gemini graph_spec, even if backend does not attach SVG.
+function graphFromSpec(q){
+ if(!q||q.visual_svg||!q.graph_spec)return q;
+ try{
+  const spec=typeof q.graph_spec==="string"?JSON.parse(q.graph_spec):q.graph_spec;
+  const kind=String(spec.kind||"").toLowerCase();
+  const coefficients=spec.coefficients;
+  const sizes={linear:2,quadratic:3,cubic:4};
+  if(!sizes[kind]||!Array.isArray(coefficients)||coefficients.length!==sizes[kind])return q;
+  if(!coefficients.every(v=>Number.isFinite(Number(v))))return q;
+  q.visual_svg=graphSvg(kind,coefficients);
+ }catch(e){console.warn("Không dựng được graph_spec:",e)}
+ return q;
+}
 function addGraphToQuestion(i){
  syncAll();const q=generated[i];if(!q)return;
  const kind=prompt("Chọn loại hàm số: 1 = bậc nhất, 2 = bậc hai, 3 = bậc ba", "2");if(kind===null)return;
@@ -163,7 +177,7 @@ function addGraphToQuestion(i){
  try{q.visual_svg=graphSvg(types[kind],vals);render();show(`Đã vẽ đồ thị cho câu ${i+1}. Kiểm tra công thức và đáp án trước khi lưu.`,true)}catch(e){show(e.message)}
 }
 function visualHtml(raw){const x=sanitizeSvg(raw);return x?`<div class="stem-svg math-wrap bg-white border rounded-xl p-3 my-3">${x}</div>`:""}
-// V3.7.34: preserve real mathematical typesetting in exported DOCX.
+// V3.7.36: preserve real mathematical typesetting in exported DOCX.
 const wordMathCache=new Map();
 function wordMathParts(value){
  const s=String(value??""), re=/(\$\$([\s\S]+?)\$\$|\$([^$\n]+)\$|\\\(([\s\S]+?)\\\)|\\\[([\s\S]+?)\\\])/g;
@@ -345,7 +359,7 @@ function allocateBatchRatios(totalBatches,totalCount,r,u,a){
 }
 
 function isStructured(){return $("generationMode").value==="structure"}
-function dedupe(arr){let out=[];for(const raw of arr||[]){const q={...raw};q.question_text=cleanQuestion(q.question_text);q.stimulus=cleanStudentText(q.stimulus);q.section_title=cleanStudentText(q.section_title);q.section_instruction=cleanStudentText(q.section_instruction);q.source_title=cleanTitle(q.source_title);q.question_type=["mcq4","true_false","short_answer","numeric"].includes(q.question_type)?q.question_type:"mcq4";q.accepted_answers=Array.isArray(q.accepted_answers)?q.accepted_answers:[];q.accepted_units=Array.isArray(q.accepted_units)?q.accepted_units:[];q.section_title=localizeSectionTitle(q.section_title);q.visual_svg=sanitizeSvg(q.visual_svg);const dup=isStructured()?out.some(x=>x.section_key===q.section_key&&norm(x.question_text)===norm(q.question_text)):out.some(x=>similarity(x.question_text,q.question_text)>.82);if(!dup)out.push(q)}return out}
+function dedupe(arr){let out=[];for(const raw of arr||[]){const q={...raw};q.question_text=cleanQuestion(q.question_text);q.stimulus=cleanStudentText(q.stimulus);q.section_title=cleanStudentText(q.section_title);q.section_instruction=cleanStudentText(q.section_instruction);q.source_title=cleanTitle(q.source_title);q.question_type=["mcq4","true_false","short_answer","numeric"].includes(q.question_type)?q.question_type:"mcq4";q.accepted_answers=Array.isArray(q.accepted_answers)?q.accepted_answers:[];q.accepted_units=Array.isArray(q.accepted_units)?q.accepted_units:[];q.section_title=localizeSectionTitle(q.section_title);q.visual_svg=sanitizeSvg(q.visual_svg);graphFromSpec(q);const dup=isStructured()?out.some(x=>x.section_key===q.section_key&&norm(x.question_text)===norm(q.question_text)):out.some(x=>similarity(x.question_text,q.question_text)>.82);if(!dup)out.push(q)}return out}
 
 async function init(){
  me=(await s.auth.getUser()).data.user;
@@ -632,6 +646,16 @@ function editorByType(x,i){
 }
 // MathJax cannot render inside editable textarea/input; use a live preview outside the field.
 function mathPreviewText(value){return esc(value||"")}
+function normalizeLooseMath(value){
+ const raw=String(value||'');
+ // Preserve already delimited TeX; wrap isolated commands from Gemini.
+ const chunks=raw.split(/(\$\$[\s\S]*?\$\$|\$[^$\n]+\$|\\\([\s\S]*?\\\)|\\\[[\s\S]*?\\\])/g);
+ const cmd=/(?:[+-]\s*)?\\(?:sqrt(?:\[[^\]]*\])?\{[^{}]*\}|frac\{[^{}]*\}\{[^{}]*\}|mathbb\{[^{}]*\}|(?:infty|pi|alpha|beta|theta|omega|Delta|leq|geq|neq|times|cdot|to|in|le|ge|lt|gt)\b)/g;
+ return chunks.map((chunk,i)=>{
+  if(i%2===1)return chunk;
+  return chunk.replace(cmd,m=>`\\(${m}\\)`);
+ }).join('');
+}
 function updateMathLive(card){
  if(!card)return;
  const fields=[...card.querySelectorAll('textarea.q,textarea.stim,input.op,input.exp,input.txtans,input.accepted,input.unit,input.units')];
@@ -642,12 +666,12 @@ function updateMathLive(card){
    field.insertAdjacentElement('afterend',panel);
   }
   const value=field.value||'';
-  const hasMath=/\$[^\$]+\$|\\\(|\\\[|\\(?:frac|sqrt|ce|times|cdot|pi|Delta|leq|geq|neq|rightarrow|text|mathrm|sum|int|alpha|beta|theta|omega)\b/.test(value);
+  const hasMath=/\$[^\$]+\$|\\\(|\\\[|\\(?:frac|sqrt|mathbb|infty|to|in|ce|times|cdot|pi|Delta|leq|geq|neq|rightarrow|text|mathrm|sum|int|alpha|beta|theta|omega)\b/.test(value);
   if(!hasMath){field.classList.remove('hidden');panel.classList.add('hidden');panel.innerHTML='';continue}
   panel.classList.remove('hidden');
   const editing=field.dataset.mathEditing==='1';
   field.classList.toggle('hidden',!editing);
-  const display=document.createElement('div');display.className='math-live-content';display.textContent=value;
+  const display=document.createElement('div');display.className='math-live-content';display.textContent=normalizeLooseMath(value);
   const button=document.createElement('button');button.type='button';button.className='ml-2 border border-blue-300 text-blue-700 rounded-lg px-2 py-1 text-xs';
   button.textContent=editing?'✓ Xong':'✏️ Sửa công thức';
   button.addEventListener('click',()=>{
