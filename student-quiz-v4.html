@@ -1,4 +1,6 @@
 <!doctype html><html lang="vi"><head><meta charset="utf-8"><title>Làm Quiz V4</title><script src="https://cdn.tailwindcss.com"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="scripts/supabase-config.js"></script>
+<meta name="codehub-activity-kind" content="page">
+<script defer src="scripts/activity-tracker.js"></script>
 <style>
   body.exam-active{user-select:none;-webkit-user-select:none}
   #examGate{position:fixed;inset:0;z-index:99999;background:rgba(15,23,42,.96);display:flex;align-items:center;justify-content:center;padding:24px}
@@ -28,6 +30,8 @@ async function init(){me=(await s.auth.getUser()).data.user;if(!me)return locati
 // Mỗi phương án vẫn mang value = chữ cái GỐC (A/B/C/D), nên chấm tự động không sai.
 function shuffle(a){a=[...a];for(let i=a.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
 qs=shuffle(qs);
+// Chỉ ghi khi bài kiểm tra hợp lệ và học sinh đủ quyền mở.
+void window.codehubRecordStudentActivity("quiz_view","Bài kiểm tra",asg.quizzes?.title||"Quiz");
 h.textContent=asg.quizzes.title;info.textContent=`${qs.length} câu • ${asg.time_limit} phút`;
 list.innerHTML=qs.map((x,i)=>{
   const opts=shuffle([
@@ -58,6 +62,7 @@ function prepareExam(){
     }catch(e){}
     gate.classList.add("hidden");
     document.body.classList.add("exam-active");
+    void window.codehubRecordStudentActivity("quiz_start","Bài kiểm tra",asg.quizzes?.title||"Quiz");
     started=Date.now();
     examActive=true;
     examArmedAt=Date.now();
@@ -121,4 +126,23 @@ window.addEventListener("beforeunload",e=>{
 
 function runTimer(){let end=started+asg.time_limit*60000;tick=setInterval(()=>{let d=Math.max(0,end-Date.now()),m=Math.floor(d/60000),ss=Math.floor((d%60000)/1000);timer.textContent=`${String(m).padStart(2,"0")}:${String(ss).padStart(2,"0")}`;if(!d){clearInterval(tick);submitQuiz(true)}},1000)}
 form.onsubmit=e=>{e.preventDefault();submitQuiz(false)};
-async function submitQuiz(auto, reason="manual_submit"){if(submit.disabled)return;if(!auto&&!confirm("Nộp bài ngay?"))return; examActive=false;submit.disabled=true;clearInterval(tick);let ans={};qs.forEach(q=>{let x=document.querySelector(`input[name="q_${q.id}"]:checked`);if(x)ans[q.id]=x.value});let keys=await s.from("quiz_questions").select("id,correct_answer").eq("quiz_id",asg.quiz_id);let correct=0;(keys.data||[]).forEach(q=>{if(ans[q.id]===q.correct_answer)correct++});let total=qs.length,score=Math.round(correct/total*1000)/100;let row={quiz_id:asg.quiz_id,assignment_id:aid,student_id:me.id,score,correct_count:correct,total_questions:total,started_at:new Date(started).toISOString(),submitted_at:new Date().toISOString(),answers:ans};let r=await s.from("quiz_attempts").insert(row);if(r.error){submit.disabled=false;return alert(r.error.message)}try{if(document.fullscreenElement)await document.exitFullscreen()}catch(e){};alert(asg.show_result?`Đã nộp. Điểm: ${score}/10 • Đúng ${correct}/${total}`:"Đã nộp bài.");location.href="student-quizzes-v4.html"}init();</script></body></html>
+async function submitQuiz(auto, reason="manual_submit"){if(submit.disabled)return;if(!auto&&!confirm("Nộp bài ngay?"))return; examActive=false;submit.disabled=true;clearInterval(tick);let ans={};qs.forEach(q=>{let x=document.querySelector(`input[name="q_${q.id}"]:checked`);if(x)ans[q.id]=x.value});let keys=await s.from("quiz_questions").select("id,correct_answer").eq("quiz_id",asg.quiz_id);let correct=0;(keys.data||[]).forEach(q=>{if(ans[q.id]===q.correct_answer)correct++});let total=qs.length,score=Math.round(correct/total*1000)/100;let row={quiz_id:asg.quiz_id,assignment_id:aid,student_id:me.id,score,correct_count:correct,total_questions:total,started_at:new Date(started).toISOString(),submitted_at:new Date().toISOString(),answers:ans};let r=await s.from("quiz_attempts").insert(row);if(r.error){submit.disabled=false;return alert(r.error.message)}void window.codehubRecordStudentActivity("quiz_submit","Bài kiểm tra",asg.quizzes?.title||"Quiz");try{if(document.fullscreenElement)await document.exitFullscreen()}catch(e){};alert(asg.show_result?`Đã nộp. Điểm: ${score}/10 • Đúng ${correct}/${total}`:"Đã nộp bài.");location.href="student-quizzes-v4.html"}init();</script>
+<script>
+/* Theo dõi chi tiết: chỉ ghi sau khi xác thực và kiểm tra quyền truy cập. */
+window.codehubRecordStudentActivity = async function(eventType, subject, lessonName) {
+  try {
+    const sb = window.supabaseClient;
+    if (!sb) return;
+    const {data:{user}} = await sb.auth.getUser();
+    if (!user) return;
+    const {error} = await sb.from('activity_logs').insert({
+      user_id:user.id, event_type:eventType,
+      subject:String(subject||'').slice(0,160),
+      lesson:String(lessonName||'').slice(0,180),
+      page_path:(location.pathname+location.search).slice(0,500)
+    });
+    if(error) console.warn('[CodeHub activity]',error.message);
+  } catch(e) {console.warn('[CodeHub activity]',e)}
+};
+</script>
+</body></html>
