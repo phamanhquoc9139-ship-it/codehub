@@ -1,0 +1,1157 @@
+const fs = require('fs');
+
+const outputPath = 'C:\\Users\\ADMIN\\.gemini\\antigravity\\scratch\\cs-learning-platform\\courses\\olympic_toan_thpt.html';
+
+function createQuiz(id, question, options, correctIdx, explanation) {
+  const letters = ['A', 'B', 'C', 'D'];
+  const buttons = options.map((opt, idx) => {
+    const isCorrect = idx === correctIdx;
+    const cleanExp = explanation.replace(/'/g, "\\'");
+    return `<button onclick="checkQuiz('${id}', ${idx}, ${isCorrect}, '${cleanExp}')" class="quiz-btn-${id} text-left p-3 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-purple-50 dark:hover:bg-purple-950/30 transition">${letters[idx]}. ${opt}</button>`;
+  }).join('\n                ');
+
+  return `
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700 space-y-3">
+              <p class="font-bold text-gray-900 dark:text-white">${question}</p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                ${buttons}
+              </div>
+              <div id="feedback-${id}" class="hidden mt-3 p-3 rounded-lg text-xs font-medium"></div>
+            </div>`;
+}
+
+// 10 Olympic Math Topics
+const topics = [
+  {
+    id: 'bai1',
+    num: '01',
+    sub: 'Đại Số Olympic • Đa Thức Bậc Cao',
+    title: 'Đa Thức Bất Khả Quy Bậc Cao, Định Lý Galois Cơ Bản & Bổ Đề Hensel',
+    intro: 'Trong các kỳ thi Olympic Toán Quốc tế (IMO / APMO / TST), đại số đa thức vượt xa phạm vi trung học phổ thông để khai thác cấu trúc trường phân rã, tính bất khả quy modulo số nguyên tố (Reduction modulo p), Bổ đề Hensel trong số học p-adic và đa thức nguyên nhận giá trị nguyên (Integer-valued polynomials).',
+    b1Title: 'Bổ Đề Hensel & Tiêu Chuẩn Bất Khả Quy Modulo $p$',
+    b1Content: `• <strong>Bổ đề Hensel (Hensel\'s Lemma):</strong> Nếu $P(r) \\equiv 0 \\pmod p$ và $P\'(r) \\not\\equiv 0 \\pmod p$, thì nghiệm đơn $r$ nâng cấp duy nhất lên nghiệm modulo $p^k$: $r_k \\equiv r_{k-1} - \\frac{P(r_{k-1})}{P\'(r)} \\pmod{p^k}$.<br>• <strong>Bất khả quy modulo $p$:</strong> Nếu $P(x) \\in \\mathbb{Z}[x]$ monic và bất khả quy modulo một số nguyên tố $p$ thì $P(x)$ bất khả quy trên $\\mathbb{Q}[x]$.`,
+    b2Title: 'Đa Thức Nguyên Nhận Giá Trị Nguyên & Cơ Sở Nhị Thức',
+    b2Content: `• <strong>Đa thức nhận giá trị nguyên:</strong> Đa thức $P(x) \\in \\mathbb{Q}[x]$ thỏa mãn $P(n) \\in \\mathbb{Z}$ với mọi $n \\in \\mathbb{Z}$.<br>• <strong>Định lý Mahler:</strong> $P(x)$ nhận giá trị nguyên khi và chỉ khi $P(x)$ biểu diễn dưới dạng tổ hợp nguyên của các đa thức nhị thức $\\binom{x}{k} = \\frac{x(x-1)...(x-k+1)}{k!}$.`,
+    quizzes: [
+      {
+        q: '1. Đa thức $P(x) = x^4 + x + 1$ có tính chất bất khả quy nào trên $\\mathbb{Q}[x]$?',
+        opts: ['Bất khả quy trên $\\mathbb{Q}[x]$ vì bất khả quy modulo 2', 'Khả quy vì có 2 nghiệm thực', 'Phân tích được thành 2 đa thức bậc 2 hệ số hữu tỉ', 'Khả quy modulo 2'],
+        ans: 0,
+        exp: 'Chính xác! Modulo 2: x^4 + x + 1 không có nghiệm x=0, 1 và không chia hết cho x^2+x+1 (đa thức bậc 2 bất khả quy duy nhất mod 2). Do đó nó bất khả quy mod 2 => bất khả quy trên Q[x].'
+      },
+      {
+        q: '2. Không gian các đa thức bậc không quá $n$ nhận giá trị nguyên trên $\\mathbb{Z}$ có cơ sở $\\mathbb{Z}$-tự do là:',
+        opts: ['$\\left\\{\\binom{x}{0}, \\binom{x}{1}, ..., \\binom{x}{n}\\right\\}$', '$\\{1, x, x^2, ..., x^n\\}$', '$\\{T_0(x), T_1(x), ..., T_n(x)\\}$', '$\\{x!, (x-1)!, ...\\}$'],
+        ans: 0,
+        exp: 'Chính xác! Theo định lý cơ sở nhị thức, mọi đa thức nhận giá trị nguyên đều là tổ hợp tuyến tính hệ số nguyên của các đa thức nhị thức C_x^k.'
+      },
+      {
+        q: '3. Nếu đa thức $P(x) \\in \\mathbb{Z}[x]$ thỏa mãn $P(x) = 2026$ có ít nhất 5 nghiệm nguyên phân biệt, thì phương trình $P(x) = 2027$ có tối đa bao nhiêu nghiệm nguyên?',
+        opts: ['0 nghiệm', '1 nghiệm', '5 nghiệm', 'Vô số nghiệm'],
+        ans: 0,
+        exp: 'Chính xác! Giả sử x_0 là nghiệm nguyên của P(x) = 2027. Khi đó (x_0 - x_i) | (P(x_0) - P(x_i) = 2027 - 2026 = 1) với 5 nghiệm x_i khác nhau. Nhưng ước của 1 chỉ có 1 và -1 (tối đa 2 số), mâu thuẫn! Vậy có 0 nghiệm.'
+      },
+      {
+        q: '4. Đa thức cyclotomic $\\Phi_p(x)$ với $p$ là số nguyên tố có biểu thức là:',
+        opts: ['$x^{p-1} + x^{p-2} + ... + x + 1$', '$x^p - 1$', '$x^p + 1$', '$x^{p-1} - 1$'],
+        ans: 0,
+        exp: 'Chính xác! Phi_p(x) = (x^p - 1)/(x - 1) = x^(p-1) + x^(p-2) + ... + x + 1, luôn bất khả quy trên Q[x].'
+      }
+    ]
+  },
+  {
+    id: 'bai2',
+    num: '02',
+    sub: 'Đại Số Olympic • Phương Trình Hàm',
+    title: 'Phương Trình Hàm Rời Rạc & Trên $\\mathbb{Q}$, Hàm Đơn Điệu & Điểm Tuần Hoàn',
+    intro: 'Tại các kỳ thi IMO, phương trình hàm thường được đặt trên tập số hữu tỉ $\\mathbb{Q}$, tập số nguyên $\\mathbb{Z}$ hoặc tập số nguyên dương $\\mathbb{N}^*$. Để giải quyết, học sinh cần thuần thục kỹ thuật quy nạp Cauchy, tính giải tích, phương trình hàm sai phân phi tuyến và chu kỳ điểm tuần hoàn.',
+    b1Title: 'Kỹ Thuật Mật Độ & Mở Rộng Từ $\\mathbb{Q}$ Sang $\\mathbb{R}$',
+    b1Content: `• Nếu hàm số $f$ thỏa mãn phương trình Cauchy $f(x+y) = f(x) + f(y)$ với mọi $x, y \\in \\mathbb{Q}$ thì $f(q) = q f(1)$ với mọi $q \\in \\mathbb{Q}$.<br>• <strong>Điều kiện mở rộng:</strong> Chỉ cần một trong các điều kiện nhẹ: $f$ đơn điệu, $f$ liên tục tại 1 điểm, hoặc $f(x) \\ge 0$ khi $x \\ge 0$ là đủ để suy ra $f(x) = cx$ trên toàn bộ $\\mathbb{R}$ nhờ tính trù mật của $\\mathbb{Q}$.`,
+    b2Title: 'Phương Trình Hàm Dạng Lặp & Điểm Bất Động',
+    b2Content: `• <strong>Hàm tự liên hợp:</strong> Phương trình dạng $f(f(x)) = x$ (Involution). Mọi nghiệm song ánh đều là đối xứng qua đường phân giác $y = x$.<br>• <strong>Kỹ thuật cố định biến:</strong> Tìm điểm bất động $f(c) = c$ hoặc điểm triệt tiêu $f(x_0) = 0$ để rút gọn bậc tự do của biến số.`,
+    quizzes: [
+      {
+        q: '1. Tìm tất cả các hàm số $f: \\mathbb{Q} \\to \\mathbb{Q}$ thỏa mãn $f(x+y) = f(x) + f(y) + 2026$ với mọi $x, y \\in \\mathbb{Q}$.',
+        opts: ['$f(x) = cx - 2026$ với $c = f(1) + 2026$', '$f(x) = cx + 2026$', '$f(x) = 2026x$', '$f(x) = x^2 - 2026$'],
+        ans: 0,
+        exp: 'Chính xác! Đặt g(x) = f(x) + 2026. Ta có g(x+y) = g(x) + g(y) trên Q => g(x) = cx => f(x) = cx - 2026.'
+      },
+      {
+        q: '2. Cho hàm số $f: \\mathbb{R} \\to \\mathbb{R}$ thỏa mãn $f(x + f(y)) = f(x) + y$ với mọi $x, y \\in \\mathbb{R}$. Khẳng định nào sau đây đúng?',
+        opts: ['$f(x) = x$ hoặc $f(x) = -x$', '$f(x) = 2x$', '$f(x) = x + 1$', '$f$ là hàm hằng'],
+        ans: 0,
+        exp: 'Chính xác! Cho x = 0 => f(f(y)) = f(0) + y => f là song ánh. Từ đó chứng minh được f cộng tính f(x+y) = f(x)+f(y) và f(f(y)) = y => f(x) = x hoặc f(x) = -x.'
+      },
+      {
+        q: '3. Phương trình hàm $f(f(n)) + f(n) = 2n + 3$ với $f: \\mathbb{N} \\to \\mathbb{N}$ có nghiệm duy nhất là:',
+        opts: ['$f(n) = n + 1$', '$f(n) = n + 3$', '$f(n) = 2n$', '$f(n) = n$'],
+        ans: 0,
+        exp: 'Chính xác! Thử f(n) = n + 1: f(f(n)) = f(n+1) = n+2 => f(f(n)) + f(n) = (n+2) + (n+1) = 2n+3 (thỏa mãn).'
+      },
+      {
+        q: '4. Cho hàm $f$ thỏa mãn $f(xy) = x f(y) + y f(x)$ trên $\\mathbb{R}^+$. Dạng nghiệm tổng quát của $f$ là:',
+        opts: ['$f(x) = cx \\ln x$', '$f(x) = c x^2$', '$f(x) = c \\ln x$', '$f(x) = x + c$'],
+        ans: 0,
+        exp: 'Chính xác! Chia 2 vế cho xy: f(xy)/(xy) = f(x)/x + f(y)/y. Đặt g(x) = f(x)/x => g(xy) = g(x) + g(y) => g(x) = c ln x => f(x) = cx ln x.'
+      }
+    ]
+  },
+  {
+    id: 'bai3',
+    num: '03',
+    sub: 'Đại Số Olympic • Bất Đẳng Thức & Lồi',
+    title: 'Khái Niệm Trội, Bất Đẳng Thức Muirhead, Karamata & Bất Đẳng Thức Popoviciu',
+    intro: 'Bất đẳng thức IMO đòi hỏi tư duy giải tích lồi hiện đại: lý thuyết trội (Majorization), bất đẳng thức đối xứng Muirhead tổng quát hóa AM-GM, bất đẳng thức Karamata cho dãy trội trên hàm lồi và bất đẳng thức Popoviciu.',
+    b1Title: 'Lý Thuyết Trội (Majorization) & Bất Đẳng Thức Muirhead',
+    b1Content: `• Dãy $\\alpha = (\\alpha_1, ..., \\alpha_n)$ trội hơn $\\beta = (\\beta_1, ..., \\beta_n)$ (ký hiệu $\\alpha \\succ \\beta$) nếu tổng các phần tử bằng nhau và tổng tiền tố $\\sum_{i=1}^k \\alpha_i \\ge \\sum_{i=1}^k \\beta_i$ với mọi $k < n$.<br>• <strong>Bất đẳng thức Muirhead:</strong> Nếu $\\alpha \\succ \\beta$ thì với mọi số dương $x_1, ..., x_n$:<br>$$\\sum_{\\text{sym}} x_1^{\\alpha_1} x_2^{\\alpha_2} ... x_n^{\\alpha_n} \\ge \\sum_{\\text{sym}} x_1^{\\beta_1} x_2^{\\beta_2} ... x_n^{\\beta_n}$$`,
+    b2Title: 'Bất Đẳng Thức Karamata & Hàm Lồi',
+    b2Content: `• <strong>Định lý Karamata:</strong> Cho $f$ là hàm lồi trên khoảng $I$. Nếu dãy $(x_1, ..., x_n) \\succ (y_1, ..., y_n)$ với $x_i, y_i \\in I$ thì:<br>$$f(x_1) + f(x_2) + ... + f(x_n) \\ge f(y_1) + f(y_2) + ... + f(y_n)$$<br>• Tổng quát hóa bất đẳng thức Jensen khi các biến không đối xứng bằng nhau.`,
+    quizzes: [
+      {
+        q: '1. So sánh hai bộ số $\\alpha = (3, 0, 0)$ và $\\beta = (1, 1, 1)$. Theo bất đẳng thức Muirhead, bất đẳng thức tương đương giữa 3 số dương $a, b, c$ là:',
+        opts: ['$a^3 + b^3 + c^3 \\ge 3abc$ (Bất đẳng thức AM-GM 3 số)', '$a^2b + b^2c + c^2a \\ge 3abc$', '$a^3+b^3+c^3 \\ge ab(a+b)+bc(b+c)+ca(c+a)$', '$a+b+c \\ge 3\\sqrt[3]{abc}$'],
+        ans: 0,
+        exp: 'Chính xác! Bộ (3,0,0) trội hơn bộ (1,1,1). Áp dụng Muirhead cho 3 biến: 2(a^3+b^3+c^3) >= 6abc <=> a^3+b^3+c^3 >= 3abc.'
+      },
+      {
+        q: '2. Cho tam giác $ABC$. Áp dụng bất đẳng thức Karamata cho hàm lồi $f(x) = -\\sin x$ trên $(0, \\pi)$, giá trị lớn nhất của $\\sin A + \\sin B + \\sin C$ đạt được khi:',
+        opts: ['Tam giác $ABC$ đều ($A = B = C = \\pi/3$)', 'Tam giác vuông cân', 'Tam giác tù', 'Không tồn tại giá trị lớn nhất'],
+        ans: 0,
+        exp: 'Chính xác! Do (A, B, C) luôn trội hơn (pi/3, pi/3, pi/3), áp dụng Karamata cho hàm lõm sin x cho max = 3*sqrt(3)/2 khi tam giác đều.'
+      },
+      {
+        q: '3. Bất đẳng thức Popoviciu cho hàm lồi $f$ trên khoảng $I$ liên hệ giữa $f(a), f(b), f(c)$ và $f\\left(\\frac{a+b+c}{3}\\right)$ với các điểm trung bình từng cặp:',
+        opts: ['$f(a)+f(b)+f(c) + 3f\\left(\\frac{a+b+c}{3}\\right) \\ge 2\\left[f\\left(\\frac{a+b}{2}\\right)+f\\left(\\frac{b+c}{2}\\right)+f\\left(\\frac{c+a}{2}\\right)\\right]$', '$f(a)+f(b)+f(c) \\ge 3f\\left(\\frac{a+b+c}{3}\\right)$', '$f(a)+f(b)+f(c) \\le f\\left(\\frac{a+b}{2}\\right)+f\\left(\\frac{b+c}{2}\\right)$', 'Luôn là đẳng thức'],
+        ans: 0,
+        exp: 'Chính xác! Đây là hệ thức kinh điển của bất đẳng thức Popoviciu, làm mạnh hơn bất đẳng thức Jensen.'
+      },
+      {
+        q: '4. Điều kiện để dãy $(x_1, x_2, ..., x_n)$ trội hơn dãy $(y_1, y_2, ..., y_n)$ (đã sắp xếp giảm dần) là:',
+        opts: ['Tổng tiền tố $\\sum_{i=1}^k x_i \\ge \\sum_{i=1}^k y_i$ với mọi $k < n$ và tổng toàn bộ $\\sum x_i = \\sum y_i$', 'Mọi $x_i \\ge y_i$', 'Tích $\\prod x_i \\ge \\prod y_i$', '$x_1 > y_1$ và $x_n < y_n$'],
+        ans: 0,
+        exp: 'Chính xác! Định nghĩa chuẩn tắc của quan hệ trội Majorization trong đại số lồi.'
+      }
+    ]
+  },
+  {
+    id: 'bai4',
+    num: '04',
+    sub: 'Giải Tích Olympic • Giới Hạn & Dãy Hàm',
+    title: 'Hội Tụ Đều, Tiệm Cận Euler-Maclaurin, Tích Phân Riemann Vô Hạn & Bổ Đề Cesàro',
+    intro: 'Phần giải tích nâng cao trong các kỳ thi Olympic toán sinh viên quốc tế (IMC) và chọn đội tuyển TST khai thác sâu về khai triển tiệm cận bậc cao (Asymptotic expansions), công thức cộng Euler-Maclaurin, tích phân phụ thuộc tham số và định lý Dini về hội tụ đều.',
+    b1Title: 'Công Thức Khai Triển Euler-Maclaurin',
+    b1Content: `• <strong>Ý tưởng:</strong> Xấp xỉ tổng rời rạc bằng tích phân liên tục và các số Bernoulli $B_k$:<br>$$\\sum_{k=1}^n f(k) = \\int_1^n f(x)dx + \\frac{f(1)+f(n)}{2} + \\sum_{k=1}^m \\frac{B_{2k}}{(2k)!} [f^{(2k-1)}(n) - f^{(2k-1)}(1)] + R_m$$<br>• <strong>Ứng dụng:</strong> Tìm tiệm cận số Stirling $n! \\sim \\sqrt{2\\pi n}\\left(\\frac{n}{e}\\right)^n$ và hằng số Euler-Mascheroni $\\gamma = \\lim (\\sum 1/k - \\ln n) \\approx 0.5772$.`,
+    b2Title: 'Bổ Đề Cesàro Bậc Cao & Tiệm Cận Dãy',
+    b2Content: `• Khi giải dãy số vô tỷ $x_{n+1} = f(x_n)$ có điểm kỳ dị, sử dụng khai triển Taylor nhiều bậc để tách phần chính tiệm cận: $x_n = \\frac{a}{\\sqrt{n}} + \\frac{b \\ln n}{n\\sqrt{n}} + O(1/n^{3/2})$.`,
+    quizzes: [
+      {
+        q: '1. Giới hạn $\\lim_{n \\to \\infty} \\left(1 + \\frac{1}{2} + \\frac{1}{3} + ... + \\frac{1}{n} - \\ln n\\right)$ hội tụ về hằng số nào?',
+        opts: ['Hằng số Euler-Mascheroni $\\gamma \\approx 0.5772$', 'Số $\\pi$', 'Số $e$', '$0$'],
+        ans: 0,
+        exp: 'Chính xác! Định nghĩa hằng số Euler-Mascheroni gamma = 0.5772156649...'
+      },
+      {
+        q: '2. Công thức xấp xỉ Stirling cho giai thừa $n!$ khi $n \\to \\infty$ là:',
+        opts: ['$n! \\sim \\sqrt{2\\pi n}\\left(\\frac{n}{e}\\right)^n$', '$n! \\sim n^n / e^n$', '$n! \\sim \\sqrt{\\pi n} e^n$', '$n! \\sim 2^n n^n$'],
+        ans: 0,
+        exp: 'Chính xác! Công thức tiệm cận Stirling kinh điển trong giải tích Olympic.'
+      },
+      {
+        q: '3. Cho dãy $(f_n(x))$ liên tục trên đoạn $[a, b]$ hội tụ điểm về $f(x)$. Theo định lý Dini, $(f_n)$ hội tụ đều khi và chỉ khi:',
+        opts: ['$f(x)$ liên tục và dãy $(f_n(x))$ đơn điệu theo $n$ với mọi $x$', '$f(x)$ khả vi vô hạn', '$[a, b]$ là đoạn có độ dài bé hơn 1', '$f_n(x)$ là các đa thức'],
+        ans: 0,
+        exp: 'Chính xác! Định lý Dini: Dãy hàm liên tục đơn điệu hội tụ điểm về hàm liên tục trên tập compact thì hội tụ đều.'
+      },
+      {
+        q: '4. Giới hạn $\\lim_{n \\to \\infty} \\sum_{k=1}^n \\frac{n}{n^2 + k^2}$ bằng:',
+        opts: ['$\\pi / 4$', '$\\pi / 2$', '$1$', '$\\ln 2$'],
+        ans: 0,
+        exp: 'Chính xác! Đưa về tổng tích phân Riemann: sum 1/n * 1/(1 + (k/n)^2) -> tích phân từ 0 đến 1 của dx/(1+x^2) = arctan(1) = pi/4.'
+      }
+    ]
+  },
+  {
+    id: 'bai5',
+    num: '05',
+    sub: 'Số Học Olympic • Thặng Dư Bậc Cao',
+    title: 'Ký Hiệu Jacobi, Luật Tương Hỗ Bậc Cao & Bổ Đề Gauss',
+    intro: 'Số học quốc tế khai thác mở rộng của thặng dư chính phương: Bổ đề Gauss, Ký hiệu Jacobi cho số lẻ hợp số, Luật tương hỗ Jacobi, và bước đệm đến lý thuyết trường số đại số (Algebraic Number Theory).',
+    b1Title: 'Bổ Đề Gauss & Ký Hiệu Jacobi',
+    b1Content: `• <strong>Bổ đề Gauss:</strong> $\\left(\\frac{a}{p}\\right) = (-1)^S$ với $S$ là số các phần tử trong tập $\\{a, 2a, ..., \\frac{p-1}{2}a\\}$ có phần dư modulo $p$ lớn hơn $p/2$.<br>• <strong>Ký hiệu Jacobi $\\left(\\frac{a}{n}\\right)$:</strong> Phân tích $n = p_1^{e_1} ... p_k^{e_k}$, định nghĩa $\\left(\\frac{a}{n}\\right) = \\prod \\left(\\frac{a}{p_i}\\right)^{e_i}$.<br>• <strong>Chú ý quan trọng:</strong> $\\left(\\frac{a}{n}\\right) = 1$ KHÔNG đồng nghĩa $a$ là thặng dư chính phương mod $n$ nếu $n$ là hợp số!`,
+    b2Title: 'Luật Tương Hỗ Jacobi',
+    b2Content: `• Với hai số nguyên dương lẻ nguyên tố cùng nhau $m, n$:<br>$$\\left(\\frac{m}{n}\\right)\\left(\\frac{n}{m}\\right) = (-1)^{\\frac{m-1}{2}\\frac{n-1}{2}}$$`,
+    quizzes: [
+      {
+        q: '1. Tính ký hiệu Jacobi $\\left(\\frac{2}{n}\\right)$ với $n$ là số nguyên lẻ:',
+        opts: ['$(-1)^{(n^2-1)/8}$', '$(-1)^{(n-1)/2}$', '$+1$ với mọi $n$', '$-1$ với mọi $n$'],
+        ans: 0,
+        exp: 'Chính xác! (2/n) = +1 nếu n = 1, 7 (mod 8) và = -1 nếu n = 3, 5 (mod 8), tức là (-1)^((n^2-1)/8).'
+      },
+      {
+        q: '2. Cho $n = 15$. Ký hiệu Jacobi $\\left(\\frac{2}{15}\\right) = \\left(\\frac{2}{3}\\right)\\left(\\frac{2}{5}\\right) = (-1)(-1) = +1$. Số 2 có phải là thặng dư chính phương modulo 15 không?',
+        opts: ['Không, vì các số chính phương mod 15 chỉ là 0, 1, 4, 6, 9, 10', 'Có, vì ký hiệu Jacobi bằng +1', 'Có, vì 15 là số lẻ', 'Chỉ là thặng dư chính phương mod 5'],
+        ans: 0,
+        exp: 'Chính xác! Ví dụ kinh điển: Ký hiệu Jacobi bằng +1 nhưng 2 không phải thặng dư chính phương mod 15 (vì 2 không là SCP mod 3).'
+      },
+      {
+        q: '3. Định lý Bachet-Fermat về bốn số chính phương khẳng định:',
+        opts: ['Mọi số tự nhiên đều biểu diễn được dưới dạng tổng của 4 số chính phương', 'Chỉ các số nguyên tố mới biểu diễn được', 'Mọi số lẻ biểu diễn được dưới dạng 2 số chính phương', 'Phương trình x^4 + y^4 = z^4 có vô số nghiệm'],
+        ans: 0,
+        exp: 'Chính xác! Định lý 4 bình phương của Lagrange (Bachet-Fermat): mọi n in N đều là tổng của 4 bình phương.'
+      },
+      {
+        q: '4. Căn nguyên thủy modulo số nguyên tố $p = 7$ là:',
+        opts: ['$3$', '$2$', '$4$', '$6$'],
+        ans: 0,
+        exp: 'Chính xác! Lũy thừa của 3 mod 7: 3^1=3, 3^2=2, 3^3=6, 3^4=4, 3^5=5, 3^6=1. Cấp bằng 6 = phi(7) nên 3 là căn nguyên thủy.'
+      }
+    ]
+  },
+  {
+    id: 'bai6',
+    num: '06',
+    sub: 'Số Học Olympic • Định Lý Zsigmondy',
+    title: 'Định Lý Zsigmondy, Phương Trình Mordell & Đường Cong Elliptic',
+    intro: 'Định lý Zsigmondy là "vũ khí hủy diệt" cho các bài toán số học chứa lũy thừa $a^n - b^n$ trong các kỳ thi IMO. Kết hợp phương pháp lùi vô hạn trên đường cong Mordell $y^2 = x^3 + k$.',
+    b1Title: 'Định Lý Zsigmondy (Ước Nguyên Tố Nguyên Thủy)',
+    b1Content: `• Cho $a > b \\ge 1$ nguyên tố cùng nhau. Với mọi $n \\ge 1$, số $a^n - b^n$ luôn có ít nhất một <strong>ước số nguyên tố nguyên thủy</strong> (primitive prime factor &mdash; ước nguyên tố không chia hết bất kỳ $a^k - b^k$ nào với $k < n$), NGOẠI TRỪ 2 trường hợp:<br>1. $2^6 - 1^6$ (ước nguyên tố là 3 và 7, nhưng đã chia hết $2^2-1$ và $2^3-1$).<br>2. $n = 2$ và $a+b$ là lũy thừa của 2.`,
+    b2Title: 'Phương Trình Mordell $y^2 = x^3 + k$',
+    b2Content: `• Khảo sát nghiệm nguyên qua vành số nguyên Gauss $\\mathbb{Z}[i]$ hoặc $\\mathbb{Z}[\\sqrt{-k}]$. Tính nguyên tố cùng nhau của các nhân tử để ép thành lũy thừa bậc 3.`,
+    quizzes: [
+      {
+        q: '1. Trường hợp ngoại lệ kinh điển của Định lý Zsigmondy đối với biểu thức $a^n - b^n$ với $n > 2$ là:',
+        opts: ['$a = 2, b = 1, n = 6$ ($2^6 - 1$)', '$a = 3, b = 1, n = 4$', '$a = 2, b = 1, n = 4$', '$a = 5, b = 2, n = 3$'],
+        ans: 0,
+        exp: 'Chính xác! 2^6 - 1 = 63 = 9 * 7 = 3^2 * 7. Số 3 chia hết 2^2-1, số 7 chia hết 2^3-1 => không có ước nguyên tố nguyên thủy mới.'
+      },
+      {
+        q: '2. Phương trình $y^2 = x^3 + 7$ có bao nhiêu nghiệm nguyên $(x, y)$?',
+        opts: ['0 nghiệm nguyên', '1 nghiệm nguyên', '2 nghiệm nguyên', 'Vô số nghiệm'],
+        ans: 0,
+        exp: 'Chính xác! Sử dụng modulo 4 và phân tích nhân tử trong Z[sqrt(-7)], phương trình kinh điển Mordell này vô nghiệm nguyên.'
+      },
+      {
+        q: '3. Ước nguyên tố nguyên thủy của $a^n + b^n$ với $n$ lẻ luôn:',
+        opts: ['Đồng dư 1 modulo $2n$', 'Đồng dư 1 modulo $n$', 'Luôn là số chẵn', 'Nhỏ hơn n'],
+        ans: 0,
+        exp: 'Chính xác! Mọi ước nguyên tố nguyên thủy p của a^n + b^n đều thỏa mãn p = 1 (mod 2n).'
+      },
+      {
+        q: '4. Định lý Fermat lớn phát biểu phương trình $x^n + y^n = z^n$ không có nghiệm nguyên dương với mọi:',
+        opts: ['$n \\ge 3$', '$n \\ge 2$', '$n$ là số nguyên tố', '$n$ chẵn'],
+        ans: 0,
+        exp: 'Chính xác! Định lý cuối cùng của Fermat được Andrew Wiles chứng minh hoàn toàn năm 1995.'
+      }
+    ]
+  },
+  {
+    id: 'bai7',
+    num: '07',
+    sub: 'Hình Học Olympic • Hình Học Xạ Ảnh',
+    title: 'Mặt Phẳng Xạ Ảnh $\\mathbb{RP}^2$, Định Lý Pascal & Định Lý Brianchon Trên Conic',
+    intro: 'Hình học phẳng đỉnh cao IMO dựa trên ngôn ngữ xạ ảnh: đường thẳng vô tận, điểm vô tận, biến đổi xạ ảnh bảo toàn tỉ số kép, định lý Pascal cho lục giác nội tiếp đường conic và định lý Brianchon cho lục giác ngoại tiếp conic.',
+    b1Title: 'Định Lý Pascal (Lục Giác Nội Tiếp Conic)',
+    b1Content: `• Cho 6 điểm $A, B, C, D, E, F$ nằm trên một đường conic (đường tròn, elip, parabol, hyperbol).<br>• Khi đó giao điểm của 3 cặp cạnh đối diện:<br>$$P = AB \\cap DE, \\quad Q = BC \\cap EF, \\quad R = CD \\cap FA$$<br>luôn <strong>thẳng hàng</strong> trên đường thẳng gọi là <strong>đường thẳng Pascal</strong>.`,
+    b2Title: 'Định Lý Brianchon (Lục Giác Ngoại Tiếp Conic)',
+    b2Content: `• Đối ngẫu của Pascal: Nếu một lục giác ngoại tiếp một đường conic, thì ba đường chéo chính nối các đỉnh đối diện luôn <strong>đồng quy</strong> tại một điểm gọi là <strong>điểm Brianchon</strong>.`,
+    quizzes: [
+      {
+        q: '1. Định lý Pascal khẳng định giao điểm của các cặp cạnh đối diện của một lục giác nội tiếp conic luôn:',
+        opts: ['Thẳng hàng', 'Đồng quy', 'Tạo thành một tam giác đều', 'Nằm trên một đường tròn'],
+        ans: 0,
+        exp: 'Chính xác! Định lý Pascal về lục giác thần bí (Mystic Hexagram) khẳng định 3 giao điểm luôn thẳng hàng.'
+      },
+      {
+        q: '2. Định lý Brianchon là định lý đối ngẫu xạ ảnh của định lý nào?',
+        opts: ['Định lý Pascal', 'Định lý Desargues', 'Định lý Menelaus', 'Định lý Ceva'],
+        ans: 0,
+        exp: 'Chính xác! Brianchon và Pascal là cặp định lý đối ngẫu hoàn hảo qua cực - đối cực đối với đường conic.'
+      },
+      {
+        q: '3. Trong mặt phẳng xạ ảnh, hai đường thẳng song song trong mặt phẳng Euclid quy ước cắt nhau tại:',
+        opts: ['Một điểm ở vô tận (điểm lý tưởng)', 'Gốc tọa độ', 'Không cắt nhau', 'Một đường tròn'],
+        ans: 0,
+        exp: 'Chính xác! Mặt phẳng xạ ảnh bổ sung đường thẳng vô tận chứa các điểm vô tận là phương cắt nhau của các chùm đường song song.'
+      },
+      {
+        q: '4. Định lý Desargues phát biểu hai tam giác thấu xạ (có các đường nối đỉnh tương ứng đồng quy) khi và chỉ khi:',
+        opts: ['Giao điểm của các cặp cạnh tương ứng thẳng hàng', 'Hai tam giác đồng dạng', 'Hai tam giác bằng nhau', 'Trọng tâm trùng nhau'],
+        ans: 0,
+        exp: 'Chính xác! Điều kiện thấu xạ từ một điểm tương đương thấu xạ từ một đường thẳng.'
+      }
+    ]
+  },
+  {
+    id: 'bai8',
+    num: '08',
+    sub: 'Hình Học Olympic • Phép Biến Hình',
+    title: 'Phép Vị Tự Quay (Spiral Similarity), Điểm Liên Hợp Đẳng Giác & Điểm Lemoine',
+    intro: 'Các bài toán hình học IMO phân loại cao sử dụng phép vị tự quay (tích của phép quay và phép vị tự cùng tâm), tâm vị tự quay của hai đoạn thẳng, đường đối trung (Symmedian), điểm Lemoine và điểm liên hợp đẳng giác (Isogonal conjugate).',
+    b1Title: 'Phép Vị Tự Quay & Cấu Hình Tứ Giác',
+    b1Content: `• Phép vị tự quay $S(O, \\varphi, k)$ biến đoạn $AB$ thành $CD$. Điểm $O$ là tâm vị tự quay duy nhất.<br>• <strong>Tính chất đối ngẫu:</strong> Nếu $S$ biến $AB$ thành $CD$ thì cũng tồn tại phép vị tự quay cùng tâm $O$ biến $AC$ thành $BD$.<br>• Tâm vị tự quay $O$ chính là giao điểm thứ hai của hai đường tròn ngoại tiếp $(MAC)$ và $(MBD)$ với $M = AB \\cap CD$.`,
+    b2Title: 'Đường Đối Trung & Điểm Lemoine',
+    b2Content: `• <strong>Đường đối trung:</strong> Đối xứng với đường trung tuyến qua đường phân giác cùng đỉnh.<br>• Ba đường đối trung của tam giác đồng quy tại <strong>điểm Lemoine</strong> (ký hiệu $L$). Điểm Lemoine là điểm cực tiểu hóa tổng bình phương khoảng cách tới ba cạnh tam giác!`,
+    quizzes: [
+      {
+        q: '1. Điểm Lemoine của tam giác $ABC$ có tính chất tối ưu hình học nào sau đây?',
+        opts: ['Cực tiểu hóa tổng bình phương khoảng cách từ điểm đó tới 3 cạnh của tam giác', 'Cực đại hóa diện tích tam giác', 'Cách đều 3 cạnh tam giác', 'Cách đều 3 đỉnh tam giác'],
+        ans: 0,
+        exp: 'Chính xác! Điểm Lemoine (Symmedian point) là điểm duy nhất cực tiểu hóa d_a^2 + d_b^2 + d_c^2 tới 3 cạnh tam giác.'
+      },
+      {
+        q: '2. Điểm liên hợp đẳng giác của trọng tâm tam giác $ABC$ chính là:',
+        opts: ['Điểm Lemoine', 'Trực tâm', 'Tâm ngoại tiếp', 'Tâm nội tiếp'],
+        ans: 0,
+        exp: 'Chính xác! Vì đường đối trung đối xứng với đường trung tuyến qua phân giác nên giao điểm 3 đường đối trung (Lemoine) chính là liên hợp đẳng giác của trọng tâm.'
+      },
+      {
+        q: '3. Điểm liên hợp đẳng giác của trực tâm $H$ là điểm nào?',
+        opts: ['Tâm đường tròn ngoại tiếp $O$', 'Trọng tâm $G$', 'Tâm đường tròn nội tiếp $I$', 'Điểm Nagel'],
+        ans: 0,
+        exp: 'Chính xác! Góc giữa đường cao và cạnh kề bằng góc giữa đường kính ngoại tiếp và cạnh kề => H và O liên hợp đẳng giác.'
+      },
+      {
+        q: '4. Cho phép vị tự quay tâm $O$ biến đoạn thẳng $AB$ thành đoạn $A\'B\'$. Khẳng định đúng là:',
+        opts: ['Tam giác $OAA\'$ đồng dạng với tam giác $OBB\'$', 'Tam giác $OAB$ đều', '$AB$ song song $A\'B\'$', '$OA = OB$'],
+        ans: 0,
+        exp: 'Chính xác! Tính chất cốt lõi của phép vị tự quay: tam giác OAA\' đồng dạng với tam giác OBB\'.'
+      }
+    ]
+  },
+  {
+    id: 'bai9',
+    num: '09',
+    sub: 'Tổ Hợp Olympic • Đại Số Tổ Hợp',
+    title: 'Phương Pháp Đa Thức (Polynomial Method) & Combinatorial Nullstellensatz',
+    intro: 'Đại số tổ hợp (Algebraic Combinatorics) là bước đột phá của toán học Olympic hiện đại, tiên phong bởi Noga Alon với định lý Combinatorial Nullstellensatz, phương pháp ma trận và hàm sinh (Generating functions).',
+    b1Title: 'Định Lý Combinatorial Nullstellensatz Của Noga Alon',
+    b1Content: `• Cho trường $\\mathbb{F}$ và đa thức $P(x_1, ..., x_n) \\in \\mathbb{F}[x_1, ..., x_n]$ có bậc $\\deg P = t_1 + ... + t_n$.<br>• Nếu hệ số của đơn thức $x_1^{t_1} ... x_n^{t_n}$ khác 0, và $S_1, ..., S_n$ là các tập con hữu hạn của $\\mathbb{F}$ với $|S_i| > t_i$, thì <strong>tồn tại</strong> $(s_1, ..., s_n) \\in S_1 \\times ... \\times S_n$ sao cho:<br>$$P(s_1, s_2, ..., s_n) \\neq 0$$<br>• Giải quyết trọn vẹn định lý Cauchy-Davenport, bài toán tô màu đồ thị và phủ siêu phẳng.`,
+    b2Title: 'Hàm Sinh & Ma Trận Kirchhoff (Matrix-Tree Theorem)',
+    b2Content: `• <strong>Định lý Matrix-Tree:</strong> Số cây khung của đồ thị $G$ bằng định thức của bất kỳ ma trận con bù nào của ma trận Laplace $L = D - A$.`,
+    quizzes: [
+      {
+        q: '1. Định lý Cayley phát biểu số cây có nhãn trên $n$ đỉnh là:',
+        opts: ['$n^{n-2}$', '$n!$', '$2^n$', '$n^n$'],
+        ans: 0,
+        exp: 'Chính xác! Số cây khung có nhãn trên n đỉnh là n^(n-2) theo công thức kinh điển của Cayley.'
+      },
+      {
+        q: '2. Định lý Cauchy-Davenport trong lý thuyết cộng số học: Với hai tập con $A, B \\subset \\mathbb{Z}/p\\mathbb{Z}$ ($p$ nguyên tố), số phần tử của tập tổng $A + B$ thỏa mãn:',
+        opts: ['$|A + B| \\ge \\min(p, |A| + |B| - 1)$', '$|A + B| = |A| \\cdot |B|$', '$|A + B| \\le |A| + |B|$', '$|A + B| = p$'],
+        ans: 0,
+        exp: 'Chính xác! Định lý Cauchy-Davenport |A+B| >= min(p, |A|+|B|-1) được chứng minh thanh nhã bằng Combinatorial Nullstellensatz.'
+      },
+      {
+        q: '3. Hệ số của $x^n$ trong khai triển hàm sinh $1/(1-x)^2$ là:',
+        opts: ['$n + 1$', '$n$', '$2^n$', '$1$'],
+        ans: 0,
+        exp: 'Chính xác! 1/(1-x)^2 = d/dx (1/(1-x)) = d/dx (sum x^n) = sum (n+1)x^n.'
+      },
+      {
+        q: '4. Ma trận Laplace của đồ thị $G$ được định nghĩa bằng công thức:',
+        opts: ['$L = D - A$ (Ma trận bậc trừ Ma trận kề)', '$L = D + A$', '$L = D \\times A$', '$L = A - D$'],
+        ans: 0,
+        exp: 'Chính xác! Ma trận Laplace L = D - A, có tính chất bán xác định dương và tổng mỗi hàng bằng 0.'
+      }
+    ]
+  },
+  {
+    id: 'bai10',
+    num: '10',
+    sub: 'Tổ Hợp Olympic • Phương Pháp Xác Suất',
+    title: 'Phương Pháp Xác Suất Của Paul Erdős & Bổ Đề Cục Bộ Lovász (LLL)',
+    intro: 'Phương pháp xác suất (Probabilistic Method) do Paul Erdős khởi xướng chứng minh sự tồn tại của cấu trúc tổ hợp mà không cần chỉ ra cụ thể. Đỉnh cao là Bổ đề cục bộ Lovász (Lovász Local Lemma - LLL) kiểm soát các biến cố phụ thuộc yếu.',
+    b1Title: 'Phương Pháp Xác Suất Của Paul Erdős',
+    b1Content: `• Để chứng minh tồn tại một đối tượng có tính chất $\\mathcal{P}$: Gán một không gian xác suất cho các đối tượng. Nếu $\\mathbb{P}(\\mathcal{P}) > 0$ thì đối tượng đó <strong>bắt buộc phải tồn tại</strong>!<br>• <strong>Kỳ vọng tuyến tính:</strong> $\\mathbb{E}[X_1 + ... + X_n] = \\sum \\mathbb{E}[X_i]$ luôn đúng ngay cả khi các biến ngẫu nhiên phụ thuộc nhau!`,
+    b2Title: 'Bổ Đề Cục Bộ Lovász (Lovász Local Lemma - LLL)',
+    b2Content: `• Cho $A_1, ..., A_n$ là các "biến cố xấu" có xác suất $\\mathbb{P}(A_i) \\le p$. Mỗi biến cố phụ thuộc vào tối đa $d$ biến cố khác.<br>• <strong>Dạng đối xứng LLL:</strong> Nếu $e \\cdot p \\cdot (d + 1) \\le 1$ thì xác suất để KHÔNG có biến cố xấu nào xảy ra là dương: $\\mathbb{P}(\\bigcap \\overline{A_i}) > 0$.`,
+    quizzes: [
+      {
+        q: '1. Sử dụng phương pháp xác suất, Paul Erdős đã chứng minh cận dưới của số Ramsey $R(k, k)$ là:',
+        opts: ['$R(k, k) > 2^{k/2}$ với mọi $k \\ge 3$', '$R(k, k) < k^2$', '$R(k, k) = 2^k$', '$R(k, k) = k!$'],
+        ans: 0,
+        exp: 'Chính xác! Bài báo lịch sử năm 1947 của Erdos chứng minh R(k, k) > 2^(k/2) bằng phương pháp xác suất, khai sinh ngành tổ hợp xác suất.'
+      },
+      {
+        q: '2. Điều kiện đủ của Bổ đề cục bộ Lovász (dạng đối xứng) để đảm bảo tồn tại cấu hình tránh mọi biến cố xấu là:',
+        opts: ['$e \\cdot p \\cdot (d + 1) \\le 1$', '$p \\cdot d = 1$', '$p + d \\le 1$', '$e^p \\le d$'],
+        ans: 0,
+        exp: 'Chính xác! Điều kiện e * p * (d + 1) <= 1 kinh điển của Lovasz Local Lemma.'
+      },
+      {
+        q: '3. Tính chất quan trọng nhất của Kỳ vọng toán học $\\mathbb{E}[X + Y] = \\mathbb{E}[X] + \\mathbb{E}[Y]$ trong tổ hợp là:',
+        opts: ['Luôn đúng ngay cả khi $X$ và $Y$ không độc lập', 'Chỉ đúng khi $X, Y$ độc lập', 'Chỉ đúng khi $X, Y$ có phân bố chuẩn', 'Chỉ đúng khi $X = Y$'],
+        ans: 0,
+        exp: 'Chính xác! Tính tuyến tính của kỳ vọng không đòi hỏi tính độc lập, là công cụ then chốt trong phương pháp kỳ vọng.'
+      },
+      {
+        q: '4. Bất đẳng thức Markov cho biến ngẫu nhiên không âm $X$ và hằng số $a > 0$ phát biểu:',
+        opts: ['$\\mathbb{P}(X \\ge a) \\le \\frac{\\mathbb{E}[X]}{a}$', '$\\mathbb{P}(X \\ge a) \\ge \\frac{\\mathbb{E}[X]}{a}$', '$\\mathbb{P}(X \\ge a) \\le \\mathbb{E}[X] \\cdot a$', '$\\mathbb{P}(X \\ge a) = 0$'],
+        ans: 0,
+        exp: 'Chính xác! Bất đẳng thức Markov cơ bản trong xác suất và tổ hợp.'
+      }
+    ]
+  }
+];
+
+let articlesHtml = topics.map(t => {
+  const quizHtml = t.quizzes.map((q, idx) => createQuiz(`oly_toan_${t.num}_${idx+1}`, q.q, q.opts, q.ans, q.exp)).join('\n');
+  return `
+      <!-- ==================== BÀI ${t.num} ==================== -->
+      <section id="${t.id}" class="lesson-section bg-white dark:bg-dark-surface rounded-2xl border border-gray-200 dark:border-gray-800 p-6 sm:p-8 shadow-sm space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-gray-100 dark:border-gray-800 pb-4">
+          <div class="flex items-center gap-2.5">
+            <span class="px-3 py-1 rounded-lg bg-purple-100 dark:bg-purple-900/50 text-purple-800 dark:text-purple-300 font-black text-xs">
+              CHUYÊN ĐỀ ${t.num}
+            </span>
+            <span class="text-xs font-semibold text-gray-500 dark:text-gray-400">${t.sub}</span>
+          </div>
+          <span class="text-xs font-bold text-purple-600 dark:text-purple-400 flex items-center gap-1">
+            <i class="fa-regular fa-clock"></i> Thời lượng dự kiến: 120 phút
+          </span>
+        </div>
+
+        <div class="space-y-4">
+          <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">
+            ${t.title}
+          </h2>
+          <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+            ${t.intro}
+          </p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
+            <div class="p-4 rounded-xl bg-purple-50/60 dark:bg-purple-950/30 border border-purple-200/60 dark:border-purple-900/40 space-y-2">
+              <h4 class="font-bold text-purple-900 dark:text-purple-300 uppercase flex items-center gap-1.5">
+                <i class="fa-solid fa-square-root-variable text-purple-600"></i> ${t.b1Title}
+              </h4>
+              <p class="text-gray-700 dark:text-gray-300 leading-relaxed">${t.b1Content}</p>
+            </div>
+
+            <div class="p-4 rounded-xl bg-indigo-50/60 dark:bg-indigo-950/30 border border-indigo-200/60 dark:border-indigo-900/40 space-y-2">
+              <h4 class="font-bold text-indigo-900 dark:text-indigo-300 uppercase flex items-center gap-1.5">
+                <i class="fa-solid fa-shapes text-indigo-600"></i> ${t.b2Title}
+              </h4>
+              <p class="text-gray-700 dark:text-gray-300 leading-relaxed">${t.b2Content}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="pt-4 border-t border-gray-100 dark:border-gray-800 space-y-4">
+          <h4 class="text-sm font-bold text-gray-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-circle-check text-purple-500"></i> Bài Tập Tự Luyện Chuyên Đề ${t.num} (Chuẩn IMO &amp; TST)
+          </h4>
+          <div class="space-y-4">
+            ${quizHtml}
+          </div>
+        </div>
+      </section>`;
+}).join('\n');
+
+// 10 Olympic Exam Questions
+const examQuestions = [
+  {
+    num: 1,
+    topic: 'ĐẠI SỐ • ĐA THỨC CYCLOTOMIC',
+    q: 'Bậc của đa thức Cyclotomic $\\Phi_{12}(x)$ là bao nhiêu?',
+    opts: ['4', '12', '6', '2'],
+    ans: 'A',
+    exp: 'Bậc của Phi_n(x) bằng phi(n). Ta có phi(12) = 12 * (1 - 1/2) * (1 - 1/3) = 12 * 1/2 * 2/3 = 4. Cụ thể Phi_12(x) = x^4 - x^2 + 1.'
+  },
+  {
+    num: 2,
+    topic: 'ĐẠI SỐ • PHƯƠNG TRÌNH HÀM TRÊN Q',
+    q: 'Cho hàm số $f: \\mathbb{Q} \\to \\mathbb{Q}$ thỏa mãn $f(xy) = f(x)f(y)$ và $f(x+y) = f(x) + f(y)$ với mọi $x, y \\in \\mathbb{Q}$. Nếu $f(1) \\neq 0$, giá trị của $f(2026)$ là:',
+    opts: ['2026', '0', '1', '-2026'],
+    ans: 'A',
+    exp: 'f vừa cộng tính vừa nhân tính trên Q. f(1) = f(1)^2 => f(1) = 1. Bằng quy nạp trên Q, f(x) = x với mọi x thuộc Q => f(2026) = 2026.'
+  },
+  {
+    num: 3,
+    topic: 'ĐẠI SỐ • BẤT ĐẲNG THỨC MUIRHEAD',
+    q: 'Với $a, b, c > 0$, theo bất đẳng thức Muirhead thì biểu thức $a^4 b + b^4 c + c^4 a + a b^4 + b c^4 + c a^4$ luôn lớn hơn hoặc bằng:',
+    opts: ['2(a^2 b^2 c + b^2 c^2 a + c^2 a^2 b)', '6 a^2 b^2 c^2', '2(a^5 + b^5 + c^5)', '3 abc(a+b+c)'],
+    ans: 'A',
+    exp: 'Bộ số (4, 1, 0) trội hơn bộ số (2, 2, 1) vì 4 >= 2; 4+1=5 >= 2+2=4; 4+1+0=5 = 2+2+1=5. Do đó sum_sym a^4 b >= sum_sym a^2 b^2 c = 2(a^2 b^2 c + b^2 c^2 a + c^2 a^2 b).'
+  },
+  {
+    num: 4,
+    topic: 'GIẢI TÍCH • TIỆM CẬN DÃY SỐ',
+    q: 'Cho dãy $(x_n)$ thỏa $x_1 = 2$ và $x_{n+1} = \\sqrt{x_n + 6}$. Giới hạn $\\lim_{n \\to \\infty} x_n$ bằng:',
+    opts: ['3', '2', '6', 'Vô cùng'],
+    ans: 'A',
+    exp: 'Hàm số f(x) = sqrt(x+6) đồng biến. Phương trình điểm bất động L = sqrt(L+6) => L^2 - L - 6 = 0 => L = 3 (do L > 0). Dãy tăng bị chặn trên bởi 3 nên lim x_n = 3.'
+  },
+  {
+    num: 5,
+    topic: 'SỐ HỌC • KÝ HIỆU JACOBI',
+    q: 'Tính ký hiệu Legendre $\\left(\\frac{5}{19}\\right)$ sử dụng luật tương hỗ chính phương Gauss:',
+    opts: ['+1', '-1', '0', 'Không xác định'],
+    ans: 'A',
+    exp: 'Do 5 = 1 (mod 4) nên (5/19) = (19/5) = (4/5) = (2^2/5) = +1. Do đó 5 là thặng dư chính phương mod 19 (cụ thể 9^2 = 81 = 5 mod 19).'
+  },
+  {
+    num: 6,
+    topic: 'SỐ HỌC • ĐỊNH LÝ ZSIGMONDY',
+    q: 'Số nguyên dương $n$ nhỏ nhất để $2^n - 1$ KHÔNG có ước nguyên tố nguyên thủy là:',
+    opts: ['6', '2', '4', '8'],
+    ans: 'A',
+    exp: 'Trường hợp ngoại lệ duy nhất của Zsigmondy với cơ số 2 là 2^6 - 1 = 63 = 9 * 7 = 3^2 * 7. Cả 3 và 7 đều đã là ước của 2^2-1 và 2^3-1.'
+  },
+  {
+    num: 7,
+    topic: 'HÌNH HỌC • ĐỊNH LÝ PASCAL',
+    q: 'Lục giác $AB\'CA\'BC\'$ có các đỉnh $A, B, C$ nằm trên đường thẳng $d_1$ và $A\', B\', C\'$ nằm trên đường thẳng $d_2$. Giao điểm các cặp cạnh đối diện thẳng hàng theo định lý nào (trường hợp conic suy biến)?',
+    opts: ['Định lý Pappus', 'Định lý Ceva', 'Định lý Euler', 'Định lý Menelaus'],
+    ans: 'A',
+    exp: 'Định lý Pappus là trường hợp suy biến của định lý Pascal khi đường conic suy biến thành cặp đường thẳng d1 và d2.'
+  },
+  {
+    num: 8,
+    topic: 'HÌNH HỌC • ĐƯỜNG ĐỐI TRUNG & LEMOINE',
+    q: 'Trong tam giác $ABC$, đường đối trung xuất phát từ đỉnh $A$ chia cạnh đối diện $BC$ thành hai đoạn có tỉ số bằng:',
+    opts: ['AB^2 / AC^2', 'AB / AC', 'AC / AB', 'AC^2 / AB^2'],
+    ans: 'A',
+    exp: 'Định lý đường đối trung: đường đối trung từ đỉnh A chia cạnh BC theo tỉ số DB/DC = AB^2 / AC^2.'
+  },
+  {
+    num: 9,
+    topic: 'TỔ HỢP • NULLSTELLENSATZ TỔ HỢP',
+    q: 'Định lý Combinatorial Nullstellensatz của Noga Alon chủ yếu được áp dụng để chứng minh:',
+    opts: ['Sự tồn tại của phần tử trong tích Descartes không triệt tiêu đa thức', 'Sự hội tụ của chuỗi số', 'Tính bất khả quy của đa thức bậc 2', 'Nghiệm nguyên của phương trình Pell'],
+    ans: 'A',
+    exp: 'Định lý Nullstellensatz tổ hợp đảm bảo tồn tại điểm (s1, ..., sn) trong S1 x ... x Sn sao cho P(s1, ..., sn) != 0.'
+  },
+  {
+    num: 10,
+    topic: 'TỔ HỢP • PHƯƠNG PHÁP XÁC SUẤT ERDŐS',
+    q: 'Một giải đấu thể thao vòng tròn có $n$ đấu thủ. Luôn tồn tại một giải đấu có ít nhất bao nhiêu giải đấu con chứa chu trình Hamilton theo phương pháp xác suất của Erdős?',
+    opts: ['Tồn tại với xác suất dương nhờ kỳ vọng tuyến tính', 'Không bao giờ tồn tại', 'Chỉ khi n là lũy thừa của 2', 'Chỉ khi n là số nguyên tố'],
+    ans: 'A',
+    exp: 'Phương pháp chọn ngẫu nhiên định hướng đồ thị giải đấu (Tournament) của Paul Erdos chứng minh tồn tại đồ thị giải đấu có số lượng lớn chu trình Hamilton.'
+  }
+];
+
+const examFormHtml = examQuestions.map(eq => {
+  const letters = ['A', 'B', 'C', 'D'];
+  const optsHtml = eq.opts.map((opt, idx) => {
+    return `
+              <label class="flex items-start gap-3 p-3 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-purple-50/50 dark:hover:bg-purple-950/20 cursor-pointer transition">
+                <input type="radio" name="eq${eq.num}" value="${letters[idx]}" ${idx===0 ? 'required' : ''} class="mt-0.5 text-purple-600 focus:ring-purple-500">
+                <span><strong>${letters[idx]}.</strong> ${opt}</span>
+              </label>`;
+  }).join('');
+
+  return `
+          <div class="p-4 sm:p-5 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-dark-border space-y-3">
+            <div class="flex items-center justify-between text-xs font-bold text-purple-600 dark:text-purple-400">
+              <span>CÂU HỎI ${eq.num < 10 ? '0' + eq.num : eq.num} / 10 • ${eq.topic}</span>
+              <span class="text-gray-400">1.0 Điểm</span>
+            </div>
+            <p class="font-bold text-gray-900 dark:text-white leading-relaxed">
+              ${eq.q}
+            </p>
+            <div class="space-y-2 text-xs sm:text-sm">
+              ${optsHtml}
+            </div>
+          </div>`;
+}).join('\n');
+
+const examSolutionsHtml = examQuestions.map(eq => {
+  return `
+            <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+              <strong class="text-purple-600 dark:text-purple-400">Câu ${eq.num}: Đáp án ${eq.ans}.</strong><br>
+              ${eq.exp}
+            </div>`;
+}).join('\n');
+
+const fullHtml = `<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Luyện Thi Olympic Toán Học Cấp 3 (THPT & Chuyên) - Chuẩn IMO & TST | CodeHub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            olymath: {
+              primary: '#7c3aed',
+              secondary: '#9333ea',
+              accent: '#d97706',
+              dark: '#1e1b4b',
+              card: '#2e1065'
+            },
+            dark: {
+              bg: '#0c071e',
+              surface: '#150d30',
+              card: '#211545',
+              border: '#3b2575'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .sidebar-scroll::-webkit-scrollbar { width: 6px; }
+    .sidebar-scroll::-webkit-scrollbar-track { background: transparent; }
+    .sidebar-scroll::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 4px; }
+    .dark .sidebar-scroll::-webkit-scrollbar-thumb { background: #4c1d95; }
+    .olymath-gradient {
+      background: linear-gradient(135deg, #1e1035 0%, #2e1065 35%, #4c1d95 70%, #7c3aed 100%);
+    }
+    .olymath-badge-gradient {
+      background: linear-gradient(135deg, #a855f7 0%, #d946ef 50%, #f59e0b 100%);
+    }
+    .katex-display {
+      overflow-x: auto;
+      overflow-y: hidden;
+      padding: 6px 0;
+      max-width: 100%;
+    }
+    .katex { font-size: 1.05em; }
+  </style>
+  <!-- KaTeX for beautiful Math Rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+</head>
+<body class="bg-gray-50 dark:bg-dark-bg text-gray-900 dark:text-gray-100 min-h-screen flex flex-col font-sans transition-colors duration-200">
+
+  <!-- Header Navigation -->
+  <header class="sticky top-0 z-50 bg-white/90 dark:bg-dark-surface/90 backdrop-blur border-b border-gray-200 dark:border-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <a href="../index.html" class="flex items-center gap-2 text-purple-600 dark:text-purple-400 font-bold text-lg hover:opacity-90">
+          <i class="fa-solid fa-graduation-cap text-xl"></i>
+          <span class="hidden sm:inline">CodeHub</span>
+        </a>
+        <div class="h-5 w-px bg-gray-300 dark:bg-gray-700"></div>
+        <div class="flex items-center gap-1.5 bg-gray-100 dark:bg-gray-800 p-1 rounded-xl text-xs sm:text-sm font-semibold">
+          <span class="px-2.5 py-1 rounded-lg bg-white dark:bg-gray-700 shadow-sm text-purple-600 dark:text-purple-400 flex items-center gap-1.5">
+            <i class="fa-solid fa-medal"></i> Olympic Toán THPT
+          </span>
+          <a href="hsg_toan_thpt.html" class="px-2.5 py-1 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-white dark:hover:bg-gray-700 flex items-center gap-1">
+            <i class="fa-solid fa-infinity"></i> HSG Toán
+          </a>
+          <a href="olympic_tin_thpt.html" class="px-2.5 py-1 rounded-lg text-amber-600 dark:text-amber-400 hover:bg-white dark:hover:bg-gray-700 flex items-center gap-1">
+            <i class="fa-solid fa-code"></i> Olympic Tin
+          </a>
+          <a href="olympic_hoa_thpt.html" class="px-2.5 py-1 rounded-lg text-teal-600 dark:text-teal-400 hover:bg-white dark:hover:bg-gray-700 flex items-center gap-1">
+            <i class="fa-solid fa-flask"></i> Olympic Hóa
+          </a>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <button onclick="openCourseQuizModal()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-purple-500 to-amber-500 hover:from-purple-600 hover:to-amber-600 text-white font-bold text-xs sm:text-sm shadow-sm transition">
+          <i class="fa-solid fa-stopwatch"></i>
+          <span class="hidden sm:inline">Phòng Thi Thử Olympic</span>
+          <span class="sm:hidden">Thi Thử</span>
+        </button>
+        <button id="theme-toggle" class="p-2 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-300 transition" aria-label="Đổi giao diện">
+          <i id="theme-icon" class="fa-solid fa-moon"></i>
+        </button>
+        <button id="mobile-menu-btn" class="lg:hidden p-2 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-300 transition" aria-label="Menu bài học">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="olymath-gradient text-white py-12 sm:py-16 px-4 sm:px-6 lg:px-8 border-b border-purple-900/40 relative overflow-hidden">
+    <div class="max-w-7xl mx-auto relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
+      <div class="space-y-4 max-w-3xl">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/20 text-purple-300 border border-purple-400/30 text-xs font-semibold tracking-wide">
+          <i class="fa-solid fa-trophy text-amber-400"></i> Huấn Luyện Đội Tuyển Olympic Quốc Tế (IMO • APMO • EGMO)
+        </div>
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight">
+          Luyện Thi Olympic <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-300 via-pink-200 to-amber-300">Toán Học Cấp 3 (THPT &amp; Chuyên)</span>
+        </h1>
+        <p class="text-gray-200 text-sm sm:text-base leading-relaxed">
+          Giáo trình học thuật tinh hoa hướng tới đấu trường Quốc tế: Đa thức bất khả quy Hensel, Bất đẳng thức Muirhead &amp; Karamata, Khai triển tiệm cận Euler-Maclaurin, Thặng dư bậc cao Jacobi, Định lý Zsigmondy, Hình học xạ ảnh Pascal &amp; Brianchon, Phép vị tự quay &amp; Điểm Lemoine, Combinatorial Nullstellensatz và Phương pháp xác suất Paul Erdős.
+        </p>
+        <div class="flex flex-wrap items-center gap-4 pt-2 text-xs text-gray-300">
+          <span class="flex items-center gap-1.5"><i class="fa-solid fa-book-bookmark text-purple-400"></i> 10 Chuyên đề IMO / TST</span>
+          <span class="flex items-center gap-1.5"><i class="fa-solid fa-circle-question text-pink-400"></i> 40 Câu trắc nghiệm tư duy</span>
+          <span class="flex items-center gap-1.5"><i class="fa-solid fa-square-root-variable text-amber-400"></i> Công thức KaTeX chuẩn mực</span>
+          <span class="flex items-center gap-1.5"><i class="fa-solid fa-award text-yellow-400"></i> Đề thi thử 60 phút xếp hạng Huy Chương</span>
+        </div>
+      </div>
+
+      <!-- Quick Progress Card -->
+      <div class="w-full md:w-80 bg-white/10 dark:bg-black/30 backdrop-blur-md rounded-2xl p-5 border border-white/20 dark:border-gray-700/50 shadow-xl">
+        <div class="flex items-center justify-between mb-3">
+          <span class="text-xs font-semibold uppercase tracking-wider text-purple-300">Tiến Độ Rèn Luyện</span>
+          <span id="progress-percent" class="text-xs font-bold bg-purple-400/20 text-purple-200 px-2 py-0.5 rounded-full border border-purple-400/30">0%</span>
+        </div>
+        <div class="w-full bg-white/20 dark:bg-gray-700 rounded-full h-2.5 mb-3 overflow-hidden">
+          <div id="progress-bar" class="bg-gradient-to-r from-purple-400 via-pink-400 to-amber-400 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+        </div>
+        <div class="flex items-center justify-between text-xs text-gray-200 mb-4">
+          <span>Đã hoàn thành: <b id="quiz-completed-count" class="text-white">0</b>/40 câu</span>
+          <span class="text-purple-300 font-medium">10 Chuyên Đề</span>
+        </div>
+        <div class="pt-2 border-t border-white/10 flex flex-col gap-2">
+          <button onclick="openCourseQuizModal()" class="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-purple-400 to-amber-400 hover:from-purple-500 hover:to-amber-500 text-slate-950 font-black text-xs shadow-md transition flex items-center justify-center gap-2">
+            <i class="fa-solid fa-crown text-purple-950"></i> Thi Thử Đề Olympic Toán (60:00)
+          </button>
+          <button onclick="resetAllQuizzes()" class="w-full py-2 px-3 text-xs text-center rounded-xl bg-white/15 hover:bg-white/25 transition text-white font-medium border border-white/20 flex items-center justify-center gap-2">
+            <i class="fa-solid fa-rotate-right"></i> Làm lại từ đầu
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mobile Drawer Backdrop -->
+  <div id="drawer-backdrop" class="fixed inset-0 bg-black/60 z-50 hidden transition-opacity lg:hidden" onclick="toggleDrawer(false)"></div>
+
+  <!-- Mobile Drawer Content -->
+  <div id="mobile-drawer" class="fixed top-0 right-0 bottom-0 w-80 max-w-[85vw] bg-white dark:bg-dark-surface z-50 shadow-2xl transform translate-x-full transition-transform duration-300 ease-in-out lg:hidden flex flex-col">
+    <div class="p-4 border-b border-gray-200 dark:border-gray-800 flex items-center justify-between">
+      <div class="flex items-center gap-2 text-purple-600 dark:text-purple-400 font-bold">
+        <i class="fa-solid fa-medal"></i>
+        <span>Mục Lục Olympic Toán</span>
+      </div>
+      <button onclick="toggleDrawer(false)" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+    </div>
+    <div class="overflow-y-auto p-4 space-y-1 text-sm flex-1 sidebar-scroll">
+      ${topics.map(t => `<a href="#${t.id}" onclick="toggleDrawer(false)" class="block px-3 py-2 rounded-lg hover:bg-purple-50 dark:hover:bg-purple-900/20 text-gray-700 dark:text-gray-300 hover:text-purple-600 font-medium transition">Bài ${parseInt(t.num)}: ${t.sub}</a>`).join('\n      ')}
+    </div>
+  </div>
+
+  <!-- Main Container -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 flex gap-8">
+    
+    <!-- Desktop Sticky Sidebar -->
+    <aside class="hidden lg:block w-72 shrink-0">
+      <div class="sticky top-24 space-y-4">
+        <div class="bg-white dark:bg-dark-surface p-4 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm">
+          <div class="flex items-center gap-2 mb-3 pb-2 border-b border-gray-100 dark:border-gray-700/60 font-bold text-sm text-purple-600 dark:text-purple-400">
+            <i class="fa-solid fa-compass"></i>
+            <span>Mục Lục 10 Chuyên Đề</span>
+          </div>
+          <nav class="space-y-1 text-xs sidebar-scroll max-h-[calc(100vh-260px)] overflow-y-auto pr-1">
+            ${topics.map(t => `<a href="#${t.id}" class="nav-link block px-2.5 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-purple-50 dark:hover:bg-purple-950/40 hover:text-purple-600 dark:hover:text-purple-400 transition font-medium">${parseInt(t.num)}. ${t.sub}</a>`).join('\n            ')}
+          </nav>
+        </div>
+
+        <!-- Sidebar Mock Exam Banner -->
+        <div class="p-4 rounded-2xl bg-gradient-to-br from-purple-950 via-slate-900 to-indigo-950 text-white border border-purple-500/30 shadow-lg space-y-3">
+          <div class="flex items-center gap-2 text-xs font-bold text-amber-300 uppercase tracking-wider">
+            <i class="fa-solid fa-trophy"></i> Phòng Thi Thử Trực Tuyến
+          </div>
+          <p class="text-xs text-purple-100 leading-relaxed">
+            Đề thi thử Olympic Toán THPT 10 câu tinh hoa chuẩn IMO &amp; TST, có đồng hồ đếm ngược 60 phút và xếp hạng Huy Chương.
+          </p>
+          <button onclick="openCourseQuizModal()" class="w-full py-2.5 px-3 rounded-xl bg-white text-purple-950 hover:bg-purple-50 text-xs font-black transition shadow-sm flex items-center justify-center gap-1.5">
+            <i class="fa-solid fa-play text-purple-600"></i> Bắt đầu thi thử (60:00)
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 min-w-0 space-y-12">
+      ${articlesHtml}
+
+      <!-- Course Summary Banner -->
+      <section class="bg-gradient-to-br from-purple-950 via-slate-900 to-indigo-950 text-white rounded-3xl p-8 border border-purple-500/30 shadow-2xl relative overflow-hidden">
+        <div class="relative z-10 max-w-3xl space-y-4">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-400/20 text-purple-300 text-xs font-semibold border border-purple-400/30">
+            <i class="fa-solid fa-crown text-amber-400"></i> Đỉnh Cao Olympic Toán Học THPT
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-black">Sẵn Sàng Chinh Phục Huy Chương Vàng Olympic Toán Học Quốc Tế!</h2>
+          <p class="text-gray-300 text-sm sm:text-base leading-relaxed">
+            Bạn đã làm chủ 10 chuyên đề tinh hoa: Bổ đề Hensel, Phương trình hàm Cauchy trên $\\mathbb{Q}$, Bất đẳng thức Muirhead &amp; Karamata, Tiệm cận Euler-Maclaurin, Ký hiệu Jacobi, Định lý Zsigmondy, Hình học xạ ảnh Pascal, Điểm Lemoine, Combinatorial Nullstellensatz và Phương pháp xác suất Erdős.
+          </p>
+          <div class="pt-2 flex flex-wrap gap-4">
+            <button onclick="openCourseQuizModal()" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-purple-400 to-amber-400 hover:from-purple-500 hover:to-amber-500 text-slate-950 font-black text-sm shadow-lg shadow-purple-500/30 transition flex items-center gap-2">
+              <i class="fa-solid fa-crown text-purple-900"></i> Bắt Đầu Thi Thử Olympic Toán (60:00)
+            </button>
+            <a href="../index.html" class="px-5 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-sm shadow-lg shadow-purple-500/30 transition flex items-center gap-2">
+              <i class="fa-solid fa-arrow-left"></i> Về Trang Chủ Khóa Học
+            </a>
+            <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-sm border border-white/20 transition flex items-center gap-2">
+              <i class="fa-solid fa-arrow-up"></i> Lên Đầu Trang
+            </button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Modal: Phòng Thi Thử Olympic Toán THPT (60:00) -->
+  <div id="courseQuizModal" class="fixed inset-0 z-50 hidden overflow-y-auto bg-slate-950/80 backdrop-blur-sm transition-opacity p-3 sm:p-6 flex items-center justify-center">
+    <div class="relative w-full max-w-4xl bg-white dark:bg-dark-surface rounded-3xl shadow-2xl border border-purple-500/30 overflow-hidden my-auto max-h-[92vh] flex flex-col">
+      
+      <!-- Modal Header -->
+      <div class="p-4 sm:p-6 bg-gradient-to-r from-purple-800 via-indigo-900 to-slate-900 text-white flex items-center justify-between gap-4 border-b border-purple-500/20 shrink-0">
+        <div class="space-y-1">
+          <div class="flex items-center gap-2">
+            <span class="px-2.5 py-0.5 rounded-full bg-purple-400/20 border border-purple-400/30 text-purple-300 text-[11px] font-bold uppercase tracking-wider">
+              Chuẩn Quốc Tế IMO • APMO
+            </span>
+            <span class="text-xs text-purple-200 hidden sm:inline">• 10 Câu Hỏi Đỉnh Cao Học Thuật</span>
+          </div>
+          <h3 class="text-lg sm:text-xl font-black text-white flex items-center gap-2">
+            <i class="fa-solid fa-trophy text-amber-400"></i> Đề Thi Thử Olympic Toán Học Cấp 3 (THPT &amp; Chuyên)
+          </h3>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <div class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-950/60 border border-purple-400/30 text-purple-300 font-mono font-black text-sm sm:text-base shadow-inner">
+            <i class="fa-solid fa-stopwatch animate-pulse text-amber-400"></i>
+            <span id="examTimer">60:00</span>
+          </div>
+          <button onclick="closeCourseQuizModal()" class="p-2 rounded-xl text-purple-200 hover:text-white hover:bg-white/10 transition" aria-label="Đóng phòng thi">
+            <i class="fa-solid fa-xmark text-lg"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="p-4 sm:p-6 overflow-y-auto space-y-6 flex-1 text-sm sidebar-scroll text-gray-800 dark:text-gray-200">
+        
+        <!-- Score Result Notification -->
+        <div id="examResultBox" class="hidden p-5 rounded-2xl border transition-all duration-300 space-y-3">
+          <div class="flex items-center justify-between">
+            <h4 id="examResultTitle" class="text-lg font-black flex items-center gap-2"></h4>
+            <span id="examScoreBadge" class="px-3 py-1 rounded-xl font-black text-sm"></span>
+          </div>
+          <p id="examFeedbackText" class="text-xs sm:text-sm leading-relaxed"></p>
+          <div class="pt-2 flex flex-wrap gap-3">
+            <button onclick="toggleSolutionsReview()" class="px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs shadow-md transition flex items-center gap-1.5">
+              <i class="fa-solid fa-book-open"></i> Xem Lời Giải Chi Tiết Từng Câu
+            </button>
+            <button onclick="restartExam()" class="px-4 py-2 rounded-xl bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 font-bold text-xs transition flex items-center gap-1.5">
+              <i class="fa-solid fa-rotate-right"></i> Làm Lại Đề Thi
+            </button>
+          </div>
+        </div>
+
+        <!-- Exam Form -->
+        <form id="courseExamForm" onsubmit="submitCourseExam(event)" class="space-y-6">
+          ${examFormHtml}
+
+          <div class="pt-4 flex items-center justify-between border-t border-gray-200 dark:border-gray-700">
+            <span class="text-xs text-gray-500 dark:text-gray-400">
+              <i class="fa-solid fa-circle-info mr-1"></i> Kiểm tra kỹ các câu trước khi nộp bài. Hệ thống sẽ tự động xếp hạng Huy Chương Olympic.
+            </span>
+            <button type="submit" class="px-6 py-3 rounded-2xl bg-gradient-to-r from-purple-600 to-amber-600 hover:from-purple-700 hover:to-amber-700 text-white font-black text-sm shadow-xl shadow-purple-500/25 transition flex items-center gap-2">
+              <i class="fa-solid fa-paper-plane"></i> Nộp Bài &amp; Xếp Hạng Huy Chương
+            </button>
+          </div>
+        </form>
+
+        <!-- Detailed Review Solutions Container -->
+        <div id="examSolutionsReview" class="hidden mt-8 pt-6 border-t border-gray-200 dark:border-gray-700 space-y-4">
+          <h4 class="text-base font-black text-purple-600 dark:text-purple-400 flex items-center gap-2">
+            <i class="fa-solid fa-graduation-cap"></i> Phân Tích &amp; Lời Giải Chi Tiết 10 Bài Toán Đề Thi Thử Olympic Toán
+          </h4>
+          <div class="space-y-3 text-xs sm:text-sm">
+            ${examSolutionsHtml}
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="p-4 bg-gray-100 dark:bg-dark-surface/80 border-t border-gray-200 dark:border-gray-800 flex items-center justify-between text-xs text-gray-500">
+        <span>Kỳ Thi Huấn Luyện Đội Tuyển Olympic Quốc Tế (IMO) &amp; APMO</span>
+        <button onclick="closeCourseQuizModal()" class="px-4 py-2 rounded-xl bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 font-bold transition">
+          Đóng
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="mt-16 bg-white dark:bg-dark-surface border-t border-gray-200 dark:border-gray-800 py-8 text-center text-xs text-gray-500 dark:text-gray-400">
+    <div class="max-w-7xl mx-auto px-4 space-y-2">
+      <p class="font-medium text-gray-700 dark:text-gray-300">
+        Khóa Học Luyện Thi Olympic Toán Học Cấp 3 (THPT &amp; Chuyên) • CodeHub Learning Platform
+      </p>
+      <p>
+        Biên soạn theo chương trình Đội tuyển Olympic Toán Quốc tế (IMO), Vòng tuyển chọn TST &amp; Chuẩn kiến thức chuyên sâu Toán THPT Chuyên.
+      </p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    const STORAGE_KEY = 'olympic_toan_thpt_solved_quizzes';
+    const TOTAL_QUIZZES = 40;
+
+    function renderAllMath(target) {
+      if (typeof renderMathInElement === 'function') {
+        renderMathInElement(target || document.body, {
+          delimiters: [
+            { left: '$$', right: '$$', display: true },
+            { left: '$', right: '$', display: false }
+          ],
+          ignoredTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+          throwOnError: false
+        });
+      }
+    }
+
+    // Theme Toggle
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeIcon = document.getElementById('theme-icon');
+
+    function applyTheme(isDark) {
+      if (isDark) {
+        document.documentElement.classList.add('dark');
+        if (themeIcon) themeIcon.className = 'fa-solid fa-sun text-amber-400';
+        localStorage.setItem('theme', 'dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+        if (themeIcon) themeIcon.className = 'fa-solid fa-moon text-gray-600';
+        localStorage.setItem('theme', 'light');
+      }
+    }
+
+    const savedTheme = localStorage.getItem('theme');
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    applyTheme(savedTheme === 'dark' || (!savedTheme && systemPrefersDark));
+
+    if (themeToggleBtn) {
+      themeToggleBtn.addEventListener('click', () => {
+        const isDark = document.documentElement.classList.contains('dark');
+        applyTheme(!isDark);
+      });
+    }
+
+    // Drawer Navigation
+    const mobileDrawer = document.getElementById('mobile-drawer');
+    const drawerBackdrop = document.getElementById('drawer-backdrop');
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+
+    function toggleDrawer(open) {
+      if (!mobileDrawer) return;
+      if (open) {
+        mobileDrawer.classList.remove('translate-x-full');
+        if (drawerBackdrop) drawerBackdrop.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+      } else {
+        mobileDrawer.classList.add('translate-x-full');
+        if (drawerBackdrop) drawerBackdrop.classList.add('hidden');
+        document.body.style.overflow = '';
+      }
+    }
+
+    if (mobileMenuBtn) {
+      mobileMenuBtn.addEventListener('click', () => toggleDrawer(true));
+    }
+
+    // Quiz Storage & Progress
+    function getSolvedQuizzes() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+      } catch (e) {
+        return {};
+      }
+    }
+
+    function saveSolvedQuiz(quizId, optionIndex, isCorrect) {
+      const solved = getSolvedQuizzes();
+      solved[quizId] = { optionIndex, isCorrect };
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(solved)); } catch (e) {}
+      updateProgressDisplay();
+    }
+
+    function checkQuiz(quizId, optionIndex, isCorrect, explanation) {
+      const buttons = document.querySelectorAll('.quiz-btn-' + quizId);
+      buttons.forEach((btn, idx) => {
+        btn.disabled = true;
+        btn.classList.remove('bg-purple-100', 'border-purple-500', 'bg-rose-100', 'border-rose-500');
+        if (idx === optionIndex) {
+          if (isCorrect) {
+            btn.classList.add('bg-emerald-100', 'dark:bg-emerald-950/40', 'border-emerald-500', 'text-emerald-900', 'dark:text-emerald-200', 'font-bold');
+          } else {
+            btn.classList.add('bg-rose-100', 'dark:bg-rose-950/40', 'border-rose-500', 'text-rose-900', 'dark:text-rose-200');
+          }
+        }
+      });
+
+      const feedbackEl = document.getElementById('feedback-' + quizId);
+      if (feedbackEl) {
+        feedbackEl.classList.remove('hidden');
+        feedbackEl.className = 'mt-3 p-3 rounded-lg text-xs font-medium border leading-relaxed ' +
+          (isCorrect ? 'text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/30 border-emerald-500/30' : 'text-rose-700 dark:text-rose-300 bg-rose-50 dark:bg-rose-950/30 border-rose-500/30');
+        feedbackEl.innerHTML = (isCorrect ? '<i class="fa-solid fa-circle-check mr-1.5 text-emerald-600"></i>' : '<i class="fa-solid fa-circle-xmark mr-1.5 text-rose-600"></i>') + explanation;
+        renderAllMath(feedbackEl);
+      }
+
+      saveSolvedQuiz(quizId, optionIndex, isCorrect);
+    }
+
+    function updateProgressDisplay() {
+      const solved = getSolvedQuizzes();
+      const count = Object.keys(solved).length;
+      const pct = Math.round((count / TOTAL_QUIZZES) * 100);
+      const countEl = document.getElementById('quiz-completed-count');
+      const progressPercentEl = document.getElementById('progress-percent');
+      const progressBarEl = document.getElementById('progress-bar');
+      if (countEl) countEl.innerText = count;
+      if (progressPercentEl) progressPercentEl.innerText = pct + '%';
+      if (progressBarEl) progressBarEl.style.width = pct + '%';
+    }
+
+    function resetAllQuizzes() {
+      if (confirm('Bạn có chắc muốn đặt lại toàn bộ kết quả bài tập để làm lại từ đầu?')) {
+        localStorage.removeItem(STORAGE_KEY);
+        location.reload();
+      }
+    }
+
+    // Live Countdown Timer & Exam Handling
+    let examTimerInterval = null;
+    let examSecondsLeft = 60 * 60;
+
+    function updateExamTimerDisplay() {
+      const timerEl = document.getElementById('examTimer');
+      if (!timerEl) return;
+      const m = Math.floor(examSecondsLeft / 60);
+      const s = examSecondsLeft % 60;
+      timerEl.innerText = (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
+    }
+
+    function startExamTimer() {
+      stopExamTimer();
+      updateExamTimerDisplay();
+      examTimerInterval = setInterval(() => {
+        if (examSecondsLeft > 0) {
+          examSecondsLeft--;
+          updateExamTimerDisplay();
+        } else {
+          stopExamTimer();
+          alert('⏰ Đã hết 60 phút làm bài thi thử Olympic Toán! Hệ thống sẽ tự động thu bài và xếp hạng Huy Chương.');
+          const form = document.getElementById('courseExamForm');
+          if (form) submitCourseExam(new Event('submit'));
+        }
+      }, 1000);
+    }
+
+    function stopExamTimer() {
+      if (examTimerInterval) {
+        clearInterval(examTimerInterval);
+        examTimerInterval = null;
+      }
+    }
+
+    function openCourseQuizModal() {
+      const modal = document.getElementById('courseQuizModal');
+      if (modal) {
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+        if (examSecondsLeft === 60 * 60) startExamTimer();
+        renderAllMath(modal);
+      }
+    }
+
+    function closeCourseQuizModal() {
+      const modal = document.getElementById('courseQuizModal');
+      if (modal) {
+        modal.classList.add('hidden');
+        document.body.style.overflow = '';
+      }
+    }
+
+    function restartExam() {
+      if (confirm('Bạn có chắc muốn làm lại toàn bộ đề thi thử Olympic Toán từ đầu?')) {
+        const form = document.getElementById('courseExamForm');
+        if (form) form.reset();
+        const resultBox = document.getElementById('examResultBox');
+        if (resultBox) resultBox.classList.add('hidden');
+        const reviewBox = document.getElementById('examSolutionsReview');
+        if (reviewBox) reviewBox.classList.add('hidden');
+        examSecondsLeft = 60 * 60;
+        startExamTimer();
+      }
+    }
+
+    function toggleSolutionsReview() {
+      const reviewBox = document.getElementById('examSolutionsReview');
+      if (reviewBox) {
+        reviewBox.classList.toggle('hidden');
+        if (!reviewBox.classList.contains('hidden')) renderAllMath(reviewBox);
+      }
+    }
+
+    const examAnswers = {
+      eq1: 'A', eq2: 'A', eq3: 'A', eq4: 'A', eq5: 'A',
+      eq6: 'A', eq7: 'A', eq8: 'A', eq9: 'A', eq10: 'A'
+    };
+
+    function submitCourseExam(event) {
+      if (event && event.preventDefault) event.preventDefault();
+      stopExamTimer();
+
+      const form = document.getElementById('courseExamForm');
+      if (!form) return;
+
+      const formData = new FormData(form);
+      let score = 0;
+      for (let i = 1; i <= 10; i++) {
+        if (formData.get('eq' + i) === examAnswers['eq' + i]) score++;
+      }
+
+      const resultBox = document.getElementById('examResultBox');
+      const titleEl = document.getElementById('examResultTitle');
+      const badgeEl = document.getElementById('examScoreBadge');
+      const feedbackEl = document.getElementById('examFeedbackText');
+
+      if (!resultBox || !titleEl || !badgeEl || !feedbackEl) return;
+      resultBox.classList.remove('hidden');
+
+      if (score === 10) {
+        resultBox.className = 'p-5 rounded-2xl border bg-yellow-50 dark:bg-yellow-950/40 border-yellow-500/50 text-yellow-950 dark:text-yellow-200';
+        titleEl.innerHTML = '<i class="fa-solid fa-trophy text-yellow-500 text-2xl"></i> Xuất Sắc! HUY CHƯƠNG VÀNG OLYMPIC TOÁN HỌC QUỐC TẾ (IMO GOLD MEDAL)!';
+        badgeEl.className = 'px-3 py-1 rounded-xl bg-yellow-500 text-slate-950 font-black text-sm shadow';
+        badgeEl.innerText = score + ' / 10 Điểm';
+        feedbackEl.innerText = 'Trí tuệ toán học đẳng cấp thế giới! Bạn đã giải chính xác trọn vẹn cả 10 bài toán IMO từ Đa thức Cyclotomic, Phương trình hàm trên Q, Bất đẳng thức Muirhead, Dãy số điểm bất động, Ký hiệu Jacobi, Ngoại lệ Zsigmondy, Định lý Pappus, Đường đối trung Lemoine, Combinatorial Nullstellensatz đến Phương pháp xác suất Paul Erdős!';
+      } else if (score >= 8) {
+        resultBox.className = 'p-5 rounded-2xl border bg-purple-50 dark:bg-purple-950/40 border-purple-500/50 text-purple-950 dark:text-purple-200';
+        titleEl.innerHTML = '<i class="fa-solid fa-medal text-purple-500 text-2xl"></i> Chúc Mừng! HUY CHƯƠNG BẠC OLYMPIC TOÁN HỌC (SILVER MEDAL)!';
+        badgeEl.className = 'px-3 py-1 rounded-xl bg-purple-600 text-white font-black text-sm shadow';
+        badgeEl.innerText = score + ' / 10 Điểm';
+        feedbackEl.innerText = 'Tư duy toán học rất xuất sắc và mạch lạc! Đạt mức giải Bạc IMO là thành tích đáng tự hào. Hãy phân tích kỹ các bài toán còn lại để vươn tới Huy chương Vàng tuyệt đối.';
+      } else if (score >= 6) {
+        resultBox.className = 'p-5 rounded-2xl border bg-pink-50 dark:bg-pink-950/40 border-pink-500/50 text-pink-950 dark:text-pink-200';
+        titleEl.innerHTML = '<i class="fa-solid fa-medal text-pink-600 text-2xl"></i> HUY CHƯƠNG ĐỒNG OLYMPIC TOÁN HỌC (BRONZE MEDAL)!';
+        badgeEl.className = 'px-3 py-1 rounded-xl bg-pink-600 text-white font-black text-sm shadow';
+        badgeEl.innerText = score + ' / 10 Điểm';
+        feedbackEl.innerText = 'Kết quả rất ấn tượng trước bộ đề chuẩn Quốc tế. Đọc lại lời giải chi tiết bên dưới để nắm vững thêm các bổ đề kinh điển!';
+      } else {
+        resultBox.className = 'p-5 rounded-2xl border bg-amber-50 dark:bg-amber-950/40 border-amber-500/50 text-amber-950 dark:text-amber-200';
+        titleEl.innerHTML = '<i class="fa-solid fa-certificate text-amber-500 text-2xl"></i> BẰNG KHEN OLYMPIC (HONORABLE MENTION) / Cần Rèn Luyện Thêm!';
+        badgeEl.className = 'px-3 py-1 rounded-xl bg-amber-500 text-slate-950 font-black text-sm shadow';
+        badgeEl.innerText = score + ' / 10 Điểm';
+        feedbackEl.innerText = 'Các đề thi Olympic quốc tế có độ khó rất cao. Hãy nhấn "Xem Lời Giải Chi Tiết Từng Câu" để phân tích sâu từng bài toán!';
+      }
+
+      resultBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      renderAllMath(resultBox);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderAllMath();
+      setTimeout(renderAllMath, 200);
+      setTimeout(renderAllMath, 800);
+      updateProgressDisplay();
+    });
+  </script>
+</body>
+</html>`;
+
+fs.writeFileSync(outputPath, fullHtml, 'utf8');
+console.log('Successfully created courses/olympic_toan_thpt.html!');

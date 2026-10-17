@@ -1,0 +1,2450 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ôn Luyện Thi Olympic Tiếng Anh Cấp 3 (THPT & Chuyên) - Olympic 30/4, Duyên Hải & CPE C2 | CodeHub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            oly: {
+              gold: '#f59e0b',
+              purple: '#7c3aed',
+              cyan: '#06b6d4',
+              rose: '#f43f5e',
+              dark: '#0a0e17',
+              card: '#131b2e'
+            },
+            dark: {
+              bg: '#070a12',
+              surface: '#0f172a',
+              card: '#1e293b',
+              border: '#334155'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .sidebar-scroll::-webkit-scrollbar { width: 6px; }
+    .sidebar-scroll::-webkit-scrollbar-track { background: transparent; }
+    .sidebar-scroll::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 4px; }
+    .dark .sidebar-scroll::-webkit-scrollbar-thumb { background: #475569; }
+    .oly-gradient {
+      background: linear-gradient(135deg, #070a14 0%, #170d38 40%, #31104b 70%, #b45309 100%);
+    }
+    .oly-badge-gradient {
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 40%, #7c3aed 100%);
+    }
+    .phonetic { font-family: 'Charis SIL', 'Doulos SIL', 'Segoe UI', 'DejaVu Sans', sans-serif; }
+    code { font-family: 'Consolas', 'Fira Code', 'Courier New', monospace; }
+  </style>
+  <!-- KaTeX for formulas & linguistic notations -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+
+  <!-- CodeHub Activity Monitor V2 -->
+  <meta name="codehub-activity-name" content="Ôn Luyện Thi Olympic Tiếng Anh Cấp 3 (THPT &amp; Chuyên) - Olympic 30/4, Duyên Hải &amp; CPE C2">
+  <meta name="codehub-activity-kind" content="subject">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="scripts/supabase-config.js"></script>
+  <script src="scripts/activity-tracker.js"></script>
+</head>
+<body class="bg-gray-50 dark:bg-dark-bg text-gray-900 dark:text-gray-100 min-h-screen flex flex-col font-sans transition-colors duration-200">
+
+  <!-- Header Navigation -->
+  <header class="sticky top-0 z-50 bg-white/90 dark:bg-dark-surface/90 backdrop-blur border-b border-gray-200 dark:border-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <a href="../index.html" class="flex items-center gap-2 text-amber-600 dark:text-amber-400 font-bold text-lg hover:opacity-90">
+          <i class="fa-solid fa-graduation-cap text-xl"></i>
+          <span class="hidden sm:inline">CodeHub</span>
+        </a>
+        <div class="h-5 w-px bg-gray-300 dark:bg-gray-700"></div>
+        <div class="flex items-center gap-1.5 bg-gray-100 dark:bg-gray-800 p-1 rounded-xl text-xs sm:text-sm font-semibold">
+          <span class="px-2.5 py-1 rounded-lg bg-white dark:bg-gray-700 shadow-sm text-amber-600 dark:text-amber-400 flex items-center gap-1.5">
+            <i class="fa-solid fa-trophy"></i> Olympic Tiếng Anh
+          </span>
+          <a href="hsg_tienganh_thpt.html" class="px-2.5 py-1 rounded-lg text-indigo-600 dark:text-indigo-400 hover:bg-white dark:hover:bg-gray-700 flex items-center gap-1">
+            <i class="fa-solid fa-book-bookmark"></i> HSG Tiếng Anh
+          </a>
+          <a href="tienganh_12.html" class="px-2.5 py-1 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-white dark:hover:bg-gray-700 flex items-center gap-1">
+            <i class="fa-solid fa-language"></i> Tiếng Anh 12
+          </a>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <span class="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg oly-badge-gradient text-white text-xs font-semibold shadow-sm">
+          <i class="fa-solid fa-crown text-yellow-200"></i>
+          <span>Chuẩn Olympic 30/4 • Duyên Hải • CPE C2 • TST</span>
+        </span>
+        <button onclick="openCourseQuizModal()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-slate-950 font-bold text-xs sm:text-sm shadow-sm transition">
+          <i class="fa-solid fa-stopwatch text-slate-950"></i>
+          <span class="hidden sm:inline">Phòng Thi Thử Olympic</span>
+          <span>(60:00)</span>
+        </button>
+        <!-- Dark/Light Mode Button -->
+        <button id="theme-toggle" class="p-2 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-300 transition" aria-label="Đổi giao diện">
+          <i id="theme-icon" class="fa-solid fa-moon"></i>
+        </button>
+        <!-- Mobile Drawer Button -->
+        <button id="mobile-menu-btn" class="lg:hidden p-2 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-300 transition" aria-label="Menu bài học">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="oly-gradient text-white py-12 sm:py-16 px-4 sm:px-6 lg:px-8 border-b border-purple-900/40 relative overflow-hidden">
+    <div class="max-w-7xl mx-auto relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
+      <div class="space-y-4 max-w-3xl">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-400/30 text-xs font-semibold tracking-wide">
+          <i class="fa-solid fa-crown text-yellow-400"></i> Khóa Huấn Luyện Đỉnh Cao - Đội Tuyển Olympic Tiếng Anh
+        </div>
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight">
+          Ôn Luyện Thi <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-yellow-200 to-purple-300">Olympic Tiếng Anh Cấp 3</span> (THPT &amp; Chuyên)
+        </h1>
+        <p class="text-gray-200 text-sm sm:text-base leading-relaxed">
+          Chương trình bồi dưỡng tinh hoa dành cho học sinh trường Chuyên, đội tuyển dự thi Olympic Truyền thống 30/4, Olympic Duyên Hải &amp; Đồng Bằng Bắc Bộ, Trại hè Hùng Vương, Vòng tuyển chọn Đội tuyển Quốc tế (TST) và Cambridge CPE C2 Proficiency. Đột phá qua 10 chuyên đề ngôn ngữ học nâng cao: Âm vị học lịch sử, Đảo ngữ cổ điển, Phrasal Verbs đa nghĩa hiếm gặp, Thành ngữ điển tích văn học Hy-La, Cấu tạo từ đột biến, Đọc hiểu đa văn bản phê phán và Viết luận phản biện triết học.
+        </p>
+        <div class="flex flex-wrap items-center gap-4 pt-2 text-xs text-gray-300">
+          <span class="flex items-center gap-1.5"><i class="fa-solid fa-trophy text-amber-400"></i> 10 Chuyên đề Olympic đỉnh cao</span>
+          <span class="flex items-center gap-1.5"><i class="fa-solid fa-circle-question text-emerald-400"></i> 40 Câu trắc nghiệm học thuật chuyên sâu</span>
+          <span class="flex items-center gap-1.5"><i class="fa-solid fa-stopwatch text-cyan-400"></i> Phòng thi thử trực tuyến 60 phút có đếm ngược</span>
+          <span class="flex items-center gap-1.5"><i class="fa-solid fa-award text-yellow-400"></i> Bảng phân loại Huy chương Vàng - Bạc - Đồng</span>
+        </div>
+      </div>
+
+      <!-- Quick Action Card -->
+      <div class="w-full md:w-80 bg-white/10 backdrop-blur-md border border-white/20 p-5 rounded-2xl shadow-xl space-y-4">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-semibold tracking-wide uppercase text-amber-200">Tiến độ ôn tập Olympic</span>
+          <span class="text-xs font-bold text-yellow-300" id="progress-percent">0%</span>
+        </div>
+        <div class="w-full bg-white/20 h-2 rounded-full overflow-hidden">
+          <div id="progress-bar" class="bg-gradient-to-r from-amber-400 to-purple-400 h-full w-0 transition-all duration-300"></div>
+        </div>
+        <p class="text-xs text-gray-200 leading-normal">
+          Đã hoàn thành <strong class="text-white" id="quiz-completed-count">0</strong>/40 câu hỏi chuyên đề Olympic.
+        </p>
+        <div class="pt-2 border-t border-white/10 flex flex-col gap-2">
+          <button onclick="openCourseQuizModal()" class="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-amber-400 to-yellow-500 hover:from-amber-500 hover:to-yellow-600 text-slate-950 font-black text-xs shadow-md transition flex items-center justify-center gap-2">
+            <i class="fa-solid fa-crown text-amber-900"></i> Thi Thử Đề Olympic (60:00)
+          </button>
+          <button onclick="resetAllQuizzes()" class="w-full py-2 px-3 rounded-xl bg-white/10 hover:bg-white/20 text-gray-200 text-xs font-medium transition">
+            <i class="fa-solid fa-rotate-left mr-1"></i> Đặt lại kết quả bài tập
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Container -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 flex flex-col lg:flex-row gap-8">
+    
+    <!-- Sidebar Navigation (Desktop) -->
+    <aside class="hidden lg:block w-72 shrink-0">
+      <div class="sticky top-24 bg-white dark:bg-dark-surface rounded-2xl border border-gray-200 dark:border-gray-800 p-4 shadow-sm space-y-3">
+        <h3 class="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 px-3 flex items-center justify-between">
+          <span>Lộ Trình Olympic 30/4 &amp; TST</span>
+          <span class="text-[10px] bg-amber-100 dark:bg-amber-900/50 text-amber-700 dark:text-amber-300 px-2 py-0.5 rounded-full font-bold">10 Chuyên Đề</span>
+        </h3>
+        <nav class="space-y-1 text-xs font-medium max-h-[calc(100vh-270px)] overflow-y-auto sidebar-scroll pr-1">
+          <a href="#chuyende-1" class="nav-link flex items-center gap-2.5 px-3 py-2 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-amber-50 dark:hover:bg-gray-800 transition">
+            <span class="w-6 h-6 rounded-lg bg-amber-100 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 font-bold flex items-center justify-center shrink-0 text-xs">1</span>
+            <span class="truncate">Historical Phonology &amp; Orthoepy</span>
+          </a>
+          <a href="#chuyende-2" class="nav-link flex items-center gap-2.5 px-3 py-2 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-amber-50 dark:hover:bg-gray-800 transition">
+            <span class="w-6 h-6 rounded-lg bg-amber-100 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 font-bold flex items-center justify-center shrink-0 text-xs">2</span>
+            <span class="truncate">Archaic &amp; Literary Inversions</span>
+          </a>
+          <a href="#chuyende-3" class="nav-link flex items-center gap-2.5 px-3 py-2 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-amber-50 dark:hover:bg-gray-800 transition">
+            <span class="w-6 h-6 rounded-lg bg-amber-100 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 font-bold flex items-center justify-center shrink-0 text-xs">3</span>
+            <span class="truncate">Obscure C2 Phrasal Verbs</span>
+          </a>
+          <a href="#chuyende-4" class="nav-link flex items-center gap-2.5 px-3 py-2 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-amber-50 dark:hover:bg-gray-800 transition">
+            <span class="w-6 h-6 rounded-lg bg-amber-100 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 font-bold flex items-center justify-center shrink-0 text-xs">4</span>
+            <span class="truncate">Classical Allusions &amp; Latinisms</span>
+          </a>
+          <a href="#chuyende-5" class="nav-link flex items-center gap-2.5 px-3 py-2 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-amber-50 dark:hover:bg-gray-800 transition">
+            <span class="w-6 h-6 rounded-lg bg-amber-100 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 font-bold flex items-center justify-center shrink-0 text-xs">5</span>
+            <span class="truncate">Morphological Neologisms &amp; Roots</span>
+          </a>
+          <a href="#chuyende-6" class="nav-link flex items-center gap-2.5 px-3 py-2 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-amber-50 dark:hover:bg-gray-800 transition">
+            <span class="w-6 h-6 rounded-lg bg-amber-100 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 font-bold flex items-center justify-center shrink-0 text-xs">6</span>
+            <span class="truncate">Micro-syntactic Error Analysis</span>
+          </a>
+          <a href="#chuyende-7" class="nav-link flex items-center gap-2.5 px-3 py-2 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-amber-50 dark:hover:bg-gray-800 transition">
+            <span class="w-6 h-6 rounded-lg bg-amber-100 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 font-bold flex items-center justify-center shrink-0 text-xs">7</span>
+            <span class="truncate">Tri-gapped &amp; Philosophical Cloze</span>
+          </a>
+          <a href="#chuyende-8" class="nav-link flex items-center gap-2.5 px-3 py-2 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-amber-50 dark:hover:bg-gray-800 transition">
+            <span class="w-6 h-6 rounded-lg bg-amber-100 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 font-bold flex items-center justify-center shrink-0 text-xs">8</span>
+            <span class="truncate">Multi-Text &amp; Fallacy Analysis</span>
+          </a>
+          <a href="#chuyende-9" class="nav-link flex items-center gap-2.5 px-3 py-2 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-amber-50 dark:hover:bg-gray-800 transition">
+            <span class="w-6 h-6 rounded-lg bg-amber-100 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 font-bold flex items-center justify-center shrink-0 text-xs">9</span>
+            <span class="truncate">CPE Structural Paraphrasing</span>
+          </a>
+          <a href="#chuyende-10" class="nav-link flex items-center gap-2.5 px-3 py-2 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-amber-50 dark:hover:bg-gray-800 transition">
+            <span class="w-6 h-6 rounded-lg bg-amber-100 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 font-bold flex items-center justify-center shrink-0 text-xs">10</span>
+            <span class="truncate">Critical Discourse Essay</span>
+          </a>
+        </nav>
+
+        <!-- Mock Exam Action Card -->
+        <div class="mt-4 p-4 rounded-2xl bg-gradient-to-br from-amber-600 via-amber-700 to-purple-800 text-white shadow-md space-y-2">
+          <div class="flex items-center gap-2 font-bold text-sm">
+            <i class="fa-solid fa-stopwatch text-yellow-300"></i>
+            <span>Phòng Thi Thử Olympic</span>
+          </div>
+          <p class="text-xs text-amber-100 leading-relaxed">
+            Đề thi thử Olympic Tiếng Anh Cấp 3 chuyên sâu 10 câu tinh hoa, có đồng hồ đếm ngược 60 phút và xếp hạng Huy chương.
+          </p>
+          <button onclick="openCourseQuizModal()" class="w-full py-2.5 px-3 rounded-xl bg-white text-slate-900 hover:bg-amber-50 text-xs font-black transition shadow-sm flex items-center justify-center gap-1.5">
+            <i class="fa-solid fa-play text-amber-600"></i> Bắt đầu thi thử (60:00)
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Mobile Drawer -->
+    <div id="drawer-backdrop" class="fixed inset-0 bg-black/50 z-50 hidden transition-opacity lg:hidden" onclick="toggleDrawer(false)"></div>
+    <div id="mobile-drawer" class="fixed top-0 right-0 bottom-0 w-80 bg-white dark:bg-dark-surface z-50 transform translate-x-full transition-transform duration-300 p-6 overflow-y-auto lg:hidden">
+      <div class="flex items-center justify-between pb-4 border-b border-gray-200 dark:border-gray-800">
+        <h3 class="font-bold text-sm text-gray-900 dark:text-white">10 Chuyên Đề Olympic Tiếng Anh</h3>
+        <button onclick="toggleDrawer(false)" class="p-1 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+      <div class="mt-4 space-y-2 text-xs font-medium">
+        <a href="#chuyende-1" onclick="toggleDrawer(false)" class="block px-3 py-2.5 rounded-xl hover:bg-amber-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300">Chuyên đề 1: Historical Phonology &amp; Orthoepy</a>
+        <a href="#chuyende-2" onclick="toggleDrawer(false)" class="block px-3 py-2.5 rounded-xl hover:bg-amber-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300">Chuyên đề 2: Archaic &amp; Literary Inversions</a>
+        <a href="#chuyende-3" onclick="toggleDrawer(false)" class="block px-3 py-2.5 rounded-xl hover:bg-amber-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300">Chuyên đề 3: Obscure C2 Phrasal Verbs</a>
+        <a href="#chuyende-4" onclick="toggleDrawer(false)" class="block px-3 py-2.5 rounded-xl hover:bg-amber-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300">Chuyên đề 4: Classical Allusions &amp; Latinisms</a>
+        <a href="#chuyende-5" onclick="toggleDrawer(false)" class="block px-3 py-2.5 rounded-xl hover:bg-amber-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300">Chuyên đề 5: Morphological Neologisms &amp; Roots</a>
+        <a href="#chuyende-6" onclick="toggleDrawer(false)" class="block px-3 py-2.5 rounded-xl hover:bg-amber-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300">Chuyên đề 6: Micro-syntactic Error Analysis</a>
+        <a href="#chuyende-7" onclick="toggleDrawer(false)" class="block px-3 py-2.5 rounded-xl hover:bg-amber-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300">Chuyên đề 7: Tri-gapped &amp; Philosophical Cloze</a>
+        <a href="#chuyende-8" onclick="toggleDrawer(false)" class="block px-3 py-2.5 rounded-xl hover:bg-amber-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300">Chuyên đề 8: Multi-Text &amp; Fallacy Analysis</a>
+        <a href="#chuyende-9" onclick="toggleDrawer(false)" class="block px-3 py-2.5 rounded-xl hover:bg-amber-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300">Chuyên đề 9: CPE Structural Paraphrasing</a>
+        <a href="#chuyende-10" onclick="toggleDrawer(false)" class="block px-3 py-2.5 rounded-xl hover:bg-amber-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300">Chuyên đề 10: Critical Discourse Essay</a>
+      </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 min-w-0 space-y-12">
+
+      <!-- ========================================== -->
+      <!-- CHUYÊN ĐỀ 1: HISTORICAL PHONOLOGY & ORTHOEPY -->
+      <!-- ========================================== -->
+      <article id="chuyende-1" class="lesson-section bg-white dark:bg-dark-surface rounded-2xl border border-gray-200 dark:border-gray-800 p-6 sm:p-8 shadow-sm space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-gray-100 dark:border-gray-800 pb-4">
+          <div class="flex items-center gap-2.5">
+            <span class="px-3 py-1 rounded-lg bg-amber-100 dark:bg-amber-900/50 text-amber-800 dark:text-amber-300 font-black text-xs">
+              CHUYÊN ĐỀ 01
+            </span>
+            <span class="text-xs font-semibold text-gray-500 dark:text-gray-400">Âm Vị Học Lịch Sử &amp; Quy Tắc Phát Âm Biến Thể Cực Đoan</span>
+          </div>
+          <span class="text-xs font-bold text-amber-600 dark:text-amber-400 flex items-center gap-1">
+            <i class="fa-regular fa-clock"></i> Thời lượng dự kiến: 90 phút
+          </span>
+        </div>
+
+        <div class="space-y-4">
+          <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">
+            Historical Phonology, Orthoepy &amp; Obscure Pronunciation Rules
+          </h2>
+          <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+            Trong các kỳ thi Olympic 30/4 và Trại hè Duyên Hải Bắc Bộ, phần phát âm không dừng ở các quy tắc phổ thông mà kiểm tra các trường hợp <em>Orthoepy (phát âm chuẩn cổ)</em> của từ mượn quý tộc, từ có nguồn gốc Anglo-Norman hoặc tiếng Pháp cổ:
+          </p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="p-4 rounded-xl bg-amber-50/50 dark:bg-amber-950/30 border border-amber-200/60 dark:border-amber-900/40 text-xs space-y-2">
+              <h4 class="font-bold text-amber-900 dark:text-amber-300 uppercase">Bẫy Phát Âm Độc Đoán Olympic</h4>
+              <ul class="space-y-1.5 text-gray-700 dark:text-gray-300">
+                <li>• <strong>victuals:</strong> /ˈvɪt.əlz/ (chữ 'ct' đọc như 't', hoàn toàn không có âm /k/).</li>
+                <li>• <strong>colonel:</strong> /ˈkɜː.nəl/ (đọc giống như <em>kernel</em>).</li>
+                <li>• <strong>indict / indictment:</strong> /ɪnˈdaɪt/ (âm 'c' câm, vần đọc là /aɪt/).</li>
+                <li>• <strong>poignant:</strong> /ˈpɔɪ.njənt/ (chữ 'g' câm hoàn toàn).</li>
+                <li>• <strong>schism:</strong> /ˈsɪz.əm/ hoặc /ˈskɪz.əm/.</li>
+                <li>• <strong>boatswain:</strong> /ˈbəʊ.sən/ (thuật ngữ hàng hải viết thuyền trưởng nhưng đọc rút gọn).</li>
+              </ul>
+            </div>
+
+            <div class="p-4 rounded-xl bg-purple-50/50 dark:bg-purple-950/30 border border-purple-200/60 dark:border-purple-900/40 text-xs space-y-2">
+              <h4 class="font-bold text-purple-900 dark:text-purple-300 uppercase">Trọng Âm Biến Thể Cực Đoan (Extreme Stress Patterns)</h4>
+              <ul class="space-y-1.5 text-gray-700 dark:text-gray-300">
+                <li>• <strong>Từ ghép đảo trọng âm:</strong> <em>'passer-by</em> (trọng âm rơi vào từ đầu tiên), nhưng <em>by'stander</em> lại nhấn âm 1 (/ˈbaɪˌstæn.dər/).</li>
+                <li>• <strong>Thuật ngữ ngoại giao:</strong> <em>chargé d'af'faires</em> /ʃɑːˌʒeɪ dæfˈeər/ (nhấn âm tiết cuối cùng).</li>
+                <li>• <strong>Hậu tố -ative kéo trọng âm 3 âm tiết:</strong> <em>au'thoritative</em>, <em>ad'ministrative</em>.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quizzes -->
+        <div class="pt-4 border-t border-gray-100 dark:border-gray-800 space-y-4">
+          <h4 class="text-sm font-bold text-gray-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-circle-check text-amber-500"></i> Bài Tập Tự Luyện Chuyên Đề 1 (Chuẩn Olympic 30/4)
+          </h4>
+          <div class="space-y-4 text-xs sm:text-sm">
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 space-y-3">
+              <p class="font-bold text-gray-900 dark:text-white">
+                1. Choose the word whose underlined part is pronounced differently from that of the others:
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <button onclick="checkQuiz('oly_eng_1_1', 0, true, 'Chính xác! Trong từ victuals, cụm \'ct\' được phát âm là /t/ (/ˈvɪt.əlz/), trong khi ở các từ còn lại chữ \'c\' phát âm là /k/ (fraction /ˈfræk.ʃən/, picture /ˈpɪk.tʃər/, cactus /ˈkæk.təs/).')" class="quiz-btn-oly_eng_1_1 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  A. vi<u>ct</u>uals
+                </button>
+                <button onclick="checkQuiz('oly_eng_1_1', 1, false, 'Sai. Fraction có âm /k/ rõ ràng.')" class="quiz-btn-oly_eng_1_1 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  B. fra<u>ct</u>ion
+                </button>
+                <button onclick="checkQuiz('oly_eng_1_1', 2, false, 'Sai. Picture có âm /k/ rõ ràng.')" class="quiz-btn-oly_eng_1_1 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  C. pi<u>ct</u>ure
+                </button>
+                <button onclick="checkQuiz('oly_eng_1_1', 3, false, 'Sai. Cactus có âm /k/ rõ ràng.')" class="quiz-btn-oly_eng_1_1 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  D. ca<u>ct</u>us
+                </button>
+              </div>
+              <div id="feedback-oly_eng_1_1" class="hidden"></div>
+            </div>
+
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 space-y-3">
+              <p class="font-bold text-gray-900 dark:text-white">
+                2. Which word has the primary stress placed differently from the other three?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <button onclick="checkQuiz('oly_eng_1_2', 0, true, 'Chính xác! \'Authoritative\' nhấn trọng âm vào âm tiết thứ 2: /ɔːˈθɒr.ɪ.tə.tɪv/, trong khi 3 từ còn lại đều nhấn trọng âm vào âm tiết thứ 3: un\'conscious, recon\'naissance, repre\'sentative.')" class="quiz-btn-oly_eng_1_2 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  A. authoritative
+                </button>
+                <button onclick="checkQuiz('oly_eng_1_2', 1, false, 'Sai. Representative nhấn âm 3.')" class="quiz-btn-oly_eng_1_2 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  B. representative
+                </button>
+                <button onclick="checkQuiz('oly_eng_1_2', 2, false, 'Sai. Reconnaissance nhấn âm 2: /rɪˈkɒn.ɪ.səns/ hoặc âm 3 tùy biến thể.')" class="quiz-btn-oly_eng_1_2 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  C. reconnaissance
+                </button>
+                <button onclick="checkQuiz('oly_eng_1_2', 3, false, 'Sai.')" class="quiz-btn-oly_eng_1_2 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  D. gubernatorial
+                </button>
+              </div>
+              <div id="feedback-oly_eng_1_2" class="hidden"></div>
+            </div>
+
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 space-y-3">
+              <p class="font-bold text-gray-900 dark:text-white">
+                3. Choose the word whose underlined part is pronounced as /wɑː/:
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <button onclick="checkQuiz('oly_eng_1_3', 0, true, 'Chính xác! \'Memoir\' phát âm là /ˈmem.wɑːr/ theo chuẩn gốc Pháp.')" class="quiz-btn-oly_eng_1_3 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  A. mem<u>oir</u>
+                </button>
+                <button onclick="checkQuiz('oly_eng_1_3', 1, false, 'Sai. Choir phát âm là /kwaɪər/.')" class="quiz-btn-oly_eng_1_3 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  B. ch<u>oir</u>
+                </button>
+                <button onclick="checkQuiz('oly_eng_1_3', 2, false, 'Sai. Coir phát âm là /ˈkɔɪ.ər/.')" class="quiz-btn-oly_eng_1_3 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  C. c<u>oir</u>
+                </button>
+                <button onclick="checkQuiz('oly_eng_1_3', 3, false, 'Sai. Doil phát âm là /ɔɪ/.')" class="quiz-btn-oly_eng_1_3 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  D. boil
+                </button>
+              </div>
+              <div id="feedback-oly_eng_1_3" class="hidden"></div>
+            </div>
+
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 space-y-3">
+              <p class="font-bold text-gray-900 dark:text-white">
+                4. Which of the following words contains a silent letter 'p'?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <button onclick="checkQuiz('oly_eng_1_4', 0, true, 'Chính xác! Trong từ \'coup\' (/kuː/), chữ cái \'p\' hoàn toàn là âm câm (gốc tiếng Pháp \'coup d\'état\').')" class="quiz-btn-oly_eng_1_4 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  A. cou<u>p</u>
+                </button>
+                <button onclick="checkQuiz('oly_eng_1_4', 1, false, 'Sai. Cupboard phát âm có âm /b/ (/ˈkʌb.əd/) do đồng hóa p -> b chứ không phải nguyên chữ p câm theo quy tắc coup.')" class="quiz-btn-oly_eng_1_4 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  B. ca<u>p</u>size
+                </button>
+                <button onclick="checkQuiz('oly_eng_1_4', 2, false, 'Sai.')" class="quiz-btn-oly_eng_1_4 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  C. com<u>p</u>lex
+                </button>
+                <button onclick="checkQuiz('oly_eng_1_4', 3, false, 'Sai.')" class="quiz-btn-oly_eng_1_4 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  D. cor<u>p</u>oreal
+                </button>
+              </div>
+              <div id="feedback-oly_eng_1_4" class="hidden"></div>
+            </div>
+
+          </div>
+        </div>
+      </article>
+
+      <!-- ========================================== -->
+      <!-- CHUYÊN ĐỀ 2: ARCHAIC & LITERARY INVERSIONS -->
+      <!-- ========================================== -->
+      <article id="chuyende-2" class="lesson-section bg-white dark:bg-dark-surface rounded-2xl border border-gray-200 dark:border-gray-800 p-6 sm:p-8 shadow-sm space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-gray-100 dark:border-gray-800 pb-4">
+          <div class="flex items-center gap-2.5">
+            <span class="px-3 py-1 rounded-lg bg-amber-100 dark:bg-amber-900/50 text-amber-800 dark:text-amber-300 font-black text-xs">
+              CHUYÊN ĐỀ 02
+            </span>
+            <span class="text-xs font-semibold text-gray-500 dark:text-gray-400">Đảo Ngữ Cổ Điển &amp; Cấu Trúc Đảo Phong Cách Văn Chương</span>
+          </div>
+          <span class="text-xs font-bold text-amber-600 dark:text-amber-400 flex items-center gap-1">
+            <i class="fa-regular fa-clock"></i> Thời lượng dự kiến: 120 phút
+          </span>
+        </div>
+
+        <div class="space-y-4">
+          <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">
+            Stylistic Inversions, Participle Fronting &amp; Archaic Subjunctives
+          </h2>
+          <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+            Học sinh Olympic cần vượt xa các dạng đảo ngữ thông thường để xử lý các câu có cụm phân từ đảo lên đầu (Participle Fronting), cấu trúc nhượng bộ cổ <em>Suffice it to say</em>, và đảo ngữ kép trong văn học Anh cổ điển:
+          </p>
+
+          <div class="p-4 rounded-xl bg-purple-50/50 dark:bg-purple-950/30 border border-purple-200/60 dark:border-purple-900/40 text-xs space-y-2">
+            <h4 class="font-bold text-purple-900 dark:text-purple-300 uppercase">3 Cấu Trúc Đảo Ngữ Văn Chương Bậc Thầy</h4>
+            <ul class="space-y-1.5 text-gray-700 dark:text-gray-300">
+              <li>• <strong>Participle Fronting:</strong> <em>Standing on the podium was the venerable philosopher, addressing a rapt audience.</em></li>
+              <li>• <strong>Gone are the days when:</strong> <em>Gone are the days when scholars could afford to remain in their ivory towers.</em></li>
+              <li>• <strong>Suffice it to say that:</strong> <em>Suffice it to say that the military expedition proved an unmitigated catastrophe.</em></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Quizzes -->
+        <div class="pt-4 border-t border-gray-100 dark:border-gray-800 space-y-4">
+          <h4 class="text-sm font-bold text-gray-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-circle-check text-amber-500"></i> Bài Tập Tự Luyện Chuyên Đề 2
+          </h4>
+          <div class="space-y-4 text-xs sm:text-sm">
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 space-y-3">
+              <p class="font-bold text-gray-900 dark:text-white">
+                1. ________ to divulge the confidential trade secrets, he would have faced immediate incarceration.
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <button onclick="checkQuiz('oly_eng_2_1', 0, true, 'Chính xác! Đảo ngữ điều kiện hỗn hợp / quá khứ giả định: Were he to have agreed = If he had agreed (dạng cổ và rất trang trọng trong văn phong Olympic).')" class="quiz-btn-oly_eng_2_1 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  A. Were he to have agreed
+                </button>
+                <button onclick="checkQuiz('oly_eng_2_1', 1, false, 'Sai thì động từ ở mệnh đề chính.')" class="quiz-btn-oly_eng_2_1 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  B. Should he agree
+                </button>
+                <button onclick="checkQuiz('oly_eng_2_1', 2, false, 'Sai ngữ pháp.')" class="quiz-btn-oly_eng_2_1 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  C. If he agreed
+                </button>
+                <button onclick="checkQuiz('oly_eng_2_1', 3, false, 'Sai.')" class="quiz-btn-oly_eng_2_1 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  D. Had he to agree
+                </button>
+              </div>
+              <div id="feedback-oly_eng_2_1" class="hidden"></div>
+            </div>
+
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 space-y-3">
+              <p class="font-bold text-gray-900 dark:text-white">
+                2. "________ to say, the diplomatic fallout from the scandal reverberated throughout the international community."
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <button onclick="checkQuiz('oly_eng_2_2', 0, true, 'Chính xác! Cấu trúc giả định cố định: Suffice it to say (that...) = Chỉ cần nói rằng là đủ.')" class="quiz-btn-oly_eng_2_2 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  A. Suffice it
+                </button>
+                <button onclick="checkQuiz('oly_eng_2_2', 1, false, 'Sai. Cấu trúc không thêm \'s\' vào động từ suffice.')" class="quiz-btn-oly_eng_2_2 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  B. Suffices it
+                </button>
+                <button onclick="checkQuiz('oly_eng_2_2', 2, false, 'Sai trật tự từ.')" class="quiz-btn-oly_eng_2_2 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  C. It suffices
+                </button>
+                <button onclick="checkQuiz('oly_eng_2_2', 3, false, 'Sai.')" class="quiz-btn-oly_eng_2_2 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  D. Being sufficient
+                </button>
+              </div>
+              <div id="feedback-oly_eng_2_2" class="hidden"></div>
+            </div>
+
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 space-y-3">
+              <p class="font-bold text-gray-900 dark:text-white">
+                3. "At no time ________ the sheer magnitude of the impending economic recession."
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <button onclick="checkQuiz('oly_eng_2_3', 0, true, 'Chính xác! Đảo ngữ với At no time: At no time + did + S + V_bare.')" class="quiz-btn-oly_eng_2_3 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  A. did the treasury officials grasp
+                </button>
+                <button onclick="checkQuiz('oly_eng_2_3', 1, false, 'Sai trật tự đảo ngữ.')" class="quiz-btn-oly_eng_2_3 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  B. the treasury officials grasped
+                </button>
+                <button onclick="checkQuiz('oly_eng_2_3', 2, false, 'Sai thì động từ.')" class="quiz-btn-oly_eng_2_3 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  C. were the treasury officials grasping
+                </button>
+                <button onclick="checkQuiz('oly_eng_2_3', 3, false, 'Sai.')" class="quiz-btn-oly_eng_2_3 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  D. had the treasury officials grasping
+                </button>
+              </div>
+              <div id="feedback-oly_eng_2_3" class="hidden"></div>
+            </div>
+
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 space-y-3">
+              <p class="font-bold text-gray-900 dark:text-white">
+                4. "________ from the burning wreckage were two survivors who miraculously escaped with only minor contusions."
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <button onclick="checkQuiz('oly_eng_2_4', 0, true, 'Chính xác! Participle Fronting (Đảo cụm phân từ quá khứ): Pulled from the burning wreckage were two survivors...') " class="quiz-btn-oly_eng_2_4 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  A. Pulled
+                </button>
+                <button onclick="checkQuiz('oly_eng_2_4', 1, false, 'Sai thể bị động (không dùng Pulling vì người sống sót được cứu ra).')" class="quiz-btn-oly_eng_2_4 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  B. Pulling
+                </button>
+                <button onclick="checkQuiz('oly_eng_2_4', 2, false, 'Sai ngữ pháp.')" class="quiz-btn-oly_eng_2_4 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  C. To pull
+                </button>
+                <button onclick="checkQuiz('oly_eng_2_4', 3, false, 'Sai.')" class="quiz-btn-oly_eng_2_4 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  D. Having pulled
+                </button>
+              </div>
+              <div id="feedback-oly_eng_2_4" class="hidden"></div>
+            </div>
+
+          </div>
+        </div>
+      </article>
+
+      <!-- ========================================== -->
+      <!-- CHUYÊN ĐỀ 3: OBSCURE C2 PHRASAL VERBS -->
+      <!-- ========================================== -->
+      <article id="chuyende-3" class="lesson-section bg-white dark:bg-dark-surface rounded-2xl border border-gray-200 dark:border-gray-800 p-6 sm:p-8 shadow-sm space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-gray-100 dark:border-gray-800 pb-4">
+          <div class="flex items-center gap-2.5">
+            <span class="px-3 py-1 rounded-lg bg-amber-100 dark:bg-amber-900/50 text-amber-800 dark:text-amber-300 font-black text-xs">
+              CHUYÊN ĐỀ 03
+            </span>
+            <span class="text-xs font-semibold text-gray-500 dark:text-gray-400">Cụm Động Từ Hiếm &amp; Nghĩa Bóng Độc Đáo C2</span>
+          </div>
+          <span class="text-xs font-bold text-amber-600 dark:text-amber-400 flex items-center gap-1">
+            <i class="fa-regular fa-clock"></i> Thời lượng dự kiến: 90 phút
+          </span>
+        </div>
+
+        <div class="space-y-4">
+          <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">
+            Obscure C2 Phrasal Verbs &amp; Figurative Metaphors
+          </h2>
+          <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+            Các cụm động từ trong đề thi Olympic thường mượn hình tượng động vật hoặc hành động dân gian độc đáo để diễn tả các trạng thái tâm lý và tương tác xã hội tinh tế:
+          </p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+            <div class="p-3 rounded-xl bg-amber-50/50 dark:bg-gray-800/60 border border-amber-200/60 dark:border-gray-700">
+              <strong class="text-amber-700 dark:text-amber-300">ferret out:</strong>
+              <p class="mt-1 text-gray-600 dark:text-gray-300">lùng sục, đào bới ra bí mật bị che giấu kỹ lưỡng.</p>
+            </div>
+            <div class="p-3 rounded-xl bg-amber-50/50 dark:bg-gray-800/60 border border-amber-200/60 dark:border-gray-700">
+              <strong class="text-amber-700 dark:text-amber-300">cotton on to:</strong>
+              <p class="mt-1 text-gray-600 dark:text-gray-300">cuối cùng cũng ngộ ra, hiểu ra được chân tướng sự việc.</p>
+            </div>
+            <div class="p-3 rounded-xl bg-amber-50/50 dark:bg-gray-800/60 border border-amber-200/60 dark:border-gray-700">
+              <strong class="text-amber-700 dark:text-amber-300">palm off on:</strong>
+              <p class="mt-1 text-gray-600 dark:text-gray-300">lừa gạt tống khứ đồ giả, đồ dỏm sang cho người khác.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quizzes -->
+        <div class="pt-4 border-t border-gray-100 dark:border-gray-800 space-y-4">
+          <h4 class="text-sm font-bold text-gray-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-circle-check text-amber-500"></i> Bài Tập Tự Luyện Chuyên Đề 3
+          </h4>
+          <div class="space-y-4 text-xs sm:text-sm">
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 space-y-3">
+              <p class="font-bold text-gray-900 dark:text-white">
+                1. It took several weeks of meticulous investigative journalism to ________ the embezzlement scheme.
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <button onclick="checkQuiz('oly_eng_3_1', 0, true, 'Chính xác! Ferret out: điều tra, lùng sục ra bí mật sau nhiều gian nan.')" class="quiz-btn-oly_eng_3_1 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  A. ferret out
+                </button>
+                <button onclick="checkQuiz('oly_eng_3_1', 1, false, 'Sai. Beaver away: làm việc cặm cụi chăm chỉ.')" class="quiz-btn-oly_eng_3_1 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  B. beaver away
+                </button>
+                <button onclick="checkQuiz('oly_eng_3_1', 2, false, 'Sai. Badger into: quấy rầy bắt ai làm gì.')" class="quiz-btn-oly_eng_3_1 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  C. badger into
+                </button>
+                <button onclick="checkQuiz('oly_eng_3_1', 3, false, 'Sai.')" class="quiz-btn-oly_eng_3_1 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  D. monkey with
+                </button>
+              </div>
+              <div id="feedback-oly_eng_3_1" class="hidden"></div>
+            </div>
+
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 space-y-3">
+              <p class="font-bold text-gray-900 dark:text-white">
+                2. The fraudulent art dealer attempted to ________ an ingenious forgery as an authentic Rembrandt.
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <button onclick="checkQuiz('oly_eng_3_2', 0, true, 'Chính xác! Palm off something as something: tống khứ, lừa bán đồ giả mạo như thể là đồ thật.')" class="quiz-btn-oly_eng_3_2 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  A. palm off
+                </button>
+                <button onclick="checkQuiz('oly_eng_3_2', 1, false, 'Sai. Butter up: tâng bốc nịnh hót.')" class="quiz-btn-oly_eng_3_2 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  B. butter up
+                </button>
+                <button onclick="checkQuiz('oly_eng_3_2', 2, false, 'Sai.')" class="quiz-btn-oly_eng_3_2 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  C. sponge off
+                </button>
+                <button onclick="checkQuiz('oly_eng_3_2', 3, false, 'Sai.')" class="quiz-btn-oly_eng_3_2 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  D. rope in
+                </button>
+              </div>
+              <div id="feedback-oly_eng_3_2" class="hidden"></div>
+            </div>
+
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 space-y-3">
+              <p class="font-bold text-gray-900 dark:text-white">
+                3. It took him hours before he finally ________ to the fact that they were pulling his leg.
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <button onclick="checkQuiz('oly_eng_3_3', 0, true, 'Chính xác! Cotton on to: hiểu ra, nhận thức được điều gì.')" class="quiz-btn-oly_eng_3_3 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  A. cottoned on
+                </button>
+                <button onclick="checkQuiz('oly_eng_3_3', 1, false, 'Sai. Woolen off không tồn tại.')" class="quiz-btn-oly_eng_3_3 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  B. woolened off
+                </button>
+                <button onclick="checkQuiz('oly_eng_3_3', 2, false, 'Sai.')" class="quiz-btn-oly_eng_3_3 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  C. leathered down
+                </button>
+                <button onclick="checkQuiz('oly_eng_3_3', 3, false, 'Sai.')" class="quiz-btn-oly_eng_3_3 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  D. silked up
+                </button>
+              </div>
+              <div id="feedback-oly_eng_3_3" class="hidden"></div>
+            </div>
+
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 space-y-3">
+              <p class="font-bold text-gray-900 dark:text-white">
+                4. The recalcitrant union leaders finally ________ in under mounting pressure from the government.
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <button onclick="checkQuiz('oly_eng_3_4', 0, true, 'Chính xác! Cave in: đầu hàng, nhượng bộ sau một thời gian kiên quyết chống cự.')" class="quiz-btn-oly_eng_3_4 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  A. caved in
+                </button>
+                <button onclick="checkQuiz('oly_eng_3_4', 1, false, 'Sai.')" class="quiz-btn-oly_eng_3_4 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  B. walled up
+                </button>
+                <button onclick="checkQuiz('oly_eng_3_4', 2, false, 'Sai.')" class="quiz-btn-oly_eng_3_4 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  C. roofed over
+                </button>
+                <button onclick="checkQuiz('oly_eng_3_4', 3, false, 'Sai.')" class="quiz-btn-oly_eng_3_4 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  D. tunnelled out
+                </button>
+              </div>
+              <div id="feedback-oly_eng_3_4" class="hidden"></div>
+            </div>
+
+          </div>
+        </div>
+      </article>
+
+      <!-- ========================================== -->
+      <!-- CHUYÊN ĐỀ 4: CLASSICAL ALLUSIONS & LATINISMS -->
+      <!-- ========================================== -->
+      <article id="chuyende-4" class="lesson-section bg-white dark:bg-dark-surface rounded-2xl border border-gray-200 dark:border-gray-800 p-6 sm:p-8 shadow-sm space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-gray-100 dark:border-gray-800 pb-4">
+          <div class="flex items-center gap-2.5">
+            <span class="px-3 py-1 rounded-lg bg-amber-100 dark:bg-amber-900/50 text-amber-800 dark:text-amber-300 font-black text-xs">
+              CHUYÊN ĐỀ 04
+            </span>
+            <span class="text-xs font-semibold text-gray-500 dark:text-gray-400">Thành Ngữ Điển Tích Văn Học Hy-La &amp; Cụm Từ Gốc Latinh</span>
+          </div>
+          <span class="text-xs font-bold text-amber-600 dark:text-amber-400 flex items-center gap-1">
+            <i class="fa-regular fa-clock"></i> Thời lượng dự kiến: 100 phút
+          </span>
+        </div>
+
+        <div class="space-y-4">
+          <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">
+            Classical Allusions, Greco-Roman Mythology &amp; Latin Phrases in English
+          </h2>
+          <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+            Các kỳ thi chọn Đội tuyển Quốc tế (TST) và Olympic 30/4 đặc biệt yêu thích các câu hỏi về thành ngữ xuất phát từ thần thoại Hy Lạp hoặc các cụm từ Latinh cổ:
+          </p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+            <div class="p-4 rounded-xl bg-amber-50/50 dark:bg-amber-950/30 border border-amber-200/60 dark:border-amber-900/40 space-y-1.5">
+              <h4 class="font-bold text-amber-900 dark:text-amber-300 uppercase">Mythological Allusions</h4>
+              <p>• <strong>Sword of Damocles:</strong> mối hiểm họa cận kề, lúc nào cũng rình rập rơi xuống đầu.</p>
+              <p>• <strong>Procrustean bed:</strong> khuôn mẫu áp đặt độc đoán, bắt mọi thứ phải gò ép theo một quy chuẩn phi lý.</p>
+              <p>• <strong>Sisyphean task:</strong> công việc cực nhọc vô tận, lặp đi lặp lại mà không bao giờ có kết quả trọn vẹn.</p>
+              <p>• <strong>Pyrrhic victory:</strong> chiến thắng với cái giá quá đắt, chẳng khác nào thất bại.</p>
+            </div>
+
+            <div class="p-4 rounded-xl bg-purple-50/50 dark:bg-purple-950/30 border border-purple-200/60 dark:border-purple-900/40 space-y-1.5">
+              <h4 class="font-bold text-purple-900 dark:text-purple-300 uppercase">Prestigious Latinisms</h4>
+              <p>• <strong>sine qua non:</strong> điều kiện tiên quyết không thể thiếu.</p>
+              <p>• <strong>prima facie:</strong> bằng chứng thoạt nhìn ban đầu là hiển nhiên.</p>
+              <p>• <strong>ad hoc:</strong> thành lập đặc biệt để giải quyết một tình huống phát sinh cụ thể.</p>
+              <p>• <strong>non sequitur:</strong> kết luận ngô nghê, không hề liên quan đến tiền đề trước đó.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quizzes -->
+        <div class="pt-4 border-t border-gray-100 dark:border-gray-800 space-y-4">
+          <h4 class="text-sm font-bold text-gray-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-circle-check text-amber-500"></i> Bài Tập Tự Luyện Chuyên Đề 4
+          </h4>
+          <div class="space-y-4 text-xs sm:text-sm">
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 space-y-3">
+              <p class="font-bold text-gray-900 dark:text-white">
+                1. "Maintaining absolute cryptographic security is a(n) ________ for any sovereign digital currency."
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <button onclick="checkQuiz('oly_eng_4_1', 0, true, 'Chính xác! Sine qua non: điều kiện tiên quyết bắt buộc phải có.')" class="quiz-btn-oly_eng_4_1 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  A. sine qua non
+                </button>
+                <button onclick="checkQuiz('oly_eng_4_1', 1, false, 'Sai. Modus operandi: phương thức hoạt động gây án.')" class="quiz-btn-oly_eng_4_1 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  B. modus operandi
+                </button>
+                <button onclick="checkQuiz('oly_eng_4_1', 2, false, 'Sai. Prima facie: bằng chứng ban đầu.')" class="quiz-btn-oly_eng_4_1 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  C. prima facie
+                </button>
+                <button onclick="checkQuiz('oly_eng_4_1', 3, false, 'Sai.')" class="quiz-btn-oly_eng_4_1 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  D. ad infinitum
+                </button>
+              </div>
+              <div id="feedback-oly_eng_4_1" class="hidden"></div>
+            </div>
+
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 space-y-3">
+              <p class="font-bold text-gray-900 dark:text-white">
+                2. "The army secured a ________ victory; though they captured the citadel, they lost three-quarters of their battalions."
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <button onclick="checkQuiz('oly_eng_4_2', 0, true, 'Chính xác! Pyrrhic victory: chiến thắng phải trả giá quá đắt khiến người thắng cuộc gần như kiệt quệ.')" class="quiz-btn-oly_eng_4_2 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  A. Pyrrhic
+                </button>
+                <button onclick="checkQuiz('oly_eng_4_2', 1, false, 'Sai. Sisyphean: việc cực nhọc không hồi kết.')" class="quiz-btn-oly_eng_4_2 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  B. Sisyphean
+                </button>
+                <button onclick="checkQuiz('oly_eng_4_2', 2, false, 'Sai. Procrustean: áp đặt gò ép.')" class="quiz-btn-oly_eng_4_2 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  C. Procrustean
+                </button>
+                <button onclick="checkQuiz('oly_eng_4_2', 3, false, 'Sai.')" class="quiz-btn-oly_eng_4_2 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  D. Spartan
+                </button>
+              </div>
+              <div id="feedback-oly_eng_4_2" class="hidden"></div>
+            </div>
+
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 space-y-3">
+              <p class="font-bold text-gray-900 dark:text-white">
+                3. "The threat of sudden retaliatory tariffs hung over the exporter like the sword of ________."
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <button onclick="checkQuiz('oly_eng_4_3', 0, true, 'Chính xác! The sword of Damocles: thanh kiếm của Damocles treo lơ lửng bằng một sợi lông ngựa, tượng trưng cho mối nguy nan chực chờ.')" class="quiz-btn-oly_eng_4_3 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  A. Damocles
+                </button>
+                <button onclick="checkQuiz('oly_eng_4_3', 1, false, 'Sai.')" class="quiz-btn-oly_eng_4_3 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  B. Achilles
+                </button>
+                <button onclick="checkQuiz('oly_eng_4_3', 2, false, 'Sai.')" class="quiz-btn-oly_eng_4_3 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  C. Prometheus
+                </button>
+                <button onclick="checkQuiz('oly_eng_4_3', 3, false, 'Sai.')" class="quiz-btn-oly_eng_4_3 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  D. Hercules
+                </button>
+              </div>
+              <div id="feedback-oly_eng_4_3" class="hidden"></div>
+            </div>
+
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 space-y-3">
+              <p class="font-bold text-gray-900 dark:text-white">
+                4. "The ministry's rigid curriculum imposed a ________ bed on creative pedagogy across high schools."
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <button onclick="checkQuiz('oly_eng_4_4', 0, true, 'Chính xác! Procrustean bed: chiếc giường của Procrustes (ai dài hơn thì chặt chân, ai ngắn hơn thì kéo giãn ra), nghĩa bóng là sự ép buộc gò khuôn tàn bạo.')" class="quiz-btn-oly_eng_4_4 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  A. Procrustean
+                </button>
+                <button onclick="checkQuiz('oly_eng_4_4', 1, false, 'Sai.')" class="quiz-btn-oly_eng_4_4 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  B. Tantalizing
+                </button>
+                <button onclick="checkQuiz('oly_eng_4_4', 2, false, 'Sai.')" class="quiz-btn-oly_eng_4_4 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  C. Oedipal
+                </button>
+                <button onclick="checkQuiz('oly_eng_4_4', 3, false, 'Sai.')" class="quiz-btn-oly_eng_4_4 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  D. Narcissistic
+                </button>
+              </div>
+              <div id="feedback-oly_eng_4_4" class="hidden"></div>
+            </div>
+
+          </div>
+        </div>
+      </article>
+
+      <!-- ========================================== -->
+      <!-- ========================================== -->
+      <!-- CHUYÊN ĐỀ 5: MORPHOLOGICAL NEOLOGISMS & ROOTS -->
+      <!-- ========================================== -->
+      <article id="chuyende-5" class="lesson-section bg-white dark:bg-dark-surface rounded-2xl border border-gray-200 dark:border-gray-800 p-6 sm:p-8 shadow-sm space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-gray-100 dark:border-gray-800 pb-4">
+          <div class="flex items-center gap-2.5">
+            <span class="px-3 py-1 rounded-lg bg-amber-100 dark:bg-amber-900/50 text-amber-800 dark:text-amber-300 font-black text-xs">
+              CHUYÊN ĐỀ 05
+            </span>
+            <span class="text-xs font-semibold text-gray-500 dark:text-gray-400">Hình Thái Học Đột Biến, Tiếp Vĩ Ngữ Cổ &amp; Phái Sinh Gốc Hy - La</span>
+          </div>
+          <span class="text-xs font-bold text-amber-600 dark:text-amber-400 flex items-center gap-1">
+            <i class="fa-regular fa-clock"></i> Thời lượng dự kiến: 90 phút
+          </span>
+        </div>
+
+        <div class="space-y-4">
+          <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">
+            Morphological Neologisms, Archaic Suffixes &amp; Classical Derivations
+          </h2>
+          <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+            Trong các đề thi HSG Quốc gia và Olympic 30/4, phần cấu tạo từ (Word Formation) ở cấp độ C2 kiểm tra các tiếp vĩ ngữ học thuật cổ, hiện tượng rút gọn ngược (Back-formation), từ ghép lai tạo (Portmanteau) và sự phân hóa ngữ nghĩa đa tầng giữa các phái sinh cùng gốc:
+          </p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+            <div class="p-4 rounded-xl bg-amber-50/50 dark:bg-amber-950/30 border border-amber-200/60 dark:border-amber-900/40 space-y-2">
+              <h4 class="font-bold text-amber-900 dark:text-amber-300 uppercase flex items-center gap-1.5">
+                <i class="fa-solid fa-spell-check text-amber-600"></i> Tiếp Vĩ Ngữ Cổ &amp; Ghép Hợp Đặc Thù
+              </h4>
+              <ul class="space-y-1.5 text-gray-700 dark:text-gray-300">
+                <li>• <strong>-monger:</strong> chỉ kẻ gieo rắc điều tiêu cực hoặc thương buôn: <em>scaremonger</em> (kẻ tung tin đồn gây hoang mang), <em>warmonger</em> (kẻ hiếu chiến), <em>rumourmonger</em>, <em>ironmonger</em>.</li>
+                <li>• <strong>-wright:</strong> người thợ chế tác thủ công bậc thầy (chú ý chữ 'w'): <em>playwright</em> (nhà soạn kịch), <em>shipwright</em> (thợ đóng tàu), <em>wheelwright</em>.</li>
+                <li>• <strong>-wise:</strong> xét theo phương diện / hướng chuyển động: <em>clockwise</em> (theo chiều kim đồng hồ), <em>career-wise</em> (về mặt sự nghiệp), <em>streetwise</em> (tinh khôn, trải đời).</li>
+                <li>• <strong>-bound:</strong> bị ràng buộc / kìm hãm / hướng tới: <em>duty-bound</em> (buộc phải làm vì nghĩa vụ), <em>fog-bound</em> (kẹt do sương mù), <em>desk-bound</em>, <em>earthbound</em>.</li>
+              </ul>
+            </div>
+
+            <div class="p-4 rounded-xl bg-purple-50/50 dark:bg-purple-950/30 border border-purple-200/60 dark:border-purple-900/40 space-y-2">
+              <h4 class="font-bold text-purple-900 dark:text-purple-300 uppercase flex items-center gap-1.5">
+                <i class="fa-solid fa-diagram-project text-purple-600"></i> Phân Hóa Ngữ Nghĩa &amp; Đột Biến Hình Thái
+              </h4>
+              <ul class="space-y-1.5 text-gray-700 dark:text-gray-300">
+                <li>• <strong>Back-formation:</strong> rút bỏ hậu tố giả lập để tạo động từ mới: <em>burglar &rarr; burgle</em>, <em>editor &rarr; edit</em>, <em>baby-sitter &rarr; baby-sit</em>.</li>
+                <li>• <strong>Portmanteau:</strong> ghép lai tạp 2 từ gốc: <em>staycation</em> (stay + vacation), <em>infotainment</em>, <em>brunch</em>, <em>podcast</em> (iPod + broadcast).</li>
+                <li>• <strong>Dị biệt phái sinh ba nhánh (Multi-branch Split):</strong>
+                  <br>- <em>continue:</em> <em>continuation</em> (sự tiếp tục lại sau gián đoạn) vs <em>continuity</em> (tính liền mạch) vs <em>continuum</em> (dải phổ liên tục vô hạn).
+                  <br>- <em>industry:</em> <em>industrial</em> (thuộc công nghiệp) vs <em>industrious</em> (siêng năng, cần mẫn).
+                  <br>- <em>moment:</em> <em>momentary</em> (thoáng qua chốc lát) vs <em>momentous</em> (trọng đại mang tính lịch sử).
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quizzes Chuyên đề 5 -->
+        <div class="pt-4 border-t border-gray-100 dark:border-gray-800 space-y-4">
+          <h4 class="text-sm font-bold text-gray-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-circle-check text-amber-500"></i> Bài Tập Tự Luyện Chuyên Đề 5 (Chuẩn Olympic &amp; C2)
+          </h4>
+          <div class="space-y-4 text-xs sm:text-sm">
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 space-y-3">
+              <p class="font-bold text-gray-900 dark:text-white">
+                1. The sensationalist press was severely castigated by the judiciary for acting as an irresponsible ________, inciting mass hysteria over the epidemic.
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <button onclick="checkQuiz('oly_eng_5_1', 0, true, 'Chính xác! Scaremonger = kẻ gieo rắc tin đồn nhảm gây hoang mang, sợ hãi trong quần chúng nhân dân.')" class="quiz-btn-oly_eng_5_1 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  A. scaremonger
+                </button>
+                <button onclick="checkQuiz('oly_eng_5_1', 1, false, 'Sai. Warmonger = kẻ hiếu chiến muốn kích động chiến tranh.')" class="quiz-btn-oly_eng_5_1 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  B. warmonger
+                </button>
+                <button onclick="checkQuiz('oly_eng_5_1', 2, false, 'Sai. Playwright = nhà soạn kịch sân khấu.')" class="quiz-btn-oly_eng_5_1 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  C. playwright
+                </button>
+                <button onclick="checkQuiz('oly_eng_5_1', 3, false, 'Sai. Ironmonger = người bán đồ kim khí.')" class="quiz-btn-oly_eng_5_1 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  D. ironmonger
+                </button>
+              </div>
+              <div id="feedback-oly_eng_5_1" class="hidden"></div>
+            </div>
+
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 space-y-3">
+              <p class="font-bold text-gray-900 dark:text-white">
+                2. Which of the following words came into the English lexicon through the morphological process of <strong>back-formation</strong>?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <button onclick="checkQuiz('oly_eng_5_2', 0, true, 'Chính xác! Động từ 'burgle' được hình thành nhờ back-formation từ danh từ gốc 'burglar' (chứ không phải burglar phái sinh từ burgle).')" class="quiz-btn-oly_eng_5_2 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  A. burgle
+                </button>
+                <button onclick="checkQuiz('oly_eng_5_2', 1, false, 'Sai. Staycation là từ ghép lai tạo (portmanteau) giữa stay và vacation.')" class="quiz-btn-oly_eng_5_2 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  B. staycation
+                </button>
+                <button onclick="checkQuiz('oly_eng_5_2', 2, false, 'Sai. Ungentlemanliness là quá trình tiếp đầu/tiếp vĩ thông thường (prefixation + suffixation).')" class="quiz-btn-oly_eng_5_2 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  C. ungentlemanliness
+                </button>
+                <button onclick="checkQuiz('oly_eng_5_2', 3, false, 'Sai. Hypercritical dùng tiền tố hyper-.')" class="quiz-btn-oly_eng_5_2 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  D. hypercritical
+                </button>
+              </div>
+              <div id="feedback-oly_eng_5_2" class="hidden"></div>
+            </div>
+
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 space-y-3">
+              <p class="font-bold text-gray-900 dark:text-white">
+                3. The cognitive psychologist argued that human consciousness exists along an unbroken ________ of mental states rather than a series of disconnected phases.
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <button onclick="checkQuiz('oly_eng_5_3', 0, true, 'Chính xác! Continuum = một thể/dải liên tục liền mạch không có ranh giới phân tách rõ rệt.')" class="quiz-btn-oly_eng_5_3 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  A. continuum
+                </button>
+                <button onclick="checkQuiz('oly_eng_5_3', 1, false, 'Sai. Continuation = sự tiếp diễn lại của một câu chuyện hoặc chuỗi sự việc sau khi ngắt quãng.')" class="quiz-btn-oly_eng_5_3 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  B. continuation
+                </button>
+                <button onclick="checkQuiz('oly_eng_5_3', 2, false, 'Sai. Continuity = tính liên tục không ngắt quãng (dùng cho công việc, dòng phim ảnh).')" class="quiz-btn-oly_eng_5_3 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  C. continuity
+                </button>
+                <button onclick="checkQuiz('oly_eng_5_3', 3, false, 'Sai ngữ pháp (danh từ không phù hợp ngữ cảnh).')" class="quiz-btn-oly_eng_5_3 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  D. continuance
+                </button>
+              </div>
+              <div id="feedback-oly_eng_5_3" class="hidden"></div>
+            </div>
+
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 space-y-3">
+              <p class="font-bold text-gray-900 dark:text-white">
+                4. Feeling ________ by his sacred sworn pledge to the late monarch, Lord William refused to ratify the treacherous petition.
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <button onclick="checkQuiz('oly_eng_5_4', 0, true, 'Chính xác! Duty-bound = bị ràng buộc chặt chẽ bởi danh dự, nghĩa vụ hoặc lời thề thiêng liêng.')" class="quiz-btn-oly_eng_5_4 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  A. duty-bound
+                </button>
+                <button onclick="checkQuiz('oly_eng_5_4', 1, false, 'Sai. Dutiful = có tính chất vâng lời, có hiếu vụ thông thường.')" class="quiz-btn-oly_eng_5_4 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  B. dutiful
+                </button>
+                <button onclick="checkQuiz('oly_eng_5_4', 2, false, 'Sai. Duty-free = miễn thuế.')" class="quiz-btn-oly_eng_5_4 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  C. duty-free
+                </button>
+                <button onclick="checkQuiz('oly_eng_5_4', 3, false, 'Sai nét nghĩa học thuật.')" class="quiz-btn-oly_eng_5_4 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  D. duty-conscious
+                </button>
+              </div>
+              <div id="feedback-oly_eng_5_4" class="hidden"></div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- ========================================== -->
+      <!-- CHUYÊN ĐỀ 6: MICRO-SYNTACTIC ERROR ANALYSIS -->
+      <!-- ========================================== -->
+      <article id="chuyende-6" class="lesson-section bg-white dark:bg-dark-surface rounded-2xl border border-gray-200 dark:border-gray-800 p-6 sm:p-8 shadow-sm space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-gray-100 dark:border-gray-800 pb-4">
+          <div class="flex items-center gap-2.5">
+            <span class="px-3 py-1 rounded-lg bg-amber-100 dark:bg-amber-900/50 text-amber-800 dark:text-amber-300 font-black text-xs">
+              CHUYÊN ĐỀ 06
+            </span>
+            <span class="text-xs font-semibold text-gray-500 dark:text-gray-400">Phát Hiện Vi Lỗi Cú Pháp Tầng Sâu &amp; Sửa Sai Đoạn Văn Triết Học</span>
+          </div>
+          <span class="text-xs font-bold text-amber-600 dark:text-amber-400 flex items-center gap-1">
+            <i class="fa-regular fa-clock"></i> Thời lượng dự kiến: 100 phút
+          </span>
+        </div>
+
+        <div class="space-y-4">
+          <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">
+            Olympic Micro-syntactic Error Analysis &amp; Cryptic Grammatical Fallacies
+          </h2>
+          <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+            Phần sửa lỗi sai (Error Identification) trong đề thi Olympic và Vòng tuyển chọn Đội tuyển Quốc tế (TST) không kiểm tra lỗi chính tả cơ bản mà nhắm vào các "vi lỗi cú pháp" tinh vi: biến cách cách tử của đại từ, lỗi phân từ lơ lửng, lỗi so sánh khập khiễng phi logic và bẫy hòa hợp vị ngữ giả định:
+          </p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+            <div class="p-4 rounded-xl bg-amber-50/50 dark:bg-amber-950/30 border border-amber-200/60 dark:border-amber-900/40 space-y-2">
+              <h4 class="font-bold text-amber-900 dark:text-amber-300 uppercase flex items-center gap-1.5">
+                <i class="fa-solid fa-triangle-exclamation text-amber-600"></i> Ba Cạm Bẫy Cú Pháp Vi Mô "Tử Thần"
+              </h4>
+              <ul class="space-y-2 text-gray-700 dark:text-gray-300">
+                <li>• <strong>Case Inflection in Compound Objects:</strong> Sau giới từ (between, except, like), đại từ bắt buộc phải ở dạng tân ngữ: <em>Between you and me</em> (ĐÚNG) &mdash; cấm dùng <em>Between you and I</em>.</li>
+                <li>• <strong>Dangling Modifier (Phân từ lơ lửng):</strong> Khi mệnh đề phân từ đầu câu không có cùng chủ ngữ logic với mệnh đề chính:
+                  <br><span class="text-rose-600 font-medium">&times; Walking down the boulevard, the museum came into view.</span> (Bảo tàng không thể đi bộ).
+                  <br><span class="text-emerald-600 font-medium">&check; Walking down the boulevard, we saw the museum.</span>
+                </li>
+                <li>• <strong>Illogical / Faulty Comparison:</strong> So sánh khập khiễng giữa vật thể và đối tượng không đồng nhất:
+                  <br><span class="text-rose-600 font-medium">&times; The cognitive aptitude of crows exceeds dogs.</span>
+                  <br><span class="text-emerald-600 font-medium">&check; The cognitive aptitude of crows exceeds that of dogs.</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="p-4 rounded-xl bg-purple-50/50 dark:bg-purple-950/30 border border-purple-200/60 dark:border-purple-900/40 space-y-2">
+              <h4 class="font-bold text-purple-900 dark:text-purple-300 uppercase flex items-center gap-1.5">
+                <i class="fa-solid fa-code-merge text-purple-600"></i> Hòa Hợp Giả Định &amp; Trật Tự Thành Phần Song Hành
+              </h4>
+              <ul class="space-y-2 text-gray-700 dark:text-gray-300">
+                <li>• <strong>Mandative Subjunctive:</strong> Các động từ chỉ mệnh lệnh, yêu cầu (demand, recommend, insist) đòi hỏi động từ nguyên thể không chia: <em>It is imperative that each envoy (submit, not submits) their credential.</em></li>
+                <li>• <strong>Correlative Conjunction Parallelism:</strong> Cấu trúc <em>not only... but also...</em>, <em>neither... nor...</em> bắt buộc hai vế tương thích hoàn hảo về cấu trúc ngữ pháp (danh từ song song danh từ, mệnh đề đảo ngữ song song mệnh đề đảo ngữ).</li>
+                <li>• <strong>Prepositional Pied-piping:</strong> Đưa giới từ lên trước đại từ quan hệ trong văn phong trang trọng: <em>the extent to which</em>, <em>the premise on which</em>.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quizzes Chuyên đề 6 -->
+        <div class="pt-4 border-t border-gray-100 dark:border-gray-800 space-y-4">
+          <h4 class="text-sm font-bold text-gray-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-circle-check text-amber-500"></i> Bài Tập Tự Luyện Chuyên Đề 6 (Chuẩn Olympic &amp; C2)
+          </h4>
+          <div class="space-y-4 text-xs sm:text-sm">
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 space-y-3">
+              <p class="font-bold text-gray-900 dark:text-white">
+                1. Identify the underlined part that contains a grammatical error: "The grand cathedral exhibits ornate stone gargoyles that <u>amazes</u> (A) <u>whomever</u> (B) walks through the cloister, <u>standing</u> (C) as a testament to medieval craftsmanship <u>dating back to</u> (D) the twelfth century."
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <button onclick="checkQuiz('oly_eng_6_1', 0, true, 'Chính xác! Lỗi hòa hợp chủ vị mệnh đề quan hệ: gargoyles là danh từ số nhiều, nên động từ phải chia là 'amaze' (không có 's').')" class="quiz-btn-oly_eng_6_1 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  A. amazes &rarr; amaze
+                </button>
+                <button onclick="checkQuiz('oly_eng_6_1', 1, false, 'Sai. Whomever đứng làm tân ngữ cho động từ amaze là chính xác.')" class="quiz-btn-oly_eng_6_1 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  B. whomever
+                </button>
+                <button onclick="checkQuiz('oly_eng_6_1', 2, false, 'Sai. Standing phân từ hiện tại bổ nghĩa cho cathedral là chuẩn.')" class="quiz-btn-oly_eng_6_1 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  C. standing
+                </button>
+                <button onclick="checkQuiz('oly_eng_6_1', 3, false, 'Sai. Dating back to là phân từ rút gọn chính xác.')" class="quiz-btn-oly_eng_6_1 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  D. dating back to
+                </button>
+              </div>
+              <div id="feedback-oly_eng_6_1" class="hidden"></div>
+            </div>
+
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 space-y-3">
+              <p class="font-bold text-gray-900 dark:text-white">
+                2. Choose the correct form to complete the formal legal statement: "The protracted boundary dispute between ________ was resolved amicably by the maritime tribunal."
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <button onclick="checkQuiz('oly_eng_6_2', 0, true, 'Chính xác! Đại từ đứng sau giới từ 'between' bắt buộc phải ở cách tân ngữ (objective case): 'him and me'.')" class="quiz-btn-oly_eng_6_2 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  A. him and me
+                </button>
+                <button onclick="checkQuiz('oly_eng_6_2', 1, false, 'Sai. 'he and I' là cách chủ ngữ (nominative case), không được làm tân ngữ giới từ.')" class="quiz-btn-oly_eng_6_2 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  B. he and I
+                </button>
+                <button onclick="checkQuiz('oly_eng_6_2', 2, false, 'Sai. 'he' là cách chủ ngữ.')" class="quiz-btn-oly_eng_6_2 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  C. he and me
+                </button>
+                <button onclick="checkQuiz('oly_eng_6_2', 3, false, 'Sai. 'I' không thể làm tân ngữ sau giới từ.')" class="quiz-btn-oly_eng_6_2 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  D. him and I
+                </button>
+              </div>
+              <div id="feedback-oly_eng_6_2" class="hidden"></div>
+            </div>
+
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 space-y-3">
+              <p class="font-bold text-gray-900 dark:text-white">
+                3. Which sentence completely eliminates the fatal flaw of a <strong>dangling participle</strong>?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <button onclick="checkQuiz('oly_eng_6_3', 0, true, 'Chính xác! Chủ ngữ 'the research team' thực hiện hành động 'having deciphered the codex', tránh hoàn toàn lỗi phân từ lơ lửng.')" class="quiz-btn-oly_eng_6_3 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  A. Having deciphered the codex, the research team announced the breakthrough.
+                </button>
+                <button onclick="checkQuiz('oly_eng_6_3', 1, false, 'Sai. The manuscript không thể tự giải mã chính mình (dangling modifier).')" class="quiz-btn-oly_eng_6_3 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  B. Having deciphered the codex, the manuscript was published online.
+                </button>
+                <button onclick="checkQuiz('oly_eng_6_3', 2, false, 'Sai. An astonishment không thể giải mã codex.')" class="quiz-btn-oly_eng_6_3 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  C. Having deciphered the codex, an immense astonishment swept the academy.
+                </button>
+                <button onclick="checkQuiz('oly_eng_6_3', 3, false, 'Sai. The ancient ruins không thể giải mã codex.')" class="quiz-btn-oly_eng_6_3 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  D. Having deciphered the codex, the ancient ruins yielded new secrets.
+                </button>
+              </div>
+              <div id="feedback-oly_eng_6_3" class="hidden"></div>
+            </div>
+
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 space-y-3">
+              <p class="font-bold text-gray-900 dark:text-white">
+                4. Select the option that remedies the fault of <strong>illogical comparison</strong>: "The linguistic dexterity of corvids is remarkably comparable to ________."
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <button onclick="checkQuiz('oly_eng_6_4', 0, true, 'Chính xác! Phải dùng đại từ chỉ định 'that of' để thay thế cho danh từ số ít trừu tượng 'linguistic dexterity', so sánh khả năng với khả năng chứ không so với cá thể con vật.')" class="quiz-btn-oly_eng_6_4 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  A. that of primates
+                </button>
+                <button onclick="checkQuiz('oly_eng_6_4', 1, false, 'Sai. So sánh dexterity với cả con khỉ (primates) là phi lý.')" class="quiz-btn-oly_eng_6_4 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  B. primates
+                </button>
+                <button onclick="checkQuiz('oly_eng_6_4', 2, false, 'Sai. Dexterity là danh từ không đếm được/số ít nên không dùng 'those of'.')" class="quiz-btn-oly_eng_6_4 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  C. those of primates
+                </button>
+                <button onclick="checkQuiz('oly_eng_6_4', 3, false, 'Sai cấu trúc ngữ pháp học thuật.')" class="quiz-btn-oly_eng_6_4 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  D. primate's
+                </button>
+              </div>
+              <div id="feedback-oly_eng_6_4" class="hidden"></div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- ========================================== -->
+      <!-- CHUYÊN ĐỀ 7: TRI-GAPPED & PHILOSOPHICAL OPEN CLOZE -->
+      <!-- ========================================== -->
+      <article id="chuyende-7" class="lesson-section bg-white dark:bg-dark-surface rounded-2xl border border-gray-200 dark:border-gray-800 p-6 sm:p-8 shadow-sm space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-gray-100 dark:border-gray-800 pb-4">
+          <div class="flex items-center gap-2.5">
+            <span class="px-3 py-1 rounded-lg bg-amber-100 dark:bg-amber-900/50 text-amber-800 dark:text-amber-300 font-black text-xs">
+              CHUYÊN ĐỀ 07
+            </span>
+            <span class="text-xs font-semibold text-gray-500 dark:text-gray-400">Kỹ Thuật Điền Từ Đoạn Văn Triết Học Cổ Điển &amp; Liên Từ Cổ</span>
+          </div>
+          <span class="text-xs font-bold text-amber-600 dark:text-amber-400 flex items-center gap-1">
+            <i class="fa-regular fa-clock"></i> Thời lượng dự kiến: 90 phút
+          </span>
+        </div>
+
+        <div class="space-y-4">
+          <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">
+            Tri-gapped &amp; Philosophical Open Cloze: Archaic Particles &amp; High Register
+          </h2>
+          <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+            Dạng bài Open Cloze trong các kỳ thi Olympic khu vực và toàn quốc thường trích dẫn các văn bản hàn lâm thế kỷ 18-20 (Immanuel Kant, John Stuart Mill, Bertrand Russell). Muốn đạt điểm tối đa, học sinh phải nằm lòng hệ thống liên từ cổ và cấu trúc ngữ pháp chức năng:
+          </p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+            <div class="p-4 rounded-xl bg-amber-50/50 dark:bg-amber-950/30 border border-amber-200/60 dark:border-amber-900/40 space-y-2">
+              <h4 class="font-bold text-amber-900 dark:text-amber-300 uppercase flex items-center gap-1.5">
+                <i class="fa-solid fa-feather-pointed text-amber-600"></i> Hệ Thống Liên Từ &amp; Đại Từ Cổ Điển
+              </h4>
+              <ul class="space-y-2 text-gray-700 dark:text-gray-300">
+                <li>• <strong>whence:</strong> từ nơi nào / từ nguồn cội nào (= from where / from which origin). Ví dụ: <em>Let us examine the axioms whence these deductions were drawn.</em></li>
+                <li>• <strong>whither:</strong> đến nơi nào (= to where / towards what place). Ví dụ: <em>Whither should humanity steer its collective moral compass?</em></li>
+                <li>• <strong>whereupon:</strong> ngay sau sự việc đó (= immediately after which). Ví dụ: <em>The prime minister resigned, whereupon spontaneous jubilation erupted.</em></li>
+                <li>• <strong>notwithstanding:</strong> mặc dù, bất kể (= despite / in spite of). Đặc biệt có thể đứng SAU danh từ: <em>His formidable intellectual reputation notwithstanding,...</em></li>
+                <li>• <strong>insofar as:</strong> trong chừng mực mà (= to the extent that / in so far as).</li>
+              </ul>
+            </div>
+
+            <div class="p-4 rounded-xl bg-purple-50/50 dark:bg-purple-950/30 border border-purple-200/60 dark:border-purple-900/40 space-y-2">
+              <h4 class="font-bold text-purple-900 dark:text-purple-300 uppercase flex items-center gap-1.5">
+                <i class="fa-solid fa-puzzle-piece text-purple-600"></i> Cụm Từ Ngữ Pháp Cố Định Thường Điền C2
+              </h4>
+              <ul class="space-y-2 text-gray-700 dark:text-gray-300">
+                <li>• <strong>by dint of:</strong> nhờ vào, bằng sự nỗ lực kiên trì (= by means of hard work).</li>
+                <li>• <strong>in lieu of:</strong> thay vì, thay thế cho (= in place of / instead of).</li>
+                <li>• <strong>under the auspices of:</strong> dưới sự bảo trợ / hướng dẫn của một tổ chức danh giá.</li>
+                <li>• <strong>at variance with:</strong> mâu thuẫn hoàn toàn, bất đồng gay gắt với điều gì.</li>
+                <li>• <strong>with a view to (+ V-ing):</strong> với mục đích hướng tới việc làm gì.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quizzes Chuyên đề 7 -->
+        <div class="pt-4 border-t border-gray-100 dark:border-gray-800 space-y-4">
+          <h4 class="text-sm font-bold text-gray-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-circle-check text-amber-500"></i> Bài Tập Tự Luyện Chuyên Đề 7 (Chuẩn Olympic &amp; C2)
+          </h4>
+          <div class="space-y-4 text-xs sm:text-sm">
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 space-y-3">
+              <p class="font-bold text-gray-900 dark:text-white">
+                1. "The historian adamantly refused to disclose the obscure clandestine library ________ he had acquired the lost illuminated manuscript."
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <button onclick="checkQuiz('oly_eng_7_1', 0, true, 'Chính xác! Whence = from which place / from where (từ nơi mà ông ấy đã lấy được bản thảo cổ).')" class="quiz-btn-oly_eng_7_1 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  A. whence
+                </button>
+                <button onclick="checkQuiz('oly_eng_7_1', 1, false, 'Sai. Whither = to which place (hướng tới nơi nào).')" class="quiz-btn-oly_eng_7_1 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  B. whither
+                </button>
+                <button onclick="checkQuiz('oly_eng_7_1', 2, false, 'Sai. Whereupon = as a result of which / immediately after.')" class="quiz-btn-oly_eng_7_1 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  C. whereupon
+                </button>
+                <button onclick="checkQuiz('oly_eng_7_1', 3, false, 'Sai. Wherein = in which (bên trong cái gì).')" class="quiz-btn-oly_eng_7_1 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  D. wherein
+                </button>
+              </div>
+              <div id="feedback-oly_eng_7_1" class="hidden"></div>
+            </div>
+
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 space-y-3">
+              <p class="font-bold text-gray-900 dark:text-white">
+                2. "The magistrate pronounced a sweeping sentence of penal exile, ________ the condemned felon sank to the flagstones in utter despair."
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <button onclick="checkQuiz('oly_eng_7_2', 0, true, 'Chính xác! Whereupon = immediately after which (ngay sau hành động tuyên án của quan tòa).')" class="quiz-btn-oly_eng_7_2 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  A. whereupon
+                </button>
+                <button onclick="checkQuiz('oly_eng_7_2', 1, false, 'Sai. Notwithstanding mang nghĩa nhượng bộ (mặc dù).')" class="quiz-btn-oly_eng_7_2 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  B. notwithstanding
+                </button>
+                <button onclick="checkQuiz('oly_eng_7_2', 2, false, 'Sai. Whence chỉ xuất xứ nguồn gốc.')" class="quiz-btn-oly_eng_7_2 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  C. whence
+                </button>
+                <button onclick="checkQuiz('oly_eng_7_2', 3, false, 'Sai. Wherefore = for what reason (vì lý do gì).')" class="quiz-btn-oly_eng_7_2 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  D. wherefore
+                </button>
+              </div>
+              <div id="feedback-oly_eng_7_2" class="hidden"></div>
+            </div>
+
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 space-y-3">
+              <p class="font-bold text-gray-900 dark:text-white">
+                3. "The vociferous protestations of the opposition ________, the austerity bill was passed into law by a comfortable parliamentary margin."
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <button onclick="checkQuiz('oly_eng_7_3', 0, true, 'Chính xác! Notwithstanding có thể đứng sau cụm danh từ làm giới từ nhượng bộ đảo (Noun Phrase + notwithstanding).')" class="quiz-btn-oly_eng_7_3 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  A. notwithstanding
+                </button>
+                <button onclick="checkQuiz('oly_eng_7_3', 1, false, 'Sai. Despite bắt buộc phải đứng TRƯỚC danh từ, không đứng sau.')" class="quiz-btn-oly_eng_7_3 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  B. despite
+                </button>
+                <button onclick="checkQuiz('oly_eng_7_3', 2, false, 'Sai. Although đòi hỏi một mệnh đề (S + V).')" class="quiz-btn-oly_eng_7_3 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  C. although
+                </button>
+                <button onclick="checkQuiz('oly_eng_7_3', 3, false, 'Sai. Nevertheless là trạng từ liên kết nối câu.')" class="quiz-btn-oly_eng_7_3 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  D. nevertheless
+                </button>
+              </div>
+              <div id="feedback-oly_eng_7_3" class="hidden"></div>
+            </div>
+
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 space-y-3">
+              <p class="font-bold text-gray-900 dark:text-white">
+                4. "The moral philosopher argued that civil disobedience is ethically justifiable only ________ it opposes institutional tyranny without infringing upon fundamental human rights."
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <button onclick="checkQuiz('oly_eng_7_4', 0, true, 'Chính xác! Insofar as = trong chừng mực mà / to the extent that (cụm liên từ điều kiện triết học chuẩn C2).')" class="quiz-btn-oly_eng_7_4 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  A. insofar as
+                </button>
+                <button onclick="checkQuiz('oly_eng_7_4', 1, false, 'Sai. In case mang nghĩa phòng khi / trong trường hợp xảy ra sự cố.')" class="quiz-btn-oly_eng_7_4 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  B. in case
+                </button>
+                <button onclick="checkQuiz('oly_eng_7_4', 2, false, 'Sai. As though = như thể là.')" class="quiz-btn-oly_eng_7_4 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  C. as though
+                </button>
+                <button onclick="checkQuiz('oly_eng_7_4', 3, false, 'Sai. So that chỉ mục đích kết quả.')" class="quiz-btn-oly_eng_7_4 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  D. so that
+                </button>
+              </div>
+              <div id="feedback-oly_eng_7_4" class="hidden"></div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- ========================================== -->
+      <!-- CHUYÊN ĐỀ 8: MULTI-TEXT & FALLACY ANALYSIS -->
+      <!-- ========================================== -->
+      <article id="chuyende-8" class="lesson-section bg-white dark:bg-dark-surface rounded-2xl border border-gray-200 dark:border-gray-800 p-6 sm:p-8 shadow-sm space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-gray-100 dark:border-gray-800 pb-4">
+          <div class="flex items-center gap-2.5">
+            <span class="px-3 py-1 rounded-lg bg-amber-100 dark:bg-amber-900/50 text-amber-800 dark:text-amber-300 font-black text-xs">
+              CHUYÊN ĐỀ 08
+            </span>
+            <span class="text-xs font-semibold text-gray-500 dark:text-gray-400">Đọc Hiểu Đa Văn Bản, Bóc Tách Luận Điểm Đối Nghịch &amp; Ngụy Biện Logic</span>
+          </div>
+          <span class="text-xs font-bold text-amber-600 dark:text-amber-400 flex items-center gap-1">
+            <i class="fa-regular fa-clock"></i> Thời lượng dự kiến: 120 phút
+          </span>
+        </div>
+
+        <div class="space-y-4">
+          <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">
+            Multi-Text Cross-Examination, Logical Fallacies &amp; Rhetorical Tropes
+          </h2>
+          <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+            Kỳ thi Tuyển chọn Đội tuyển Quốc tế (TST) và Cambridge CPE đưa ra các cặp văn bản đối kháng cùng bàn luận về một vấn đề triết học hoặc xã hội hóc búa. Thí sinh phải giải mã các ngụy biện logic (Logical Fallacies) và nhận diện các biện pháp tu từ kinh điển (Rhetorical Devices):
+          </p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+            <div class="p-4 rounded-xl bg-amber-50/50 dark:bg-amber-950/30 border border-amber-200/60 dark:border-amber-900/40 space-y-2">
+              <h4 class="font-bold text-amber-900 dark:text-amber-300 uppercase flex items-center gap-1.5">
+                <i class="fa-solid fa-brain text-amber-600"></i> 5 Ngụy Biện Logic Kinh Điển (Logical Fallacies)
+              </h4>
+              <ul class="space-y-1.5 text-gray-700 dark:text-gray-300">
+                <li>• <strong>Ad Hominem:</strong> Công kích đời tư hoặc nhân cách người tranh luận thay vì phản biện lập luận học thuật.</li>
+                <li>• <strong>Straw Man (Người rơm):</strong> Bóp méo quan điểm đối phương thành dạng cực đoan, lố bịch để dễ dàng bác bỏ.</li>
+                <li>• <strong>False Dilemma / Dichotomy:</strong> Ép đối phương vào 2 lựa chọn cực đoan duy nhất ("hoặc ta hoặc thù") trong khi còn nhiều giải pháp khác.</li>
+                <li>• <strong>Post Hoc Ergo Propter Hoc:</strong> Giả định rằng sự kiện A gây ra sự kiện B chỉ vì B xảy ra ngay sau A.</li>
+                <li>• <strong>Slippery Slope (Dốc trượt):</strong> Suy diễn phi lý rằng một hành động nhỏ sẽ kéo theo chuỗi thảm họa khôn lường.</li>
+              </ul>
+            </div>
+
+            <div class="p-4 rounded-xl bg-purple-50/50 dark:bg-purple-950/30 border border-purple-200/60 dark:border-purple-900/40 space-y-2">
+              <h4 class="font-bold text-purple-900 dark:text-purple-300 uppercase flex items-center gap-1.5">
+                <i class="fa-solid fa-scroll text-purple-600"></i> 4 Thủ Pháp Tu Từ Bậc Thầy (Rhetorical Tropes)
+              </h4>
+              <ul class="space-y-1.5 text-gray-700 dark:text-gray-300">
+                <li>• <strong>Litotes:</strong> Phép nói giảm qua hai lần phủ định để nhấn mạnh: <em>"The general's valor was by no means negligible"</em> (= vô cùng hiển hách).</li>
+                <li>• <strong>Chiasmus:</strong> Phép đảo đối xứng cấu trúc (AB &rarr; BA): <em>"Ask not what your country can do for you &mdash; ask what you can do for your country."</em></li>
+                <li>• <strong>Zeugma:</strong> Một động từ/tính từ điều phối hai tân ngữ mang tầng nghĩa khác nhau: <em>"He lost his coat and his temper."</em></li>
+                <li>• <strong>Oxymoron:</strong> Ghép hai khái niệm tương phản tuyệt đối: <em>"deafening silence"</em>, <em>"cruel kindness"</em>.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quizzes Chuyên đề 8 -->
+        <div class="pt-4 border-t border-gray-100 dark:border-gray-800 space-y-4">
+          <h4 class="text-sm font-bold text-gray-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-circle-check text-amber-500"></i> Bài Tập Tự Luyện Chuyên Đề 8 (Chuẩn Olympic &amp; C2)
+          </h4>
+          <div class="space-y-4 text-xs sm:text-sm">
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 space-y-3">
+              <p class="font-bold text-gray-900 dark:text-white">
+                1. In a televised debate on academic tenure, candidate X said: "My esteemed opponent wants to abolish all student tuition fees, which proves he wishes to bankrupt the universities and eradicate higher education entirely!" Which fallacy is this?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <button onclick="checkQuiz('oly_eng_8_1', 0, true, 'Chính xác! Straw Man Fallacy (Ngụy biện người rơm): bóp méo đề xuất cải cách của đối phương thành việc 'phá hủy toàn bộ nền đại học' để dễ công kích.')" class="quiz-btn-oly_eng_8_1 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  A. Straw Man Fallacy
+                </button>
+                <button onclick="checkQuiz('oly_eng_8_1', 1, false, 'Sai. Ad Hominem nhắm vào đời tư cá nhân chứ không bóp méo lập luận.')" class="quiz-btn-oly_eng_8_1 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  B. Ad Hominem Fallacy
+                </button>
+                <button onclick="checkQuiz('oly_eng_8_1', 2, false, 'Sai. Slippery Slope suy diễn theo chuỗi nhân quả tương lai.')" class="quiz-btn-oly_eng_8_1 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  C. Slippery Slope
+                </button>
+                <button onclick="checkQuiz('oly_eng_8_1', 3, false, 'Sai. Red Herring đánh lạc hướng đề tài.')" class="quiz-btn-oly_eng_8_1 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  D. Red Herring
+                </button>
+              </div>
+              <div id="feedback-oly_eng_8_1" class="hidden"></div>
+            </div>
+
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 space-y-3">
+              <p class="font-bold text-gray-900 dark:text-white">
+                2. Which of the following sentences embodies the classical rhetorical device of <strong>Litotes</strong>?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <button onclick="checkQuiz('oly_eng_8_2', 0, true, 'Chính xác! 'by no means insignificant' = cực kỳ to lớn; dùng phủ định kép (no + in-) để diễn tả lời khẳng định tao nhã mang tính tu từ Litotes.')" class="quiz-btn-oly_eng_8_2 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  A. "The ambassador's contribution to the armistice was by no means insignificant."
+                </button>
+                <button onclick="checkQuiz('oly_eng_8_2', 1, false, 'Sai. Đây là câu trần thuật thông thường.')" class="quiz-btn-oly_eng_8_2 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  B. "The ambassador spoke with boundless eloquence and fiery zeal."
+                </button>
+                <button onclick="checkQuiz('oly_eng_8_2', 2, false, 'Sai. Đây là thủ pháp nhân hóa (Personification).')" class="quiz-btn-oly_eng_8_2 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  C. "The night sky wept glistening tears of dewy sorrow."
+                </button>
+                <button onclick="checkQuiz('oly_eng_8_2', 3, false, 'Sai. Đây là thủ pháp hoán dụ (Metonymy).')" class="quiz-btn-oly_eng_8_2 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  D. "The pen proved mightier than the sword in the historic revolution."
+                </button>
+              </div>
+              <div id="feedback-oly_eng_8_2" class="hidden"></div>
+            </div>
+
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 space-y-3">
+              <p class="font-bold text-gray-900 dark:text-white">
+                3. The sentence "He stole her heirloom emerald pendant and her innocent heart" is an exquisite illustration of:
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <button onclick="checkQuiz('oly_eng_8_3', 0, true, 'Chính xác! Phép Zeugma: động từ 'stole' đồng thời chi phối cả tân ngữ nghĩa đen (emerald pendant) và tân ngữ nghĩa bóng trừu tượng (innocent heart).')" class="quiz-btn-oly_eng_8_3 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  A. Zeugma
+                </button>
+                <button onclick="checkQuiz('oly_eng_8_3', 1, false, 'Sai. Chiasmus là phép đảo chéo đối xứng AB-BA.')" class="quiz-btn-oly_eng_8_3 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  B. Chiasmus
+                </button>
+                <button onclick="checkQuiz('oly_eng_8_3', 2, false, 'Sai. Oxymoron là phép nghịch hợp giữa hai từ cạnh nhau.')" class="quiz-btn-oly_eng_8_3 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  C. Oxymoron
+                </button>
+                <button onclick="checkQuiz('oly_eng_8_3', 3, false, 'Sai. Hyperbole là phép cường điệu hóa.')" class="quiz-btn-oly_eng_8_3 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  D. Hyperbole
+                </button>
+              </div>
+              <div id="feedback-oly_eng_8_3" class="hidden"></div>
+            </div>
+
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 space-y-3">
+              <p class="font-bold text-gray-900 dark:text-white">
+                4. "Either you embrace unconditional fiscal deregulation, or you desire to witness our civilization crumble into catastrophic ruin." This argument commits the fallacy of:
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <button onclick="checkQuiz('oly_eng_8_4', 0, true, 'Chính xác! False Dilemma (Song đề giả): ép người nghe chọn giữa 2 thái cực mà lờ đi nhiều con đường dung hòa khả thi khác.')" class="quiz-btn-oly_eng_8_4 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  A. False Dilemma
+                </button>
+                <button onclick="checkQuiz('oly_eng_8_4', 1, false, 'Sai. Ad Hominem công kích phẩm chất cá nhân.')" class="quiz-btn-oly_eng_8_4 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  B. Ad Hominem
+                </button>
+                <button onclick="checkQuiz('oly_eng_8_4', 2, false, 'Sai. Post Hoc ngụy biện về thứ tự thời gian.')" class="quiz-btn-oly_eng_8_4 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  C. Post Hoc Ergo Propter Hoc
+                </button>
+                <button onclick="checkQuiz('oly_eng_8_4', 3, false, 'Sai. Bandwagon là ngụy biện chạy theo số đông.')" class="quiz-btn-oly_eng_8_4 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  D. Bandwagon Fallacy
+                </button>
+              </div>
+              <div id="feedback-oly_eng_8_4" class="hidden"></div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- ========================================== -->
+      <!-- CHUYÊN ĐỀ 9: CPE KEY WORD TRANSFORMATION -->
+      <!-- ========================================== -->
+      <article id="chuyende-9" class="lesson-section bg-white dark:bg-dark-surface rounded-2xl border border-gray-200 dark:border-gray-800 p-6 sm:p-8 shadow-sm space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-gray-100 dark:border-gray-800 pb-4">
+          <div class="flex items-center gap-2.5">
+            <span class="px-3 py-1 rounded-lg bg-amber-100 dark:bg-amber-900/50 text-amber-800 dark:text-amber-300 font-black text-xs">
+              CHUYÊN ĐỀ 09
+            </span>
+            <span class="text-xs font-semibold text-gray-500 dark:text-gray-400">Viết Lại Câu Đẳng Cấp Cambridge CPE C2 &amp; Olympic 30/4</span>
+          </div>
+          <span class="text-xs font-bold text-amber-600 dark:text-amber-400 flex items-center gap-1">
+            <i class="fa-regular fa-clock"></i> Thời lượng dự kiến: 110 phút
+          </span>
+        </div>
+
+        <div class="space-y-4">
+          <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">
+            CPE Key Word Transformation, Inversion Paraphrase &amp; Idiomatic Register
+          </h2>
+          <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+            Phần viết lại câu biến đổi từ khóa (Key Word Transformation) cấp độ C2 yêu cầu thí sinh giữ nguyên nghĩa gốc bằng 3 đến 8 từ với từ cho sẵn viết hoa, kết hợp thành ngữ học thuật tinh xảo và các mẫu câu đảo ngữ phức tạp:
+          </p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+            <div class="p-4 rounded-xl bg-amber-50/50 dark:bg-amber-950/30 border border-amber-200/60 dark:border-amber-900/40 space-y-2">
+              <h4 class="font-bold text-amber-900 dark:text-amber-300 uppercase flex items-center gap-1.5">
+                <i class="fa-solid fa-gem text-amber-600"></i> 4 Mẫu Thành Ngữ "Điểm Mười" Trong Olympic
+              </h4>
+              <ul class="space-y-1.5 text-gray-700 dark:text-gray-300">
+                <li>• <strong>BRUNT:</strong> <em>The coastal hamlets suffered the worst consequences of the tsunami.</em>
+                  <br>&rarr; The coastal hamlets <strong>bore the brunt of</strong> the tsunami.
+                </li>
+                <li>• <strong>BRINK:</strong> <em>The two nations came dangerously close to plunging into total war.</em>
+                  <br>&rarr; The two nations were <strong>hovering on the brink of</strong> total war.
+                </li>
+                <li>• <strong>QUALMS:</strong> <em>The minister did not hesitate at all to dismiss his subordinates.</em>
+                  <br>&rarr; The minister had <strong>no qualms about dismissing</strong> his subordinates.
+                </li>
+                <li>• <strong>BOUNDS:</strong> <em>His bizarre statements exceeded all limits of diplomatic decency.</em>
+                  <br>&rarr; His bizarre statements were <strong>beyond the bounds of</strong> diplomatic decency.
+                </li>
+              </ul>
+            </div>
+
+            <div class="p-4 rounded-xl bg-purple-50/50 dark:bg-purple-950/30 border border-purple-200/60 dark:border-purple-900/40 space-y-2">
+              <h4 class="font-bold text-purple-900 dark:text-purple-300 uppercase flex items-center gap-1.5">
+                <i class="fa-solid fa-arrows-split-up-and-left text-purple-600"></i> Cấu Trúc Biến Đổi Đảo Ngữ &amp; Nhượng Bộ
+              </h4>
+              <ul class="space-y-1.5 text-gray-700 dark:text-gray-300">
+                <li>• <strong>LITTLE DID:</strong> <em>He was completely oblivious to the coup plotting against him.</em>
+                  <br>&rarr; <strong>Little did he realize</strong> that a coup was plotting against him.
+                </li>
+                <li>• <strong>NO CIRCUMSTANCES:</strong> <em>You must never reveal this classified cipher to anyone.</em>
+                  <br>&rarr; Under <strong>no circumstances are you to reveal</strong> this cipher.
+                </li>
+                <li>• <strong>HARD / MUCH AS:</strong> <em>Although he pleaded with exceptional eloquence, he failed.</em>
+                  <br>&rarr; <strong>Hard as he might plead</strong>, he failed to persuade the senate.
+                </li>
+                <li>• <strong>ACCOUNT:</strong> <em>Never leave the archive unlocked under any circumstance.</em>
+                  <br>&rarr; On <strong>no account should the archive be left</strong> unlocked.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quizzes Chuyên đề 9 -->
+        <div class="pt-4 border-t border-gray-100 dark:border-gray-800 space-y-4">
+          <h4 class="text-sm font-bold text-gray-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-circle-check text-amber-500"></i> Bài Tập Tự Luyện Chuyên Đề 9 (Chuẩn Olympic &amp; C2)
+          </h4>
+          <div class="space-y-4 text-xs sm:text-sm">
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 space-y-3">
+              <p class="font-bold text-gray-900 dark:text-white">
+                1. "The rural agrarian population suffered the worst impact of the unprecedented economic inflation." Complete the sentence with <strong>BRUNT</strong>: "The rural agrarian population ________ the unprecedented economic inflation."
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <button onclick="checkQuiz('oly_eng_9_1', 0, true, 'Chính xác! To bear the brunt of something = gánh chịu hậu quả nặng nề nhất của một biến cố xấu.')" class="quiz-btn-oly_eng_9_1 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  A. bore the brunt of
+                </button>
+                <button onclick="checkQuiz('oly_eng_9_1', 1, false, 'Sai giới từ (không dùng brunt on).')" class="quiz-btn-oly_eng_9_1 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  B. took the brunt on
+                </button>
+                <button onclick="checkQuiz('oly_eng_9_1', 2, false, 'Sai động từ (không dùng stood the brunt).')" class="quiz-btn-oly_eng_9_1 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  C. stood the brunt of
+                </button>
+                <button onclick="checkQuiz('oly_eng_9_1', 3, false, 'Sai cấu trúc ngữ cảnh.')" class="quiz-btn-oly_eng_9_1 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  D. held the brunt for
+                </button>
+              </div>
+              <div id="feedback-oly_eng_9_1" class="hidden"></div>
+            </div>
+
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 space-y-3">
+              <p class="font-bold text-gray-900 dark:text-white">
+                2. "The diplomatic mission was on the very verge of collapse when new concessions were made." Complete with <strong>BRINK</strong>: "The diplomatic mission ________ collapse when new concessions were made."
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <button onclick="checkQuiz('oly_eng_9_2', 0, true, 'Chính xác! To be on the brink of / hover on the brink of = đứng trên bờ vực sụp đổ.')" class="quiz-btn-oly_eng_9_2 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  A. was on the brink of
+                </button>
+                <button onclick="checkQuiz('oly_eng_9_2', 1, false, 'Sai giới từ (không dùng in the brink).')" class="quiz-btn-oly_eng_9_2 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  B. was in the brink of
+                </button>
+                <button onclick="checkQuiz('oly_eng_9_2', 2, false, 'Sai giới từ (không dùng at the brink).')" class="quiz-btn-oly_eng_9_2 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  C. stood at the brink for
+                </button>
+                <button onclick="checkQuiz('oly_eng_9_2', 3, false, 'Sai cấu trúc từ vựng.')" class="quiz-btn-oly_eng_9_2 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  D. hovered in brink to
+                </button>
+              </div>
+              <div id="feedback-oly_eng_9_2" class="hidden"></div>
+            </div>
+
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 space-y-3">
+              <p class="font-bold text-gray-900 dark:text-white">
+                3. "The corporate whistleblower did not hesitate in the slightest to expose the fiscal embezzlement." Complete with <strong>QUALMS</strong>: "The corporate whistleblower had ________ the fiscal embezzlement."
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <button onclick="checkQuiz('oly_eng_9_3', 0, true, 'Chính xác! To have no qualms about doing something = hoàn toàn không ngần ngại hay cắn rứt lương tâm khi làm việc gì.')" class="quiz-btn-oly_eng_9_3 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  A. no qualms about exposing
+                </button>
+                <button onclick="checkQuiz('oly_eng_9_3', 1, false, 'Sai giới từ (không dùng qualms of).')" class="quiz-btn-oly_eng_9_3 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  B. no qualm of exposing
+                </button>
+                <button onclick="checkQuiz('oly_eng_9_3', 2, false, 'Sai dạng số ít/số nhiều và cấu trúc to-V.')" class="quiz-btn-oly_eng_9_3 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  C. few qualms to expose
+                </button>
+                <button onclick="checkQuiz('oly_eng_9_3', 3, false, 'Sai giới từ (không dùng qualms against).')" class="quiz-btn-oly_eng_9_3 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  D. no qualms against exposing
+                </button>
+              </div>
+              <div id="feedback-oly_eng_9_3" class="hidden"></div>
+            </div>
+
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 space-y-3">
+              <p class="font-bold text-gray-900 dark:text-white">
+                4. "The executive's insolent outburst exceeded all acceptable limits of professional decorum." Complete with <strong>BOUNDS</strong>: "The executive's insolent outburst was ________ professional decorum."
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <button onclick="checkQuiz('oly_eng_9_4', 0, true, 'Chính xác! Beyond the bounds of something = vượt quá mọi giới hạn cho phép hoặc chuẩn mực đạo đức.')" class="quiz-btn-oly_eng_9_4 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  A. beyond the bounds of
+                </button>
+                <button onclick="checkQuiz('oly_eng_9_4', 1, false, 'Sai giới từ (không dùng out of bounds to trong ngữ cảnh này).')" class="quiz-btn-oly_eng_9_4 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  B. out of the bounds to
+                </button>
+                <button onclick="checkQuiz('oly_eng_9_4', 2, false, 'Sai giới từ.')" class="quiz-btn-oly_eng_9_4 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  C. past the bounds in
+                </button>
+                <button onclick="checkQuiz('oly_eng_9_4', 3, false, 'Sai ngữ nghĩa.')" class="quiz-btn-oly_eng_9_4 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  D. beneath the bounds of
+                </button>
+              </div>
+              <div id="feedback-oly_eng_9_4" class="hidden"></div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- ========================================== -->
+      <!-- CHUYÊN ĐỀ 10: CRITICAL DISCOURSE ESSAY -->
+      <!-- ========================================== -->
+      <article id="chuyende-10" class="lesson-section bg-white dark:bg-dark-surface rounded-2xl border border-gray-200 dark:border-gray-800 p-6 sm:p-8 shadow-sm space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-gray-100 dark:border-gray-800 pb-4">
+          <div class="flex items-center gap-2.5">
+            <span class="px-3 py-1 rounded-lg bg-amber-100 dark:bg-amber-900/50 text-amber-800 dark:text-amber-300 font-black text-xs">
+              CHUYÊN ĐỀ 10
+            </span>
+            <span class="text-xs font-semibold text-gray-500 dark:text-gray-400">Viết Luận Biện Luận Triết Học &amp; Xã Hội C2 (Discursive Essay)</span>
+          </div>
+          <span class="text-xs font-bold text-amber-600 dark:text-amber-400 flex items-center gap-1">
+            <i class="fa-regular fa-clock"></i> Thời lượng dự kiến: 120 phút
+          </span>
+        </div>
+
+        <div class="space-y-4">
+          <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">
+            Critical Discourse Essay, Syllogistic Logic &amp; Counter-Rebuttal Architecture
+          </h2>
+          <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+            Bài luận Olympic Tiếng Anh (350-450 từ) không sử dụng văn phong học trò đơn giản mà yêu cầu tư duy lập luận tam đoạn luận (Syllogism), kỹ thuật củng cố lập trường đối lập rồi bẻ gãy (Steel-manning &amp; Counter-rebuttal) cùng kho ngữ liệu triết học sâu sắc:
+          </p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+            <div class="p-4 rounded-xl bg-amber-50/50 dark:bg-amber-950/30 border border-amber-200/60 dark:border-amber-900/40 space-y-2">
+              <h4 class="font-bold text-amber-900 dark:text-amber-300 uppercase flex items-center gap-1.5">
+                <i class="fa-solid fa-landmark text-amber-600"></i> Cấu Trúc Luận Điểm 5 Đoạn Chuẩn Olympic TST
+              </h4>
+              <ul class="space-y-1.5 text-gray-700 dark:text-gray-300">
+                <li>• <strong>1. Exordium (Introduction):</strong> Đặt vấn đề bằng một nghịch lý triết học (philosophical paradox) và khẳng định luận đề không khoan nhượng (Thesis Statement).</li>
+                <li>• <strong>2. Probatio I (Deductive Syllogism):</strong> Xây dựng tam đoạn luận: Tiền đề chính (Major Premise) &rarr; Tiền đề phụ (Minor Premise) &rarr; Kết luận tất yếu.</li>
+                <li>• <strong>3. Probatio II (Dialectical Nuance):</strong> Đào sâu tính đạo đức học (Deontology vs Consequentialism) hoặc các tác động kinh tế &ndash; xã hội vi mô.</li>
+                <li>• <strong>4. Refutatio (Steel-manning &amp; Rebuttal):</strong> Tái hiện luận điểm của phe đối lập ở trạng thái thuyết phục nhất, sau đó vạch trần điểm mù cốt tử để bác bỏ.</li>
+                <li>• <strong>5. Peroratio (Synthesis):</strong> Đúc kết thông điệp thời đại và dự phóng tương lai nhân loại.</li>
+              </ul>
+            </div>
+
+            <div class="p-4 rounded-xl bg-purple-50/50 dark:bg-purple-950/30 border border-purple-200/60 dark:border-purple-900/40 space-y-2">
+              <h4 class="font-bold text-purple-900 dark:text-purple-300 uppercase flex items-center gap-1.5">
+                <i class="fa-solid fa-quote-left text-purple-600"></i> Thuật Ngữ Triết Học &amp; Mẫu Câu Lập Luận C2
+              </h4>
+              <ul class="space-y-1.5 text-gray-700 dark:text-gray-300">
+                <li>• <strong>a fortiori:</strong> càng có lý do mạnh mẽ hơn nữa để khẳng định (= with even stronger reason).</li>
+                <li>• <strong>ipso facto:</strong> chính do sự thật đó, hiển nhiên là (= by that very fact).</li>
+                <li>• <strong>per se:</strong> tự bản thân nó (= intrinsically / in itself).</li>
+                <li>• <strong>shibboleth:</strong> tín điều hoặc khẩu hiệu sáo rỗng được số đông chấp nhận mù quáng.</li>
+                <li>• <em>"It is a prevailing shibboleth that economic deregulation inherently engenders human well-being."</em></li>
+                <li>• <em>"To subscribe uncritically to this dogma is to invite intellectual myopia."</em></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quizzes Chuyên đề 10 -->
+        <div class="pt-4 border-t border-gray-100 dark:border-gray-800 space-y-4">
+          <h4 class="text-sm font-bold text-gray-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-circle-check text-amber-500"></i> Bài Tập Tự Luyện Chuyên Đề 10 (Chuẩn Olympic &amp; C2)
+          </h4>
+          <div class="space-y-4 text-xs sm:text-sm">
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 space-y-3">
+              <p class="font-bold text-gray-900 dark:text-white">
+                1. In rigorous philosophical discourse, which Latin locution means <strong>"with even stronger reason"</strong> or <strong>"all the more so"</strong>?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <button onclick="checkQuiz('oly_eng_10_1', 0, true, 'Chính xác! A fortiori = với lý do càng mạnh mẽ và xác đáng hơn nữa (thuật ngữ biện luận triết học C2).')" class="quiz-btn-oly_eng_10_1 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  A. a fortiori
+                </button>
+                <button onclick="checkQuiz('oly_eng_10_1', 1, false, 'Sai. Ipso facto = bởi chính sự việc đó (by that very fact).')" class="quiz-btn-oly_eng_10_1 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  B. ipso facto
+                </button>
+                <button onclick="checkQuiz('oly_eng_10_1', 2, false, 'Sai. Per se = tự bản thân nó (in itself).')" class="quiz-btn-oly_eng_10_1 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  C. per se
+                </button>
+                <button onclick="checkQuiz('oly_eng_10_1', 3, false, 'Sai. Ad infinitum = kéo dài đến vô tận.')" class="quiz-btn-oly_eng_10_1 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  D. ad infinitum
+                </button>
+              </div>
+              <div id="feedback-oly_eng_10_1" class="hidden"></div>
+            </div>
+
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 space-y-3">
+              <p class="font-bold text-gray-900 dark:text-white">
+                2. Which sentence exhibits the most sophisticated academic register suitable for opening a critique of a widely accepted dogma?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <button onclick="checkQuiz('oly_eng_10_2', 0, true, 'Chính xác! 'It is a prevailing shibboleth that...' thể hiện đẳng cấp từ vựng học thuật C2 để thách thức một tín điều số đông.')" class="quiz-btn-oly_eng_10_2 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  A. "It is a prevailing shibboleth that untrammeled technological innovation is universally benevolent."
+                </button>
+                <button onclick="checkQuiz('oly_eng_10_2', 1, false, 'Sai. Văn phong giao tiếp thông thường, không đạt chuẩn Olympic C2.')" class="quiz-btn-oly_eng_10_2 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  B. "A lot of ordinary folks assume new technology is always amazing and wonderful."
+                </button>
+                <button onclick="checkQuiz('oly_eng_10_2', 2, false, 'Sai. Cấu trúc câu đơn giản thiếu tính luận biện.')" class="quiz-btn-oly_eng_10_2 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  C. "People usually think technology has no bad points, which is definitely a major mistake."
+                </button>
+                <button onclick="checkQuiz('oly_eng_10_2', 3, false, 'Sai. Văn phong thô sơ.')" class="quiz-btn-oly_eng_10_2 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  D. "Technology cannot always be good because bad things can actually happen."
+                </button>
+              </div>
+              <div id="feedback-oly_eng_10_2" class="hidden"></div>
+            </div>
+
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 space-y-3">
+              <p class="font-bold text-gray-900 dark:text-white">
+                3. Consider the classical deductive syllogism: "Major Premise: All synthetic neural networks lack biological sentient mortality. Minor Premise: Autonomous AI systems are synthetic neural networks. Conclusion: ________."
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <button onclick="checkQuiz('oly_eng_10_3', 0, true, 'Chính xác! Kết luận logic tất yếu của tam đoạn luận: Autonomous AI systems lack biological sentient mortality.')" class="quiz-btn-oly_eng_10_3 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  A. Autonomous AI systems lack biological sentient mortality.
+                </button>
+                <button onclick="checkQuiz('oly_eng_10_3', 1, false, 'Sai. Suy diễn phi logic nằm ngoài tiền đề đã nêu.')" class="quiz-btn-oly_eng_10_3 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  B. Autonomous AI systems will inevitably exterminate all mortals.
+                </button>
+                <button onclick="checkQuiz('oly_eng_10_3', 2, false, 'Sai. Trái ngược hoàn toàn với tiền đề.')" class="quiz-btn-oly_eng_10_3 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  C. All biological sentient entities are autonomous AI systems.
+                </button>
+                <button onclick="checkQuiz('oly_eng_10_3', 3, false, 'Sai kết cấu nhân quả.')" class="quiz-btn-oly_eng_10_3 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  D. Synthetic neural networks possess biological immortality.
+                </button>
+              </div>
+              <div id="feedback-oly_eng_10_3" class="hidden"></div>
+            </div>
+
+            <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 space-y-3">
+              <p class="font-bold text-gray-900 dark:text-white">
+                4. In philosophical debate and academic discourse, the rhetorical technique of <strong>"Steel-manning"</strong> signifies:
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <button onclick="checkQuiz('oly_eng_10_4', 0, true, 'Chính xác! Steel-manning là kỹ thuật xây dựng và trình bày phiên bản mạnh mẽ, thuyết phục nhất của luận điểm đối phương trước khi phản biện (ngược lại hoàn toàn với ngụy biện người rơm Straw-manning).')" class="quiz-btn-oly_eng_10_4 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  A. Constructing the strongest possible form of an opposing argument prior to refutation.
+                </button>
+                <button onclick="checkQuiz('oly_eng_10_4', 1, false, 'Sai. Đây là hành vi công kích thô lỗ trong tranh luận.')" class="quiz-btn-oly_eng_10_4 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  B. Constantly interrupting the interlocutor with overwhelming statistics.
+                </button>
+                <button onclick="checkQuiz('oly_eng_10_4', 2, false, 'Sai. Đây chính là định nghĩa của ngụy biện người rơm (Straw-manning).')" class="quiz-btn-oly_eng_10_4 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  C. Crafting a caricature of the counterargument to demolish it with ease.
+                </button>
+                <button onclick="checkQuiz('oly_eng_10_4', 3, false, 'Sai định nghĩa học thuật.')" class="quiz-btn-oly_eng_10_4 text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-amber-50 dark:hover:bg-gray-700/60 transition">
+                  D. Refusing to alter one's dogmatic premises regardless of empirical proofs.
+                </button>
+              </div>
+              <div id="feedback-oly_eng_10_4" class="hidden"></div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Completion Section -->
+      <section class="oly-gradient text-white p-8 rounded-3xl shadow-xl relative overflow-hidden">
+        <div class="relative z-10 space-y-4 max-w-2xl">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-400/20 text-amber-300 text-xs font-semibold">
+            <i class="fa-solid fa-crown text-amber-400"></i> Hoàn Thành Lộ Trình Huấn Luyện Đội Tuyển Olympic Tiếng Anh
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-black">Sẵn Sàng Chinh Phục Huy Chương Vàng Olympic &amp; CPE C2!</h2>
+          <p class="text-gray-300 text-sm sm:text-base leading-relaxed">
+            Bạn đã đi qua toàn bộ 10 chuyên đề tinh hoa nhất của ngữ pháp, từ vựng và tư duy phê phán tiếng Anh cấp độ C2. Hãy bước vào <strong>Phòng Thi Thử Trực Tuyến</strong> với 10 câu hỏi tinh tuyển, đồng hồ đếm ngược 60 phút và xếp hạng Huy chương Olympic!
+          </p>
+          <div class="pt-2 flex flex-wrap gap-4">
+            <a href="../index.html" class="px-5 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-sm shadow-lg shadow-amber-500/30 transition flex items-center gap-2">
+              <i class="fa-solid fa-arrow-left"></i> Về Trang Chủ Khóa Học
+            </a>
+            <button onclick="openCourseQuizModal()" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-400 to-yellow-400 hover:from-amber-500 hover:to-yellow-500 text-slate-950 font-black text-sm shadow-lg shadow-yellow-500/30 transition flex items-center gap-2">
+              <i class="fa-solid fa-crown text-amber-900"></i> Bắt Đầu Thi Thử Olympic (60:00)
+            </button>
+            <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-sm border border-white/20 transition flex items-center gap-2">
+              <i class="fa-solid fa-arrow-up"></i> Lên Đầu Trang
+            </button>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Course Exam Modal: Đề Thi Thử Olympic Tiếng Anh Cuối Khóa -->
+  <div class="hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto" id="courseQuizModal">
+    <div class="bg-white dark:bg-dark-surface rounded-3xl max-w-4xl w-full max-h-[92vh] overflow-y-auto p-6 sm:p-8 shadow-2xl border border-amber-300/40 dark:border-amber-500/30">
+      
+      <!-- Modal Header -->
+      <div class="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-gray-200 dark:border-gray-700 mb-6">
+        <div>
+          <span class="px-2.5 py-1 rounded-full bg-amber-100 dark:bg-amber-950/70 text-amber-800 dark:text-amber-300 font-bold text-xs flex items-center gap-1.5 w-fit">
+            <i class="fa-solid fa-crown text-amber-500"></i> Phòng Thi Thử Trực Tuyến • Chuẩn Olympic 30/4, Duyên Hải &amp; TST
+          </span>
+          <h3 class="text-xl sm:text-2xl font-black text-gray-900 dark:text-white mt-1.5">
+            Đề Thi Thử Olympic Tiếng Anh Cấp 3 (THPT &amp; Chuyên)
+          </h3>
+          <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
+            10 câu hỏi tinh hoa bao quát các phần thi đỉnh cao: Orthoepy, Literary Inversion, Latinisms &amp; C2 Transformations
+          </p>
+        </div>
+        <div class="flex items-center gap-3">
+          <div class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-600 dark:text-amber-400 font-mono font-bold text-sm">
+            <i class="fa-solid fa-stopwatch animate-pulse"></i>
+            <span id="examTimer">60:00</span>
+          </div>
+          <button class="w-9 h-9 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-500 hover:text-gray-900 dark:hover:text-white flex items-center justify-center transition" onclick="closeCourseQuizModal()" aria-label="Đóng đề thi">
+            <i class="fa-solid fa-xmark text-lg"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Exam Form -->
+      <form class="space-y-6 text-sm text-gray-700 dark:text-gray-300" id="courseExamForm" onsubmit="submitCourseExam(event)">
+        
+        <!-- Q1 -->
+        <div class="p-5 rounded-2xl bg-amber-50/40 dark:bg-gray-800/60 border border-amber-200/60 dark:border-gray-700 space-y-3">
+          <div class="flex items-center justify-between gap-2">
+            <span class="px-2.5 py-0.5 rounded-md bg-amber-100 dark:bg-amber-900/40 text-amber-800 dark:text-amber-300 font-semibold text-xs">
+              Câu 1: Orthoepy &amp; Silent Letters
+            </span>
+            <span class="text-xs text-gray-400">1.0 điểm</span>
+          </div>
+          <p class="font-bold text-gray-900 dark:text-white text-sm sm:text-base leading-snug">
+            1. In which of the following words is the letter 'c' pronounced as /k/ rather than being completely silent?
+          </p>
+          <div class="space-y-2 pt-1">
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq1" required="" type="radio" value="A"/>
+              <span><strong>A.</strong> su<u>c</u>cumb</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq1" type="radio" value="B"/>
+              <span><strong>B.</strong> indi<u>c</u>t</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq1" type="radio" value="C"/>
+              <span><strong>C.</strong> vi<u>c</u>tuals</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq1" type="radio" value="D"/>
+              <span><strong>D.</strong> mus<u>c</u>le</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="p-5 rounded-2xl bg-amber-50/40 dark:bg-gray-800/60 border border-amber-200/60 dark:border-gray-700 space-y-3">
+          <div class="flex items-center justify-between gap-2">
+            <span class="px-2.5 py-0.5 rounded-md bg-purple-100 dark:bg-purple-900/40 text-purple-800 dark:text-purple-300 font-semibold text-xs">
+              Câu 2: Literary Inversion &amp; Participle Fronting
+            </span>
+            <span class="text-xs text-gray-400">1.0 điểm</span>
+          </div>
+          <p class="font-bold text-gray-900 dark:text-white text-sm sm:text-base leading-snug">
+            2. "________ are the days when an ambassador could negotiate treaties in complete seclusion without the intrusion of social media."
+          </p>
+          <div class="space-y-2 pt-1">
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq2" required="" type="radio" value="A"/>
+              <span><strong>A.</strong> Gone</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq2" type="radio" value="B"/>
+              <span><strong>B.</strong> Going</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq2" type="radio" value="C"/>
+              <span><strong>C.</strong> Passed</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq2" type="radio" value="D"/>
+              <span><strong>D.</strong> Far</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="p-5 rounded-2xl bg-amber-50/40 dark:bg-gray-800/60 border border-amber-200/60 dark:border-gray-700 space-y-3">
+          <div class="flex items-center justify-between gap-2">
+            <span class="px-2.5 py-0.5 rounded-md bg-yellow-100 dark:bg-yellow-900/40 text-yellow-800 dark:text-yellow-300 font-semibold text-xs">
+              Câu 3: Obscure C2 Phrasal Verbs
+            </span>
+            <span class="text-xs text-gray-400">1.0 điểm</span>
+          </div>
+          <p class="font-bold text-gray-900 dark:text-white text-sm sm:text-base leading-snug">
+            3. "The Prime Minister refused to ________ on the proposed tax reform, insisting that fiscal discipline was non-negotiable."
+          </p>
+          <div class="space-y-2 pt-1">
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq3" required="" type="radio" value="A"/>
+              <span><strong>A.</strong> shilly-shally</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq3" type="radio" value="B"/>
+              <span><strong>B.</strong> sponge off</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq3" type="radio" value="C"/>
+              <span><strong>C.</strong> beaver away</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq3" type="radio" value="D"/>
+              <span><strong>D.</strong> cotton on</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="p-5 rounded-2xl bg-amber-50/40 dark:bg-gray-800/60 border border-amber-200/60 dark:border-gray-700 space-y-3">
+          <div class="flex items-center justify-between gap-2">
+            <span class="px-2.5 py-0.5 rounded-md bg-rose-100 dark:bg-rose-900/40 text-rose-800 dark:text-rose-300 font-semibold text-xs">
+              Câu 4: Classical Allusions &amp; Mythology
+            </span>
+            <span class="text-xs text-gray-400">1.0 điểm</span>
+          </div>
+          <p class="font-bold text-gray-900 dark:text-white text-sm sm:text-base leading-snug">
+            4. "Eradicating institutional corruption in the ministry proved to be a veritable ________ task, with each purged official replaced by two more."
+          </p>
+          <div class="space-y-2 pt-1">
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq4" required="" type="radio" value="A"/>
+              <span><strong>A.</strong> Sisyphean</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq4" type="radio" value="B"/>
+              <span><strong>B.</strong> Gordian</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq4" type="radio" value="C"/>
+              <span><strong>C.</strong> Spartan</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq4" type="radio" value="D"/>
+              <span><strong>D.</strong> Trojan</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q5 -->
+        <div class="p-5 rounded-2xl bg-amber-50/40 dark:bg-gray-800/60 border border-amber-200/60 dark:border-gray-700 space-y-3">
+          <div class="flex items-center justify-between gap-2">
+            <span class="px-2.5 py-0.5 rounded-md bg-emerald-100 dark:bg-emerald-900/40 text-emerald-800 dark:text-emerald-300 font-semibold text-xs">
+              Câu 5: Latin Legal &amp; Academic Terms
+            </span>
+            <span class="text-xs text-gray-400">1.0 điểm</span>
+          </div>
+          <p class="font-bold text-gray-900 dark:text-white text-sm sm:text-base leading-snug">
+            5. "The argument presented by the defense was a complete ________, concluding that innocence was proven simply because the defendant was smiling."
+          </p>
+          <div class="space-y-2 pt-1">
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq5" required="" type="radio" value="A"/>
+              <span><strong>A.</strong> non sequitur</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq5" type="radio" value="B"/>
+              <span><strong>B.</strong> quid pro quo</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq5" type="radio" value="C"/>
+              <span><strong>C.</strong> bona fide</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq5" type="radio" value="D"/>
+              <span><strong>D.</strong> ipso facto</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q6 -->
+        <div class="p-5 rounded-2xl bg-amber-50/40 dark:bg-gray-800/60 border border-amber-200/60 dark:border-gray-700 space-y-3">
+          <div class="flex items-center justify-between gap-2">
+            <span class="px-2.5 py-0.5 rounded-md bg-cyan-100 dark:bg-cyan-900/40 text-cyan-800 dark:text-cyan-300 font-semibold text-xs">
+              Câu 6: Morphological Affixation
+            </span>
+            <span class="text-xs text-gray-400">1.0 điểm</span>
+          </div>
+          <p class="font-bold text-gray-900 dark:text-white text-sm sm:text-base leading-snug">
+            6. "The sensationalist tabloids were accused of being unscrupulous scare-________, inciting irrational panic over harmless rumors." (MONGER)
+          </p>
+          <div class="space-y-2 pt-1">
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq6" required="" type="radio" value="A"/>
+              <span><strong>A.</strong> mongers</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq6" type="radio" value="B"/>
+              <span><strong>B.</strong> wrights</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq6" type="radio" value="C"/>
+              <span><strong>C.</strong> makers</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq6" type="radio" value="D"/>
+              <span><strong>D.</strong> crafters</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q7 -->
+        <div class="p-5 rounded-2xl bg-amber-50/40 dark:bg-gray-800/60 border border-amber-200/60 dark:border-gray-700 space-y-3">
+          <div class="flex items-center justify-between gap-2">
+            <span class="px-2.5 py-0.5 rounded-md bg-teal-100 dark:bg-teal-900/40 text-teal-800 dark:text-teal-300 font-semibold text-xs">
+              Câu 7: Archaic Conjunctions &amp; Discourse
+            </span>
+            <span class="text-xs text-gray-400">1.0 điểm</span>
+          </div>
+          <p class="font-bold text-gray-900 dark:text-white text-sm sm:text-base leading-snug">
+            7. "The philosopher questioned the origins of ethical morality, inquiring ________ mankind had derived its innate conception of justice."
+          </p>
+          <div class="space-y-2 pt-1">
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq7" required="" type="radio" value="A"/>
+              <span><strong>A.</strong> whence (từ đâu mà ra, từ nguồn nào mà tới)</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq7" type="radio" value="B"/>
+              <span><strong>B.</strong> whither (đi về đâu)</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq7" type="radio" value="C"/>
+              <span><strong>C.</strong> whereby</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq7" type="radio" value="D"/>
+              <span><strong>D.</strong> wherein</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q8 -->
+        <div class="p-5 rounded-2xl bg-amber-50/40 dark:bg-gray-800/60 border border-amber-200/60 dark:border-gray-700 space-y-3">
+          <div class="flex items-center justify-between gap-2">
+            <span class="px-2.5 py-0.5 rounded-md bg-indigo-100 dark:bg-indigo-900/40 text-indigo-800 dark:text-indigo-300 font-semibold text-xs">
+              Câu 8: Logical Fallacy Identification
+            </span>
+            <span class="text-xs text-gray-400">1.0 điểm</span>
+          </div>
+          <p class="font-bold text-gray-900 dark:text-white text-sm sm:text-base leading-snug">
+            8. Attacking an opponent's personal character or background rather than addressing their actual empirical argument is known in logic as:
+          </p>
+          <div class="space-y-2 pt-1">
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq8" required="" type="radio" value="A"/>
+              <span><strong>A.</strong> an Ad Hominem fallacy</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq8" type="radio" value="B"/>
+              <span><strong>B.</strong> a Straw Man fallacy</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq8" type="radio" value="C"/>
+              <span><strong>C.</strong> a Red Herring fallacy</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq8" type="radio" value="D"/>
+              <span><strong>D.</strong> a Slippery Slope fallacy</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q9 -->
+        <div class="p-5 rounded-2xl bg-amber-50/40 dark:bg-gray-800/60 border border-amber-200/60 dark:border-gray-700 space-y-3">
+          <div class="flex items-center justify-between gap-2">
+            <span class="px-2.5 py-0.5 rounded-md bg-violet-100 dark:bg-violet-900/40 text-violet-800 dark:text-violet-300 font-semibold text-xs">
+              Câu 9: CPE Sentence Transformation
+            </span>
+            <span class="text-xs text-gray-400">1.0 điểm</span>
+          </div>
+          <p class="font-bold text-gray-900 dark:text-white text-sm sm:text-base leading-snug">
+            9. "The junior staff suffered the most from the company's abrupt restructuring." (BRUNT) <br>
+            $\implies$ Which transformation is completely accurate in C2 register?
+          </p>
+          <div class="space-y-2 pt-1">
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq9" required="" type="radio" value="A"/>
+              <span><strong>A.</strong> The junior staff bore the brunt of the company's abrupt restructuring.</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq9" type="radio" value="B"/>
+              <span><strong>B.</strong> The junior staff took the brunt on the company's restructuring.</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq9" type="radio" value="C"/>
+              <span><strong>C.</strong> On the brunt was the junior staff for the restructuring.</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq9" type="radio" value="D"/>
+              <span><strong>D.</strong> Brunt of the restructuring fell into the junior staff.</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q10 -->
+        <div class="p-5 rounded-2xl bg-amber-50/40 dark:bg-gray-800/60 border border-amber-200/60 dark:border-gray-700 space-y-3">
+          <div class="flex items-center justify-between gap-2">
+            <span class="px-2.5 py-0.5 rounded-md bg-fuchsia-100 dark:bg-fuchsia-900/40 text-fuchsia-800 dark:text-fuchsia-300 font-semibold text-xs">
+              Câu 10: Rhetorical Device Recognition
+            </span>
+            <span class="text-xs text-gray-400">1.0 điểm</span>
+          </div>
+          <p class="font-bold text-gray-900 dark:text-white text-sm sm:text-base leading-snug">
+            10. In the famous maxim "Ask not what your country can do for you — ask what you can do for your country", which rhetorical figure of speech is demonstrated?
+          </p>
+          <div class="space-y-2 pt-1">
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq10" required="" type="radio" value="A"/>
+              <span><strong>A.</strong> Chiasmus (phép đảo cấu trúc chéo AB-BA)</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq10" type="radio" value="B"/>
+              <span><strong>B.</strong> Litotes (phép nói giảm nói tránh phủ định)</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq10" type="radio" value="C"/>
+              <span><strong>C.</strong> Oxymoron (phép nghịch hợp từ)</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq10" type="radio" value="D"/>
+              <span><strong>D.</strong> Synecdoche (phép hoán dụ bộ phận)</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="pt-4 flex items-center justify-end gap-3 border-t border-gray-200 dark:border-gray-700">
+          <button class="px-5 py-2.5 rounded-xl bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 font-medium hover:bg-gray-200 dark:hover:bg-gray-600 transition" onclick="closeCourseQuizModal()" type="button">
+            Đóng lại
+          </button>
+          <button class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-slate-950 font-black transition shadow-lg shadow-amber-500/30 flex items-center gap-2" type="submit">
+            <i class="fa-solid fa-paper-plane"></i> Nộp Bài &amp; Xem Kết Quả
+          </button>
+        </div>
+      </form>
+
+      <!-- Exam Result Panel -->
+      <div class="hidden p-6 sm:p-8 rounded-2xl bg-amber-50/80 dark:bg-amber-950/40 border border-amber-300 dark:border-amber-700 text-center space-y-4" id="courseExamResult">
+        <div class="w-16 h-16 mx-auto rounded-full bg-gradient-to-r from-amber-500 to-yellow-500 text-slate-950 flex items-center justify-center text-2xl shadow-xl shadow-amber-500/30">
+          <i class="fa-solid fa-crown text-amber-950"></i>
+        </div>
+        <h4 class="text-2xl sm:text-3xl font-black text-gray-900 dark:text-white" id="examScoreText">
+          Kết quả của bạn: 10/10 điểm
+        </h4>
+        <p class="text-sm sm:text-base text-gray-600 dark:text-gray-300 max-w-xl mx-auto leading-relaxed" id="examCommentText">
+          Nhận xét xếp hạng Huy chương Olympic Tiếng Anh
+        </p>
+        
+        <div class="pt-2 flex flex-wrap items-center justify-center gap-3">
+          <button class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-slate-950 text-sm font-bold transition shadow-md flex items-center gap-2" onclick="resetCourseExam()">
+            <i class="fa-solid fa-rotate-left"></i> Làm lại đề thi
+          </button>
+          <button class="px-5 py-2.5 rounded-xl bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600 text-sm font-semibold transition flex items-center gap-2" onclick="toggleSolutionsReview()" id="toggleSolutionsBtn">
+            <i class="fa-solid fa-book-open"></i> Xem lời giải chi tiết (10 câu)
+          </button>
+          <button class="px-5 py-2.5 rounded-xl border border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-800 text-sm font-semibold transition" onclick="closeCourseQuizModal()">
+            Đóng bảng điểm
+          </button>
+        </div>
+
+        <!-- Detail Solutions Container -->
+        <div class="hidden mt-8 text-left space-y-4 border-t border-amber-200 dark:border-amber-900/60 pt-6" id="examSolutionsReview">
+          <h5 class="text-base font-bold text-gray-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-circle-check text-emerald-500"></i> Bảng Đáp Án &amp; Lời Giải Chi Tiết Cả 10 Chuyên Đề Olympic:
+          </h5>
+          <div class="space-y-3 text-xs sm:text-sm">
+            
+            <div class="p-3.5 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+              <strong class="text-amber-600 dark:text-amber-400">Câu 1: Đáp án A.</strong>
+              Trong <em>succumb</em> /səˈkʌm/, chữ 'c' đầu đọc là /k/ (kết hợp 'cc' phát âm là /k/). Trong khi ở <em>indict</em> (/ɪnˈdaɪt/), <em>victuals</em> (/ˈvɪt.əlz/), và <em>muscle</em> (/ˈmʌs.əl/), chữ 'c' hoàn toàn là âm câm.
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+              <strong class="text-amber-600 dark:text-amber-400">Câu 2: Đáp án A.</strong>
+              Thành ngữ văn học cổ điển kết hợp Participle Fronting: <em>Gone are the days when...</em> (Đã qua rồi cái thời mà...).
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+              <strong class="text-amber-600 dark:text-amber-400">Câu 3: Đáp án A.</strong>
+              Động từ ghép C2: <em>shilly-shally</em> = do dự, chần chừ, lưỡng lự không dứt khoát.
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+              <strong class="text-amber-600 dark:text-amber-400">Câu 4: Đáp án A.</strong>
+              Thần thoại Hy Lạp: <em>Sisyphean task</em> chỉ công việc nhọc nhằn đẩy tảng đá lên đỉnh núi rồi lăn xuống, lặp đi lặp lại vô vọng không có hồi kết.
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+              <strong class="text-amber-600 dark:text-amber-400">Câu 5: Đáp án A.</strong>
+              Thuật ngữ Latinh: <em>non sequitur</em> = kết luận ngụy biện, phi lý, không hề có mối liên hệ nhân quả logic với tiền đề phía trước.
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+              <strong class="text-amber-600 dark:text-amber-400">Câu 6: Đáp án A.</strong>
+              Tiếp vĩ ngữ cổ <em>-monger</em> chỉ kẻ buôn bán / gieo rắc điều tiêu cực: <em>scaremonger</em> (kẻ gieo rắc nỗi sợ hãi vô căn cứ), <em>warmonger</em> (kẻ hiếu chiến).
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+              <strong class="text-amber-600 dark:text-amber-400">Câu 7: Đáp án A.</strong>
+              Liên từ cổ: <em>whence</em> = from where / from which source (từ nguồn cội nào).
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+              <strong class="text-amber-600 dark:text-amber-400">Câu 8: Đáp án A.</strong>
+              Thuật ngữ logic học: <em>Ad Hominem fallacy</em> (công kích cá nhân đối phương thay vì phản biện lập luận học thuật của họ).
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+              <strong class="text-amber-600 dark:text-amber-400">Câu 9: Đáp án A.</strong>
+              Thành ngữ C2: <em>bear the brunt of something</em> = gánh chịu hậu quả nặng nề nhất của một biến cố.
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+              <strong class="text-amber-600 dark:text-amber-400">Câu 10: Đáp án A.</strong>
+              Thủ pháp tu từ: <em>Chiasmus</em> (phép đảo chéo cấu trúc câu: "Ask not what your country can do for you [A - B] — ask what you can do for your country [B - A]").
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="mt-16 bg-white dark:bg-dark-surface border-t border-gray-200 dark:border-gray-800 py-8 text-center text-xs text-gray-500 dark:text-gray-400">
+    <div class="max-w-7xl mx-auto px-4 space-y-2">
+      <p class="font-medium text-gray-700 dark:text-gray-300">
+        Khóa Học Ôn Luyện Thi Olympic Tiếng Anh Cấp 3 (THPT &amp; Chuyên) • CodeHub Learning Platform
+      </p>
+      <p>
+        Biên soạn theo chuẩn kỳ thi Olympic Truyền thống 30/4, Olympic Duyên Hải &amp; Đồng Bằng Bắc Bộ, Trại hè Hùng Vương &amp; Vòng tuyển chọn Đội tuyển Quốc tế (TST).
+      </p>
+    </div>
+  </footer>
+
+  <!-- Interactive Scripts -->
+  <script>
+    const STORAGE_KEY = 'olympic_tienganh_thpt_solved_quizzes';
+    const TOTAL_QUIZZES = 40;
+
+    // KaTeX Math Rendering
+    function renderAllMath() {
+      if (typeof renderMathInElement === 'function') {
+        renderMathInElement(document.body, {
+          delimiters: [
+            { left: '$$', right: '$$', display: true },
+            { left: '$', right: '$', display: false }
+          ],
+          ignoredTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+          throwOnError: false
+        });
+      }
+    }
+
+    // Theme Toggle
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeIcon = document.getElementById('theme-icon');
+
+    function applyTheme(isDark) {
+      if (isDark) {
+        document.documentElement.classList.add('dark');
+        themeIcon.className = 'fa-solid fa-sun text-amber-400';
+        localStorage.setItem('theme', 'dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+        themeIcon.className = 'fa-solid fa-moon text-gray-600';
+        localStorage.setItem('theme', 'light');
+      }
+    }
+
+    const savedTheme = localStorage.getItem('theme');
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    applyTheme(savedTheme === 'dark' || (!savedTheme && systemPrefersDark));
+
+    themeToggleBtn.addEventListener('click', () => {
+      const isDark = document.documentElement.classList.contains('dark');
+      applyTheme(!isDark);
+    });
+
+    // Mobile Drawer Navigation
+    const mobileDrawer = document.getElementById('mobile-drawer');
+    const drawerBackdrop = document.getElementById('drawer-backdrop');
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+
+    function toggleDrawer(open) {
+      if (open) {
+        mobileDrawer.classList.remove('translate-x-full');
+        drawerBackdrop.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+      } else {
+        mobileDrawer.classList.add('translate-x-full');
+        drawerBackdrop.classList.add('hidden');
+        document.body.style.overflow = '';
+      }
+    }
+
+    if (mobileMenuBtn) {
+      mobileMenuBtn.addEventListener('click', () => toggleDrawer(true));
+    }
+
+    // Quiz LocalStorage & State
+    function getSolvedQuizzes() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+      } catch (e) {
+        return {};
+      }
+    }
+
+    function saveSolvedQuiz(quizId, isCorrect) {
+      const solved = getSolvedQuizzes();
+      solved[quizId] = isCorrect;
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(solved));
+      updateProgressDisplay();
+    }
+
+    function checkQuiz(quizId, optionIndex, isCorrect, explanation) {
+      const buttons = document.querySelectorAll('.quiz-btn-' + quizId);
+      buttons.forEach((btn, idx) => {
+        btn.disabled = true;
+        btn.classList.remove('bg-amber-50', 'dark:bg-amber-950/30', 'border-amber-500', 'bg-rose-50', 'dark:bg-rose-950/30', 'border-rose-500', 'bg-emerald-50', 'dark:bg-emerald-950/30', 'border-emerald-500');
+        if (idx === optionIndex) {
+          if (isCorrect) {
+            btn.classList.add('bg-emerald-100', 'dark:bg-emerald-950/40', 'border-emerald-500', 'text-emerald-900', 'dark:text-emerald-200', 'font-bold');
+          } else {
+            btn.classList.add('bg-rose-100', 'dark:bg-rose-950/40', 'border-rose-500', 'text-rose-900', 'dark:text-rose-200');
+          }
+        }
+      });
+
+      const feedbackEl = document.getElementById('feedback-' + quizId);
+      if (feedbackEl) {
+        feedbackEl.classList.remove('hidden');
+        feedbackEl.className = 'mt-3 p-3 rounded-lg text-xs font-medium border leading-relaxed ' + 
+          (isCorrect ? 'text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/30 border-emerald-500/30' : 'text-rose-700 dark:text-rose-300 bg-rose-50 dark:bg-rose-950/30 border-rose-500/30');
+        feedbackEl.innerHTML = (isCorrect ? '<i class="fa-solid fa-circle-check mr-1.5 text-emerald-600"></i>' : '<i class="fa-solid fa-circle-xmark mr-1.5 text-rose-600"></i>') + explanation;
+        renderAllMath();
+      }
+
+      saveSolvedQuiz(quizId, isCorrect);
+    }
+
+    function updateProgressDisplay() {
+      const solved = getSolvedQuizzes();
+      const count = Object.values(solved).filter(v => v === true).length;
+      const pct = Math.round((count / TOTAL_QUIZZES) * 100);
+
+      const countEl = document.getElementById('quiz-completed-count');
+      const progressPercentEl = document.getElementById('progress-percent');
+      const progressBarEl = document.getElementById('progress-bar');
+
+      if (countEl) countEl.innerText = count;
+      if (progressPercentEl) progressPercentEl.innerText = pct + '%';
+      if (progressBarEl) progressBarEl.style.width = pct + '%';
+    }
+
+    function resetAllQuizzes() {
+      if (confirm('Bạn có chắc muốn đặt lại toàn bộ kết quả bài tập để làm lại từ đầu?')) {
+        localStorage.removeItem(STORAGE_KEY);
+        location.reload();
+      }
+    }
+
+    // Olympic Exam Modal & Live Countdown Timer Handlers
+    let examTimerInterval = null;
+    let examSecondsLeft = 60 * 60; // 60 minutes for Olympic exam
+
+    function updateExamTimerDisplay() {
+      const timerEl = document.getElementById('examTimer');
+      if (!timerEl) return;
+      const m = Math.floor(examSecondsLeft / 60);
+      const s = examSecondsLeft % 60;
+      timerEl.innerText = (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
+    }
+
+    function startExamTimer() {
+      stopExamTimer();
+      updateExamTimerDisplay();
+      examTimerInterval = setInterval(() => {
+        if (examSecondsLeft > 0) {
+          examSecondsLeft--;
+          updateExamTimerDisplay();
+        } else {
+          stopExamTimer();
+          alert('⏰ Đã hết 60 phút làm bài thi thử Olympic! Hệ thống sẽ tự động thu bài và xếp hạng.');
+          const form = document.getElementById('courseExamForm');
+          if (form) {
+            submitCourseExam(new Event('submit'));
+          }
+        }
+      }, 1000);
+    }
+
+    function stopExamTimer() {
+      if (examTimerInterval) {
+        clearInterval(examTimerInterval);
+        examTimerInterval = null;
+      }
+    }
+
+    function openCourseQuizModal() {
+      const modal = document.getElementById('courseQuizModal');
+      if (modal) {
+        modal.classList.remove('hidden');
+        renderAllMath();
+        setTimeout(renderAllMath, 100);
+        const form = document.getElementById('courseExamForm');
+        if (form && !form.classList.contains('hidden')) {
+          startExamTimer();
+        }
+      }
+    }
+
+    function closeCourseQuizModal() {
+      const modal = document.getElementById('courseQuizModal');
+      if (modal) modal.classList.add('hidden');
+      stopExamTimer();
+    }
+
+    const examAnswers = {
+      eq1: 'A',
+      eq2: 'A',
+      eq3: 'A',
+      eq4: 'A',
+      eq5: 'A',
+      eq6: 'A',
+      eq7: 'A',
+      eq8: 'A',
+      eq9: 'A',
+      eq10: 'A'
+    };
+
+    function submitCourseExam(e) {
+      if (e && e.preventDefault) e.preventDefault();
+      stopExamTimer();
+      const form = document.getElementById('courseExamForm');
+      let score = 0;
+
+      for (let i = 1; i <= 10; i++) {
+        const val = form['eq' + i]?.value;
+        if (val === examAnswers['eq' + i]) {
+          score++;
+        }
+      }
+
+      form.classList.add('hidden');
+      const resultBox = document.getElementById('courseExamResult');
+      resultBox.classList.remove('hidden');
+      document.getElementById('examScoreText').innerText = 'Kết quả của bạn: ' + score + '/10 điểm';
+
+      let comment = '';
+      if (score >= 9) {
+        comment = '🥇 Đẳng cấp Huy chương Vàng Olympic Tiếng Anh! Kiến thức ngôn ngữ học cổ điển, vốn thành ngữ Hy-La và khả năng tư duy phản biện của bạn đạt tầm đỉnh cao, hoàn toàn sẵn sàng cho Vòng chọn Đội tuyển Quốc tế TST và kỳ thi CPE!';
+      } else if (score >= 7) {
+        comment = '🥈 Xuất sắc! Huy chương Bạc Olympic! Bạn nắm rất vững cấu trúc đảo ngữ văn chương, ngữ âm lịch sử và các thuật ngữ Latinh. Hãy tiếp tục mài giũa thêm tốc độ tư duy logic.';
+      } else if (score >= 5) {
+        comment = '🥉 Đạt mốc Huy chương Đồng Olympic! Nền tảng học thuật của bạn khá tốt. Hãy tiếp tục mở rộng vốn từ vựng triết học và các tiếp tố phái sinh hiếm gặp.';
+      } else {
+        comment = '🎯 Giải Khuyến khích Olympic! Đề thi Olympic đòi hỏi sự tích lũy sâu rộng về văn hóa và ngôn ngữ học. Hãy đọc kỹ lời giải chi tiết 10 câu dưới đây và thử làm lại nhé!';
+      }
+      document.getElementById('examCommentText').innerText = comment;
+      renderAllMath();
+    }
+
+    function resetCourseExam() {
+      const form = document.getElementById('courseExamForm');
+      form.reset();
+      form.classList.remove('hidden');
+      document.getElementById('courseExamResult').classList.add('hidden');
+      const solutions = document.getElementById('examSolutionsReview');
+      if (solutions) solutions.classList.add('hidden');
+      examSecondsLeft = 60 * 60;
+      startExamTimer();
+      renderAllMath();
+    }
+
+    function toggleSolutionsReview() {
+      const solutions = document.getElementById('examSolutionsReview');
+      const btn = document.getElementById('toggleSolutionsBtn');
+      if (solutions) {
+        solutions.classList.toggle('hidden');
+        renderAllMath();
+        if (btn) {
+          if (solutions.classList.contains('hidden')) {
+            btn.innerHTML = '<i class="fa-solid fa-book-open"></i> Xem lời giải chi tiết (10 câu)';
+          } else {
+            btn.innerHTML = '<i class="fa-solid fa-eye-slash"></i> Ẩn bớt lời giải chi tiết';
+          }
+        }
+      }
+    }
+
+    // ScrollSpy cho Sidebar navigation & Render Math
+    document.addEventListener('DOMContentLoaded', () => {
+      renderAllMath();
+      setTimeout(renderAllMath, 200);
+      setTimeout(renderAllMath, 800);
+      updateProgressDisplay();
+
+      const sections = document.querySelectorAll('.lesson-section');
+      const navLinks = document.querySelectorAll('.nav-link');
+
+      window.addEventListener('scroll', () => {
+        let current = '';
+        const scrollPos = window.pageYOffset || document.documentElement.scrollTop;
+
+        sections.forEach(section => {
+          const top = section.offsetTop - 140;
+          const height = section.offsetHeight;
+          if (scrollPos >= top && scrollPos < top + height) {
+            current = section.getAttribute('id');
+          }
+        });
+
+        navLinks.forEach(link => {
+          link.classList.remove('bg-amber-500/10', 'text-amber-600', 'dark:text-amber-400', 'font-bold');
+          if (link.getAttribute('href') === '#' + current) {
+            link.classList.add('bg-amber-500/10', 'text-amber-600', 'dark:text-amber-400', 'font-bold');
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

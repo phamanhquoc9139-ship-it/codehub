@@ -88,6 +88,11 @@
           <i class="fa-solid fa-award text-yellow-200"></i>
           <span>Chuẩn IOI • APIO • Olympic 30/4 • Duyên Hải</span>
         </span>
+        <button onclick="openCourseQuizModal()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-slate-900 font-bold text-xs sm:text-sm shadow-sm transition">
+          <i class="fa-solid fa-crown text-amber-950"></i>
+          <span class="hidden sm:inline">Đề thi Olympic cuối khóa</span>
+          <span>(10 câu)</span>
+        </button>
         <!-- Dark/Light Mode Button -->
         <button id="theme-toggle" class="p-2 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-300 transition" aria-label="Đổi giao diện">
           <i id="theme-icon" class="fa-solid fa-moon"></i>
@@ -1466,6 +1471,9 @@ eq root} (len[u] - len[link[u]])$</button>
             <a href="../index.html" class="px-5 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-sm shadow-lg shadow-amber-500/30 transition flex items-center gap-2">
               <i class="fa-solid fa-arrow-left"></i> Về Trang Chủ Khóa Học
             </a>
+            <button onclick="openCourseQuizModal()" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-400 to-yellow-400 hover:from-amber-500 hover:to-yellow-500 text-slate-950 font-black text-sm shadow-lg shadow-yellow-500/30 transition flex items-center gap-2">
+              <i class="fa-solid fa-crown text-amber-900"></i> Thi Thử Đề Olympic Cuối Khóa (10 câu)
+            </button>
             <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-sm border border-white/20 transition flex items-center gap-2">
               <i class="fa-solid fa-arrow-up"></i> Lên Đầu Trang
             </button>
@@ -1474,6 +1482,440 @@ eq root} (len[u] - len[link[u]])$</button>
       </section>
 
     </main>
+  </div>
+
+  <!-- Course Exam Modal: Đề Thi Olympic Tin Học Cuối Khóa -->
+  <div class="hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto" id="courseQuizModal">
+    <div class="bg-white dark:bg-dark-surface rounded-3xl max-w-4xl w-full max-h-[92vh] overflow-y-auto p-6 sm:p-8 shadow-2xl border border-amber-300/40 dark:border-amber-500/30">
+      
+      <!-- Modal Header -->
+      <div class="flex items-center justify-between pb-4 border-b border-gray-200 dark:border-gray-700 mb-6">
+        <div>
+          <span class="px-2.5 py-1 rounded-full bg-amber-100 dark:bg-amber-950/70 text-amber-800 dark:text-amber-300 font-bold text-xs flex items-center gap-1.5 w-fit">
+            <i class="fa-solid fa-crown text-amber-500"></i> Đề Thi Khảo Sát Năng Lực Đội Tuyển Olympic Tin Học
+          </span>
+          <h3 class="text-xl sm:text-2xl font-black text-gray-900 dark:text-white mt-1.5">
+            Đề Thi Olympic Tin Học Cấp 3 (THPT &amp; Chuyên) Cuối Khóa
+          </h3>
+          <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
+            10 câu hỏi thuật toán đỉnh cao bao quát 10 chuyên đề Olympic quốc tế (IOI, APIO, Olympic 30/4, Duyên Hải)
+          </p>
+        </div>
+        <button class="w-9 h-9 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-500 hover:text-gray-900 dark:hover:text-white flex items-center justify-center transition" onclick="closeCourseQuizModal()" aria-label="Đóng đề thi">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <!-- Exam Form -->
+      <form class="space-y-6 text-sm text-gray-700 dark:text-gray-300" id="courseExamForm" onsubmit="submitCourseExam(event)">
+        
+        <!-- Q1 -->
+        <div class="p-5 rounded-2xl bg-amber-50/40 dark:bg-gray-800/60 border border-amber-200/60 dark:border-gray-700 space-y-3">
+          <div class="flex items-center justify-between gap-2">
+            <span class="px-2.5 py-0.5 rounded-md bg-amber-100 dark:bg-amber-900/40 text-amber-800 dark:text-amber-300 font-semibold text-xs">
+              Chuyên đề 1: Sqrt Decomposition (Chia khối căn bậc hai)
+            </span>
+            <span class="text-xs text-gray-400">1.0 điểm</span>
+          </div>
+          <p class="font-bold text-gray-900 dark:text-white text-sm sm:text-base leading-snug">
+            1. Cho mảng $A$ gồm $N$ phần tử ($N \le 10^5$). Ta chia mảng thành các khối (blocks) kích thước $B = \lceil\sqrt{N}\rceil$. Để thực hiện cập nhật giá trị một phần tử $A[i] = v$ và truy vấn tính tổng đoạn con $[L, R]$, độ phức tạp thời gian cho mỗi thao tác tương ứng là:
+          </p>
+          <div class="space-y-2 pt-1">
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq1" required="" type="radio" value="A"/>
+              <span><strong>A.</strong> Cập nhật $O(1)$, Truy vấn tổng đoạn $O(\sqrt{N})$</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq1" type="radio" value="B"/>
+              <span><strong>B.</strong> Cập nhật $O(\sqrt{N})$, Truy vấn tổng đoạn $O(1)$</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq1" type="radio" value="C"/>
+              <span><strong>C.</strong> Cập nhật $O(\log N)$, Truy vấn tổng đoạn $O(N)$</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq1" type="radio" value="D"/>
+              <span><strong>D.</strong> Cập nhật $O(N)$, Truy vấn tổng đoạn $O(\log N)$</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="p-5 rounded-2xl bg-amber-50/40 dark:bg-gray-800/60 border border-amber-200/60 dark:border-gray-700 space-y-3">
+          <div class="flex items-center justify-between gap-2">
+            <span class="px-2.5 py-0.5 rounded-md bg-yellow-100 dark:bg-yellow-900/40 text-yellow-800 dark:text-yellow-300 font-semibold text-xs">
+              Chuyên đề 2: Thuật toán Mo (Mo's Algorithm)
+            </span>
+            <span class="text-xs text-gray-400">1.0 điểm</span>
+          </div>
+          <p class="font-bold text-gray-900 dark:text-white text-sm sm:text-base leading-snug">
+            2. Thuật toán Mo giải quyết $Q$ truy vấn đoạn $[L_i, R_i]$ tĩnh (không cập nhật) trên dãy $N$ phần tử. Khi chia mảng thành các khối kích thước $B = \frac{N}{\sqrt{Q}}$ và sắp xếp các truy vấn theo $(L_i / B, R_i)$, tổng thời gian di chuyển của hai con trỏ qua toàn bộ $Q$ truy vấn là:
+          </p>
+          <div class="space-y-2 pt-1">
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq2" required="" type="radio" value="A"/>
+              <span><strong>A.</strong> $O((N + Q) \sqrt{N})$ (hoặc $O(N \sqrt{Q})$ khi $Q \approx N$)</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq2" type="radio" value="B"/>
+              <span><strong>B.</strong> $O((N + Q) \log N)$</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq2" type="radio" value="C"/>
+              <span><strong>C.</strong> $O(N \cdot Q)$</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq2" type="radio" value="D"/>
+              <span><strong>D.</strong> $O(N^2 + Q)$</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="p-5 rounded-2xl bg-amber-50/40 dark:bg-gray-800/60 border border-amber-200/60 dark:border-gray-700 space-y-3">
+          <div class="flex items-center justify-between gap-2">
+            <span class="px-2.5 py-0.5 rounded-md bg-purple-100 dark:bg-purple-900/40 text-purple-800 dark:text-purple-300 font-semibold text-xs">
+              Chuyên đề 3: Cây phân đoạn bền vững (Persistent Segment Tree)
+            </span>
+            <span class="text-xs text-gray-400">1.0 điểm</span>
+          </div>
+          <p class="font-bold text-gray-900 dark:text-white text-sm sm:text-base leading-snug">
+            3. Trong cây phân đoạn bền vững (Persistent Segment Tree) quản lý dãy số $N$ phần tử, kỹ thuật sao chép đường đi (Path Copying) khi cập nhật 1 điểm tạo ra bao nhiêu nút mới và tiêu tốn bao nhiêu thời gian &amp; bộ nhớ?
+          </p>
+          <div class="space-y-2 pt-1">
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq3" required="" type="radio" value="A"/>
+              <span><strong>A.</strong> Tạo đúng $O(\log N)$ nút mới dọc theo đường đi từ gốc đến lá, tốn thời gian và bộ nhớ $O(\log N)$</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq3" type="radio" value="B"/>
+              <span><strong>B.</strong> Tạo lại toàn bộ cây với $O(N)$ nút mới, tốn $O(N)$ bộ nhớ</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq3" type="radio" value="C"/>
+              <span><strong>C.</strong> Chỉ tạo duy nhất $1$ nút mới ở gốc, tốn $O(1)$ bộ nhớ</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq3" type="radio" value="D"/>
+              <span><strong>D.</strong> Tạo $O(\sqrt{N})$ nút mới, tốn $O(\sqrt{N})$ bộ nhớ</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="p-5 rounded-2xl bg-amber-50/40 dark:bg-gray-800/60 border border-amber-200/60 dark:border-gray-700 space-y-3">
+          <div class="flex items-center justify-between gap-2">
+            <span class="px-2.5 py-0.5 rounded-md bg-blue-100 dark:bg-blue-900/40 text-blue-800 dark:text-blue-300 font-semibold text-xs">
+              Chuyên đề 4: Phân tách cây Heavy-Light Decomposition (HLD)
+            </span>
+            <span class="text-xs text-gray-400">1.0 điểm</span>
+          </div>
+          <p class="font-bold text-gray-900 dark:text-white text-sm sm:text-base leading-snug">
+            4. Kỹ thuật Heavy-Light Decomposition (HLD) phân chia các cạnh trên cây $N$ đỉnh thành cạnh Nặng (Heavy edge) và cạnh Nhẹ (Light edge). Đường đi đơn giữa hai đỉnh bất kỳ $(u, v)$ trên cây đi qua tối đa bao nhiêu cạnh nhẹ và đoạn chuỗi nặng?
+          </p>
+          <div class="space-y-2 pt-1">
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq4" required="" type="radio" value="A"/>
+              <span><strong>A.</strong> Tối đa $O(\log N)$ cạnh nhẹ và $O(\log N)$ đoạn chuỗi nặng liên tục</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq4" type="radio" value="B"/>
+              <span><strong>B.</strong> Tối đa $O(\sqrt{N})$ cạnh nhẹ</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq4" type="radio" value="C"/>
+              <span><strong>C.</strong> Tối đa $O(N)$ chuỗi nặng</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq4" type="radio" value="D"/>
+              <span><strong>D.</strong> Luôn luôn có đúng 2 chuỗi nặng</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q5 -->
+        <div class="p-5 rounded-2xl bg-amber-50/40 dark:bg-gray-800/60 border border-amber-200/60 dark:border-gray-700 space-y-3">
+          <div class="flex items-center justify-between gap-2">
+            <span class="px-2.5 py-0.5 rounded-md bg-emerald-100 dark:bg-emerald-900/40 text-emerald-800 dark:text-emerald-300 font-semibold text-xs">
+              Chuyên đề 5: Centroid Decomposition (Trọng tâm cây)
+            </span>
+            <span class="text-xs text-gray-400">1.0 điểm</span>
+          </div>
+          <p class="font-bold text-gray-900 dark:text-white text-sm sm:text-base leading-snug">
+            5. Trong kỹ thuật Centroid Decomposition trên cây $N$ đỉnh, trọng tâm (centroid) là đỉnh mà khi loại bỏ, mỗi cây con còn lại có số lượng đỉnh không vượt quá bao nhiêu, và độ sâu tối đa của Cây Trọng Tâm (Centroid Tree) là bao nhiêu?
+          </p>
+          <div class="space-y-2 pt-1">
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq5" required="" type="radio" value="A"/>
+              <span><strong>A.</strong> Mỗi cây con có kích thước $\le \lfloor N/2 \rfloor$, và độ sâu cây trọng tâm tối đa là $O(\log N)$</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq5" type="radio" value="B"/>
+              <span><strong>B.</strong> Mỗi cây con có kích thước $\le \sqrt{N}$, độ sâu cây trọng tâm tối đa là $O(\sqrt{N})$</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq5" type="radio" value="C"/>
+              <span><strong>C.</strong> Mỗi cây con có kích thước $\le N/3$, độ sâu cây trọng tâm là $O(1)$</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq5" type="radio" value="D"/>
+              <span><strong>D.</strong> Mỗi cây con có kích thước $\le N - 1$, độ sâu cây trọng tâm là $O(N)$</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q6 -->
+        <div class="p-5 rounded-2xl bg-amber-50/40 dark:bg-gray-800/60 border border-amber-200/60 dark:border-gray-700 space-y-3">
+          <div class="flex items-center justify-between gap-2">
+            <span class="px-2.5 py-0.5 rounded-md bg-rose-100 dark:bg-rose-900/40 text-rose-800 dark:text-rose-300 font-semibold text-xs">
+              Chuyên đề 6: Tối ưu Quy hoạch động (Convex Hull Trick)
+            </span>
+            <span class="text-xs text-gray-400">1.0 điểm</span>
+          </div>
+          <p class="font-bold text-gray-900 dark:text-white text-sm sm:text-base leading-snug">
+            6. Khi tối ưu bài toán quy hoạch động $DP[i] = \min_{j < i} \{ DP[j] + b_j \cdot a_i \}$ bằng Convex Hull Trick (CHT), nếu cả hệ số góc $m = b_j$ và hoành độ truy vấn $x = a_i$ đều biến thiên đơn điệu, độ phức tạp thuật toán khi duy trì bao lồi bằng hàng đợi hai đầu (std::deque) là:
+          </p>
+          <div class="space-y-2 pt-1">
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq6" required="" type="radio" value="A"/>
+              <span><strong>A.</strong> $O(N)$ (mỗi đường thẳng chỉ thêm vào và loại ra khỏi Deque tối đa 1 lần với chi phí khấu hao $O(1)$)</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq6" type="radio" value="B"/>
+              <span><strong>B.</strong> $O(N \log N)$ do phải chặt nhị phân mỗi bước</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq6" type="radio" value="C"/>
+              <span><strong>C.</strong> $O(N^2)$</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq6" type="radio" value="D"/>
+              <span><strong>D.</strong> $O(N \sqrt{N})$</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q7 -->
+        <div class="p-5 rounded-2xl bg-amber-50/40 dark:bg-gray-800/60 border border-amber-200/60 dark:border-gray-700 space-y-3">
+          <div class="flex items-center justify-between gap-2">
+            <span class="px-2.5 py-0.5 rounded-md bg-cyan-100 dark:bg-cyan-900/40 text-cyan-800 dark:text-cyan-300 font-semibold text-xs">
+              Chuyên đề 7: Mạng luồng cực đại (Dinic's Algorithm)
+            </span>
+            <span class="text-xs text-gray-400">1.0 điểm</span>
+          </div>
+          <p class="font-bold text-gray-900 dark:text-white text-sm sm:text-base leading-snug">
+            7. Thuật toán Dinic tìm luồng cực đại kết hợp Đồ thị phân tầng (BFS) và Tìm luồng cản (DFS Blocking Flow) có độ phức tạp thời gian trên mạng tổng quát $G = (V, E)$ và trên mạng đơn vị (Unit Network) lần lượt là:
+          </p>
+          <div class="space-y-2 pt-1">
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq7" required="" type="radio" value="A"/>
+              <span><strong>A.</strong> Đồ thị tổng quát là $O(V^2 E)$, trên mạng đơn vị là $O(E \sqrt{V})$</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq7" type="radio" value="B"/>
+              <span><strong>B.</strong> Đồ thị tổng quát là $O(V \cdot E^2)$, trên mạng đơn vị là $O(V \cdot E)$</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq7" type="radio" value="C"/>
+              <span><strong>C.</strong> Đồ thị tổng quát là $O(E \log V)$, trên mạng đơn vị là $O(V)$</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq7" type="radio" value="D"/>
+              <span><strong>D.</strong> Đồ thị tổng quát là $O(V^3)$, trên mạng đơn vị là $O(E \log E)$</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q8 -->
+        <div class="p-5 rounded-2xl bg-amber-50/40 dark:bg-gray-800/60 border border-amber-200/60 dark:border-gray-700 space-y-3">
+          <div class="flex items-center justify-between gap-2">
+            <span class="px-2.5 py-0.5 rounded-md bg-indigo-100 dark:bg-indigo-900/40 text-indigo-800 dark:text-indigo-300 font-semibold text-xs">
+              Chuyên đề 8: Luồng chi phí nhỏ nhất (Min-Cost Max-Flow - MCMF)
+            </span>
+            <span class="text-xs text-gray-400">1.0 điểm</span>
+          </div>
+          <p class="font-bold text-gray-900 dark:text-white text-sm sm:text-base leading-snug">
+            8. Trong bài toán MCMF, để thay thế SPFA bằng thuật toán Dijkstra có thế năng đỉnh (Johnson’s Potentials) nhằm triệt tiêu trọng số âm, trọng số chi phí quy đổi $w'(u, v)$ của cung $(u, v)$ với thế năng $h$ được tính bằng công thức:
+          </p>
+          <div class="space-y-2 pt-1">
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq8" required="" type="radio" value="A"/>
+              <span><strong>A.</strong> $w'(u, v) = w(u, v) + h(u) - h(v) \ge 0$</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq8" type="radio" value="B"/>
+              <span><strong>B.</strong> $w'(u, v) = w(u, v) - h(u) - h(v)$</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq8" type="radio" value="C"/>
+              <span><strong>C.</strong> $w'(u, v) = w(u, v) \cdot h(u) / h(v)$</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq8" type="radio" value="D"/>
+              <span><strong>D.</strong> $w'(u, v) = |w(u, v) - h(u)|$</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q9 -->
+        <div class="p-5 rounded-2xl bg-amber-50/40 dark:bg-gray-800/60 border border-amber-200/60 dark:border-gray-700 space-y-3">
+          <div class="flex items-center justify-between gap-2">
+            <span class="px-2.5 py-0.5 rounded-md bg-teal-100 dark:bg-teal-900/40 text-teal-800 dark:text-teal-300 font-semibold text-xs">
+              Chuyên đề 9: Suffix Automaton (SAM)
+            </span>
+            <span class="text-xs text-gray-400">1.0 điểm</span>
+          </div>
+          <p class="font-bold text-gray-900 dark:text-white text-sm sm:text-base leading-snug">
+            9. Cấu trúc Suffix Automaton (SAM) của một xâu ký tự có độ dài $N$ ($N > 1$) biểu diễn toàn bộ các xâu con trong một DAG tuyến tính. Số trạng thái (đỉnh) tối đa và số liên kết (cung) tối đa của SAM là:
+          </p>
+          <div class="space-y-2 pt-1">
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq9" required="" type="radio" value="A"/>
+              <span><strong>A.</strong> Tối đa $2N - 1$ trạng thái và $3N - 4$ cung, xây dựng trong $O(N)$</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq9" type="radio" value="B"/>
+              <span><strong>B.</strong> Tối đa $N^2$ trạng thái và $N^2$ cung, xây dựng trong $O(N^2)$</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq9" type="radio" value="C"/>
+              <span><strong>C.</strong> Tối đa $N \log N$ trạng thái và $N \log N$ cung, xây dựng trong $O(N \log N)$</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq9" type="radio" value="D"/>
+              <span><strong>D.</strong> Tối đa $2^N$ trạng thái, xây dựng trong $O(2^N)$</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q10 -->
+        <div class="p-5 rounded-2xl bg-amber-50/40 dark:bg-gray-800/60 border border-amber-200/60 dark:border-gray-700 space-y-3">
+          <div class="flex items-center justify-between gap-2">
+            <span class="px-2.5 py-0.5 rounded-md bg-fuchsia-100 dark:bg-fuchsia-900/40 text-fuchsia-800 dark:text-fuchsia-300 font-semibold text-xs">
+              Chuyên đề 10: Biến đổi Fourier Nhanh (FFT) &amp; Cơ sở Xor
+            </span>
+            <span class="text-xs text-gray-400">1.0 điểm</span>
+          </div>
+          <p class="font-bold text-gray-900 dark:text-white text-sm sm:text-base leading-snug">
+            10. Thuật toán Fast Fourier Transform (FFT) thực hiện nhân hai đa thức bậc $N$ với độ phức tạp thời gian là bao nhiêu, và Cơ sở tuyến tính Xor (Xor Basis) của tập số nguyên 64-bit có kích thước tối đa là bao nhiêu?
+          </p>
+          <div class="space-y-2 pt-1">
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq10" required="" type="radio" value="A"/>
+              <span><strong>A.</strong> FFT nhân hai đa thức trong $O(N \log N)$; Kích thước cơ sở tuyến tính Xor 64-bit tối đa là 64 phần tử</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq10" type="radio" value="B"/>
+              <span><strong>B.</strong> FFT nhân trong $O(N^2)$; Kích thước cơ sở Xor tối đa là $N$ phần tử</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq10" type="radio" value="C"/>
+              <span><strong>C.</strong> FFT nhân trong $O(N \sqrt{N})$; Kích thước cơ sở Xor tối đa là 128 phần tử</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-amber-100/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-amber-600 focus:ring-amber-500" name="eq10" type="radio" value="D"/>
+              <span><strong>D.</strong> FFT nhân trong $O(N)$; Kích thước cơ sở Xor tối đa là 32 phần tử</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="pt-4 flex items-center justify-end gap-3 border-t border-gray-200 dark:border-gray-700">
+          <button class="px-5 py-2.5 rounded-xl bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 font-medium hover:bg-gray-200 dark:hover:bg-gray-600 transition" onclick="closeCourseQuizModal()" type="button">
+            Đóng lại
+          </button>
+          <button class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-slate-950 font-black transition shadow-lg shadow-amber-500/30 flex items-center gap-2" type="submit">
+            <i class="fa-solid fa-paper-plane"></i> Nộp Bài &amp; Xem Kết Quả
+          </button>
+        </div>
+      </form>
+
+      <!-- Exam Result Panel -->
+      <div class="hidden p-6 sm:p-8 rounded-2xl bg-amber-50/80 dark:bg-amber-950/40 border border-amber-300 dark:border-amber-700 text-center space-y-4" id="courseExamResult">
+        <div class="w-16 h-16 mx-auto rounded-full bg-gradient-to-r from-amber-500 to-yellow-500 text-slate-950 flex items-center justify-center text-2xl shadow-xl shadow-amber-500/30">
+          <i class="fa-solid fa-crown text-amber-950"></i>
+        </div>
+        <h4 class="text-2xl sm:text-3xl font-black text-gray-900 dark:text-white" id="examScoreText">
+          Kết quả của bạn: 10/10 điểm
+        </h4>
+        <p class="text-sm sm:text-base text-gray-600 dark:text-gray-300 max-w-xl mx-auto leading-relaxed" id="examCommentText">
+          Nhận xét đánh giá năng lực Olympic thuật toán
+        </p>
+        
+        <div class="pt-2 flex flex-wrap items-center justify-center gap-3">
+          <button class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-slate-950 text-sm font-bold transition shadow-md flex items-center gap-2" onclick="resetCourseExam()">
+            <i class="fa-solid fa-rotate-left"></i> Làm lại đề thi
+          </button>
+          <button class="px-5 py-2.5 rounded-xl bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600 text-sm font-semibold transition flex items-center gap-2" onclick="toggleSolutionsReview()" id="toggleSolutionsBtn">
+            <i class="fa-solid fa-book-open"></i> Xem lời giải chi tiết (10 câu)
+          </button>
+          <button class="px-5 py-2.5 rounded-xl border border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-800 text-sm font-semibold transition" onclick="closeCourseQuizModal()">
+            Đóng bảng điểm
+          </button>
+        </div>
+
+        <!-- Detail Solutions Container -->
+        <div class="hidden mt-8 text-left space-y-4 border-t border-amber-200 dark:border-amber-900/60 pt-6" id="examSolutionsReview">
+          <h5 class="text-base font-bold text-gray-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-circle-check text-emerald-500"></i> Bảng Đáp Án &amp; Lời Giải Chi Tiết Cả 10 Chuyên Đề Olympic:
+          </h5>
+          <div class="space-y-3 text-xs sm:text-sm">
+            
+            <div class="p-3.5 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+              <strong class="text-amber-600 dark:text-amber-400">Câu 1: Đáp án A.</strong>
+              Khi mảng được chia thành các khối $B = \lceil\sqrt{N}\rceil$, việc cập nhật 1 phần tử chỉ cần tính lại tổng của khối chứa nó trong $O(1)$. Truy vấn tổng đoạn $[L, R]$ duyệt qua tối đa 2 khối biên không trọn vẹn và tối đa $\sqrt{N}$ khối trọn vẹn $\implies O(\sqrt{N})$.
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+              <strong class="text-amber-600 dark:text-amber-400">Câu 2: Đáp án A.</strong>
+              Với $B = N / \sqrt{Q}$, con trỏ trái $L$ di chuyển trong mỗi khối không quá $B$, đổi khối tối đa $Q$ lần $\implies O(Q \cdot B) = O(N \sqrt{Q})$. Con trỏ phải $R$ tăng đơn điệu trong mỗi khối $\le N$, có $N/B = \sqrt{Q}$ khối $\implies O(N \sqrt{Q})$. Khi $Q \approx N$, tổng thời gian là $O((N + Q) \sqrt{N})$.
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+              <strong class="text-amber-600 dark:text-amber-400">Câu 3: Đáp án A.</strong>
+              Phương pháp Path Copying chỉ tạo mới các nút nằm trực tiếp trên đường đi từ gốc đến vị trí lá cần cập nhật (chiều cao cây phân đoạn là $\lceil \log_2 N \rceil$). Các nhánh con không đổi được tái sử dụng con trỏ từ phiên bản trước $\implies O(\log N)$ thời gian &amp; bộ nhớ.
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+              <strong class="text-amber-600 dark:text-amber-400">Câu 4: Đáp án A.</strong>
+              Mỗi khi đi qua một cạnh nhẹ (Light Edge) từ con lên cha, kích thước cây con ít nhất tăng gấp đôi ($\text{size}(u) > 2 \cdot \text{size}(v)$). Do đó, trên đường đi đơn giữa bất kỳ 2 đỉnh nào trên cây có tối đa $\le \log_2 N$ cạnh nhẹ, đồng nghĩa với tối đa $O(\log N)$ chuỗi nặng liên tục.
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+              <strong class="text-amber-600 dark:text-amber-400">Câu 5: Đáp án A.</strong>
+              Mọi cây bất kỳ luôn tồn tại ít nhất 1 trọng tâm (centroid) sao cho kích thước mỗi nhánh con khi bỏ đỉnh đó $\le \lfloor N/2 \rfloor$. Do kích thước cây giảm ít nhất một nửa sau mỗi tầng đệ quy phân tách, độ sâu của cây trọng tâm luôn bị chặn trên bởi $O(\log N)$.
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+              <strong class="text-amber-600 dark:text-amber-400">Câu 6: Đáp án A.</strong>
+              Khi hệ số góc $m$ và hoành độ truy vấn $x$ đều đơn điệu, các đường thẳng tối ưu luôn trôi theo một chiều trên bao lồi. Ta dùng <code>std::deque</code> để thêm đường thẳng vào đuôi và pop các điểm không tối ưu ở đầu, mỗi đường thẳng ra vào đúng 1 lần với tổng thời gian tuyến tính $O(N)$.
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+              <strong class="text-amber-600 dark:text-amber-400">Câu 7: Đáp án A.</strong>
+              Thuật toán Dinic có tối đa $V-1$ pha tăng luồng, mỗi pha tìm luồng cản tốn $O(V \cdot E) \implies O(V^2 E)$ trên đồ thị tổng quát. Trên mạng đơn vị (dung lượng các cung nội bộ bằng 1), số pha bị chặn bởi $O(\sqrt{V})$, mỗi pha tốn $O(E) \implies O(E \sqrt{V})$.
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+              <strong class="text-amber-600 dark:text-amber-400">Câu 8: Đáp án A.</strong>
+              Dựa trên kỹ thuật biến đổi thế năng Johnson: đặt khoảng cách ngắn nhất từ nguồn $S$ đến mọi đỉnh $v$ là $h(v)$. Khi đó bất đẳng thức tam giác đảm bảo $h(u) + w(u, v) \ge h(v) \iff w'(u, v) = w(u, v) + h(u) - h(v) \ge 0$, cho phép dùng Dijkstra $O(E \log V)$ thay cho Bellman-Ford $O(V E)$.
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+              <strong class="text-amber-600 dark:text-amber-400">Câu 9: Đáp án A.</strong>
+              Đã được chứng minh bằng lý thuyết ngôn ngữ hình thức của Blumer và Crochemore: Với xâu có độ dài $N \ge 2$, Suffix Automaton có không quá $2N - 1$ trạng thái và không quá $3N - 4$ chuyển trạng thái. Thuật toán trực tuyến của nó chạy trong $O(N)$ thời gian và không gian bộ nhớ.
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+              <strong class="text-amber-600 dark:text-amber-400">Câu 10: Đáp án A.</strong>
+              FFT (Cooley-Tukey) chuyển đổi đa thức sang biểu diễn điểm giá trị tại các căn bậc $N$ của đơn vị trong $O(N \log N)$. Không gian vector trên trường nhị phân $\mathbb{F}_2^{64}$ có số chiều là 64, do đó cơ sở tuyến tính Xor của bất kỳ tập số 64-bit nào cũng chỉ chứa tối đa 64 vector độc lập tuyến tính.
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
   </div>
 
   <!-- Footer -->
@@ -1621,6 +2063,91 @@ eq root} (len[u] - len[link[u]])$</button>
       if (confirm('Bạn có chắc muốn đặt lại toàn bộ kết quả bài tập để làm lại từ đầu?')) {
         localStorage.removeItem(STORAGE_KEY);
         location.reload();
+      }
+    }
+
+    // Olympic Exam Modal Handlers
+    function openCourseQuizModal() {
+      const modal = document.getElementById('courseQuizModal');
+      if (modal) {
+        modal.classList.remove('hidden');
+        renderAllMath();
+        setTimeout(renderAllMath, 100);
+      }
+    }
+
+    function closeCourseQuizModal() {
+      const modal = document.getElementById('courseQuizModal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    const examAnswers = {
+      eq1: 'A',
+      eq2: 'A',
+      eq3: 'A',
+      eq4: 'A',
+      eq5: 'A',
+      eq6: 'A',
+      eq7: 'A',
+      eq8: 'A',
+      eq9: 'A',
+      eq10: 'A'
+    };
+
+    function submitCourseExam(e) {
+      e.preventDefault();
+      const form = document.getElementById('courseExamForm');
+      let score = 0;
+
+      for (let i = 1; i <= 10; i++) {
+        const val = form['eq' + i]?.value;
+        if (val === examAnswers['eq' + i]) {
+          score++;
+        }
+      }
+
+      form.classList.add('hidden');
+      const resultBox = document.getElementById('courseExamResult');
+      resultBox.classList.remove('hidden');
+      document.getElementById('examScoreText').innerText = 'Kết quả của bạn: ' + score + '/10 điểm';
+
+      let comment = '';
+      if (score >= 9) {
+        comment = '🥇 Đẳng cấp Huy chương Vàng Olympic! Tư duy thuật toán đỉnh cao, sẵn sàng chinh phục các kỳ thi APIO, IOI và Vòng chọn Đội tuyển Quốc tế!';
+      } else if (score >= 7) {
+        comment = '🥈 Phong độ Huy chương Bạc / Đồng xuất sắc! Bạn nắm rất vững cấu trúc dữ liệu và giải thuật nâng cao (HLD, Centroid, Luồng, CHT, FFT). Hãy trau chuốt thêm thời gian cài đặt.';
+      } else if (score >= 5) {
+        comment = '🥉 Đạt mốc Giải Ba / Khuyến khích! Nền tảng tư duy tốt, cần củng cố thêm kỹ thuật phân tích độ phức tạp chặt chẽ và cài đặt các cấu trúc dữ liệu bền vững.';
+      } else {
+        comment = '🎯 Cần rèn luyện thêm! Các chuyên đề Olympic đòi hỏi sự tích lũy bền bỉ. Hãy xem kỹ lời giải chi tiết bên dưới, đọc lại bài giảng và làm lại đề thi nhé!';
+      }
+      document.getElementById('examCommentText').innerText = comment;
+      renderAllMath();
+    }
+
+    function resetCourseExam() {
+      const form = document.getElementById('courseExamForm');
+      form.reset();
+      form.classList.remove('hidden');
+      document.getElementById('courseExamResult').classList.add('hidden');
+      const solutions = document.getElementById('examSolutionsReview');
+      if (solutions) solutions.classList.add('hidden');
+      renderAllMath();
+    }
+
+    function toggleSolutionsReview() {
+      const solutions = document.getElementById('examSolutionsReview');
+      const btn = document.getElementById('toggleSolutionsBtn');
+      if (solutions) {
+        solutions.classList.toggle('hidden');
+        renderAllMath();
+        if (btn) {
+          if (solutions.classList.contains('hidden')) {
+            btn.innerHTML = '<i class="fa-solid fa-book-open"></i> Xem lời giải chi tiết (10 câu)';
+          } else {
+            btn.innerHTML = '<i class="fa-solid fa-eye-slash"></i> Ẩn bớt lời giải chi tiết';
+          }
+        }
       }
     }
 

@@ -56,13 +56,6 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
-
-<!-- CodeHub Activity Monitor V2 -->
-<meta name="codehub-activity-name" content="Luyện Thi Học Sinh Giỏi Hóa Học Cấp 3 (THPT) - Chuyên Sâu Quốc Gia &amp; Olympic">
-<meta name="codehub-activity-kind" content="subject">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="scripts/supabase-config.js"></script>
-<script src="scripts/activity-tracker.js"></script>
 </head>
 <body class="bg-gray-50 dark:bg-dark-bg text-gray-900 dark:text-gray-100 min-h-screen flex flex-col font-sans transition-colors duration-200">
 
@@ -96,6 +89,11 @@
           <i class="fa-solid fa-award text-yellow-200"></i>
           <span>HSG Quốc Gia • IChO • Olympic Hóa Học</span>
         </span>
+        <button onclick="openCourseQuizModal()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-bold text-xs sm:text-sm shadow-sm transition">
+          <i class="fa-solid fa-stopwatch"></i>
+          <span class="hidden sm:inline">Phòng Thi Thử HSG Hóa</span>
+          <span class="sm:hidden">Thi Thử</span>
+        </button>
         <!-- Dark/Light Mode Button -->
         <button id="theme-toggle" class="p-2 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-300 transition" aria-label="Đổi giao diện">
           <i id="theme-icon" class="fa-solid fa-moon"></i>
@@ -142,9 +140,14 @@
           <span>Đã hoàn thành: <b id="quiz-completed-count" class="text-white">0</b>/40 câu</span>
           <span class="text-emerald-300 font-medium">10 Chuyên Đề</span>
         </div>
-        <button onclick="resetAllQuizzes()" class="w-full py-2 px-3 text-xs text-center rounded-xl bg-white/15 hover:bg-white/25 transition text-white font-medium border border-white/20 flex items-center justify-center gap-2">
-          <i class="fa-solid fa-rotate-right"></i> Làm lại từ đầu
-        </button>
+        <div class="pt-2 border-t border-white/10 flex flex-col gap-2">
+          <button onclick="openCourseQuizModal()" class="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-emerald-400 to-teal-400 hover:from-emerald-500 hover:to-teal-500 text-slate-950 font-black text-xs shadow-md transition flex items-center justify-center gap-2">
+            <i class="fa-solid fa-trophy text-emerald-950"></i> Thi Thử Đề HSG Hóa Học (60:00)
+          </button>
+          <button onclick="resetAllQuizzes()" class="w-full py-2 px-3 text-xs text-center rounded-xl bg-white/15 hover:bg-white/25 transition text-white font-medium border border-white/20 flex items-center justify-center gap-2">
+            <i class="fa-solid fa-rotate-right"></i> Làm lại từ đầu
+          </button>
+        </div>
       </div>
     </div>
   </section>
@@ -200,6 +203,19 @@
             <a href="#bai9" class="nav-link block px-2.5 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-emerald-50 dark:hover:bg-emerald-950/40 hover:text-emerald-600 dark:hover:text-emerald-400 transition font-medium">9. Hữu Cơ: Cấu Trúc Lập Thể</a>
             <a href="#bai10" class="nav-link block px-2.5 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-emerald-50 dark:hover:bg-emerald-950/40 hover:text-emerald-600 dark:hover:text-emerald-400 transition font-medium">10. Cơ Chế Phản Ứng Hữu Cơ</a>
           </nav>
+        </div>
+
+        <!-- Sidebar Mock Exam Banner -->
+        <div class="p-4 rounded-2xl bg-gradient-to-br from-emerald-900 to-teal-950 text-white border border-emerald-500/30 shadow-lg space-y-3">
+          <div class="flex items-center gap-2 text-xs font-bold text-emerald-300 uppercase tracking-wider">
+            <i class="fa-solid fa-flask-vial"></i> Phòng Thi Thử Trực Tuyến
+          </div>
+          <p class="text-xs text-emerald-100 leading-relaxed">
+            Đề thi thử HSG Hóa Học THPT chuyên sâu 10 câu tinh hoa chuẩn VChO/IChO, có đồng hồ đếm ngược 60 phút và xếp hạng Huy Chương.
+          </p>
+          <button onclick="openCourseQuizModal()" class="w-full py-2.5 px-3 rounded-xl bg-white text-emerald-950 hover:bg-emerald-50 text-xs font-black transition shadow-sm flex items-center justify-center gap-1.5">
+            <i class="fa-solid fa-play text-emerald-600"></i> Bắt đầu thi thử (60:00)
+          </button>
         </div>
       </div>
     </aside>
@@ -1298,6 +1314,9 @@
             <a href="../index.html" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm shadow-lg shadow-emerald-500/30 transition flex items-center gap-2">
               <i class="fa-solid fa-arrow-left"></i> Về Trang Chủ Khóa Học
             </a>
+            <button onclick="openCourseQuizModal()" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-400 to-teal-400 hover:from-emerald-500 hover:to-teal-500 text-slate-950 font-black text-sm shadow-lg shadow-teal-500/30 transition flex items-center gap-2">
+              <i class="fa-solid fa-trophy text-emerald-900"></i> Bắt Đầu Thi Thử HSG Hóa (60:00)
+            </button>
             <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-sm border border-white/20 transition flex items-center gap-2">
               <i class="fa-solid fa-arrow-up"></i> Lên Đầu Trang
             </button>
@@ -1306,6 +1325,436 @@
       </section>
 
     </main>
+  </div>
+
+  
+  <!-- ======================================================== -->
+  <!-- MODAL: PHÒNG THI THỬ HỌC SINH GIỎI HÓA HỌC THPT (60:00) -->
+  <!-- ======================================================== -->
+  <div id="courseQuizModal" class="fixed inset-0 z-50 hidden overflow-y-auto bg-slate-950/80 backdrop-blur-sm transition-opacity p-3 sm:p-6 flex items-center justify-center">
+    <div class="relative w-full max-w-4xl bg-white dark:bg-dark-surface rounded-3xl shadow-2xl border border-emerald-500/30 overflow-hidden my-auto max-h-[92vh] flex flex-col">
+      
+      <!-- Modal Header -->
+      <div class="p-4 sm:p-6 bg-gradient-to-r from-emerald-700 via-teal-800 to-slate-900 text-white flex items-center justify-between gap-4 border-b border-emerald-500/20 shrink-0">
+        <div class="space-y-1">
+          <div class="flex items-center gap-2">
+            <span class="px-2.5 py-0.5 rounded-full bg-emerald-400/20 border border-emerald-400/30 text-emerald-300 text-[11px] font-bold uppercase tracking-wider">
+              HSG Quốc Gia • IChO
+            </span>
+            <span class="text-xs text-emerald-200 hidden sm:inline">• 10 Câu Hỏi Chuyên Sâu Tích Hợp</span>
+          </div>
+          <h3 class="text-lg sm:text-xl font-black text-white flex items-center gap-2">
+            <i class="fa-solid fa-trophy text-yellow-400"></i> Đề Thi Thử Học Sinh Giỏi Môn Hóa Học Cấp 3
+          </h3>
+        </div>
+
+        <!-- Live Countdown Timer & Close Button -->
+        <div class="flex items-center gap-3">
+          <div class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-950/60 border border-emerald-400/30 text-emerald-300 font-mono font-black text-sm sm:text-base shadow-inner">
+            <i class="fa-solid fa-stopwatch animate-pulse text-emerald-400"></i>
+            <span id="examTimer">60:00</span>
+          </div>
+          <button onclick="closeCourseQuizModal()" class="p-2 rounded-xl text-emerald-200 hover:text-white hover:bg-white/10 transition" aria-label="Đóng phòng thi">
+            <i class="fa-solid fa-xmark text-lg"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Modal Body (Scrollable Exam Content) -->
+      <div class="p-4 sm:p-6 overflow-y-auto space-y-6 flex-1 text-sm sidebar-scroll text-gray-800 dark:text-gray-200">
+        
+        <!-- Score Result Notification (Hidden initially) -->
+        <div id="examResultBox" class="hidden p-5 rounded-2xl border transition-all duration-300 space-y-3">
+          <div class="flex items-center justify-between">
+            <h4 id="examResultTitle" class="text-lg font-black flex items-center gap-2"></h4>
+            <span id="examScoreBadge" class="px-3 py-1 rounded-xl font-black text-sm"></span>
+          </div>
+          <p id="examFeedbackText" class="text-xs sm:text-sm leading-relaxed"></p>
+          <div class="pt-2 flex flex-wrap gap-3">
+            <button onclick="toggleSolutionsReview()" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-md transition flex items-center gap-1.5">
+              <i class="fa-solid fa-book-open"></i> Xem Lời Giải Chi Tiết Từng Câu
+            </button>
+            <button onclick="restartExam()" class="px-4 py-2 rounded-xl bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 font-bold text-xs transition flex items-center gap-1.5">
+              <i class="fa-solid fa-rotate-right"></i> Làm Lại Đề Thi
+            </button>
+          </div>
+        </div>
+
+        <!-- Exam Form with 10 Rigorous Chemistry Questions -->
+        <form id="courseExamForm" onsubmit="submitCourseExam(event)" class="space-y-6">
+
+          <!-- Câu 1: Cấu tạo nguyên tử & Thuyết Obitan MO -->
+          <div class="p-4 sm:p-5 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-dark-border space-y-3">
+            <div class="flex items-center justify-between text-xs font-bold text-emerald-600 dark:text-emerald-400">
+              <span>CÂU HỎI 01 / 10 • NGUYÊN TỬ &amp; OBITAN MO</span>
+              <span class="text-gray-400">1.0 Điểm</span>
+            </div>
+            <p class="font-bold text-gray-900 dark:text-white leading-relaxed">
+              Dựa vào thuyết obitan phân tử (MO) đối với phân tử dị hạch $NO$, khi ion hóa tạo thành cation nitrozyl $NO^+$, bậc liên kết (Bond Order) và từ tính của $NO^+$ thay đổi như thế nào so với $NO$?
+            </p>
+            <div class="space-y-2 text-xs sm:text-sm">
+              <label class="flex items-start gap-3 p-3 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/20 cursor-pointer transition">
+                <input type="radio" name="eq1" value="A" required class="mt-0.5 text-emerald-600 focus:ring-emerald-500">
+                <span><strong>A.</strong> Bậc liên kết tăng từ 2.5 lên 3.0; chuyển từ thuận từ (paramagnetic) sang nghịch từ (diamagnetic) do tách electron ở MO phản liên kết $pi^*_{2p}$.</span>
+              </label>
+              <label class="flex items-start gap-3 p-3 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/20 cursor-pointer transition">
+                <input type="radio" name="eq1" value="B" class="mt-0.5 text-emerald-600 focus:ring-emerald-500">
+                <span><strong>B.</strong> Bậc liên kết giảm từ 2.5 xuống 2.0; từ tính vẫn giữ nguyên tính thuận từ với 1 electron độc thân.</span>
+              </label>
+              <label class="flex items-start gap-3 p-3 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/20 cursor-pointer transition">
+                <input type="radio" name="eq1" value="C" class="mt-0.5 text-emerald-600 focus:ring-emerald-500">
+                <span><strong>C.</strong> Bậc liên kết giữ nguyên bằng 2.5; chuyển từ nghịch từ sang thuận từ do kích thích electron.</span>
+              </label>
+              <label class="flex items-start gap-3 p-3 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/20 cursor-pointer transition">
+                <input type="radio" name="eq1" value="D" class="mt-0.5 text-emerald-600 focus:ring-emerald-500">
+                <span><strong>D.</strong> Bậc liên kết tăng lên 3.5; phân tử vẫn có 2 electron độc thân trên obitan $sigma_{2p_z}$.</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Câu 2: Nhiệt động học & Phương trình Gibbs -->
+          <div class="p-4 sm:p-5 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-dark-border space-y-3">
+            <div class="flex items-center justify-between text-xs font-bold text-emerald-600 dark:text-emerald-400">
+              <span>CÂU HỎI 02 / 10 • NHIỆT ĐỘNG LỰC HỌC &amp; GIBBS</span>
+              <span class="text-gray-400">1.0 Điểm</span>
+            </div>
+            <p class="font-bold text-gray-900 dark:text-white leading-relaxed">
+              Cho phản ứng: $	ext{N}_2	ext{O}_4(k) ightleftharpoons 2	ext{NO}_2(k)$ có $Delta H^circ_{298} = +57.2	ext{ kJ/mol}$ và $Delta S^circ_{298} = +175.8	ext{ J/(mol}cdot	ext{K)}$. Bỏ qua sự phụ thuộc của $Delta H^circ$ và $Delta S^circ$ vào nhiệt độ, ở điều kiện áp suất chuẩn 1 bar, phản ứng bắt đầu tự diễn biến theo chiều thuận ở khoảng nhiệt độ nào?
+            </p>
+            <div class="space-y-2 text-xs sm:text-sm">
+              <label class="flex items-start gap-3 p-3 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/20 cursor-pointer transition">
+                <input type="radio" name="eq2" value="A" required class="mt-0.5 text-emerald-600 focus:ring-emerald-500">
+                <span><strong>A.</strong> $T > 325.4	ext{ K}$ (tức $t > 52.4^circ	ext{C}$).</span>
+              </label>
+              <label class="flex items-start gap-3 p-3 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/20 cursor-pointer transition">
+                <input type="radio" name="eq2" value="B" class="mt-0.5 text-emerald-600 focus:ring-emerald-500">
+                <span><strong>B.</strong> $T < 325.4	ext{ K}$ (tức $t < 52.4^circ	ext{C}$).</span>
+              </label>
+              <label class="flex items-start gap-3 p-3 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/20 cursor-pointer transition">
+                <input type="radio" name="eq2" value="C" class="mt-0.5 text-emerald-600 focus:ring-emerald-500">
+                <span><strong>C.</strong> $T > 572.0	ext{ K}$ (tức $t > 299^circ	ext{C}$).</span>
+              </label>
+              <label class="flex items-start gap-3 p-3 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/20 cursor-pointer transition">
+                <input type="radio" name="eq2" value="D" class="mt-0.5 text-emerald-600 focus:ring-emerald-500">
+                <span><strong>D.</strong> Phản ứng luôn tự diễn biến ở mọi nhiệt độ vì có $Delta S^circ > 0$.</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Câu 3: Động hóa học & Phương trình Arrhenius -->
+          <div class="p-4 sm:p-5 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-dark-border space-y-3">
+            <div class="flex items-center justify-between text-xs font-bold text-emerald-600 dark:text-emerald-400">
+              <span>CÂU HỎI 03 / 10 • ĐỘNG HÓA HỌC &amp; ARRHENIUS</span>
+              <span class="text-gray-400">1.0 Điểm</span>
+            </div>
+            <p class="font-bold text-gray-900 dark:text-white leading-relaxed">
+              Một phản ứng phân hủy pha khí tuân theo quy luật động học bậc một có chu kỳ bán hủy $t_{1/2} = 30$ phút ở $300	ext{ K}$ và $t_{1/2} = 5$ phút ở $320	ext{ K}$. Lấy $R = 8.314	ext{ J/(mol}cdot	ext{K})$, năng lượng hoạt hóa $E_a$ của phản ứng xấp xỉ bằng:
+            </p>
+            <div class="space-y-2 text-xs sm:text-sm">
+              <label class="flex items-start gap-3 p-3 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/20 cursor-pointer transition">
+                <input type="radio" name="eq3" value="A" required class="mt-0.5 text-emerald-600 focus:ring-emerald-500">
+                <span><strong>A.</strong> $71.5	ext{ kJ/mol}$</span>
+              </label>
+              <label class="flex items-start gap-3 p-3 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/20 cursor-pointer transition">
+                <input type="radio" name="eq3" value="B" class="mt-0.5 text-emerald-600 focus:ring-emerald-500">
+                <span><strong>B.</strong> $43.8	ext{ kJ/mol}$</span>
+              </label>
+              <label class="flex items-start gap-3 p-3 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/20 cursor-pointer transition">
+                <input type="radio" name="eq3" value="C" class="mt-0.5 text-emerald-600 focus:ring-emerald-500">
+                <span><strong>C.</strong> $108.2	ext{ kJ/mol}$</span>
+              </label>
+              <label class="flex items-start gap-3 p-3 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/20 cursor-pointer transition">
+                <input type="radio" name="eq3" value="D" class="mt-0.5 text-emerald-600 focus:ring-emerald-500">
+                <span><strong>D.</strong> $14.3	ext{ kJ/mol}$</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Câu 4: Cân bằng hóa học & Hằng số Kp, Kc -->
+          <div class="p-4 sm:p-5 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-dark-border space-y-3">
+            <div class="flex items-center justify-between text-xs font-bold text-emerald-600 dark:text-emerald-400">
+              <span>CÂU HỎI 04 / 10 • CÂN BẰNG PHA KHÍ &amp; HẰNG SỐ CÂN BẰNG</span>
+              <span class="text-gray-400">1.0 Điểm</span>
+            </div>
+            <p class="font-bold text-gray-900 dark:text-white leading-relaxed">
+              Ở $1000	ext{ K}$, phản ứng dị thể $	ext{CO}_2(k) + 	ext{C}(r) ightleftharpoons 2	ext{CO}(k)$ có hằng số cân bằng $K_p = 1.5	ext{ atm}$. Nếu tổng áp suất của hệ khí ở trạng thái cân bằng là $3.0	ext{ atm}$, áp suất riêng phần của $	ext{CO}$ và phần mol của nó trong pha khí là:
+            </p>
+            <div class="space-y-2 text-xs sm:text-sm">
+              <label class="flex items-start gap-3 p-3 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/20 cursor-pointer transition">
+                <input type="radio" name="eq4" value="A" required class="mt-0.5 text-emerald-600 focus:ring-emerald-500">
+                <span><strong>A.</strong> $P_{	ext{CO}} = 1.5	ext{ atm}$ (phần mol $x_{	ext{CO}} = 0.50$).</span>
+              </label>
+              <label class="flex items-start gap-3 p-3 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/20 cursor-pointer transition">
+                <input type="radio" name="eq4" value="B" class="mt-0.5 text-emerald-600 focus:ring-emerald-500">
+                <span><strong>B.</strong> $P_{	ext{CO}} = 2.0	ext{ atm}$ (phần mol $x_{	ext{CO}} = 0.67$).</span>
+              </label>
+              <label class="flex items-start gap-3 p-3 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/20 cursor-pointer transition">
+                <input type="radio" name="eq4" value="C" class="mt-0.5 text-emerald-600 focus:ring-emerald-500">
+                <span><strong>C.</strong> $P_{	ext{CO}} = 1.0	ext{ atm}$ (phần mol $x_{	ext{CO}} = 0.33$).</span>
+              </label>
+              <label class="flex items-start gap-3 p-3 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/20 cursor-pointer transition">
+                <input type="radio" name="eq4" value="D" class="mt-0.5 text-emerald-600 focus:ring-emerald-500">
+                <span><strong>D.</strong> $P_{	ext{CO}} = 2.5	ext{ atm}$ (phần mol $x_{	ext{CO}} = 0.83$).</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Câu 5: Cân bằng axit-bazơ & Dung dịch đệm -->
+          <div class="p-4 sm:p-5 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-dark-border space-y-3">
+            <div class="flex items-center justify-between text-xs font-bold text-emerald-600 dark:text-emerald-400">
+              <span>CÂU HỎI 05 / 10 • AXIT - BAZƠ &amp; DUNG DỊCH ĐỆM</span>
+              <span class="text-gray-400">1.0 Điểm</span>
+            </div>
+            <p class="font-bold text-gray-900 dark:text-white leading-relaxed">
+              Trộn $100	ext{ mL}$ dung dịch axit axetic $	ext{CH}_3	ext{COOH } 0.20	ext{ M}$ ($pK_a = 4.76$) với $100	ext{ mL}$ dung dịch $	ext{NaOH } 0.10	ext{ M}$. Giá trị $pH$ của dung dịch thu được sau khi đạt trạng thái cân bằng ở $25^circ	ext{C}$ là:
+            </p>
+            <div class="space-y-2 text-xs sm:text-sm">
+              <label class="flex items-start gap-3 p-3 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/20 cursor-pointer transition">
+                <input type="radio" name="eq5" value="A" required class="mt-0.5 text-emerald-600 focus:ring-emerald-500">
+                <span><strong>A.</strong> $pH = 4.76$ (tạo hệ đệm cân bằng tỷ lệ mol $[	ext{CH}_3	ext{COOH}] : [	ext{CH}_3	ext{COO}^-] = 1 : 1$).</span>
+              </label>
+              <label class="flex items-start gap-3 p-3 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/20 cursor-pointer transition">
+                <input type="radio" name="eq5" value="B" class="mt-0.5 text-emerald-600 focus:ring-emerald-500">
+                <span><strong>B.</strong> $pH = 7.00$ (do phản ứng trung hòa hoàn toàn giữa axit và bazơ).</span>
+              </label>
+              <label class="flex items-start gap-3 p-3 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/20 cursor-pointer transition">
+                <input type="radio" name="eq5" value="C" class="mt-0.5 text-emerald-600 focus:ring-emerald-500">
+                <span><strong>C.</strong> $pH = 5.06$ (dư muối bazơ liên hợp).</span>
+              </label>
+              <label class="flex items-start gap-3 p-3 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/20 cursor-pointer transition">
+                <input type="radio" name="eq5" value="D" class="mt-0.5 text-emerald-600 focus:ring-emerald-500">
+                <span><strong>D.</strong> $pH = 3.25$ (do ảnh hưởng của sự phân ly axit dư).</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Câu 6: Phức chất vô cơ & Thuyết Trường Tinh Thể CFT -->
+          <div class="p-4 sm:p-5 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-dark-border space-y-3">
+            <div class="flex items-center justify-between text-xs font-bold text-emerald-600 dark:text-emerald-400">
+              <span>CÂU HỎI 06 / 10 • PHỨC CHẤT &amp; TRƯỜNG TINH THỂ (CFT)</span>
+              <span class="text-gray-400">1.0 Điểm</span>
+            </div>
+            <p class="font-bold text-gray-900 dark:text-white leading-relaxed">
+              Theo thuyết trường tinh thể (Crystal Field Theory), hai ion phức bát diện $[	ext{Fe}(	ext{CN})_6]^{3-}$ và $[	ext{FeF}_6]^{3-}$ có đặc điểm phân bố electron trên phân mức $d$ và từ tính như thế nào?
+            </p>
+            <div class="space-y-2 text-xs sm:text-sm">
+              <label class="flex items-start gap-3 p-3 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/20 cursor-pointer transition">
+                <input type="radio" name="eq6" value="A" required class="mt-0.5 text-emerald-600 focus:ring-emerald-500">
+                <span><strong>A.</strong> $[	ext{Fe}(	ext{CN})_6]^{3-}$ là phức spin thấp ($t_{2g}^5 e_g^0$) có 1 electron độc thân; $[	ext{FeF}_6]^{3-}$ là phức spin cao ($t_{2g}^3 e_g^2$) có 5 electron độc thân.</span>
+              </label>
+              <label class="flex items-start gap-3 p-3 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/20 cursor-pointer transition">
+                <input type="radio" name="eq6" value="B" class="mt-0.5 text-emerald-600 focus:ring-emerald-500">
+                <span><strong>B.</strong> Cả hai ion phức đều là phức spin thấp và đều chỉ có 1 electron độc thân vì đều chứa ion trung tâm $	ext{Fe}^{3+}$.</span>
+              </label>
+              <label class="flex items-start gap-3 p-3 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/20 cursor-pointer transition">
+                <input type="radio" name="eq6" value="C" class="mt-0.5 text-emerald-600 focus:ring-emerald-500">
+                <span><strong>C.</strong> $[	ext{Fe}(	ext{CN})_6]^{3-}$ là phức nghịch từ hoàn toàn (0 electron độc thân); $[	ext{FeF}_6]^{3-}$ có 3 electron độc thân.</span>
+              </label>
+              <label class="flex items-start gap-3 p-3 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/20 cursor-pointer transition">
+                <input type="radio" name="eq6" value="D" class="mt-0.5 text-emerald-600 focus:ring-emerald-500">
+                <span><strong>D.</strong> $[	ext{Fe}(	ext{CN})_6]^{3-}$ có 5 electron độc thân (spin cao); $[	ext{FeF}_6]^{3-}$ có 1 electron độc thân (spin thấp).</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Câu 7: Điện hóa học, Pin Galvani & Phương trình Nernst -->
+          <div class="p-4 sm:p-5 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-dark-border space-y-3">
+            <div class="flex items-center justify-between text-xs font-bold text-emerald-600 dark:text-emerald-400">
+              <span>CÂU HỎI 07 / 10 • ĐIỆN HÓA HỌC &amp; PIN GALVANI</span>
+              <span class="text-gray-400">1.0 Điểm</span>
+            </div>
+            <p class="font-bold text-gray-900 dark:text-white leading-relaxed">
+              Cho pin Galvani Daniell: $	ext{Zn} | 	ext{Zn}^{2+}(1	ext{ M}) parallel 	ext{Cu}^{2+}(1	ext{ M}) | 	ext{Cu}$ ở $298	ext{ K}$. Biết thế điện cực chuẩn $E^circ(	ext{Zn}^{2+}/	ext{Zn}) = -0.763	ext{ V}$ và $E^circ(	ext{Cu}^{2+}/	ext{Cu}) = +0.340	ext{ V}$, hằng số Faraday $F = 96485	ext{ C/mol}$. Sức điện động chuẩn $E^circ_{	ext{pin}}$ và biến thiên năng lượng tự do Gibbs chuẩn $Delta G^circ$ của pin là:
+            </p>
+            <div class="space-y-2 text-xs sm:text-sm">
+              <label class="flex items-start gap-3 p-3 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/20 cursor-pointer transition">
+                <input type="radio" name="eq7" value="A" required class="mt-0.5 text-emerald-600 focus:ring-emerald-500">
+                <span><strong>A.</strong> $E^circ_{	ext{pin}} = +1.103	ext{ V}$ và $Delta G^circ = -212.85	ext{ kJ/mol}$.</span>
+              </label>
+              <label class="flex items-start gap-3 p-3 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/20 cursor-pointer transition">
+                <input type="radio" name="eq7" value="B" class="mt-0.5 text-emerald-600 focus:ring-emerald-500">
+                <span><strong>B.</strong> $E^circ_{	ext{pin}} = +0.423	ext{ V}$ và $Delta G^circ = -81.63	ext{ kJ/mol}$.</span>
+              </label>
+              <label class="flex items-start gap-3 p-3 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/20 cursor-pointer transition">
+                <input type="radio" name="eq7" value="C" class="mt-0.5 text-emerald-600 focus:ring-emerald-500">
+                <span><strong>C.</strong> $E^circ_{	ext{pin}} = +1.103	ext{ V}$ và $Delta G^circ = +212.85	ext{ kJ/mol}$.</span>
+              </label>
+              <label class="flex items-start gap-3 p-3 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/20 cursor-pointer transition">
+                <input type="radio" name="eq7" value="D" class="mt-0.5 text-emerald-600 focus:ring-emerald-500">
+                <span><strong>D.</strong> $E^circ_{	ext{pin}} = -1.103	ext{ V}$ và $Delta G^circ = -106.42	ext{ kJ/mol}$.</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Câu 8: Tinh thể học & Cấu trúc ô mạng cơ sở -->
+          <div class="p-4 sm:p-5 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-dark-border space-y-3">
+            <div class="flex items-center justify-between text-xs font-bold text-emerald-600 dark:text-emerald-400">
+              <span>CÂU HỎI 08 / 10 • TINH THỂ HỌC &amp; Ô MẠNG CƠ SỞ</span>
+              <span class="text-gray-400">1.0 Điểm</span>
+            </div>
+            <p class="font-bold text-gray-900 dark:text-white leading-relaxed">
+              Kim loại đồng ($	ext{Cu}$, khối lượng mol $M = 63.55	ext{ g/mol}$) kết tinh theo mạng lập phương tâm diện (FCC) với độ dài cạnh ô mạng cơ sở $a = 3.61 	imes 10^{-8}	ext{ cm}$. Lấy số Avogadro $N_A = 6.022 	imes 10^{23}	ext{ mol}^{-1}$. Số nguyên tử $	ext{Cu}$ trong một ô mạng cơ sở và khối lượng riêng lý thuyết của kim loại đồng lần lượt là:
+            </p>
+            <div class="space-y-2 text-xs sm:text-sm">
+              <label class="flex items-start gap-3 p-3 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/20 cursor-pointer transition">
+                <input type="radio" name="eq8" value="A" required class="mt-0.5 text-emerald-600 focus:ring-emerald-500">
+                <span><strong>A.</strong> $Z = 4$ nguyên tử; khối lượng riêng $d approx 8.97	ext{ g/cm}^3$.</span>
+              </label>
+              <label class="flex items-start gap-3 p-3 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/20 cursor-pointer transition">
+                <input type="radio" name="eq8" value="B" class="mt-0.5 text-emerald-600 focus:ring-emerald-500">
+                <span><strong>B.</strong> $Z = 2$ nguyên tử; khối lượng riêng $d approx 4.48	ext{ g/cm}^3$.</span>
+              </label>
+              <label class="flex items-start gap-3 p-3 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/20 cursor-pointer transition">
+                <input type="radio" name="eq8" value="C" class="mt-0.5 text-emerald-600 focus:ring-emerald-500">
+                <span><strong>C.</strong> $Z = 6$ nguyên tử; khối lượng riêng $d approx 13.45	ext{ g/cm}^3$.</span>
+              </label>
+              <label class="flex items-start gap-3 p-3 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/20 cursor-pointer transition">
+                <input type="radio" name="eq8" value="D" class="mt-0.5 text-emerald-600 focus:ring-emerald-500">
+                <span><strong>D.</strong> $Z = 4$ nguyên tử; khối lượng riêng $d approx 11.23	ext{ g/cm}^3$.</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Câu 9: Hóa học hữu cơ & Cấu hình lập thể R/S -->
+          <div class="p-4 sm:p-5 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-dark-border space-y-3">
+            <div class="flex items-center justify-between text-xs font-bold text-emerald-600 dark:text-emerald-400">
+              <span>CÂU HỎI 09 / 10 • HÓA HỮU CƠ &amp; DANH PHÁP LẬP THỂ R/S</span>
+              <span class="text-gray-400">1.0 Điểm</span>
+            </div>
+            <p class="font-bold text-gray-900 dark:text-white leading-relaxed">
+              Theo quy tắc danh pháp lập thể Cahn-Ingold-Prelog (CIP), hãy xác định thứ tự ưu tiên của các nhóm thế và cấu hình lập thể $(R/S)$ tại nguyên tử cacbon bất đối của phân tử axit $(+)$-lactic tự nhiên: $	ext{CH}_3-	ext{CH(OH)}-	ext{COOH}$ khi nhóm $-	ext{H}$ hướng ra xa người quan sát:
+            </p>
+            <div class="space-y-2 text-xs sm:text-sm">
+              <label class="flex items-start gap-3 p-3 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/20 cursor-pointer transition">
+                <input type="radio" name="eq9" value="A" required class="mt-0.5 text-emerald-600 focus:ring-emerald-500">
+                <span><strong>A.</strong> Ưu tiên: $-	ext{OH} > -	ext{COOH} > -	ext{CH}_3 > -	ext{H}$; cấu hình là $(S)$.</span>
+              </label>
+              <label class="flex items-start gap-3 p-3 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/20 cursor-pointer transition">
+                <input type="radio" name="eq9" value="B" class="mt-0.5 text-emerald-600 focus:ring-emerald-500">
+                <span><strong>B.</strong> Ưu tiên: $-	ext{COOH} > -	ext{OH} > -	ext{CH}_3 > -	ext{H}$; cấu hình là $(R)$.</span>
+              </label>
+              <label class="flex items-start gap-3 p-3 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/20 cursor-pointer transition">
+                <input type="radio" name="eq9" value="C" class="mt-0.5 text-emerald-600 focus:ring-emerald-500">
+                <span><strong>C.</strong> Ưu tiên: $-	ext{OH} > -	ext{CH}_3 > -	ext{COOH} > -	ext{H}$; cấu hình là $(S)$.</span>
+              </label>
+              <label class="flex items-start gap-3 p-3 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/20 cursor-pointer transition">
+                <input type="radio" name="eq9" value="D" class="mt-0.5 text-emerald-600 focus:ring-emerald-500">
+                <span><strong>D.</strong> Ưu tiên: $-	ext{OH} > -	ext{COOH} > -	ext{CH}_3 > -	ext{H}$; cấu hình là $(R)$.</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Câu 10: Cơ chế phản ứng hữu cơ chuyên sâu -->
+          <div class="p-4 sm:p-5 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-dark-border space-y-3">
+            <div class="flex items-center justify-between text-xs font-bold text-emerald-600 dark:text-emerald-400">
+              <span>CÂU HỎI 10 / 10 • CƠ CHẾ PHẢN ỨNG HỮU CƠ $S_N1$ VS $S_N2$</span>
+              <span class="text-gray-400">1.0 Điểm</span>
+            </div>
+            <p class="font-bold text-gray-900 dark:text-white leading-relaxed">
+              Khi cho chất quang hoạt $(R)	ext{-2-bromooctan}$ phản ứng với dung dịch $	ext{NaOH}$ trong dung môi aprotic phân cực (DMSO) ở nhiệt độ phòng, phản ứng diễn ra ưu thế theo cơ chế nào và hóa học lập thể của sản phẩm thu được là gì?
+            </p>
+            <div class="space-y-2 text-xs sm:text-sm">
+              <label class="flex items-start gap-3 p-3 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/20 cursor-pointer transition">
+                <input type="radio" name="eq10" value="A" required class="mt-0.5 text-emerald-600 focus:ring-emerald-500">
+                <span><strong>A.</strong> Cơ chế $S_N2$ với sự nghịch đảo cấu hình Walden hoàn toàn, tạo ra $(S)	ext{-octan-2-ol}$.</span>
+              </label>
+              <label class="flex items-start gap-3 p-3 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/20 cursor-pointer transition">
+                <input type="radio" name="eq10" value="B" class="mt-0.5 text-emerald-600 focus:ring-emerald-500">
+                <span><strong>B.</strong> Cơ chế $S_N1$ qua trạng thái cacbocation phẳng, tạo ra hỗn hợp raxemic $(pm)	ext{-octan-2-ol}$ không quang hoạt.</span>
+              </label>
+              <label class="flex items-start gap-3 p-3 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/20 cursor-pointer transition">
+                <input type="radio" name="eq10" value="C" class="mt-0.5 text-emerald-600 focus:ring-emerald-500">
+                <span><strong>C.</strong> Cơ chế $S_N2$ giữ nguyên cấu hình không gian, tạo ra $(R)	ext{-octan-2-ol}$.</span>
+              </label>
+              <label class="flex items-start gap-3 p-3 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/20 cursor-pointer transition">
+                <input type="radio" name="eq10" value="D" class="mt-0.5 text-emerald-600 focus:ring-emerald-500">
+                <span><strong>D.</strong> Cơ chế tách $E2$ tạo thành hỗn hợp đồng phân hình học cis-trans của oct-2-en mà không tạo ancol.</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Submit Button Container -->
+          <div class="pt-4 flex items-center justify-between border-t border-gray-200 dark:border-gray-700">
+            <span class="text-xs text-gray-500 dark:text-gray-400">
+              <i class="fa-solid fa-circle-info mr-1"></i> Kiểm tra kỹ các câu trước khi nộp bài. Hệ thống sẽ tự động xếp giải HSG.
+            </span>
+            <button type="submit" class="px-6 py-3 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-black text-sm shadow-xl shadow-emerald-500/25 transition flex items-center gap-2">
+              <i class="fa-solid fa-paper-plane"></i> Nộp Bài &amp; Xếp Hạng Giải
+            </button>
+          </div>
+
+        </form>
+
+        <!-- Detailed Review Solutions Container -->
+        <div id="examSolutionsReview" class="hidden mt-8 pt-6 border-t border-gray-200 dark:border-gray-700 space-y-4">
+          <h4 class="text-base font-black text-emerald-600 dark:text-emerald-400 flex items-center gap-2">
+            <i class="fa-solid fa-graduation-cap"></i> Phân Tích &amp; Lời Giải Chi Tiết 10 Câu Đề Thi Thử HSG Hóa Học
+          </h4>
+          
+          <div class="space-y-3 text-xs sm:text-sm">
+            <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+              <strong class="text-emerald-600 dark:text-emerald-400">Câu 1: Đáp án A.</strong><br>
+              Theo thuyết MO, phân tử $NO$ có 11 electron hóa trị: $sigma_{2s}^2 sigma_{2s}^{*2} pi_{2p_x}^2 pi_{2p_y}^2 sigma_{2p_z}^2 pi_{2p_x}^{*1}$. Bậc liên kết $BO = (8 - 3)/2 = 2.5$, có 1 e độc thân nên thuận từ. Khi mất 1e ở MO $pi^*$ tạo cation $NO^+$, cấu hình trở thành đẳng electron với $N_2$ (10 e hóa trị): $BO = (8 - 2)/2 = 3.0$ và mọi electron đều đã ghép đôi $	o$ $NO^+$ là ion nghịch từ (diamagnetic) rất bền.
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+              <strong class="text-emerald-600 dark:text-emerald-400">Câu 2: Đáp án A.</strong><br>
+              Phản ứng tự diễn biến khi $Delta G^circ = Delta H^circ - TDelta S^circ < 0$. Do $Delta H^circ > 0$ và $Delta S^circ > 0$, nhiệt độ ngưỡng đảo chiều là $T_{	ext{cb}} = rac{Delta H^circ}{Delta S^circ} = rac{57200	ext{ J/mol}}{175.8	ext{ J/(mol}cdot	ext{K)}} approx 325.37	ext{ K} approx 52.4^circ	ext{C}$. Do đó khi $T > 325.4	ext{ K}$, số hạng $-TDelta S^circ$ chiếm ưu thế làm $Delta G^circ < 0$, phản ứng tự diễn biến theo chiều thuận.
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+              <strong class="text-emerald-600 dark:text-emerald-400">Câu 3: Đáp án A.</strong><br>
+              Với phản ứng bậc một: $k = rac{ln 2}{t_{1/2}} implies rac{k_{320}}{k_{300}} = rac{t_{1/2}(300)}{t_{1/2}(320)} = rac{30}{5} = 6$. Theo phương trình Arrhenius dạng tích phân: $lnleft(rac{k_2}{k_1}ight) = rac{E_a}{R}left(rac{1}{T_1} - rac{1}{T_2}ight) iff ln(6) = rac{E_a}{8.314}left(rac{1}{300} - rac{1}{320}ight) implies E_a approx 71478	ext{ J/mol} approx 71.5	ext{ kJ/mol}$.
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+              <strong class="text-emerald-600 dark:text-emerald-400">Câu 4: Đáp án A.</strong><br>
+              Carbon rắn $C(r)$ có hoạt độ bằng 1 nên không xuất hiện trong biểu thức hằng số cân bằng: $K_p = rac{P_{	ext{CO}}^2}{P_{	ext{CO}_2}} = 1.5$. Ta có $P_{	ext{tổng}} = P_{	ext{CO}} + P_{	ext{CO}_2} = 3.0	ext{ atm} implies P_{	ext{CO}_2} = 3.0 - P_{	ext{CO}}$. Thay vào: $P_{	ext{CO}}^2 + 1.5 P_{	ext{CO}} - 4.5 = 0$. Phương trình bậc hai có nghiệm dương $P_{	ext{CO}} = 1.5	ext{ atm}$. Phần mol $x_{	ext{CO}} = rac{1.5}{3.0} = 0.50$ (50%).
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+              <strong class="text-emerald-600 dark:text-emerald-400">Câu 5: Đáp án A.</strong><br>
+              Số mol axit: $n_{	ext{CH}_3	ext{COOH}} = 0.1 	imes 0.2 = 0.02	ext{ mol}$; số mol kiềm $n_{	ext{NaOH}} = 0.1 	imes 0.1 = 0.01	ext{ mol}$. Sau phản ứng tạo ra $0.01	ext{ mol CH}_3	ext{COONa}$ và còn dư $0.02 - 0.01 = 0.01	ext{ mol CH}_3	ext{COOH}$. Nồng độ hai chất trong hệ đệm bằng nhau: $[	ext{CH}_3	ext{COOH}] = [	ext{CH}_3	ext{COO}^-]$. Áp dụng phương trình Henderson-Hasselbalch: $pH = pK_a + lograc{[	ext{CH}_3	ext{COO}^-]}{[	ext{CH}_3	ext{COOH}]} = 4.76 + log(1) = 4.76$.
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+              <strong class="text-emerald-600 dark:text-emerald-400">Câu 6: Đáp án A.</strong><br>
+              Ion $	ext{Fe}^{3+}$ có cấu hình $[Ar]3d^5$. Phối tử $CN^-$ là phối tử trường mạnh ($Delta_o > P$), các electron dồn ghép đôi tối đa ở obitan $t_{2g}$ tạo cấu hình $t_{2g}^5 e_g^0$ $implies$ chỉ có 1 electron độc thân (phức spin thấp). Ngược lại, phối tử $F^-$ là phối tử trường yếu ($Delta_o < P$), các electron phân bố đều tuân theo quy tắc Hund $t_{2g}^3 e_g^2 implies$ có 5 electron độc thân (phức spin cao).
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+              <strong class="text-emerald-600 dark:text-emerald-400">Câu 7: Đáp án A.</strong><br>
+              Sức điện động chuẩn của pin: $E^circ_{	ext{pin}} = E^circ_{	ext{catot}} - E^circ_{	ext{anot}} = E^circ(	ext{Cu}^{2+}/	ext{Cu}) - E^circ(	ext{Zn}^{2+}/	ext{Zn}) = 0.340 - (-0.763) = +1.103	ext{ V}$. Phản ứng pin trao đổi $n = 2$ electron ($	ext{Zn} + 	ext{Cu}^{2+} 	o 	ext{Zn}^{2+} + 	ext{Cu}$). Biến thiên năng lượng tự do Gibbs: $Delta G^circ = -nFE^circ_{	ext{pin}} = -2 	imes 96485 	imes 1.103 = -212846	ext{ J/mol} = -212.85	ext{ kJ/mol}$.
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+              <strong class="text-emerald-600 dark:text-emerald-400">Câu 8: Đáp án A.</strong><br>
+              Mạng lập phương tâm diện (FCC) có số nguyên tử hiệu dụng trong một ô mạng: $Z = 8 	imes rac{1}{8} 	ext{ (đỉnh)} + 6 	imes rac{1}{2} 	ext{ (mặt)} = 4$ nguyên tử. Thể tích ô mạng $V = a^3 = (3.61 	imes 10^{-8})^3 approx 4.7046 	imes 10^{-23}	ext{ cm}^3$. Khối lượng riêng thực tế: $d = rac{Z 	imes M}{N_A 	imes V} = rac{4 	imes 63.55}{6.022 	imes 10^{23} 	imes 4.7046 	imes 10^{-23}} approx 8.97	ext{ g/cm}^3$.
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+              <strong class="text-emerald-600 dark:text-emerald-400">Câu 9: Đáp án A.</strong><br>
+              Xác định độ ưu tiên của 4 nhóm thế gắn vào cacbon bất đối $C^*$ của axit lactic theo CIP: (1) $-OH$ (nguyên tử O có $Z=8$ lớn nhất); (2) $-COOH$ (C gắn với $(O, O, O)$); (3) $-CH_3$ (C gắn với $(H, H, H)$); (4) $-H$ ($Z=1$ nhỏ nhất). Đưa $-H$ ra xa người quan sát, vòng quay từ nhóm (1) $	o$ (2) $	o$ (3) ngược chiều kim đồng hồ, do đó cacbon mang cấu hình $(S)$.
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+              <strong class="text-emerald-600 dark:text-emerald-400">Câu 10: Đáp án A.</strong><br>
+              Trong dung môi aprotic phân cực như DMSO, ion $OH^-$ không bị sonvat hóa mạnh bởi liên kết hidro nên có tính ái nhân (nucleophile) rất mạnh, thúc đẩy phản ứng theo cơ chế lưỡng phân tử $S_N2$. Phản ứng $S_N2$ diễn ra với sự tấn công từ phía đối diện (back-side attack) dẫn đến hiện tượng nghịch đảo cấu hình Walden 100%, chuyển chất đầu $(R)	ext{-2-bromooctan}$ thành sản phẩm $(S)	ext{-octan-2-ol}$.
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="p-4 bg-gray-100 dark:bg-dark-surface/80 border-t border-gray-200 dark:border-gray-800 flex items-center justify-between text-xs text-gray-500">
+        <span>Kỳ Thi Huấn Luyện Đội Tuyển HSG Quốc Gia (VChO) &amp; IChO</span>
+        <button onclick="closeCourseQuizModal()" class="px-4 py-2 rounded-xl bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 font-bold transition">
+          Đóng
+        </button>
+      </div>
+
+    </div>
   </div>
 
   <!-- Footer -->

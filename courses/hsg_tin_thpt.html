@@ -89,6 +89,11 @@
           <i class="fa-solid fa-trophy text-amber-300"></i>
           <span>VNOI • VOI • Olympic Tin học</span>
         </span>
+        <button onclick="openCourseQuizModal()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white text-xs sm:text-sm font-semibold shadow-sm transition">
+          <i class="fa-solid fa-file-signature text-amber-300"></i>
+          <span class="hidden sm:inline">Đề thi HSG cuối khóa</span>
+          <span>(10 câu)</span>
+        </button>
         <!-- Dark/Light Mode Button -->
         <button id="theme-toggle" class="p-2 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-300 transition" aria-label="Đổi giao diện">
           <i id="theme-icon" class="fa-solid fa-moon"></i>
@@ -1542,6 +1547,9 @@ struct FenwickTree {
             <a href="../index.html" class="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm shadow-lg shadow-blue-500/30 transition flex items-center gap-2">
               <i class="fa-solid fa-arrow-left"></i> Về Trang Chủ Khóa Học
             </a>
+            <button onclick="openCourseQuizModal()" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold text-sm shadow-lg shadow-orange-500/30 transition flex items-center gap-2">
+              <i class="fa-solid fa-file-signature text-amber-200"></i> Thi Thử Đề HSG Cuối Khóa (10 câu)
+            </button>
             <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-sm border border-white/20 transition flex items-center gap-2">
               <i class="fa-solid fa-arrow-up"></i> Lên Đầu Trang
             </button>
@@ -1550,6 +1558,440 @@ struct FenwickTree {
       </section>
 
     </main>
+  </div>
+
+  <!-- Course Exam Modal: Đề Thi HSG Tin Học Cuối Khóa -->
+  <div class="hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto" id="courseQuizModal">
+    <div class="bg-white dark:bg-dark-surface rounded-3xl max-w-4xl w-full max-h-[92vh] overflow-y-auto p-6 sm:p-8 shadow-2xl border border-gray-200 dark:border-gray-700">
+      
+      <!-- Modal Header -->
+      <div class="flex items-center justify-between pb-4 border-b border-gray-200 dark:border-gray-700 mb-6">
+        <div>
+          <span class="px-2.5 py-1 rounded-full bg-blue-100 dark:bg-blue-950/70 text-blue-700 dark:text-blue-300 font-bold text-xs flex items-center gap-1.5 w-fit">
+            <i class="fa-solid fa-trophy text-amber-500"></i> Đề Thi Khảo Sát Năng Lực Chuẩn HSG Tin THPT
+          </span>
+          <h3 class="text-xl sm:text-2xl font-black text-gray-900 dark:text-white mt-1.5">
+            Đề Thi Học Sinh Giỏi Tin Học THPT Cuối Khóa
+          </h3>
+          <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
+            10 câu hỏi thuật toán cốt lõi bao quát toàn bộ 10 chuyên đề bồi dưỡng đội tuyển HSG Tỉnh & VOI
+          </p>
+        </div>
+        <button class="w-9 h-9 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-500 hover:text-gray-900 dark:hover:text-white flex items-center justify-center transition" onclick="closeCourseQuizModal()" aria-label="Đóng đề thi">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <!-- Exam Form -->
+      <form class="space-y-6 text-sm text-gray-700 dark:text-gray-300" id="courseExamForm" onsubmit="submitCourseExam(event)">
+        
+        <!-- Q1 -->
+        <div class="p-5 rounded-2xl bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700 space-y-3">
+          <div class="flex items-center justify-between gap-2">
+            <span class="px-2.5 py-0.5 rounded-md bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 font-semibold text-xs">
+              Chuyên đề 1: Fast I/O &amp; Giới hạn thời gian
+            </span>
+            <span class="text-xs text-gray-400">1.0 điểm</span>
+          </div>
+          <p class="font-bold text-gray-900 dark:text-white text-sm sm:text-base leading-snug">
+            1. Trong C++20 khi giải bài thi HSG với dữ liệu lớn $N = 10^6$ dòng, dòng lệnh nào sau đây bắt buộc đặt ở đầu hàm <code>main()</code> để hủy đồng bộ giữa C I/O và C++ Streams, tránh lỗi Time Limit Exceeded (TLE) khi dùng <code>cin</code>/<code>cout</code>?
+          </p>
+          <div class="space-y-2 pt-1">
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-blue-50/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-blue-600 focus:ring-blue-500" name="eq1" required="" type="radio" value="A"/>
+              <span><strong>A.</strong> <code>ios_base::sync_with_stdio(false); cin.tie(NULL);</code></span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-blue-50/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-blue-600 focus:ring-blue-500" name="eq1" type="radio" value="B"/>
+              <span><strong>B.</strong> <code>ios_base::sync_with_stdio(true); cin.tie(NULL);</code></span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-blue-50/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-blue-600 focus:ring-blue-500" name="eq1" type="radio" value="C"/>
+              <span><strong>C.</strong> <code>cin.tie(false); cout.tie(false); fflush(stdin);</code></span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-blue-50/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-blue-600 focus:ring-blue-500" name="eq1" type="radio" value="D"/>
+              <span><strong>D.</strong> <code>setprecision(6); system("pause");</code></span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="p-5 rounded-2xl bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700 space-y-3">
+          <div class="flex items-center justify-between gap-2">
+            <span class="px-2.5 py-0.5 rounded-md bg-cyan-100 dark:bg-cyan-900/40 text-cyan-700 dark:text-cyan-300 font-semibold text-xs">
+              Chuyên đề 2: Kỹ thuật Hai con trỏ (Two Pointers)
+            </span>
+            <span class="text-xs text-gray-400">1.0 điểm</span>
+          </div>
+          <p class="font-bold text-gray-900 dark:text-white text-sm sm:text-base leading-snug">
+            2. Cho mảng số nguyên dương $A$ gồm $N$ phần tử ($N \le 10^5$) và số nguyên dương $S$. Cần tìm độ dài ngắn nhất của dãy con liên tiếp có tổng các phần tử $\ge S$. Phương pháp tối ưu và độ phức tạp tương ứng là gì?
+          </p>
+          <div class="space-y-2 pt-1">
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-blue-50/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-blue-600 focus:ring-blue-500" name="eq2" required="" type="radio" value="A"/>
+              <span><strong>A.</strong> Kỹ thuật Hai con trỏ / Cửa sổ trượt (Two Pointers) với độ phức tạp $O(N)$</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-blue-50/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-blue-600 focus:ring-blue-500" name="eq2" type="radio" value="B"/>
+              <span><strong>B.</strong> Duyệt 2 vòng lặp lồng nhau qua mọi cặp $(L, R)$ với độ phức tạp $O(N^2)$</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-blue-50/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-blue-600 focus:ring-blue-500" name="eq2" type="radio" value="C"/>
+              <span><strong>C.</strong> Quy hoạch động 2 chiều $DP[N][S]$ với độ phức tạp $O(N \cdot S)$</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-blue-50/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-blue-600 focus:ring-blue-500" name="eq2" type="radio" value="D"/>
+              <span><strong>D.</strong> Nhân ma trận nhanh lũy thừa logarit với độ phức tạp $O(S^3 \log N)$</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="p-5 rounded-2xl bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700 space-y-3">
+          <div class="flex items-center justify-between gap-2">
+            <span class="px-2.5 py-0.5 rounded-md bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300 font-semibold text-xs">
+              Chuyên đề 3: Chặt nhị phân kết quả (Binary Search on Answer)
+            </span>
+            <span class="text-xs text-gray-400">1.0 điểm</span>
+          </div>
+          <p class="font-bold text-gray-900 dark:text-white text-sm sm:text-base leading-snug">
+            3. Để áp dụng kỹ thuật **Chặt nhị phân kết quả** tìm giá trị nhỏ nhất $X$ thỏa mãn yêu cầu bài toán, hàm kiểm tra điều kiện $check(X)$ bắt buộc phải thỏa mãn tính chất toán học nào?
+          </p>
+          <div class="space-y-2 pt-1">
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-blue-50/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-blue-600 focus:ring-blue-500" name="eq3" required="" type="radio" value="A"/>
+              <span><strong>A.</strong> Tính đơn điệu (Monotonicity): nếu $check(X)$ đúng thì với mọi $Y > X$ $check(Y)$ cũng đúng</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-blue-50/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-blue-600 focus:ring-blue-500" name="eq3" type="radio" value="B"/>
+              <span><strong>B.</strong> Tính tuần hoàn chu kỳ: $check(X + K) = check(X)$ với hằng số $K$</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-blue-50/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-blue-600 focus:ring-blue-500" name="eq3" type="radio" value="C"/>
+              <span><strong>C.</strong> Tính lồi: đồ thị hàm $check(X)$ có duy nhất 1 điểm cực trị</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-blue-50/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-blue-600 focus:ring-blue-500" name="eq3" type="radio" value="D"/>
+              <span><strong>D.</strong> Tính khả vi trên trường số thực liên tục</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="p-5 rounded-2xl bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700 space-y-3">
+          <div class="flex items-center justify-between gap-2">
+            <span class="px-2.5 py-0.5 rounded-md bg-purple-100 dark:bg-purple-900/40 text-purple-700 dark:text-purple-300 font-semibold text-xs">
+              Chuyên đề 4: Số học &amp; Nghịch đảo Modulo
+            </span>
+            <span class="text-xs text-gray-400">1.0 điểm</span>
+          </div>
+          <p class="font-bold text-gray-900 dark:text-white text-sm sm:text-base leading-snug">
+            4. Khi tính tổ hợp $C_n^k = \frac{n!}{k!(n-k)!} \pmod{10^9+7}$, theo định lý Fermat nhỏ, nghịch đảo modulo của $(k!)$ theo số nguyên tố $P = 10^9+7$ được tính bằng:
+          </p>
+          <div class="space-y-2 pt-1">
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-blue-50/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-blue-600 focus:ring-blue-500" name="eq4" required="" type="radio" value="A"/>
+              <span><strong>A.</strong> $(k!)^{-1} \equiv (k!)^{P - 2} \pmod P$ thông qua lũy thừa nhanh $O(\log P)$</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-blue-50/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-blue-600 focus:ring-blue-500" name="eq4" type="radio" value="B"/>
+              <span><strong>B.</strong> $(k!)^{-1} \equiv (k!)^{P - 1} \pmod P$</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-blue-50/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-blue-600 focus:ring-blue-500" name="eq4" type="radio" value="C"/>
+              <span><strong>C.</strong> $(k!)^{-1} \equiv (k!) \cdot (P - 1) \pmod P$</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-blue-50/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-blue-600 focus:ring-blue-500" name="eq4" type="radio" value="D"/>
+              <span><strong>D.</strong> $(k!)^{-1} \equiv P - (k!) \pmod P$</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q5 -->
+        <div class="p-5 rounded-2xl bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700 space-y-3">
+          <div class="flex items-center justify-between gap-2">
+            <span class="px-2.5 py-0.5 rounded-md bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300 font-semibold text-xs">
+              Chuyên đề 5: Quy hoạch động Cái túi 0/1 (Knapsack)
+            </span>
+            <span class="text-xs text-gray-400">1.0 điểm</span>
+          </div>
+          <p class="font-bold text-gray-900 dark:text-white text-sm sm:text-base leading-snug">
+            5. Trong bài toán Cái túi 0/1 với trọng tải $W$, để tối ưu không gian bộ nhớ từ mảng 2 chiều xuống mảng 1 chiều $DP[W]$, vòng lặp biến trọng số $w$ cần duyệt theo chiều nào để mỗi đồ vật chỉ được chọn nhiều nhất 1 lần?
+          </p>
+          <div class="space-y-2 pt-1">
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-blue-50/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-blue-600 focus:ring-blue-500" name="eq5" required="" type="radio" value="A"/>
+              <span><strong>A.</strong> Duyệt ngược từ $W$ giảm dần về $w_i$ ($w = W \dots w_i$)</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-blue-50/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-blue-600 focus:ring-blue-500" name="eq5" type="radio" value="B"/>
+              <span><strong>B.</strong> Duyệt xuôi từ $w_i$ tăng dần lên $W$ ($w = w_i \dots W$)</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-blue-50/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-blue-600 focus:ring-blue-500" name="eq5" type="radio" value="C"/>
+              <span><strong>C.</strong> Chiều duyệt nào cũng đúng kết quả như nhau</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-blue-50/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-blue-600 focus:ring-blue-500" name="eq5" type="radio" value="D"/>
+              <span><strong>D.</strong> Bắt buộc phải dùng 2 mảng $DP$ phụ đảo chéo nhau</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q6 -->
+        <div class="p-5 rounded-2xl bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700 space-y-3">
+          <div class="flex items-center justify-between gap-2">
+            <span class="px-2.5 py-0.5 rounded-md bg-rose-100 dark:bg-rose-900/40 text-rose-700 dark:text-rose-300 font-semibold text-xs">
+              Chuyên đề 6: Quy hoạch động Bitmask (TSP)
+            </span>
+            <span class="text-xs text-gray-400">1.0 điểm</span>
+          </div>
+          <p class="font-bold text-gray-900 dark:text-white text-sm sm:text-base leading-snug">
+            6. Bài toán người du lịch (TSP) tìm chu trình Hamilton ngắn nhất qua $N$ đỉnh ($N \le 20$). Khi giải bằng Quy hoạch động Bitmask với trạng thái $DP[mask][u]$, số trạng thái và độ phức tạp thời gian tổng thể là:
+          </p>
+          <div class="space-y-2 pt-1">
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-blue-50/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-blue-600 focus:ring-blue-500" name="eq6" required="" type="radio" value="A"/>
+              <span><strong>A.</strong> Số trạng thái là $2^N \cdot N$, độ phức tạp thời gian là $O(2^N \cdot N^2)$</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-blue-50/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-blue-600 focus:ring-blue-500" name="eq6" type="radio" value="B"/>
+              <span><strong>B.</strong> Số trạng thái là $N!$, độ phức tạp thời gian là $O(N!)$</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-blue-50/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-blue-600 focus:ring-blue-500" name="eq6" type="radio" value="C"/>
+              <span><strong>C.</strong> Số trạng thái là $N^2$, độ phức tạp thời gian là $O(N^3)$</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-blue-50/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-blue-600 focus:ring-blue-500" name="eq6" type="radio" value="D"/>
+              <span><strong>D.</strong> Số trạng thái là $2^N$, độ phức tạp thời gian là $O(2^N)$</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q7 -->
+        <div class="p-5 rounded-2xl bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700 space-y-3">
+          <div class="flex items-center justify-between gap-2">
+            <span class="px-2.5 py-0.5 rounded-md bg-indigo-100 dark:bg-indigo-900/40 text-indigo-700 dark:text-indigo-300 font-semibold text-xs">
+              Chuyên đề 7: Đồ thị &amp; Đường đi ngắn nhất Dijkstra
+            </span>
+            <span class="text-xs text-gray-400">1.0 điểm</span>
+          </div>
+          <p class="font-bold text-gray-900 dark:text-white text-sm sm:text-base leading-snug">
+            7. Cho đồ thị có hướng trọng số không âm gồm $V$ đỉnh và $E$ cạnh ($V \le 10^5, E \le 3 \cdot 10^5$). Thuật toán Dijkstra cài đặt với hàng đợi ưu tiên <code>std::priority_queue</code> có độ phức tạp thời gian tối ưu là:
+          </p>
+          <div class="space-y-2 pt-1">
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-blue-50/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-blue-600 focus:ring-blue-500" name="eq7" required="" type="radio" value="A"/>
+              <span><strong>A.</strong> $O((V + E) \log V)$</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-blue-50/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-blue-600 focus:ring-blue-500" name="eq7" type="radio" value="B"/>
+              <span><strong>B.</strong> $O(V^2)$</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-blue-50/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-blue-600 focus:ring-blue-500" name="eq7" type="radio" value="C"/>
+              <span><strong>C.</strong> $O(V \cdot E)$</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-blue-50/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-blue-600 focus:ring-blue-500" name="eq7" type="radio" value="D"/>
+              <span><strong>D.</strong> $O(V^3)$</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q8 -->
+        <div class="p-5 rounded-2xl bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700 space-y-3">
+          <div class="flex items-center justify-between gap-2">
+            <span class="px-2.5 py-0.5 rounded-md bg-teal-100 dark:bg-teal-900/40 text-teal-700 dark:text-teal-300 font-semibold text-xs">
+              Chuyên đề 8: Khớp, Cầu &amp; Thuật toán Tarjan
+            </span>
+            <span class="text-xs text-gray-400">1.0 điểm</span>
+          </div>
+          <p class="font-bold text-gray-900 dark:text-white text-sm sm:text-base leading-snug">
+            8. Trong cây DFS của thuật toán Tarjan trên đồ thị vô hướng, cạnh nối giữa đỉnh cha $u$ và con $v$ ($u \to v$) là một **CẦU (bridge)** khi và chỉ khi thỏa mãn điều kiện nào? (với $num[u]$ là thời điểm vào đỉnh $u$, $low[v]$ là mốc thấp nhất con cháu $v$ đi tới được).
+          </p>
+          <div class="space-y-2 pt-1">
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-blue-50/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-blue-600 focus:ring-blue-500" name="eq8" required="" type="radio" value="A"/>
+              <span><strong>A.</strong> $low[v] > num[u]$ (đỉnh $v$ và con cháu không thể leo ngược lên $u$ hoặc tổ tiên của $u$)</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-blue-50/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-blue-600 focus:ring-blue-500" name="eq8" type="radio" value="B"/>
+              <span><strong>B.</strong> $low[v] \ge num[u]$</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-blue-50/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-blue-600 focus:ring-blue-500" name="eq8" type="radio" value="C"/>
+              <span><strong>C.</strong> $low[v] < num[u]$</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-blue-50/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-blue-600 focus:ring-blue-500" name="eq8" type="radio" value="D"/>
+              <span><strong>D.</strong> $low[v] = num[v]$</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q9 -->
+        <div class="p-5 rounded-2xl bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700 space-y-3">
+          <div class="flex items-center justify-between gap-2">
+            <span class="px-2.5 py-0.5 rounded-md bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 font-semibold text-xs">
+              Chuyên đề 9: Cấu trúc dữ liệu Segment Tree (IT)
+            </span>
+            <span class="text-xs text-gray-400">1.0 điểm</span>
+          </div>
+          <p class="font-bold text-gray-900 dark:text-white text-sm sm:text-base leading-snug">
+            9. Cấu trúc dữ liệu Segment Tree kết hợp kỹ thuật **Lazy Propagation (cập nhật lười)** cho phép thực hiện cập nhật đoạn (Range Update) và truy vấn đoạn (Range Query) với độ phức tạp thời gian mỗi thao tác là:
+          </p>
+          <div class="space-y-2 pt-1">
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-blue-50/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-blue-600 focus:ring-blue-500" name="eq9" required="" type="radio" value="A"/>
+              <span><strong>A.</strong> $O(\log N)$</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-blue-50/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-blue-600 focus:ring-blue-500" name="eq9" type="radio" value="B"/>
+              <span><strong>B.</strong> $O(1)$</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-blue-50/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-blue-600 focus:ring-blue-500" name="eq9" type="radio" value="C"/>
+              <span><strong>C.</strong> $O(\sqrt{N})$</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-blue-50/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-blue-600 focus:ring-blue-500" name="eq9" type="radio" value="D"/>
+              <span><strong>D.</strong> $O(N)$</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q10 -->
+        <div class="p-5 rounded-2xl bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700 space-y-3">
+          <div class="flex items-center justify-between gap-2">
+            <span class="px-2.5 py-0.5 rounded-md bg-violet-100 dark:bg-violet-900/40 text-violet-700 dark:text-violet-300 font-semibold text-xs">
+              Chuyên đề 10: Xử lý chuỗi (String Hashing)
+            </span>
+            <span class="text-xs text-gray-400">1.0 điểm</span>
+          </div>
+          <p class="font-bold text-gray-900 dark:text-white text-sm sm:text-base leading-snug">
+            10. Để tránh hoàn toàn hiện tượng đụng độ mã băm (Hash Collision) khi giải bài toán so khớp chuỗi trên các bộ test thi HSG có kiểm thử phản ví dụ (anti-hash), giải pháp chuẩn mực và an toàn nhất là:
+          </p>
+          <div class="space-y-2 pt-1">
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-blue-50/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-blue-600 focus:ring-blue-500" name="eq10" required="" type="radio" value="A"/>
+              <span><strong>A.</strong> Dùng kỹ thuật Băm kép (Double Hashing) với 2 modulo nguyên tố lớn khác nhau (như $10^9+7$ và $10^9+9$)</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-blue-50/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-blue-600 focus:ring-blue-500" name="eq10" type="radio" value="B"/>
+              <span><strong>B.</strong> Dùng kiểu <code>unsigned long long</code> với modulo tự nhiên $2^{64}$ duy nhất</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-blue-50/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-blue-600 focus:ring-blue-500" name="eq10" type="radio" value="C"/>
+              <span><strong>C.</strong> Chọn cơ số $base$ là một số chẵn tùy ý</span>
+            </label>
+            <label class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-blue-50/50 dark:hover:bg-gray-700/50 cursor-pointer transition">
+              <input class="mt-1 text-blue-600 focus:ring-blue-500" name="eq10" type="radio" value="D"/>
+              <span><strong>D.</strong> Chỉ sử dụng hàm <code>string::compare</code> lặp qua từng ký tự</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="pt-4 flex items-center justify-end gap-3 border-t border-gray-200 dark:border-gray-700">
+          <button class="px-5 py-2.5 rounded-xl bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 font-medium hover:bg-gray-200 dark:hover:bg-gray-600 transition" onclick="closeCourseQuizModal()" type="button">
+            Đóng lại
+          </button>
+          <button class="px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold transition shadow-lg shadow-blue-500/30 flex items-center gap-2" type="submit">
+            <i class="fa-solid fa-paper-plane"></i> Nộp Bài &amp; Xem Kết Quả
+          </button>
+        </div>
+      </form>
+
+      <!-- Exam Result Panel -->
+      <div class="hidden p-6 sm:p-8 rounded-2xl bg-blue-50/80 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800 text-center space-y-4" id="courseExamResult">
+        <div class="w-16 h-16 mx-auto rounded-full bg-blue-600 text-white flex items-center justify-center text-2xl shadow-xl shadow-blue-500/30">
+          <i class="fa-solid fa-trophy text-amber-300"></i>
+        </div>
+        <h4 class="text-2xl sm:text-3xl font-black text-gray-900 dark:text-white" id="examScoreText">
+          Kết quả của bạn: 10/10 điểm
+        </h4>
+        <p class="text-sm sm:text-base text-gray-600 dark:text-gray-300 max-w-xl mx-auto leading-relaxed" id="examCommentText">
+          Nhận xét đánh giá năng lực thuật toán
+        </p>
+        
+        <div class="pt-2 flex flex-wrap items-center justify-center gap-3">
+          <button class="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold transition shadow-md flex items-center gap-2" onclick="resetCourseExam()">
+            <i class="fa-solid fa-rotate-left"></i> Làm lại đề thi
+          </button>
+          <button class="px-5 py-2.5 rounded-xl bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600 text-sm font-semibold transition flex items-center gap-2" onclick="toggleSolutionsReview()" id="toggleSolutionsBtn">
+            <i class="fa-solid fa-book-open"></i> Xem lời giải chi tiết (10 câu)
+          </button>
+          <button class="px-5 py-2.5 rounded-xl border border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-800 text-sm font-semibold transition" onclick="closeCourseQuizModal()">
+            Đóng bảng điểm
+          </button>
+        </div>
+
+        <!-- Detail Solutions Container -->
+        <div class="hidden mt-8 text-left space-y-4 border-t border-blue-200 dark:border-blue-900 pt-6" id="examSolutionsReview">
+          <h5 class="text-base font-bold text-gray-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-circle-check text-emerald-500"></i> Bảng Đáp Án &amp; Lời Giải Chi Tiết Cả 10 Chuyên Đề:
+          </h5>
+          <div class="space-y-3 text-xs sm:text-sm">
+            
+            <div class="p-3.5 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+              <strong class="text-blue-600 dark:text-blue-400">Câu 1: Đáp án A.</strong>
+              <code>ios_base::sync_with_stdio(false)</code> ngắt kết nối đồng bộ giữa C buffer và C++ stream, kết hợp <code>cin.tie(NULL)</code> bỏ auto-flush giúp tốc độ đọc nhanh tương đương hoặc hơn <code>scanf</code>.
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+              <strong class="text-blue-600 dark:text-blue-400">Câu 2: Đáp án A.</strong>
+              Vì mảng toàn số nguyên dương, khi mở rộng con trỏ phải $R$ thì tổng luôn tăng, thu hẹp $L$ thì tổng giảm. Kỹ thuật Two Pointers cho phép mỗi phần tử vào/ra đúng 1 lần, đạt thời gian tuyến tính $O(N)$.
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+              <strong class="text-blue-600 dark:text-blue-400">Câu 3: Đáp án A.</strong>
+              Điều kiện tiên quyết để chặt nhị phân kết quả là tính <em>đơn điệu (Monotonicity)</em>, chia không gian tìm kiếm thành 2 nửa rõ rệt: toàn FALSE và toàn TRUE.
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+              <strong class="text-blue-600 dark:text-blue-400">Câu 4: Đáp án A.</strong>
+              Theo định lý Fermat nhỏ, nếu $P$ là số nguyên tố và $\gcd(a, P) = 1$ thì $a^{P-1} \equiv 1 \pmod P \implies a^{-1} \equiv a^{P-2} \pmod P$.
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+              <strong class="text-blue-600 dark:text-blue-400">Câu 5: Đáp án A.</strong>
+              Duyệt ngược từ $W$ về $w_i$ để khi tính $DP[w]$, trạng thái $DP[w - w_i]$ được lấy từ bước trước (đồ vật thứ $i$ chưa được chọn). Nếu duyệt xuôi sẽ biến thành bài toán Knapsack vô hạn (Unbounded Knapsack).
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+              <strong class="text-blue-600 dark:text-blue-400">Câu 6: Đáp án A.</strong>
+              Với $N \le 20$, mảng $DP[1 \ll N][N]$ có $2^N \cdot N$ trạng thái. Mỗi trạng thái thử chuyển sang đỉnh tiếp theo trong $N$ đỉnh $\implies O(2^N \cdot N^2)$, khả thi với $N=20$ ($2^{20} \cdot 400 \approx 4 \cdot 10^8$ phép tính cơ bản).
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+              <strong class="text-blue-600 dark:text-blue-400">Câu 7: Đáp án A.</strong>
+              Dijkstra với binary heap / `priority_queue` duyệt qua mỗi cạnh tối đa 1 lần, mỗi lần đẩy vào queue tốn $O(\log V)$, tổng thời gian là $O((V + E) \log V)$.
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+              <strong class="text-blue-600 dark:text-blue-400">Câu 8: Đáp án A.</strong>
+              Cạnh $u \to v$ là cầu khi và chỉ khi $low[v] > num[u]$. Còn đối với khớp (articulation point), điều kiện là $low[v] \ge num[u]$.
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+              <strong class="text-blue-600 dark:text-blue-400">Câu 9: Đáp án A.</strong>
+              Lazy Propagation trì hoãn việc đẩy giá trị xuống các nút con cho đến khi thực sự cần truy cập, giúp cả hai thao tác cập nhật đoạn và truy vấn đoạn đều chỉ tốn $O(\log N)$.
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+              <strong class="text-blue-600 dark:text-blue-400">Câu 10: Đáp án A.</strong>
+              Băm modulo $2^{64}$ (dùng unsigned long long) rất dễ bị hack bởi thuật toán sinh xâu Thue-Morse. Chuẩn an toàn nhất trong thi VOI là băm kép (Double Hash) với 2 modulo nguyên tố $10^9+7$ và $10^9+9$.
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
   </div>
 
   <!-- Footer -->
@@ -1697,6 +2139,91 @@ struct FenwickTree {
       if (confirm('Bạn có chắc muốn đặt lại toàn bộ kết quả bài tập để làm lại từ đầu?')) {
         localStorage.removeItem(STORAGE_KEY);
         location.reload();
+      }
+    }
+
+    // Course Exam Modal Handlers
+    function openCourseQuizModal() {
+      const modal = document.getElementById('courseQuizModal');
+      if (modal) {
+        modal.classList.remove('hidden');
+        renderAllMath();
+        setTimeout(renderAllMath, 100);
+      }
+    }
+
+    function closeCourseQuizModal() {
+      const modal = document.getElementById('courseQuizModal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    const examAnswers = {
+      eq1: 'A',
+      eq2: 'A',
+      eq3: 'A',
+      eq4: 'A',
+      eq5: 'A',
+      eq6: 'A',
+      eq7: 'A',
+      eq8: 'A',
+      eq9: 'A',
+      eq10: 'A'
+    };
+
+    function submitCourseExam(e) {
+      e.preventDefault();
+      const form = document.getElementById('courseExamForm');
+      let score = 0;
+
+      for (let i = 1; i <= 10; i++) {
+        const val = form['eq' + i]?.value;
+        if (val === examAnswers['eq' + i]) {
+          score++;
+        }
+      }
+
+      form.classList.add('hidden');
+      const resultBox = document.getElementById('courseExamResult');
+      resultBox.classList.remove('hidden');
+      document.getElementById('examScoreText').innerText = 'Kết quả của bạn: ' + score + '/10 điểm';
+
+      let comment = '';
+      if (score >= 9) {
+        comment = '🏆 Xuất sắc! Năng lực thuật toán và tư duy lập trình thi đấu của bạn hoàn toàn sẵn sàng cho kỳ thi HSG Tỉnh/Thành phố & Vòng sơ loại HSG Quốc gia!';
+      } else if (score >= 7) {
+        comment = '⭐ Rất tốt! Bạn nắm vững các chuyên đề trọng điểm (Quy hoạch động, Đồ thị, Cấu trúc dữ liệu). Hãy rèn luyện thêm tốc độ và kỹ năng cài đặt phản xạ.';
+      } else if (score >= 5) {
+        comment = '👍 Đạt yêu cầu cơ bản! Bạn đã hiểu phương pháp cốt lõi, cần củng cố thêm các kỹ thuật nâng cao như Bitmask DP, Tarjan và Segment Tree.';
+      } else {
+        comment = '💪 Cần nỗ lực hơn! Hãy ôn tập kỹ lại lý thuyết của từng chuyên đề, phân tích các bài mẫu và thử làm lại đề thi này nhé!';
+      }
+      document.getElementById('examCommentText').innerText = comment;
+      renderAllMath();
+    }
+
+    function resetCourseExam() {
+      const form = document.getElementById('courseExamForm');
+      form.reset();
+      form.classList.remove('hidden');
+      document.getElementById('courseExamResult').classList.add('hidden');
+      const solutions = document.getElementById('examSolutionsReview');
+      if (solutions) solutions.classList.add('hidden');
+      renderAllMath();
+    }
+
+    function toggleSolutionsReview() {
+      const solutions = document.getElementById('examSolutionsReview');
+      const btn = document.getElementById('toggleSolutionsBtn');
+      if (solutions) {
+        solutions.classList.toggle('hidden');
+        renderAllMath();
+        if (btn) {
+          if (solutions.classList.contains('hidden')) {
+            btn.innerHTML = '<i class="fa-solid fa-book-open"></i> Xem lời giải chi tiết (10 câu)';
+          } else {
+            btn.innerHTML = '<i class="fa-solid fa-eye-slash"></i> Ẩn bớt lời giải chi tiết';
+          }
+        }
       }
     }
 
