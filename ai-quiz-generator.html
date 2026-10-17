@@ -111,6 +111,15 @@
 const s=window.supabaseClient,$=id=>document.getElementById(id);
 let me,myRole="",generated=[],fileSources=[],structureSource=null,activeStructure=null,courseOwners={};
 const AI_FUNCTION="generate-quiz-ai-v3";
+// Nhật ký giáo viên: chỉ ghi metadata, không gửi nội dung đề hoặc tài liệu.
+async function logTeacherAction(event,detail=""){
+ try{
+  if(!me || !["admin","teacher"].includes(myRole))return;
+  const {error}=await s.from("activity_logs").insert({user_id:me.id,event_type:event,subject:String(selectedCourseBase()||"AI Quiz Generator").slice(0,160),lesson:String(detail).slice(0,180),page_path:location.pathname.slice(0,500)});
+  if(error)console.warn("CodeHub nhật ký:",error.message);
+ }catch(e){console.warn("CodeHub nhật ký:",e)}
+}
+
 const esc=v=>String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
 const cleanTitle=v=>String(v||"").replace(/^\s*\[?(?:BÀI|BAI)\s*\d*\s*:\s*/i,"").replace(/^\s*\[?TÀI LIỆU\s*:\s*/i,"").replace(/\]\s*$/,"").trim();
 const cleanStudentText=v=>String(v||"")
@@ -403,6 +412,7 @@ async function init(){
  const p=await s.from("profiles").select("role").eq("id",me.id).single();
  myRole=String(p.data?.role||"").trim().toLowerCase();
  if(!["admin","teacher"].includes(myRole))return location.href="student-dashboard.html";
+  void logTeacherAction("page_view","Mở công cụ tạo đề AI");
  let cq=s.from("courses").select("id,title,subject,grade,school_year,teacher_id,is_published,created_at").order("subject").order("grade").order("school_year").order("created_at");
  if(myRole==="teacher")cq=cq.eq("teacher_id",me.id);
  const c=await cq;
@@ -433,7 +443,7 @@ $("newQuiz").onclick=()=>{if(!$("course").value)return show("Hãy chọn Khóa h
 $("quizPreset").onchange=()=>{if($("quizPreset").value!=="custom")$("quizTitle").value=$("quizPreset").value;else{$("quizTitle").value="";$("quizTitle").focus()}};
 function closeQuizCreate(){$("quizModal").classList.add("hidden")}
 $("closeQuizModal").onclick=closeQuizCreate;$("cancelQuiz").onclick=closeQuizCreate;$("quizModal").onclick=e=>{if(e.target===$("quizModal"))closeQuizCreate()};
-$("createQuiz").onclick=async()=>{const courseId=$("course").value,title=$("quizTitle").value.trim();if(!courseId)return show("Hãy chọn Khóa học.");if(!title)return show("Nhập tên Quiz.");$("createQuiz").disabled=true;$("createQuiz").textContent="Đang tạo...";try{const z=await s.from("quizzes").insert({course_id:courseId,teacher_id:me.id,title,is_published:false}).select("id,title").single();if(z.error)throw z.error;await loadCourseData(courseId,z.data.id);closeQuizCreate();show(`Đã tạo "${title}" và tự chọn làm Quiz đích.`,true)}catch(e){show("Không tạo được Quiz: "+e.message)}finally{$("createQuiz").disabled=false;$("createQuiz").textContent="Tạo và chọn Quiz"}};
+$("createQuiz").onclick=async()=>{const courseId=$("course").value,title=$("quizTitle").value.trim();if(!courseId)return show("Hãy chọn Khóa học.");if(!title)return show("Nhập tên Quiz.");$("createQuiz").disabled=true;$("createQuiz").textContent="Đang tạo...";try{const z=await s.from("quizzes").insert({course_id:courseId,teacher_id:me.id,title,is_published:false}).select("id,title").single();if(z.error)throw z.error;await loadCourseData(courseId,z.data.id);closeQuizCreate();void logTeacherAction("quiz_create",`Tạo Quiz: ${title}`);show(`Đã tạo "${title}" và tự chọn làm Quiz đích.`,true)}catch(e){show("Không tạo được Quiz: "+e.message)}finally{$("createQuiz").disabled=false;$("createQuiz").textContent="Tạo và chọn Quiz"}};
 
 function applyExamRules(){
  const type=$("examType").value,c=$("count");
@@ -671,6 +681,7 @@ $("generate").onclick=async()=>{
       }catch(err){refillErrors.push(`Lượt ${refillCalls}: ${err.message||err}`)}
     }
     generated=filtered.items.slice(0,total);
+    if(generated.length)void logTeacherAction("ai_quiz",`Tạo AI ${generated.length}/${total} câu • ${$("examType").selectedOptions[0]?.textContent||""}`);
     const details=`AI trả về ${all.length} • trùng ${filtered.duplicates} • không hợp lệ ${filtered.invalid} • tạo bù ${refillCalls} lượt`;
     if(generated.length<total)show(`Đã giữ ${generated.length}/${total} câu. ${details}.${refillErrors.length?" Lỗi: "+refillErrors.join("; "):""}`);
     else show(`✓ Đủ ${total}/${total} câu. ${details}.`,true);
@@ -781,10 +792,10 @@ $("save").onclick=async()=>{
  if(!$("quiz").value)return show("Chọn Quiz đích.");syncAll();const ps=[...document.querySelectorAll(".pick:checked")];if(!ps.length)return show("Chưa chọn câu nào.");const quizId=$("quiz").value,quizName=$("quiz").selectedOptions[0]?.textContent?.trim()||"Quiz";const countRes=await s.from("quiz_questions").select("id",{count:"exact",head:true}).eq("quiz_id",quizId);if(countRes.error)return show("Không kiểm tra được câu hỏi hiện có: "+countRes.error.message);const oldCount=countRes.count||0;let mode="replace";if(oldCount>0){const replace=confirm(`⚠️ SAFE SAVE\n\nQuiz "${quizName}" hiện có ${oldCount} câu.\nBạn đang chọn ${ps.length} câu mới.\n\nOK = THAY THẾ toàn bộ câu cũ.\nCancel = chọn tiếp giữa THÊM câu hoặc HỦY.`);if(!replace){const add=confirm(`THÊM ${ps.length} câu vào ${oldCount} câu hiện có?\nOK = Thêm\nCancel = Hủy.`);if(!add)return show("Đã hủy lưu. Không có dữ liệu thay đổi.",true);mode="append"}}
  const rows=ps.map((p,n)=>{const q=generated[+p.dataset.i],type=["mcq4","true_false","short_answer","numeric"].includes(q.question_type)?q.question_type:"mcq4",mcq=type==="mcq4",sh=type==="short_answer",num=type==="numeric";return{quiz_id:quizId,question_text:q.question_text,option_a:mcq?q.option_a||"":"",option_b:mcq?q.option_b||"":"",option_c:mcq?q.option_c||"":"",option_d:mcq?q.option_d||"":"",correct_answer:mcq?(q.correct_answer||"A"):"A",explanation:q.explanation||"",question_order:n+1,question_type:type,section_key:q.section_key||null,section_title:q.section_title||null,section_instruction:q.section_instruction||null,stimulus:q.stimulus||null,visual_svg:sanitizeSvg(q.visual_svg)||null,correct_text:sh?(q.correct_text||q.accepted_answers?.[0]||""):(type==="true_false"?(q.correct_answer||q.correct_text||"T"):null),accepted_answers:sh?(q.accepted_answers||[]):[],correct_number:num?Number(q.correct_number):null,numeric_tolerance:num?Math.max(0,Number(q.numeric_tolerance)||0):0,answer_unit:num?(q.answer_unit||null):null,accepted_units:num?(q.accepted_units||[]):[],unit_required:num?!!q.unit_required:false}});
  if(mode==="replace"){const del=await s.from("quiz_questions").delete().eq("quiz_id",quizId);if(del.error)return show("Không thể xóa câu cũ: "+del.error.message)}else{const ex=await s.from("quiz_questions").select("question_order").eq("quiz_id",quizId).order("question_order",{ascending:false}).limit(1);if(ex.error)return show(ex.error.message);const st=(ex.data?.[0]?.question_order||0)+1;rows.forEach((r,n)=>r.question_order=st+n)}
- const z=await s.from("quiz_questions").insert(rows);if(z.error)return show("Lỗi lưu câu hỏi: "+z.error.message);show(mode==="replace"?`✓ Đã thay ${oldCount} câu cũ bằng ${rows.length} câu mới.`:`✓ Đã thêm ${rows.length} câu.`,true)
+ const z=await s.from("quiz_questions").insert(rows);if(z.error)return show("Lỗi lưu câu hỏi: "+z.error.message);show(mode==="replace"?`✓ Đã thay ${oldCount} câu cũ bằng ${rows.length} câu mới.`:`✓ Đã thêm ${rows.length} câu.`,true);void logTeacherAction("quiz_save",`Lưu ${rows.length} câu • ${quizName}`)
 };
 
-$("publishQuiz").onclick=async()=>{const quizId=$("quiz").value;if(!quizId)return show("Hãy chọn Quiz đích trước khi xuất bản.");const qcount=await s.from("quiz_questions").select("id",{count:"exact",head:true}).eq("quiz_id",quizId);if(qcount.error)return show("Không kiểm tra được Quiz: "+qcount.error.message);if(!(qcount.count||0))return show("Quiz chưa có câu hỏi.");const quizName=$("quiz").selectedOptions[0]?.textContent?.trim()||"Quiz";if(!confirm(`Xuất bản "${quizName}" (${qcount.count} câu)?`))return;const r=await s.from("quizzes").update({is_published:true}).eq("id",quizId);if(r.error)return show(r.error.message);show(`✓ Đã xuất bản "${quizName}".`,true);$("publishQuiz").textContent="✅ Đã xuất bản";$("publishQuiz").classList.replace("bg-orange-500","bg-emerald-600")};
+$("publishQuiz").onclick=async()=>{const quizId=$("quiz").value;if(!quizId)return show("Hãy chọn Quiz đích trước khi xuất bản.");const qcount=await s.from("quiz_questions").select("id",{count:"exact",head:true}).eq("quiz_id",quizId);if(qcount.error)return show("Không kiểm tra được Quiz: "+qcount.error.message);if(!(qcount.count||0))return show("Quiz chưa có câu hỏi.");const quizName=$("quiz").selectedOptions[0]?.textContent?.trim()||"Quiz";if(!confirm(`Xuất bản "${quizName}" (${qcount.count} câu)?`))return;const r=await s.from("quizzes").update({is_published:true}).eq("id",quizId);if(r.error)return show(r.error.message);show(`✓ Đã xuất bản "${quizName}".`,true);void logTeacherAction("quiz_publish",`Xuất bản ${quizName} • ${qcount.count} câu`);$("publishQuiz").textContent="✅ Đã xuất bản";$("publishQuiz").classList.replace("bg-orange-500","bg-emerald-600")};
 
 function downloadBlob(blob,name){const u=URL.createObjectURL(blob),a=document.createElement("a");a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),2000)}
 function selectedQuestionIndexes(){syncAll();return[...document.querySelectorAll(".pick:checked")].map(x=>+x.dataset.i)}
