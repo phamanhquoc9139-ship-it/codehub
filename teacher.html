@@ -527,6 +527,8 @@
       <p>Xem tài khoản học sinh, giáo viên và xuất danh sách tài khoản.</p>
     </div>
 
+    <div id="activityCard" class="card" style="display:none" onclick="window.location.href='activity-monitor.html'"><div class="icon">📋</div><h2>Nhật ký truy cập</h2><p>Xem ai truy cập CodeHub, môn học và bài học đã mở.</p></div>
+
     <!-- SAO LƯU & KHÔI PHỤC - CHỈ ADMIN -->
     <div id="adminSystemCard" class="card" style="display:none" onclick="window.location.href='admin-system.html'">
       <div class="icon">💾</div>
@@ -671,6 +673,8 @@ document.addEventListener(
 
       // Chỉ Admin mới thấy chức năng quản lý toàn bộ tài khoản
       if (normalizedRole === "admin") {
+        const activityCard = document.getElementById("activityCard");
+        if (activityCard) activityCard.style.display = "block";
         const adminCard = document.getElementById("adminAccountsCard");
         if (adminCard) adminCard.style.display = "block";
         const schoolsCard = document.getElementById("schoolsCard");
