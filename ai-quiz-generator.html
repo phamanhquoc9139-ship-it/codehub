@@ -595,23 +595,35 @@ function updateMathLive(card){
  const fields=[...card.querySelectorAll('textarea.q,textarea.stim,input.op,input.exp,input.txtans,input.accepted,input.unit,input.units')];
  for(const field of fields){
   let panel=field.nextElementSibling;
-  if(!panel?.classList?.contains('math-live')){panel=document.createElement('div');panel.className='math-live';field.insertAdjacentElement('afterend',panel)}
+  if(!panel?.classList?.contains('math-live')){
+   panel=document.createElement('div');panel.className='math-live';
+   field.insertAdjacentElement('afterend',panel);
+  }
   const value=field.value||'';
   const hasMath=/\$[^\$]+\$|\\\(|\\\[|\\(?:frac|sqrt|ce|times|cdot|pi|Delta|leq|geq|neq|rightarrow|text|mathrm|sum|int|alpha|beta|theta|omega)\b/.test(value);
-  panel.innerHTML=hasMath?`<div class="math-live-label">Xem trước công thức</div><div class="math-live-content">${mathPreviewText(value)}</div>`:'';
-  if(hasMath&&window.MathJax?.typesetPromise){
-   try{window.MathJax.typesetClear?.([panel]);window.MathJax.typesetPromise([panel]).catch(()=>{})}catch(e){console.warn('MathJax preview:',e)}
+  if(!hasMath){field.classList.remove('hidden');panel.classList.add('hidden');panel.innerHTML='';continue}
+  panel.classList.remove('hidden');
+  const editing=field.dataset.mathEditing==='1';
+  field.classList.toggle('hidden',!editing);
+  const display=document.createElement('div');display.className='math-live-content';display.textContent=value;
+  const button=document.createElement('button');button.type='button';button.className='ml-2 border border-blue-300 text-blue-700 rounded-lg px-2 py-1 text-xs';
+  button.textContent=editing?'✓ Xong':'✏️ Sửa công thức';
+  button.addEventListener('click',()=>{
+   if(editing){field.dataset.mathEditing='0';updateMathLive(card)}
+   else{field.dataset.mathEditing='1';updateMathLive(card);field.focus()}
+  });
+  panel.replaceChildren(display,button);
+  if(window.MathJax?.typesetPromise){
+   try{window.MathJax.typesetPromise([display]).catch(()=>{})}catch(e){console.warn('MathJax preview:',e)}
   }
  }
 }
 let mathLiveTimer;
-function setupMathLive(){
- document.querySelectorAll('#list .card').forEach(updateMathLive);
-}
+function setupMathLive(){document.querySelectorAll('#list .card').forEach(updateMathLive)}
 $('list').addEventListener('input',e=>{
  if(!e.target.matches('textarea.q,textarea.stim,input.op,input.exp,input.txtans,input.accepted,input.unit,input.units'))return;
  const card=e.target.closest('.card');clearTimeout(mathLiveTimer);
- mathLiveTimer=setTimeout(()=>updateMathLive(card),220);
+ mathLiveTimer=setTimeout(()=>updateMathLive(card),250);
 });
 function render(){
  if(!$('list').dataset.graphWired){$('list').dataset.graphWired="1";$('list').addEventListener("click",e=>{const btn=e.target.closest("[data-graph]");if(btn)addGraphToQuestion(Number(btn.dataset.graph))})}
