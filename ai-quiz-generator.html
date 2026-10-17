@@ -12,7 +12,7 @@
 <script src="scripts/supabase-config.js"></script>
 <style>.drop.drag{border-color:#7c3aed;background:#f5f3ff}.busy{opacity:.6;pointer-events:none}.stem-svg svg{max-width:100%;height:auto;display:block;margin:auto}.math-wrap mjx-container{overflow-x:auto;overflow-y:hidden;max-width:100%}.math-live{margin-top:6px;padding:9px 12px;border:1px solid #dbeafe;border-radius:10px;background:#f8fbff;font-size:14px;white-space:pre-wrap;overflow-wrap:anywhere}.math-live:empty{display:none}.math-live-label{font-size:11px;color:#64748b;font-weight:600;margin-bottom:3px}</style></head>
 <body class="bg-slate-50 text-slate-900"><main class="max-w-7xl mx-auto p-5">
-<div class="flex justify-between gap-4 mb-5"><div><h1 class="text-3xl font-bold">✨ AI Quiz Generator V3.7.36 • GRAPH + WORD MATH</h1><p class="text-slate-500">Ma trận • Đặc tả • Đề kiểm tra • Đáp án • 4 mã đề theo khối • Chấm tự động • Word .docx</p></div><a href="quizzes.html" class="border bg-white rounded-xl px-4 py-2 h-fit">← Quiz</a></div>
+<div class="flex justify-between gap-4 mb-5"><div><h1 class="text-3xl font-bold">✨ AI Quiz Generator V3.7.37 • GRAPH + WORD MATH + REFILL</h1><p class="text-slate-500">Ma trận • Đặc tả • Đề kiểm tra • Đáp án • 4 mã đề theo khối • Chấm tự động • Word .docx</p></div><a href="quizzes.html" class="border bg-white rounded-xl px-4 py-2 h-fit">← Quiz</a></div>
 <div id="msg" class="hidden mb-4 p-3 rounded-xl"></div>
 <div class="grid lg:grid-cols-4 gap-5">
 <aside class="bg-white rounded-2xl shadow p-5 space-y-3">
@@ -359,7 +359,43 @@ function allocateBatchRatios(totalBatches,totalCount,r,u,a){
 }
 
 function isStructured(){return $("generationMode").value==="structure"}
-function dedupe(arr){let out=[];for(const raw of arr||[]){const q={...raw};q.question_text=cleanQuestion(q.question_text);q.stimulus=cleanStudentText(q.stimulus);q.section_title=cleanStudentText(q.section_title);q.section_instruction=cleanStudentText(q.section_instruction);q.source_title=cleanTitle(q.source_title);q.question_type=["mcq4","true_false","short_answer","numeric"].includes(q.question_type)?q.question_type:"mcq4";q.accepted_answers=Array.isArray(q.accepted_answers)?q.accepted_answers:[];q.accepted_units=Array.isArray(q.accepted_units)?q.accepted_units:[];q.section_title=localizeSectionTitle(q.section_title);q.visual_svg=sanitizeSvg(q.visual_svg);graphFromSpec(q);const dup=isStructured()?out.some(x=>x.section_key===q.section_key&&norm(x.question_text)===norm(q.question_text)):out.some(x=>similarity(x.question_text,q.question_text)>.82);if(!dup)out.push(q)}return out}
+// V3.7.37: Compare the mathematical data as well as the Vietnamese wording.
+function mathSignature(v){
+ const raw=String(v||"").toLowerCase().replace(/\\(?:left|right|displaystyle|textstyle)/g,"")
+  .replace(/\\(?:dfrac|tfrac)/g,"\\frac").replace(/\\,/g,"")
+  .replace(/\\(?:infty|sqrt|frac|lim|to|mathbb|pi|sin|cos|tan|log|ln)/g,m=>m.slice(1))
+  .replace(/\s+/g,"");
+ // Retain numbers, variables, exponents, operators, LaTeX groups and punctuation.
+ return raw.replace(/[^0-9a-z^_+*/=(){}\[\].,;:<>|−-]/g,"");
+}
+function duplicateQuestion(a,b){
+ if(a.question_type!==b.question_type)return false;
+ if(isStructured()&&a.section_key!==b.section_key)return false;
+ const x=String(a.question_text||"")+" "+String(a.stimulus||"");
+ const y=String(b.question_text||"")+" "+String(b.stimulus||"");
+ if(x.trim()===y.trim())return true;
+ // Only fuzzy-deduplicate if ALL mathematical symbols and numbers are identical.
+ const mathTokens=v=>[...String(v).matchAll(/\\[a-zA-Z]+|[0-9]+(?:[.,][0-9]+)?|[a-zA-Z](?:\s*\^\s*\{?[-+0-9a-zA-Z]+\}?)?|[+*/=<>−-]/g)].map(m=>m[0].replace(/\s+/g,"")).join("|");
+ if(mathTokens(x)!==mathTokens(y))return false;
+ return similarity(x,y)>.94;
+}
+function dedupeWithStats(arr){
+ const out=[];let duplicates=0,invalid=0;
+ for(const raw of arr||[]){
+  if(!raw||typeof raw.question_text!=="string"||!raw.question_text.trim()){invalid++;continue}
+  const q={...raw};q.question_text=cleanQuestion(q.question_text);q.stimulus=cleanStudentText(q.stimulus);
+  q.section_title=localizeSectionTitle(cleanStudentText(q.section_title));q.section_instruction=cleanStudentText(q.section_instruction);
+  q.source_title=cleanTitle(q.source_title);
+  q.question_type=["mcq4","true_false","short_answer","numeric"].includes(q.question_type)?q.question_type:"mcq4";
+  q.accepted_answers=Array.isArray(q.accepted_answers)?q.accepted_answers:[];
+  q.accepted_units=Array.isArray(q.accepted_units)?q.accepted_units:[];
+  q.visual_svg=sanitizeSvg(q.visual_svg);graphFromSpec(q);
+  if(out.some(x=>duplicateQuestion(x,q))){duplicates++;continue}
+  out.push(q);
+ }
+ return {items:out,duplicates,invalid};
+}
+function dedupe(arr){return dedupeWithStats(arr).items}
 
 async function init(){
  me=(await s.auth.getUser()).data.user;
@@ -603,9 +639,41 @@ $("generate").onclick=async()=>{
       if(!success)throw lastErr||Error(`Không tạo được lượt ${i+1}.`);
     }
 
-    generated=dedupe(all).slice(0,total);
-    if(generated.length<total)show(`Đã tạo ${generated.length}/${total} câu sau khi loại câu trùng. Có thể bấm Tạo câu hỏi lại nếu cần bổ sung.`);
-    else show(`✓ Hoàn tất ${generated.length}/${total} câu. Đã ghép ${batches.length} lượt nhỏ để giảm tải máy chủ.`,true);
+    // Refill only after filtering; never silently lower the requested count.
+    let filtered=dedupeWithStats(all);
+    let refillCalls=0,refillErrors=[];
+    const maxRefillCalls=3;
+    while(filtered.items.length<total&&refillCalls<maxRefillCalls){
+      refillCalls++;
+      const missing=total-filtered.items.length;
+      const refillCount=Math.min(10,missing);
+      show(`Đã giữ ${filtered.items.length}/${total} câu • trùng ${filtered.duplicates} • không hợp lệ ${filtered.invalid}. Đang tạo bù lượt ${refillCalls}/${maxRefillCalls} (${refillCount} câu)...`,true);
+      const refillPayload={
+        mode:"generate",courseTitle:selectedCourseBase(),language:$("language").value,
+        generationMode:isStructured()?"structure":"free",lessonIds,extraText,fileSources,
+        count:refillCount,ratios:{remember:r,understand:u,apply:a},
+        questionTypes:selectedTypes,allowVisuals:$("allowVisuals").checked,
+        structure:isStructured()?missingStructure(activeStructure,filtered.items):null,
+        excludeQuestions:filtered.items.map(q=>q.question_text).slice(-60)
+      };
+      if(isStructured()&&!refillPayload.structure)break;
+      try{
+        const response=await Promise.race([
+          s.functions.invoke(AI_FUNCTION,{body:refillPayload}),
+          new Promise((_,reject)=>setTimeout(()=>reject(Error("Tạo bù quá thời gian 90 giây")),90000))
+        ]);
+        if(response.error)throw Error(response.error.message||"Lỗi tạo bù");
+        if(response.data?.success===false)throw Error(response.data.error||"AI từ chối tạo bù");
+        const extra=Array.isArray(response.data?.questions)?response.data.questions:[];
+        if(!extra.length){refillErrors.push(`Lượt ${refillCalls}: AI trả về 0 câu`);continue}
+        all.push(...extra);
+        filtered=dedupeWithStats(all);
+      }catch(err){refillErrors.push(`Lượt ${refillCalls}: ${err.message||err}`)}
+    }
+    generated=filtered.items.slice(0,total);
+    const details=`AI trả về ${all.length} • trùng ${filtered.duplicates} • không hợp lệ ${filtered.invalid} • tạo bù ${refillCalls} lượt`;
+    if(generated.length<total)show(`Đã giữ ${generated.length}/${total} câu. ${details}.${refillErrors.length?" Lỗi: "+refillErrors.join("; "):""}`);
+    else show(`✓ Đủ ${total}/${total} câu. ${details}.`,true);
     render();
   }catch(e){
     show(e?.name==="AbortError"?"AI chưa phản hồi trong thời gian cho phép ở một lượt nhỏ. Hãy thử lại.":(e.message||String(e)));
