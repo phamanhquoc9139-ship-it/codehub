@@ -42,6 +42,17 @@
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
+
+/* CodeHub Neural 3D — independent visual; does not affect authentication or courses */
+.codehub-neural-panel{position:relative;min-height:370px;overflow:hidden;isolation:isolate;background:radial-gradient(ellipse at 50% 46%,#263b83 0%,#171b46 42%,#0a1027 100%);cursor:crosshair}
+.codehub-neural-panel:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 75% 22%,rgba(132,82,255,.24),transparent 40%),radial-gradient(circle at 22% 78%,rgba(25,212,242,.15),transparent 43%);pointer-events:none}
+#codehub-neural-canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.codehub-neural-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;pointer-events:none;text-align:center;text-shadow:0 0 25px #06122e;z-index:1}
+.codehub-neural-mark{font-weight:900;font-size:clamp(26px,3.5vw,47px);line-height:1;color:#b9f9ff;text-shadow:0 0 22px #11d6ee}
+.codehub-neural-name{font-size:clamp(20px,2.8vw,36px);letter-spacing:.18em;font-weight:900;color:white;text-shadow:0 0 22px #67d9ff,0 2px 6px #101637}
+.codehub-neural-sub{font-size:10px;letter-spacing:.24em;color:#b5c5f9;margin-top:6px}
+@media(min-width:1024px){.codehub-neural-panel{min-height:100%}}
+@media(prefers-reduced-motion:reduce){.codehub-neural-panel{cursor:default}}
     </style>
 </head>
 
@@ -124,16 +135,9 @@
                 </main>
             </div>
         </div>
-        <div
-            class="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2 bg-gray-50 dark:bg-gray-800 flex items-center justify-center">
-            <!-- Simple illustration placeholder -->
-            <div class="p-8">
-                <svg class="w-full h-full text-blue-200 dark:text-gray-700" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd"
-                        d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z"
-                        clip-rule="evenodd" />
-                </svg>
-            </div>
+        <div class="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2 codehub-neural-panel" aria-label="Mạng neuron CodeHub chuyển động 3D">
+            <canvas id="codehub-neural-canvas" aria-hidden="true"></canvas>
+            <div class="codehub-neural-center" aria-hidden="true"><span class="codehub-neural-mark">&lt;/&gt;</span><span class="codehub-neural-name">CODEHUB</span><span class="codehub-neural-sub">LEARN · CODE · CREATE</span></div>
         </div>
     </div>
 
@@ -4029,6 +4033,51 @@
         });
       }
     </script>
+
+<script>
+/* Lightweight canvas animation; no external dependencies or network requests. */
+(function(){
+  const canvas=document.getElementById('codehub-neural-canvas');
+  if(!canvas)return;
+  const ctx=canvas.getContext('2d');if(!ctx)return;
+  const panel=canvas.parentElement;
+  const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
+  const nodes=[]; const edges=[];
+  // Three connected layers of neurons arranged in a spatial diamond.
+  const layers=[[-1.25,5],[-.43,6],[.43,6],[1.25,5]];
+  layers.forEach(([x,n],li)=>{for(let i=0;i<n;i++){
+    const angle=i*Math.PI*2/n+(li%2)*.25;
+    nodes.push({x:x*.95,y:Math.cos(angle)*.98,z:Math.sin(angle)*.9,layer:li});
+  }});
+  nodes.forEach((a,i)=>nodes.forEach((b,j)=>{if(j>i&&b.layer===a.layer+1&&(i+j)%3!==0)edges.push([i,j]);}));
+  let w=0,h=0,dpr=1,mouseX=0,mouseY=0,frame=0,raf=0,visible=true;
+  function resize(){const r=panel.getBoundingClientRect();w=r.width;h=r.height;dpr=Math.min(window.devicePixelRatio||1,2);canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);}
+  function draw(t){if(!visible)return;ctx.clearRect(0,0,w,h);
+    const time=reduced.matches?0:t*.00025;
+    const ay=time+mouseX*.36, ax=-.17+Math.sin(time*.65)*.18+mouseY*.28;
+    const scale=Math.min(w*.205,h*.31);
+    const projected=nodes.map(p=>{
+      let x=p.x*Math.cos(ay)-p.z*Math.sin(ay), z=p.x*Math.sin(ay)+p.z*Math.cos(ay);
+      let y=p.y*Math.cos(ax)-z*Math.sin(ax);z=p.y*Math.sin(ax)+z*Math.cos(ax);
+      const persp=3.8/(3.8+z*.30);
+      return {x:w*.5+x*scale*persp,y:h*.5+y*scale*persp,z,r:(4.5+(z+2)*1.2)*Math.max(.8,Math.min(1.2,persp))};
+    });
+    // Subtle stars in the background.
+    for(let i=0;i<34;i++){let sx=((i*137.31)%101)/101*w,sy=((i*79.71)%97)/97*h;ctx.fillStyle='rgba(161,191,255,.28)';ctx.beginPath();ctx.arc(sx,sy,i%5===0?1.3:.65,0,Math.PI*2);ctx.fill();}
+    edges.forEach(([a,b],idx)=>{const A=projected[a],B=projected[b];ctx.beginPath();ctx.moveTo(A.x,A.y);ctx.lineTo(B.x,B.y);ctx.strokeStyle=idx%3===0?'rgba(44,224,248,.31)':'rgba(166,121,255,.30)';ctx.lineWidth=1.25;ctx.stroke();
+      if(!reduced.matches){const f=(time*1.3+idx*.173)%1;const x=A.x+(B.x-A.x)*f,y=A.y+(B.y-A.y)*f;ctx.beginPath();ctx.fillStyle='#9afaff';ctx.shadowColor='#2eeaff';ctx.shadowBlur=13;ctx.arc(x,y,1.8,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0;}
+    });
+    projected.forEach((p,i)=>{const cyan=i%4===0||i%4===3;ctx.beginPath();ctx.fillStyle=cyan?'#50eaff':'#b18aff';ctx.shadowColor=cyan?'#17dfff':'#8d55ff';ctx.shadowBlur=19;ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0;ctx.beginPath();ctx.fillStyle='rgba(255,255,255,.7)';ctx.arc(p.x-p.r*.2,p.y-p.r*.2,p.r*.33,0,Math.PI*2);ctx.fill();});
+    if(!reduced.matches)raf=requestAnimationFrame(draw);
+  }
+  function start(){cancelAnimationFrame(raf);resize();raf=requestAnimationFrame(draw);}
+  panel.addEventListener('pointermove',e=>{const r=panel.getBoundingClientRect();mouseX=(e.clientX-r.left)/r.width-.5;mouseY=(e.clientY-r.top)/r.height-.5;});
+  panel.addEventListener('pointerleave',()=>{mouseX=0;mouseY=0;});
+  if('ResizeObserver'in window)new ResizeObserver(start).observe(panel);else window.addEventListener('resize',start);
+  document.addEventListener('visibilitychange',()=>{visible=!document.hidden;if(visible)start();else cancelAnimationFrame(raf);});
+  reduced.addEventListener?.('change',start);start();
+})();
+</script>
 </body>
 
 </html>
