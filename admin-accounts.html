@@ -27,7 +27,15 @@ const $=x=>document.getElementById(x), FN="https://drfcejvmyhzorwepndta.supabase
 const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 async function session(){const {data:{session}}=await window.supabaseClient.auth.getSession();if(!session){location.href="login.html";throw 0}return session}
 async function api(method,body){let s=await session();let r=await fetch(FN,{method,headers:{Authorization:`Bearer ${s.access_token}`,"Content-Type":"application/json"},body:body?JSON.stringify(body):undefined});let j=await r.json().catch(()=>({}));if(!r.ok)throw Error(j.error||j.message||`HTTP ${r.status}`);return j}
-function filt(){let q=$("search").value.toLowerCase(),r=$("role").value;return accounts.filter(x=>(!r||x.role===r)&&(!q||[x.full_name,x.email,x.student_code,x.class_name,(x.subjects||[]).join(" ")].join(" ").toLowerCase().includes(q)))}
+function filt(){
+ const q=$("search").value.toLocaleLowerCase("vi").trim(),r=$("role").value;
+ const priority={admin:0,teacher:1,student:2};
+ return accounts.filter(x=>(!r||x.role===r)&&(!q||[x.full_name,x.email,x.student_code,x.class_name,(x.subjects||[]).join(" ")].join(" ").toLocaleLowerCase("vi").includes(q)))
+  .sort((a,b)=>{
+   const roleDiff=(priority[a.role]??99)-(priority[b.role]??99);
+   return roleDiff||String(a.full_name||"").localeCompare(String(b.full_name||""),"vi",{sensitivity:"base"})||String(a.student_code||"").localeCompare(String(b.student_code||""),"vi",{numeric:true});
+  });
+}
 function render(){let a=filt();$("rows").innerHTML=a.map((x,i)=>`<tr><td>${i+1}</td><td><b>${esc(x.full_name||"—")}</b></td><td>${esc(x.email||"—")}</td><td>${esc(x.student_code||"—")}</td><td>${esc(x.class_name||"—")}</td><td>${esc((x.subjects||[]).join(", ")||"—")}</td><td><span class="badge ${esc(x.role)}">${x.role==="admin"?"Admin":x.role==="teacher"?"Giáo viên":"Học sinh"}</span></td><td>${x.role==="teacher"?`<button class="btn assign" onclick="openAssign('${x.id}')">🏫 Phân lớp</button> <button class="btn orange" onclick="resetPwd('${x.id}')">Đặt MK</button> <button class="btn red" onclick="delTeacher('${x.id}','${esc(x.full_name)}')">Xóa</button>`:"—"}</td></tr>`).join("")||'<tr><td colspan="8">Không có dữ liệu.</td></tr>';$("total").textContent=accounts.length;$("teachers").textContent=accounts.filter(x=>x.role==="teacher").length;$("students").textContent=accounts.filter(x=>x.role==="student").length}
 async function load(){try{let j=await api("GET");accounts=j.accounts||j.users||j.data||[];subjects=j.subjects||[];render();$("subjects").innerHTML=subjects.length?subjects.map(s=>`<label class="subject"><input type="checkbox" value="${esc(s.id)}"> ${esc(s.subject_name)}</label>`).join(""):"Chưa có môn học."}catch(e){$("msg").textContent="Lỗi: "+e.message}}
 async function openAssign(id){try{
