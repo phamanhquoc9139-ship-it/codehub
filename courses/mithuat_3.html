@@ -1,0 +1,2094 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Khóa Học Mĩ Thuật Lớp 3 - Kết Nối Tri Thức | CodeHub</title>
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            dark: {
+              bg: '#0A0B14',
+              surface: '#121422',
+              card: '#1B1E34'
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <meta name="codehub-activity-name" content="Khóa Học Mĩ Thuật Lớp 3">
+
+  <style>
+    .sidebar-scroll::-webkit-scrollbar { width: 4px; }
+    .sidebar-scroll::-webkit-scrollbar-thumb { background: #ec4899; border-radius: 4px; }
+    .art-hero-bg {
+      background: radial-gradient(circle at 10% 20%, rgba(236, 72, 153, 0.15) 0%, transparent 40%),
+                  radial-gradient(circle at 90% 80%, rgba(168, 85, 247, 0.15) 0%, transparent 40%);
+    }
+    .color-swatch {
+      transition: all 0.2s ease;
+    }
+    .color-swatch:hover {
+      transform: scale(1.08);
+    }
+  </style>
+</head>
+<body class="bg-gray-50 dark:bg-dark-bg text-gray-800 dark:text-gray-100 font-sans min-h-screen flex flex-col transition-colors duration-200">
+
+  <!-- Mobile Drawer Backdrop -->
+  <div id="drawer-backdrop" onclick="toggleDrawer()" class="fixed inset-0 bg-black/50 z-40 hidden lg:hidden backdrop-blur-sm transition-opacity"></div>
+
+  <!-- Mobile Drawer Navigation -->
+  <div id="mobile-drawer" class="fixed top-0 left-0 bottom-0 w-80 bg-white dark:bg-dark-surface z-50 transform -translate-x-full transition-transform duration-300 ease-in-out lg:hidden flex flex-col p-6 shadow-2xl border-r border-gray-100 dark:border-gray-800">
+    <div class="flex items-center justify-between pb-4 border-b border-gray-100 dark:border-gray-800">
+      <div class="flex items-center gap-2 text-pink-600 font-bold text-lg">
+        <i class="fa-solid fa-palette text-2xl"></i>
+        <span>Mĩ Thuật Lớp 3 (KNTT)</span>
+      </div>
+      <button onclick="toggleDrawer()" class="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+    </div>
+    <div class="mt-4 flex-1 overflow-y-auto space-y-1 sidebar-scroll pr-1">
+      <a href="#overview-section" onclick="toggleDrawer()" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-pink-50 dark:hover:bg-pink-950/40 text-gray-700 dark:text-gray-300 font-medium text-sm">
+        <i class="fa-solid fa-table-cells text-pink-500 w-5"></i> Bảng tổng hợp cốt lõi
+      </a>
+      <a href="#foundation-section" onclick="toggleDrawer()" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-pink-50 dark:hover:bg-pink-950/40 text-gray-700 dark:text-gray-300 text-sm">
+        <i class="fa-solid fa-cubes text-pink-500 w-5"></i> Kiến thức & kĩ năng nền tảng
+      </a>
+      <a href="#evaluation-section" onclick="toggleDrawer()" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-pink-50 dark:hover:bg-pink-950/40 text-gray-700 dark:text-gray-300 text-sm">
+        <i class="fa-solid fa-award text-pink-500 w-5"></i> 4 Tiêu chí đánh giá
+      </a>
+      <div class="pt-2 pb-1 text-[11px] font-bold uppercase tracking-wider text-gray-400">10 Chủ Đề SGK</div>
+      <a href="#theme-1" onclick="toggleDrawer()" class="flex items-center gap-2.5 px-3 py-1.5 rounded-xl hover:bg-pink-50 dark:hover:bg-pink-950/40 text-gray-700 dark:text-gray-300 text-xs">
+        <span class="w-5 h-5 rounded-md bg-pink-100 dark:bg-pink-900/40 text-pink-600 dark:text-pink-400 flex items-center justify-center font-bold text-[10px]">01</span>
+        <span>1. Em yêu Mĩ thuật</span>
+      </a>
+      <a href="#theme-2" onclick="toggleDrawer()" class="flex items-center gap-2.5 px-3 py-1.5 rounded-xl hover:bg-pink-50 dark:hover:bg-pink-950/40 text-gray-700 dark:text-gray-300 text-xs">
+        <span class="w-5 h-5 rounded-md bg-pink-100 dark:bg-pink-900/40 text-pink-600 dark:text-pink-400 flex items-center justify-center font-bold text-[10px]">02</span>
+        <span>2. Hoa văn trang phục dân tộc</span>
+      </a>
+      <a href="#theme-3" onclick="toggleDrawer()" class="flex items-center gap-2.5 px-3 py-1.5 rounded-xl hover:bg-pink-50 dark:hover:bg-pink-950/40 text-gray-700 dark:text-gray-300 text-xs">
+        <span class="w-5 h-5 rounded-md bg-pink-100 dark:bg-pink-900/40 text-pink-600 dark:text-pink-400 flex items-center justify-center font-bold text-[10px]">03</span>
+        <span>3. Màu sắc em yêu</span>
+      </a>
+      <a href="#theme-4" onclick="toggleDrawer()" class="flex items-center gap-2.5 px-3 py-1.5 rounded-xl hover:bg-pink-50 dark:hover:bg-pink-950/40 text-gray-700 dark:text-gray-300 text-xs">
+        <span class="w-5 h-5 rounded-md bg-pink-100 dark:bg-pink-900/40 text-pink-600 dark:text-pink-400 flex items-center justify-center font-bold text-[10px]">04</span>
+        <span>4. Vẻ đẹp của khối</span>
+      </a>
+      <a href="#theme-5" onclick="toggleDrawer()" class="flex items-center gap-2.5 px-3 py-1.5 rounded-xl hover:bg-pink-50 dark:hover:bg-pink-950/40 text-gray-700 dark:text-gray-300 text-xs">
+        <span class="w-5 h-5 rounded-md bg-pink-100 dark:bg-pink-900/40 text-pink-600 dark:text-pink-400 flex items-center justify-center font-bold text-[10px]">05</span>
+        <span>5. Vật liệu trong sáng tạo</span>
+      </a>
+      <a href="#theme-6" onclick="toggleDrawer()" class="flex items-center gap-2.5 px-3 py-1.5 rounded-xl hover:bg-pink-50 dark:hover:bg-pink-950/40 text-gray-700 dark:text-gray-300 text-xs">
+        <span class="w-5 h-5 rounded-md bg-pink-100 dark:bg-pink-900/40 text-pink-600 dark:text-pink-400 flex items-center justify-center font-bold text-[10px]">06</span>
+        <span>6. Biết ơn thầy cô</span>
+      </a>
+      <a href="#theme-7" onclick="toggleDrawer()" class="flex items-center gap-2.5 px-3 py-1.5 rounded-xl hover:bg-pink-50 dark:hover:bg-pink-950/40 text-gray-700 dark:text-gray-300 text-xs">
+        <span class="w-5 h-5 rounded-md bg-pink-100 dark:bg-pink-900/40 text-pink-600 dark:text-pink-400 flex items-center justify-center font-bold text-[10px]">07</span>
+        <span>7. Cảnh vật quanh em</span>
+      </a>
+      <a href="#theme-8" onclick="toggleDrawer()" class="flex items-center gap-2.5 px-3 py-1.5 rounded-xl hover:bg-pink-50 dark:hover:bg-pink-950/40 text-gray-700 dark:text-gray-300 text-xs">
+        <span class="w-5 h-5 rounded-md bg-pink-100 dark:bg-pink-900/40 text-pink-600 dark:text-pink-400 flex items-center justify-center font-bold text-[10px]">08</span>
+        <span>8. Chân dung người thân</span>
+      </a>
+      <a href="#theme-9" onclick="toggleDrawer()" class="flex items-center gap-2.5 px-3 py-1.5 rounded-xl hover:bg-pink-50 dark:hover:bg-pink-950/40 text-gray-700 dark:text-gray-300 text-xs">
+        <span class="w-5 h-5 rounded-md bg-pink-100 dark:bg-pink-900/40 text-pink-600 dark:text-pink-400 flex items-center justify-center font-bold text-[10px]">09</span>
+        <span>9. Sinh hoạt trong gia đình</span>
+      </a>
+      <a href="#theme-10" onclick="toggleDrawer()" class="flex items-center gap-2.5 px-3 py-1.5 rounded-xl hover:bg-pink-50 dark:hover:bg-pink-950/40 text-gray-700 dark:text-gray-300 text-xs">
+        <span class="w-5 h-5 rounded-md bg-pink-100 dark:bg-pink-900/40 text-pink-600 dark:text-pink-400 flex items-center justify-center font-bold text-[10px]">10</span>
+        <span>10. An toàn giao thông</span>
+      </a>
+    </div>
+    <div class="pt-4 border-t border-gray-100 dark:border-gray-800 space-y-2">
+      <button onclick="openCertificationModal(); toggleDrawer();" class="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-gradient-to-r from-pink-500 to-purple-600 text-white font-bold text-sm shadow-md shadow-pink-500/20">
+        <i class="fa-solid fa-award"></i> Thi Trạng Nguyên Mĩ Thuật
+      </button>
+      <a href="../index.html" class="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 font-semibold text-sm hover:bg-gray-50 dark:hover:bg-gray-800">
+        <i class="fa-solid fa-house"></i> Về trang chủ
+      </a>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="sticky top-0 z-40 bg-white/95 dark:bg-dark-surface/95 backdrop-blur border-b border-gray-200 dark:border-gray-800 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      
+      <!-- Logo & Breadcrumb -->
+      <div class="flex items-center gap-3">
+        <a href="../index.html" class="p-2 rounded-xl text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" title="Trở về Trang chủ">
+          <i class="fa-solid fa-arrow-left text-base"></i>
+        </a>
+        <a href="../index.html" class="flex items-center gap-2 text-pink-600 dark:text-pink-400 font-bold text-lg">
+          <i class="fa-solid fa-graduation-cap text-xl"></i>
+          <span class="tracking-tight">CodeHub</span>
+        </a>
+        <span class="hidden sm:inline-block text-gray-300 dark:text-gray-700">|</span>
+        <span class="hidden sm:inline-block text-xs font-semibold px-2.5 py-1 rounded-full bg-pink-100 dark:bg-pink-950/60 text-pink-800 dark:text-pink-300">
+          Mĩ Thuật Lớp 3 (KNTT - GDPT 2018)
+        </span>
+      </div>
+
+      <!-- Quick Action Buttons -->
+      <div class="flex items-center gap-2">
+        <a href="tienganh_3.html" class="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-indigo-600 dark:text-indigo-400 font-semibold text-xs transition-colors shadow-sm"><i class="fa-solid fa-language"></i><span>Tiếng Anh 3</span></a>
+        <a href="mithuat_2.html" class="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-pink-600 dark:text-pink-400 font-semibold text-xs transition-colors shadow-sm">
+          <i class="fa-solid fa-palette"></i>
+          <span>Mĩ Thuật 2</span>
+        </a>
+        <a href="hdtn_3.html" class="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-amber-600 dark:text-amber-400 font-semibold text-xs transition-colors shadow-sm">
+          <i class="fa-solid fa-shapes"></i>
+          <span>HĐTN 3</span>
+        </a>
+        <a href="daoduc_3.html" class="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-rose-600 dark:text-rose-400 font-semibold text-xs transition-colors shadow-sm">
+          <i class="fa-solid fa-heart"></i>
+          <span>Đạo Đức 3</span>
+        </a>
+        <a href="gdtc_3.html" class="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-emerald-600 dark:text-emerald-400 font-semibold text-xs transition-colors shadow-sm">
+          <i class="fa-solid fa-person-running"></i>
+          <span>GDTC 3</span>
+        </a>
+        <a href="grade_3.html" class="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-purple-600 dark:text-purple-400 font-semibold text-xs transition-colors shadow-sm">
+          <i class="fa-solid fa-graduation-cap"></i>
+          <span>Lớp 3 Hub</span>
+        </a>
+        <button onclick="openCertificationModal()" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-pink-600 hover:bg-pink-700 text-white font-semibold text-xs transition-colors shadow-sm">
+          <i class="fa-solid fa-award"></i>
+          <span>Khảo sát toàn khóa (10 câu)</span>
+        </button>
+
+        <!-- Theme Toggle -->
+        <button id="theme-toggle" class="p-2 rounded-xl text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" title="Chuyển chế độ Sáng / Tối">
+          <i id="theme-icon" class="fa-solid fa-moon dark:hidden text-sm"></i>
+          <i class="fa-solid fa-sun hidden dark:block text-amber-400 text-sm"></i>
+        </button>
+
+        <!-- Mobile Drawer Toggle -->
+        <button onclick="toggleDrawer()" class="lg:hidden p-2 rounded-xl text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+          <i class="fa-solid fa-bars text-lg"></i>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="art-hero-bg border-b border-gray-200/80 dark:border-gray-800/80 py-10 sm:py-14">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-8">
+        
+        <div class="space-y-4 max-w-2xl text-center md:text-left">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-pink-100 dark:bg-pink-950/70 text-pink-800 dark:text-pink-300 text-xs font-semibold">
+            <i class="fa-solid fa-palette text-pink-500"></i>
+            <span>Bộ Sách Kết Nối Tri Thức Với Cuộc Sống • GDPT 2018</span>
+          </div>
+          
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black text-gray-900 dark:text-white tracking-tight leading-tight">
+            Khóa Học <span class="bg-gradient-to-r from-pink-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent">Mĩ Thuật Lớp 3</span>
+          </h1>
+          
+          <p class="text-gray-600 dark:text-gray-300 text-sm sm:text-base leading-relaxed">
+            Hành trình sáng tạo nghệ thuật đầy màu sắc: Khám phá mĩ thuật 2D & 3D, hoa văn trang phục dân tộc, pha chế màu thứ cấp, cảm nhận vẻ đẹp của khối, phối hợp vật liệu tự nhiên, vẽ tranh chân dung người thân, phong cảnh quê hương và tuyên truyền an toàn giao thông.
+          </p>
+
+          <!-- 4-Step Experiential Process Chain -->
+          <div class="pt-2">
+            <span class="text-xs font-bold uppercase tracking-wider text-gray-400 dark:text-gray-500 block mb-2">
+              <i class="fa-solid fa-rotate text-pink-500 mr-1"></i> Quy trình hoạt động mĩ thuật chuẩn SGK:
+            </span>
+            <div class="flex flex-wrap items-center justify-center md:justify-start gap-1.5 sm:gap-2 text-[11px] sm:text-xs font-bold">
+              <span class="px-3 py-1.5 rounded-lg bg-white dark:bg-dark-card border border-pink-200 dark:border-pink-800/60 text-pink-700 dark:text-pink-300 shadow-sm flex items-center gap-1.5">
+                <i class="fa-solid fa-eye text-pink-500"></i> 1. Quan sát
+              </span>
+              <i class="fa-solid fa-angle-right text-gray-400 text-[10px]"></i>
+              <span class="px-3 py-1.5 rounded-lg bg-white dark:bg-dark-card border border-purple-200 dark:border-purple-800/60 text-purple-700 dark:text-purple-300 shadow-sm flex items-center gap-1.5">
+                <i class="fa-solid fa-paintbrush text-purple-500"></i> 2. Thể hiện
+              </span>
+              <i class="fa-solid fa-angle-right text-gray-400 text-[10px]"></i>
+              <span class="px-3 py-1.5 rounded-lg bg-white dark:bg-dark-card border border-blue-200 dark:border-blue-800/60 text-blue-700 dark:text-blue-300 shadow-sm flex items-center gap-1.5">
+                <i class="fa-solid fa-comments text-blue-500"></i> 3. Thảo luận
+              </span>
+              <i class="fa-solid fa-angle-right text-gray-400 text-[10px]"></i>
+              <span class="px-3 py-1.5 rounded-lg bg-white dark:bg-dark-card border border-emerald-200 dark:border-emerald-800/60 text-emerald-700 dark:text-emerald-300 shadow-sm flex items-center gap-1.5">
+                <i class="fa-solid fa-wand-magic-sparkles text-emerald-500"></i> 4. Vận dụng
+              </span>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap items-center justify-center md:justify-start gap-4 pt-2">
+            <a href="#overview-section" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-bold text-sm shadow-md shadow-pink-500/25 transition">
+              <i class="fa-solid fa-table-list mr-1.5"></i> Bảng 10 Chủ đề cốt lõi
+            </a>
+            <button onclick="openCertificationModal()" class="px-5 py-2.5 rounded-xl bg-white dark:bg-dark-surface hover:bg-gray-100 dark:hover:bg-dark-card border border-gray-200 dark:border-gray-700 text-gray-800 dark:text-white font-bold text-sm shadow-sm transition">
+              <i class="fa-solid fa-award text-pink-500 mr-1.5"></i> Thi Trạng Nguyên Mĩ Thuật
+            </button>
+          </div>
+        </div>
+
+        <!-- Quick Stats Cards Grid -->
+        <div class="grid grid-cols-2 gap-3.5 w-full md:w-auto shrink-0 max-w-sm">
+          <div class="p-4 rounded-2xl bg-white dark:bg-dark-surface border border-gray-100 dark:border-gray-800 shadow-sm">
+            <div class="text-pink-500 text-2xl font-black mb-1 flex items-center gap-2">
+              <i class="fa-solid fa-book-open text-xl"></i> 10 Chủ đề
+            </div>
+            <div class="text-xs text-gray-500 dark:text-gray-400 font-medium">Bao quát từ trang 5 đến 63 SGK</div>
+          </div>
+          <div class="p-4 rounded-2xl bg-white dark:bg-dark-surface border border-gray-100 dark:border-gray-800 shadow-sm">
+            <div class="text-purple-500 text-2xl font-black mb-1 flex items-center gap-2">
+              <i class="fa-solid fa-swatchbook text-xl"></i> Màu thứ cấp
+            </div>
+            <div class="text-xs text-gray-500 dark:text-gray-400 font-medium">3 màu cơ bản & 3 màu thứ cấp (Cam, Tím, Lục)</div>
+          </div>
+          <div class="p-4 rounded-2xl bg-white dark:bg-dark-surface border border-gray-100 dark:border-gray-800 shadow-sm">
+            <div class="text-emerald-500 text-2xl font-black mb-1 flex items-center gap-2">
+              <i class="fa-solid fa-shapes text-xl"></i> 2D & 3D
+            </div>
+            <div class="text-xs text-gray-500 dark:text-gray-400 font-medium">Khối cứng, mềm, rỗng, đặc, tĩnh & động</div>
+          </div>
+          <div class="p-4 rounded-2xl bg-white dark:bg-dark-surface border border-gray-100 dark:border-gray-800 shadow-sm">
+            <div class="text-indigo-500 text-2xl font-black mb-1 flex items-center gap-2">
+              <i class="fa-solid fa-check-circle text-xl"></i> 4 Tiêu chí
+            </div>
+            <div class="text-xs text-gray-500 dark:text-gray-400 font-medium">Nhận thức, sáng tạo, phân tích & thái độ</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content Layout -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+      
+      <!-- Desktop Sticky Sidebar Navigation -->
+      <aside class="hidden lg:block lg:col-span-1">
+        <div class="sticky top-24 bg-white dark:bg-dark-surface rounded-3xl p-5 shadow-sm border border-gray-100 dark:border-gray-800 space-y-4">
+          <div class="flex items-center justify-between pb-3 border-b border-gray-100 dark:border-gray-800">
+            <span class="font-bold text-gray-900 dark:text-white text-sm uppercase tracking-wider flex items-center gap-2">
+              <i class="fa-solid fa-palette text-pink-500"></i> Mục Lục 10 Chủ Đề
+            </span>
+            <span class="text-[11px] font-bold text-pink-600 bg-pink-50 dark:bg-pink-950/40 px-2 py-0.5 rounded-lg">KNTT 3</span>
+          </div>
+
+          <!-- Navigation Links -->
+          <div class="space-y-1 overflow-y-auto max-h-[calc(100vh-280px)] pr-1 sidebar-scroll">
+            <a href="#overview-section" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-pink-50 dark:hover:bg-pink-950/40 text-gray-700 dark:text-gray-300 font-semibold text-xs transition">
+              <i class="fa-solid fa-table-cells text-pink-500 w-5"></i> Bảng tổng hợp cốt lõi
+            </a>
+            <a href="#foundation-section" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-pink-50 dark:hover:bg-pink-950/40 text-gray-700 dark:text-gray-300 font-semibold text-xs transition">
+              <i class="fa-solid fa-cubes text-pink-500 w-5"></i> Kiến thức & kĩ năng nền
+            </a>
+            <a href="#evaluation-section" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-pink-50 dark:hover:bg-pink-950/40 text-gray-700 dark:text-gray-300 font-semibold text-xs transition">
+              <i class="fa-solid fa-award text-pink-500 w-5"></i> 4 Tiêu chí đánh giá
+            </a>
+            
+            <div class="pt-2 pb-1 text-[11px] font-bold uppercase tracking-wider text-gray-400">10 Chủ đề chi tiết</div>
+            <a href="#theme-1" class="flex items-center gap-2.5 px-3 py-1.5 rounded-xl hover:bg-pink-50 dark:hover:bg-pink-950/40 text-gray-700 dark:text-gray-300 hover:text-pink-600 text-xs font-medium transition group">
+              <span class="w-5 h-5 rounded-md bg-pink-100 dark:bg-pink-900/40 text-pink-600 dark:text-pink-400 flex items-center justify-center font-bold text-[10px] group-hover:bg-pink-600 group-hover:text-white transition">01</span>
+              <span class="truncate">1. Em yêu Mĩ thuật</span>
+            </a>
+            <a href="#theme-2" class="flex items-center gap-2.5 px-3 py-1.5 rounded-xl hover:bg-pink-50 dark:hover:bg-pink-950/40 text-gray-700 dark:text-gray-300 hover:text-pink-600 text-xs font-medium transition group">
+              <span class="w-5 h-5 rounded-md bg-pink-100 dark:bg-pink-900/40 text-pink-600 dark:text-pink-400 flex items-center justify-center font-bold text-[10px] group-hover:bg-pink-600 group-hover:text-white transition">02</span>
+              <span class="truncate">2. Hoa văn trang phục dân tộc</span>
+            </a>
+            <a href="#theme-3" class="flex items-center gap-2.5 px-3 py-1.5 rounded-xl hover:bg-pink-50 dark:hover:bg-pink-950/40 text-gray-700 dark:text-gray-300 hover:text-pink-600 text-xs font-medium transition group">
+              <span class="w-5 h-5 rounded-md bg-pink-100 dark:bg-pink-900/40 text-pink-600 dark:text-pink-400 flex items-center justify-center font-bold text-[10px] group-hover:bg-pink-600 group-hover:text-white transition">03</span>
+              <span class="truncate">3. Màu sắc em yêu</span>
+            </a>
+            <a href="#theme-4" class="flex items-center gap-2.5 px-3 py-1.5 rounded-xl hover:bg-pink-50 dark:hover:bg-pink-950/40 text-gray-700 dark:text-gray-300 hover:text-pink-600 text-xs font-medium transition group">
+              <span class="w-5 h-5 rounded-md bg-pink-100 dark:bg-pink-900/40 text-pink-600 dark:text-pink-400 flex items-center justify-center font-bold text-[10px] group-hover:bg-pink-600 group-hover:text-white transition">04</span>
+              <span class="truncate">4. Vẻ đẹp của khối</span>
+            </a>
+            <a href="#theme-5" class="flex items-center gap-2.5 px-3 py-1.5 rounded-xl hover:bg-pink-50 dark:hover:bg-pink-950/40 text-gray-700 dark:text-gray-300 hover:text-pink-600 text-xs font-medium transition group">
+              <span class="w-5 h-5 rounded-md bg-pink-100 dark:bg-pink-900/40 text-pink-600 dark:text-pink-400 flex items-center justify-center font-bold text-[10px] group-hover:bg-pink-600 group-hover:text-white transition">05</span>
+              <span class="truncate">5. Vật liệu trong sáng tạo</span>
+            </a>
+            <a href="#theme-6" class="flex items-center gap-2.5 px-3 py-1.5 rounded-xl hover:bg-pink-50 dark:hover:bg-pink-950/40 text-gray-700 dark:text-gray-300 hover:text-pink-600 text-xs font-medium transition group">
+              <span class="w-5 h-5 rounded-md bg-pink-100 dark:bg-pink-900/40 text-pink-600 dark:text-pink-400 flex items-center justify-center font-bold text-[10px] group-hover:bg-pink-600 group-hover:text-white transition">06</span>
+              <span class="truncate">6. Biết ơn thầy cô</span>
+            </a>
+            <a href="#theme-7" class="flex items-center gap-2.5 px-3 py-1.5 rounded-xl hover:bg-pink-50 dark:hover:bg-pink-950/40 text-gray-700 dark:text-gray-300 hover:text-pink-600 text-xs font-medium transition group">
+              <span class="w-5 h-5 rounded-md bg-pink-100 dark:bg-pink-900/40 text-pink-600 dark:text-pink-400 flex items-center justify-center font-bold text-[10px] group-hover:bg-pink-600 group-hover:text-white transition">07</span>
+              <span class="truncate">7. Cảnh vật quanh em</span>
+            </a>
+            <a href="#theme-8" class="flex items-center gap-2.5 px-3 py-1.5 rounded-xl hover:bg-pink-50 dark:hover:bg-pink-950/40 text-gray-700 dark:text-gray-300 hover:text-pink-600 text-xs font-medium transition group">
+              <span class="w-5 h-5 rounded-md bg-pink-100 dark:bg-pink-900/40 text-pink-600 dark:text-pink-400 flex items-center justify-center font-bold text-[10px] group-hover:bg-pink-600 group-hover:text-white transition">08</span>
+              <span class="truncate">8. Chân dung người thân</span>
+            </a>
+            <a href="#theme-9" class="flex items-center gap-2.5 px-3 py-1.5 rounded-xl hover:bg-pink-50 dark:hover:bg-pink-950/40 text-gray-700 dark:text-gray-300 hover:text-pink-600 text-xs font-medium transition group">
+              <span class="w-5 h-5 rounded-md bg-pink-100 dark:bg-pink-900/40 text-pink-600 dark:text-pink-400 flex items-center justify-center font-bold text-[10px] group-hover:bg-pink-600 group-hover:text-white transition">09</span>
+              <span class="truncate">9. Sinh hoạt trong gia đình</span>
+            </a>
+            <a href="#theme-10" class="flex items-center gap-2.5 px-3 py-1.5 rounded-xl hover:bg-pink-50 dark:hover:bg-pink-950/40 text-gray-700 dark:text-gray-300 hover:text-pink-600 text-xs font-medium transition group">
+              <span class="w-5 h-5 rounded-md bg-pink-100 dark:bg-pink-900/40 text-pink-600 dark:text-pink-400 flex items-center justify-center font-bold text-[10px] group-hover:bg-pink-600 group-hover:text-white transition">10</span>
+              <span class="truncate">10. An toàn giao thông</span>
+            </a>
+          </div>
+
+          <div class="pt-3 border-t border-gray-100 dark:border-gray-800">
+            <button onclick="openCertificationModal()" class="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-bold text-xs shadow-md shadow-pink-500/20 transition">
+              <i class="fa-solid fa-award"></i> Thi Trạng Nguyên Mĩ Thuật
+            </button>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Main Column -->
+      <div class="lg:col-span-3 space-y-10">
+
+        <!-- SECTION: BẢNG TỔNG HỢP KIẾN THỨC CỐT LÕI TOÀN SÁCH -->
+        <section id="overview-section" class="bg-white dark:bg-dark-surface rounded-3xl p-6 sm:p-8 shadow-sm border border-gray-100 dark:border-gray-800 space-y-6 scroll-mt-24">
+          <div class="flex items-center justify-between pb-4 border-b border-gray-100 dark:border-gray-800">
+            <div class="flex items-center gap-3">
+              <span class="w-10 h-10 rounded-2xl bg-pink-100 dark:bg-pink-900/40 text-pink-600 dark:text-pink-400 flex items-center justify-center text-lg font-bold">
+                <i class="fa-solid fa-table-cells"></i>
+              </span>
+              <div>
+                <h2 class="text-xl sm:text-2xl font-black text-gray-900 dark:text-white">II. Bảng Tổng Hợp Kiến Thức Cốt Lõi Toàn Sách</h2>
+                <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">Tóm lược 10 chủ đề SGK Mĩ thuật 3 – Kết nối tri thức với cuộc sống</p>
+              </div>
+            </div>
+            <span class="hidden sm:inline-flex px-3 py-1 rounded-full text-xs font-bold bg-pink-50 dark:bg-pink-950/50 text-pink-600 border border-pink-200 dark:border-pink-800">
+              10 Chủ Đề
+            </span>
+          </div>
+
+          <!-- Master Table -->
+          <div class="overflow-x-auto rounded-2xl border border-gray-100 dark:border-gray-800">
+            <table class="w-full text-left text-xs sm:text-sm text-gray-600 dark:text-gray-300">
+              <thead class="bg-pink-50/80 dark:bg-pink-950/30 text-gray-900 dark:text-white uppercase font-bold text-[11px] tracking-wider border-b border-pink-100 dark:border-pink-900/50">
+                <tr>
+                  <th class="py-3.5 px-4">Chủ đề</th>
+                  <th class="py-3.5 px-4">Trang SGK</th>
+                  <th class="py-3.5 px-4">Kiến thức bắt buộc cần nắm</th>
+                  <th class="py-3.5 px-4">Sản phẩm học tập</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
+                <tr class="hover:bg-pink-50/30 dark:hover:bg-pink-950/20 transition">
+                  <td class="py-3 px-4 font-bold text-gray-900 dark:text-white">1. Em yêu Mĩ thuật</td>
+                  <td class="py-3 px-4 font-mono text-xs">Trang 5–7</td>
+                  <td class="py-3 px-4">Hoạt động mĩ thuật; 2D (hai chiều), 3D (ba chiều); mĩ thuật tạo hình và mĩ thuật ứng dụng.</td>
+                  <td class="py-3 px-4 font-medium text-pink-700 dark:text-pink-300">Bài giới thiệu hoặc bảng phân loại sản phẩm mĩ thuật</td>
+                </tr>
+                <tr class="hover:bg-pink-50/30 dark:hover:bg-pink-950/20 transition">
+                  <td class="py-3 px-4 font-bold text-gray-900 dark:text-white">2. Hoa văn trên trang phục</td>
+                  <td class="py-3 px-4 font-mono text-xs">Trang 8–13</td>
+                  <td class="py-3 px-4">Hoa văn các dân tộc (Mông, Ê-đê, Chăm); nét, hình, màu sắc; mô phỏng và sắp xếp hoa văn trang trí.</td>
+                  <td class="py-3 px-4 font-medium text-pink-700 dark:text-pink-300">Bài vẽ hoa văn dân tộc; chậu hoa/đồ vật được trang trí</td>
+                </tr>
+                <tr class="hover:bg-pink-50/30 dark:hover:bg-pink-950/20 transition">
+                  <td class="py-3 px-4 font-bold text-gray-900 dark:text-white">3. Màu sắc em yêu</td>
+                  <td class="py-3 px-4 font-mono text-xs">Trang 14–21</td>
+                  <td class="py-3 px-4">Ba màu cơ bản (Đỏ, Vàng, Xanh lam); pha tạo ba màu thứ cấp (Cam, Tím, Xanh lá); phối màu trong sáng tạo.</td>
+                  <td class="py-3 px-4 font-medium text-pink-700 dark:text-pink-300">Tranh kết hợp màu cơ bản và thứ cấp; khung ảnh trang trí</td>
+                </tr>
+                <tr class="hover:bg-pink-50/30 dark:hover:bg-pink-950/20 transition">
+                  <td class="py-3 px-4 font-bold text-gray-900 dark:text-white">4. Vẻ đẹp của khối</td>
+                  <td class="py-3 px-4 font-mono text-xs">Trang 22–27</td>
+                  <td class="py-3 px-4">Đặc điểm khối (cứng, mềm, rỗng, đặc, tĩnh, động); sắp xếp hướng khối tạo cảm giác chuyển động thị giác.</td>
+                  <td class="py-3 px-4 font-medium text-pink-700 dark:text-pink-300">Sản phẩm nặn/tạo hình khối; mô hình tạo cảm giác chuyển động</td>
+                </tr>
+                <tr class="hover:bg-pink-50/30 dark:hover:bg-pink-950/20 transition">
+                  <td class="py-3 px-4 font-bold text-gray-900 dark:text-white">5. Một số vật liệu sáng tạo</td>
+                  <td class="py-3 px-4 font-mono text-xs">Trang 28–33</td>
+                  <td class="py-3 px-4">Bề mặt vật liệu (nhẵn, thô ráp, mềm, cứng); thao tác in, dán, nặn, ghép; tận dụng vật liệu tự nhiên và tái chế.</td>
+                  <td class="py-3 px-4 font-medium text-pink-700 dark:text-pink-300">Tranh in gân lá cây, tranh ghép vật liệu sẵn có, thiệp lưu niệm</td>
+                </tr>
+                <tr class="hover:bg-pink-50/30 dark:hover:bg-pink-950/20 transition">
+                  <td class="py-3 px-4 font-bold text-gray-900 dark:text-white">6. Biết ơn thầy cô</td>
+                  <td class="py-3 px-4 font-mono text-xs">Trang 34–39</td>
+                  <td class="py-3 px-4">Hình ảnh chủ đề tri ân ngày 20/11; sử dụng nét, hình, màu sắc thể hiện lòng kính yêu thầy cô giáo.</td>
+                  <td class="py-3 px-4 font-medium text-pink-700 dark:text-pink-300">Tranh vẽ thầy cô; báo tường hoặc thiệp chúc mừng 20/11</td>
+                </tr>
+                <tr class="hover:bg-pink-50/30 dark:hover:bg-pink-950/20 transition">
+                  <td class="py-3 px-4 font-bold text-gray-900 dark:text-white">7. Cảnh vật quanh em</td>
+                  <td class="py-3 px-4 font-mono text-xs">Trang 40–45</td>
+                  <td class="py-3 px-4">Vẻ đẹp thiên nhiên; bố cục hình ảnh chính và hình ảnh phụ; màu sắc đặc trưng cảnh vật quê hương.</td>
+                  <td class="py-3 px-4 font-medium text-pink-700 dark:text-pink-300">Tranh phong cảnh quê hương; mô hình ti vi trình chiếu tranh</td>
+                </tr>
+                <tr class="hover:bg-pink-50/30 dark:hover:bg-pink-950/20 transition">
+                  <td class="py-3 px-4 font-bold text-gray-900 dark:text-white">8. Chân dung người thân</td>
+                  <td class="py-3 px-4 font-mono text-xs">Trang 46–51</td>
+                  <td class="py-3 px-4">Đặc điểm ngũ quan và biểu cảm khuôn mặt; 2 cách vẽ (qua trí nhớ và quan sát trực tiếp); phối màu chân thực.</td>
+                  <td class="py-3 px-4 font-medium text-pink-700 dark:text-pink-300">Tranh chân dung hoặc sản phẩm nặn/ghép chân dung người thân</td>
+                </tr>
+                <tr class="hover:bg-pink-50/30 dark:hover:bg-pink-950/20 transition">
+                  <td class="py-3 px-4 font-bold text-gray-900 dark:text-white">9. Sinh hoạt trong gia đình</td>
+                  <td class="py-3 px-4 font-mono text-xs">Trang 52–57</td>
+                  <td class="py-3 px-4">Hoạt động đời thường gia đình; sắp xếp vị trí trước - sau tạo không gian xa - gần; hình ảnh chính - phụ.</td>
+                  <td class="py-3 px-4 font-medium text-pink-700 dark:text-pink-300">Tranh sinh hoạt gia đình; hộp đựng khăn giấy trang trí</td>
+                </tr>
+                <tr class="hover:bg-pink-50/30 dark:hover:bg-pink-950/20 transition">
+                  <td class="py-3 px-4 font-bold text-gray-900 dark:text-white">10. An toàn giao thông</td>
+                  <td class="py-3 px-4 font-mono text-xs">Trang 58–63</td>
+                  <td class="py-3 px-4">Quy tắc giao thông (đội mũ bảo hiểm, đi đúng làn, qua đường vạch kẻ); phân biệt đúng - sai; tạo hình và trang trí vật dụng.</td>
+                  <td class="py-3 px-4 font-medium text-pink-700 dark:text-pink-300">Tranh cổ động ATGT; mô hình ngã tư; sản phẩm trang trí mũ bảo hiểm</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- SECTION: KIẾN THỨC VÀ KĨ NĂNG NỀN TẢNG (PHẦN III) -->
+        <section id="foundation-section" class="bg-white dark:bg-dark-surface rounded-3xl p-6 sm:p-8 shadow-sm border border-gray-100 dark:border-gray-800 space-y-6 scroll-mt-24">
+          <div class="flex items-center gap-3 pb-4 border-b border-gray-100 dark:border-gray-800">
+            <span class="w-10 h-10 rounded-2xl bg-purple-100 dark:bg-purple-900/40 text-purple-600 dark:text-purple-400 flex items-center justify-center text-lg font-bold">
+              <i class="fa-solid fa-cubes"></i>
+            </span>
+            <div>
+              <h2 class="text-xl sm:text-2xl font-black text-gray-900 dark:text-white">III. Các Kiến Thức & Kĩ Năng Nền Tảng Cần Ghi Nhớ</h2>
+              <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">8 Nhóm nội dung nền tảng tạo dựng ngôn ngữ mĩ thuật cho học sinh lớp 3</p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-xs sm:text-sm">
+            
+            <div class="p-4 rounded-2xl bg-pink-50/50 dark:bg-pink-950/20 border border-pink-100 dark:border-pink-900/40 space-y-2">
+              <div class="font-bold text-pink-700 dark:text-pink-400 flex items-center gap-1.5">
+                <i class="fa-solid fa-shapes"></i> Yếu tố tạo hình
+              </div>
+              <p class="text-xs text-gray-600 dark:text-gray-300">
+                Nét (thẳng, cong, gấp khúc), hình (tròn, vuông, tam giác), màu sắc và khối (cứng, mềm, rỗng, đặc).
+              </p>
+            </div>
+
+            <div class="p-4 rounded-2xl bg-purple-50/50 dark:bg-purple-950/20 border border-purple-100 dark:border-purple-900/40 space-y-2">
+              <div class="font-bold text-purple-700 dark:text-purple-400 flex items-center gap-1.5">
+                <i class="fa-solid fa-swatchbook"></i> Màu sắc
+              </div>
+              <p class="text-xs text-gray-600 dark:text-gray-300">
+                <strong>Ba màu cơ bản:</strong> Đỏ, Vàng, Xanh lam.<br>
+                <strong>Ba màu thứ cấp:</strong> Cam, Tím, Xanh lá cây (pha từ màu cơ bản).
+              </p>
+            </div>
+
+            <div class="p-4 rounded-2xl bg-blue-50/50 dark:bg-blue-950/20 border border-blue-100 dark:border-blue-900/40 space-y-2">
+              <div class="font-bold text-blue-700 dark:text-blue-400 flex items-center gap-1.5">
+                <i class="fa-solid fa-layer-group"></i> Không gian & Bố cục
+              </div>
+              <p class="text-xs text-gray-600 dark:text-gray-300">
+                Xác định hình ảnh chính (trọng tâm, to rõ) – hình ảnh phụ; sắp xếp vị trí trước – sau thể hiện chiều sâu không gian.
+              </p>
+            </div>
+
+            <div class="p-4 rounded-2xl bg-emerald-50/50 dark:bg-emerald-950/20 border border-emerald-100 dark:border-emerald-900/40 space-y-2">
+              <div class="font-bold text-emerald-700 dark:text-emerald-400 flex items-center gap-1.5">
+                <i class="fa-solid fa-leaf"></i> Vật liệu sáng tạo
+              </div>
+              <p class="text-xs text-gray-600 dark:text-gray-300">
+                Giấy màu, đất nặn, lá cây tự nhiên, bông gòn, vỏ hộp, que kem, vật liệu tái chế thân thiện môi trường.
+              </p>
+            </div>
+
+            <div class="p-4 rounded-2xl bg-amber-50/50 dark:bg-amber-950/20 border border-amber-100 dark:border-amber-900/40 space-y-2">
+              <div class="font-bold text-amber-700 dark:text-amber-400 flex items-center gap-1.5">
+                <i class="fa-solid fa-scissors"></i> Kĩ thuật tạo hình
+              </div>
+              <p class="text-xs text-gray-600 dark:text-gray-300">
+                Vẽ nét tô màu, nặn khối, cắt, xé, dán, in gân lá, lắp ghép và trang trí đồ vật ứng dụng.
+              </p>
+            </div>
+
+            <div class="p-4 rounded-2xl bg-rose-50/50 dark:bg-rose-950/20 border border-rose-100 dark:border-rose-900/40 space-y-2">
+              <div class="font-bold text-rose-700 dark:text-rose-400 flex items-center gap-1.5">
+                <i class="fa-solid fa-eye"></i> Cảm thụ mĩ thuật
+              </div>
+              <p class="text-xs text-gray-600 dark:text-gray-300">
+                Biết quan sát tinh tế, nhận xét vẻ đẹp thẩm mĩ của thiên nhiên, hoa văn dân tộc và tác phẩm nghệ thuật.
+              </p>
+            </div>
+
+            <div class="p-4 rounded-2xl bg-indigo-50/50 dark:bg-indigo-950/20 border border-indigo-100 dark:border-indigo-900/40 space-y-2">
+              <div class="font-bold text-indigo-700 dark:text-indigo-400 flex items-center gap-1.5">
+                <i class="fa-solid fa-lightbulb"></i> Sáng tạo ý tưởng
+              </div>
+              <p class="text-xs text-gray-600 dark:text-gray-300">
+                Hình thành ý tưởng từ thực tế, tranh ảnh hoặc trí tưởng tượng; chọn cách thể hiện 2D hoặc 3D độc đáo.
+              </p>
+            </div>
+
+            <div class="p-4 rounded-2xl bg-teal-50/50 dark:bg-teal-950/20 border border-teal-100 dark:border-teal-900/40 space-y-2">
+              <div class="font-bold text-teal-700 dark:text-teal-400 flex items-center gap-1.5">
+                <i class="fa-solid fa-comments"></i> Đánh giá & Chia sẻ
+              </div>
+              <p class="text-xs text-gray-600 dark:text-gray-300">
+                Tự tin thuyết trình giới thiệu sản phẩm của mình; biết nhận xét, khích lệ và tôn trọng sản phẩm của bạn bè.
+              </p>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- SECTION: ĐỊNH HƯỚNG ĐÁNH GIÁ (PHẦN IV) & QUY TRÌNH 4 BƯỚC (PHẦN V) -->
+        <section id="evaluation-section" class="bg-white dark:bg-dark-surface rounded-3xl p-6 sm:p-8 shadow-sm border border-gray-100 dark:border-gray-800 space-y-6 scroll-mt-24">
+          <div class="flex items-center gap-3 pb-4 border-b border-gray-100 dark:border-gray-800">
+            <span class="w-10 h-10 rounded-2xl bg-indigo-100 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-lg font-bold">
+              <i class="fa-solid fa-clipboard-check"></i>
+            </span>
+            <div>
+              <h2 class="text-xl sm:text-2xl font-black text-gray-900 dark:text-white">IV. Định Hướng Đánh Giá & V. Quy Trình Hoạt Động</h2>
+              <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">4 Tiêu chí đánh giá kết quả học tập & Quy trình 4 bước xuyên suốt</p>
+            </div>
+          </div>
+
+          <!-- 4 Evaluation Criteria -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-1.5">
+              <div class="font-bold text-pink-600 dark:text-pink-400 text-sm flex items-center gap-2">
+                <span class="w-6 h-6 rounded-md bg-pink-100 dark:bg-pink-900/40 flex items-center justify-center text-xs">1</span>
+                Quan sát & Nhận thức thẩm mĩ
+              </div>
+              <p class="text-xs text-gray-600 dark:text-gray-300">
+                Nhận biết được các yếu tố tạo hình (nét, hình, màu sắc cơ bản và thứ cấp, đặc điểm khối 2D/3D) và vẻ đẹp của sản phẩm mĩ thuật.
+              </p>
+            </div>
+
+            <div class="p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-1.5">
+              <div class="font-bold text-purple-600 dark:text-purple-400 text-sm flex items-center gap-2">
+                <span class="w-6 h-6 rounded-md bg-purple-100 dark:bg-purple-900/40 flex items-center justify-center text-xs">2</span>
+                Sáng tạo & Ứng dụng thẩm mĩ
+              </div>
+              <p class="text-xs text-gray-600 dark:text-gray-300">
+                Biết lựa chọn vật liệu, vận dụng các thao tác kĩ thuật (vẽ, nặn, xé dán, in ấn) để tạo ra sản phẩm hoàn chỉnh theo từng chủ đề.
+              </p>
+            </div>
+
+            <div class="p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-1.5">
+              <div class="font-bold text-blue-600 dark:text-blue-400 text-sm flex items-center gap-2">
+                <span class="w-6 h-6 rounded-md bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center text-xs">3</span>
+                Phân tích & Đánh giá thẩm mĩ
+              </div>
+              <p class="text-xs text-gray-600 dark:text-gray-300">
+                Biết giới thiệu, mô tả cảm xúc, chia sẻ ý tưởng và đưa ra nhận xét tích cực về sản phẩm của bản thân và bạn bè trong lớp.
+              </p>
+            </div>
+
+            <div class="p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-1.5">
+              <div class="font-bold text-emerald-600 dark:text-emerald-400 text-sm flex items-center gap-2">
+                <span class="w-6 h-6 rounded-md bg-emerald-100 dark:bg-emerald-900/40 flex items-center justify-center text-xs">4</span>
+                Thái độ học tập
+              </div>
+              <p class="text-xs text-gray-600 dark:text-gray-300">
+                Tích cực tham gia hoạt động, hào hứng hợp tác nhóm, giữ gìn vệ sinh lớp học, bảo quản dụng cụ và trân trọng thành quả lao động.
+              </p>
+            </div>
+          </div>
+
+          <!-- 4-Step Process Box -->
+          <div class="p-5 rounded-2xl bg-gradient-to-r from-pink-500/10 via-purple-500/10 to-indigo-500/10 border border-pink-200 dark:border-pink-800/60 space-y-3">
+            <h4 class="font-bold text-pink-800 dark:text-pink-300 text-sm uppercase tracking-wide flex items-center gap-2">
+              <i class="fa-solid fa-arrows-spin"></i> Quy trình 4 bước thực hành mĩ thuật xuyên suốt các bài học
+            </h4>
+            <div class="grid grid-cols-1 sm:grid-cols-4 gap-3 text-xs">
+              <div class="p-3 rounded-xl bg-white dark:bg-dark-card shadow-xs border border-pink-100 dark:border-gray-800">
+                <span class="font-bold text-pink-600 block mb-1 text-sm">1. Quan sát</span>
+                Tìm hiểu đối tượng mẫu, nhận diện nét, hình, màu sắc và chất liệu thực tế.
+              </div>
+              <div class="p-3 rounded-xl bg-white dark:bg-dark-card shadow-xs border border-purple-100 dark:border-gray-800">
+                <span class="font-bold text-purple-600 block mb-1 text-sm">2. Thể hiện</span>
+                Phác thảo ý tưởng, lựa chọn vật liệu và thực hành tạo hình (2D hoặc 3D).
+              </div>
+              <div class="p-3 rounded-xl bg-white dark:bg-dark-card shadow-xs border border-blue-100 dark:border-gray-800">
+                <span class="font-bold text-blue-600 block mb-1 text-sm">3. Thảo luận</span>
+                Trưng bày sản phẩm, giới thiệu cảm nhận và góp ý thân thiện cùng bạn.
+              </div>
+              <div class="p-3 rounded-xl bg-white dark:bg-dark-card shadow-xs border border-emerald-100 dark:border-gray-800">
+                <span class="font-bold text-emerald-600 block mb-1 text-sm">4. Vận dụng</span>
+                Ứng dụng sản phẩm vào trang trí lớp học, góc học tập gia đình hoặc làm quà tặng.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- CHỦ ĐỀ 1: EM YÊU MĨ THUẬT -->
+        <article id="theme-1" class="bg-white dark:bg-dark-surface rounded-3xl p-6 sm:p-8 shadow-sm border border-gray-100 dark:border-gray-800 space-y-6 scroll-mt-24">
+          <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-gray-100 dark:border-gray-800">
+            <div class="flex items-center gap-3">
+              <span class="w-10 h-10 rounded-2xl bg-gradient-to-br from-pink-500 to-purple-600 text-white flex items-center justify-center font-black text-sm shadow-md shadow-pink-500/20">
+                01
+              </span>
+              <div>
+                <div class="flex items-center gap-2">
+                  <span class="px-2.5 py-0.5 rounded-full bg-pink-100 dark:bg-pink-950 text-pink-700 dark:text-pink-300 font-bold text-[11px] uppercase tracking-wider">
+                    Làm quen nghệ thuật
+                  </span>
+                  <span class="text-[11px] font-semibold text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-dark-card px-2 py-0.5 rounded-md">
+                    Trang 5–7
+                  </span>
+                </div>
+                <h3 class="text-lg sm:text-2xl font-black text-gray-900 dark:text-white mt-0.5">Chủ Đề 1: Em Yêu Mĩ Thuật</h3>
+              </div>
+            </div>
+            <div class="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400 font-medium bg-gray-50 dark:bg-dark-card px-3 py-1.5 rounded-xl">
+              <i class="fa-regular fa-clock text-pink-500"></i> Bài mở đầu
+            </div>
+          </div>
+
+          <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 italic">Hoạt động mĩ thuật • Phân biệt 2D & 3D • Mĩ thuật tạo hình & Mĩ thuật ứng dụng</p>
+
+          <div class="space-y-4 text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-2">
+                <h4 class="font-bold text-pink-700 dark:text-pink-400 flex items-center gap-2 text-sm">
+                  <i class="fa-solid fa-paintbrush"></i> Kiến thức trọng tâm
+                </h4>
+                <ul class="text-xs sm:text-sm space-y-1.5 list-disc list-inside text-gray-600 dark:text-gray-300">
+                  <li>Nhận biết các hoạt động mĩ thuật phong phú trong và ngoài lớp học (vẽ tranh, nặn tượng, xé dán, triển lãm).</li>
+                  <li>Phân biệt sản phẩm mĩ thuật tạo hình <strong>2D (hai chiều)</strong> trên mặt phẳng (tranh vẽ, tranh xé dán) và <strong>3D (ba chiều)</strong> có thể tích, chiều sâu (tượng nặn, mô hình).</li>
+                  <li>Phân biệt sản phẩm mĩ thuật tạo hình (thuần thưởng lãm) và sản phẩm mĩ thuật ứng dụng (đồ gốm, trang trí túi xách, thiệp).</li>
+                  <li>Hiểu rằng mĩ thuật luôn hiện diện trong học tập và cuộc sống xung quanh em.</li>
+                </ul>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-2">
+                <h4 class="font-bold text-purple-700 dark:text-purple-400 flex items-center gap-2 text-sm">
+                  <i class="fa-solid fa-award"></i> Kĩ năng & Sản phẩm học tập
+                </h4>
+                <div class="space-y-2 text-xs sm:text-sm text-gray-600 dark:text-gray-300">
+                  <div>
+                    <span class="font-bold text-gray-800 dark:text-gray-200">Kĩ năng cần đạt:</span>
+                    Quan sát, nhận diện, phân loại chính xác các dạng sản phẩm mĩ thuật và tự tin thuyết trình giới thiệu sản phẩm.
+                  </div>
+                  <div>
+                    <span class="font-bold text-gray-800 dark:text-gray-200">Sản phẩm cụ thể:</span>
+                    Bài thuyết trình giới thiệu hoặc phiếu phân loại các sản phẩm mĩ thuật 2D, 3D trong phòng học.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Quiz Theme 1 -->
+            <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800 space-y-4">
+              <h4 class="text-xs font-bold uppercase tracking-wider text-pink-600 flex items-center gap-2">
+                <i class="fa-solid fa-circle-question"></i> Bài tập trắc nghiệm củng cố Chủ đề 1
+              </h4>
+
+              <div class="p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-3">
+                <p class="font-semibold text-gray-800 dark:text-gray-200 text-xs sm:text-sm">
+                  <strong>Câu 1:</strong> Điểm khác biệt cơ bản nhất giữa sản phẩm mĩ thuật 2D (hai chiều) và sản phẩm mĩ thuật 3D (ba chiều) là gì?
+                </p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                  <button onclick="checkQuiz('t1_q1', 0, false, 'Màu sắc không quyết định sản phẩm là 2D hay 3D.')" class="quiz-btn-t1_q1 p-3 rounded-xl border border-gray-200 dark:border-gray-700 text-left hover:bg-pink-50 dark:hover:bg-pink-950/30 transition">
+                    A. Sản phẩm 2D chỉ có 1 màu, còn sản phẩm 3D có nhiều màu
+                  </button>
+                  <button onclick="checkQuiz('t1_q1', 1, true, 'Sản phẩm 2D được thể hiện trên mặt phẳng (chiều dài, rộng), còn sản phẩm 3D có thêm chiều sâu/chiều cao không gian (khối).')" class="quiz-btn-t1_q1 p-3 rounded-xl border border-gray-200 dark:border-gray-700 text-left hover:bg-pink-50 dark:hover:bg-pink-950/30 transition">
+                    B. Sản phẩm 2D thể hiện trên mặt phẳng (chiều dài và rộng), sản phẩm 3D có thể tích và chiều sâu không gian (khối)
+                  </button>
+                  <button onclick="checkQuiz('t1_q1', 2, false, 'Cả hai dạng đều là sản phẩm mĩ thuật có giá trị nghệ thuật.')" class="quiz-btn-t1_q1 p-3 rounded-xl border border-gray-200 dark:border-gray-700 text-left hover:bg-pink-50 dark:hover:bg-pink-950/30 transition">
+                    C. Sản phẩm 2D vẽ bằng tay, sản phẩm 3D chỉ làm bằng máy tính
+                  </button>
+                  <button onclick="checkQuiz('t1_q1', 3, false, 'Không chính xác.')" class="quiz-btn-t1_q1 p-3 rounded-xl border border-gray-200 dark:border-gray-700 text-left hover:bg-pink-50 dark:hover:bg-pink-950/30 transition">
+                    D. Cả hai dạng hoàn toàn giống nhau không có điểm khác
+                  </button>
+                </div>
+                <div id="feedback-t1_q1" class="hidden"></div>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-3">
+                <p class="font-semibold text-gray-800 dark:text-gray-200 text-xs sm:text-sm">
+                  <strong>Câu 2:</strong> Vật phẩm nào sau đây là một ví dụ tiêu biểu của "sản phẩm mĩ thuật ứng dụng"?
+                </p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                  <button onclick="checkQuiz('t1_q2', 0, false, 'Tranh sơn dầu treo tường là mĩ thuật tạo hình.')" class="quiz-btn-t1_q2 p-3 rounded-xl border border-gray-200 dark:border-gray-700 text-left hover:bg-pink-50 dark:hover:bg-pink-950/30 transition">
+                    A. Bức tranh sơn dầu treo trên tường triển lãm nghệ thuật
+                  </button>
+                  <button onclick="checkQuiz('t1_q2', 1, true, 'Chiếc cốc gốm vừa có công năng đựng nước vừa được vẽ trang trí hoa văn đẹp mắt chính là mĩ thuật ứng dụng.')" class="quiz-btn-t1_q2 p-3 rounded-xl border border-gray-200 dark:border-gray-700 text-left hover:bg-pink-50 dark:hover:bg-pink-950/30 transition">
+                    B. Chiếc cốc sứ uống nước được vẽ trang trí hoa văn xinh xắn
+                  </button>
+                  <button onclick="checkQuiz('t1_q2', 2, false, 'Tờ giấy trắng tinh chưa có bàn tay nghệ thuật trang trí.')" class="quiz-btn-t1_q2 p-3 rounded-xl border border-gray-200 dark:border-gray-700 text-left hover:bg-pink-50 dark:hover:bg-pink-950/30 transition">
+                    C. Tờ giấy nháp trắng tinh chưa vẽ gì
+                  </button>
+                  <button onclick="checkQuiz('t1_q2', 3, false, 'Cục đất sét thô chưa được tạo tác thành sản phẩm.')" class="quiz-btn-t1_q2 p-3 rounded-xl border border-gray-200 dark:border-gray-700 text-left hover:bg-pink-50 dark:hover:bg-pink-950/30 transition">
+                    D. Cục đất sét tự nhiên chưa qua tạo hình
+                  </button>
+                </div>
+                <div id="feedback-t1_q2" class="hidden"></div>
+              </div>
+
+            </div>
+
+          </div>
+        </article>
+
+        <!-- CHỦ ĐỀ 2: HOA VĂN TRÊN TRANG PHỤC CỦA MỘT SỐ DÂN TỘC -->
+        <article id="theme-2" class="bg-white dark:bg-dark-surface rounded-3xl p-6 sm:p-8 shadow-sm border border-gray-100 dark:border-gray-800 space-y-6 scroll-mt-24">
+          <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-gray-100 dark:border-gray-800">
+            <div class="flex items-center gap-3">
+              <span class="w-10 h-10 rounded-2xl bg-gradient-to-br from-pink-500 to-purple-600 text-white flex items-center justify-center font-black text-sm shadow-md shadow-pink-500/20">
+                02
+              </span>
+              <div>
+                <div class="flex items-center gap-2">
+                  <span class="px-2.5 py-0.5 rounded-full bg-pink-100 dark:bg-pink-950 text-pink-700 dark:text-pink-300 font-bold text-[11px] uppercase tracking-wider">
+                    Văn hóa dân tộc
+                  </span>
+                  <span class="text-[11px] font-semibold text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-dark-card px-2 py-0.5 rounded-md">
+                    Trang 8–13
+                  </span>
+                </div>
+                <h3 class="text-lg sm:text-2xl font-black text-gray-900 dark:text-white mt-0.5">Chủ Đề 2: Hoa Văn Trên Trang Phục Của Một Số Dân Tộc</h3>
+              </div>
+            </div>
+            <div class="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400 font-medium bg-gray-50 dark:bg-dark-card px-3 py-1.5 rounded-xl">
+              <i class="fa-regular fa-clock text-pink-500"></i> Trang 8–13
+            </div>
+          </div>
+
+          <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 italic">Dân tộc Mông, Ê-đê, Chăm • Hoa văn từ nét, hình và màu • Mô phỏng & trang trí đồ vật</p>
+
+          <div class="space-y-4 text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-2">
+                <h4 class="font-bold text-pink-700 dark:text-pink-400 flex items-center gap-2 text-sm">
+                  <i class="fa-solid fa-shirt"></i> Kiến thức trọng tâm
+                </h4>
+                <ul class="text-xs sm:text-sm space-y-1.5 list-disc list-inside text-gray-600 dark:text-gray-300">
+                  <li>Nhận biết nét đẹp hoa văn đặc sắc trên trang phục truyền thống của các dân tộc: <strong>Mông</strong> (hoa văn ziczac, xoắn ốc, chữ thập sắc màu rực rỡ), <strong>Ê-đê</strong> (dải dệt thổ cẩm hình chim, muông thú, quả trám), <strong>Chăm</strong> (hoa văn hình học, hoa lá trên khăn rơ-ma).</li>
+                  <li>Nhận biết hoa văn được kết hợp tinh tế từ nét (thẳng, cong, chéo), hình (tam giác, thoi, vuông) và màu sắc tương phản nổi bật.</li>
+                  <li>Biết mô phỏng lại một mẫu hoa văn dân tộc em yêu thích.</li>
+                  <li>Biết sắp xếp hoa văn lặp lại hoặc xen kẽ để trang trí đồ dùng hàng ngày.</li>
+                </ul>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-2">
+                <h4 class="font-bold text-purple-700 dark:text-purple-400 flex items-center gap-2 text-sm">
+                  <i class="fa-solid fa-award"></i> Kĩ năng & Sản phẩm học tập
+                </h4>
+                <div class="space-y-2 text-xs sm:text-sm text-gray-600 dark:text-gray-300">
+                  <div>
+                    <span class="font-bold text-gray-800 dark:text-gray-200">Kĩ năng cần đạt:</span>
+                    Quan sát họa tiết thổ cẩm, vẽ mô phỏng tỉ mỉ, phối màu hài hòa và sắp xếp trang trí cân đối.
+                  </div>
+                  <div>
+                    <span class="font-bold text-gray-800 dark:text-gray-200">Sản phẩm cụ thể:</span>
+                    Dải hoa văn dân tộc vẽ trên giấy; sản phẩm trang trí chậu hoa, bọc sổ tay hoặc túi vải.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Quiz Theme 2 -->
+            <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800 space-y-4">
+              <h4 class="text-xs font-bold uppercase tracking-wider text-pink-600 flex items-center gap-2">
+                <i class="fa-solid fa-circle-question"></i> Bài tập trắc nghiệm củng cố Chủ đề 2
+              </h4>
+
+              <div class="p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-3">
+                <p class="font-semibold text-gray-800 dark:text-gray-200 text-xs sm:text-sm">
+                  <strong>Câu 1:</strong> Hoa văn trên trang phục truyền thống của người Mông và Ê-đê thường được tạo nên từ những yếu tố cơ bản nào?
+                </p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                  <button onclick="checkQuiz('t2_q1', 0, true, 'Hoa văn thổ cẩm được dệt/thêu từ các nét kĩ thuật, hình học (hình thoi, tam giác, chữ thập) và màu sắc nổi bật.')" class="quiz-btn-t2_q1 p-3 rounded-xl border border-gray-200 dark:border-gray-700 text-left hover:bg-pink-50 dark:hover:bg-pink-950/30 transition">
+                    A. Các nét thẳng, cong, hình hình học (hình thoi, tam giác, chữ thập) và màu sắc tương phản rực rỡ
+                  </button>
+                  <button onclick="checkQuiz('t2_q1', 1, false, 'Hoa văn thổ cẩm không dùng chữ viết hiện đại.')" class="quiz-btn-t2_q1 p-3 rounded-xl border border-gray-200 dark:border-gray-700 text-left hover:bg-pink-50 dark:hover:bg-pink-950/30 transition">
+                    B. Các chữ số và chữ cái tiếng Anh
+                  </button>
+                  <button onclick="checkQuiz('t2_q1', 2, false, 'Trang phục truyền thống không in ảnh chụp.')" class="quiz-btn-t2_q1 p-3 rounded-xl border border-gray-200 dark:border-gray-700 text-left hover:bg-pink-50 dark:hover:bg-pink-950/30 transition">
+                    C. Những bức ảnh chụp phong cảnh hiện đại
+                  </button>
+                  <button onclick="checkQuiz('t2_q1', 3, false, 'Vải trơn không có hoa văn.')" class="quiz-btn-t2_q1 p-3 rounded-xl border border-gray-200 dark:border-gray-700 text-left hover:bg-pink-50 dark:hover:bg-pink-950/30 transition">
+                    D. Chỉ để vải màu trắng trơn không trang trí
+                  </button>
+                </div>
+                <div id="feedback-t2_q1" class="hidden"></div>
+              </div>
+
+            </div>
+
+          </div>
+        </article>
+
+        <!-- CHỦ ĐỀ 3: MÀU SẮC EM YÊU (KÈM BỘ PHA MÀU TƯƠNG TÁC) -->
+        <article id="theme-3" class="bg-white dark:bg-dark-surface rounded-3xl p-6 sm:p-8 shadow-sm border border-gray-100 dark:border-gray-800 space-y-6 scroll-mt-24">
+          <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-gray-100 dark:border-gray-800">
+            <div class="flex items-center gap-3">
+              <span class="w-10 h-10 rounded-2xl bg-gradient-to-br from-pink-500 to-purple-600 text-white flex items-center justify-center font-black text-sm shadow-md shadow-pink-500/20">
+                03
+              </span>
+              <div>
+                <div class="flex items-center gap-2">
+                  <span class="px-2.5 py-0.5 rounded-full bg-pink-100 dark:bg-pink-950 text-pink-700 dark:text-pink-300 font-bold text-[11px] uppercase tracking-wider">
+                    Lí thuyết màu sắc
+                  </span>
+                  <span class="text-[11px] font-semibold text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-dark-card px-2 py-0.5 rounded-md">
+                    Trang 14–21
+                  </span>
+                </div>
+                <h3 class="text-lg sm:text-2xl font-black text-gray-900 dark:text-white mt-0.5">Chủ Đề 3: Màu Sắc Em Yêu</h3>
+              </div>
+            </div>
+            <div class="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400 font-medium bg-gray-50 dark:bg-dark-card px-3 py-1.5 rounded-xl">
+              <i class="fa-regular fa-clock text-pink-500"></i> Trang 14–21
+            </div>
+          </div>
+
+          <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 italic">Ba màu cơ bản • Pha tạo ba màu thứ cấp • Ứng dụng màu sắc trong tự nhiên và tranh vẽ</p>
+
+          <div class="space-y-4 text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-2">
+                <h4 class="font-bold text-pink-700 dark:text-pink-400 flex items-center gap-2 text-sm">
+                  <i class="fa-solid fa-palette"></i> Kiến thức trọng tâm
+                </h4>
+                <ul class="text-xs sm:text-sm space-y-1.5 list-disc list-inside text-gray-600 dark:text-gray-300">
+                  <li>Nhận biết <strong>ba màu cơ bản</strong> (màu gốc): <strong class="text-red-500">Đỏ</strong>, <strong class="text-yellow-500">Vàng</strong>, <strong class="text-blue-500">Xanh lam</strong>.</li>
+                  <li>Nắm vững công thức pha tạo <strong>ba màu thứ cấp</strong>:
+                    <div class="mt-1 pl-4 space-y-1 text-xs font-mono font-bold">
+                      <div>• Đỏ + Vàng &rarr; <span class="text-orange-500">Màu Cam</span></div>
+                      <div>• Đỏ + Xanh lam &rarr; <span class="text-purple-500">Màu Tím</span></div>
+                      <div>• Vàng + Xanh lam &rarr; <span class="text-emerald-500">Màu Xanh lá cây</span></div>
+                    </div>
+                  </li>
+                  <li>Phân biệt màu cơ bản và màu thứ cấp trong thiên nhiên, đồ vật và tranh nghệ thuật.</li>
+                  <li>Biết phối hợp các cặp màu để tạo sản phẩm mĩ thuật rực rỡ, hài hòa.</li>
+                </ul>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-2">
+                <h4 class="font-bold text-purple-700 dark:text-purple-400 flex items-center gap-2 text-sm">
+                  <i class="fa-solid fa-award"></i> Kĩ năng & Sản phẩm học tập
+                </h4>
+                <div class="space-y-2 text-xs sm:text-sm text-gray-600 dark:text-gray-300">
+                  <div>
+                    <span class="font-bold text-gray-800 dark:text-gray-200">Kĩ năng cần đạt:</span>
+                    Nhận biết màu chuẩn xác, kĩ năng dùng cọ pha màu nước hoặc sáp màu, phối màu sáng tạo.
+                  </div>
+                  <div>
+                    <span class="font-bold text-gray-800 dark:text-gray-200">Sản phẩm cụ thể:</span>
+                    Bức tranh tĩnh vật hoa quả kết hợp màu cơ bản và thứ cấp; khung ảnh tự làm trang trí màu sắc.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- INTERACTIVE TOOL: MÁY PHA MÀU THỨ CẤP TRỰC QUAN -->
+            <div class="p-5 rounded-2xl bg-gradient-to-r from-pink-500/10 via-purple-500/10 to-indigo-500/10 border border-pink-200 dark:border-pink-800/60 space-y-4">
+              <div class="flex items-center justify-between">
+                <h4 class="font-bold text-pink-800 dark:text-pink-300 text-sm uppercase tracking-wide flex items-center gap-2">
+                  <i class="fa-solid fa-wand-magic-sparkles text-pink-500"></i> Phòng Thí Nghiệm Pha Màu Trực Quan (Interactive Color Lab)
+                </h4>
+                <span class="text-[11px] font-semibold text-gray-500 dark:text-gray-400">Thử nghiệm pha 2 màu cơ bản</span>
+              </div>
+              <p class="text-xs text-gray-600 dark:text-gray-300">
+                Nhấp vào 2 màu cơ bản bất kì dưới đây để xem sự pha trộn kì diệu thành màu thứ cấp:
+              </p>
+
+              <div class="flex flex-wrap items-center justify-center gap-4 sm:gap-6 py-2">
+                <!-- Color 1: Red -->
+                <button onclick="selectPrimaryColor('red')" id="btn-color-red" class="color-swatch px-4 py-2.5 rounded-2xl bg-red-500 text-white font-bold text-xs shadow-md shadow-red-500/30 flex items-center gap-2">
+                  <span class="w-3.5 h-3.5 rounded-full bg-white"></span> Màu Đỏ
+                </button>
+                <!-- Color 2: Yellow -->
+                <button onclick="selectPrimaryColor('yellow')" id="btn-color-yellow" class="color-swatch px-4 py-2.5 rounded-2xl bg-amber-400 text-gray-900 font-bold text-xs shadow-md shadow-yellow-500/30 flex items-center gap-2">
+                  <span class="w-3.5 h-3.5 rounded-full bg-gray-900"></span> Màu Vàng
+                </button>
+                <!-- Color 3: Blue -->
+                <button onclick="selectPrimaryColor('blue')" id="btn-color-blue" class="color-swatch px-4 py-2.5 rounded-2xl bg-blue-600 text-white font-bold text-xs shadow-md shadow-blue-500/30 flex items-center gap-2">
+                  <span class="w-3.5 h-3.5 rounded-full bg-white"></span> Xanh Lam
+                </button>
+              </div>
+
+              <!-- Result Mixer Display -->
+              <div id="mixer-result-box" class="p-4 rounded-xl bg-white dark:bg-dark-card border border-gray-200 dark:border-gray-700 flex items-center justify-between text-xs sm:text-sm font-bold text-gray-700 dark:text-gray-200">
+                <div class="flex items-center gap-3">
+                  <span id="mix-color-a" class="w-6 h-6 rounded-full bg-gray-200 inline-block border"></span>
+                  <i class="fa-solid fa-plus text-gray-400 text-xs"></i>
+                  <span id="mix-color-b" class="w-6 h-6 rounded-full bg-gray-200 inline-block border"></span>
+                  <i class="fa-solid fa-arrow-right text-gray-400 text-xs"></i>
+                  <span id="mix-result-color" class="w-8 h-8 rounded-xl bg-gray-300 inline-block shadow-sm border"></span>
+                </div>
+                <div id="mix-result-text" class="text-right text-xs text-gray-500 dark:text-gray-400">
+                  Hãy nhấp chọn 2 màu cơ bản ở trên để pha màu!
+                </div>
+              </div>
+            </div>
+
+            <!-- Quiz Theme 3 -->
+            <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800 space-y-4">
+              <h4 class="text-xs font-bold uppercase tracking-wider text-pink-600 flex items-center gap-2">
+                <i class="fa-solid fa-circle-question"></i> Bài tập trắc nghiệm củng cố Chủ đề 3
+              </h4>
+
+              <div class="p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-3">
+                <p class="font-semibold text-gray-800 dark:text-gray-200 text-xs sm:text-sm">
+                  <strong>Câu 1:</strong> Khi em pha màu Đỏ với màu Xanh lam, em sẽ tạo ra được màu thứ cấp nào?
+                </p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                  <button onclick="checkQuiz('t3_q1', 0, false, 'Đỏ + Vàng mới tạo ra màu Cam.')" class="quiz-btn-t3_q1 p-3 rounded-xl border border-gray-200 dark:border-gray-700 text-left hover:bg-pink-50 dark:hover:bg-pink-950/30 transition">
+                    A. Màu Cam
+                  </button>
+                  <button onclick="checkQuiz('t3_q1', 1, false, 'Vàng + Xanh lam mới tạo ra Xanh lá cây.')" class="quiz-btn-t3_q1 p-3 rounded-xl border border-gray-200 dark:border-gray-700 text-left hover:bg-pink-50 dark:hover:bg-pink-950/30 transition">
+                    B. Màu Xanh lá cây
+                  </button>
+                  <button onclick="checkQuiz('t3_q1', 2, true, 'Chính xác! Màu Đỏ pha trộn với màu Xanh lam sẽ tạo ra Màu Tím thơ mộng.')" class="quiz-btn-t3_q1 p-3 rounded-xl border border-gray-200 dark:border-gray-700 text-left hover:bg-pink-50 dark:hover:bg-pink-950/30 transition">
+                    C. Màu Tím
+                  </button>
+                  <button onclick="checkQuiz('t3_q1', 3, false, 'Màu Nâu cần pha nhiều màu hơn.')" class="quiz-btn-t3_q1 p-3 rounded-xl border border-gray-200 dark:border-gray-700 text-left hover:bg-pink-50 dark:hover:bg-pink-950/30 transition">
+                    D. Màu Nâu
+                  </button>
+                </div>
+                <div id="feedback-t3_q1" class="hidden"></div>
+              </div>
+
+            </div>
+
+          </div>
+        </article>
+
+        <!-- CHỦ ĐỀ 4: VẺ ĐẸP CỦA KHỐI -->
+        <article id="theme-4" class="bg-white dark:bg-dark-surface rounded-3xl p-6 sm:p-8 shadow-sm border border-gray-100 dark:border-gray-800 space-y-6 scroll-mt-24">
+          <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-gray-100 dark:border-gray-800">
+            <div class="flex items-center gap-3">
+              <span class="w-10 h-10 rounded-2xl bg-gradient-to-br from-pink-500 to-purple-600 text-white flex items-center justify-center font-black text-sm shadow-md shadow-pink-500/20">
+                04
+              </span>
+              <div>
+                <div class="flex items-center gap-2">
+                  <span class="px-2.5 py-0.5 rounded-full bg-pink-100 dark:bg-pink-950 text-pink-700 dark:text-pink-300 font-bold text-[11px] uppercase tracking-wider">
+                    Điêu khắc & Tạo hình
+                  </span>
+                  <span class="text-[11px] font-semibold text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-dark-card px-2 py-0.5 rounded-md">
+                    Trang 22–27
+                  </span>
+                </div>
+                <h3 class="text-lg sm:text-2xl font-black text-gray-900 dark:text-white mt-0.5">Chủ Đề 4: Vẻ Đẹp Của Khối</h3>
+              </div>
+            </div>
+            <div class="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400 font-medium bg-gray-50 dark:bg-dark-card px-3 py-1.5 rounded-xl">
+              <i class="fa-regular fa-clock text-pink-500"></i> Trang 22–27
+            </div>
+          </div>
+
+          <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 italic">Khối cứng, mềm, rỗng, đặc, tĩnh & động • Cảm giác thị giác • Sắp xếp khối tạo chuyển động</p>
+
+          <div class="space-y-4 text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-2">
+                <h4 class="font-bold text-pink-700 dark:text-pink-400 flex items-center gap-2 text-sm">
+                  <i class="fa-solid fa-cube"></i> Kiến thức trọng tâm
+                </h4>
+                <ul class="text-xs sm:text-sm space-y-1.5 list-disc list-inside text-gray-600 dark:text-gray-300">
+                  <li>Nhận biết các biểu hiện phong phú của khối: <strong>khối cứng</strong> (đá, gỗ), <strong>khối mềm</strong> (bông gòn, đất nặn), <strong>khối đặc</strong> (viên gạch), <strong>khối rỗng</strong> (chiếc hộp, ống tre).</li>
+                  <li>Hiểu rằng hình dạng và cấu trúc khối tạo ra cảm giác thị giác khác nhau (vững chãi, thanh thoát, mềm mại).</li>
+                  <li>Nhận biết việc sắp xếp các khối theo hướng nghiêng, xoay hoặc lệch trục có thể tạo <strong>cảm giác chuyển động (động)</strong>, trái ngược với đặt thăng bằng tạo cảm giác tĩnh.</li>
+                  <li>Biết sử dụng đất nặn hoặc vỏ hộp giấy để tạo hình các con vật, phương tiện giao thông thể hiện chuyển động.</li>
+                </ul>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-2">
+                <h4 class="font-bold text-purple-700 dark:text-purple-400 flex items-center gap-2 text-sm">
+                  <i class="fa-solid fa-award"></i> Kĩ năng & Sản phẩm học tập
+                </h4>
+                <div class="space-y-2 text-xs sm:text-sm text-gray-600 dark:text-gray-300">
+                  <div>
+                    <span class="font-bold text-gray-800 dark:text-gray-200">Kĩ năng cần đạt:</span>
+                    Quan sát khối 3 chiều, kĩ năng nặn, cắt ghép, lắp ráp và sắp đặt khối tạo nhịp điệu chuyển động.
+                  </div>
+                  <div>
+                    <span class="font-bold text-gray-800 dark:text-gray-200">Sản phẩm cụ thể:</span>
+                    Mô hình con vật hoặc vận động viên chạy nhảy bằng đất nặn/hộp giấy thể hiện tư thế chuyển động.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Quiz Theme 4 -->
+            <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800 space-y-4">
+              <h4 class="text-xs font-bold uppercase tracking-wider text-pink-600 flex items-center gap-2">
+                <i class="fa-solid fa-circle-question"></i> Bài tập trắc nghiệm củng cố Chủ đề 4
+              </h4>
+
+              <div class="p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-3">
+                <p class="font-semibold text-gray-800 dark:text-gray-200 text-xs sm:text-sm">
+                  <strong>Câu 1:</strong> Khi sắp xếp các khối hình hộp hoặc khối đất nặn theo hướng nghiêng và so le nhau, người quan sát sẽ có cảm giác thị giác nào?
+                </p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                  <button onclick="checkQuiz('t4_q1', 0, true, 'Sắp xếp nghiêng, so le hoặc lệch hướng tạo cảm giác nhịp điệu chuyển động sinh động.')" class="quiz-btn-t4_q1 p-3 rounded-xl border border-gray-200 dark:border-gray-700 text-left hover:bg-pink-50 dark:hover:bg-pink-950/30 transition">
+                    A. Cảm giác chuyển động, biến đổi và linh hoạt (khối động)
+                  </button>
+                  <button onclick="checkQuiz('t4_q1', 1, false, 'Khối tĩnh thường được đặt ngay ngắn cân bằng.')" class="quiz-btn-t4_q1 p-3 rounded-xl border border-gray-200 dark:border-gray-700 text-left hover:bg-pink-50 dark:hover:bg-pink-950/30 transition">
+                    B. Cảm giác hoàn toàn bất động và tĩnh lặng (khối tĩnh)
+                  </button>
+                  <button onclick="checkQuiz('t4_q1', 2, false, 'Không liên quan đến biến mất.')" class="quiz-btn-t4_q1 p-3 rounded-xl border border-gray-200 dark:border-gray-700 text-left hover:bg-pink-50 dark:hover:bg-pink-950/30 transition">
+                    C. Cảm giác khối bị biến mất
+                  </button>
+                  <button onclick="checkQuiz('t4_q1', 3, false, 'Không chính xác.')" class="quiz-btn-t4_q1 p-3 rounded-xl border border-gray-200 dark:border-gray-700 text-left hover:bg-pink-50 dark:hover:bg-pink-950/30 transition">
+                    D. Không tạo ra bất kì cảm giác nào
+                  </button>
+                </div>
+                <div id="feedback-t4_q1" class="hidden"></div>
+              </div>
+
+            </div>
+
+          </div>
+        </article>
+
+        <!-- CHỦ ĐỀ 5: MỘT SỐ VẬT LIỆU SỬ DỤNG TRONG THỰC HÀNH, SÁNG TẠO MĨ THUẬT -->
+        <article id="theme-5" class="bg-white dark:bg-dark-surface rounded-3xl p-6 sm:p-8 shadow-sm border border-gray-100 dark:border-gray-800 space-y-6 scroll-mt-24">
+          <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-gray-100 dark:border-gray-800">
+            <div class="flex items-center gap-3">
+              <span class="w-10 h-10 rounded-2xl bg-gradient-to-br from-pink-500 to-purple-600 text-white flex items-center justify-center font-black text-sm shadow-md shadow-pink-500/20">
+                05
+              </span>
+              <div>
+                <div class="flex items-center gap-2">
+                  <span class="px-2.5 py-0.5 rounded-full bg-pink-100 dark:bg-pink-950 text-pink-700 dark:text-pink-300 font-bold text-[11px] uppercase tracking-wider">
+                    Vật liệu & Kĩ thuật
+                  </span>
+                  <span class="text-[11px] font-semibold text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-dark-card px-2 py-0.5 rounded-md">
+                    Trang 28–33
+                  </span>
+                </div>
+                <h3 class="text-lg sm:text-2xl font-black text-gray-900 dark:text-white mt-0.5">Chủ Đề 5: Một Số Vật Liệu Trong Thực Hành, Sáng Tạo Mĩ Thuật</h3>
+              </div>
+            </div>
+            <div class="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400 font-medium bg-gray-50 dark:bg-dark-card px-3 py-1.5 rounded-xl">
+              <i class="fa-regular fa-clock text-pink-500"></i> Trang 28–33
+            </div>
+          </div>
+
+          <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 italic">Vật liệu tự nhiên & tái chế • Bề mặt chất liệu • Thao tác in, dán, nặn, ghép</p>
+
+          <div class="space-y-4 text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-2">
+                <h4 class="font-bold text-pink-700 dark:text-pink-400 flex items-center gap-2 text-sm">
+                  <i class="fa-solid fa-leaf"></i> Kiến thức trọng tâm
+                </h4>
+                <ul class="text-xs sm:text-sm space-y-1.5 list-disc list-inside text-gray-600 dark:text-gray-300">
+                  <li>Nhận biết các vật liệu tự nhiên (lá cây, cành cây khô, vỏ sò, hạt đỗ) và vật liệu sẵn có (giấy báo cũ, bông gòn, vỏ lon, nắp chai).</li>
+                  <li>Phân biệt sự khác nhau về đặc tính bề mặt vật liệu: <strong>nhẵn bóng</strong> (vỏ chai nhựa), <strong>thô ráp</strong> (vỏ cây), <strong>mềm mại</strong> (bông, vải), <strong>cứng chắc</strong> (vỏ sò, bìa carton).</li>
+                  <li>Thực hành thuần thục các thao tác tạo hình: <strong>in</strong> (quét màu lên gân lá rồi dập lên giấy), <strong>dán</strong>, <strong>nặn</strong>, <strong>ghép</strong>.</li>
+                  <li>Biết lựa chọn, phối hợp các vật liệu khác nhau để tạo ra đồ lưu niệm đẹp mắt và ý nghĩa.</li>
+                </ul>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-2">
+                <h4 class="font-bold text-purple-700 dark:text-purple-400 flex items-center gap-2 text-sm">
+                  <i class="fa-solid fa-award"></i> Kĩ năng & Sản phẩm học tập
+                </h4>
+                <div class="space-y-2 text-xs sm:text-sm text-gray-600 dark:text-gray-300">
+                  <div>
+                    <span class="font-bold text-gray-800 dark:text-gray-200">Kĩ năng cần đạt:</span>
+                    Cảm nhận bề mặt chất liệu, khéo léo in hình gân lá, cắt ghép kết hợp vật liệu an toàn.
+                  </div>
+                  <div>
+                    <span class="font-bold text-gray-800 dark:text-gray-200">Sản phẩm cụ thể:</span>
+                    Bức tranh in lá cây hình đàn cá dưới đại dương; thiệp chúc mừng đính hạt ngũ cốc hoặc cúc áo.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Quiz Theme 5 -->
+            <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800 space-y-4">
+              <h4 class="text-xs font-bold uppercase tracking-wider text-pink-600 flex items-center gap-2">
+                <i class="fa-solid fa-circle-question"></i> Bài tập trắc nghiệm củng cố Chủ đề 5
+              </h4>
+
+              <div class="p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-3">
+                <p class="font-semibold text-gray-800 dark:text-gray-200 text-xs sm:text-sm">
+                  <strong>Câu 1:</strong> Khi thực hiện kĩ thuật in lá cây lên giấy, để đường gân lá hiện lên rõ ràng và đẹp nhất, em nên bôi màu vào bề mặt nào của chiếc lá?
+                </p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                  <button onclick="checkQuiz('t5_q1', 0, false, 'Mặt trên nhẵn bóng nên gân lá chìm, in không rõ nét.')" class="quiz-btn-t5_q1 p-3 rounded-xl border border-gray-200 dark:border-gray-700 text-left hover:bg-pink-50 dark:hover:bg-pink-950/30 transition">
+                    A. Quét màu vào mặt trên nhẵn bóng của lá
+                  </button>
+                  <button onclick="checkQuiz('t5_q1', 1, true, 'Mặt dưới của lá có đường gân nổi rõ rệt, khi quét màu và áp lên giấy sẽ in được vân hoa rất sắc nét.')" class="quiz-btn-t5_q1 p-3 rounded-xl border border-gray-200 dark:border-gray-700 text-left hover:bg-pink-50 dark:hover:bg-pink-950/30 transition">
+                    B. Quét màu vào mặt dưới của lá nơi có các đường gân nổi gồ ghề
+                  </button>
+                  <button onclick="checkQuiz('t5_q1', 2, false, 'Chỉ quét cuống lá không tạo được hình dáng chiếc lá.')" class="quiz-btn-t5_q1 p-3 rounded-xl border border-gray-200 dark:border-gray-700 text-left hover:bg-pink-50 dark:hover:bg-pink-950/30 transition">
+                    C. Chỉ quét màu vào phần cuống lá
+                  </button>
+                  <button onclick="checkQuiz('t5_q1', 3, false, 'Không chính xác.')" class="quiz-btn-t5_q1 p-3 rounded-xl border border-gray-200 dark:border-gray-700 text-left hover:bg-pink-50 dark:hover:bg-pink-950/30 transition">
+                    D. Nhúng cả chiếc lá ngập vào nước
+                  </button>
+                </div>
+                <div id="feedback-t5_q1" class="hidden"></div>
+              </div>
+
+            </div>
+
+          </div>
+        </article>
+
+        <!-- CHỦ ĐỀ 6: BIẾT ƠN THẦY CÔ -->
+        <article id="theme-6" class="bg-white dark:bg-dark-surface rounded-3xl p-6 sm:p-8 shadow-sm border border-gray-100 dark:border-gray-800 space-y-6 scroll-mt-24">
+          <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-gray-100 dark:border-gray-800">
+            <div class="flex items-center gap-3">
+              <span class="w-10 h-10 rounded-2xl bg-gradient-to-br from-pink-500 to-purple-600 text-white flex items-center justify-center font-black text-sm shadow-md shadow-pink-500/20">
+                06
+              </span>
+              <div>
+                <div class="flex items-center gap-2">
+                  <span class="px-2.5 py-0.5 rounded-full bg-pink-100 dark:bg-pink-950 text-pink-700 dark:text-pink-300 font-bold text-[11px] uppercase tracking-wider">
+                    Chủ đề tri ân
+                  </span>
+                  <span class="text-[11px] font-semibold text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-dark-card px-2 py-0.5 rounded-md">
+                    Trang 34–39
+                  </span>
+                </div>
+                <h3 class="text-lg sm:text-2xl font-black text-gray-900 dark:text-white mt-0.5">Chủ Đề 6: Biết Ơn Thầy Cô</h3>
+              </div>
+            </div>
+            <div class="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400 font-medium bg-gray-50 dark:bg-dark-card px-3 py-1.5 rounded-xl">
+              <i class="fa-regular fa-clock text-pink-500"></i> Trang 34–39
+            </div>
+          </div>
+
+          <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 italic">Hình ảnh người thầy • Nét, hình, màu sắc • Thiết kế thiệp và báo tường chào mừng 20/11</p>
+
+          <div class="space-y-4 text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-2">
+                <h4 class="font-bold text-pink-700 dark:text-pink-400 flex items-center gap-2 text-sm">
+                  <i class="fa-solid fa-chalkboard-user"></i> Kiến thức trọng tâm
+                </h4>
+                <ul class="text-xs sm:text-sm space-y-1.5 list-disc list-inside text-gray-600 dark:text-gray-300">
+                  <li>Nhận biết các hình ảnh, khoảnh khắc xúc động gắn liền với thầy cô giáo (thầy cô say sưa giảng bài bên bảng đen, hướng dẫn học sinh đọc sách, tặng hoa ngày 20/11).</li>
+                  <li>Biết lựa chọn ý tưởng, hình ảnh trọng tâm để sáng tác bức tranh về thầy cô yêu quý.</li>
+                  <li>Vận dụng nét vẽ tình cảm, hình khối cân đối và màu sắc tươi sáng để diễn tả tình thầy trò.</li>
+                  <li>Biết thiết kế, trang trí báo tường hoặc tấm thiệp chúc mừng nhân ngày Nhà giáo Việt Nam 20/11.</li>
+                </ul>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-2">
+                <h4 class="font-bold text-purple-700 dark:text-purple-400 flex items-center gap-2 text-sm">
+                  <i class="fa-solid fa-award"></i> Kĩ năng & Sản phẩm học tập
+                </h4>
+                <div class="space-y-2 text-xs sm:text-sm text-gray-600 dark:text-gray-300">
+                  <div>
+                    <span class="font-bold text-gray-800 dark:text-gray-200">Kĩ năng cần đạt:</span>
+                    Vẽ tranh theo chủ đề tri ân, thiết kế bố cục thiệp hài hòa, kết hợp chữ viết và hình vẽ nghệ thuật.
+                  </div>
+                  <div>
+                    <span class="font-bold text-gray-800 dark:text-gray-200">Sản phẩm cụ thể:</span>
+                    Tranh vẽ cô giáo đang giảng bài; tấm thiệp 3D chúc mừng 20/11 đính hoa giấy xinh xắn.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Quiz Theme 6 -->
+            <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800 space-y-4">
+              <h4 class="text-xs font-bold uppercase tracking-wider text-pink-600 flex items-center gap-2">
+                <i class="fa-solid fa-circle-question"></i> Bài tập trắc nghiệm củng cố Chủ đề 6
+              </h4>
+
+              <div class="p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-3">
+                <p class="font-semibold text-gray-800 dark:text-gray-200 text-xs sm:text-sm">
+                  <strong>Câu 1:</strong> Trong một bức tranh vẽ về chủ đề "Biết ơn thầy cô", hình ảnh nào sau đây nên được chọn làm "hình ảnh chính" của bức tranh?
+                </p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                  <button onclick="checkQuiz('t6_q1', 0, false, 'Cột cờ sân trường chỉ là hình ảnh phụ trong khung cảnh.')" class="quiz-btn-t6_q1 p-3 rounded-xl border border-gray-200 dark:border-gray-700 text-left hover:bg-pink-50 dark:hover:bg-pink-950/30 transition">
+                    A. Cột cờ và hàng rào ngoài sân trường
+                  </button>
+                  <button onclick="checkQuiz('t6_q1', 1, true, 'Hình ảnh cô giáo và học sinh đang tươi cười tặng hoa là trung tâm ý nghĩa của bức tranh chủ đề tri ân.')" class="quiz-btn-t6_q1 p-3 rounded-xl border border-gray-200 dark:border-gray-700 text-left hover:bg-pink-50 dark:hover:bg-pink-950/30 transition">
+                    B. Cô giáo dịu hiền và các bạn học sinh đang vui mừng dâng hoa chúc mừng cô
+                  </button>
+                  <button onclick="checkQuiz('t6_q1', 2, false, 'Bầu trời và đám mây chỉ là hình ảnh phụ làm nền.')" class="quiz-btn-t6_q1 p-3 rounded-xl border border-gray-200 dark:border-gray-700 text-left hover:bg-pink-50 dark:hover:bg-pink-950/30 transition">
+                    C. Những đám mây bay trên bầu trời
+                  </button>
+                  <button onclick="checkQuiz('t6_q1', 3, false, 'Bóng đèn chỉ là chi tiết phụ.')" class="quiz-btn-t6_q1 p-3 rounded-xl border border-gray-200 dark:border-gray-700 text-left hover:bg-pink-50 dark:hover:bg-pink-950/30 transition">
+                    D. Chiếc bóng đèn điện trên trần lớp học
+                  </button>
+                </div>
+                <div id="feedback-t6_q1" class="hidden"></div>
+              </div>
+
+            </div>
+
+          </div>
+        </article>
+
+        <!-- CHỦ ĐỀ 7: CẢNH VẬT QUANH EM -->
+        <article id="theme-7" class="bg-white dark:bg-dark-surface rounded-3xl p-6 sm:p-8 shadow-sm border border-gray-100 dark:border-gray-800 space-y-6 scroll-mt-24">
+          <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-gray-100 dark:border-gray-800">
+            <div class="flex items-center gap-3">
+              <span class="w-10 h-10 rounded-2xl bg-gradient-to-br from-pink-500 to-purple-600 text-white flex items-center justify-center font-black text-sm shadow-md shadow-pink-500/20">
+                07
+              </span>
+              <div>
+                <div class="flex items-center gap-2">
+                  <span class="px-2.5 py-0.5 rounded-full bg-pink-100 dark:bg-pink-950 text-pink-700 dark:text-pink-300 font-bold text-[11px] uppercase tracking-wider">
+                    Thiên nhiên & Bố cục
+                  </span>
+                  <span class="text-[11px] font-semibold text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-dark-card px-2 py-0.5 rounded-md">
+                    Trang 40–45
+                  </span>
+                </div>
+                <h3 class="text-lg sm:text-2xl font-black text-gray-900 dark:text-white mt-0.5">Chủ Đề 7: Cảnh Vật Quanh Em</h3>
+              </div>
+            </div>
+            <div class="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400 font-medium bg-gray-50 dark:bg-dark-card px-3 py-1.5 rounded-xl">
+              <i class="fa-regular fa-clock text-pink-500"></i> Trang 40–45
+            </div>
+          </div>
+
+          <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 italic">Vẻ đẹp thiên nhiên • Bố cục hình ảnh chính - phụ • Màu sắc cảnh vật • Ti vi tranh cuộn</p>
+
+          <div class="space-y-4 text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-2">
+                <h4 class="font-bold text-pink-700 dark:text-pink-400 flex items-center gap-2 text-sm">
+                  <i class="fa-solid fa-mountain-sun"></i> Kiến thức trọng tâm
+                </h4>
+                <ul class="text-xs sm:text-sm space-y-1.5 list-disc list-inside text-gray-600 dark:text-gray-300">
+                  <li>Cảm nhận vẻ đẹp đa dạng của cảnh vật thiên nhiên (cánh đồng lúa chín vàng, dòng sông xanh mát, dãy núi trùng điệp, góc phố thân quen).</li>
+                  <li>Biết quan sát, chọn lọc hình ảnh và gam màu đặc trưng theo mùa hoặc thời điểm trong ngày (bình minh, hoàng hôn).</li>
+                  <li>Sắp xếp bố cục hài hòa: <strong>hình ảnh chính</strong> đặt ở vị trí trung tâm nổi bật, <strong>hình ảnh phụ</strong> (mây trời, cỏ cây, chim bay) bổ trợ làm tranh thêm sinh động.</li>
+                  <li>Sử dụng vật liệu tái chế (hộp carton, que cuộn) để sáng tạo mô hình "Chiếc ti vi trình chiếu tranh phong cảnh".</li>
+                </ul>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-2">
+                <h4 class="font-bold text-purple-700 dark:text-purple-400 flex items-center gap-2 text-sm">
+                  <i class="fa-solid fa-award"></i> Kĩ năng & Sản phẩm học tập
+                </h4>
+                <div class="space-y-2 text-xs sm:text-sm text-gray-600 dark:text-gray-300">
+                  <div>
+                    <span class="font-bold text-gray-800 dark:text-gray-200">Kĩ năng cần đạt:</span>
+                    Quan sát phong cảnh, sắp xếp mảng chính - phụ, phối màu cảnh quan tạo chiều sâu không gian.
+                  </div>
+                  <div>
+                    <span class="font-bold text-gray-800 dark:text-gray-200">Sản phẩm cụ thể:</span>
+                    Tranh phong cảnh quê hương; mô hình hộp ti vi có trục quay trình chiếu dải tranh cảnh vật.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Quiz Theme 7 -->
+            <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800 space-y-4">
+              <h4 class="text-xs font-bold uppercase tracking-wider text-pink-600 flex items-center gap-2">
+                <i class="fa-solid fa-circle-question"></i> Bài tập trắc nghiệm củng cố Chủ đề 7
+              </h4>
+
+              <div class="p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-3">
+                <p class="font-semibold text-gray-800 dark:text-gray-200 text-xs sm:text-sm">
+                  <strong>Câu 1:</strong> Khi vẽ một bức tranh phong cảnh, hình ảnh chính cần được sắp xếp và thể hiện như thế nào để bố cục tranh hợp lí nhất?
+                </p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                  <button onclick="checkQuiz('t7_q1', 0, false, 'Vẽ tí xíu ở góc sẽ làm tranh bị trống trải mất cân đối.')" class="quiz-btn-t7_q1 p-3 rounded-xl border border-gray-200 dark:border-gray-700 text-left hover:bg-pink-50 dark:hover:bg-pink-950/30 transition">
+                    A. Vẽ thật nhỏ xíu ở tận góc dưới cùng của tờ giấy
+                  </button>
+                  <button onclick="checkQuiz('t7_q1', 1, true, 'Hình ảnh chính cần được vẽ to, rõ ràng ở vị trí trọng tâm để thu hút ánh nhìn đầu tiên của người xem.')" class="quiz-btn-t7_q1 p-3 rounded-xl border border-gray-200 dark:border-gray-700 text-left hover:bg-pink-50 dark:hover:bg-pink-950/30 transition">
+                    B. Đặt ở vị trí trọng tâm bức tranh, vẽ to và rõ nét với màu sắc nổi bật nhất
+                  </button>
+                  <button onclick="checkQuiz('t7_q1', 2, false, 'Không có hình ảnh chính tranh sẽ bị rối loạn.')" class="quiz-btn-t7_q1 p-3 rounded-xl border border-gray-200 dark:border-gray-700 text-left hover:bg-pink-50 dark:hover:bg-pink-950/30 transition">
+                    C. Không cần vẽ hình ảnh chính, chỉ cần vẽ các chấm màu linh tinh
+                  </button>
+                  <button onclick="checkQuiz('t7_q1', 3, false, 'Che khuất sẽ làm mất hình ảnh chính.')" class="quiz-btn-t7_q1 p-3 rounded-xl border border-gray-200 dark:border-gray-700 text-left hover:bg-pink-50 dark:hover:bg-pink-950/30 transition">
+                    D. Vẽ hình ảnh phụ che kín hết hình ảnh chính
+                  </button>
+                </div>
+                <div id="feedback-t7_q1" class="hidden"></div>
+              </div>
+
+            </div>
+
+          </div>
+        </article>
+
+        <!-- CHỦ ĐỀ 8: CHÂN DUNG NGƯỜI THÂN TRONG GIA ĐÌNH -->
+        <article id="theme-8" class="bg-white dark:bg-dark-surface rounded-3xl p-6 sm:p-8 shadow-sm border border-gray-100 dark:border-gray-800 space-y-6 scroll-mt-24">
+          <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-gray-100 dark:border-gray-800">
+            <div class="flex items-center gap-3">
+              <span class="w-10 h-10 rounded-2xl bg-gradient-to-br from-pink-500 to-purple-600 text-white flex items-center justify-center font-black text-sm shadow-md shadow-pink-500/20">
+                08
+              </span>
+              <div>
+                <div class="flex items-center gap-2">
+                  <span class="px-2.5 py-0.5 rounded-full bg-pink-100 dark:bg-pink-950 text-pink-700 dark:text-pink-300 font-bold text-[11px] uppercase tracking-wider">
+                    Chân dung hội họa
+                  </span>
+                  <span class="text-[11px] font-semibold text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-dark-card px-2 py-0.5 rounded-md">
+                    Trang 46–51
+                  </span>
+                </div>
+                <h3 class="text-lg sm:text-2xl font-black text-gray-900 dark:text-white mt-0.5">Chủ Đề 8: Chân Dung Người Thân Trong Gia Đình</h3>
+              </div>
+            </div>
+            <div class="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400 font-medium bg-gray-50 dark:bg-dark-card px-3 py-1.5 rounded-xl">
+              <i class="fa-regular fa-clock text-pink-500"></i> Trang 46–51
+            </div>
+          </div>
+
+          <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 italic">Đặc điểm khuôn mặt & biểu cảm • 2 Cách vẽ (trí nhớ & quan sát) • Phối màu thể hiện tình cảm</p>
+
+          <div class="space-y-4 text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-2">
+                <h4 class="font-bold text-pink-700 dark:text-pink-400 flex items-center gap-2 text-sm">
+                  <i class="fa-solid fa-user"></i> Kiến thức trọng tâm
+                </h4>
+                <ul class="text-xs sm:text-sm space-y-1.5 list-disc list-inside text-gray-600 dark:text-gray-300">
+                  <li>Nhận biết đặc trưng của thể loại tranh chân dung: tập trung diễn tả khuôn mặt, cổ và nửa thân người.</li>
+                  <li>Quan sát các bộ phận ngũ quan trên khuôn mặt: mắt, mũi, miệng, tai, kiểu tóc và <strong>biểu cảm</strong> (vui tươi, trầm ấm, nụ cười hiền hậu).</li>
+                  <li>Nắm rõ <strong>hai cách thể hiện tranh chân dung</strong> được giới thiệu trong SGK:
+                    <div class="mt-1 pl-4 space-y-0.5 text-xs">
+                      <div>1. <em>Vẽ qua trí nhớ:</em> hồi tưởng lại nét mặt thân thương của người thân.</div>
+                      <div>2. <em>Vẽ bằng quan sát trực tiếp:</em> quan sát người thân đang ngồi làm mẫu trước mặt.</div>
+                    </div>
+                  </li>
+                  <li>Biết dùng nét vẽ mềm mại, màu sắc ấm áp và có thể tận dụng sợi len làm tóc, vải vụn làm áo.</li>
+                </ul>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-2">
+                <h4 class="font-bold text-purple-700 dark:text-purple-400 flex items-center gap-2 text-sm">
+                  <i class="fa-solid fa-award"></i> Kĩ năng & Sản phẩm học tập
+                </h4>
+                <div class="space-y-2 text-xs sm:text-sm text-gray-600 dark:text-gray-300">
+                  <div>
+                    <span class="font-bold text-gray-800 dark:text-gray-200">Kĩ năng cần đạt:</span>
+                    Quan sát tỉ lệ khuôn mặt, nắm bắt biểu cảm nhân vật, phối màu da và biểu cảm yêu thương.
+                  </div>
+                  <div>
+                    <span class="font-bold text-gray-800 dark:text-gray-200">Sản phẩm cụ thể:</span>
+                    Bức tranh chân dung mẹ hiền hoặc ông bà được lồng vào khung ảnh xinh xắn.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Quiz Theme 8 -->
+            <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800 space-y-4">
+              <h4 class="text-xs font-bold uppercase tracking-wider text-pink-600 flex items-center gap-2">
+                <i class="fa-solid fa-circle-question"></i> Bài tập trắc nghiệm củng cố Chủ đề 8
+              </h4>
+
+              <div class="p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-3">
+                <p class="font-semibold text-gray-800 dark:text-gray-200 text-xs sm:text-sm">
+                  <strong>Câu 1:</strong> Hai cách thể hiện tranh chân dung được giới thiệu trong SGK Mĩ thuật 3 là những cách nào?
+                </p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                  <button onclick="checkQuiz('t8_q1', 0, false, 'Vẽ qua kính lúp không phải là phương pháp trong SGK.')" class="quiz-btn-t8_q1 p-3 rounded-xl border border-gray-200 dark:border-gray-700 text-left hover:bg-pink-50 dark:hover:bg-pink-950/30 transition">
+                    A. Vẽ qua kính lúp và vẽ qua bóng gương
+                  </button>
+                  <button onclick="checkQuiz('t8_q1', 1, true, 'Chính xác! SGK hướng dẫn hai cách: Vẽ qua trí nhớ và Vẽ bằng quan sát người thân trực tiếp.')" class="quiz-btn-t8_q1 p-3 rounded-xl border border-gray-200 dark:border-gray-700 text-left hover:bg-pink-50 dark:hover:bg-pink-950/30 transition">
+                    B. Vẽ qua trí nhớ (hồi tưởng) và Vẽ bằng quan sát trực tiếp (mẫu thực tế)
+                  </button>
+                  <button onclick="checkQuiz('t8_q1', 2, false, 'Đồ lại trên ảnh chụp không phát huy sáng tạo hội họa.')" class="quiz-btn-t8_q1 p-3 rounded-xl border border-gray-200 dark:border-gray-700 text-left hover:bg-pink-50 dark:hover:bg-pink-950/30 transition">
+                    C. Đồ lại theo vết scan và in bằng máy vi tính
+                  </button>
+                  <button onclick="checkQuiz('t8_q1', 3, false, 'Không chính xác.')" class="quiz-btn-t8_q1 p-3 rounded-xl border border-gray-200 dark:border-gray-700 text-left hover:bg-pink-50 dark:hover:bg-pink-950/30 transition">
+                    D. Chỉ có một cách duy nhất là vẽ theo trí tưởng tượng thần tiên
+                  </button>
+                </div>
+                <div id="feedback-t8_q1" class="hidden"></div>
+              </div>
+
+            </div>
+
+          </div>
+        </article>
+
+        <!-- CHỦ ĐỀ 9: SINH HOẠT TRONG GIA ĐÌNH -->
+        <article id="theme-9" class="bg-white dark:bg-dark-surface rounded-3xl p-6 sm:p-8 shadow-sm border border-gray-100 dark:border-gray-800 space-y-6 scroll-mt-24">
+          <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-gray-100 dark:border-gray-800">
+            <div class="flex items-center gap-3">
+              <span class="w-10 h-10 rounded-2xl bg-gradient-to-br from-pink-500 to-purple-600 text-white flex items-center justify-center font-black text-sm shadow-md shadow-pink-500/20">
+                09
+              </span>
+              <div>
+                <div class="flex items-center gap-2">
+                  <span class="px-2.5 py-0.5 rounded-full bg-pink-100 dark:bg-pink-950 text-pink-700 dark:text-pink-300 font-bold text-[11px] uppercase tracking-wider">
+                    Đời sống thường ngày
+                  </span>
+                  <span class="text-[11px] font-semibold text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-dark-card px-2 py-0.5 rounded-md">
+                    Trang 52–57
+                  </span>
+                </div>
+                <h3 class="text-lg sm:text-2xl font-black text-gray-900 dark:text-white mt-0.5">Chủ Đề 9: Sinh Hoạt Trong Gia Đình</h3>
+              </div>
+            </div>
+            <div class="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400 font-medium bg-gray-50 dark:bg-dark-card px-3 py-1.5 rounded-xl">
+              <i class="fa-regular fa-clock text-pink-500"></i> Trang 52–57
+            </div>
+          </div>
+
+          <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 italic">Bữa cơm gia đình • Không gian trước - sau • Hình ảnh chính phụ • Hộp đựng giấy ăn trang trí</p>
+
+          <div class="space-y-4 text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-2">
+                <h4 class="font-bold text-pink-700 dark:text-pink-400 flex items-center gap-2 text-sm">
+                  <i class="fa-solid fa-people-roof"></i> Kiến thức trọng tâm
+                </h4>
+                <ul class="text-xs sm:text-sm space-y-1.5 list-disc list-inside text-gray-600 dark:text-gray-300">
+                  <li>Nhận biết các hoạt động sinh hoạt ấm cúng thường ngày trong gia đình: bữa cơm quây quần, cả nhà dọn dẹp nhà cửa, cùng nhau xem tivi, gói bánh chưng ngày Tết.</li>
+                  <li>Lựa chọn ý tưởng từ quan sát đời thực, ảnh chụp kỉ niệm gia đình hoặc qua trí nhớ.</li>
+                  <li>Biết <strong>sắp xếp hình ảnh trước – sau</strong>: người và vật ở gần vẽ to đặt ở phía trước, người và vật ở xa vẽ nhỏ hơn đặt ở phía sau để tạo không gian xa gần.</li>
+                  <li>Phân biệt rõ ràng hình ảnh chính (các thành viên gia đình) và hình ảnh phụ (bàn ăn, cửa sổ, chậu hoa).</li>
+                </ul>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-2">
+                <h4 class="font-bold text-purple-700 dark:text-purple-400 flex items-center gap-2 text-sm">
+                  <i class="fa-solid fa-award"></i> Kĩ năng & Sản phẩm học tập
+                </h4>
+                <div class="space-y-2 text-xs sm:text-sm text-gray-600 dark:text-gray-300">
+                  <div>
+                    <span class="font-bold text-gray-800 dark:text-gray-200">Kĩ năng cần đạt:</span>
+                    Xây dựng ý tưởng bố cục nhiều nhân vật, diễn tả không gian trước sau, trang trí đồ dùng gia đình.
+                  </div>
+                  <div>
+                    <span class="font-bold text-gray-800 dark:text-gray-200">Sản phẩm cụ thể:</span>
+                    Tranh vẽ cảnh bữa cơm gia đình đầm ấm; chiếc hộp đựng giấy ăn được dán tranh trang trí độc đáo.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Quiz Theme 9 -->
+            <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800 space-y-4">
+              <h4 class="text-xs font-bold uppercase tracking-wider text-pink-600 flex items-center gap-2">
+                <i class="fa-solid fa-circle-question"></i> Bài tập trắc nghiệm củng cố Chủ đề 9
+              </h4>
+
+              <div class="p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-3">
+                <p class="font-semibold text-gray-800 dark:text-gray-200 text-xs sm:text-sm">
+                  <strong>Câu 1:</strong> Trong mĩ thuật, quy luật nào sau đây giúp tạo ra cảm giác "không gian xa – gần" trong bức tranh sinh hoạt gia đình?
+                </p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                  <button onclick="checkQuiz('t9_q1', 0, true, 'Quy luật phối cảnh: Người và vật ở phía trước (gần) vẽ to, rõ nét; ở phía sau (xa) vẽ nhỏ hơn.')" class="quiz-btn-t9_q1 p-3 rounded-xl border border-gray-200 dark:border-gray-700 text-left hover:bg-pink-50 dark:hover:bg-pink-950/30 transition">
+                    A. Người và vật ở gần (phía trước) vẽ to rõ ràng; người và vật ở xa (phía sau) vẽ nhỏ hơn
+                  </button>
+                  <button onclick="checkQuiz('t9_q1', 1, false, 'Vẽ bằng nhau tranh sẽ phẳng lỳ không có chiều sâu.')" class="quiz-btn-t9_q1 p-3 rounded-xl border border-gray-200 dark:border-gray-700 text-left hover:bg-pink-50 dark:hover:bg-pink-950/30 transition">
+                    B. Tất cả mọi người dù ở xa hay gần đều phải vẽ kích thước bằng chằn chặn nhau
+                  </button>
+                  <button onclick="checkQuiz('t9_q1', 2, false, 'Ở xa vẽ to hơn là trái với tự nhiên.')" class="quiz-btn-t9_q1 p-3 rounded-xl border border-gray-200 dark:border-gray-700 text-left hover:bg-pink-50 dark:hover:bg-pink-950/30 transition">
+                    C. Người ở xa tít thì vẽ to khổng lồ, người ở gần thì vẽ tí hon
+                  </button>
+                  <button onclick="checkQuiz('t9_q1', 3, false, 'Không chính xác.')" class="quiz-btn-t9_q1 p-3 rounded-xl border border-gray-200 dark:border-gray-700 text-left hover:bg-pink-50 dark:hover:bg-pink-950/30 transition">
+                    D. Chỉ vẽ 1 người duy nhất trong tranh
+                  </button>
+                </div>
+                <div id="feedback-t9_q1" class="hidden"></div>
+              </div>
+
+            </div>
+
+          </div>
+        </article>
+
+        <!-- CHỦ ĐỀ 10: AN TOÀN GIAO THÔNG -->
+        <article id="theme-10" class="bg-white dark:bg-dark-surface rounded-3xl p-6 sm:p-8 shadow-sm border border-gray-100 dark:border-gray-800 space-y-6 scroll-mt-24">
+          <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-gray-100 dark:border-gray-800">
+            <div class="flex items-center gap-3">
+              <span class="w-10 h-10 rounded-2xl bg-gradient-to-br from-pink-500 to-purple-600 text-white flex items-center justify-center font-black text-sm shadow-md shadow-pink-500/20">
+                10
+              </span>
+              <div>
+                <div class="flex items-center gap-2">
+                  <span class="px-2.5 py-0.5 rounded-full bg-pink-100 dark:bg-pink-950 text-pink-700 dark:text-pink-300 font-bold text-[11px] uppercase tracking-wider">
+                    Mĩ thuật cổ động
+                  </span>
+                  <span class="text-[11px] font-semibold text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-dark-card px-2 py-0.5 rounded-md">
+                    Trang 58–63
+                  </span>
+                </div>
+                <h3 class="text-lg sm:text-2xl font-black text-gray-900 dark:text-white mt-0.5">Chủ Đề 10: An Toàn Giao Thông</h3>
+              </div>
+            </div>
+            <div class="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400 font-medium bg-gray-50 dark:bg-dark-card px-3 py-1.5 rounded-xl">
+              <i class="fa-regular fa-clock text-pink-500"></i> Trang 58–63
+            </div>
+          </div>
+
+          <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 italic">Luật lệ giao thông • Phân biệt đúng - sai • Tạo hình & trang trí mũ bảo hiểm</p>
+
+          <div class="space-y-4 text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-2">
+                <h4 class="font-bold text-pink-700 dark:text-pink-400 flex items-center gap-2 text-sm">
+                  <i class="fa-solid fa-traffic-light"></i> Kiến thức trọng tâm
+                </h4>
+                <ul class="text-xs sm:text-sm space-y-1.5 list-disc list-inside text-gray-600 dark:text-gray-300">
+                  <li>Nhận biết các quy định cốt lõi khi tham gia giao thông: đội mũ bảo hiểm cài quai đúng cách khi đi xe máy/xe đạp điện, đi đúng làn đường, dừng đèn đỏ, đi bộ trên vỉa hè và sang đường tại vạch kẻ trắng.</li>
+                  <li>Phân biệt rõ ràng hành vi đúng (an toàn) và hành vi sai nguy hiểm (chở quá số người, lạng lách, không đội mũ bảo hiểm).</li>
+                  <li>Sử dụng linh hoạt hình, màu sắc (đèn tín hiệu xanh - vàng - đỏ), khối để tạo sản phẩm mĩ thuật cổ động an toàn giao thông.</li>
+                  <li>Biết trang trí mũ bảo hiểm hoặc làm mô hình ngã tư giao thông bằng vật liệu tái chế.</li>
+                </ul>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-2">
+                <h4 class="font-bold text-purple-700 dark:text-purple-400 flex items-center gap-2 text-sm">
+                  <i class="fa-solid fa-award"></i> Kĩ năng & Sản phẩm học tập
+                </h4>
+                <div class="space-y-2 text-xs sm:text-sm text-gray-600 dark:text-gray-300">
+                  <div>
+                    <span class="font-bold text-gray-800 dark:text-gray-200">Kĩ năng cần đạt:</span>
+                    Quan sát hành vi văn hóa giao thông, tạo hình phương tiện và đèn tín hiệu, trang trí đồ vật bảo hộ.
+                  </div>
+                  <div>
+                    <span class="font-bold text-gray-800 dark:text-gray-200">Sản phẩm cụ thể:</span>
+                    Tranh cổ động "Chúng em đội mũ bảo hiểm khi tới trường"; mô hình ngã tư đường phố bằng bìa carton.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Quiz Theme 10 -->
+            <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800 space-y-4">
+              <h4 class="text-xs font-bold uppercase tracking-wider text-pink-600 flex items-center gap-2">
+                <i class="fa-solid fa-circle-question"></i> Bài tập trắc nghiệm củng cố Chủ đề 10
+              </h4>
+
+              <div class="p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-3">
+                <p class="font-semibold text-gray-800 dark:text-gray-200 text-xs sm:text-sm">
+                  <strong>Câu 1:</strong> Màu sắc chuẩn của 3 vòng tròn đèn tín hiệu giao thông đường bộ từ trên xuống dưới lần lượt là gì?
+                </p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                  <button onclick="checkQuiz('t10_q1', 0, true, 'Thứ tự chuẩn quốc tế: Đỏ (trên cùng: Dừng lại) - Vàng (ở giữa: Giảm tốc độ) - Xanh (dưới cùng: Được phép đi).')" class="quiz-btn-t10_q1 p-3 rounded-xl border border-gray-200 dark:border-gray-700 text-left hover:bg-pink-50 dark:hover:bg-pink-950/30 transition">
+                    A. Đỏ (dừng lại) - Vàng (giảm tốc) - Xanh lá (được đi)
+                  </button>
+                  <button onclick="checkQuiz('t10_q1', 1, false, 'Sai thứ tự chuẩn đèn tín hiệu.')" class="quiz-btn-t10_q1 p-3 rounded-xl border border-gray-200 dark:border-gray-700 text-left hover:bg-pink-50 dark:hover:bg-pink-950/30 transition">
+                    B. Xanh lá - Vàng - Đỏ
+                  </button>
+                  <button onclick="checkQuiz('t10_q1', 2, false, 'Đèn tín hiệu không có màu tím.')" class="quiz-btn-t10_q1 p-3 rounded-xl border border-gray-200 dark:border-gray-700 text-left hover:bg-pink-50 dark:hover:bg-pink-950/30 transition">
+                    C. Tím - Cam - Xanh lam
+                  </button>
+                  <button onclick="checkQuiz('t10_q1', 3, false, 'Không chính xác.')" class="quiz-btn-t10_q1 p-3 rounded-xl border border-gray-200 dark:border-gray-700 text-left hover:bg-pink-50 dark:hover:bg-pink-950/30 transition">
+                    D. Chỉ có duy nhất màu trắng nhấp nháy
+                  </button>
+                </div>
+                <div id="feedback-t10_q1" class="hidden"></div>
+              </div>
+
+            </div>
+
+            <!-- Callout to Exam Modal -->
+            <div class="p-5 rounded-2xl bg-gradient-to-r from-pink-500 to-purple-600 text-white flex flex-col sm:flex-row items-center justify-between gap-4 shadow-md mt-6">
+              <div class="space-y-1 text-center sm:text-left">
+                <h4 class="font-bold text-base sm:text-lg flex items-center justify-center sm:justify-start gap-2">
+                  <i class="fa-solid fa-award text-yellow-300"></i> Hội Thi Trạng Nguyên Mĩ Thuật Lớp 3
+                </h4>
+                <p class="text-xs sm:text-sm text-white/90">
+                  Thực hiện bài kiểm tra khảo sát 10 câu hỏi trắc nghiệm toàn diện bao quát 10 chủ đề để nhận Chứng Nhận Danh Dự!
+                </p>
+              </div>
+              <button onclick="openCertificationModal()" class="px-6 py-2.5 rounded-xl bg-white text-pink-700 hover:bg-pink-50 font-bold text-xs sm:text-sm shadow-md shrink-0 transition">
+                <i class="fa-solid fa-play mr-1.5"></i> Bắt đầu thi ngay
+              </button>
+            </div>
+
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Modal: Hội Thi Trạng Nguyên Mĩ Thuật Lớp 3 (10 Câu Hỏi Toàn Diện) -->
+  <div id="certification-modal" class="fixed inset-0 bg-black/60 z-50 hidden backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white dark:bg-dark-surface w-full max-w-3xl rounded-3xl p-6 sm:p-8 shadow-2xl border border-gray-100 dark:border-gray-800 space-y-6 my-8 max-h-[90vh] overflow-y-auto">
+      
+      <!-- Modal Header -->
+      <div class="flex items-center justify-between pb-4 border-b border-gray-100 dark:border-gray-800">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-2xl bg-pink-100 dark:bg-pink-900/40 text-pink-600 dark:text-pink-400 flex items-center justify-center text-xl font-bold">
+            <i class="fa-solid fa-palette"></i>
+          </div>
+          <div>
+            <h3 class="text-lg sm:text-xl font-black text-gray-900 dark:text-white">Hội Thi Trạng Nguyên Mĩ Thuật Lớp 3</h3>
+            <p class="text-xs text-gray-500 dark:text-gray-400">10 câu hỏi tình huống và lí thuyết mĩ thuật toàn diện</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-3">
+          <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-pink-50 dark:bg-pink-950/50 border border-pink-200 dark:border-pink-800 text-pink-700 dark:text-pink-300 font-mono font-bold text-xs">
+            <i class="fa-regular fa-clock"></i> <span id="examTimer">60:00</span>
+          </div>
+          <button onclick="closeCertificationModal()" class="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
+            <i class="fa-solid fa-xmark text-lg"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Exam Form -->
+      <form id="certification-form" class="space-y-6">
+        
+        <!-- Q1 -->
+        <div class="p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-2">
+          <p class="font-bold text-xs sm:text-sm text-gray-800 dark:text-gray-200">
+            Câu 1 (Chủ đề 1): Bức tượng nặn chú mèo bằng đất sét thuộc thể loại sản phẩm mĩ thuật nào sau đây?
+          </p>
+          <div class="space-y-1.5 text-xs text-gray-600 dark:text-gray-300">
+            <label class="flex items-center gap-2 p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer">
+              <input type="radio" name="eq1" value="0" class="text-pink-600 focus:ring-pink-500">
+              <span>A. Sản phẩm mĩ thuật 2D (hai chiều phẳng)</span>
+            </label>
+            <label class="flex items-center gap-2 p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer">
+              <input type="radio" name="eq1" value="1" class="text-pink-600 focus:ring-pink-500">
+              <span>B. Sản phẩm mĩ thuật 3D (ba chiều, có thể tích và chiều sâu không gian)</span>
+            </label>
+            <label class="flex items-center gap-2 p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer">
+              <input type="radio" name="eq1" value="2" class="text-pink-600 focus:ring-pink-500">
+              <span>C. Sản phẩm âm thanh nghe bằng tai</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-2">
+          <p class="font-bold text-xs sm:text-sm text-gray-800 dark:text-gray-200">
+            Câu 2 (Chủ đề 2): Hoa văn trang trí trên trang phục thổ cẩm của các dân tộc thường được tạo thành từ những yếu tố nào?
+          </p>
+          <div class="space-y-1.5 text-xs text-gray-600 dark:text-gray-300">
+            <label class="flex items-center gap-2 p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer">
+              <input type="radio" name="eq2" value="0" class="text-pink-600 focus:ring-pink-500">
+              <span>A. Chỉ có nét chấm đen trắng</span>
+            </label>
+            <label class="flex items-center gap-2 p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer">
+              <input type="radio" name="eq2" value="1" class="text-pink-600 focus:ring-pink-500">
+              <span>B. Sự kết hợp khéo léo giữa nét, hình và màu sắc hài hòa</span>
+            </label>
+            <label class="flex items-center gap-2 p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer">
+              <input type="radio" name="eq2" value="2" class="text-pink-600 focus:ring-pink-500">
+              <span>C. Chữ số toán học</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-2">
+          <p class="font-bold text-xs sm:text-sm text-gray-800 dark:text-gray-200">
+            Câu 3 (Chủ đề 3): Khi pha màu Vàng với màu Xanh lam, ta sẽ thu được màu thứ cấp nào?
+          </p>
+          <div class="space-y-1.5 text-xs text-gray-600 dark:text-gray-300">
+            <label class="flex items-center gap-2 p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer">
+              <input type="radio" name="eq3" value="0" class="text-pink-600 focus:ring-pink-500">
+              <span>A. Màu Đỏ cờ</span>
+            </label>
+            <label class="flex items-center gap-2 p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer">
+              <input type="radio" name="eq3" value="1" class="text-pink-600 focus:ring-pink-500">
+              <span>B. Màu Xanh lá cây (xanh lục)</span>
+            </label>
+            <label class="flex items-center gap-2 p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer">
+              <input type="radio" name="eq3" value="2" class="text-pink-600 focus:ring-pink-500">
+              <span>C. Màu Tím</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-2">
+          <p class="font-bold text-xs sm:text-sm text-gray-800 dark:text-gray-200">
+            Câu 4 (Chủ đề 4): Trong mĩ thuật tạo hình, khối đặc và khối rỗng khác nhau ở điểm nào?
+          </p>
+          <div class="space-y-1.5 text-xs text-gray-600 dark:text-gray-300">
+            <label class="flex items-center gap-2 p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer">
+              <input type="radio" name="eq4" value="0" class="text-pink-600 focus:ring-pink-500">
+              <span>A. Khối đặc có màu đỏ, khối rỗng có màu xanh</span>
+            </label>
+            <label class="flex items-center gap-2 p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer">
+              <input type="radio" name="eq4" value="1" class="text-pink-600 focus:ring-pink-500">
+              <span>B. Khối đặc có phần ruột chứa đầy vật chất bên trong, còn khối rỗng có khoảng trống bên trong (như chiếc hộp)</span>
+            </label>
+            <label class="flex items-center gap-2 p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer">
+              <input type="radio" name="eq4" value="2" class="text-pink-600 focus:ring-pink-500">
+              <span>C. Khối đặc là hình tròn, khối rỗng là hình vuông</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q5 -->
+        <div class="p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-2">
+          <p class="font-bold text-xs sm:text-sm text-gray-800 dark:text-gray-200">
+            Câu 5 (Chủ đề 5): Để làm một bức tranh đàn cá bơi dưới biển từ vật liệu tự nhiên, vật liệu nào sau đây thích hợp nhất để in hoặc dán làm thân cá?
+          </p>
+          <div class="space-y-1.5 text-xs text-gray-600 dark:text-gray-300">
+            <label class="flex items-center gap-2 p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer">
+              <input type="radio" name="eq5" value="0" class="text-pink-600 focus:ring-pink-500">
+              <span>A. Những thanh sắt nhọn nguy hiểm</span>
+            </label>
+            <label class="flex items-center gap-2 p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer">
+              <input type="radio" name="eq5" value="1" class="text-pink-600 focus:ring-pink-500">
+              <span>B. Những chiếc lá cây có hình bầu dục hoặc vỏ sò nhỏ</span>
+            </label>
+            <label class="flex items-center gap-2 p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer">
+              <input type="radio" name="eq5" value="2" class="text-pink-600 focus:ring-pink-500">
+              <span>C. Một bát nước lọc</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q6 -->
+        <div class="p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-2">
+          <p class="font-bold text-xs sm:text-sm text-gray-800 dark:text-gray-200">
+            Câu 6 (Chủ đề 6): Khi vẽ tranh tri ân thầy cô giáo, em nên lựa chọn màu sắc như thế nào?
+          </p>
+          <div class="space-y-1.5 text-xs text-gray-600 dark:text-gray-300">
+            <label class="flex items-center gap-2 p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer">
+              <input type="radio" name="eq6" value="0" class="text-pink-600 focus:ring-pink-500">
+              <span>A. Toàn màu đen u tối</span>
+            </label>
+            <label class="flex items-center gap-2 p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer">
+              <input type="radio" name="eq6" value="1" class="text-pink-600 focus:ring-pink-500">
+              <span>B. Màu sắc tươi sáng, ấm áp, thể hiện lòng kính yêu và niềm vui của ngày hội</span>
+            </label>
+            <label class="flex items-center gap-2 p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer">
+              <input type="radio" name="eq6" value="2" class="text-pink-600 focus:ring-pink-500">
+              <span>C. Chỉ để nền giấy trắng không tô màu</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q7 -->
+        <div class="p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-2">
+          <p class="font-bold text-xs sm:text-sm text-gray-800 dark:text-gray-200">
+            Câu 7 (Chủ đề 7): Vai trò của "hình ảnh phụ" trong một bức tranh phong cảnh là gì?
+          </p>
+          <div class="space-y-1.5 text-xs text-gray-600 dark:text-gray-300">
+            <label class="flex items-center gap-2 p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer">
+              <input type="radio" name="eq7" value="0" class="text-pink-600 focus:ring-pink-500">
+              <span>A. Che kín toàn bộ hình ảnh chính</span>
+            </label>
+            <label class="flex items-center gap-2 p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer">
+              <input type="radio" name="eq7" value="1" class="text-pink-600 focus:ring-pink-500">
+              <span>B. Bổ trợ làm nổi bật hình ảnh chính và làm cho không gian bức tranh thêm phong phú, sinh động</span>
+            </label>
+            <label class="flex items-center gap-2 p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer">
+              <input type="radio" name="eq7" value="2" class="text-pink-600 focus:ring-pink-500">
+              <span>C. Làm cho bức tranh xấu đi</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q8 -->
+        <div class="p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-2">
+          <p class="font-bold text-xs sm:text-sm text-gray-800 dark:text-gray-200">
+            Câu 8 (Chủ đề 8): Khi vẽ tranh chân dung mẹ, điều gì giúp thể hiện được nét riêng và tình cảm của mẹ rõ ràng nhất?
+          </p>
+          <div class="space-y-1.5 text-xs text-gray-600 dark:text-gray-300">
+            <label class="flex items-center gap-2 p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer">
+              <input type="radio" name="eq8" value="0" class="text-pink-600 focus:ring-pink-500">
+              <span>A. Vẽ đôi giày của mẹ</span>
+            </label>
+            <label class="flex items-center gap-2 p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer">
+              <input type="radio" name="eq8" value="1" class="text-pink-600 focus:ring-pink-500">
+              <span>B. Quan sát và thể hiện kĩ các đặc điểm ngũ quan (đôi mắt hiền từ, nụ cười ấm áp, mái tóc)</span>
+            </label>
+            <label class="flex items-center gap-2 p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer">
+              <input type="radio" name="eq8" value="2" class="text-pink-600 focus:ring-pink-500">
+              <span>C. Vẽ chiếc xe máy mẹ hay đi</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q9 -->
+        <div class="p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-2">
+          <p class="font-bold text-xs sm:text-sm text-gray-800 dark:text-gray-200">
+            Câu 9 (Chủ đề 9): Khi vẽ bức tranh bữa cơm gia đình, người ngồi gần bàn ăn phía trước và người đứng lấy cơm phía xa được sắp xếp thế nào?
+          </p>
+          <div class="space-y-1.5 text-xs text-gray-600 dark:text-gray-300">
+            <label class="flex items-center gap-2 p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer">
+              <input type="radio" name="eq9" value="0" class="text-pink-600 focus:ring-pink-500">
+              <span>A. Người ở gần vẽ nhỏ hơn người ở xa</span>
+            </label>
+            <label class="flex items-center gap-2 p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer">
+              <input type="radio" name="eq9" value="1" class="text-pink-600 focus:ring-pink-500">
+              <span>B. Người ở gần vẽ phía trước và to hơn; người ở xa vẽ phía sau và nhỏ hơn</span>
+            </label>
+            <label class="flex items-center gap-2 p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer">
+              <input type="radio" name="eq9" value="2" class="text-pink-600 focus:ring-pink-500">
+              <span>C. Cắt bỏ người ở xa không vẽ</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q10 -->
+        <div class="p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-2">
+          <p class="font-bold text-xs sm:text-sm text-gray-800 dark:text-gray-200">
+            Câu 10 (Quy trình 4 bước): Quy trình hoạt động thực hành mĩ thuật chuẩn xuyên suốt các bài học gồm 4 bước nào?
+          </p>
+          <div class="space-y-1.5 text-xs text-gray-600 dark:text-gray-300">
+            <label class="flex items-center gap-2 p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer">
+              <input type="radio" name="eq10" value="0" class="text-pink-600 focus:ring-pink-500">
+              <span>A. Ngồi nghe &rarr; Chép bài &rarr; Nộp vở &rarr; Về nhà</span>
+            </label>
+            <label class="flex items-center gap-2 p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer">
+              <input type="radio" name="eq10" value="1" class="text-pink-600 focus:ring-pink-500">
+              <span>B. Quan sát &rarr; Thể hiện &rarr; Thảo luận &rarr; Vận dụng</span>
+            </label>
+            <label class="flex items-center gap-2 p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer">
+              <input type="radio" name="eq10" value="2" class="text-pink-600 focus:ring-pink-500">
+              <span>C. Xem tranh &rarr; Xé giấy &rarr; Dọn dẹp &rarr; Nghỉ giải lao</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="pt-4 border-t border-gray-100 dark:border-gray-800 flex items-center justify-end gap-3">
+          <button type="button" onclick="closeCertificationModal()" class="px-5 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 font-semibold text-xs hover:bg-gray-100 dark:hover:bg-gray-800">
+            Đóng
+          </button>
+          <button type="button" onclick="submitCertificationExam()" class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-bold text-xs shadow-md shadow-pink-500/20">
+            <i class="fa-solid fa-paper-plane mr-1.5"></i> Nộp Bài Thi & Xem Điểm
+          </button>
+        </div>
+
+      </form>
+
+      <!-- Exam Results Container -->
+      <div id="exam-results" class="hidden space-y-4 pt-4 border-t border-gray-100 dark:border-gray-800">
+        <div id="exam-badge" class="p-5 rounded-2xl text-center space-y-2"></div>
+        <div id="exam-feedback-list" class="space-y-2 text-xs"></div>
+        <div class="flex justify-center pt-2">
+          <button onclick="resetCertificationExam()" class="px-5 py-2 rounded-xl bg-pink-600 text-white font-bold text-xs hover:bg-pink-700 transition">
+            <i class="fa-solid fa-rotate-right mr-1.5"></i> Làm lại bài thi
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-dark-surface py-10 mt-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-gray-500 dark:text-gray-400">
+      <div class="flex items-center gap-2 font-bold text-gray-700 dark:text-gray-300">
+        <i class="fa-solid fa-graduation-cap text-pink-500 text-base"></i>
+        <span>CodeHub E-Learning Platform • Chương trình Mĩ Thuật Lớp 3</span>
+      </div>
+      <div>
+        Bộ sách Kết nối tri thức với cuộc sống • Chuẩn Chương trình GDPT 2018 (10 chủ đề, trang 5–63)
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    // Theme Switcher Logic
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const htmlElem = document.documentElement;
+
+    function applyInitialTheme() {
+      const saved = localStorage.getItem('codehub_theme');
+      if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        htmlElem.classList.add('dark');
+      } else {
+        htmlElem.classList.remove('dark');
+      }
+    }
+    applyInitialTheme();
+
+    if (themeToggleBtn) {
+      themeToggleBtn.addEventListener('click', () => {
+        if (htmlElem.classList.contains('dark')) {
+          htmlElem.classList.remove('dark');
+          localStorage.setItem('codehub_theme', 'light');
+        } else {
+          htmlElem.classList.add('dark');
+          localStorage.setItem('codehub_theme', 'dark');
+        }
+      });
+    }
+
+    // Mobile Drawer Logic
+    function toggleDrawer() {
+      const drawer = document.getElementById('mobile-drawer');
+      const backdrop = document.getElementById('drawer-backdrop');
+      if (drawer.classList.contains('-translate-x-full')) {
+        drawer.classList.remove('-translate-x-full');
+        backdrop.classList.remove('hidden');
+      } else {
+        drawer.classList.add('-translate-x-full');
+        backdrop.classList.add('hidden');
+      }
+    }
+
+    // Theme Inline Quiz Check Logic
+    function checkQuiz(quizId, selectedIdx, isCorrect, explanation) {
+      const fb = document.getElementById('feedback-' + quizId);
+      const buttons = document.querySelectorAll('.quiz-btn-' + quizId);
+
+      buttons.forEach((btn, idx) => {
+        btn.disabled = true;
+        btn.classList.remove('hover:bg-pink-50', 'dark:hover:bg-pink-950/30');
+        if (idx === selectedIdx) {
+          if (isCorrect) {
+            btn.className += ' bg-green-100 dark:bg-green-950/60 border-green-500 text-green-900 dark:text-green-100 font-bold';
+          } else {
+            btn.className += ' bg-red-100 dark:bg-red-950/60 border-red-500 text-red-900 dark:text-red-100 font-bold';
+          }
+        }
+      });
+
+      if (fb) {
+        fb.classList.remove('hidden');
+        if (isCorrect) {
+          fb.className = 'mt-3 p-3.5 rounded-xl text-xs sm:text-sm font-medium bg-green-50 dark:bg-green-950/40 text-green-800 dark:text-green-200 border border-green-200 dark:border-green-800';
+          fb.innerHTML = '<span class="font-bold flex items-center gap-1.5"><i class="fa-solid fa-circle-check text-green-600"></i> Chính xác!</span> ' + explanation;
+        } else {
+          fb.className = 'mt-3 p-3.5 rounded-xl text-xs sm:text-sm font-medium bg-pink-50 dark:bg-pink-950/40 text-pink-800 dark:text-pink-200 border border-pink-200 dark:border-pink-800';
+          fb.innerHTML = '<span class="font-bold flex items-center gap-1.5"><i class="fa-solid fa-circle-xmark text-rose-600"></i> Chưa chính xác!</span> ' + explanation;
+        }
+      }
+    }
+
+    // Interactive Color Mixer Logic
+    let selectedColors = [];
+
+    function selectPrimaryColor(color) {
+      if (selectedColors.length >= 2) {
+        selectedColors = [];
+      }
+      if (!selectedColors.includes(color)) {
+        selectedColors.push(color);
+      }
+
+      updateMixerUI();
+    }
+
+    function updateMixerUI() {
+      const colorMap = {
+        red: { name: 'Màu Đỏ', class: 'bg-red-500' },
+        yellow: { name: 'Màu Vàng', class: 'bg-amber-400' },
+        blue: { name: 'Xanh Lam', class: 'bg-blue-600' }
+      };
+
+      const dotA = document.getElementById('mix-color-a');
+      const dotB = document.getElementById('mix-color-b');
+      const dotRes = document.getElementById('mix-result-color');
+      const textRes = document.getElementById('mix-result-text');
+
+      if (selectedColors.length === 1) {
+        dotA.className = 'w-6 h-6 rounded-full inline-block border ' + colorMap[selectedColors[0]].class;
+        dotB.className = 'w-6 h-6 rounded-full bg-gray-200 dark:bg-gray-700 inline-block border';
+        dotRes.className = 'w-8 h-8 rounded-xl bg-gray-300 dark:bg-gray-600 inline-block shadow-sm border';
+        textRes.innerText = 'Đã chọn: ' + colorMap[selectedColors[0]].name + '. Hãy chọn thêm 1 màu nữa!';
+      } else if (selectedColors.length === 2) {
+        dotA.className = 'w-6 h-6 rounded-full inline-block border ' + colorMap[selectedColors[0]].class;
+        dotB.className = 'w-6 h-6 rounded-full inline-block border ' + colorMap[selectedColors[1]].class;
+
+        const pair = selectedColors.slice().sort().join('+');
+        if (pair === 'red+yellow') {
+          dotRes.className = 'w-8 h-8 rounded-xl bg-orange-500 inline-block shadow-sm border shadow-orange-500/50';
+          textRes.innerHTML = '<span class="text-orange-500 font-bold">Đỏ + Vàng = MÀU CAM (Màu thứ cấp)</span>';
+        } else if (pair === 'blue+red') {
+          dotRes.className = 'w-8 h-8 rounded-xl bg-purple-600 inline-block shadow-sm border shadow-purple-500/50';
+          textRes.innerHTML = '<span class="text-purple-600 font-bold">Đỏ + Xanh Lam = MÀU TÍM (Màu thứ cấp)</span>';
+        } else if (pair === 'blue+yellow') {
+          dotRes.className = 'w-8 h-8 rounded-xl bg-emerald-500 inline-block shadow-sm border shadow-emerald-500/50';
+          textRes.innerHTML = '<span class="text-emerald-500 font-bold">Vàng + Xanh Lam = XANH LÁ CÂY (Màu thứ cấp)</span>';
+        }
+      } else {
+        dotA.className = 'w-6 h-6 rounded-full bg-gray-200 dark:bg-gray-700 inline-block border';
+        dotB.className = 'w-6 h-6 rounded-full bg-gray-200 dark:bg-gray-700 inline-block border';
+        dotRes.className = 'w-8 h-8 rounded-xl bg-gray-300 dark:bg-gray-600 inline-block shadow-sm border';
+        textRes.innerText = 'Hãy nhấp chọn 2 màu cơ bản ở trên để pha màu!';
+      }
+    }
+
+    // Modal Control
+    function openCertificationModal() {
+      document.getElementById('certification-modal').classList.remove('hidden');
+    }
+    function closeCertificationModal() {
+      document.getElementById('certification-modal').classList.add('hidden');
+    }
+
+    // Certification Timer
+    let examSeconds = 60 * 60;
+    const timerElem = document.getElementById('examTimer');
+    const examTimerInterval = setInterval(() => {
+      if (examSeconds <= 0) {
+        clearInterval(examTimerInterval);
+        submitCertificationExam();
+        return;
+      }
+      examSeconds--;
+      const m = Math.floor(examSeconds / 60);
+      const s = examSeconds % 60;
+      if (timerElem) {
+        timerElem.innerText = (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
+      }
+    }, 1000);
+
+    // Correct Answers Map (eq1 -> eq10)
+    const examAnswers = {
+      eq1: '1',
+      eq2: '1',
+      eq3: '1',
+      eq4: '1',
+      eq5: '1',
+      eq6: '1',
+      eq7: '1',
+      eq8: '1',
+      eq9: '1',
+      eq10: '1'
+    };
+
+    let examSubmitted = false;
+
+    function submitCertificationExam() {
+      if (examSubmitted) return;
+      examSubmitted = true;
+      clearInterval(examTimerInterval);
+
+      let score = 0;
+      const form = document.getElementById('certification-form');
+      const resultsContainer = document.getElementById('exam-results');
+      const badgeElem = document.getElementById('exam-badge');
+      const feedbackList = document.getElementById('exam-feedback-list');
+
+      feedbackList.innerHTML = '';
+
+      for (let i = 1; i <= 10; i++) {
+        const qName = 'eq' + i;
+        const selected = form.querySelector('input[name="' + qName + '"]:checked');
+        const correctVal = examAnswers[qName];
+        const isRight = selected && selected.value === correctVal;
+
+        if (isRight) score++;
+
+        const item = document.createElement('div');
+        item.className = 'p-3 rounded-xl border ' + (isRight ? 'border-green-200 bg-green-50 dark:bg-green-950/20 text-green-900 dark:text-green-200' : 'border-rose-200 bg-rose-50 dark:bg-rose-950/20 text-rose-900 dark:text-rose-200');
+        item.innerHTML = '<strong>Câu ' + i + ':</strong> ' + (isRight ? '<i class="fa-solid fa-circle-check text-green-600"></i> Đúng' : '<i class="fa-solid fa-circle-xmark text-rose-600"></i> Chưa đúng (Đáp án đúng là B)');
+        feedbackList.appendChild(item);
+      }
+
+      resultsContainer.classList.remove('hidden');
+
+      if (score >= 8) {
+        badgeElem.className = 'p-5 rounded-2xl text-center space-y-2 bg-gradient-to-r from-pink-500/20 to-purple-500/20 border-2 border-pink-500';
+        badgeElem.innerHTML = '<div class="text-3xl text-pink-500"><i class="fa-solid fa-crown"></i></div>' +
+          '<h4 class="text-lg font-black text-pink-800 dark:text-pink-300">Chúc Mừng Em Đạt Danh Hiệu "Trạng Nguyên Mĩ Thuật Lớp 3"!</h4>' +
+          '<p class="text-xs text-gray-600 dark:text-gray-300">Em đã đạt <strong>' + score + '/10</strong> điểm xuất sắc. Khả năng cảm thụ thẩm mĩ, nhận biết màu sắc và bố cục không gian của em rất tuyệt vời!</p>';
+      } else {
+        badgeElem.className = 'p-5 rounded-2xl text-center space-y-2 bg-pink-50 dark:bg-pink-950/30 border border-pink-300 dark:border-pink-700';
+        badgeElem.innerHTML = '<div class="text-2xl text-pink-600"><i class="fa-solid fa-thumbs-up"></i></div>' +
+          '<h4 class="text-base font-bold text-pink-800 dark:text-pink-300">Kết quả: ' + score + '/10 điểm</h4>' +
+          '<p class="text-xs text-gray-600 dark:text-gray-300">Em hãy xem lại các câu hỏi chưa đúng và thử làm lại để đạt điểm tối đa nhé!</p>';
+      }
+
+      resultsContainer.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function resetCertificationExam() {
+      examSubmitted = false;
+      document.getElementById('certification-form').reset();
+      document.getElementById('exam-results').classList.add('hidden');
+    }
+  </script>
+</body>
+</html>
