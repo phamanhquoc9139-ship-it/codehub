@@ -1,0 +1,2366 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Khóa Học Tiếng Việt Lớp 3 - Chương Trình GDPT 2018 Chuẩn Mực | CodeHub</title>
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            dark: {
+              bg: '#0A0B14',
+              surface: '#121422',
+              card: '#1B1E34'
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <meta name="codehub-activity-name" content="Khóa Học Tiếng Việt Lớp 3">
+
+  <style>
+    .sidebar-scroll::-webkit-scrollbar { width: 4px; }
+    .sidebar-scroll::-webkit-scrollbar-thumb { background: #f43f5e; border-radius: 4px; }
+    .vietnamese-hero-bg {
+      background: radial-gradient(circle at 10% 20%, rgba(244, 63, 94, 0.15) 0%, transparent 40%),
+                  radial-gradient(circle at 90% 80%, rgba(245, 158, 11, 0.15) 0%, transparent 40%);
+    }
+  </style>
+</head>
+<body class="bg-gray-50 dark:bg-dark-bg text-gray-800 dark:text-gray-100 font-sans min-h-screen flex flex-col transition-colors duration-200">
+
+  <!-- Mobile Drawer Backdrop -->
+  <div id="drawer-backdrop" onclick="toggleDrawer()" class="fixed inset-0 bg-black/50 z-40 hidden lg:hidden backdrop-blur-sm transition-opacity"></div>
+
+  <!-- Mobile Drawer Navigation -->
+  <div id="mobile-drawer" class="fixed top-0 left-0 bottom-0 w-80 bg-white dark:bg-dark-surface z-50 transform -translate-x-full transition-transform duration-300 ease-in-out lg:hidden flex flex-col p-6 shadow-2xl border-r border-gray-100 dark:border-gray-800">
+    <div class="flex items-center justify-between pb-4 border-b border-gray-100 dark:border-gray-800">
+      <div class="flex items-center gap-2 text-rose-600 font-bold text-lg">
+        <i class="fa-solid fa-book-bookmark text-2xl"></i>
+        <span>Tiếng Việt 3 (GDPT 2018)</span>
+      </div>
+      <button onclick="toggleDrawer()" class="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+    </div>
+    <div class="mt-4 flex-1 overflow-y-auto space-y-1 sidebar-scroll pr-1">
+      <a href="#overview-section" onclick="toggleDrawer()" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-rose-50 dark:hover:bg-rose-950/40 text-gray-700 dark:text-gray-300 font-medium text-xs">
+        <i class="fa-solid fa-compass text-rose-500 w-4"></i> I. 8 Chủ điểm trọng tâm
+      </a>
+      <a href="#mach-kienthuc" onclick="toggleDrawer()" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-rose-50 dark:hover:bg-rose-950/40 text-gray-700 dark:text-gray-300 font-medium text-xs">
+        <i class="fa-solid fa-network-wired text-rose-500 w-4"></i> II. 5 Mạch kiến thức cốt lõi
+      </a>
+      <a href="#bang-uutien" onclick="toggleDrawer()" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-rose-50 dark:hover:bg-rose-950/40 text-gray-700 dark:text-gray-300 font-medium text-xs">
+        <i class="fa-solid fa-list-ol text-rose-500 w-4"></i> III. Bảng ưu tiên ôn tập
+      </a>
+      <a href="#matran-nganhang" onclick="toggleDrawer()" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-rose-50 dark:hover:bg-rose-950/40 text-gray-700 dark:text-gray-300 font-medium text-xs">
+        <i class="fa-solid fa-chart-pie text-rose-500 w-4"></i> IV. Ma trận ngân hàng câu hỏi
+      </a>
+      <div class="pt-2 pb-1 text-[11px] font-bold uppercase tracking-wider text-gray-400">Danh Sách 8 Chủ Điểm</div>
+      
+    <a href="#chudiem-1" onclick="toggleDrawer()" class="flex items-center gap-2 px-3 py-1.5 rounded-xl hover:bg-rose-50 dark:hover:bg-rose-950/40 text-gray-700 dark:text-gray-300 text-xs">
+      <span class="w-5 h-5 rounded-md bg-rose-100 dark:bg-rose-900/40 text-rose-600 dark:text-rose-400 flex items-center justify-center font-bold text-[10px]">01</span>
+      <span class="truncate">Những trải nghiệm thú vị</span>
+    </a>
+  
+    <a href="#chudiem-2" onclick="toggleDrawer()" class="flex items-center gap-2 px-3 py-1.5 rounded-xl hover:bg-rose-50 dark:hover:bg-rose-950/40 text-gray-700 dark:text-gray-300 text-xs">
+      <span class="w-5 h-5 rounded-md bg-rose-100 dark:bg-rose-900/40 text-rose-600 dark:text-rose-400 flex items-center justify-center font-bold text-[10px]">02</span>
+      <span class="truncate">Cổng trường rộng mở</span>
+    </a>
+  
+    <a href="#chudiem-3" onclick="toggleDrawer()" class="flex items-center gap-2 px-3 py-1.5 rounded-xl hover:bg-rose-50 dark:hover:bg-rose-950/40 text-gray-700 dark:text-gray-300 text-xs">
+      <span class="w-5 h-5 rounded-md bg-rose-100 dark:bg-rose-900/40 text-rose-600 dark:text-rose-400 flex items-center justify-center font-bold text-[10px]">03</span>
+      <span class="truncate">Mái nhà yêu thương</span>
+    </a>
+  
+    <a href="#chudiem-4" onclick="toggleDrawer()" class="flex items-center gap-2 px-3 py-1.5 rounded-xl hover:bg-rose-50 dark:hover:bg-rose-950/40 text-gray-700 dark:text-gray-300 text-xs">
+      <span class="w-5 h-5 rounded-md bg-rose-100 dark:bg-rose-900/40 text-rose-600 dark:text-rose-400 flex items-center justify-center font-bold text-[10px]">04</span>
+      <span class="truncate">Cộng đồng gắn bó</span>
+    </a>
+  
+    <a href="#chudiem-5" onclick="toggleDrawer()" class="flex items-center gap-2 px-3 py-1.5 rounded-xl hover:bg-rose-50 dark:hover:bg-rose-950/40 text-gray-700 dark:text-gray-300 text-xs">
+      <span class="w-5 h-5 rounded-md bg-rose-100 dark:bg-rose-900/40 text-rose-600 dark:text-rose-400 flex items-center justify-center font-bold text-[10px]">05</span>
+      <span class="truncate">Những sắc màu thiên nhiên</span>
+    </a>
+  
+    <a href="#chudiem-6" onclick="toggleDrawer()" class="flex items-center gap-2 px-3 py-1.5 rounded-xl hover:bg-rose-50 dark:hover:bg-rose-950/40 text-gray-700 dark:text-gray-300 text-xs">
+      <span class="w-5 h-5 rounded-md bg-rose-100 dark:bg-rose-900/40 text-rose-600 dark:text-rose-400 flex items-center justify-center font-bold text-[10px]">06</span>
+      <span class="truncate">Bài học từ cuộc sống</span>
+    </a>
+  
+    <a href="#chudiem-7" onclick="toggleDrawer()" class="flex items-center gap-2 px-3 py-1.5 rounded-xl hover:bg-rose-50 dark:hover:bg-rose-950/40 text-gray-700 dark:text-gray-300 text-xs">
+      <span class="w-5 h-5 rounded-md bg-rose-100 dark:bg-rose-900/40 text-rose-600 dark:text-rose-400 flex items-center justify-center font-bold text-[10px]">07</span>
+      <span class="truncate">Đất nước ngàn năm</span>
+    </a>
+  
+    <a href="#chudiem-8" onclick="toggleDrawer()" class="flex items-center gap-2 px-3 py-1.5 rounded-xl hover:bg-rose-50 dark:hover:bg-rose-950/40 text-gray-700 dark:text-gray-300 text-xs">
+      <span class="w-5 h-5 rounded-md bg-rose-100 dark:bg-rose-900/40 text-rose-600 dark:text-rose-400 flex items-center justify-center font-bold text-[10px]">08</span>
+      <span class="truncate">Trái Đất của chúng mình</span>
+    </a>
+  
+    </div>
+    <div class="pt-4 border-t border-gray-100 dark:border-gray-800 space-y-2">
+      <button onclick="openCertificationModal(); toggleDrawer();" class="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-gradient-to-r from-rose-500 to-amber-600 text-white font-bold text-sm shadow-md shadow-rose-500/20">
+        <i class="fa-solid fa-award"></i> Thi Trạng Nguyên Tiếng Việt
+      </button>
+      <a href="../index.html" class="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 font-semibold text-sm hover:bg-gray-50 dark:hover:bg-gray-800">
+        <i class="fa-solid fa-house"></i> Về trang chủ
+      </a>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="sticky top-0 z-40 bg-white/95 dark:bg-dark-surface/95 backdrop-blur border-b border-gray-200 dark:border-gray-800 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      
+      <!-- Logo & Breadcrumb -->
+      <div class="flex items-center gap-3">
+        <a href="../index.html" class="p-2 rounded-xl text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" title="Trở về Trang chủ">
+          <i class="fa-solid fa-arrow-left text-base"></i>
+        </a>
+        <a href="../index.html" class="flex items-center gap-2 text-rose-600 dark:text-rose-400 font-bold text-lg">
+          <i class="fa-solid fa-graduation-cap text-xl"></i>
+          <span class="tracking-tight">CodeHub</span>
+        </a>
+        <span class="hidden sm:inline-block text-gray-300 dark:text-gray-700">|</span>
+        <span class="hidden sm:inline-block text-xs font-semibold px-2.5 py-1 rounded-full bg-rose-100 dark:bg-rose-950/60 text-rose-800 dark:text-rose-300">
+          Tiếng Việt Lớp 3 (GDPT 2018)
+        </span>
+      </div>
+
+      <!-- Quick Action Buttons -->
+      <div class="flex items-center gap-2">
+        <a href="tinhoc_3.html" class="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-blue-600 dark:text-blue-400 font-semibold text-xs transition-colors shadow-sm">
+          <i class="fa-solid fa-laptop-code"></i>
+          <span>Tin Học 3</span>
+        </a>
+        <a href="tnxh_3.html" class="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-teal-600 dark:text-teal-400 font-semibold text-xs transition-colors shadow-sm">
+          <i class="fa-solid fa-seedling"></i>
+          <span>TN&XH 3</span>
+        </a>
+        <a href="toan_3.html" class="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-blue-600 dark:text-blue-400 font-semibold text-xs transition-colors shadow-sm">
+          <i class="fa-solid fa-calculator"></i>
+          <span>Toán 3</span>
+        </a>
+        <a href="tiengviet_2.html" class="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-rose-600 dark:text-rose-400 font-semibold text-xs transition-colors shadow-sm">
+          <i class="fa-solid fa-book"></i>
+          <span>Tiếng Việt 2</span>
+        </a>
+        <a href="tienganh_3.html" class="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-sky-600 dark:text-sky-400 font-semibold text-xs transition-colors shadow-sm">
+          <i class="fa-solid fa-language"></i>
+          <span>Tiếng Anh 3</span>
+        </a>
+        <a href="tiengphap_3.html" class="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-indigo-600 dark:text-indigo-400 font-semibold text-xs transition-colors shadow-sm">
+          <i class="fa-solid fa-graduation-cap"></i>
+          <span>Tiếng Pháp 3</span>
+        </a>
+        <a href="tiengnga_3.html" class="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-blue-600 dark:text-blue-400 font-semibold text-xs transition-colors shadow-sm">
+          <i class="fa-solid fa-language"></i>
+          <span>Tiếng Nga 3</span>
+        </a>
+        <a href="grade_3.html" class="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-rose-600 dark:text-rose-400 font-semibold text-xs transition-colors shadow-sm">
+          <i class="fa-solid fa-school"></i>
+          <span>Lớp 3 Hub</span>
+        </a>
+        <button onclick="openCertificationModal()" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-semibold text-xs transition-colors shadow-sm">
+          <i class="fa-solid fa-award"></i>
+          <span>Trạng Nguyên Tiếng Việt (10 câu)</span>
+        </button>
+
+        <!-- Theme Toggle -->
+        <button id="theme-toggle" onclick="toggleDarkMode()" class="p-2 rounded-xl text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" title="Chuyển chế độ Sáng / Tối">
+          <i id="theme-icon" class="fa-solid fa-moon dark:hidden text-sm"></i>
+          <i class="fa-solid fa-sun hidden dark:block text-amber-400 text-sm"></i>
+        </button>
+
+        <!-- Mobile Drawer Toggle -->
+        <button onclick="toggleDrawer()" class="lg:hidden p-2 rounded-xl text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+          <i class="fa-solid fa-bars text-lg"></i>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="vietnamese-hero-bg border-b border-gray-200/80 dark:border-gray-800/80 py-10 sm:py-14">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-8">
+        
+        <div class="space-y-4 max-w-2xl text-center md:text-left">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-100 dark:bg-rose-950/70 text-rose-800 dark:text-rose-300 text-xs font-semibold">
+            <i class="fa-solid fa-book-open text-rose-500"></i>
+            <span>Chương Trình Giáo Dục Phổ Thông 2018 • Bộ GD&ĐT</span>
+          </div>
+          
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black text-gray-900 dark:text-white tracking-tight leading-tight">
+            Khóa Học <span class="bg-gradient-to-r from-rose-600 via-red-600 to-amber-500 bg-clip-text text-transparent">Tiếng Việt Lớp 3</span>
+          </h1>
+          
+          <p class="text-gray-600 dark:text-gray-300 text-sm sm:text-base leading-relaxed">
+            Học tốt Tiếng Việt 3 qua <strong>8 Chủ điểm trọng tâm</strong> (Học kì I & II) và <strong>5 Mạch kiến thức cốt lõi</strong>: Đọc hiểu văn bản, Luyện từ và câu, Chính tả chữ viết, Viết đoạn văn, Rèn luyện Nói & Nghe. Tích hợp audio phát âm giọng đọc chuẩn tiếng Việt!
+          </p>
+
+          <!-- 5 Mạch kiến thức Pill Chain -->
+          <div class="pt-2">
+            <span class="text-xs font-bold uppercase tracking-wider text-gray-400 dark:text-gray-500 block mb-2">
+              <i class="fa-solid fa-layer-group text-rose-500 mr-1"></i> 5 Mạch kiến thức cốt lõi:
+            </span>
+            <div class="flex flex-wrap items-center justify-center md:justify-start gap-1.5 sm:gap-2 text-[11px] sm:text-xs font-bold">
+              <span class="px-3 py-1.5 rounded-lg bg-white dark:bg-dark-card border border-rose-200 dark:border-rose-800/60 text-rose-700 dark:text-rose-300 shadow-sm flex items-center gap-1.5">
+                <i class="fa-solid fa-book-reader text-rose-500"></i> 1. Đọc hiểu
+              </span>
+              <span class="px-3 py-1.5 rounded-lg bg-white dark:bg-dark-card border border-blue-200 dark:border-blue-800/60 text-blue-700 dark:text-blue-300 shadow-sm flex items-center gap-1.5">
+                <i class="fa-solid fa-font text-blue-500"></i> 2. Luyện từ & câu
+              </span>
+              <span class="px-3 py-1.5 rounded-lg bg-white dark:bg-dark-card border border-amber-200 dark:border-amber-800/60 text-amber-700 dark:text-amber-300 shadow-sm flex items-center gap-1.5">
+                <i class="fa-solid fa-spell-check text-amber-500"></i> 3. Chính tả
+              </span>
+              <span class="px-3 py-1.5 rounded-lg bg-white dark:bg-dark-card border border-purple-200 dark:border-purple-800/60 text-purple-700 dark:text-purple-300 shadow-sm flex items-center gap-1.5">
+                <i class="fa-solid fa-pen-fancy text-purple-500"></i> 4. Viết đoạn văn
+              </span>
+              <span class="px-3 py-1.5 rounded-lg bg-white dark:bg-dark-card border border-emerald-200 dark:border-emerald-800/60 text-emerald-700 dark:text-emerald-300 shadow-sm flex items-center gap-1.5">
+                <i class="fa-solid fa-comments text-emerald-500"></i> 5. Nói và nghe
+              </span>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap items-center justify-center md:justify-start gap-4 pt-2">
+            <a href="#overview-section" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-rose-500 via-red-600 to-amber-600 hover:opacity-95 text-white font-bold text-sm shadow-md shadow-rose-500/25 transition">
+              <i class="fa-solid fa-list-check mr-1.5"></i> Khám phá 8 Chủ điểm
+            </a>
+            <button onclick="openCertificationModal()" class="px-5 py-2.5 rounded-xl bg-white dark:bg-dark-surface hover:bg-gray-100 dark:hover:bg-dark-card border border-gray-200 dark:border-gray-700 text-gray-800 dark:text-white font-bold text-sm shadow-sm transition">
+              <i class="fa-solid fa-award text-rose-500 mr-1.5"></i> Thi Trạng Nguyên Tiếng Việt
+            </button>
+          </div>
+        </div>
+
+        <!-- Quick Stats Cards Grid -->
+        <div class="grid grid-cols-2 gap-3.5 w-full md:w-auto shrink-0 max-w-sm">
+          <div class="p-4 rounded-2xl bg-white dark:bg-dark-surface border border-gray-100 dark:border-gray-800 shadow-sm">
+            <div class="text-rose-500 text-2xl font-black mb-1 flex items-center gap-2">
+              <i class="fa-solid fa-book-bookmark text-xl"></i> 8 Chủ điểm
+            </div>
+            <div class="text-xs text-gray-500 dark:text-gray-400 font-medium">4 Chủ điểm kì I & 4 Chủ điểm kì II</div>
+          </div>
+          <div class="p-4 rounded-2xl bg-white dark:bg-dark-surface border border-gray-100 dark:border-gray-800 shadow-sm">
+            <div class="text-blue-500 text-2xl font-black mb-1 flex items-center gap-2">
+              <i class="fa-solid fa-network-wired text-xl"></i> 5 Mạch học
+            </div>
+            <div class="text-xs text-gray-500 dark:text-gray-400 font-medium">Đọc, Từ & câu, Chính tả, Viết, Nói nghe</div>
+          </div>
+          <div class="p-4 rounded-2xl bg-white dark:bg-dark-surface border border-gray-100 dark:border-gray-800 shadow-sm">
+            <div class="text-amber-500 text-2xl font-black mb-1 flex items-center gap-2">
+              <i class="fa-solid fa-list-ol text-xl"></i> Ưu tiên
+            </div>
+            <div class="text-xs text-gray-500 dark:text-gray-400 font-medium">2 Mức độ ưu tiên ôn tập trọng tâm</div>
+          </div>
+          <div class="p-4 rounded-2xl bg-white dark:bg-dark-surface border border-gray-100 dark:border-gray-800 shadow-sm">
+            <div class="text-emerald-500 text-2xl font-black mb-1 flex items-center gap-2">
+              <i class="fa-solid fa-headset text-xl"></i> Audio
+            </div>
+            <div class="text-xs text-gray-500 dark:text-gray-400 font-medium">Bấm vào từ hoặc câu để nghe phát âm vi-VN</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content Layout -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+      
+      <!-- Desktop Sticky Sidebar Navigation -->
+      <aside class="hidden lg:block lg:col-span-1">
+        <div class="sticky top-20 p-5 rounded-2xl bg-white dark:bg-dark-surface border border-gray-100 dark:border-gray-800 shadow-sm max-h-[calc(100vh-6rem)] overflow-y-auto sidebar-scroll space-y-4">
+          <div>
+            <span class="text-xs font-black uppercase tracking-wider text-rose-600 dark:text-rose-400">Mục lục kiến thức</span>
+            <div class="mt-2 space-y-1">
+              <a href="#overview-section" class="flex items-center gap-2 px-3 py-1.5 rounded-xl hover:bg-rose-50 dark:hover:bg-rose-950/40 text-gray-700 dark:text-gray-300 text-xs font-semibold">
+                <i class="fa-solid fa-compass text-rose-500 w-4"></i> I. 8 Chủ điểm cốt lõi
+              </a>
+              <a href="#mach-kienthuc" class="flex items-center gap-2 px-3 py-1.5 rounded-xl hover:bg-rose-50 dark:hover:bg-rose-950/40 text-gray-700 dark:text-gray-300 text-xs font-semibold">
+                <i class="fa-solid fa-network-wired text-rose-500 w-4"></i> II. 5 Mạch kiến thức
+              </a>
+              <a href="#bang-uutien" class="flex items-center gap-2 px-3 py-1.5 rounded-xl hover:bg-rose-50 dark:hover:bg-rose-950/40 text-gray-700 dark:text-gray-300 text-xs font-semibold">
+                <i class="fa-solid fa-list-ol text-rose-500 w-4"></i> III. Bảng ưu tiên ôn tập
+              </a>
+              <a href="#matran-nganhang" class="flex items-center gap-2 px-3 py-1.5 rounded-xl hover:bg-rose-50 dark:hover:bg-rose-950/40 text-gray-700 dark:text-gray-300 text-xs font-semibold">
+                <i class="fa-solid fa-chart-pie text-rose-500 w-4"></i> IV. Ma trận ngân hàng đề
+              </a>
+            </div>
+          </div>
+
+          <div class="pt-3 border-t border-gray-100 dark:border-gray-800">
+            <span class="text-[11px] font-bold uppercase tracking-wider text-gray-400">8 Chủ điểm SGK</span>
+            <div class="mt-2 space-y-1">
+              
+    <a href="#chudiem-1" class="flex items-center gap-2 px-3 py-1.5 rounded-xl hover:bg-rose-50 dark:hover:bg-rose-950/40 text-gray-700 dark:text-gray-300 text-xs transition">
+      <span class="w-5 h-5 rounded-md bg-rose-100 dark:bg-rose-900/40 text-rose-600 dark:text-rose-400 flex items-center justify-center font-bold text-[10px]">01</span>
+      <span class="truncate">Những trải nghiệm thú vị</span>
+    </a>
+  
+    <a href="#chudiem-2" class="flex items-center gap-2 px-3 py-1.5 rounded-xl hover:bg-rose-50 dark:hover:bg-rose-950/40 text-gray-700 dark:text-gray-300 text-xs transition">
+      <span class="w-5 h-5 rounded-md bg-rose-100 dark:bg-rose-900/40 text-rose-600 dark:text-rose-400 flex items-center justify-center font-bold text-[10px]">02</span>
+      <span class="truncate">Cổng trường rộng mở</span>
+    </a>
+  
+    <a href="#chudiem-3" class="flex items-center gap-2 px-3 py-1.5 rounded-xl hover:bg-rose-50 dark:hover:bg-rose-950/40 text-gray-700 dark:text-gray-300 text-xs transition">
+      <span class="w-5 h-5 rounded-md bg-rose-100 dark:bg-rose-900/40 text-rose-600 dark:text-rose-400 flex items-center justify-center font-bold text-[10px]">03</span>
+      <span class="truncate">Mái nhà yêu thương</span>
+    </a>
+  
+    <a href="#chudiem-4" class="flex items-center gap-2 px-3 py-1.5 rounded-xl hover:bg-rose-50 dark:hover:bg-rose-950/40 text-gray-700 dark:text-gray-300 text-xs transition">
+      <span class="w-5 h-5 rounded-md bg-rose-100 dark:bg-rose-900/40 text-rose-600 dark:text-rose-400 flex items-center justify-center font-bold text-[10px]">04</span>
+      <span class="truncate">Cộng đồng gắn bó</span>
+    </a>
+  
+    <a href="#chudiem-5" class="flex items-center gap-2 px-3 py-1.5 rounded-xl hover:bg-rose-50 dark:hover:bg-rose-950/40 text-gray-700 dark:text-gray-300 text-xs transition">
+      <span class="w-5 h-5 rounded-md bg-rose-100 dark:bg-rose-900/40 text-rose-600 dark:text-rose-400 flex items-center justify-center font-bold text-[10px]">05</span>
+      <span class="truncate">Những sắc màu thiên nhiên</span>
+    </a>
+  
+    <a href="#chudiem-6" class="flex items-center gap-2 px-3 py-1.5 rounded-xl hover:bg-rose-50 dark:hover:bg-rose-950/40 text-gray-700 dark:text-gray-300 text-xs transition">
+      <span class="w-5 h-5 rounded-md bg-rose-100 dark:bg-rose-900/40 text-rose-600 dark:text-rose-400 flex items-center justify-center font-bold text-[10px]">06</span>
+      <span class="truncate">Bài học từ cuộc sống</span>
+    </a>
+  
+    <a href="#chudiem-7" class="flex items-center gap-2 px-3 py-1.5 rounded-xl hover:bg-rose-50 dark:hover:bg-rose-950/40 text-gray-700 dark:text-gray-300 text-xs transition">
+      <span class="w-5 h-5 rounded-md bg-rose-100 dark:bg-rose-900/40 text-rose-600 dark:text-rose-400 flex items-center justify-center font-bold text-[10px]">07</span>
+      <span class="truncate">Đất nước ngàn năm</span>
+    </a>
+  
+    <a href="#chudiem-8" class="flex items-center gap-2 px-3 py-1.5 rounded-xl hover:bg-rose-50 dark:hover:bg-rose-950/40 text-gray-700 dark:text-gray-300 text-xs transition">
+      <span class="w-5 h-5 rounded-md bg-rose-100 dark:bg-rose-900/40 text-rose-600 dark:text-rose-400 flex items-center justify-center font-bold text-[10px]">08</span>
+      <span class="truncate">Trái Đất của chúng mình</span>
+    </a>
+  
+            </div>
+          </div>
+
+          <div class="pt-3 border-t border-gray-100 dark:border-gray-800">
+            <button onclick="openCertificationModal()" class="w-full flex items-center justify-center gap-2 py-2 px-3 rounded-xl bg-gradient-to-r from-rose-500 to-amber-600 text-white font-bold text-xs shadow-sm hover:opacity-95 transition">
+              <i class="fa-solid fa-award"></i> Thi Trạng Nguyên (60p)
+            </button>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Main Column -->
+      <div class="lg:col-span-3 space-y-10">
+        
+        <!-- Section I: 8 Chủ điểm Header -->
+        <div id="overview-section" class="flex items-center justify-between pb-3 border-b border-gray-200 dark:border-gray-800 scroll-mt-24">
+          <div>
+            <div class="flex items-center gap-2 mb-1">
+              <span class="text-xs font-extrabold uppercase text-rose-600 dark:text-rose-400 tracking-wider">Phần I</span>
+              <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-300">SGK GDPT 2018</span>
+            </div>
+            <h2 class="text-xl sm:text-2xl font-black text-gray-900 dark:text-white">Kiến Thức Cốt Lõi 8 Chủ Điểm Trọng Tâm</h2>
+          </div>
+          <span class="hidden sm:inline-flex items-center gap-1.5 text-xs text-rose-600 dark:text-rose-400 font-bold bg-rose-50 dark:bg-rose-950/60 px-3 py-1.5 rounded-xl border border-rose-100 dark:border-rose-900">
+            <i class="fa-solid fa-book-open"></i> Học kì I & II
+          </span>
+        </div>
+
+        <!-- 8 Theme Articles -->
+        <div class="space-y-8">
+          
+      <!-- Chủ điểm 01: Những trải nghiệm thú vị -->
+      <article id="chudiem-1" class="bg-white dark:bg-dark-surface rounded-3xl p-6 sm:p-7 shadow-sm border border-gray-100 dark:border-gray-800 space-y-5 scroll-mt-24">
+        <!-- Header -->
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-gray-100 dark:border-gray-800">
+          <div class="flex items-center gap-3">
+            <span class="w-10 h-10 rounded-2xl bg-gradient-to-br from-rose-500 via-red-600 to-amber-500 text-white flex items-center justify-center font-black text-sm shadow-md shadow-rose-500/20">
+              01
+            </span>
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="px-2 py-0.5 rounded-full bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-300 font-bold text-[10px] uppercase tracking-wider">
+                  Học kì I • Tuần 1–4
+                </span>
+                <span class="text-[11px] font-semibold text-gray-400">Bản thân & Trải nghiệm</span>
+              </div>
+              <h3 class="text-lg sm:text-xl font-black text-gray-900 dark:text-white mt-0.5">Chủ điểm 1: Những trải nghiệm thú vị</h3>
+              <p class="text-xs text-gray-500 dark:text-gray-400 font-medium">Kể về trải nghiệm, cảm xúc, hoạt động bổ ích của bản thân</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 text-xs font-bold bg-rose-50 dark:bg-rose-950/50 text-rose-600 dark:text-rose-300 px-3 py-1.5 rounded-xl border border-rose-100 dark:border-rose-900">
+            <i class="fa-solid fa-compass"></i> Trọng tâm SGK
+          </div>
+        </div>
+
+        <!-- 3 Pillars Breakdown -->
+        <div class="space-y-4">
+          <!-- Pillar 1: Đọc & Cảm thụ văn thơ -->
+          <div class="p-3.5 bg-rose-50/60 dark:bg-rose-950/20 rounded-2xl border border-rose-100 dark:border-rose-900/40 space-y-2">
+            <div class="flex items-center justify-between">
+              <h4 class="text-xs sm:text-sm font-bold text-gray-800 dark:text-gray-200 flex items-center gap-1.5">
+                <span class="w-5 h-5 rounded-md bg-rose-600 text-white flex items-center justify-center text-[10px] font-bold">1</span>
+                <span>Đọc & Cảm thụ văn bản đọc mẫu</span>
+              </h4>
+              <button onclick="speakVietnamese('Sáng đầu thu trong xanh Em bước vào lớp mới Bao ánh mắt tươi cười Đón chào mùa háo hức.')" class="text-xs text-rose-600 dark:text-rose-400 font-bold hover:underline flex items-center gap-1">
+                <i class="fa-solid fa-play"></i> Nghe đọc mẫu
+              </button>
+            </div>
+            <div class="bg-white dark:bg-dark-card p-3 rounded-xl border border-rose-100 dark:border-rose-900/60 space-y-1">
+              <p class="text-xs sm:text-sm italic text-rose-950 dark:text-rose-200 leading-relaxed font-serif whitespace-pre-line">
+                Sáng đầu thu trong xanh
+Em bước vào lớp mới
+Bao ánh mắt tươi cười
+Đón chào mùa háo hức.
+              </p>
+              <p class="text-[11px] text-gray-400 text-right mt-1 font-medium">&mdash; Trích: Khai giảng mùa thu</p>
+            </div>
+          </div>
+
+          <!-- Pillar 2: Luyện từ và câu trọng tâm -->
+          <div class="space-y-2.5">
+            <h4 class="text-xs sm:text-sm font-bold text-gray-800 dark:text-gray-200 flex items-center gap-1.5">
+              <span class="w-5 h-5 rounded-md bg-amber-600 text-white flex items-center justify-center text-[10px] font-bold">2</span>
+              <span>Luyện từ và câu & Vốn từ then chốt (Bấm vào từ để nghe phát âm)</span>
+            </h4>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2.5">
+              
+      <div onclick="speakVietnamese('trải nghiệm')" class="p-3 bg-white dark:bg-dark-card rounded-xl border border-rose-100 dark:border-rose-900/60 text-center space-y-1 hover:border-rose-400 hover:shadow-sm cursor-pointer transition group">
+        <p class="font-bold text-gray-900 dark:text-white text-xs sm:text-sm group-hover:text-rose-600 transition flex items-center justify-center gap-1">
+          trải nghiệm <i class="fa-solid fa-volume-low text-[10px] text-gray-400"></i>
+        </p>
+        <span class="inline-block px-1.5 py-0.5 rounded bg-rose-50 dark:bg-rose-950/60 text-rose-600 dark:text-rose-300 text-[10px] font-semibold">Danh từ</span>
+        <p class="text-[11px] text-gray-500 dark:text-gray-400 leading-snug">Những điều bản thân từng trải qua và tích lũy được</p>
+      </div>
+    
+      <div onclick="speakVietnamese('háo hức')" class="p-3 bg-white dark:bg-dark-card rounded-xl border border-rose-100 dark:border-rose-900/60 text-center space-y-1 hover:border-rose-400 hover:shadow-sm cursor-pointer transition group">
+        <p class="font-bold text-gray-900 dark:text-white text-xs sm:text-sm group-hover:text-rose-600 transition flex items-center justify-center gap-1">
+          háo hức <i class="fa-solid fa-volume-low text-[10px] text-gray-400"></i>
+        </p>
+        <span class="inline-block px-1.5 py-0.5 rounded bg-rose-50 dark:bg-rose-950/60 text-rose-600 dark:text-rose-300 text-[10px] font-semibold">Từ chỉ cảm xúc</span>
+        <p class="text-[11px] text-gray-500 dark:text-gray-400 leading-snug">Tâm trạng mong đợi rộn ràng, háo hức trước sự việc mới</p>
+      </div>
+    
+      <div onclick="speakVietnamese('rộn ràng')" class="p-3 bg-white dark:bg-dark-card rounded-xl border border-rose-100 dark:border-rose-900/60 text-center space-y-1 hover:border-rose-400 hover:shadow-sm cursor-pointer transition group">
+        <p class="font-bold text-gray-900 dark:text-white text-xs sm:text-sm group-hover:text-rose-600 transition flex items-center justify-center gap-1">
+          rộn ràng <i class="fa-solid fa-volume-low text-[10px] text-gray-400"></i>
+        </p>
+        <span class="inline-block px-1.5 py-0.5 rounded bg-rose-50 dark:bg-rose-950/60 text-rose-600 dark:text-rose-300 text-[10px] font-semibold">Từ chỉ đặc điểm</span>
+        <p class="text-[11px] text-gray-500 dark:text-gray-400 leading-snug">Âm thanh, không khí nhộn nhịp, vui vẻ</p>
+      </div>
+    
+      <div onclick="speakVietnamese('bồi hồi')" class="p-3 bg-white dark:bg-dark-card rounded-xl border border-rose-100 dark:border-rose-900/60 text-center space-y-1 hover:border-rose-400 hover:shadow-sm cursor-pointer transition group">
+        <p class="font-bold text-gray-900 dark:text-white text-xs sm:text-sm group-hover:text-rose-600 transition flex items-center justify-center gap-1">
+          bồi hồi <i class="fa-solid fa-volume-low text-[10px] text-gray-400"></i>
+        </p>
+        <span class="inline-block px-1.5 py-0.5 rounded bg-rose-50 dark:bg-rose-950/60 text-rose-600 dark:text-rose-300 text-[10px] font-semibold">Từ chỉ cảm xúc</span>
+        <p class="text-[11px] text-gray-500 dark:text-gray-400 leading-snug">Cảm xúc xúc động xao xuyến trong lòng</p>
+      </div>
+    
+            </div>
+            <div class="p-3 bg-amber-50/60 dark:bg-amber-950/30 rounded-xl border border-amber-100 dark:border-amber-900/50 text-xs text-amber-950 dark:text-amber-200">
+              <strong><i class="fa-solid fa-code-fork mr-1"></i> Kiến thức ngữ pháp trọng tâm:</strong> Câu kể giới thiệu bản thân ('Em là học sinh lớp 3A.'); Từ chỉ sự vật xung quanh lớp học.
+            </div>
+          </div>
+
+          <!-- Pillar 3: Viết đoạn văn & Nói nghe -->
+          <div class="p-3.5 bg-indigo-50/60 dark:bg-indigo-950/20 rounded-2xl border border-indigo-100 dark:border-indigo-900/40 space-y-2">
+            <h4 class="text-xs sm:text-sm font-bold text-gray-800 dark:text-gray-200 flex items-center gap-1.5">
+              <span class="w-5 h-5 rounded-md bg-indigo-600 text-white flex items-center justify-center text-[10px] font-bold">3</span>
+              <span>Viết đoạn văn & Rèn luyện kỹ năng Nói - Nghe</span>
+            </h4>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1">
+              <div class="p-3 bg-white dark:bg-dark-card rounded-xl border border-indigo-100/70 dark:border-indigo-900/50 space-y-1">
+                <span class="text-[11px] font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider block">
+                  <i class="fa-solid fa-pen-nib mr-1"></i> Định hướng viết đoạn văn:
+                </span>
+                <p class="text-xs text-gray-700 dark:text-gray-300">Viết đoạn văn (4–5 câu) kể lại một trải nghiệm thú vị trong kì nghỉ hè hoặc ngày đầu tiên vào lớp 3 của em.</p>
+              </div>
+              <div class="p-3 bg-white dark:bg-dark-card rounded-xl border border-indigo-100/70 dark:border-indigo-900/50 space-y-1">
+                <span class="text-[11px] font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider block">
+                  <i class="fa-solid fa-comments mr-1"></i> Thực hành nói và nghe:
+                </span>
+                <p class="text-xs text-gray-700 dark:text-gray-300">Tự tin giới thiệu bản thân trước cả lớp: họ tên, sở thích, niềm vui khi bước vào năm học mới.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Practice Quizzes -->
+        <div class="pt-4 border-t border-gray-100 dark:border-gray-800">
+          <h4 class="font-bold text-gray-900 dark:text-white text-xs sm:text-sm flex items-center gap-1.5 mb-3">
+            <i class="fa-solid fa-circle-question text-rose-500"></i> Quick Check Quiz (2 câu hỏi củng cố tức thì)
+          </h4>
+          <div class="space-y-3">
+            
+        <div class="p-3.5 sm:p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-2.5">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-bold text-rose-600 dark:text-rose-400 uppercase tracking-wider">Câu hỏi củng cố 1</span>
+          </div>
+          <p class="text-xs sm:text-sm font-bold text-gray-900 dark:text-white">Trong câu: 'Em rất háo hức khi được gặp lại thầy cô và bạn bè.', từ ngữ nào bộc lộ cảm xúc của học sinh?</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2" id="opts_quiz_0_0">
+            
+        <button onclick="checkQuiz('quiz_0_0', 0, 2, '\'Háo hức\' là từ ngữ bộc lộ trạng thái cảm xúc vui tươi, đón đợi điều mới mẻ.')" class="quiz-btn-quiz_0_0 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">A.</span> thầy cô
+        </button>
+      
+        <button onclick="checkQuiz('quiz_0_0', 1, 2, '\'Háo hức\' là từ ngữ bộc lộ trạng thái cảm xúc vui tươi, đón đợi điều mới mẻ.')" class="quiz-btn-quiz_0_0 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">B.</span> bạn bè
+        </button>
+      
+        <button onclick="checkQuiz('quiz_0_0', 2, 2, '\'Háo hức\' là từ ngữ bộc lộ trạng thái cảm xúc vui tươi, đón đợi điều mới mẻ.')" class="quiz-btn-quiz_0_0 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">C.</span> háo hức
+        </button>
+      
+        <button onclick="checkQuiz('quiz_0_0', 3, 2, '\'Háo hức\' là từ ngữ bộc lộ trạng thái cảm xúc vui tươi, đón đợi điều mới mẻ.')" class="quiz-btn-quiz_0_0 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">D.</span> gặp lại
+        </button>
+      
+          </div>
+          <div id="fb_quiz_0_0" class="hidden p-2.5 rounded-xl text-xs"></div>
+        </div>
+      
+        <div class="p-3.5 sm:p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-2.5">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-bold text-rose-600 dark:text-rose-400 uppercase tracking-wider">Câu hỏi củng cố 2</span>
+          </div>
+          <p class="text-xs sm:text-sm font-bold text-gray-900 dark:text-white">Câu: 'Tôi là Nguyễn Nam, học sinh lớp 3C.' thuộc kiểu câu nào em đã học?</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2" id="opts_quiz_0_1">
+            
+        <button onclick="checkQuiz('quiz_0_1', 0, 0, 'Câu trên là câu kể dùng để giới thiệu bản thân (Ai là gì?).')" class="quiz-btn-quiz_0_1 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">A.</span> Câu kể (dùng để giới thiệu)
+        </button>
+      
+        <button onclick="checkQuiz('quiz_0_1', 1, 0, 'Câu trên là câu kể dùng để giới thiệu bản thân (Ai là gì?).')" class="quiz-btn-quiz_0_1 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">B.</span> Câu hỏi (hỏi thông tin)
+        </button>
+      
+        <button onclick="checkQuiz('quiz_0_1', 2, 0, 'Câu trên là câu kể dùng để giới thiệu bản thân (Ai là gì?).')" class="quiz-btn-quiz_0_1 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">C.</span> Câu cảm (bộc lộ cảm xúc)
+        </button>
+      
+        <button onclick="checkQuiz('quiz_0_1', 3, 0, 'Câu trên là câu kể dùng để giới thiệu bản thân (Ai là gì?).')" class="quiz-btn-quiz_0_1 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">D.</span> Câu khiến (nêu đề nghị)
+        </button>
+      
+          </div>
+          <div id="fb_quiz_0_1" class="hidden p-2.5 rounded-xl text-xs"></div>
+        </div>
+      
+          </div>
+        </div>
+      </article>
+    
+      <!-- Chủ điểm 02: Cổng trường rộng mở -->
+      <article id="chudiem-2" class="bg-white dark:bg-dark-surface rounded-3xl p-6 sm:p-7 shadow-sm border border-gray-100 dark:border-gray-800 space-y-5 scroll-mt-24">
+        <!-- Header -->
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-gray-100 dark:border-gray-800">
+          <div class="flex items-center gap-3">
+            <span class="w-10 h-10 rounded-2xl bg-gradient-to-br from-rose-500 via-red-600 to-amber-500 text-white flex items-center justify-center font-black text-sm shadow-md shadow-rose-500/20">
+              02
+            </span>
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="px-2 py-0.5 rounded-full bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-300 font-bold text-[10px] uppercase tracking-wider">
+                  Học kì I • Tuần 5–8
+                </span>
+                <span class="text-[11px] font-semibold text-gray-400">Mái trường mến yêu</span>
+              </div>
+              <h3 class="text-lg sm:text-xl font-black text-gray-900 dark:text-white mt-0.5">Chủ điểm 2: Cổng trường rộng mở</h3>
+              <p class="text-xs text-gray-500 dark:text-gray-400 font-medium">Trường lớp, bạn bè, thầy cô và tinh thần hăng say học tập</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 text-xs font-bold bg-rose-50 dark:bg-rose-950/50 text-rose-600 dark:text-rose-300 px-3 py-1.5 rounded-xl border border-rose-100 dark:border-rose-900">
+            <i class="fa-solid fa-school"></i> Trọng tâm SGK
+          </div>
+        </div>
+
+        <!-- 3 Pillars Breakdown -->
+        <div class="space-y-4">
+          <!-- Pillar 1: Đọc & Cảm thụ văn thơ -->
+          <div class="p-3.5 bg-rose-50/60 dark:bg-rose-950/20 rounded-2xl border border-rose-100 dark:border-rose-900/40 space-y-2">
+            <div class="flex items-center justify-between">
+              <h4 class="text-xs sm:text-sm font-bold text-gray-800 dark:text-gray-200 flex items-center gap-1.5">
+                <span class="w-5 h-5 rounded-md bg-rose-600 text-white flex items-center justify-center text-[10px] font-bold">1</span>
+                <span>Đọc & Cảm thụ văn bản đọc mẫu</span>
+              </h4>
+              <button onclick="speakVietnamese('Mỗi sớm mai đến lớp Thầy cô trao nụ cười Trang sách hồng mở rộng Chắp cánh ước mơ tươi.')" class="text-xs text-rose-600 dark:text-rose-400 font-bold hover:underline flex items-center gap-1">
+                <i class="fa-solid fa-play"></i> Nghe đọc mẫu
+              </button>
+            </div>
+            <div class="bg-white dark:bg-dark-card p-3 rounded-xl border border-rose-100 dark:border-rose-900/60 space-y-1">
+              <p class="text-xs sm:text-sm italic text-rose-950 dark:text-rose-200 leading-relaxed font-serif whitespace-pre-line">
+                Mỗi sớm mai đến lớp
+Thầy cô trao nụ cười
+Trang sách hồng mở rộng
+Chắp cánh ước mơ tươi.
+              </p>
+              <p class="text-[11px] text-gray-400 text-right mt-1 font-medium">&mdash; Trích: Dưới mái trường thân yêu</p>
+            </div>
+          </div>
+
+          <!-- Pillar 2: Luyện từ và câu trọng tâm -->
+          <div class="space-y-2.5">
+            <h4 class="text-xs sm:text-sm font-bold text-gray-800 dark:text-gray-200 flex items-center gap-1.5">
+              <span class="w-5 h-5 rounded-md bg-amber-600 text-white flex items-center justify-center text-[10px] font-bold">2</span>
+              <span>Luyện từ và câu & Vốn từ then chốt (Bấm vào từ để nghe phát âm)</span>
+            </h4>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2.5">
+              
+      <div onclick="speakVietnamese('thảo luận')" class="p-3 bg-white dark:bg-dark-card rounded-xl border border-rose-100 dark:border-rose-900/60 text-center space-y-1 hover:border-rose-400 hover:shadow-sm cursor-pointer transition group">
+        <p class="font-bold text-gray-900 dark:text-white text-xs sm:text-sm group-hover:text-rose-600 transition flex items-center justify-center gap-1">
+          thảo luận <i class="fa-solid fa-volume-low text-[10px] text-gray-400"></i>
+        </p>
+        <span class="inline-block px-1.5 py-0.5 rounded bg-rose-50 dark:bg-rose-950/60 text-rose-600 dark:text-rose-300 text-[10px] font-semibold">Từ chỉ hoạt động</span>
+        <p class="text-[11px] text-gray-500 dark:text-gray-400 leading-snug">Cùng nhau trao đổi ý kiến để giải quyết bài tập</p>
+      </div>
+    
+      <div onclick="speakVietnamese('ngăn nắp')" class="p-3 bg-white dark:bg-dark-card rounded-xl border border-rose-100 dark:border-rose-900/60 text-center space-y-1 hover:border-rose-400 hover:shadow-sm cursor-pointer transition group">
+        <p class="font-bold text-gray-900 dark:text-white text-xs sm:text-sm group-hover:text-rose-600 transition flex items-center justify-center gap-1">
+          ngăn nắp <i class="fa-solid fa-volume-low text-[10px] text-gray-400"></i>
+        </p>
+        <span class="inline-block px-1.5 py-0.5 rounded bg-rose-50 dark:bg-rose-950/60 text-rose-600 dark:text-rose-300 text-[10px] font-semibold">Từ chỉ đặc điểm</span>
+        <p class="text-[11px] text-gray-500 dark:text-gray-400 leading-snug">Gọn gàng, sạch sẽ, đồ dùng được xếp đúng nơi quy định</p>
+      </div>
+    
+      <div onclick="speakVietnamese('chăm chỉ')" class="p-3 bg-white dark:bg-dark-card rounded-xl border border-rose-100 dark:border-rose-900/60 text-center space-y-1 hover:border-rose-400 hover:shadow-sm cursor-pointer transition group">
+        <p class="font-bold text-gray-900 dark:text-white text-xs sm:text-sm group-hover:text-rose-600 transition flex items-center justify-center gap-1">
+          chăm chỉ <i class="fa-solid fa-volume-low text-[10px] text-gray-400"></i>
+        </p>
+        <span class="inline-block px-1.5 py-0.5 rounded bg-rose-50 dark:bg-rose-950/60 text-rose-600 dark:text-rose-300 text-[10px] font-semibold">Từ chỉ phẩm chất</span>
+        <p class="text-[11px] text-gray-500 dark:text-gray-400 leading-snug">Cần cù, siêng năng trong học tập và rèn luyện</p>
+      </div>
+    
+      <div onclick="speakVietnamese('thân thương')" class="p-3 bg-white dark:bg-dark-card rounded-xl border border-rose-100 dark:border-rose-900/60 text-center space-y-1 hover:border-rose-400 hover:shadow-sm cursor-pointer transition group">
+        <p class="font-bold text-gray-900 dark:text-white text-xs sm:text-sm group-hover:text-rose-600 transition flex items-center justify-center gap-1">
+          thân thương <i class="fa-solid fa-volume-low text-[10px] text-gray-400"></i>
+        </p>
+        <span class="inline-block px-1.5 py-0.5 rounded bg-rose-50 dark:bg-rose-950/60 text-rose-600 dark:text-rose-300 text-[10px] font-semibold">Từ chỉ tình cảm</span>
+        <p class="text-[11px] text-gray-500 dark:text-gray-400 leading-snug">Gần gũi, gắn bó và đầy yêu mến</p>
+      </div>
+    
+            </div>
+            <div class="p-3 bg-amber-50/60 dark:bg-amber-950/30 rounded-xl border border-amber-100 dark:border-amber-900/50 text-xs text-amber-950 dark:text-amber-200">
+              <strong><i class="fa-solid fa-code-fork mr-1"></i> Kiến thức ngữ pháp trọng tâm:</strong> Biện pháp tu từ so sánh: 'Trường học như ngôi nhà thứ hai của em.'; Phân biệt dấu chấm (.) và dấu chấm hỏi (?).
+            </div>
+          </div>
+
+          <!-- Pillar 3: Viết đoạn văn & Nói nghe -->
+          <div class="p-3.5 bg-indigo-50/60 dark:bg-indigo-950/20 rounded-2xl border border-indigo-100 dark:border-indigo-900/40 space-y-2">
+            <h4 class="text-xs sm:text-sm font-bold text-gray-800 dark:text-gray-200 flex items-center gap-1.5">
+              <span class="w-5 h-5 rounded-md bg-indigo-600 text-white flex items-center justify-center text-[10px] font-bold">3</span>
+              <span>Viết đoạn văn & Rèn luyện kỹ năng Nói - Nghe</span>
+            </h4>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1">
+              <div class="p-3 bg-white dark:bg-dark-card rounded-xl border border-indigo-100/70 dark:border-indigo-900/50 space-y-1">
+                <span class="text-[11px] font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider block">
+                  <i class="fa-solid fa-pen-nib mr-1"></i> Định hướng viết đoạn văn:
+                </span>
+                <p class="text-xs text-gray-700 dark:text-gray-300">Viết đoạn văn (4–5 câu) tả một đồ dùng học tập gắn bó thân thiết với em (cây bút, thước kẻ, chiếc cặp sách).</p>
+              </div>
+              <div class="p-3 bg-white dark:bg-dark-card rounded-xl border border-indigo-100/70 dark:border-indigo-900/50 space-y-1">
+                <span class="text-[11px] font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider block">
+                  <i class="fa-solid fa-comments mr-1"></i> Thực hành nói và nghe:
+                </span>
+                <p class="text-xs text-gray-700 dark:text-gray-300">Kể cho bạn nghe về một tiết học hoặc một trò chơi thú vị cùng bạn bè trong giờ ra chơi ở trường.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Practice Quizzes -->
+        <div class="pt-4 border-t border-gray-100 dark:border-gray-800">
+          <h4 class="font-bold text-gray-900 dark:text-white text-xs sm:text-sm flex items-center gap-1.5 mb-3">
+            <i class="fa-solid fa-circle-question text-rose-500"></i> Quick Check Quiz (2 câu hỏi củng cố tức thì)
+          </h4>
+          <div class="space-y-3">
+            
+        <div class="p-3.5 sm:p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-2.5">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-bold text-rose-600 dark:text-rose-400 uppercase tracking-wider">Câu hỏi củng cố 1</span>
+          </div>
+          <p class="text-xs sm:text-sm font-bold text-gray-900 dark:text-white">Câu nào dưới đây có sử dụng biện pháp so sánh?</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2" id="opts_quiz_1_0">
+            
+        <button onclick="checkQuiz('quiz_1_0', 0, 1, 'Câu \'Trường học như ngôi nhà thứ hai...\' so sánh trường học với ngôi nhà thứ hai qua từ so sánh \'như\'.')" class="quiz-btn-quiz_1_0 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">A.</span> Sân trường hôm nay thật rộn rã tiếng cười đùa.
+        </button>
+      
+        <button onclick="checkQuiz('quiz_1_0', 1, 1, 'Câu \'Trường học như ngôi nhà thứ hai...\' so sánh trường học với ngôi nhà thứ hai qua từ so sánh \'như\'.')" class="quiz-btn-quiz_1_0 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">B.</span> Trường học như ngôi nhà thứ hai ấm áp của chúng em.
+        </button>
+      
+        <button onclick="checkQuiz('quiz_1_0', 2, 1, 'Câu \'Trường học như ngôi nhà thứ hai...\' so sánh trường học với ngôi nhà thứ hai qua từ so sánh \'như\'.')" class="quiz-btn-quiz_1_0 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">C.</span> Các bạn học sinh đang chăm chú nghe cô giáo giảng bài.
+        </button>
+      
+        <button onclick="checkQuiz('quiz_1_0', 3, 1, 'Câu \'Trường học như ngôi nhà thứ hai...\' so sánh trường học với ngôi nhà thứ hai qua từ so sánh \'như\'.')" class="quiz-btn-quiz_1_0 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">D.</span> Những hàng cây xanh tỏa bóng mát rượi quanh sân.
+        </button>
+      
+          </div>
+          <div id="fb_quiz_1_0" class="hidden p-2.5 rounded-xl text-xs"></div>
+        </div>
+      
+        <div class="p-3.5 sm:p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-2.5">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-bold text-rose-600 dark:text-rose-400 uppercase tracking-wider">Câu hỏi củng cố 2</span>
+          </div>
+          <p class="text-xs sm:text-sm font-bold text-gray-900 dark:text-white">Dấu câu nào phù hợp nhất để đặt vào cuối câu: 'Hôm nay lớp chúng mình sẽ học bài thơ nào vậy'?</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2" id="opts_quiz_1_1">
+            
+        <button onclick="checkQuiz('quiz_1_1', 0, 2, 'Đây là câu hỏi dùng để hỏi thông tin, do đó cần đặt dấu chấm hỏi (?) ở cuối câu.')" class="quiz-btn-quiz_1_1 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">A.</span> Dấu chấm (.)
+        </button>
+      
+        <button onclick="checkQuiz('quiz_1_1', 1, 2, 'Đây là câu hỏi dùng để hỏi thông tin, do đó cần đặt dấu chấm hỏi (?) ở cuối câu.')" class="quiz-btn-quiz_1_1 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">B.</span> Dấu chấm than (!)
+        </button>
+      
+        <button onclick="checkQuiz('quiz_1_1', 2, 2, 'Đây là câu hỏi dùng để hỏi thông tin, do đó cần đặt dấu chấm hỏi (?) ở cuối câu.')" class="quiz-btn-quiz_1_1 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">C.</span> Dấu chấm hỏi (?)
+        </button>
+      
+        <button onclick="checkQuiz('quiz_1_1', 3, 2, 'Đây là câu hỏi dùng để hỏi thông tin, do đó cần đặt dấu chấm hỏi (?) ở cuối câu.')" class="quiz-btn-quiz_1_1 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">D.</span> Dấu hai chấm (:)
+        </button>
+      
+          </div>
+          <div id="fb_quiz_1_1" class="hidden p-2.5 rounded-xl text-xs"></div>
+        </div>
+      
+          </div>
+        </div>
+      </article>
+    
+      <!-- Chủ điểm 03: Mái nhà yêu thương -->
+      <article id="chudiem-3" class="bg-white dark:bg-dark-surface rounded-3xl p-6 sm:p-7 shadow-sm border border-gray-100 dark:border-gray-800 space-y-5 scroll-mt-24">
+        <!-- Header -->
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-gray-100 dark:border-gray-800">
+          <div class="flex items-center gap-3">
+            <span class="w-10 h-10 rounded-2xl bg-gradient-to-br from-rose-500 via-red-600 to-amber-500 text-white flex items-center justify-center font-black text-sm shadow-md shadow-rose-500/20">
+              03
+            </span>
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="px-2 py-0.5 rounded-full bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-300 font-bold text-[10px] uppercase tracking-wider">
+                  Học kì I • Tuần 9–13
+                </span>
+                <span class="text-[11px] font-semibold text-gray-400">Tổ ấm gia đình</span>
+              </div>
+              <h3 class="text-lg sm:text-xl font-black text-gray-900 dark:text-white mt-0.5">Chủ điểm 3: Mái nhà yêu thương</h3>
+              <p class="text-xs text-gray-500 dark:text-gray-400 font-medium">Gia đình, tình cảm thiêng liêng và sự quan tâm giữa những người thân</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 text-xs font-bold bg-rose-50 dark:bg-rose-950/50 text-rose-600 dark:text-rose-300 px-3 py-1.5 rounded-xl border border-rose-100 dark:border-rose-900">
+            <i class="fa-solid fa-heart"></i> Trọng tâm SGK
+          </div>
+        </div>
+
+        <!-- 3 Pillars Breakdown -->
+        <div class="space-y-4">
+          <!-- Pillar 1: Đọc & Cảm thụ văn thơ -->
+          <div class="p-3.5 bg-rose-50/60 dark:bg-rose-950/20 rounded-2xl border border-rose-100 dark:border-rose-900/40 space-y-2">
+            <div class="flex items-center justify-between">
+              <h4 class="text-xs sm:text-sm font-bold text-gray-800 dark:text-gray-200 flex items-center gap-1.5">
+                <span class="w-5 h-5 rounded-md bg-rose-600 text-white flex items-center justify-center text-[10px] font-bold">1</span>
+                <span>Đọc & Cảm thụ văn bản đọc mẫu</span>
+              </h4>
+              <button onclick="speakVietnamese('Bàn tay mẹ dịu êm Chăm lo từng giấc ngủ Bóng hình cha vất vả Cho con trọn niềm vui.')" class="text-xs text-rose-600 dark:text-rose-400 font-bold hover:underline flex items-center gap-1">
+                <i class="fa-solid fa-play"></i> Nghe đọc mẫu
+              </button>
+            </div>
+            <div class="bg-white dark:bg-dark-card p-3 rounded-xl border border-rose-100 dark:border-rose-900/60 space-y-1">
+              <p class="text-xs sm:text-sm italic text-rose-950 dark:text-rose-200 leading-relaxed font-serif whitespace-pre-line">
+                Bàn tay mẹ dịu êm
+Chăm lo từng giấc ngủ
+Bóng hình cha vất vả
+Cho con trọn niềm vui.
+              </p>
+              <p class="text-[11px] text-gray-400 text-right mt-1 font-medium">&mdash; Trích: Khúc ca gia đình</p>
+            </div>
+          </div>
+
+          <!-- Pillar 2: Luyện từ và câu trọng tâm -->
+          <div class="space-y-2.5">
+            <h4 class="text-xs sm:text-sm font-bold text-gray-800 dark:text-gray-200 flex items-center gap-1.5">
+              <span class="w-5 h-5 rounded-md bg-amber-600 text-white flex items-center justify-center text-[10px] font-bold">2</span>
+              <span>Luyện từ và câu & Vốn từ then chốt (Bấm vào từ để nghe phát âm)</span>
+            </h4>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2.5">
+              
+      <div onclick="speakVietnamese('yêu thương')" class="p-3 bg-white dark:bg-dark-card rounded-xl border border-rose-100 dark:border-rose-900/60 text-center space-y-1 hover:border-rose-400 hover:shadow-sm cursor-pointer transition group">
+        <p class="font-bold text-gray-900 dark:text-white text-xs sm:text-sm group-hover:text-rose-600 transition flex items-center justify-center gap-1">
+          yêu thương <i class="fa-solid fa-volume-low text-[10px] text-gray-400"></i>
+        </p>
+        <span class="inline-block px-1.5 py-0.5 rounded bg-rose-50 dark:bg-rose-950/60 text-rose-600 dark:text-rose-300 text-[10px] font-semibold">Từ chỉ tình cảm</span>
+        <p class="text-[11px] text-gray-500 dark:text-gray-400 leading-snug">Tình cảm gắn bó tha thiết, quan tâm sâu sắc</p>
+      </div>
+    
+      <div onclick="speakVietnamese('ấm áp')" class="p-3 bg-white dark:bg-dark-card rounded-xl border border-rose-100 dark:border-rose-900/60 text-center space-y-1 hover:border-rose-400 hover:shadow-sm cursor-pointer transition group">
+        <p class="font-bold text-gray-900 dark:text-white text-xs sm:text-sm group-hover:text-rose-600 transition flex items-center justify-center gap-1">
+          ấm áp <i class="fa-solid fa-volume-low text-[10px] text-gray-400"></i>
+        </p>
+        <span class="inline-block px-1.5 py-0.5 rounded bg-rose-50 dark:bg-rose-950/60 text-rose-600 dark:text-rose-300 text-[10px] font-semibold">Từ chỉ đặc điểm</span>
+        <p class="text-[11px] text-gray-500 dark:text-gray-400 leading-snug">Tạo cảm giác dễ chịu, bình yên và chở che</p>
+      </div>
+    
+      <div onclick="speakVietnamese('hiếu thảo')" class="p-3 bg-white dark:bg-dark-card rounded-xl border border-rose-100 dark:border-rose-900/60 text-center space-y-1 hover:border-rose-400 hover:shadow-sm cursor-pointer transition group">
+        <p class="font-bold text-gray-900 dark:text-white text-xs sm:text-sm group-hover:text-rose-600 transition flex items-center justify-center gap-1">
+          hiếu thảo <i class="fa-solid fa-volume-low text-[10px] text-gray-400"></i>
+        </p>
+        <span class="inline-block px-1.5 py-0.5 rounded bg-rose-50 dark:bg-rose-950/60 text-rose-600 dark:text-rose-300 text-[10px] font-semibold">Từ chỉ phẩm chất</span>
+        <p class="text-[11px] text-gray-500 dark:text-gray-400 leading-snug">Biết kính yêu, vâng lời và phụng dưỡng ông bà cha mẹ</p>
+      </div>
+    
+      <div onclick="speakVietnamese('sum vầy')" class="p-3 bg-white dark:bg-dark-card rounded-xl border border-rose-100 dark:border-rose-900/60 text-center space-y-1 hover:border-rose-400 hover:shadow-sm cursor-pointer transition group">
+        <p class="font-bold text-gray-900 dark:text-white text-xs sm:text-sm group-hover:text-rose-600 transition flex items-center justify-center gap-1">
+          sum vầy <i class="fa-solid fa-volume-low text-[10px] text-gray-400"></i>
+        </p>
+        <span class="inline-block px-1.5 py-0.5 rounded bg-rose-50 dark:bg-rose-950/60 text-rose-600 dark:text-rose-300 text-[10px] font-semibold">Từ chỉ hoạt động</span>
+        <p class="text-[11px] text-gray-500 dark:text-gray-400 leading-snug">Tụ họp đông đủ người thân trong không khí đầm ấm</p>
+      </div>
+    
+            </div>
+            <div class="p-3 bg-amber-50/60 dark:bg-amber-950/30 rounded-xl border border-amber-100 dark:border-amber-900/50 text-xs text-amber-950 dark:text-amber-200">
+              <strong><i class="fa-solid fa-code-fork mr-1"></i> Kiến thức ngữ pháp trọng tâm:</strong> Câu cảm bộc lộ cảm xúc ('Ôi, bàn tay mẹ mới ấm áp làm sao!'); Dấu chấm than (!).
+            </div>
+          </div>
+
+          <!-- Pillar 3: Viết đoạn văn & Nói nghe -->
+          <div class="p-3.5 bg-indigo-50/60 dark:bg-indigo-950/20 rounded-2xl border border-indigo-100 dark:border-indigo-900/40 space-y-2">
+            <h4 class="text-xs sm:text-sm font-bold text-gray-800 dark:text-gray-200 flex items-center gap-1.5">
+              <span class="w-5 h-5 rounded-md bg-indigo-600 text-white flex items-center justify-center text-[10px] font-bold">3</span>
+              <span>Viết đoạn văn & Rèn luyện kỹ năng Nói - Nghe</span>
+            </h4>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1">
+              <div class="p-3 bg-white dark:bg-dark-card rounded-xl border border-indigo-100/70 dark:border-indigo-900/50 space-y-1">
+                <span class="text-[11px] font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider block">
+                  <i class="fa-solid fa-pen-nib mr-1"></i> Định hướng viết đoạn văn:
+                </span>
+                <p class="text-xs text-gray-700 dark:text-gray-300">Viết đoạn văn (4–5 câu) bày tỏ tình cảm, lòng biết ơn sâu sắc đối với người thân (ông, bà, bố hoặc mẹ).</p>
+              </div>
+              <div class="p-3 bg-white dark:bg-dark-card rounded-xl border border-indigo-100/70 dark:border-indigo-900/50 space-y-1">
+                <span class="text-[11px] font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider block">
+                  <i class="fa-solid fa-comments mr-1"></i> Thực hành nói và nghe:
+                </span>
+                <p class="text-xs text-gray-700 dark:text-gray-300">Kể lại một kỉ niệm ấm áp giữa em và người thân trong gia đình.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Practice Quizzes -->
+        <div class="pt-4 border-t border-gray-100 dark:border-gray-800">
+          <h4 class="font-bold text-gray-900 dark:text-white text-xs sm:text-sm flex items-center gap-1.5 mb-3">
+            <i class="fa-solid fa-circle-question text-rose-500"></i> Quick Check Quiz (2 câu hỏi củng cố tức thì)
+          </h4>
+          <div class="space-y-3">
+            
+        <div class="p-3.5 sm:p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-2.5">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-bold text-rose-600 dark:text-rose-400 uppercase tracking-wider">Câu hỏi củng cố 1</span>
+          </div>
+          <p class="text-xs sm:text-sm font-bold text-gray-900 dark:text-white">Trong các câu dưới đây, câu nào là câu cảm bộc lộ cảm xúc?</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2" id="opts_quiz_2_0">
+            
+        <button onclick="checkQuiz('quiz_2_0', 0, 2, 'Câu \'Ôi, bữa cơm mẹ nấu hôm nay ngon tuyệt vời!\' có từ cảm thán \'Ôi\' và bộc lộ sự trầm trồ, xúc động.')" class="quiz-btn-quiz_2_0 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">A.</span> Mẹ em là bác sĩ làm việc ở bệnh viện tỉnh.
+        </button>
+      
+        <button onclick="checkQuiz('quiz_2_0', 1, 2, 'Câu \'Ôi, bữa cơm mẹ nấu hôm nay ngon tuyệt vời!\' có từ cảm thán \'Ôi\' và bộc lộ sự trầm trồ, xúc động.')" class="quiz-btn-quiz_2_0 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">B.</span> Bố em đang chăm sóc luống hoa trước sân nhà.
+        </button>
+      
+        <button onclick="checkQuiz('quiz_2_0', 2, 2, 'Câu \'Ôi, bữa cơm mẹ nấu hôm nay ngon tuyệt vời!\' có từ cảm thán \'Ôi\' và bộc lộ sự trầm trồ, xúc động.')" class="quiz-btn-quiz_2_0 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">C.</span> Ôi, bữa cơm mẹ nấu hôm nay ngon tuyệt vời!
+        </button>
+      
+        <button onclick="checkQuiz('quiz_2_0', 3, 2, 'Câu \'Ôi, bữa cơm mẹ nấu hôm nay ngon tuyệt vời!\' có từ cảm thán \'Ôi\' và bộc lộ sự trầm trồ, xúc động.')" class="quiz-btn-quiz_2_0 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">D.</span> Mẹ có thể hướng dẫn con làm bài toán này được không?
+        </button>
+      
+          </div>
+          <div id="fb_quiz_2_0" class="hidden p-2.5 rounded-xl text-xs"></div>
+        </div>
+      
+        <div class="p-3.5 sm:p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-2.5">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-bold text-rose-600 dark:text-rose-400 uppercase tracking-wider">Câu hỏi củng cố 2</span>
+          </div>
+          <p class="text-xs sm:text-sm font-bold text-gray-900 dark:text-white">Dãy từ nào dưới đây gồm toàn các từ ngữ chỉ tình cảm trong gia đình?</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2" id="opts_quiz_2_1">
+            
+        <button onclick="checkQuiz('quiz_2_1', 0, 0, 'Dãy từ \'yêu thương, kính trọng, quý mến, hiếu thảo\' đều là từ chỉ tình cảm ruột thịt gia đình.')" class="quiz-btn-quiz_2_1 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">A.</span> yêu thương, kính trọng, quý mến, hiếu thảo
+        </button>
+      
+        <button onclick="checkQuiz('quiz_2_1', 1, 0, 'Dãy từ \'yêu thương, kính trọng, quý mến, hiếu thảo\' đều là từ chỉ tình cảm ruột thịt gia đình.')" class="quiz-btn-quiz_2_1 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">B.</span> chăm chỉ, thông minh, khéo léo, dũng cảm
+        </button>
+      
+        <button onclick="checkQuiz('quiz_2_1', 2, 0, 'Dãy từ \'yêu thương, kính trọng, quý mến, hiếu thảo\' đều là từ chỉ tình cảm ruột thịt gia đình.')" class="quiz-btn-quiz_2_1 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">C.</span> rộng lớn, bao la, bát ngát, mênh mông
+        </button>
+      
+        <button onclick="checkQuiz('quiz_2_1', 3, 0, 'Dãy từ \'yêu thương, kính trọng, quý mến, hiếu thảo\' đều là từ chỉ tình cảm ruột thịt gia đình.')" class="quiz-btn-quiz_2_1 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">D.</span> chạy nhảy, vui đùa, ca hát, vẽ tranh
+        </button>
+      
+          </div>
+          <div id="fb_quiz_2_1" class="hidden p-2.5 rounded-xl text-xs"></div>
+        </div>
+      
+          </div>
+        </div>
+      </article>
+    
+      <!-- Chủ điểm 04: Cộng đồng gắn bó -->
+      <article id="chudiem-4" class="bg-white dark:bg-dark-surface rounded-3xl p-6 sm:p-7 shadow-sm border border-gray-100 dark:border-gray-800 space-y-5 scroll-mt-24">
+        <!-- Header -->
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-gray-100 dark:border-gray-800">
+          <div class="flex items-center gap-3">
+            <span class="w-10 h-10 rounded-2xl bg-gradient-to-br from-rose-500 via-red-600 to-amber-500 text-white flex items-center justify-center font-black text-sm shadow-md shadow-rose-500/20">
+              04
+            </span>
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="px-2 py-0.5 rounded-full bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-300 font-bold text-[10px] uppercase tracking-wider">
+                  Học kì I • Tuần 14–18
+                </span>
+                <span class="text-[11px] font-semibold text-gray-400">Xã hội & Đoàn kết</span>
+              </div>
+              <h3 class="text-lg sm:text-xl font-black text-gray-900 dark:text-white mt-0.5">Chủ điểm 4: Cộng đồng gắn bó</h3>
+              <p class="text-xs text-gray-500 dark:text-gray-400 font-medium">Nghề nghiệp xã hội, hoạt động cộng đồng và tình đoàn kết nhân ái</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 text-xs font-bold bg-rose-50 dark:bg-rose-950/50 text-rose-600 dark:text-rose-300 px-3 py-1.5 rounded-xl border border-rose-100 dark:border-rose-900">
+            <i class="fa-solid fa-users"></i> Trọng tâm SGK
+          </div>
+        </div>
+
+        <!-- 3 Pillars Breakdown -->
+        <div class="space-y-4">
+          <!-- Pillar 1: Đọc & Cảm thụ văn thơ -->
+          <div class="p-3.5 bg-rose-50/60 dark:bg-rose-950/20 rounded-2xl border border-rose-100 dark:border-rose-900/40 space-y-2">
+            <div class="flex items-center justify-between">
+              <h4 class="text-xs sm:text-sm font-bold text-gray-800 dark:text-gray-200 flex items-center gap-1.5">
+                <span class="w-5 h-5 rounded-md bg-rose-600 text-white flex items-center justify-center text-[10px] font-bold">1</span>
+                <span>Đọc & Cảm thụ văn bản đọc mẫu</span>
+              </h4>
+              <button onclick="speakVietnamese('Cô y tá dịu dàng Bác nông dân cấy lúa Chú công an canh gác Cho cuộc sống bình yên.')" class="text-xs text-rose-600 dark:text-rose-400 font-bold hover:underline flex items-center gap-1">
+                <i class="fa-solid fa-play"></i> Nghe đọc mẫu
+              </button>
+            </div>
+            <div class="bg-white dark:bg-dark-card p-3 rounded-xl border border-rose-100 dark:border-rose-900/60 space-y-1">
+              <p class="text-xs sm:text-sm italic text-rose-950 dark:text-rose-200 leading-relaxed font-serif whitespace-pre-line">
+                Cô y tá dịu dàng
+Bác nông dân cấy lúa
+Chú công an canh gác
+Cho cuộc sống bình yên.
+              </p>
+              <p class="text-[11px] text-gray-400 text-right mt-1 font-medium">&mdash; Trích: Những bàn tay lao động</p>
+            </div>
+          </div>
+
+          <!-- Pillar 2: Luyện từ và câu trọng tâm -->
+          <div class="space-y-2.5">
+            <h4 class="text-xs sm:text-sm font-bold text-gray-800 dark:text-gray-200 flex items-center gap-1.5">
+              <span class="w-5 h-5 rounded-md bg-amber-600 text-white flex items-center justify-center text-[10px] font-bold">2</span>
+              <span>Luyện từ và câu & Vốn từ then chốt (Bấm vào từ để nghe phát âm)</span>
+            </h4>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2.5">
+              
+      <div onclick="speakVietnamese('bác sĩ / kĩ sư')" class="p-3 bg-white dark:bg-dark-card rounded-xl border border-rose-100 dark:border-rose-900/60 text-center space-y-1 hover:border-rose-400 hover:shadow-sm cursor-pointer transition group">
+        <p class="font-bold text-gray-900 dark:text-white text-xs sm:text-sm group-hover:text-rose-600 transition flex items-center justify-center gap-1">
+          bác sĩ / kĩ sư <i class="fa-solid fa-volume-low text-[10px] text-gray-400"></i>
+        </p>
+        <span class="inline-block px-1.5 py-0.5 rounded bg-rose-50 dark:bg-rose-950/60 text-rose-600 dark:text-rose-300 text-[10px] font-semibold">Từ chỉ nghề nghiệp</span>
+        <p class="text-[11px] text-gray-500 dark:text-gray-400 leading-snug">Những người lao động trí óc phục vụ sức khỏe, kĩ thuật</p>
+      </div>
+    
+      <div onclick="speakVietnamese('nông dân / công nhân')" class="p-3 bg-white dark:bg-dark-card rounded-xl border border-rose-100 dark:border-rose-900/60 text-center space-y-1 hover:border-rose-400 hover:shadow-sm cursor-pointer transition group">
+        <p class="font-bold text-gray-900 dark:text-white text-xs sm:text-sm group-hover:text-rose-600 transition flex items-center justify-center gap-1">
+          nông dân / công nhân <i class="fa-solid fa-volume-low text-[10px] text-gray-400"></i>
+        </p>
+        <span class="inline-block px-1.5 py-0.5 rounded bg-rose-50 dark:bg-rose-950/60 text-rose-600 dark:text-rose-300 text-[10px] font-semibold">Từ chỉ nghề nghiệp</span>
+        <p class="text-[11px] text-gray-500 dark:text-gray-400 leading-snug">Người lao động sản xuất làm ra của cải vật chất</p>
+      </div>
+    
+      <div onclick="speakVietnamese('đoàn kết')" class="p-3 bg-white dark:bg-dark-card rounded-xl border border-rose-100 dark:border-rose-900/60 text-center space-y-1 hover:border-rose-400 hover:shadow-sm cursor-pointer transition group">
+        <p class="font-bold text-gray-900 dark:text-white text-xs sm:text-sm group-hover:text-rose-600 transition flex items-center justify-center gap-1">
+          đoàn kết <i class="fa-solid fa-volume-low text-[10px] text-gray-400"></i>
+        </p>
+        <span class="inline-block px-1.5 py-0.5 rounded bg-rose-50 dark:bg-rose-950/60 text-rose-600 dark:text-rose-300 text-[10px] font-semibold">Từ chỉ phẩm chất</span>
+        <p class="text-[11px] text-gray-500 dark:text-gray-400 leading-snug">Gắn bó, đồng lòng giúp đỡ lẫn nhau vì mục tiêu chung</p>
+      </div>
+    
+      <div onclick="speakVietnamese('tận tụy')" class="p-3 bg-white dark:bg-dark-card rounded-xl border border-rose-100 dark:border-rose-900/60 text-center space-y-1 hover:border-rose-400 hover:shadow-sm cursor-pointer transition group">
+        <p class="font-bold text-gray-900 dark:text-white text-xs sm:text-sm group-hover:text-rose-600 transition flex items-center justify-center gap-1">
+          tận tụy <i class="fa-solid fa-volume-low text-[10px] text-gray-400"></i>
+        </p>
+        <span class="inline-block px-1.5 py-0.5 rounded bg-rose-50 dark:bg-rose-950/60 text-rose-600 dark:text-rose-300 text-[10px] font-semibold">Từ chỉ đặc điểm</span>
+        <p class="text-[11px] text-gray-500 dark:text-gray-400 leading-snug">Hết lòng hết sức với công việc và mọi người xung quanh</p>
+      </div>
+    
+            </div>
+            <div class="p-3 bg-amber-50/60 dark:bg-amber-950/30 rounded-xl border border-amber-100 dark:border-amber-900/50 text-xs text-amber-950 dark:text-amber-200">
+              <strong><i class="fa-solid fa-code-fork mr-1"></i> Kiến thức ngữ pháp trọng tâm:</strong> Câu khiến nêu yêu cầu, đề nghị ('Xin các bạn hãy giữ trật tự chung.'); Mở rộng vốn từ về nghề nghiệp.
+            </div>
+          </div>
+
+          <!-- Pillar 3: Viết đoạn văn & Nói nghe -->
+          <div class="p-3.5 bg-indigo-50/60 dark:bg-indigo-950/20 rounded-2xl border border-indigo-100 dark:border-indigo-900/40 space-y-2">
+            <h4 class="text-xs sm:text-sm font-bold text-gray-800 dark:text-gray-200 flex items-center gap-1.5">
+              <span class="w-5 h-5 rounded-md bg-indigo-600 text-white flex items-center justify-center text-[10px] font-bold">3</span>
+              <span>Viết đoạn văn & Rèn luyện kỹ năng Nói - Nghe</span>
+            </h4>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1">
+              <div class="p-3 bg-white dark:bg-dark-card rounded-xl border border-indigo-100/70 dark:border-indigo-900/50 space-y-1">
+                <span class="text-[11px] font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider block">
+                  <i class="fa-solid fa-pen-nib mr-1"></i> Định hướng viết đoạn văn:
+                </span>
+                <p class="text-xs text-gray-700 dark:text-gray-300">Viết đoạn văn (4–5 câu) giới thiệu về nghề nghiệp và sự đóng góp của một người lao động mà em kính trọng.</p>
+              </div>
+              <div class="p-3 bg-white dark:bg-dark-card rounded-xl border border-indigo-100/70 dark:border-indigo-900/50 space-y-1">
+                <span class="text-[11px] font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider block">
+                  <i class="fa-solid fa-comments mr-1"></i> Thực hành nói và nghe:
+                </span>
+                <p class="text-xs text-gray-700 dark:text-gray-300">Kể chuyện theo tranh về một hoạt động thiện nguyện, bảo vệ môi trường khu phố em đã chứng kiến.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Practice Quizzes -->
+        <div class="pt-4 border-t border-gray-100 dark:border-gray-800">
+          <h4 class="font-bold text-gray-900 dark:text-white text-xs sm:text-sm flex items-center gap-1.5 mb-3">
+            <i class="fa-solid fa-circle-question text-rose-500"></i> Quick Check Quiz (2 câu hỏi củng cố tức thì)
+          </h4>
+          <div class="space-y-3">
+            
+        <div class="p-3.5 sm:p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-2.5">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-bold text-rose-600 dark:text-rose-400 uppercase tracking-wider">Câu hỏi củng cố 1</span>
+          </div>
+          <p class="text-xs sm:text-sm font-bold text-gray-900 dark:text-white">Câu nào dưới đây là câu khiến dùng để nêu lời yêu cầu, đề nghị?</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2" id="opts_quiz_3_0">
+            
+        <button onclick="checkQuiz('quiz_3_0', 0, 1, 'Câu \'Chúng mình cùng nhau... nhé!\' mang ngữ điệu hô hào, khuyên nhủ, đề nghị hành động chung (câu khiến).')" class="quiz-btn-quiz_3_0 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">A.</span> Bác lao công đang quét sạch con đường làng.
+        </button>
+      
+        <button onclick="checkQuiz('quiz_3_0', 1, 1, 'Câu \'Chúng mình cùng nhau... nhé!\' mang ngữ điệu hô hào, khuyên nhủ, đề nghị hành động chung (câu khiến).')" class="quiz-btn-quiz_3_0 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">B.</span> Chúng mình cùng nhau dọn dẹp sân chơi khu phố nhé!
+        </button>
+      
+        <button onclick="checkQuiz('quiz_3_0', 2, 1, 'Câu \'Chúng mình cùng nhau... nhé!\' mang ngữ điệu hô hào, khuyên nhủ, đề nghị hành động chung (câu khiến).')" class="quiz-btn-quiz_3_0 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">C.</span> Khu phố văn hóa này thật sạch đẹp biết bao!
+        </button>
+      
+        <button onclick="checkQuiz('quiz_3_0', 3, 1, 'Câu \'Chúng mình cùng nhau... nhé!\' mang ngữ điệu hô hào, khuyên nhủ, đề nghị hành động chung (câu khiến).')" class="quiz-btn-quiz_3_0 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">D.</span> Ai là người đã trồng hàng cây xanh bên lề đường?
+        </button>
+      
+          </div>
+          <div id="fb_quiz_3_0" class="hidden p-2.5 rounded-xl text-xs"></div>
+        </div>
+      
+        <div class="p-3.5 sm:p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-2.5">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-bold text-rose-600 dark:text-rose-400 uppercase tracking-wider">Câu hỏi củng cố 2</span>
+          </div>
+          <p class="text-xs sm:text-sm font-bold text-gray-900 dark:text-white">Từ ngữ nào dưới đây chỉ đức tính quý báu của người lao động trong xã hội?</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2" id="opts_quiz_3_1">
+            
+        <button onclick="checkQuiz('quiz_3_1', 0, 0, '\'Tận tụy\' chỉ phẩm chất làm việc hết lòng, có trách nhiệm cao của người lao động.')" class="quiz-btn-quiz_3_1 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">A.</span> tận tụy
+        </button>
+      
+        <button onclick="checkQuiz('quiz_3_1', 1, 0, '\'Tận tụy\' chỉ phẩm chất làm việc hết lòng, có trách nhiệm cao của người lao động.')" class="quiz-btn-quiz_3_1 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">B.</span> xanh biếc
+        </button>
+      
+        <button onclick="checkQuiz('quiz_3_1', 2, 0, '\'Tận tụy\' chỉ phẩm chất làm việc hết lòng, có trách nhiệm cao của người lao động.')" class="quiz-btn-quiz_3_1 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">C.</span> nguy nga
+        </button>
+      
+        <button onclick="checkQuiz('quiz_3_1', 3, 0, '\'Tận tụy\' chỉ phẩm chất làm việc hết lòng, có trách nhiệm cao của người lao động.')" class="quiz-btn-quiz_3_1 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">D.</span> hùng vĩ
+        </button>
+      
+          </div>
+          <div id="fb_quiz_3_1" class="hidden p-2.5 rounded-xl text-xs"></div>
+        </div>
+      
+          </div>
+        </div>
+      </article>
+    
+      <!-- Chủ điểm 05: Những sắc màu thiên nhiên -->
+      <article id="chudiem-5" class="bg-white dark:bg-dark-surface rounded-3xl p-6 sm:p-7 shadow-sm border border-gray-100 dark:border-gray-800 space-y-5 scroll-mt-24">
+        <!-- Header -->
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-gray-100 dark:border-gray-800">
+          <div class="flex items-center gap-3">
+            <span class="w-10 h-10 rounded-2xl bg-gradient-to-br from-rose-500 via-red-600 to-amber-500 text-white flex items-center justify-center font-black text-sm shadow-md shadow-rose-500/20">
+              05
+            </span>
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="px-2 py-0.5 rounded-full bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-300 font-bold text-[10px] uppercase tracking-wider">
+                  Học kì II • Tuần 19–23
+                </span>
+                <span class="text-[11px] font-semibold text-gray-400">Bức tranh bốn mùa</span>
+              </div>
+              <h3 class="text-lg sm:text-xl font-black text-gray-900 dark:text-white mt-0.5">Chủ điểm 5: Những sắc màu thiên nhiên</h3>
+              <p class="text-xs text-gray-500 dark:text-gray-400 font-medium">Thiên nhiên tươi đẹp, thời tiết bốn mùa, cây cối xanh tươi và muôn loài</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 text-xs font-bold bg-rose-50 dark:bg-rose-950/50 text-rose-600 dark:text-rose-300 px-3 py-1.5 rounded-xl border border-rose-100 dark:border-rose-900">
+            <i class="fa-solid fa-leaf"></i> Trọng tâm SGK
+          </div>
+        </div>
+
+        <!-- 3 Pillars Breakdown -->
+        <div class="space-y-4">
+          <!-- Pillar 1: Đọc & Cảm thụ văn thơ -->
+          <div class="p-3.5 bg-rose-50/60 dark:bg-rose-950/20 rounded-2xl border border-rose-100 dark:border-rose-900/40 space-y-2">
+            <div class="flex items-center justify-between">
+              <h4 class="text-xs sm:text-sm font-bold text-gray-800 dark:text-gray-200 flex items-center gap-1.5">
+                <span class="w-5 h-5 rounded-md bg-rose-600 text-white flex items-center justify-center text-[10px] font-bold">1</span>
+                <span>Đọc & Cảm thụ văn bản đọc mẫu</span>
+              </h4>
+              <button onclick="speakVietnamese('Gió xuân mơn man thổi Mầm non hé mắt cười Họa mi ngân giọng hót Trời đất sáng ngời tươi.')" class="text-xs text-rose-600 dark:text-rose-400 font-bold hover:underline flex items-center gap-1">
+                <i class="fa-solid fa-play"></i> Nghe đọc mẫu
+              </button>
+            </div>
+            <div class="bg-white dark:bg-dark-card p-3 rounded-xl border border-rose-100 dark:border-rose-900/60 space-y-1">
+              <p class="text-xs sm:text-sm italic text-rose-950 dark:text-rose-200 leading-relaxed font-serif whitespace-pre-line">
+                Gió xuân mơn man thổi
+Mầm non hé mắt cười
+Họa mi ngân giọng hót
+Trời đất sáng ngời tươi.
+              </p>
+              <p class="text-[11px] text-gray-400 text-right mt-1 font-medium">&mdash; Trích: Khúc ca mùa xuân</p>
+            </div>
+          </div>
+
+          <!-- Pillar 2: Luyện từ và câu trọng tâm -->
+          <div class="space-y-2.5">
+            <h4 class="text-xs sm:text-sm font-bold text-gray-800 dark:text-gray-200 flex items-center gap-1.5">
+              <span class="w-5 h-5 rounded-md bg-amber-600 text-white flex items-center justify-center text-[10px] font-bold">2</span>
+              <span>Luyện từ và câu & Vốn từ then chốt (Bấm vào từ để nghe phát âm)</span>
+            </h4>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2.5">
+              
+      <div onclick="speakVietnamese('xanh biếc')" class="p-3 bg-white dark:bg-dark-card rounded-xl border border-rose-100 dark:border-rose-900/60 text-center space-y-1 hover:border-rose-400 hover:shadow-sm cursor-pointer transition group">
+        <p class="font-bold text-gray-900 dark:text-white text-xs sm:text-sm group-hover:text-rose-600 transition flex items-center justify-center gap-1">
+          xanh biếc <i class="fa-solid fa-volume-low text-[10px] text-gray-400"></i>
+        </p>
+        <span class="inline-block px-1.5 py-0.5 rounded bg-rose-50 dark:bg-rose-950/60 text-rose-600 dark:text-rose-300 text-[10px] font-semibold">Từ chỉ đặc điểm</span>
+        <p class="text-[11px] text-gray-500 dark:text-gray-400 leading-snug">Màu xanh lam đậm, tươi sáng và trong trẻo của bầu trời, làn nước</p>
+      </div>
+    
+      <div onclick="speakVietnamese('rực rỡ')" class="p-3 bg-white dark:bg-dark-card rounded-xl border border-rose-100 dark:border-rose-900/60 text-center space-y-1 hover:border-rose-400 hover:shadow-sm cursor-pointer transition group">
+        <p class="font-bold text-gray-900 dark:text-white text-xs sm:text-sm group-hover:text-rose-600 transition flex items-center justify-center gap-1">
+          rực rỡ <i class="fa-solid fa-volume-low text-[10px] text-gray-400"></i>
+        </p>
+        <span class="inline-block px-1.5 py-0.5 rounded bg-rose-50 dark:bg-rose-950/60 text-rose-600 dark:text-rose-300 text-[10px] font-semibold">Từ chỉ đặc điểm</span>
+        <p class="text-[11px] text-gray-500 dark:text-gray-400 leading-snug">Có màu sắc tươi sáng, nổi bật và lôi cuốn ánh nhìn</p>
+      </div>
+    
+      <div onclick="speakVietnamese('thì thầm')" class="p-3 bg-white dark:bg-dark-card rounded-xl border border-rose-100 dark:border-rose-900/60 text-center space-y-1 hover:border-rose-400 hover:shadow-sm cursor-pointer transition group">
+        <p class="font-bold text-gray-900 dark:text-white text-xs sm:text-sm group-hover:text-rose-600 transition flex items-center justify-center gap-1">
+          thì thầm <i class="fa-solid fa-volume-low text-[10px] text-gray-400"></i>
+        </p>
+        <span class="inline-block px-1.5 py-0.5 rounded bg-rose-50 dark:bg-rose-950/60 text-rose-600 dark:text-rose-300 text-[10px] font-semibold">Từ chỉ hoạt động/âm thanh</span>
+        <p class="text-[11px] text-gray-500 dark:text-gray-400 leading-snug">Tiếng động nhỏ, êm dịu như tiếng gió ríu rít qua cành lá</p>
+      </div>
+    
+      <div onclick="speakVietnamese('muôn loài')" class="p-3 bg-white dark:bg-dark-card rounded-xl border border-rose-100 dark:border-rose-900/60 text-center space-y-1 hover:border-rose-400 hover:shadow-sm cursor-pointer transition group">
+        <p class="font-bold text-gray-900 dark:text-white text-xs sm:text-sm group-hover:text-rose-600 transition flex items-center justify-center gap-1">
+          muôn loài <i class="fa-solid fa-volume-low text-[10px] text-gray-400"></i>
+        </p>
+        <span class="inline-block px-1.5 py-0.5 rounded bg-rose-50 dark:bg-rose-950/60 text-rose-600 dark:text-rose-300 text-[10px] font-semibold">Từ chỉ sự vật</span>
+        <p class="text-[11px] text-gray-500 dark:text-gray-400 leading-snug">Tất cả các loài động vật, cây cối trong tự nhiên</p>
+      </div>
+    
+            </div>
+            <div class="p-3 bg-amber-50/60 dark:bg-amber-950/30 rounded-xl border border-amber-100 dark:border-amber-900/50 text-xs text-amber-950 dark:text-amber-200">
+              <strong><i class="fa-solid fa-code-fork mr-1"></i> Kiến thức ngữ pháp trọng tâm:</strong> Mô hình so sánh: Âm thanh như âm thanh ('Tiếng suối như tiếng hát xa.'); Màu sắc, đặc điểm thiên nhiên.
+            </div>
+          </div>
+
+          <!-- Pillar 3: Viết đoạn văn & Nói nghe -->
+          <div class="p-3.5 bg-indigo-50/60 dark:bg-indigo-950/20 rounded-2xl border border-indigo-100 dark:border-indigo-900/40 space-y-2">
+            <h4 class="text-xs sm:text-sm font-bold text-gray-800 dark:text-gray-200 flex items-center gap-1.5">
+              <span class="w-5 h-5 rounded-md bg-indigo-600 text-white flex items-center justify-center text-[10px] font-bold">3</span>
+              <span>Viết đoạn văn & Rèn luyện kỹ năng Nói - Nghe</span>
+            </h4>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1">
+              <div class="p-3 bg-white dark:bg-dark-card rounded-xl border border-indigo-100/70 dark:border-indigo-900/50 space-y-1">
+                <span class="text-[11px] font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider block">
+                  <i class="fa-solid fa-pen-nib mr-1"></i> Định hướng viết đoạn văn:
+                </span>
+                <p class="text-xs text-gray-700 dark:text-gray-300">Viết đoạn văn (4–5 câu) miêu tả một cảnh đẹp thiên nhiên mà em yêu thích (bình minh trên biển, vườn hoa mùa xuân).</p>
+              </div>
+              <div class="p-3 bg-white dark:bg-dark-card rounded-xl border border-indigo-100/70 dark:border-indigo-900/50 space-y-1">
+                <span class="text-[11px] font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider block">
+                  <i class="fa-solid fa-comments mr-1"></i> Thực hành nói và nghe:
+                </span>
+                <p class="text-xs text-gray-700 dark:text-gray-300">Nói về loài cây hoặc con vật mà em thích nhất, nêu rõ hình dáng, màu sắc và lý do em yêu quý.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Practice Quizzes -->
+        <div class="pt-4 border-t border-gray-100 dark:border-gray-800">
+          <h4 class="font-bold text-gray-900 dark:text-white text-xs sm:text-sm flex items-center gap-1.5 mb-3">
+            <i class="fa-solid fa-circle-question text-rose-500"></i> Quick Check Quiz (2 câu hỏi củng cố tức thì)
+          </h4>
+          <div class="space-y-3">
+            
+        <div class="p-3.5 sm:p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-2.5">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-bold text-rose-600 dark:text-rose-400 uppercase tracking-wider">Câu hỏi củng cố 1</span>
+          </div>
+          <p class="text-xs sm:text-sm font-bold text-gray-900 dark:text-white">Trong câu: 'Những giọt sương sớm long lanh như những hạt ngọc.', sự vật được so sánh là gì?</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2" id="opts_quiz_4_0">
+            
+        <button onclick="checkQuiz('quiz_4_0', 0, 1, '\'Những giọt sương sớm\' (sự vật 1) được so sánh với \'những hạt ngọc\' (sự vật 2).')" class="quiz-btn-quiz_4_0 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">A.</span> ánh mặt trời
+        </button>
+      
+        <button onclick="checkQuiz('quiz_4_0', 1, 1, '\'Những giọt sương sớm\' (sự vật 1) được so sánh với \'những hạt ngọc\' (sự vật 2).')" class="quiz-btn-quiz_4_0 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">B.</span> những giọt sương sớm
+        </button>
+      
+        <button onclick="checkQuiz('quiz_4_0', 2, 1, '\'Những giọt sương sớm\' (sự vật 1) được so sánh với \'những hạt ngọc\' (sự vật 2).')" class="quiz-btn-quiz_4_0 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">C.</span> những hạt ngọc
+        </button>
+      
+        <button onclick="checkQuiz('quiz_4_0', 3, 1, '\'Những giọt sương sớm\' (sự vật 1) được so sánh với \'những hạt ngọc\' (sự vật 2).')" class="quiz-btn-quiz_4_0 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">D.</span> chiếc lá xanh
+        </button>
+      
+          </div>
+          <div id="fb_quiz_4_0" class="hidden p-2.5 rounded-xl text-xs"></div>
+        </div>
+      
+        <div class="p-3.5 sm:p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-2.5">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-bold text-rose-600 dark:text-rose-400 uppercase tracking-wider">Câu hỏi củng cố 2</span>
+          </div>
+          <p class="text-xs sm:text-sm font-bold text-gray-900 dark:text-white">Dãy từ nào sau đây toàn là từ chỉ đặc điểm màu sắc của cảnh vật thiên nhiên?</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2" id="opts_quiz_4_1">
+            
+        <button onclick="checkQuiz('quiz_4_1', 0, 0, 'Dãy từ \'vàng ươm, đỏ thắm, xanh ngắt, trắng muốt\' đều là từ chỉ đặc điểm màu sắc.')" class="quiz-btn-quiz_4_1 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">A.</span> vàng ươm, đỏ thắm, xanh ngắt, trắng muốt
+        </button>
+      
+        <button onclick="checkQuiz('quiz_4_1', 1, 0, 'Dãy từ \'vàng ươm, đỏ thắm, xanh ngắt, trắng muốt\' đều là từ chỉ đặc điểm màu sắc.')" class="quiz-btn-quiz_4_1 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">B.</span> chảy xiết, róc rách, thì thầm, thì thào
+        </button>
+      
+        <button onclick="checkQuiz('quiz_4_1', 2, 0, 'Dãy từ \'vàng ươm, đỏ thắm, xanh ngắt, trắng muốt\' đều là từ chỉ đặc điểm màu sắc.')" class="quiz-btn-quiz_4_1 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">C.</span> cây bàng, dòng sông, ngọn núi, bầu trời
+        </button>
+      
+        <button onclick="checkQuiz('quiz_4_1', 3, 0, 'Dãy từ \'vàng ươm, đỏ thắm, xanh ngắt, trắng muốt\' đều là từ chỉ đặc điểm màu sắc.')" class="quiz-btn-quiz_4_1 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">D.</span> chăm chỉ, dũng cảm, ngoan ngoãn, thật thà
+        </button>
+      
+          </div>
+          <div id="fb_quiz_4_1" class="hidden p-2.5 rounded-xl text-xs"></div>
+        </div>
+      
+          </div>
+        </div>
+      </article>
+    
+      <!-- Chủ điểm 06: Bài học từ cuộc sống -->
+      <article id="chudiem-6" class="bg-white dark:bg-dark-surface rounded-3xl p-6 sm:p-7 shadow-sm border border-gray-100 dark:border-gray-800 space-y-5 scroll-mt-24">
+        <!-- Header -->
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-gray-100 dark:border-gray-800">
+          <div class="flex items-center gap-3">
+            <span class="w-10 h-10 rounded-2xl bg-gradient-to-br from-rose-500 via-red-600 to-amber-500 text-white flex items-center justify-center font-black text-sm shadow-md shadow-rose-500/20">
+              06
+            </span>
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="px-2 py-0.5 rounded-full bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-300 font-bold text-[10px] uppercase tracking-wider">
+                  Học kì II • Tuần 24–27
+                </span>
+                <span class="text-[11px] font-semibold text-gray-400">Phẩm chất & Lối sống</span>
+              </div>
+              <h3 class="text-lg sm:text-xl font-black text-gray-900 dark:text-white mt-0.5">Chủ điểm 6: Bài học từ cuộc sống</h3>
+              <p class="text-xs text-gray-500 dark:text-gray-400 font-medium">Những bài học về cách ứng xử, lòng trung thực, dũng cảm và lòng nhân ái</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 text-xs font-bold bg-rose-50 dark:bg-rose-950/50 text-rose-600 dark:text-rose-300 px-3 py-1.5 rounded-xl border border-rose-100 dark:border-rose-900">
+            <i class="fa-solid fa-book-open-reader"></i> Trọng tâm SGK
+          </div>
+        </div>
+
+        <!-- 3 Pillars Breakdown -->
+        <div class="space-y-4">
+          <!-- Pillar 1: Đọc & Cảm thụ văn thơ -->
+          <div class="p-3.5 bg-rose-50/60 dark:bg-rose-950/20 rounded-2xl border border-rose-100 dark:border-rose-900/40 space-y-2">
+            <div class="flex items-center justify-between">
+              <h4 class="text-xs sm:text-sm font-bold text-gray-800 dark:text-gray-200 flex items-center gap-1.5">
+                <span class="w-5 h-5 rounded-md bg-rose-600 text-white flex items-center justify-center text-[10px] font-bold">1</span>
+                <span>Đọc & Cảm thụ văn bản đọc mẫu</span>
+              </h4>
+              <button onclick="speakVietnamese('Lời nói hay như hoa Tấm lòng thảo như ngọc Sống chân thành, trung thực Đời ngát hương ngàn phương.')" class="text-xs text-rose-600 dark:text-rose-400 font-bold hover:underline flex items-center gap-1">
+                <i class="fa-solid fa-play"></i> Nghe đọc mẫu
+              </button>
+            </div>
+            <div class="bg-white dark:bg-dark-card p-3 rounded-xl border border-rose-100 dark:border-rose-900/60 space-y-1">
+              <p class="text-xs sm:text-sm italic text-rose-950 dark:text-rose-200 leading-relaxed font-serif whitespace-pre-line">
+                Lời nói hay như hoa
+Tấm lòng thảo như ngọc
+Sống chân thành, trung thực
+Đời ngát hương ngàn phương.
+              </p>
+              <p class="text-[11px] text-gray-400 text-right mt-1 font-medium">&mdash; Trích: Lời khuyên cuộc sống</p>
+            </div>
+          </div>
+
+          <!-- Pillar 2: Luyện từ và câu trọng tâm -->
+          <div class="space-y-2.5">
+            <h4 class="text-xs sm:text-sm font-bold text-gray-800 dark:text-gray-200 flex items-center gap-1.5">
+              <span class="w-5 h-5 rounded-md bg-amber-600 text-white flex items-center justify-center text-[10px] font-bold">2</span>
+              <span>Luyện từ và câu & Vốn từ then chốt (Bấm vào từ để nghe phát âm)</span>
+            </h4>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2.5">
+              
+      <div onclick="speakVietnamese('trung thực')" class="p-3 bg-white dark:bg-dark-card rounded-xl border border-rose-100 dark:border-rose-900/60 text-center space-y-1 hover:border-rose-400 hover:shadow-sm cursor-pointer transition group">
+        <p class="font-bold text-gray-900 dark:text-white text-xs sm:text-sm group-hover:text-rose-600 transition flex items-center justify-center gap-1">
+          trung thực <i class="fa-solid fa-volume-low text-[10px] text-gray-400"></i>
+        </p>
+        <span class="inline-block px-1.5 py-0.5 rounded bg-rose-50 dark:bg-rose-950/60 text-rose-600 dark:text-rose-300 text-[10px] font-semibold">Từ chỉ phẩm chất</span>
+        <p class="text-[11px] text-gray-500 dark:text-gray-400 leading-snug">Thành thật, không dối trá, luôn tôn trọng sự thật</p>
+      </div>
+    
+      <div onclick="speakVietnamese('dũng cảm')" class="p-3 bg-white dark:bg-dark-card rounded-xl border border-rose-100 dark:border-rose-900/60 text-center space-y-1 hover:border-rose-400 hover:shadow-sm cursor-pointer transition group">
+        <p class="font-bold text-gray-900 dark:text-white text-xs sm:text-sm group-hover:text-rose-600 transition flex items-center justify-center gap-1">
+          dũng cảm <i class="fa-solid fa-volume-low text-[10px] text-gray-400"></i>
+        </p>
+        <span class="inline-block px-1.5 py-0.5 rounded bg-rose-50 dark:bg-rose-950/60 text-rose-600 dark:text-rose-300 text-[10px] font-semibold">Từ chỉ phẩm chất</span>
+        <p class="text-[11px] text-gray-500 dark:text-gray-400 leading-snug">Có dũng khí dám đối mặt với gian nan, thử thách và cái xấu</p>
+      </div>
+    
+      <div onclick="speakVietnamese('khiêm tốn')" class="p-3 bg-white dark:bg-dark-card rounded-xl border border-rose-100 dark:border-rose-900/60 text-center space-y-1 hover:border-rose-400 hover:shadow-sm cursor-pointer transition group">
+        <p class="font-bold text-gray-900 dark:text-white text-xs sm:text-sm group-hover:text-rose-600 transition flex items-center justify-center gap-1">
+          khiêm tốn <i class="fa-solid fa-volume-low text-[10px] text-gray-400"></i>
+        </p>
+        <span class="inline-block px-1.5 py-0.5 rounded bg-rose-50 dark:bg-rose-950/60 text-rose-600 dark:text-rose-300 text-[10px] font-semibold">Từ chỉ phẩm chất</span>
+        <p class="text-[11px] text-gray-500 dark:text-gray-400 leading-snug">Không tự kiêu, luôn tôn trọng người khác và ham học hỏi</p>
+      </div>
+    
+      <div onclick="speakVietnamese('chia sẻ')" class="p-3 bg-white dark:bg-dark-card rounded-xl border border-rose-100 dark:border-rose-900/60 text-center space-y-1 hover:border-rose-400 hover:shadow-sm cursor-pointer transition group">
+        <p class="font-bold text-gray-900 dark:text-white text-xs sm:text-sm group-hover:text-rose-600 transition flex items-center justify-center gap-1">
+          chia sẻ <i class="fa-solid fa-volume-low text-[10px] text-gray-400"></i>
+        </p>
+        <span class="inline-block px-1.5 py-0.5 rounded bg-rose-50 dark:bg-rose-950/60 text-rose-600 dark:text-rose-300 text-[10px] font-semibold">Từ chỉ hành động</span>
+        <p class="text-[11px] text-gray-500 dark:text-gray-400 leading-snug">Cùng san sẻ niềm vui, khó khăn với những người xung quanh</p>
+      </div>
+    
+            </div>
+            <div class="p-3 bg-amber-50/60 dark:bg-amber-950/30 rounded-xl border border-amber-100 dark:border-amber-900/50 text-xs text-amber-950 dark:text-amber-200">
+              <strong><i class="fa-solid fa-code-fork mr-1"></i> Kiến thức ngữ pháp trọng tâm:</strong> Cặp từ trái nghĩa (trung thực - gian dối, dũng cảm - hèn nhát); Tác dụng của dấu hai chấm (:) báo hiệu lời nói.
+            </div>
+          </div>
+
+          <!-- Pillar 3: Viết đoạn văn & Nói nghe -->
+          <div class="p-3.5 bg-indigo-50/60 dark:bg-indigo-950/20 rounded-2xl border border-indigo-100 dark:border-indigo-900/40 space-y-2">
+            <h4 class="text-xs sm:text-sm font-bold text-gray-800 dark:text-gray-200 flex items-center gap-1.5">
+              <span class="w-5 h-5 rounded-md bg-indigo-600 text-white flex items-center justify-center text-[10px] font-bold">3</span>
+              <span>Viết đoạn văn & Rèn luyện kỹ năng Nói - Nghe</span>
+            </h4>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1">
+              <div class="p-3 bg-white dark:bg-dark-card rounded-xl border border-indigo-100/70 dark:border-indigo-900/50 space-y-1">
+                <span class="text-[11px] font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider block">
+                  <i class="fa-solid fa-pen-nib mr-1"></i> Định hướng viết đoạn văn:
+                </span>
+                <p class="text-xs text-gray-700 dark:text-gray-300">Viết đoạn văn (4–5 câu) nêu lí do vì sao em yêu thích (hoặc khâm phục) một nhân vật trong câu chuyện đã học.</p>
+              </div>
+              <div class="p-3 bg-white dark:bg-dark-card rounded-xl border border-indigo-100/70 dark:border-indigo-900/50 space-y-1">
+                <span class="text-[11px] font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider block">
+                  <i class="fa-solid fa-comments mr-1"></i> Thực hành nói và nghe:
+                </span>
+                <p class="text-xs text-gray-700 dark:text-gray-300">Kể lại một câu chuyện về lòng trung thực hoặc tình bạn đẹp mà em đã từng đọc trong sách.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Practice Quizzes -->
+        <div class="pt-4 border-t border-gray-100 dark:border-gray-800">
+          <h4 class="font-bold text-gray-900 dark:text-white text-xs sm:text-sm flex items-center gap-1.5 mb-3">
+            <i class="fa-solid fa-circle-question text-rose-500"></i> Quick Check Quiz (2 câu hỏi củng cố tức thì)
+          </h4>
+          <div class="space-y-3">
+            
+        <div class="p-3.5 sm:p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-2.5">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-bold text-rose-600 dark:text-rose-400 uppercase tracking-wider">Câu hỏi củng cố 1</span>
+          </div>
+          <p class="text-xs sm:text-sm font-bold text-gray-900 dark:text-white">Cặp từ nào dưới đây là cặp từ trái nghĩa về phẩm chất con người?</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2" id="opts_quiz_5_0">
+            
+        <button onclick="checkQuiz('quiz_5_0', 0, 1, '\'Dũng cảm\' (dám đương đầu) và \'hèn nhát\' (sợ hãi, lùi bước) là hai từ có nghĩa trái ngược nhau.')" class="quiz-btn-quiz_5_0 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">A.</span> chăm chỉ - cần cù
+        </button>
+      
+        <button onclick="checkQuiz('quiz_5_0', 1, 1, '\'Dũng cảm\' (dám đương đầu) và \'hèn nhát\' (sợ hãi, lùi bước) là hai từ có nghĩa trái ngược nhau.')" class="quiz-btn-quiz_5_0 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">B.</span> dũng cảm - hèn nhát
+        </button>
+      
+        <button onclick="checkQuiz('quiz_5_0', 2, 1, '\'Dũng cảm\' (dám đương đầu) và \'hèn nhát\' (sợ hãi, lùi bước) là hai từ có nghĩa trái ngược nhau.')" class="quiz-btn-quiz_5_0 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">C.</span> thông minh - sáng dạ
+        </button>
+      
+        <button onclick="checkQuiz('quiz_5_0', 3, 1, '\'Dũng cảm\' (dám đương đầu) và \'hèn nhát\' (sợ hãi, lùi bước) là hai từ có nghĩa trái ngược nhau.')" class="quiz-btn-quiz_5_0 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">D.</span> nhân hậu - hiền từ
+        </button>
+      
+          </div>
+          <div id="fb_quiz_5_0" class="hidden p-2.5 rounded-xl text-xs"></div>
+        </div>
+      
+        <div class="p-3.5 sm:p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-2.5">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-bold text-rose-600 dark:text-rose-400 uppercase tracking-wider">Câu hỏi củng cố 2</span>
+          </div>
+          <p class="text-xs sm:text-sm font-bold text-gray-900 dark:text-white">Dấu hai chấm (:) trong câu sau có tác dụng gì: 'Cô giáo dặn cả lớp: 'Các em nhớ làm bài tập đầy đủ nhé!''?</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2" id="opts_quiz_5_1">
+            
+        <button onclick="checkQuiz('quiz_5_1', 0, 1, 'Dấu hai chấm kết hợp với dấu ngoặc kép báo hiệu lời nói trực tiếp của cô giáo.')" class="quiz-btn-quiz_5_1 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">A.</span> Dùng để kết thúc một câu kể
+        </button>
+      
+        <button onclick="checkQuiz('quiz_5_1', 1, 1, 'Dấu hai chấm kết hợp với dấu ngoặc kép báo hiệu lời nói trực tiếp của cô giáo.')" class="quiz-btn-quiz_5_1 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">B.</span> Báo hiệu lời nói trực tiếp của nhân vật
+        </button>
+      
+        <button onclick="checkQuiz('quiz_5_1', 2, 1, 'Dấu hai chấm kết hợp với dấu ngoặc kép báo hiệu lời nói trực tiếp của cô giáo.')" class="quiz-btn-quiz_5_1 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">C.</span> Dùng để đặt câu hỏi cho người khác
+        </button>
+      
+        <button onclick="checkQuiz('quiz_5_1', 3, 1, 'Dấu hai chấm kết hợp với dấu ngoặc kép báo hiệu lời nói trực tiếp của cô giáo.')" class="quiz-btn-quiz_5_1 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">D.</span> Báo hiệu một câu bộc lộ cảm xúc
+        </button>
+      
+          </div>
+          <div id="fb_quiz_5_1" class="hidden p-2.5 rounded-xl text-xs"></div>
+        </div>
+      
+          </div>
+        </div>
+      </article>
+    
+      <!-- Chủ điểm 07: Đất nước ngàn năm -->
+      <article id="chudiem-7" class="bg-white dark:bg-dark-surface rounded-3xl p-6 sm:p-7 shadow-sm border border-gray-100 dark:border-gray-800 space-y-5 scroll-mt-24">
+        <!-- Header -->
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-gray-100 dark:border-gray-800">
+          <div class="flex items-center gap-3">
+            <span class="w-10 h-10 rounded-2xl bg-gradient-to-br from-rose-500 via-red-600 to-amber-500 text-white flex items-center justify-center font-black text-sm shadow-md shadow-rose-500/20">
+              07
+            </span>
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="px-2 py-0.5 rounded-full bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-300 font-bold text-[10px] uppercase tracking-wider">
+                  Học kì II • Tuần 28–31
+                </span>
+                <span class="text-[11px] font-semibold text-gray-400">Quê hương & Truyền thống</span>
+              </div>
+              <h3 class="text-lg sm:text-xl font-black text-gray-900 dark:text-white mt-0.5">Chủ điểm 7: Đất nước ngàn năm</h3>
+              <p class="text-xs text-gray-500 dark:text-gray-400 font-medium">Quê hương đất nước Việt Nam, di tích lịch sử và bản sắc văn hóa</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 text-xs font-bold bg-rose-50 dark:bg-rose-950/50 text-rose-600 dark:text-rose-300 px-3 py-1.5 rounded-xl border border-rose-100 dark:border-rose-900">
+            <i class="fa-solid fa-landmark"></i> Trọng tâm SGK
+          </div>
+        </div>
+
+        <!-- 3 Pillars Breakdown -->
+        <div class="space-y-4">
+          <!-- Pillar 1: Đọc & Cảm thụ văn thơ -->
+          <div class="p-3.5 bg-rose-50/60 dark:bg-rose-950/20 rounded-2xl border border-rose-100 dark:border-rose-900/40 space-y-2">
+            <div class="flex items-center justify-between">
+              <h4 class="text-xs sm:text-sm font-bold text-gray-800 dark:text-gray-200 flex items-center gap-1.5">
+                <span class="w-5 h-5 rounded-md bg-rose-600 text-white flex items-center justify-center text-[10px] font-bold">1</span>
+                <span>Đọc & Cảm thụ văn bản đọc mẫu</span>
+              </h4>
+              <button onclick="speakVietnamese('Việt Nam đất nước ta ơi Mênh mông biển lúa đâu trời đẹp hơn Cánh cò bay lả dập dờn Mây mờ che đỉnh Trường Sơn sớm chiều.')" class="text-xs text-rose-600 dark:text-rose-400 font-bold hover:underline flex items-center gap-1">
+                <i class="fa-solid fa-play"></i> Nghe đọc mẫu
+              </button>
+            </div>
+            <div class="bg-white dark:bg-dark-card p-3 rounded-xl border border-rose-100 dark:border-rose-900/60 space-y-1">
+              <p class="text-xs sm:text-sm italic text-rose-950 dark:text-rose-200 leading-relaxed font-serif whitespace-pre-line">
+                Việt Nam đất nước ta ơi
+Mênh mông biển lúa đâu trời đẹp hơn
+Cánh cò bay lả dập dờn
+Mây mờ che đỉnh Trường Sơn sớm chiều.
+              </p>
+              <p class="text-[11px] text-gray-400 text-right mt-1 font-medium">&mdash; Trích: Nguyễn Đình Thi</p>
+            </div>
+          </div>
+
+          <!-- Pillar 2: Luyện từ và câu trọng tâm -->
+          <div class="space-y-2.5">
+            <h4 class="text-xs sm:text-sm font-bold text-gray-800 dark:text-gray-200 flex items-center gap-1.5">
+              <span class="w-5 h-5 rounded-md bg-amber-600 text-white flex items-center justify-center text-[10px] font-bold">2</span>
+              <span>Luyện từ và câu & Vốn từ then chốt (Bấm vào từ để nghe phát âm)</span>
+            </h4>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2.5">
+              
+      <div onclick="speakVietnamese('giang sơn')" class="p-3 bg-white dark:bg-dark-card rounded-xl border border-rose-100 dark:border-rose-900/60 text-center space-y-1 hover:border-rose-400 hover:shadow-sm cursor-pointer transition group">
+        <p class="font-bold text-gray-900 dark:text-white text-xs sm:text-sm group-hover:text-rose-600 transition flex items-center justify-center gap-1">
+          giang sơn <i class="fa-solid fa-volume-low text-[10px] text-gray-400"></i>
+        </p>
+        <span class="inline-block px-1.5 py-0.5 rounded bg-rose-50 dark:bg-rose-950/60 text-rose-600 dark:text-rose-300 text-[10px] font-semibold">Từ chỉ sự vật</span>
+        <p class="text-[11px] text-gray-500 dark:text-gray-400 leading-snug">Sông núi, đất nước thiêng liêng của dân tộc</p>
+      </div>
+    
+      <div onclick="speakVietnamese('truyền thống')" class="p-3 bg-white dark:bg-dark-card rounded-xl border border-rose-100 dark:border-rose-900/60 text-center space-y-1 hover:border-rose-400 hover:shadow-sm cursor-pointer transition group">
+        <p class="font-bold text-gray-900 dark:text-white text-xs sm:text-sm group-hover:text-rose-600 transition flex items-center justify-center gap-1">
+          truyền thống <i class="fa-solid fa-volume-low text-[10px] text-gray-400"></i>
+        </p>
+        <span class="inline-block px-1.5 py-0.5 rounded bg-rose-50 dark:bg-rose-950/60 text-rose-600 dark:text-rose-300 text-[10px] font-semibold">Từ chỉ giá trị</span>
+        <p class="text-[11px] text-gray-500 dark:text-gray-400 leading-snug">Những phong tục, đạo lý tốt đẹp được lưu truyền ngàn đời</p>
+      </div>
+    
+      <div onclick="speakVietnamese('di tích')" class="p-3 bg-white dark:bg-dark-card rounded-xl border border-rose-100 dark:border-rose-900/60 text-center space-y-1 hover:border-rose-400 hover:shadow-sm cursor-pointer transition group">
+        <p class="font-bold text-gray-900 dark:text-white text-xs sm:text-sm group-hover:text-rose-600 transition flex items-center justify-center gap-1">
+          di tích <i class="fa-solid fa-volume-low text-[10px] text-gray-400"></i>
+        </p>
+        <span class="inline-block px-1.5 py-0.5 rounded bg-rose-50 dark:bg-rose-950/60 text-rose-600 dark:text-rose-300 text-[10px] font-semibold">Từ chỉ sự vật</span>
+        <p class="text-[11px] text-gray-500 dark:text-gray-400 leading-snug">Công trình, dấu vết lịch sử có giá trị văn hóa lưu lại</p>
+      </div>
+    
+      <div onclick="speakVietnamese('tự hào')" class="p-3 bg-white dark:bg-dark-card rounded-xl border border-rose-100 dark:border-rose-900/60 text-center space-y-1 hover:border-rose-400 hover:shadow-sm cursor-pointer transition group">
+        <p class="font-bold text-gray-900 dark:text-white text-xs sm:text-sm group-hover:text-rose-600 transition flex items-center justify-center gap-1">
+          tự hào <i class="fa-solid fa-volume-low text-[10px] text-gray-400"></i>
+        </p>
+        <span class="inline-block px-1.5 py-0.5 rounded bg-rose-50 dark:bg-rose-950/60 text-rose-600 dark:text-rose-300 text-[10px] font-semibold">Từ chỉ tình cảm</span>
+        <p class="text-[11px] text-gray-500 dark:text-gray-400 leading-snug">Cảm giác hãnh diện, tin tưởng vào giá trị tốt đẹp của quê hương</p>
+      </div>
+    
+            </div>
+            <div class="p-3 bg-amber-50/60 dark:bg-amber-950/30 rounded-xl border border-amber-100 dark:border-amber-900/50 text-xs text-amber-950 dark:text-amber-200">
+              <strong><i class="fa-solid fa-code-fork mr-1"></i> Kiến thức ngữ pháp trọng tâm:</strong> Quy tắc viết hoa tên người, tên địa lí Việt Nam (Hà Nội, Vịnh Hạ Long); Tác dụng của dấu gạch ngang (-).
+            </div>
+          </div>
+
+          <!-- Pillar 3: Viết đoạn văn & Nói nghe -->
+          <div class="p-3.5 bg-indigo-50/60 dark:bg-indigo-950/20 rounded-2xl border border-indigo-100 dark:border-indigo-900/40 space-y-2">
+            <h4 class="text-xs sm:text-sm font-bold text-gray-800 dark:text-gray-200 flex items-center gap-1.5">
+              <span class="w-5 h-5 rounded-md bg-indigo-600 text-white flex items-center justify-center text-[10px] font-bold">3</span>
+              <span>Viết đoạn văn & Rèn luyện kỹ năng Nói - Nghe</span>
+            </h4>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1">
+              <div class="p-3 bg-white dark:bg-dark-card rounded-xl border border-indigo-100/70 dark:border-indigo-900/50 space-y-1">
+                <span class="text-[11px] font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider block">
+                  <i class="fa-solid fa-pen-nib mr-1"></i> Định hướng viết đoạn văn:
+                </span>
+                <p class="text-xs text-gray-700 dark:text-gray-300">Viết đoạn văn (4–5 câu) giới thiệu về một danh lam thắng cảnh hoặc một nét đẹp văn hóa truyền thống của quê hương em.</p>
+              </div>
+              <div class="p-3 bg-white dark:bg-dark-card rounded-xl border border-indigo-100/70 dark:border-indigo-900/50 space-y-1">
+                <span class="text-[11px] font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider block">
+                  <i class="fa-solid fa-comments mr-1"></i> Thực hành nói và nghe:
+                </span>
+                <p class="text-xs text-gray-700 dark:text-gray-300">Kể lại một truyền thuyết lịch sử em đã học (Thánh Gióng, Sự tích Hồ Gươm, Sơn Tinh Thủy Tinh).</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Practice Quizzes -->
+        <div class="pt-4 border-t border-gray-100 dark:border-gray-800">
+          <h4 class="font-bold text-gray-900 dark:text-white text-xs sm:text-sm flex items-center gap-1.5 mb-3">
+            <i class="fa-solid fa-circle-question text-rose-500"></i> Quick Check Quiz (2 câu hỏi củng cố tức thì)
+          </h4>
+          <div class="space-y-3">
+            
+        <div class="p-3.5 sm:p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-2.5">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-bold text-rose-600 dark:text-rose-400 uppercase tracking-wider">Câu hỏi củng cố 1</span>
+          </div>
+          <p class="text-xs sm:text-sm font-bold text-gray-900 dark:text-white">Tên địa lí nào dưới đây được viết hoa ĐÚNG quy tắc chính tả?</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2" id="opts_quiz_6_0">
+            
+        <button onclick="checkQuiz('quiz_6_0', 0, 2, '\'Thủ đô Hà Nội\' viết hoa đúng chữ cái đầu của mỗi tiếng tạo thành tên riêng.')" class="quiz-btn-quiz_6_0 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">A.</span> sông Hồng
+        </button>
+      
+        <button onclick="checkQuiz('quiz_6_0', 1, 2, '\'Thủ đô Hà Nội\' viết hoa đúng chữ cái đầu của mỗi tiếng tạo thành tên riêng.')" class="quiz-btn-quiz_6_0 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">B.</span> Hồ gươm
+        </button>
+      
+        <button onclick="checkQuiz('quiz_6_0', 2, 2, '\'Thủ đô Hà Nội\' viết hoa đúng chữ cái đầu của mỗi tiếng tạo thành tên riêng.')" class="quiz-btn-quiz_6_0 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">C.</span> Thủ đô Hà Nội
+        </button>
+      
+        <button onclick="checkQuiz('quiz_6_0', 3, 2, '\'Thủ đô Hà Nội\' viết hoa đúng chữ cái đầu của mỗi tiếng tạo thành tên riêng.')" class="quiz-btn-quiz_6_0 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">D.</span> đảo phú Quốc
+        </button>
+      
+          </div>
+          <div id="fb_quiz_6_0" class="hidden p-2.5 rounded-xl text-xs"></div>
+        </div>
+      
+        <div class="p-3.5 sm:p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-2.5">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-bold text-rose-600 dark:text-rose-400 uppercase tracking-wider">Câu hỏi củng cố 2</span>
+          </div>
+          <p class="text-xs sm:text-sm font-bold text-gray-900 dark:text-white">Dấu gạch ngang (-) đặt ở đầu dòng trong các đoạn đối thoại có tác dụng gì?</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2" id="opts_quiz_6_1">
+            
+        <button onclick="checkQuiz('quiz_6_1', 0, 1, 'Dấu gạch ngang đầu dòng dùng để đánh dấu chỗ bắt đầu lời nói của nhân vật trong đối thoại.')" class="quiz-btn-quiz_6_1 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">A.</span> Đánh dấu kết thúc câu kể
+        </button>
+      
+        <button onclick="checkQuiz('quiz_6_1', 1, 1, 'Dấu gạch ngang đầu dòng dùng để đánh dấu chỗ bắt đầu lời nói của nhân vật trong đối thoại.')" class="quiz-btn-quiz_6_1 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">B.</span> Đánh dấu lời nói trực tiếp của nhân vật
+        </button>
+      
+        <button onclick="checkQuiz('quiz_6_1', 2, 1, 'Dấu gạch ngang đầu dòng dùng để đánh dấu chỗ bắt đầu lời nói của nhân vật trong đối thoại.')" class="quiz-btn-quiz_6_1 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">C.</span> Dùng để bộc lộ cảm xúc ngạc nhiên
+        </button>
+      
+        <button onclick="checkQuiz('quiz_6_1', 3, 1, 'Dấu gạch ngang đầu dòng dùng để đánh dấu chỗ bắt đầu lời nói của nhân vật trong đối thoại.')" class="quiz-btn-quiz_6_1 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">D.</span> Dùng để giải thích nghĩa của từ khó
+        </button>
+      
+          </div>
+          <div id="fb_quiz_6_1" class="hidden p-2.5 rounded-xl text-xs"></div>
+        </div>
+      
+          </div>
+        </div>
+      </article>
+    
+      <!-- Chủ điểm 08: Trái Đất của chúng mình -->
+      <article id="chudiem-8" class="bg-white dark:bg-dark-surface rounded-3xl p-6 sm:p-7 shadow-sm border border-gray-100 dark:border-gray-800 space-y-5 scroll-mt-24">
+        <!-- Header -->
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-gray-100 dark:border-gray-800">
+          <div class="flex items-center gap-3">
+            <span class="w-10 h-10 rounded-2xl bg-gradient-to-br from-rose-500 via-red-600 to-amber-500 text-white flex items-center justify-center font-black text-sm shadow-md shadow-rose-500/20">
+              08
+            </span>
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="px-2 py-0.5 rounded-full bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-300 font-bold text-[10px] uppercase tracking-wider">
+                  Học kì II • Tuần 32–35
+                </span>
+                <span class="text-[11px] font-semibold text-gray-400">Hành tinh xanh</span>
+              </div>
+              <h3 class="text-lg sm:text-xl font-black text-gray-900 dark:text-white mt-0.5">Chủ điểm 8: Trái Đất của chúng mình</h3>
+              <p class="text-xs text-gray-500 dark:text-gray-400 font-medium">Môi trường sống, bảo vệ thiên nhiên, nguồn nước và hành tinh xanh</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 text-xs font-bold bg-rose-50 dark:bg-rose-950/50 text-rose-600 dark:text-rose-300 px-3 py-1.5 rounded-xl border border-rose-100 dark:border-rose-900">
+            <i class="fa-solid fa-earth-americas"></i> Trọng tâm SGK
+          </div>
+        </div>
+
+        <!-- 3 Pillars Breakdown -->
+        <div class="space-y-4">
+          <!-- Pillar 1: Đọc & Cảm thụ văn thơ -->
+          <div class="p-3.5 bg-rose-50/60 dark:bg-rose-950/20 rounded-2xl border border-rose-100 dark:border-rose-900/40 space-y-2">
+            <div class="flex items-center justify-between">
+              <h4 class="text-xs sm:text-sm font-bold text-gray-800 dark:text-gray-200 flex items-center gap-1.5">
+                <span class="w-5 h-5 rounded-md bg-rose-600 text-white flex items-center justify-center text-[10px] font-bold">1</span>
+                <span>Đọc & Cảm thụ văn bản đọc mẫu</span>
+              </h4>
+              <button onclick="speakVietnamese('Trái Đất là quả bóng xanh Bay giữa khoảng trời trong vắt Hãy chung tay cùng gìn giữ Cho màu xanh mãi thắm tươi.')" class="text-xs text-rose-600 dark:text-rose-400 font-bold hover:underline flex items-center gap-1">
+                <i class="fa-solid fa-play"></i> Nghe đọc mẫu
+              </button>
+            </div>
+            <div class="bg-white dark:bg-dark-card p-3 rounded-xl border border-rose-100 dark:border-rose-900/60 space-y-1">
+              <p class="text-xs sm:text-sm italic text-rose-950 dark:text-rose-200 leading-relaxed font-serif whitespace-pre-line">
+                Trái Đất là quả bóng xanh
+Bay giữa khoảng trời trong vắt
+Hãy chung tay cùng gìn giữ
+Cho màu xanh mãi thắm tươi.
+              </p>
+              <p class="text-[11px] text-gray-400 text-right mt-1 font-medium">&mdash; Trích: Bài ca Trái Đất</p>
+            </div>
+          </div>
+
+          <!-- Pillar 2: Luyện từ và câu trọng tâm -->
+          <div class="space-y-2.5">
+            <h4 class="text-xs sm:text-sm font-bold text-gray-800 dark:text-gray-200 flex items-center gap-1.5">
+              <span class="w-5 h-5 rounded-md bg-amber-600 text-white flex items-center justify-center text-[10px] font-bold">2</span>
+              <span>Luyện từ và câu & Vốn từ then chốt (Bấm vào từ để nghe phát âm)</span>
+            </h4>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2.5">
+              
+      <div onclick="speakVietnamese('môi trường')" class="p-3 bg-white dark:bg-dark-card rounded-xl border border-rose-100 dark:border-rose-900/60 text-center space-y-1 hover:border-rose-400 hover:shadow-sm cursor-pointer transition group">
+        <p class="font-bold text-gray-900 dark:text-white text-xs sm:text-sm group-hover:text-rose-600 transition flex items-center justify-center gap-1">
+          môi trường <i class="fa-solid fa-volume-low text-[10px] text-gray-400"></i>
+        </p>
+        <span class="inline-block px-1.5 py-0.5 rounded bg-rose-50 dark:bg-rose-950/60 text-rose-600 dark:text-rose-300 text-[10px] font-semibold">Từ chỉ sự vật</span>
+        <p class="text-[11px] text-gray-500 dark:text-gray-400 leading-snug">Toàn bộ không gian sống bao quanh con người và sinh vật</p>
+      </div>
+    
+      <div onclick="speakVietnamese('bảo vệ')" class="p-3 bg-white dark:bg-dark-card rounded-xl border border-rose-100 dark:border-rose-900/60 text-center space-y-1 hover:border-rose-400 hover:shadow-sm cursor-pointer transition group">
+        <p class="font-bold text-gray-900 dark:text-white text-xs sm:text-sm group-hover:text-rose-600 transition flex items-center justify-center gap-1">
+          bảo vệ <i class="fa-solid fa-volume-low text-[10px] text-gray-400"></i>
+        </p>
+        <span class="inline-block px-1.5 py-0.5 rounded bg-rose-50 dark:bg-rose-950/60 text-rose-600 dark:text-rose-300 text-[10px] font-semibold">Từ chỉ hoạt động</span>
+        <p class="text-[11px] text-gray-500 dark:text-gray-400 leading-snug">Giữ gìn, chăm lo để không bị tổn hại hoặc phá hủy</p>
+      </div>
+    
+      <div onclick="speakVietnamese('tái chế')" class="p-3 bg-white dark:bg-dark-card rounded-xl border border-rose-100 dark:border-rose-900/60 text-center space-y-1 hover:border-rose-400 hover:shadow-sm cursor-pointer transition group">
+        <p class="font-bold text-gray-900 dark:text-white text-xs sm:text-sm group-hover:text-rose-600 transition flex items-center justify-center gap-1">
+          tái chế <i class="fa-solid fa-volume-low text-[10px] text-gray-400"></i>
+        </p>
+        <span class="inline-block px-1.5 py-0.5 rounded bg-rose-50 dark:bg-rose-950/60 text-rose-600 dark:text-rose-300 text-[10px] font-semibold">Từ chỉ hoạt động</span>
+        <p class="text-[11px] text-gray-500 dark:text-gray-400 leading-snug">Xử lý rác thải, phế liệu để tạo thành đồ dùng mới có ích</p>
+      </div>
+    
+      <div onclick="speakVietnamese('trong lành')" class="p-3 bg-white dark:bg-dark-card rounded-xl border border-rose-100 dark:border-rose-900/60 text-center space-y-1 hover:border-rose-400 hover:shadow-sm cursor-pointer transition group">
+        <p class="font-bold text-gray-900 dark:text-white text-xs sm:text-sm group-hover:text-rose-600 transition flex items-center justify-center gap-1">
+          trong lành <i class="fa-solid fa-volume-low text-[10px] text-gray-400"></i>
+        </p>
+        <span class="inline-block px-1.5 py-0.5 rounded bg-rose-50 dark:bg-rose-950/60 text-rose-600 dark:text-rose-300 text-[10px] font-semibold">Từ chỉ đặc điểm</span>
+        <p class="text-[11px] text-gray-500 dark:text-gray-400 leading-snug">Sạch sẽ, thoáng đãng, không bị khói bụi hay ô nhiễm</p>
+      </div>
+    
+            </div>
+            <div class="p-3 bg-amber-50/60 dark:bg-amber-950/30 rounded-xl border border-amber-100 dark:border-amber-900/50 text-xs text-amber-950 dark:text-amber-200">
+              <strong><i class="fa-solid fa-code-fork mr-1"></i> Kiến thức ngữ pháp trọng tâm:</strong> Câu mở rộng vốn từ về Môi trường & Trái Đất; Viết tin nhắn hoặc thư điện tử kêu gọi bảo vệ thiên nhiên.
+            </div>
+          </div>
+
+          <!-- Pillar 3: Viết đoạn văn & Nói nghe -->
+          <div class="p-3.5 bg-indigo-50/60 dark:bg-indigo-950/20 rounded-2xl border border-indigo-100 dark:border-indigo-900/40 space-y-2">
+            <h4 class="text-xs sm:text-sm font-bold text-gray-800 dark:text-gray-200 flex items-center gap-1.5">
+              <span class="w-5 h-5 rounded-md bg-indigo-600 text-white flex items-center justify-center text-[10px] font-bold">3</span>
+              <span>Viết đoạn văn & Rèn luyện kỹ năng Nói - Nghe</span>
+            </h4>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1">
+              <div class="p-3 bg-white dark:bg-dark-card rounded-xl border border-indigo-100/70 dark:border-indigo-900/50 space-y-1">
+                <span class="text-[11px] font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider block">
+                  <i class="fa-solid fa-pen-nib mr-1"></i> Định hướng viết đoạn văn:
+                </span>
+                <p class="text-xs text-gray-700 dark:text-gray-300">Viết đoạn văn (4–5 câu) kể lại một việc làm tốt em đã làm để giữ gìn vệ sinh trường lớp hoặc khu phố.</p>
+              </div>
+              <div class="p-3 bg-white dark:bg-dark-card rounded-xl border border-indigo-100/70 dark:border-indigo-900/50 space-y-1">
+                <span class="text-[11px] font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider block">
+                  <i class="fa-solid fa-comments mr-1"></i> Thực hành nói và nghe:
+                </span>
+                <p class="text-xs text-gray-700 dark:text-gray-300">Thuyết trình ngắn (1–2 phút) trước nhóm về chủ đề: 'Em làm gì để bảo vệ Trái Đất xanh tươi?'.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Practice Quizzes -->
+        <div class="pt-4 border-t border-gray-100 dark:border-gray-800">
+          <h4 class="font-bold text-gray-900 dark:text-white text-xs sm:text-sm flex items-center gap-1.5 mb-3">
+            <i class="fa-solid fa-circle-question text-rose-500"></i> Quick Check Quiz (2 câu hỏi củng cố tức thì)
+          </h4>
+          <div class="space-y-3">
+            
+        <div class="p-3.5 sm:p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-2.5">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-bold text-rose-600 dark:text-rose-400 uppercase tracking-wider">Câu hỏi củng cố 1</span>
+          </div>
+          <p class="text-xs sm:text-sm font-bold text-gray-900 dark:text-white">Việc làm nào dưới đây thể hiện ý thức bảo vệ môi trường và Trái Đất?</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2" id="opts_quiz_7_0">
+            
+        <button onclick="checkQuiz('quiz_7_0', 0, 2, 'Trồng cây xanh và bỏ rác đúng nơi quy định là hành động tích cực bảo vệ môi trường sống.')" class="quiz-btn-quiz_7_0 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">A.</span> Bẻ cành cây, hái hoa trong công viên
+        </button>
+      
+        <button onclick="checkQuiz('quiz_7_0', 1, 2, 'Trồng cây xanh và bỏ rác đúng nơi quy định là hành động tích cực bảo vệ môi trường sống.')" class="quiz-btn-quiz_7_0 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">B.</span> Vứt túi ni lông và rác thải xuống dòng sông
+        </button>
+      
+        <button onclick="checkQuiz('quiz_7_0', 2, 2, 'Trồng cây xanh và bỏ rác đúng nơi quy định là hành động tích cực bảo vệ môi trường sống.')" class="quiz-btn-quiz_7_0 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">C.</span> Trồng thêm cây xanh và bỏ rác đúng nơi quy định
+        </button>
+      
+        <button onclick="checkQuiz('quiz_7_0', 3, 2, 'Trồng cây xanh và bỏ rác đúng nơi quy định là hành động tích cực bảo vệ môi trường sống.')" class="quiz-btn-quiz_7_0 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">D.</span> Để vòi nước chảy lãng phí khi rửa tay
+        </button>
+      
+          </div>
+          <div id="fb_quiz_7_0" class="hidden p-2.5 rounded-xl text-xs"></div>
+        </div>
+      
+        <div class="p-3.5 sm:p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-2.5">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-bold text-rose-600 dark:text-rose-400 uppercase tracking-wider">Câu hỏi củng cố 2</span>
+          </div>
+          <p class="text-xs sm:text-sm font-bold text-gray-900 dark:text-white">Từ nào dưới đây CÙNG NGHĨA với từ 'bảo vệ'?</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2" id="opts_quiz_7_1">
+            
+        <button onclick="checkQuiz('quiz_7_1', 0, 1, '\'Giữ gìn\' có nghĩa tương đồng với \'bảo vệ\' (chăm lo, không để bị tổn hại).')" class="quiz-btn-quiz_7_1 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">A.</span> phá hoại
+        </button>
+      
+        <button onclick="checkQuiz('quiz_7_1', 1, 1, '\'Giữ gìn\' có nghĩa tương đồng với \'bảo vệ\' (chăm lo, không để bị tổn hại).')" class="quiz-btn-quiz_7_1 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">B.</span> giữ gìn
+        </button>
+      
+        <button onclick="checkQuiz('quiz_7_1', 2, 1, '\'Giữ gìn\' có nghĩa tương đồng với \'bảo vệ\' (chăm lo, không để bị tổn hại).')" class="quiz-btn-quiz_7_1 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">C.</span> lãng phí
+        </button>
+      
+        <button onclick="checkQuiz('quiz_7_1', 3, 1, '\'Giữ gìn\' có nghĩa tương đồng với \'bảo vệ\' (chăm lo, không để bị tổn hại).')" class="quiz-btn-quiz_7_1 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">D.</span> làm bẩn
+        </button>
+      
+          </div>
+          <div id="fb_quiz_7_1" class="hidden p-2.5 rounded-xl text-xs"></div>
+        </div>
+      
+          </div>
+        </div>
+      </article>
+    
+        </div>
+
+        <!-- Section II: 5 Mạch kiến thức cốt lõi -->
+        <section id="mach-kienthuc" class="bg-white dark:bg-dark-surface rounded-3xl p-6 sm:p-7 shadow-sm border border-gray-100 dark:border-gray-800 space-y-6 scroll-mt-24">
+          <div class="flex items-center justify-between pb-3 border-b border-gray-100 dark:border-gray-800">
+            <div>
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-xs font-extrabold uppercase text-rose-600 dark:text-rose-400 tracking-wider">Phần II</span>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-300">Chuẩn Kĩ Năng</span>
+              </div>
+              <h2 class="text-xl sm:text-2xl font-black text-gray-900 dark:text-white">Kiến Thức Cốt Lõi Theo 5 Mạch Năng Lực</h2>
+            </div>
+          </div>
+
+          <div class="space-y-6">
+            <!-- Mạch 1: Đọc và đọc hiểu -->
+            <div class="p-4 rounded-2xl bg-rose-50/50 dark:bg-dark-card border border-rose-100 dark:border-rose-900/50 space-y-2.5">
+              <div class="flex items-center gap-2 font-bold text-rose-600 dark:text-rose-400 text-sm">
+                <i class="fa-solid fa-book-reader"></i> 1. Đọc và đọc hiểu văn bản
+              </div>
+              <ul class="text-xs text-gray-700 dark:text-gray-300 space-y-1.5">
+                <li>• <strong>Đọc đúng, rõ ràng:</strong> Đọc chuẩn tốc độ khoảng 70–80 tiếng/phút, ngắt nghỉ đúng dấu câu và nhịp thơ.</li>
+                <li>• <strong>Xác định yếu tố truyện:</strong> Nhận biết nhân vật chính, sự việc, thời gian và địa điểm diễn ra câu chuyện.</li>
+                <li>• <strong>Trình tự diễn biến:</strong> Nắm vững thứ tự các sự việc (mở đầu &rarr; diễn biến &rarr; kết thúc).</li>
+                <li>• <strong>Chi tiết & Nội dung chính:</strong> Tìm được các chi tiết then chốt và trả lời đúng câu hỏi đọc hiểu văn bản.</li>
+                <li>• <strong>Cảm xúc & Bài học:</strong> Hiểu được tâm tư tình cảm của nhân vật và rút ra bài học ý nghĩa liên hệ với bản thân.</li>
+              </ul>
+            </div>
+
+            <!-- Mạch 2: Luyện từ và câu -->
+            <div class="p-4 rounded-2xl bg-blue-50/50 dark:bg-dark-card border border-blue-100 dark:border-blue-900/50 space-y-3">
+              <div class="flex items-center gap-2 font-bold text-blue-600 dark:text-blue-400 text-sm">
+                <i class="fa-solid fa-font"></i> 2. Luyện từ và câu (Hệ thống Từ loại, Kiểu câu & Dấu câu)
+              </div>
+              <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs text-gray-700 dark:text-gray-300 border-collapse">
+                  <thead>
+                    <tr class="bg-blue-100/70 dark:bg-blue-950/70 text-blue-950 dark:text-white uppercase font-bold">
+                      <th class="p-2.5 rounded-l-lg">Nội dung</th>
+                      <th class="p-2.5">Kiến thức cần nhớ</th>
+                      <th class="p-2.5 rounded-r-lg">Ví dụ minh họa</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-gray-200 dark:divide-gray-800">
+                    <tr>
+                      <td class="p-2.5 font-bold text-blue-600">Từ chỉ sự vật</td>
+                      <td class="p-2.5">Chỉ người, con vật, đồ vật, cây cối, hiện tượng tự nhiên</td>
+                      <td class="p-2.5 italic">cô giáo, chú chim sẻ, quyển vở, cây bàng</td>
+                    </tr>
+                    <tr>
+                      <td class="p-2.5 font-bold text-blue-600">Từ chỉ hoạt động</td>
+                      <td class="p-2.5">Chỉ việc làm, hành động vận động của người hoặc vật</td>
+                      <td class="p-2.5 italic">chạy nhảy, viết bài, thảo luận, quét sân</td>
+                    </tr>
+                    <tr>
+                      <td class="p-2.5 font-bold text-blue-600">Từ chỉ đặc điểm</td>
+                      <td class="p-2.5">Chỉ màu sắc, hình dáng, tính chất, tính tình</td>
+                      <td class="p-2.5 italic">xanh ngắt, tròn xoe, chăm chỉ, ngoan ngoãn</td>
+                    </tr>
+                    <tr>
+                      <td class="p-2.5 font-bold text-blue-600">Từ cùng nghĩa / trái nghĩa</td>
+                      <td class="p-2.5">Từ có nghĩa giống nhau hoặc đối lập nhau hoàn toàn</td>
+                      <td class="p-2.5 italic">chăm chỉ - cần cù (cùng); thật thà - gian dối (trái)</td>
+                    </tr>
+                    <tr>
+                      <td class="p-2.5 font-bold text-blue-600">4 Kiểu câu</td>
+                      <td class="p-2.5">Câu kể, Câu hỏi (?), Câu cảm (!), Câu khiến (!)</td>
+                      <td class="p-2.5 italic">Ai làm gì? / Bạn đi đâu thế? / Ôi, đẹp quá! / Hãy im lặng nhé!</td>
+                    </tr>
+                    <tr>
+                      <td class="p-2.5 font-bold text-blue-600">Biện pháp so sánh</td>
+                      <td class="p-2.5">Đối chiếu sự vật/hoạt động này với sự vật/hoạt động khác</td>
+                      <td class="p-2.5 italic">Trẻ em như búp trên cành; Tiếng suối trong như tiếng hát</td>
+                    </tr>
+                    <tr>
+                      <td class="p-2.5 font-bold text-blue-600">Dấu câu quan trọng</td>
+                      <td class="p-2.5">Dấu chấm (.), dấu hỏi (?), dấu than (!), dấu hai chấm (:), dấu gạch ngang (-)</td>
+                      <td class="p-2.5 italic">Báo hiệu lời nói trực tiếp (:), Đánh dấu lời thoại (-)</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Mạch 3: Chính tả và chữ viết -->
+            <div class="p-4 rounded-2xl bg-amber-50/50 dark:bg-dark-card border border-amber-100 dark:border-amber-900/50 space-y-2">
+              <div class="flex items-center gap-2 font-bold text-amber-600 dark:text-amber-400 text-sm">
+                <i class="fa-solid fa-spell-check"></i> 3. Chính tả và chữ viết
+              </div>
+              <ul class="text-xs text-gray-700 dark:text-gray-300 space-y-1">
+                <li>• <strong>Nghe – viết:</strong> Viết đúng chính tả đoạn văn, đoạn thơ khoảng 60–70 chữ trong 15 phút.</li>
+                <li>• <strong>Quy tắc viết hoa:</strong> Viết hoa chữ cái đầu câu, viết hoa tên người và tên địa lý Việt Nam.</li>
+                <li>• <strong>Phân biệt âm vần dễ nhầm:</strong>
+                  <span class="inline-block font-mono bg-white dark:bg-dark-surface px-1.5 py-0.5 rounded border border-amber-200 dark:border-amber-800 text-amber-700 dark:text-amber-300 ml-1">g/gh</span> (gh đi với e, ê, i);
+                  <span class="inline-block font-mono bg-white dark:bg-dark-surface px-1.5 py-0.5 rounded border border-amber-200 dark:border-amber-800 text-amber-700 dark:text-amber-300 ml-1">c/k</span> (k đi với e, ê, i);
+                  <span class="inline-block font-mono bg-white dark:bg-dark-surface px-1.5 py-0.5 rounded border border-amber-200 dark:border-amber-800 text-amber-700 dark:text-amber-300 ml-1">s/x, ch/tr, r/d/gi, l/n, an/ang, dấu hỏi/ngã</span>.
+                </li>
+              </ul>
+            </div>
+
+            <!-- Mạch 4: Viết đoạn văn -->
+            <div class="p-4 rounded-2xl bg-purple-50/50 dark:bg-dark-card border border-purple-100 dark:border-purple-900/50 space-y-2.5">
+              <div class="flex items-center gap-2 font-bold text-purple-600 dark:text-purple-400 text-sm">
+                <i class="fa-solid fa-pen-fancy"></i> 4. Viết đoạn văn (Tập làm văn)
+              </div>
+              <p class="text-xs text-gray-700 dark:text-gray-300"><strong>Các kiểu bài trọng tâm lớp 3:</strong></p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-gray-600 dark:text-gray-300">
+                <div class="p-2.5 rounded-xl bg-white dark:bg-dark-surface border border-purple-100 dark:border-purple-900/50">
+                  • Kể lại một hoạt động hoặc trải nghiệm của em<br>
+                  • Giới thiệu bản thân, bạn bè hoặc người thân<br>
+                  • Tả đồ vật gắn bó (cặp sách, cây bút, đồ chơi)
+                </div>
+                <div class="p-2.5 rounded-xl bg-white dark:bg-dark-surface border border-purple-100 dark:border-purple-900/50">
+                  • Bày tỏ tình cảm, cảm xúc đối với người thân<br>
+                  • Nêu lí do thích hoặc không thích một nhân vật<br>
+                  • Viết tin nhắn, thư điện tử đơn giản
+                </div>
+              </div>
+              <p class="text-xs text-purple-900 dark:text-purple-300 font-semibold pt-1">
+                <i class="fa-solid fa-arrows-turn-to-dots mr-1"></i> Quy trình 4 bước: 1. Xác định nội dung &rarr; 2. Sắp xếp ý &rarr; 3. Viết đoạn (4–5 câu) &rarr; 4. Đọc soát và sửa lỗi.
+              </p>
+            </div>
+
+            <!-- Mạch 5: Nói và nghe -->
+            <div class="p-4 rounded-2xl bg-emerald-50/50 dark:bg-dark-card border border-emerald-100 dark:border-emerald-900/50 space-y-2">
+              <div class="flex items-center gap-2 font-bold text-emerald-600 dark:text-emerald-400 text-sm">
+                <i class="fa-solid fa-comments"></i> 5. Kĩ năng Nói và Nghe
+              </div>
+              <ul class="text-xs text-gray-700 dark:text-gray-300 space-y-1">
+                <li>• Kể lại câu chuyện đã học, đã nghe hoặc kể chuyện nối tiếp theo tranh minh họa.</li>
+                <li>• Tự tin giới thiệu về một người, một đồ vật hoặc một hoạt động trải nghiệm.</li>
+                <li>• Trao đổi ý kiến trong nhóm, biết bày tỏ cảm nghĩ và lắng nghe lời góp ý của bạn bè, thầy cô.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section III: Bảng kiến thức ưu tiên ôn tập -->
+        <section id="bang-uutien" class="bg-white dark:bg-dark-surface rounded-3xl p-6 sm:p-7 shadow-sm border border-gray-100 dark:border-gray-800 space-y-6 scroll-mt-24">
+          <div class="flex items-center justify-between pb-3 border-b border-gray-100 dark:border-gray-800">
+            <div>
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-xs font-extrabold uppercase text-rose-600 dark:text-rose-400 tracking-wider">Phần III</span>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-300">Định Hướng Ôn Tập</span>
+              </div>
+              <h2 class="text-xl sm:text-2xl font-black text-gray-900 dark:text-white">Bảng Phân Bổ Kiến Thức Ưu Tiên Ôn Tập</h2>
+              <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Khung đề xuất phân cấp ưu tiên để ôn tập kiểm tra định kì đạt kết quả cao nhất.</p>
+            </div>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs text-gray-700 dark:text-gray-300 border-collapse">
+              <thead>
+                <tr class="bg-gray-100 dark:bg-dark-card text-gray-900 dark:text-white uppercase font-extrabold border-b border-gray-200 dark:border-gray-700">
+                  <th class="p-3 rounded-l-xl">Mức ưu tiên</th>
+                  <th class="p-3">Kiến thức trọng tâm</th>
+                  <th class="p-3 rounded-r-xl">Yêu cầu cần đạt</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-100 dark:divide-gray-800 font-medium">
+                <tr class="hover:bg-rose-50/50 dark:hover:bg-dark-card/60 transition">
+                  <td class="p-3 font-bold text-rose-600 dark:text-rose-400">
+                    <span class="px-2 py-0.5 rounded-full bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-300 text-[10px] uppercase font-bold">Mức 1 (Trọng tâm)</span>
+                  </td>
+                  <td class="p-3 font-bold text-gray-900 dark:text-white">Đọc hiểu văn bản</td>
+                  <td class="p-3">Hiểu nội dung, nắm vững nhân vật, chi tiết quan trọng và thông điệp câu chuyện.</td>
+                </tr>
+                <tr class="hover:bg-rose-50/50 dark:hover:bg-dark-card/60 transition">
+                  <td class="p-3 font-bold text-rose-600 dark:text-rose-400">
+                    <span class="px-2 py-0.5 rounded-full bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-300 text-[10px] uppercase font-bold">Mức 1 (Trọng tâm)</span>
+                  </td>
+                  <td class="p-3 font-bold text-gray-900 dark:text-white">Từ chỉ sự vật, hoạt động, đặc điểm</td>
+                  <td class="p-3">Nhận diện chính xác 3 nhóm từ loại và biết đặt câu đúng ngữ pháp.</td>
+                </tr>
+                <tr class="hover:bg-rose-50/50 dark:hover:bg-dark-card/60 transition">
+                  <td class="p-3 font-bold text-rose-600 dark:text-rose-400">
+                    <span class="px-2 py-0.5 rounded-full bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-300 text-[10px] uppercase font-bold">Mức 1 (Trọng tâm)</span>
+                  </td>
+                  <td class="p-3 font-bold text-gray-900 dark:text-white">Các kiểu câu và dấu câu</td>
+                  <td class="p-3">Phân biệt 4 kiểu câu (kể, hỏi, cảm, khiến) và sử dụng đúng dấu chấm, hỏi, than, hai chấm, gạch ngang.</td>
+                </tr>
+                <tr class="hover:bg-rose-50/50 dark:hover:bg-dark-card/60 transition">
+                  <td class="p-3 font-bold text-rose-600 dark:text-rose-400">
+                    <span class="px-2 py-0.5 rounded-full bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-300 text-[10px] uppercase font-bold">Mức 1 (Trọng tâm)</span>
+                  </td>
+                  <td class="p-3 font-bold text-gray-900 dark:text-white">Viết đoạn văn</td>
+                  <td class="p-3">Viết đúng chủ đề, đủ 4–5 câu, diễn đạt mạch lạc, dùng từ gợi cảm và đúng chính tả.</td>
+                </tr>
+                <tr class="hover:bg-rose-50/50 dark:hover:bg-dark-card/60 transition">
+                  <td class="p-3 font-semibold text-gray-500">
+                    <span class="px-2 py-0.5 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 text-[10px] uppercase font-bold">Mức 2 (Củng cố)</span>
+                  </td>
+                  <td class="p-3 font-semibold text-gray-900 dark:text-white">Từ cùng nghĩa, trái nghĩa</td>
+                  <td class="p-3">Nhận biết cặp từ và sử dụng từ thay thế phù hợp ngữ cảnh.</td>
+                </tr>
+                <tr class="hover:bg-rose-50/50 dark:hover:bg-dark-card/60 transition">
+                  <td class="p-3 font-semibold text-gray-500">
+                    <span class="px-2 py-0.5 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 text-[10px] uppercase font-bold">Mức 2 (Củng cố)</span>
+                  </td>
+                  <td class="p-3 font-semibold text-gray-900 dark:text-white">Biện pháp so sánh</td>
+                  <td class="p-3">Nhận diện sự vật/hoạt động được so sánh và biết vận dụng khi viết câu.</td>
+                </tr>
+                <tr class="hover:bg-rose-50/50 dark:hover:bg-dark-card/60 transition">
+                  <td class="p-3 font-semibold text-gray-500">
+                    <span class="px-2 py-0.5 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 text-[10px] uppercase font-bold">Mức 2 (Củng cố)</span>
+                  </td>
+                  <td class="p-3 font-semibold text-gray-900 dark:text-white">Chính tả và chữ viết</td>
+                  <td class="p-3">Viết đúng phụ âm đầu, vần dễ nhầm và quy tắc viết hoa tên riêng.</td>
+                </tr>
+                <tr class="hover:bg-rose-50/50 dark:hover:bg-dark-card/60 transition">
+                  <td class="p-3 font-semibold text-gray-500">
+                    <span class="px-2 py-0.5 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 text-[10px] uppercase font-bold">Mức 2 (Củng cố)</span>
+                  </td>
+                  <td class="p-3 font-semibold text-gray-900 dark:text-white">Kể chuyện và trình bày</td>
+                  <td class="p-3">Nói rõ ràng, đúng trình tự, tự tin khi phát biểu trước tập thể.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Section IV: Ma trận ngân hàng câu hỏi đề kiểm tra -->
+        <section id="matran-nganhang" class="bg-white dark:bg-dark-surface rounded-3xl p-6 sm:p-7 shadow-sm border border-gray-100 dark:border-gray-800 space-y-6 scroll-mt-24">
+          <div class="flex items-center justify-between pb-3 border-b border-gray-100 dark:border-gray-800">
+            <div>
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-xs font-extrabold uppercase text-rose-600 dark:text-rose-400 tracking-wider">Phần IV</span>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-300">Đề Xuất Ra Đề</span>
+              </div>
+              <h2 class="text-xl sm:text-2xl font-black text-gray-900 dark:text-white">Cơ Cấu Tỉ Lệ Ngân Hàng Câu Hỏi & Đề Kiểm Tra</h2>
+            </div>
+          </div>
+
+          <!-- 4 Pillars of Exam Matrix -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="p-4 rounded-2xl bg-rose-50 dark:bg-dark-card border border-rose-200 dark:border-rose-900/60 text-center space-y-2">
+              <div class="text-3xl font-black text-rose-600 dark:text-rose-400">35%</div>
+              <div class="text-xs font-bold text-gray-900 dark:text-white uppercase tracking-wider">Đọc hiểu</div>
+              <p class="text-[11px] text-gray-500 dark:text-gray-400 leading-snug">Văn bản truyện, thơ; câu hỏi nhận biết, thông hiểu và liên hệ thực tế.</p>
+            </div>
+
+            <div class="p-4 rounded-2xl bg-blue-50 dark:bg-dark-card border border-blue-200 dark:border-blue-900/60 text-center space-y-2">
+              <div class="text-3xl font-black text-blue-600 dark:text-blue-400">35%</div>
+              <div class="text-xs font-bold text-gray-900 dark:text-white uppercase tracking-wider">Luyện từ và câu</div>
+              <p class="text-[11px] text-gray-500 dark:text-gray-400 leading-snug">Từ loại, kiểu câu, dấu câu, từ đồng nghĩa - trái nghĩa và biện pháp so sánh.</p>
+            </div>
+
+            <div class="p-4 rounded-2xl bg-amber-50 dark:bg-dark-card border border-amber-200 dark:border-amber-900/60 text-center space-y-2">
+              <div class="text-3xl font-black text-amber-600 dark:text-amber-400">15%</div>
+              <div class="text-xs font-bold text-gray-900 dark:text-white uppercase tracking-wider">Chính tả</div>
+              <p class="text-[11px] text-gray-500 dark:text-gray-400 leading-snug">Nghe – viết, phân biệt âm vần dễ nhầm và quy tắc viết hoa tên riêng.</p>
+            </div>
+
+            <div class="p-4 rounded-2xl bg-purple-50 dark:bg-dark-card border border-purple-200 dark:border-purple-900/60 text-center space-y-2">
+              <div class="text-3xl font-black text-purple-600 dark:text-purple-400">15%</div>
+              <div class="text-xs font-bold text-gray-900 dark:text-white uppercase tracking-wider">Viết đoạn văn</div>
+              <p class="text-[11px] text-gray-500 dark:text-gray-400 leading-snug">Viết đoạn văn kể chuyện, miêu tả, giới thiệu, biểu cảm (4–5 câu).</p>
+            </div>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 text-xs text-gray-600 dark:text-gray-300 leading-relaxed flex items-start gap-2.5">
+            <i class="fa-solid fa-circle-info text-rose-500 mt-0.5 text-sm flex-shrink-0"></i>
+            <div>
+              <strong>Lưu ý sư phạm:</strong> Tỉ lệ trên là minh họa cho việc xây dựng ngân hàng bài tập và đề kiểm tra viết. Kĩ năng <strong>Nói và nghe</strong> cần được đánh giá định kì bằng các hoạt động thực hành trực tiếp trên lớp. Đề kiểm tra cần bám sát chuẩn kiến thức kĩ năng lớp 3, tránh các câu hỏi vượt quá khung chương trình SGK.
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Certification Exam Modal (Trạng Nguyên Tiếng Việt) -->
+  <div id="certificationModal" class="fixed inset-0 z-50 hidden bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-dark-surface rounded-3xl border border-gray-100 dark:border-gray-800 w-full max-w-3xl max-h-[90vh] flex flex-col shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
+      
+      <!-- Modal Header -->
+      <div class="p-5 sm:p-6 bg-gradient-to-r from-rose-600 via-red-600 to-amber-600 text-white flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-11 h-11 rounded-2xl bg-white/20 backdrop-blur flex items-center justify-center text-xl shadow-inner">
+            <i class="fa-solid fa-award"></i>
+          </div>
+          <div>
+            <h3 class="font-black text-lg">Hội Thi Trạng Nguyên Tiếng Việt Lớp 3</h3>
+            <p class="text-xs text-rose-100">Khảo sát năng lực toàn diện Tiếng Việt 3 • Đề thi tổng hợp 10 câu</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-3">
+          <div class="px-3 py-1.5 rounded-xl bg-black/30 backdrop-blur text-xs font-mono font-bold flex items-center gap-1.5 border border-white/20">
+            <i class="fa-regular fa-clock text-amber-300"></i>
+            <span id="examTimer">60:00</span>
+          </div>
+          <button onclick="closeCertificationModal()" class="w-8 h-8 rounded-xl bg-white/10 hover:bg-white/25 flex items-center justify-center text-white transition">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Modal Body (Questions) -->
+      <div class="p-5 sm:p-6 overflow-y-auto flex-1 space-y-6" id="examQuestionsContainer">
+        <!-- Rendered via JS -->
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="p-4 sm:p-5 border-t border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-dark-card flex items-center justify-between">
+        <div class="text-xs text-gray-500 dark:text-gray-400 font-medium">
+          Đã trả lời: <span id="answeredCount" class="font-bold text-rose-600 dark:text-rose-400">0</span>/10 câu
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="closeCertificationModal()" class="px-4 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs font-semibold text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-dark-surface transition">
+            Đóng
+          </button>
+          <button onclick="submitCertificationExam()" class="px-5 py-2 rounded-xl bg-gradient-to-r from-rose-500 to-amber-600 hover:opacity-95 text-white font-bold text-xs shadow-md shadow-rose-500/20 transition">
+            Nộp bài & Chấm điểm
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Score Result Modal -->
+  <div id="resultModal" class="fixed inset-0 z-50 hidden bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-dark-surface rounded-3xl border border-gray-100 dark:border-gray-800 w-full max-w-md p-6 sm:p-7 text-center shadow-2xl space-y-4">
+      <div class="w-16 h-16 rounded-2xl bg-amber-100 dark:bg-amber-950/60 text-amber-500 mx-auto flex items-center justify-center text-3xl shadow-inner">
+        <i class="fa-solid fa-trophy"></i>
+      </div>
+      <div>
+        <h3 class="text-xl font-black text-gray-900 dark:text-white">Kết Quả Khảo Sát Năng Lực</h3>
+        <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Chứng nhận Trạng Nguyên Tiếng Việt Lớp 3</p>
+      </div>
+
+      <div class="p-4 rounded-2xl bg-rose-50 dark:bg-dark-card border border-rose-100 dark:border-rose-900/60 space-y-1">
+        <div class="text-4xl font-black text-rose-600 dark:text-rose-400" id="scoreDisplay">0 / 10</div>
+        <div class="text-xs font-semibold text-gray-700 dark:text-gray-300" id="resultVerdict">Đang chấm điểm...</div>
+      </div>
+
+      <button onclick="closeResultModal()" class="w-full py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs shadow-md shadow-rose-600/25 transition">
+        Xác nhận & Hoàn tất
+      </button>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-white dark:bg-dark-surface border-t border-gray-200 dark:border-gray-800 py-8 transition-colors mt-auto">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-gray-500 dark:text-gray-400">
+      <div class="flex items-center gap-2">
+        <div class="w-6 h-6 rounded bg-gradient-to-br from-rose-500 to-amber-500 text-white flex items-center justify-center text-[10px] font-bold">TV</div>
+        <span>Chương trình Tiếng Việt Lớp 3 (GDPT 2018) • Học Viện CodeHub</span>
+      </div>
+      <div class="flex items-center gap-4">
+        <a href="#overview-section" class="hover:text-rose-600 dark:hover:text-rose-400 transition">Lên đầu trang</a>
+        <span>•</span>
+        <a href="../index.html" class="hover:text-rose-600 dark:hover:text-rose-400 transition">Trang chủ Khóa học</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    // 1. Theme Management
+    function initTheme() {
+      if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    }
+    initTheme();
+
+    function toggleDarkMode() {
+      if (document.documentElement.classList.contains('dark')) {
+        document.documentElement.classList.remove('dark');
+        localStorage.theme = 'light';
+      } else {
+        document.documentElement.classList.add('dark');
+        localStorage.theme = 'dark';
+      }
+    }
+
+    // 2. Mobile Drawer Toggle
+    function toggleDrawer() {
+      const drawer = document.getElementById('mobile-drawer');
+      const backdrop = document.getElementById('drawer-backdrop');
+      if (!drawer || !backdrop) return;
+      if (drawer.classList.contains('-translate-x-full')) {
+        drawer.classList.remove('-translate-x-full');
+        backdrop.classList.remove('hidden');
+      } else {
+        drawer.classList.add('-translate-x-full');
+        backdrop.classList.add('hidden');
+      }
+    }
+
+    // 3. Web Speech API for Vietnamese (vi-VN)
+    function speakVietnamese(text) {
+      if (!('speechSynthesis' in window)) {
+        alert('Trình duyệt không hỗ trợ phát âm tự động.');
+        return;
+      }
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'vi-VN';
+      utterance.rate = 0.88;
+      utterance.pitch = 1.0;
+
+      const voices = window.speechSynthesis.getVoices();
+      const viVoice = voices.find(v => v.lang.startsWith('vi') || v.name.toLowerCase().includes('vietnam'));
+      if (viVoice) {
+        utterance.voice = viVoice;
+      }
+
+      window.speechSynthesis.speak(utterance);
+    }
+
+    // 4. Quick Check Quiz logic
+    function checkQuiz(qId, selectedIdx, correctIdx, exp) {
+      const fb = document.getElementById('fb_' + qId);
+      const btns = document.querySelectorAll('.quiz-btn-' + qId);
+      if (!fb || !btns) return;
+
+      btns.forEach((btn, idx) => {
+        btn.disabled = true;
+        if (idx === correctIdx) {
+          btn.className = 'quiz-btn-' + qId + ' text-left px-3 py-2 rounded-xl bg-emerald-100 dark:bg-emerald-950/80 border border-emerald-500 text-xs text-emerald-900 dark:text-emerald-200 font-bold w-full';
+        } else if (idx === selectedIdx) {
+          btn.className = 'quiz-btn-' + qId + ' text-left px-3 py-2 rounded-xl bg-rose-100 dark:bg-rose-950/80 border border-rose-500 text-xs text-rose-900 dark:text-rose-200 font-bold w-full';
+        } else {
+          btn.className = 'quiz-btn-' + qId + ' text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-800 text-xs opacity-50 w-full';
+        }
+      });
+
+      fb.classList.remove('hidden');
+      if (selectedIdx === correctIdx) {
+        fb.className = 'p-3 rounded-xl text-xs bg-emerald-50 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800';
+        fb.innerHTML = '<i class="fa-solid fa-circle-check text-emerald-600 mr-1.5"></i><strong>Chính xác!</strong> ' + exp;
+      } else {
+        fb.className = 'p-3 rounded-xl text-xs bg-rose-50 dark:bg-rose-950/60 text-rose-800 dark:text-rose-300 border border-rose-200 dark:border-rose-800';
+        fb.innerHTML = '<i class="fa-solid fa-circle-xmark text-rose-600 mr-1.5"></i><strong>Chưa đúng!</strong> ' + exp;
+      }
+    }
+
+    // 5. Certification Exam Logic
+    const examData = [{"q":"Trong các từ sau, từ nào là từ chỉ HOẠT ĐỘNG của học sinh?","options":["cặp sách","thảo luận","thông minh","sân trường"],"ans":1,"exp":"\'Thảo luận\' là từ chỉ hoạt động (trao đổi, bàn bạc bài tập)."},{"q":"Câu nào dưới đây chứa hình ảnh so sánh sinh động?","options":["Mặt biển hôm nay thật phẳng lặng.","Mặt trăng tròn vành vạnh như một chiếc đĩa bạc khổng lồ.","Gió thổi rì rào qua rặng phi lao ven bờ cát.","Chúng em cùng nhau đi dạo trên bờ biển mát rượi."],"ans":1,"exp":"Hình ảnh so sánh: \'Mặt trăng\' được so sánh với \'chiếc đĩa bạc khổng lồ\' qua từ \'như\'."},{"q":"Để bộc lộ cảm xúc trầm trồ trước vẻ đẹp của một bức tranh, em sử dụng kiểu câu nào?","options":["Câu kể: \'Bức tranh này do bạn Mai vẽ.\'","Câu hỏi: \'Bức tranh này vẽ cảnh gì thế?\'","Câu cảm: \'Ôi, bức tranh này đẹp rực rỡ làm sao!\'","Câu khiến: \'Bạn hãy mang bức tranh này treo lên tường đi!\'"],"ans":2,"exp":"Câu cảm \'Ôi, bức tranh này đẹp rực rỡ làm sao!\' dùng để bộc lộ cảm xúc thán phục, khen ngợi."},{"q":"Cặp từ nào dưới đây là cặp từ TRÁI NGHĨA?","options":["chăm chỉ - siêng năng","dũng cảm - gan dạ","trung thực - dối trá","nhân từ - hiền hậu"],"ans":2,"exp":"\'Trung thực\' (thật thà) và \'dối trá\' (gian dối) có ý nghĩa hoàn toàn trái ngược nhau."},{"q":"Từ ngữ nào dưới đây viết SAI chính tả quy tắc phụ âm đầu?","options":["ghế gỗ","nghi ngờ","kéo co","ghen ghét"],"ans":3,"exp":"Đúng chính tả phải là \'ghen ghét\' (tiếng \'ghen\' đi với nguyên âm \'e\' phải viết là \'gh\': ghen ghét -> sai nếu viết \'ghen\', phải là \'ghen\' đi với \'gh\' là \'ghen\' hay \'ghen tuông\')."},{"q":"Dấu câu nào thích hợp nhất để điền vào ô trống: \'Mẹ ơi, ngày mai mấy giờ cả nhà mình về quê thăm ông bà thế [_]\'?","options":["Dấu chấm (.)","Dấu chấm than (!)","Dấu chấm hỏi (?)","Dấu hai chấm (:)"],"ans":2,"exp":"Đây là câu hỏi dùng để hỏi mẹ về thời gian, do đó kết thúc bằng dấu chấm hỏi (?)."},{"q":"Tên riêng nào dưới đây được viết hoa ĐÚNG quy tắc tiếng Việt?","options":["nguyễn Nhật Ánh","Võ Thị Sáu","trần Quốc Toản","Lê văn Tám"],"ans":1,"exp":"\'Võ Thị Sáu\' viết hoa chữ cái đầu của cả 3 tiếng tạo nên tên người Việt Nam."},{"q":"Trong đoạn văn kể lại một trải nghiệm của bản thân, trình tự các ý được sắp xếp như thế nào là hợp lý nhất?","options":["Kể kết thúc trước -> Kể nguyên nhân -> Giới thiệu mở đầu","Giới thiệu thời gian, địa điểm, sự việc -> Diễn biến các hoạt động -> Nêu cảm nghĩ, cảm xúc","Nêu cảm xúc cá nhân -> Kể chi tiết vụn vặt -> Không cần giới thiệu sự việc","Chỉ kể lời thoại của bạn bè, không kể hành động của bản thân"],"ans":1,"exp":"Quy trình mạch lạc: Mở đầu giới thiệu sự việc -> Diễn biến theo thời gian -> Kết thúc nêu suy nghĩ, cảm xúc."},{"q":"Câu: \'Bác nông dân đang miệt mài cày ruộng trên cánh đồng rộng lớn.\' có từ chỉ đặc điểm là:","options":["bác nông dân","cày ruộng","cánh đồng","rộng lớn"],"ans":3,"exp":"\'Rộng lớn\' là từ chỉ đặc điểm kích thước, diện tích của cánh đồng."},{"q":"Mục đích chính của câu khiến là gì?","options":["Dùng để kể lại một sự việc đã xảy ra","Dùng để bộc lộ niềm vui, nỗi buồn của người nói","Dùng để nêu yêu cầu, đề nghị, khuyên bảo người khác","Dùng để hỏi về điều mình chưa biết"],"ans":2,"exp":"Câu khiến dùng để nêu lời yêu cầu, đề nghị, khuyên nhủ hoặc nhờ vả người khác hành động."}];
+    let userAnswers = {};
+    let timerInterval = null;
+    let secondsLeft = 3600;
+
+    function renderCertificationQuestions() {
+      const container = document.getElementById('examQuestionsContainer');
+      if (!container) return;
+      container.innerHTML = examData.map((item, qIdx) => {
+        const opts = item.options.map((opt, optIdx) => {
+          return '<label class="flex items-start gap-2.5 p-3 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-rose-50 dark:hover:bg-rose-950/40 cursor-pointer text-xs font-medium transition">' +
+                 '<input type="radio" name="cert_q_' + qIdx + '" value="' + optIdx + '" onchange="selectExamAnswer(' + qIdx + ', ' + optIdx + ')" class="mt-0.5 text-rose-600">' +
+                 '<span><strong class="text-gray-400 mr-1">' + String.fromCharCode(65 + optIdx) + '.</strong> ' + opt + '</span>' +
+                 '</label>';
+        }).join('');
+
+        return '<div class="p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-2.5">' +
+               '<div class="flex items-center justify-between">' +
+               '<span class="text-xs font-bold text-rose-600 dark:text-rose-400">Câu ' + (qIdx + 1) + ' / 10</span>' +
+               '</div>' +
+               '<p class="text-xs sm:text-sm font-bold text-gray-900 dark:text-white">' + item.q + '</p>' +
+               '<div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">' + opts + '</div>' +
+               '</div>';
+      }).join('');
+    }
+
+    function selectExamAnswer(qIdx, optIdx) {
+      userAnswers[qIdx] = optIdx;
+      document.getElementById('answeredCount').innerText = Object.keys(userAnswers).length;
+    }
+
+    function openCertificationModal() {
+      userAnswers = {};
+      secondsLeft = 3600;
+      document.getElementById('answeredCount').innerText = '0';
+      renderCertificationQuestions();
+      document.getElementById('certificationModal').classList.remove('hidden');
+
+      if (timerInterval) clearInterval(timerInterval);
+      timerInterval = setInterval(() => {
+        secondsLeft--;
+        if (secondsLeft <= 0) {
+          clearInterval(timerInterval);
+          submitCertificationExam();
+          return;
+        }
+        const m = Math.floor(secondsLeft / 60);
+        const s = secondsLeft % 60;
+        document.getElementById('examTimer').innerText = (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
+      }, 1000);
+    }
+
+    function closeCertificationModal() {
+      if (timerInterval) clearInterval(timerInterval);
+      document.getElementById('certificationModal').classList.add('hidden');
+    }
+
+    function submitCertificationExam() {
+      if (timerInterval) clearInterval(timerInterval);
+      let score = 0;
+      examData.forEach((item, idx) => {
+        if (userAnswers[idx] === item.ans) {
+          score++;
+        }
+      });
+
+      closeCertificationModal();
+      document.getElementById('scoreDisplay').innerText = score + ' / 10';
+      const verdict = document.getElementById('resultVerdict');
+      if (score >= 9) {
+        verdict.innerText = 'Xuất sắc! Đạt danh hiệu Trạng Nguyên Tiếng Việt Lớp 3!';
+      } else if (score >= 7) {
+        verdict.innerText = 'Giỏi! Nắm rất vững các mạch kiến thức Tiếng Việt 3.';
+      } else if (score >= 5) {
+        verdict.innerText = 'Đạt yêu cầu! Cần ôn luyện thêm về luyện từ và câu, chính tả.';
+      } else {
+        verdict.innerText = 'Cần cố gắng! Hãy xem lại các chủ điểm và luyện đọc thêm.';
+      }
+      document.getElementById('resultModal').classList.remove('hidden');
+    }
+
+    function closeResultModal() {
+      document.getElementById('resultModal').classList.add('hidden');
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,1765 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Khóa Học Tự Nhiên Và Xã Hội Lớp 3 - Chương Trình GDPT 2018 | CodeHub</title>
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            dark: {
+              bg: '#0A0B14',
+              surface: '#121422',
+              card: '#1B1E34'
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <meta name="codehub-activity-name" content="Khóa Học Tự Nhiên Và Xã Hội Lớp 3">
+
+  <style>
+    .sidebar-scroll::-webkit-scrollbar { width: 4px; }
+    .sidebar-scroll::-webkit-scrollbar-thumb { background: #0d9488; border-radius: 4px; }
+    .tnxh-hero-bg {
+      background: radial-gradient(circle at 10% 20%, rgba(13, 148, 136, 0.15) 0%, transparent 40%),
+                  radial-gradient(circle at 90% 80%, rgba(16, 185, 129, 0.15) 0%, transparent 40%);
+    }
+  </style>
+</head>
+<body class="bg-gray-50 dark:bg-dark-bg text-gray-800 dark:text-gray-100 font-sans min-h-screen flex flex-col transition-colors duration-200">
+
+  <!-- Mobile Drawer Backdrop -->
+  <div id="drawer-backdrop" onclick="toggleDrawer()" class="fixed inset-0 bg-black/50 z-40 hidden lg:hidden backdrop-blur-sm transition-opacity"></div>
+
+  <!-- Mobile Drawer Navigation -->
+  <div id="mobile-drawer" class="fixed top-0 left-0 bottom-0 w-80 bg-white dark:bg-dark-surface z-50 transform -translate-x-full transition-transform duration-300 ease-in-out lg:hidden flex flex-col p-6 shadow-2xl border-r border-gray-100 dark:border-gray-800">
+    <div class="flex items-center justify-between pb-4 border-b border-gray-100 dark:border-gray-800">
+      <div class="flex items-center gap-2 text-teal-600 font-bold text-lg">
+        <i class="fa-solid fa-seedling text-2xl"></i>
+        <span>TN&XH Lớp 3 (GDPT 2018)</span>
+      </div>
+      <button onclick="toggleDrawer()" class="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+    </div>
+    <div class="mt-4 flex-1 overflow-y-auto space-y-1 sidebar-scroll pr-1">
+      <a href="#overview-section" onclick="toggleDrawer()" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-teal-50 dark:hover:bg-teal-950/40 text-gray-700 dark:text-gray-300 font-medium text-xs">
+        <i class="fa-solid fa-compass text-teal-500 w-4"></i> I. 6 Chủ đề cốt lõi (30 bài)
+      </a>
+      <a href="#kienthuc-trongtam" onclick="toggleDrawer()" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-teal-50 dark:hover:bg-teal-950/40 text-gray-700 dark:text-gray-300 font-medium text-xs">
+        <i class="fa-solid fa-list-check text-teal-500 w-4"></i> II. Kiến thức trọng tâm & Đánh giá
+      </a>
+      <a href="#chuanhoa-dulieu" onclick="toggleDrawer()" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-teal-50 dark:hover:bg-teal-950/40 text-gray-700 dark:text-gray-300 font-medium text-xs">
+        <i class="fa-solid fa-database text-teal-500 w-4"></i> III. Chuẩn hoá dữ liệu CodeHub
+      </a>
+      <div class="pt-2 pb-1 text-[11px] font-bold uppercase tracking-wider text-gray-400">Danh Sách 6 Chủ Đề</div>
+      
+    <a href="#chude-1" onclick="toggleDrawer()" class="flex items-center gap-2 px-3 py-1.5 rounded-xl hover:bg-teal-50 dark:hover:bg-teal-950/40 text-gray-700 dark:text-gray-300 text-xs">
+      <span class="w-5 h-5 rounded-md bg-teal-100 dark:bg-teal-900/40 text-teal-600 dark:text-teal-400 flex items-center justify-center font-bold text-[10px]">01</span>
+      <span class="truncate">Gia đình (Bài 1–4)</span>
+    </a>
+  
+    <a href="#chude-2" onclick="toggleDrawer()" class="flex items-center gap-2 px-3 py-1.5 rounded-xl hover:bg-teal-50 dark:hover:bg-teal-950/40 text-gray-700 dark:text-gray-300 text-xs">
+      <span class="w-5 h-5 rounded-md bg-teal-100 dark:bg-teal-900/40 text-teal-600 dark:text-teal-400 flex items-center justify-center font-bold text-[10px]">02</span>
+      <span class="truncate">Trường học (Bài 5–8)</span>
+    </a>
+  
+    <a href="#chude-3" onclick="toggleDrawer()" class="flex items-center gap-2 px-3 py-1.5 rounded-xl hover:bg-teal-50 dark:hover:bg-teal-950/40 text-gray-700 dark:text-gray-300 text-xs">
+      <span class="w-5 h-5 rounded-md bg-teal-100 dark:bg-teal-900/40 text-teal-600 dark:text-teal-400 flex items-center justify-center font-bold text-[10px]">03</span>
+      <span class="truncate">Cộng đồng địa phương (Bài 9–12)</span>
+    </a>
+  
+    <a href="#chude-4" onclick="toggleDrawer()" class="flex items-center gap-2 px-3 py-1.5 rounded-xl hover:bg-teal-50 dark:hover:bg-teal-950/40 text-gray-700 dark:text-gray-300 text-xs">
+      <span class="w-5 h-5 rounded-md bg-teal-100 dark:bg-teal-900/40 text-teal-600 dark:text-teal-400 flex items-center justify-center font-bold text-[10px]">04</span>
+      <span class="truncate">Thực vật và động vật (Bài 13–17)</span>
+    </a>
+  
+    <a href="#chude-5" onclick="toggleDrawer()" class="flex items-center gap-2 px-3 py-1.5 rounded-xl hover:bg-teal-50 dark:hover:bg-teal-950/40 text-gray-700 dark:text-gray-300 text-xs">
+      <span class="w-5 h-5 rounded-md bg-teal-100 dark:bg-teal-900/40 text-teal-600 dark:text-teal-400 flex items-center justify-center font-bold text-[10px]">05</span>
+      <span class="truncate">Con người và sức khoẻ (Bài 18–25)</span>
+    </a>
+  
+    <a href="#chude-6" onclick="toggleDrawer()" class="flex items-center gap-2 px-3 py-1.5 rounded-xl hover:bg-teal-50 dark:hover:bg-teal-950/40 text-gray-700 dark:text-gray-300 text-xs">
+      <span class="w-5 h-5 rounded-md bg-teal-100 dark:bg-teal-900/40 text-teal-600 dark:text-teal-400 flex items-center justify-center font-bold text-[10px]">06</span>
+      <span class="truncate">Trái Đất và bầu trời (Bài 26–30)</span>
+    </a>
+  
+    </div>
+    <div class="pt-4 border-t border-gray-100 dark:border-gray-800 space-y-2">
+      <button onclick="openCertificationModal(); toggleDrawer();" class="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-gradient-to-r from-teal-500 to-emerald-600 text-white font-bold text-sm shadow-md shadow-teal-500/20">
+        <i class="fa-solid fa-award"></i> Thi Trạng Nguyên TN&XH
+      </button>
+      <a href="../index.html" class="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 font-semibold text-sm hover:bg-gray-50 dark:hover:bg-gray-800">
+        <i class="fa-solid fa-house"></i> Về trang chủ
+      </a>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="sticky top-0 z-40 bg-white/95 dark:bg-dark-surface/95 backdrop-blur border-b border-gray-200 dark:border-gray-800 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      
+      <!-- Logo & Breadcrumb -->
+      <div class="flex items-center gap-3">
+        <a href="../index.html" class="p-2 rounded-xl text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" title="Trở về Trang chủ">
+          <i class="fa-solid fa-arrow-left text-base"></i>
+        </a>
+        <a href="../index.html" class="flex items-center gap-2 text-teal-600 dark:text-teal-400 font-bold text-lg">
+          <i class="fa-solid fa-graduation-cap text-xl"></i>
+          <span class="tracking-tight">CodeHub</span>
+        </a>
+        <span class="hidden sm:inline-block text-gray-300 dark:text-gray-700">|</span>
+        <span class="hidden sm:inline-block text-xs font-semibold px-2.5 py-1 rounded-full bg-teal-100 dark:bg-teal-950/60 text-teal-800 dark:text-teal-300">
+          Tự Nhiên Và Xã Hội Lớp 3 (GDPT 2018)
+        </span>
+      </div>
+
+      <!-- Quick Action Buttons -->
+      <div class="flex items-center gap-2">
+        <a href="toan_3.html" class="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-blue-600 dark:text-blue-400 font-semibold text-xs transition-colors shadow-sm">
+          <i class="fa-solid fa-calculator"></i>
+          <span>Toán 3</span>
+        </a>
+        <a href="tiengviet_3.html" class="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-rose-600 dark:text-rose-400 font-semibold text-xs transition-colors shadow-sm">
+          <i class="fa-solid fa-book-bookmark"></i>
+          <span>Tiếng Việt 3</span>
+        </a>
+        <a href="tienganh_3.html" class="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-sky-600 dark:text-sky-400 font-semibold text-xs transition-colors shadow-sm">
+          <i class="fa-solid fa-language"></i>
+          <span>Tiếng Anh 3</span>
+        </a>
+        <a href="tinhoc_3.html" class="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-blue-600 dark:text-blue-400 font-semibold text-xs transition-colors shadow-sm">
+          <i class="fa-solid fa-laptop-code"></i>
+          <span>Tin Học 3</span>
+        </a>
+        <a href="grade_3.html" class="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-indigo-600 dark:text-indigo-400 font-semibold text-xs transition-colors shadow-sm">
+          <i class="fa-solid fa-school"></i>
+          <span>Lớp 3 Hub</span>
+        </a>
+        <button onclick="openCertificationModal()" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-teal-600 hover:bg-teal-700 text-white font-semibold text-xs transition-colors shadow-sm">
+          <i class="fa-solid fa-award"></i>
+          <span>Trạng Nguyên TN&XH (10 câu)</span>
+        </button>
+
+        <!-- Theme Toggle -->
+        <button id="theme-toggle" onclick="toggleDarkMode()" class="p-2 rounded-xl text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" title="Chuyển chế độ Sáng / Tối">
+          <i id="theme-icon" class="fa-solid fa-moon dark:hidden text-sm"></i>
+          <i class="fa-solid fa-sun hidden dark:block text-amber-400 text-sm"></i>
+        </button>
+
+        <!-- Mobile Drawer Toggle -->
+        <button onclick="toggleDrawer()" class="lg:hidden p-2 rounded-xl text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+          <i class="fa-solid fa-bars text-lg"></i>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="tnxh-hero-bg border-b border-gray-200/80 dark:border-gray-800/80 py-10 sm:py-14">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-8">
+        
+        <div class="space-y-4 max-w-2xl text-center md:text-left">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-100 dark:bg-teal-950/70 text-teal-800 dark:text-teal-300 text-xs font-semibold">
+            <i class="fa-solid fa-seedling text-teal-500"></i>
+            <span>Chương Trình Giáo Dục Phổ Thông 2018 • Bộ GD&ĐT</span>
+          </div>
+          
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black text-gray-900 dark:text-white tracking-tight leading-tight">
+            Khóa Học <span class="bg-gradient-to-r from-teal-600 via-emerald-600 to-cyan-500 bg-clip-text text-transparent">Tự Nhiên Và Xã Hội 3</span>
+          </h1>
+          
+          <p class="text-gray-600 dark:text-gray-300 text-sm sm:text-base leading-relaxed">
+            Khám phá thế giới quanh em qua <strong>6 Chủ đề cốt lõi (30 bài học SGK)</strong>: Gia đình và an toàn PCCC, Trường học & kết nối cộng đồng, Sản xuất & di tích địa phương, Sinh học thực vật - động vật, Cơ thể người & sức khoẻ, Trái Đất và bầu trời.
+          </p>
+
+          <!-- 6 Chủ đề Pill Chain -->
+          <div class="pt-2">
+            <span class="text-xs font-bold uppercase tracking-wider text-gray-400 dark:text-gray-500 block mb-2">
+              <i class="fa-solid fa-compass text-teal-500 mr-1"></i> 6 Chủ đề kiến thức chuẩn SGK:
+            </span>
+            <div class="flex flex-wrap items-center justify-center md:justify-start gap-1.5 sm:gap-2 text-[11px] sm:text-xs font-bold">
+              <span class="px-3 py-1.5 rounded-lg bg-white dark:bg-dark-card border border-teal-200 dark:border-teal-800/60 text-teal-700 dark:text-teal-300 shadow-sm flex items-center gap-1.5">
+                <i class="fa-solid fa-people-roof text-teal-500"></i> 1. Gia đình
+              </span>
+              <span class="px-3 py-1.5 rounded-lg bg-white dark:bg-dark-card border border-blue-200 dark:border-blue-800/60 text-blue-700 dark:text-blue-300 shadow-sm flex items-center gap-1.5">
+                <i class="fa-solid fa-school text-blue-500"></i> 2. Trường học
+              </span>
+              <span class="px-3 py-1.5 rounded-lg bg-white dark:bg-dark-card border border-amber-200 dark:border-amber-800/60 text-amber-700 dark:text-amber-300 shadow-sm flex items-center gap-1.5">
+                <i class="fa-solid fa-city text-amber-500"></i> 3. Cộng đồng
+              </span>
+              <span class="px-3 py-1.5 rounded-lg bg-white dark:bg-dark-card border border-emerald-200 dark:border-emerald-800/60 text-emerald-700 dark:text-emerald-300 shadow-sm flex items-center gap-1.5">
+                <i class="fa-solid fa-leaf text-emerald-500"></i> 4. Động thực vật
+              </span>
+              <span class="px-3 py-1.5 rounded-lg bg-white dark:bg-dark-card border border-rose-200 dark:border-rose-800/60 text-rose-700 dark:text-rose-300 shadow-sm flex items-center gap-1.5">
+                <i class="fa-solid fa-heart-pulse text-rose-500"></i> 5. Con người & sức khoẻ
+              </span>
+              <span class="px-3 py-1.5 rounded-lg bg-white dark:bg-dark-card border border-indigo-200 dark:border-indigo-800/60 text-indigo-700 dark:text-indigo-300 shadow-sm flex items-center gap-1.5">
+                <i class="fa-solid fa-earth-americas text-indigo-500"></i> 6. Trái Đất & bầu trời
+              </span>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap items-center justify-center md:justify-start gap-4 pt-2">
+            <a href="#overview-section" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-teal-500 via-emerald-600 to-cyan-600 hover:opacity-95 text-white font-bold text-sm shadow-md shadow-teal-500/25 transition">
+              <i class="fa-solid fa-list-check mr-1.5"></i> Khám phá 30 bài học
+            </a>
+            <button onclick="openCertificationModal()" class="px-5 py-2.5 rounded-xl bg-white dark:bg-dark-surface hover:bg-gray-100 dark:hover:bg-dark-card border border-gray-200 dark:border-gray-700 text-gray-800 dark:text-white font-bold text-sm shadow-sm transition">
+              <i class="fa-solid fa-award text-teal-500 mr-1.5"></i> Thi Trạng Nguyên TN&XH
+            </button>
+          </div>
+        </div>
+
+        <!-- Quick Stats Cards Grid -->
+        <div class="grid grid-cols-2 gap-3.5 w-full md:w-auto shrink-0 max-w-sm">
+          <div class="p-4 rounded-2xl bg-white dark:bg-dark-surface border border-gray-100 dark:border-gray-800 shadow-sm">
+            <div class="text-teal-500 text-2xl font-black mb-1 flex items-center gap-2">
+              <i class="fa-solid fa-book-open text-xl"></i> 6 Chủ đề
+            </div>
+            <div class="text-xs text-gray-500 dark:text-gray-400 font-medium">Toàn diện từ Gia đình đến Vũ trụ</div>
+          </div>
+          <div class="p-4 rounded-2xl bg-white dark:bg-dark-surface border border-gray-100 dark:border-gray-800 shadow-sm">
+            <div class="text-emerald-500 text-2xl font-black mb-1 flex items-center gap-2">
+              <i class="fa-solid fa-list-ol text-xl"></i> 30 Bài học
+            </div>
+            <div class="text-xs text-gray-500 dark:text-gray-400 font-medium">Khung kiến thức chuẩn SGK GDPT 2018</div>
+          </div>
+          <div class="p-4 rounded-2xl bg-white dark:bg-dark-surface border border-gray-100 dark:border-gray-800 shadow-sm">
+            <div class="text-cyan-500 text-2xl font-black mb-1 flex items-center gap-2">
+              <i class="fa-solid fa-heart-pulse text-xl"></i> 3 Cơ quan
+            </div>
+            <div class="text-xs text-gray-500 dark:text-gray-400 font-medium">Hệ Tiêu hoá, Tuần hoàn & Thần kinh</div>
+          </div>
+          <div class="p-4 rounded-2xl bg-white dark:bg-dark-surface border border-gray-100 dark:border-gray-800 shadow-sm">
+            <div class="text-amber-500 text-2xl font-black mb-1 flex items-center gap-2">
+              <i class="fa-solid fa-trophy text-xl"></i> Khảo sát
+            </div>
+            <div class="text-xs text-gray-500 dark:text-gray-400 font-medium">Thi Trạng Nguyên Nhí TN&XH (60 phút)</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content Layout -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+      
+      <!-- Desktop Sticky Sidebar Navigation -->
+      <aside class="hidden lg:block lg:col-span-1">
+        <div class="sticky top-20 p-5 rounded-2xl bg-white dark:bg-dark-surface border border-gray-100 dark:border-gray-800 shadow-sm max-h-[calc(100vh-6rem)] overflow-y-auto sidebar-scroll space-y-4">
+          <div>
+            <span class="text-xs font-black uppercase tracking-wider text-teal-600 dark:text-teal-400">Mục lục TN&XH 3</span>
+            <div class="mt-2 space-y-1">
+              <a href="#overview-section" class="flex items-center gap-2 px-3 py-1.5 rounded-xl hover:bg-teal-50 dark:hover:bg-teal-950/40 text-gray-700 dark:text-gray-300 text-xs font-semibold">
+                <i class="fa-solid fa-compass text-teal-500 w-4"></i> I. 6 Chủ đề SGK (30 bài)
+              </a>
+              <a href="#kienthuc-trongtam" class="flex items-center gap-2 px-3 py-1.5 rounded-xl hover:bg-teal-50 dark:hover:bg-teal-950/40 text-gray-700 dark:text-gray-300 text-xs font-semibold">
+                <i class="fa-solid fa-list-check text-teal-500 w-4"></i> II. Đánh giá & Ưu tiên
+              </a>
+              <a href="#chuanhoa-dulieu" class="flex items-center gap-2 px-3 py-1.5 rounded-xl hover:bg-teal-50 dark:hover:bg-teal-950/40 text-gray-700 dark:text-gray-300 text-xs font-semibold">
+                <i class="fa-solid fa-database text-teal-500 w-4"></i> III. Chuẩn hoá CodeHub
+              </a>
+            </div>
+          </div>
+
+          <div class="pt-3 border-t border-gray-100 dark:border-gray-800">
+            <span class="text-[11px] font-bold uppercase tracking-wider text-gray-400">6 Chủ đề chi tiết</span>
+            <div class="mt-2 space-y-1">
+              
+    <a href="#chude-1" class="flex items-center gap-2 px-3 py-1.5 rounded-xl hover:bg-teal-50 dark:hover:bg-teal-950/40 text-gray-700 dark:text-gray-300 text-xs transition">
+      <span class="w-5 h-5 rounded-md bg-teal-100 dark:bg-teal-900/40 text-teal-600 dark:text-teal-400 flex items-center justify-center font-bold text-[10px]">01</span>
+      <span class="truncate">Gia đình (Bài 1–4)</span>
+    </a>
+  
+    <a href="#chude-2" class="flex items-center gap-2 px-3 py-1.5 rounded-xl hover:bg-teal-50 dark:hover:bg-teal-950/40 text-gray-700 dark:text-gray-300 text-xs transition">
+      <span class="w-5 h-5 rounded-md bg-teal-100 dark:bg-teal-900/40 text-teal-600 dark:text-teal-400 flex items-center justify-center font-bold text-[10px]">02</span>
+      <span class="truncate">Trường học (Bài 5–8)</span>
+    </a>
+  
+    <a href="#chude-3" class="flex items-center gap-2 px-3 py-1.5 rounded-xl hover:bg-teal-50 dark:hover:bg-teal-950/40 text-gray-700 dark:text-gray-300 text-xs transition">
+      <span class="w-5 h-5 rounded-md bg-teal-100 dark:bg-teal-900/40 text-teal-600 dark:text-teal-400 flex items-center justify-center font-bold text-[10px]">03</span>
+      <span class="truncate">Cộng đồng địa phương (Bài 9–12)</span>
+    </a>
+  
+    <a href="#chude-4" class="flex items-center gap-2 px-3 py-1.5 rounded-xl hover:bg-teal-50 dark:hover:bg-teal-950/40 text-gray-700 dark:text-gray-300 text-xs transition">
+      <span class="w-5 h-5 rounded-md bg-teal-100 dark:bg-teal-900/40 text-teal-600 dark:text-teal-400 flex items-center justify-center font-bold text-[10px]">04</span>
+      <span class="truncate">Thực vật và động vật (Bài 13–17)</span>
+    </a>
+  
+    <a href="#chude-5" class="flex items-center gap-2 px-3 py-1.5 rounded-xl hover:bg-teal-50 dark:hover:bg-teal-950/40 text-gray-700 dark:text-gray-300 text-xs transition">
+      <span class="w-5 h-5 rounded-md bg-teal-100 dark:bg-teal-900/40 text-teal-600 dark:text-teal-400 flex items-center justify-center font-bold text-[10px]">05</span>
+      <span class="truncate">Con người và sức khoẻ (Bài 18–25)</span>
+    </a>
+  
+    <a href="#chude-6" class="flex items-center gap-2 px-3 py-1.5 rounded-xl hover:bg-teal-50 dark:hover:bg-teal-950/40 text-gray-700 dark:text-gray-300 text-xs transition">
+      <span class="w-5 h-5 rounded-md bg-teal-100 dark:bg-teal-900/40 text-teal-600 dark:text-teal-400 flex items-center justify-center font-bold text-[10px]">06</span>
+      <span class="truncate">Trái Đất và bầu trời (Bài 26–30)</span>
+    </a>
+  
+            </div>
+          </div>
+
+          <div class="pt-3 border-t border-gray-100 dark:border-gray-800">
+            <button onclick="openCertificationModal()" class="w-full flex items-center justify-center gap-2 py-2 px-3 rounded-xl bg-gradient-to-r from-teal-500 to-emerald-600 text-white font-bold text-xs shadow-sm hover:opacity-95 transition">
+              <i class="fa-solid fa-award"></i> Thi Trạng Nguyên (60p)
+            </button>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Main Column -->
+      <div class="lg:col-span-3 space-y-10">
+        
+        <!-- Section I: 6 Chủ đề Header -->
+        <div id="overview-section" class="flex items-center justify-between pb-3 border-b border-gray-200 dark:border-gray-800 scroll-mt-24">
+          <div>
+            <div class="flex items-center gap-2 mb-1">
+              <span class="text-xs font-extrabold uppercase text-teal-600 dark:text-teal-400 tracking-wider">Phần I & II</span>
+              <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-teal-100 dark:bg-teal-950 text-teal-700 dark:text-teal-300">SGK GDPT 2018</span>
+            </div>
+            <h2 class="text-xl sm:text-2xl font-black text-gray-900 dark:text-white">Kiến Thức Cốt Lõi 6 Chủ Đề (Bài 1 Đến Bài 30)</h2>
+          </div>
+          <span class="hidden sm:inline-flex items-center gap-1.5 text-xs text-teal-600 dark:text-teal-400 font-bold bg-teal-50 dark:bg-teal-950/60 px-3 py-1.5 rounded-xl border border-teal-100 dark:border-teal-900">
+            <i class="fa-solid fa-book-open"></i> 30 Bài học chuẩn SGK
+          </span>
+        </div>
+
+        <!-- 6 Theme Articles Loop -->
+        <div class="space-y-8">
+          
+      <!-- Chủ đề 01: Gia đình -->
+      <article id="chude-1" class="bg-white dark:bg-dark-surface rounded-3xl p-6 sm:p-7 shadow-sm border border-gray-100 dark:border-gray-800 space-y-5 scroll-mt-24">
+        <!-- Header -->
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-gray-100 dark:border-gray-800">
+          <div class="flex items-center gap-3">
+            <span class="w-10 h-10 rounded-2xl bg-gradient-to-br from-teal-500 via-emerald-600 to-cyan-600 text-white flex items-center justify-center font-black text-sm shadow-md shadow-teal-500/20">
+              01
+            </span>
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="px-2 py-0.5 rounded-full bg-teal-100 dark:bg-teal-950 text-teal-700 dark:text-teal-300 font-bold text-[10px] uppercase tracking-wider">
+                  Bài 1–4
+                </span>
+                <span class="text-[11px] font-semibold text-gray-400">Tổ ấm & An toàn</span>
+              </div>
+              <h3 class="text-lg sm:text-xl font-black text-gray-900 dark:text-white mt-0.5">Chủ đề 1: Gia đình</h3>
+              <p class="text-xs text-gray-500 dark:text-gray-400 font-medium">Họ hàng nội, ngoại; ngày kỉ niệm gia đình; phòng tránh hoả hoạn; vệ sinh quanh nhà</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 text-xs font-bold bg-teal-50 dark:bg-teal-950/50 text-teal-600 dark:text-teal-300 px-3 py-1.5 rounded-xl border border-teal-100 dark:border-teal-900">
+            <i class="fa-solid fa-people-roof"></i> Chuẩn SGK TN&XH 3
+          </div>
+        </div>
+
+        <!-- Summary & Audio Button -->
+        <div class="p-3.5 bg-teal-50/60 dark:bg-teal-950/20 rounded-2xl border border-teal-100 dark:border-teal-900/40 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-teal-900 dark:text-teal-300 flex items-center gap-1.5">
+              <i class="fa-solid fa-compass"></i> Tóm lược nội dung chủ đề
+            </span>
+            <button onclick="speakTNXH('Học sinh hiểu được mối quan hệ gắn bó giữa họ hàng bên nội và bên ngoại, biết cách xưng hô lễ phép. Nhận diện các nguyên nhân và biện pháp phòng tránh hoả hoạn trong gia đình, biết số điện thoại cứu hỏa 114. Hình thành thói quen giữ gìn vệ sinh môi trường sống sạch sẽ.')" class="text-xs text-teal-600 dark:text-teal-400 font-bold hover:underline flex items-center gap-1">
+              <i class="fa-solid fa-play"></i> Nghe tóm tắt chủ đề
+            </button>
+          </div>
+          <p class="text-xs sm:text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
+            Học sinh hiểu được mối quan hệ gắn bó giữa họ hàng bên nội và bên ngoại, biết cách xưng hô lễ phép. Nhận diện các nguyên nhân và biện pháp phòng tránh hoả hoạn trong gia đình, biết số điện thoại cứu hỏa 114. Hình thành thói quen giữ gìn vệ sinh môi trường sống sạch sẽ.
+          </p>
+        </div>
+
+        <!-- Lessons Cards Grid -->
+        <div class="space-y-3">
+          <h4 class="text-xs sm:text-sm font-bold text-gray-800 dark:text-gray-200 flex items-center gap-1.5">
+            <i class="fa-solid fa-book-bookmark text-teal-500"></i>
+            <span>Các bài học trọng tâm trong chủ đề:</span>
+          </h4>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            
+      <div class="p-3.5 rounded-2xl bg-white dark:bg-dark-card border border-teal-100/80 dark:border-teal-900/40 space-y-2">
+        <div class="flex items-center justify-between pb-1.5 border-b border-gray-100 dark:border-gray-800">
+          <span class="text-xs font-bold text-teal-700 dark:text-teal-300">Bài 1: Họ hàng và những ngày kỉ niệm của gia đình</span>
+          <button onclick="speakTNXH('Họ hàng và những ngày kỉ niệm của gia đình. Phân biệt họ hàng bên nội (ông bà nội, bác, chú, cô...) và bên ngoại (ông bà ngoại, bác, cậu, dì...).. Biết cách xưng hô chuẩn mực, lễ phép với các thế hệ trong dòng họ.. Nhận biết và ghi nhớ các sự kiện quan trọng: ngày cưới bố mẹ, sinh nhật, ngày giỗ tổ tiên.. Bày tỏ tình cảm yêu thương, sự quan tâm, kính trọng và giúp đỡ người thân.')" class="p-1 rounded-md text-teal-600 dark:text-teal-400 hover:bg-teal-50 dark:hover:bg-teal-900/50 text-[11px]" title="Nghe tóm tắt bài học">
+            <i class="fa-solid fa-volume-high"></i>
+          </button>
+        </div>
+        <ul class="text-xs text-gray-600 dark:text-gray-300 space-y-1">
+          <li>• Phân biệt họ hàng bên nội (ông bà nội, bác, chú, cô...) và bên ngoại (ông bà ngoại, bác, cậu, dì...).</li><li>• Biết cách xưng hô chuẩn mực, lễ phép với các thế hệ trong dòng họ.</li><li>• Nhận biết và ghi nhớ các sự kiện quan trọng: ngày cưới bố mẹ, sinh nhật, ngày giỗ tổ tiên.</li><li>• Bày tỏ tình cảm yêu thương, sự quan tâm, kính trọng và giúp đỡ người thân.</li>
+        </ul>
+      </div>
+    
+      <div class="p-3.5 rounded-2xl bg-white dark:bg-dark-card border border-teal-100/80 dark:border-teal-900/40 space-y-2">
+        <div class="flex items-center justify-between pb-1.5 border-b border-gray-100 dark:border-gray-800">
+          <span class="text-xs font-bold text-teal-700 dark:text-teal-300">Bài 2: Phòng tránh hoả hoạn khi ở nhà</span>
+          <button onclick="speakTNXH('Phòng tránh hoả hoạn khi ở nhà. Nguyên nhân gây cháy: nghịch lửa, quên tắt bếp ga/bếp điện, chập điện, để vật dễ cháy gần nguồn nhiệt.. Hậu quả của hoả hoạn: thiệt hại tính mạng, sức khoẻ và tài sản to lớn.. Hành động an toàn: Tuyệt đối không nghịch lửa, không tự cắm rút thiết bị điện nguy hiểm khi chưa có người lớn.. Kỹ năng thoát hiểm: Báo động lớn tiếng, lấy khăn ướt che mũi miệng, bò thấp người thoát hiểm, gọi 114.')" class="p-1 rounded-md text-teal-600 dark:text-teal-400 hover:bg-teal-50 dark:hover:bg-teal-900/50 text-[11px]" title="Nghe tóm tắt bài học">
+            <i class="fa-solid fa-volume-high"></i>
+          </button>
+        </div>
+        <ul class="text-xs text-gray-600 dark:text-gray-300 space-y-1">
+          <li>• Nguyên nhân gây cháy: nghịch lửa, quên tắt bếp ga/bếp điện, chập điện, để vật dễ cháy gần nguồn nhiệt.</li><li>• Hậu quả của hoả hoạn: thiệt hại tính mạng, sức khoẻ và tài sản to lớn.</li><li>• Hành động an toàn: Tuyệt đối không nghịch lửa, không tự cắm rút thiết bị điện nguy hiểm khi chưa có người lớn.</li><li>• Kỹ năng thoát hiểm: Báo động lớn tiếng, lấy khăn ướt che mũi miệng, bò thấp người thoát hiểm, gọi 114.</li>
+        </ul>
+      </div>
+    
+      <div class="p-3.5 rounded-2xl bg-white dark:bg-dark-card border border-teal-100/80 dark:border-teal-900/40 space-y-2">
+        <div class="flex items-center justify-between pb-1.5 border-b border-gray-100 dark:border-gray-800">
+          <span class="text-xs font-bold text-teal-700 dark:text-teal-300">Bài 3: Vệ sinh xung quanh nhà</span>
+          <button onclick="speakTNXH('Vệ sinh xung quanh nhà. Lợi ích của môi trường sống sạch sẽ: phòng tránh bệnh sốt xuất huyết, hô hấp, tạo cảnh quan tươi mát.. Hành vi giữ vệ sinh: Quét dọn sân vườn, khơi thông cống rãnh, đậy kín chum vại không để bọ gậy sinh sôi.. Không vứt rác bừa bãi, biết phân loại rác và chăm sóc cây xanh quanh nhà.')" class="p-1 rounded-md text-teal-600 dark:text-teal-400 hover:bg-teal-50 dark:hover:bg-teal-900/50 text-[11px]" title="Nghe tóm tắt bài học">
+            <i class="fa-solid fa-volume-high"></i>
+          </button>
+        </div>
+        <ul class="text-xs text-gray-600 dark:text-gray-300 space-y-1">
+          <li>• Lợi ích của môi trường sống sạch sẽ: phòng tránh bệnh sốt xuất huyết, hô hấp, tạo cảnh quan tươi mát.</li><li>• Hành vi giữ vệ sinh: Quét dọn sân vườn, khơi thông cống rãnh, đậy kín chum vại không để bọ gậy sinh sôi.</li><li>• Không vứt rác bừa bãi, biết phân loại rác và chăm sóc cây xanh quanh nhà.</li>
+        </ul>
+      </div>
+    
+      <div class="p-3.5 rounded-2xl bg-white dark:bg-dark-card border border-teal-100/80 dark:border-teal-900/40 space-y-2">
+        <div class="flex items-center justify-between pb-1.5 border-b border-gray-100 dark:border-gray-800">
+          <span class="text-xs font-bold text-teal-700 dark:text-teal-300">Bài 4: Ôn tập chủ đề Gia đình</span>
+          <button onclick="speakTNXH('Ôn tập chủ đề Gia đình. Hệ thống hóa kiến thức về sơ đồ họ hàng nội, ngoại.. Thực hành xử lý tình huống giả định khi xảy ra sự cố cháy nổ tại nhà.. Lập kế hoạch dọn dẹp vệ sinh khuôn viên ngôi nhà cùng các thành viên gia đình.')" class="p-1 rounded-md text-teal-600 dark:text-teal-400 hover:bg-teal-50 dark:hover:bg-teal-900/50 text-[11px]" title="Nghe tóm tắt bài học">
+            <i class="fa-solid fa-volume-high"></i>
+          </button>
+        </div>
+        <ul class="text-xs text-gray-600 dark:text-gray-300 space-y-1">
+          <li>• Hệ thống hóa kiến thức về sơ đồ họ hàng nội, ngoại.</li><li>• Thực hành xử lý tình huống giả định khi xảy ra sự cố cháy nổ tại nhà.</li><li>• Lập kế hoạch dọn dẹp vệ sinh khuôn viên ngôi nhà cùng các thành viên gia đình.</li>
+        </ul>
+      </div>
+    
+          </div>
+        </div>
+
+        <!-- Practice Quizzes -->
+        <div class="pt-4 border-t border-gray-100 dark:border-gray-800">
+          <h4 class="font-bold text-gray-900 dark:text-white text-xs sm:text-sm flex items-center gap-1.5 mb-3">
+            <i class="fa-solid fa-circle-question text-teal-500"></i> Quick Check Quiz (2 câu hỏi tình huống thực tế)
+          </h4>
+          <div class="space-y-3">
+            
+        <div class="p-3.5 sm:p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-2.5">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-bold text-teal-600 dark:text-teal-400 uppercase tracking-wider">Tình huống thực tế 1</span>
+          </div>
+          <p class="text-xs sm:text-sm font-bold text-gray-900 dark:text-white">Khi phát hiện có đám cháy xảy ra trong nhà, em cần làm gì đầu tiên?</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2" id="opts_quiz_0_0">
+            
+        <button onclick="checkQuiz('quiz_0_0', 0, 1, 'Khi có cháy, việc quan trọng nhất là báo động, thoát hiểm nhanh chóng theo lối an toàn và gọi số cứu hỏa 114.')" class="quiz-btn-quiz_0_0 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-teal-50 dark:hover:bg-teal-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">A.</span> Chui vào gầm giường hoặc tủ quần áo để trốn
+        </button>
+      
+        <button onclick="checkQuiz('quiz_0_0', 1, 1, 'Khi có cháy, việc quan trọng nhất là báo động, thoát hiểm nhanh chóng theo lối an toàn và gọi số cứu hỏa 114.')" class="quiz-btn-quiz_0_0 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-teal-50 dark:hover:bg-teal-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">B.</span> Hô hoán báo động cho người lớn, tìm đường thoát ra ngoài an toàn và gọi 114
+        </button>
+      
+        <button onclick="checkQuiz('quiz_0_0', 2, 1, 'Khi có cháy, việc quan trọng nhất là báo động, thoát hiểm nhanh chóng theo lối an toàn và gọi số cứu hỏa 114.')" class="quiz-btn-quiz_0_0 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-teal-50 dark:hover:bg-teal-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">C.</span> Cố gắng quay lại tìm đồ chơi và vật dụng yêu thích
+        </button>
+      
+        <button onclick="checkQuiz('quiz_0_0', 3, 1, 'Khi có cháy, việc quan trọng nhất là báo động, thoát hiểm nhanh chóng theo lối an toàn và gọi số cứu hỏa 114.')" class="quiz-btn-quiz_0_0 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-teal-50 dark:hover:bg-teal-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">D.</span> Mở tất cả các cửa sổ để gió thổi vào làm mát đám cháy
+        </button>
+      
+          </div>
+          <div id="fb_quiz_0_0" class="hidden p-2.5 rounded-xl text-xs"></div>
+        </div>
+      
+        <div class="p-3.5 sm:p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-2.5">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-bold text-teal-600 dark:text-teal-400 uppercase tracking-wider">Tình huống thực tế 2</span>
+          </div>
+          <p class="text-xs sm:text-sm font-bold text-gray-900 dark:text-white">Người nào dưới đây thuộc họ hàng bên NGOẠI của em?</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2" id="opts_quiz_0_1">
+            
+        <button onclick="checkQuiz('quiz_0_1', 0, 1, 'Người thuộc phía mẹ sinh ra hoặc anh chị em của mẹ (như cậu, dì, bác bên mẹ, ông bà ngoại) thuộc họ hàng bên ngoại.')" class="quiz-btn-quiz_0_1 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-teal-50 dark:hover:bg-teal-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">A.</span> Anh trai của bố (Bác)
+        </button>
+      
+        <button onclick="checkQuiz('quiz_0_1', 1, 1, 'Người thuộc phía mẹ sinh ra hoặc anh chị em của mẹ (như cậu, dì, bác bên mẹ, ông bà ngoại) thuộc họ hàng bên ngoại.')" class="quiz-btn-quiz_0_1 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-teal-50 dark:hover:bg-teal-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">B.</span> Em trai của mẹ (Cậu)
+        </button>
+      
+        <button onclick="checkQuiz('quiz_0_1', 2, 1, 'Người thuộc phía mẹ sinh ra hoặc anh chị em của mẹ (như cậu, dì, bác bên mẹ, ông bà ngoại) thuộc họ hàng bên ngoại.')" class="quiz-btn-quiz_0_1 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-teal-50 dark:hover:bg-teal-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">C.</span> Em gái của bố (Cô)
+        </button>
+      
+        <button onclick="checkQuiz('quiz_0_1', 3, 1, 'Người thuộc phía mẹ sinh ra hoặc anh chị em của mẹ (như cậu, dì, bác bên mẹ, ông bà ngoại) thuộc họ hàng bên ngoại.')" class="quiz-btn-quiz_0_1 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-teal-50 dark:hover:bg-teal-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">D.</span> Em trai của bố (Chú)
+        </button>
+      
+          </div>
+          <div id="fb_quiz_0_1" class="hidden p-2.5 rounded-xl text-xs"></div>
+        </div>
+      
+          </div>
+        </div>
+      </article>
+    
+      <!-- Chủ đề 02: Trường học -->
+      <article id="chude-2" class="bg-white dark:bg-dark-surface rounded-3xl p-6 sm:p-7 shadow-sm border border-gray-100 dark:border-gray-800 space-y-5 scroll-mt-24">
+        <!-- Header -->
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-gray-100 dark:border-gray-800">
+          <div class="flex items-center gap-3">
+            <span class="w-10 h-10 rounded-2xl bg-gradient-to-br from-teal-500 via-emerald-600 to-cyan-600 text-white flex items-center justify-center font-black text-sm shadow-md shadow-teal-500/20">
+              02
+            </span>
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="px-2 py-0.5 rounded-full bg-teal-100 dark:bg-teal-950 text-teal-700 dark:text-teal-300 font-bold text-[10px] uppercase tracking-wider">
+                  Bài 5–8
+                </span>
+                <span class="text-[11px] font-semibold text-gray-400">Mái trường & Cộng đồng</span>
+              </div>
+              <h3 class="text-lg sm:text-xl font-black text-gray-900 dark:text-white mt-0.5">Chủ đề 2: Trường học</h3>
+              <p class="text-xs text-gray-500 dark:text-gray-400 font-medium">Hoạt động kết nối cộng đồng; truyền thống trường; an toàn và vệ sinh trường học</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 text-xs font-bold bg-teal-50 dark:bg-teal-950/50 text-teal-600 dark:text-teal-300 px-3 py-1.5 rounded-xl border border-teal-100 dark:border-teal-900">
+            <i class="fa-solid fa-school-flag"></i> Chuẩn SGK TN&XH 3
+          </div>
+        </div>
+
+        <!-- Summary & Audio Button -->
+        <div class="p-3.5 bg-teal-50/60 dark:bg-teal-950/20 rounded-2xl border border-teal-100 dark:border-teal-900/40 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-teal-900 dark:text-teal-300 flex items-center gap-1.5">
+              <i class="fa-solid fa-compass"></i> Tóm lược nội dung chủ đề
+            </span>
+            <button onclick="speakTNXH('Tìm hiểu các hoạt động ý nghĩa gắn kết nhà trường với cộng đồng xã hội; tự hào về bề dày lịch sử và thành tích của ngôi trường em đang theo học; rèn luyện thói quen tự giác giữ gìn trường học an toàn, không bạo lực và phòng chống tai nạn thương tích.')" class="text-xs text-teal-600 dark:text-teal-400 font-bold hover:underline flex items-center gap-1">
+              <i class="fa-solid fa-play"></i> Nghe tóm tắt chủ đề
+            </button>
+          </div>
+          <p class="text-xs sm:text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
+            Tìm hiểu các hoạt động ý nghĩa gắn kết nhà trường với cộng đồng xã hội; tự hào về bề dày lịch sử và thành tích của ngôi trường em đang theo học; rèn luyện thói quen tự giác giữ gìn trường học an toàn, không bạo lực và phòng chống tai nạn thương tích.
+          </p>
+        </div>
+
+        <!-- Lessons Cards Grid -->
+        <div class="space-y-3">
+          <h4 class="text-xs sm:text-sm font-bold text-gray-800 dark:text-gray-200 flex items-center gap-1.5">
+            <i class="fa-solid fa-book-bookmark text-teal-500"></i>
+            <span>Các bài học trọng tâm trong chủ đề:</span>
+          </h4>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            
+      <div class="p-3.5 rounded-2xl bg-white dark:bg-dark-card border border-teal-100/80 dark:border-teal-900/40 space-y-2">
+        <div class="flex items-center justify-between pb-1.5 border-b border-gray-100 dark:border-gray-800">
+          <span class="text-xs font-bold text-teal-700 dark:text-teal-300">Bài 5: Hoạt động kết nối với cộng đồng</span>
+          <button onclick="speakTNXH('Hoạt động kết nối với cộng đồng. Các hoạt động tiêu biểu: Quyên góp từ thiện ủng hộ bạn nghèo, thăm viếng nghĩa trang liệt sĩ, làm sạch đường làng ngõ xóm, cổ động ATGT.. Ý nghĩa: Bồi đắp lòng nhân ái, tinh thần vì cộng đồng và trách nhiệm với xã hội.. Tích cực tham gia các hoạt động vừa sức do Đội Thiếu niên Tiền phong và nhà trường phát động.')" class="p-1 rounded-md text-teal-600 dark:text-teal-400 hover:bg-teal-50 dark:hover:bg-teal-900/50 text-[11px]" title="Nghe tóm tắt bài học">
+            <i class="fa-solid fa-volume-high"></i>
+          </button>
+        </div>
+        <ul class="text-xs text-gray-600 dark:text-gray-300 space-y-1">
+          <li>• Các hoạt động tiêu biểu: Quyên góp từ thiện ủng hộ bạn nghèo, thăm viếng nghĩa trang liệt sĩ, làm sạch đường làng ngõ xóm, cổ động ATGT.</li><li>• Ý nghĩa: Bồi đắp lòng nhân ái, tinh thần vì cộng đồng và trách nhiệm với xã hội.</li><li>• Tích cực tham gia các hoạt động vừa sức do Đội Thiếu niên Tiền phong và nhà trường phát động.</li>
+        </ul>
+      </div>
+    
+      <div class="p-3.5 rounded-2xl bg-white dark:bg-dark-card border border-teal-100/80 dark:border-teal-900/40 space-y-2">
+        <div class="flex items-center justify-between pb-1.5 border-b border-gray-100 dark:border-gray-800">
+          <span class="text-xs font-bold text-teal-700 dark:text-teal-300">Bài 6: Truyền thống trường em</span>
+          <button onclick="speakTNXH('Truyền thống trường em. Tìm hiểu lịch sử thành lập trường, tên gọi của trường gắn với danh nhân lịch sử hay địa danh.. Các thành tích nổi bật: Thầy cô dạy giỏi, học sinh đạt giải cao trong học tập, thể thao.. Phương pháp thu thập thông tin: Quan sát phòng truyền thống, phỏng vấn thầy cô giáo, đọc kỉ yếu.. Ý thức gìn giữ và phát huy truyền thống hiếu học của trường.')" class="p-1 rounded-md text-teal-600 dark:text-teal-400 hover:bg-teal-50 dark:hover:bg-teal-900/50 text-[11px]" title="Nghe tóm tắt bài học">
+            <i class="fa-solid fa-volume-high"></i>
+          </button>
+        </div>
+        <ul class="text-xs text-gray-600 dark:text-gray-300 space-y-1">
+          <li>• Tìm hiểu lịch sử thành lập trường, tên gọi của trường gắn với danh nhân lịch sử hay địa danh.</li><li>• Các thành tích nổi bật: Thầy cô dạy giỏi, học sinh đạt giải cao trong học tập, thể thao.</li><li>• Phương pháp thu thập thông tin: Quan sát phòng truyền thống, phỏng vấn thầy cô giáo, đọc kỉ yếu.</li><li>• Ý thức gìn giữ và phát huy truyền thống hiếu học của trường.</li>
+        </ul>
+      </div>
+    
+      <div class="p-3.5 rounded-2xl bg-white dark:bg-dark-card border border-teal-100/80 dark:border-teal-900/40 space-y-2">
+        <div class="flex items-center justify-between pb-1.5 border-b border-gray-100 dark:border-gray-800">
+          <span class="text-xs font-bold text-teal-700 dark:text-teal-300">Bài 7: Giữ an toàn và vệ sinh ở trường</span>
+          <button onclick="speakTNXH('Giữ an toàn và vệ sinh ở trường. Nhận diện vị trí, hành vi nguy hiểm: Leo trèo lan can, xô đẩy nhau ở cầu thang, nghịch ổ điện, trượt tay vịn cầu thang.. Kỹ năng khảo sát: Phát hiện những nơi có nguy cơ mất an toàn (gạch lát trơn trượt, cành cây gãy...) và báo cáo thầy cô.. Vệ sinh học đường: Vứt rác đúng thùng phân loại, giữ gìn nhà vệ sinh sạch sẽ, rửa tay sau khi đi vệ sinh.')" class="p-1 rounded-md text-teal-600 dark:text-teal-400 hover:bg-teal-50 dark:hover:bg-teal-900/50 text-[11px]" title="Nghe tóm tắt bài học">
+            <i class="fa-solid fa-volume-high"></i>
+          </button>
+        </div>
+        <ul class="text-xs text-gray-600 dark:text-gray-300 space-y-1">
+          <li>• Nhận diện vị trí, hành vi nguy hiểm: Leo trèo lan can, xô đẩy nhau ở cầu thang, nghịch ổ điện, trượt tay vịn cầu thang.</li><li>• Kỹ năng khảo sát: Phát hiện những nơi có nguy cơ mất an toàn (gạch lát trơn trượt, cành cây gãy...) và báo cáo thầy cô.</li><li>• Vệ sinh học đường: Vứt rác đúng thùng phân loại, giữ gìn nhà vệ sinh sạch sẽ, rửa tay sau khi đi vệ sinh.</li>
+        </ul>
+      </div>
+    
+      <div class="p-3.5 rounded-2xl bg-white dark:bg-dark-card border border-teal-100/80 dark:border-teal-900/40 space-y-2">
+        <div class="flex items-center justify-between pb-1.5 border-b border-gray-100 dark:border-gray-800">
+          <span class="text-xs font-bold text-teal-700 dark:text-teal-300">Bài 8: Ôn tập chủ đề Trường học</span>
+          <button onclick="speakTNXH('Ôn tập chủ đề Trường học. Thuyết trình ngắn giới thiệu về nét đẹp truyền thống của trường em.. Đề xuất dự án nhỏ: 'Lớp học xanh - Hành lang an toàn' nhằm nâng cao chất lượng không gian học đường.')" class="p-1 rounded-md text-teal-600 dark:text-teal-400 hover:bg-teal-50 dark:hover:bg-teal-900/50 text-[11px]" title="Nghe tóm tắt bài học">
+            <i class="fa-solid fa-volume-high"></i>
+          </button>
+        </div>
+        <ul class="text-xs text-gray-600 dark:text-gray-300 space-y-1">
+          <li>• Thuyết trình ngắn giới thiệu về nét đẹp truyền thống của trường em.</li><li>• Đề xuất dự án nhỏ: 'Lớp học xanh - Hành lang an toàn' nhằm nâng cao chất lượng không gian học đường.</li>
+        </ul>
+      </div>
+    
+          </div>
+        </div>
+
+        <!-- Practice Quizzes -->
+        <div class="pt-4 border-t border-gray-100 dark:border-gray-800">
+          <h4 class="font-bold text-gray-900 dark:text-white text-xs sm:text-sm flex items-center gap-1.5 mb-3">
+            <i class="fa-solid fa-circle-question text-teal-500"></i> Quick Check Quiz (2 câu hỏi tình huống thực tế)
+          </h4>
+          <div class="space-y-3">
+            
+        <div class="p-3.5 sm:p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-2.5">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-bold text-teal-600 dark:text-teal-400 uppercase tracking-wider">Tình huống thực tế 1</span>
+          </div>
+          <p class="text-xs sm:text-sm font-bold text-gray-900 dark:text-white">Hành động nào dưới đây là hành vi NGUY HIỂM cần tránh tuyệt đối khi ở trường?</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2" id="opts_quiz_1_0">
+            
+        <button onclick="checkQuiz('quiz_1_0', 0, 1, 'Chạy nhảy xô đẩy ở cầu thang hoặc leo trèo lan can rất dễ gây trượt chân, ngã và chấn thương nghiêm trọng.')" class="quiz-btn-quiz_1_0 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-teal-50 dark:hover:bg-teal-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">A.</span> Xếp hàng ngay ngắn khi vào lớp và xuống căng tin
+        </button>
+      
+        <button onclick="checkQuiz('quiz_1_0', 1, 1, 'Chạy nhảy xô đẩy ở cầu thang hoặc leo trèo lan can rất dễ gây trượt chân, ngã và chấn thương nghiêm trọng.')" class="quiz-btn-quiz_1_0 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-teal-50 dark:hover:bg-teal-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">B.</span> Chạy nhảy xô đẩy nhau ở cầu thang và leo trèo lên lan can
+        </button>
+      
+        <button onclick="checkQuiz('quiz_1_0', 2, 1, 'Chạy nhảy xô đẩy ở cầu thang hoặc leo trèo lan can rất dễ gây trượt chân, ngã và chấn thương nghiêm trọng.')" class="quiz-btn-quiz_1_0 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-teal-50 dark:hover:bg-teal-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">C.</span> Bỏ rác vào đúng thùng phân loại ở sân trường
+        </button>
+      
+        <button onclick="checkQuiz('quiz_1_0', 3, 1, 'Chạy nhảy xô đẩy ở cầu thang hoặc leo trèo lan can rất dễ gây trượt chân, ngã và chấn thương nghiêm trọng.')" class="quiz-btn-quiz_1_0 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-teal-50 dark:hover:bg-teal-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">D.</span> Tham gia ngày hội đọc sách tại thư viện trường
+        </button>
+      
+          </div>
+          <div id="fb_quiz_1_0" class="hidden p-2.5 rounded-xl text-xs"></div>
+        </div>
+      
+        <div class="p-3.5 sm:p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-2.5">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-bold text-teal-600 dark:text-teal-400 uppercase tracking-wider">Tình huống thực tế 2</span>
+          </div>
+          <p class="text-xs sm:text-sm font-bold text-gray-900 dark:text-white">Hoạt động nào thể hiện sự kết nối có ý nghĩa giữa nhà trường và cộng đồng xã hội?</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2" id="opts_quiz_1_1">
+            
+        <button onclick="checkQuiz('quiz_1_1', 0, 1, 'Quyên góp ủng hộ bạn nghèo, thăm mẹ Việt Nam anh hùng, dọn vệ sinh khu phố là những hoạt động kết nối cộng đồng thiết thực.')" class="quiz-btn-quiz_1_1 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-teal-50 dark:hover:bg-teal-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">A.</span> Học sinh tự ý bỏ học đi chơi điện tử
+        </button>
+      
+        <button onclick="checkQuiz('quiz_1_1', 1, 1, 'Quyên góp ủng hộ bạn nghèo, thăm mẹ Việt Nam anh hùng, dọn vệ sinh khu phố là những hoạt động kết nối cộng đồng thiết thực.')" class="quiz-btn-quiz_1_1 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-teal-50 dark:hover:bg-teal-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">B.</span> Tham gia phong trào nuôi heo đất ủng hộ các bạn vùng sâu vùng xa
+        </button>
+      
+        <button onclick="checkQuiz('quiz_1_1', 2, 1, 'Quyên góp ủng hộ bạn nghèo, thăm mẹ Việt Nam anh hùng, dọn vệ sinh khu phố là những hoạt động kết nối cộng đồng thiết thực.')" class="quiz-btn-quiz_1_1 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-teal-50 dark:hover:bg-teal-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">C.</span> Vẽ bậy lên tường lớp học và bàn ghế
+        </button>
+      
+        <button onclick="checkQuiz('quiz_1_1', 3, 1, 'Quyên góp ủng hộ bạn nghèo, thăm mẹ Việt Nam anh hùng, dọn vệ sinh khu phố là những hoạt động kết nối cộng đồng thiết thực.')" class="quiz-btn-quiz_1_1 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-teal-50 dark:hover:bg-teal-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">D.</span> Nô đùa, gây mất trật tự trong giờ học
+        </button>
+      
+          </div>
+          <div id="fb_quiz_1_1" class="hidden p-2.5 rounded-xl text-xs"></div>
+        </div>
+      
+          </div>
+        </div>
+      </article>
+    
+      <!-- Chủ đề 03: Cộng đồng địa phương -->
+      <article id="chude-3" class="bg-white dark:bg-dark-surface rounded-3xl p-6 sm:p-7 shadow-sm border border-gray-100 dark:border-gray-800 space-y-5 scroll-mt-24">
+        <!-- Header -->
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-gray-100 dark:border-gray-800">
+          <div class="flex items-center gap-3">
+            <span class="w-10 h-10 rounded-2xl bg-gradient-to-br from-teal-500 via-emerald-600 to-cyan-600 text-white flex items-center justify-center font-black text-sm shadow-md shadow-teal-500/20">
+              03
+            </span>
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="px-2 py-0.5 rounded-full bg-teal-100 dark:bg-teal-950 text-teal-700 dark:text-teal-300 font-bold text-[10px] uppercase tracking-wider">
+                  Bài 9–12
+                </span>
+                <span class="text-[11px] font-semibold text-gray-400">Sản xuất & Di tích</span>
+              </div>
+              <h3 class="text-lg sm:text-xl font-black text-gray-900 dark:text-white mt-0.5">Chủ đề 3: Cộng đồng địa phương</h3>
+              <p class="text-xs text-gray-500 dark:text-gray-400 font-medium">Sản xuất nông nghiệp, thủ công, công nghiệp; di tích lịch sử – văn hoá và cảnh quan thiên nhiên</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 text-xs font-bold bg-teal-50 dark:bg-teal-950/50 text-teal-600 dark:text-teal-300 px-3 py-1.5 rounded-xl border border-teal-100 dark:border-teal-900">
+            <i class="fa-solid fa-city"></i> Chuẩn SGK TN&XH 3
+          </div>
+        </div>
+
+        <!-- Summary & Audio Button -->
+        <div class="p-3.5 bg-teal-50/60 dark:bg-teal-950/20 rounded-2xl border border-teal-100 dark:border-teal-900/40 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-teal-900 dark:text-teal-300 flex items-center gap-1.5">
+              <i class="fa-solid fa-compass"></i> Tóm lược nội dung chủ đề
+            </span>
+            <button onclick="speakTNXH('Phân biệt các hình thức sản xuất chính tại địa phương (nông nghiệp, thủ công, công nghiệp), hiểu vai trò của lao động tạo ra sản phẩm nuôi sống xã hội; biết yêu quý, tôn trọng các di tích văn hóa lịch sử và danh lam thắng cảnh quê hương.')" class="text-xs text-teal-600 dark:text-teal-400 font-bold hover:underline flex items-center gap-1">
+              <i class="fa-solid fa-play"></i> Nghe tóm tắt chủ đề
+            </button>
+          </div>
+          <p class="text-xs sm:text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
+            Phân biệt các hình thức sản xuất chính tại địa phương (nông nghiệp, thủ công, công nghiệp), hiểu vai trò của lao động tạo ra sản phẩm nuôi sống xã hội; biết yêu quý, tôn trọng các di tích văn hóa lịch sử và danh lam thắng cảnh quê hương.
+          </p>
+        </div>
+
+        <!-- Lessons Cards Grid -->
+        <div class="space-y-3">
+          <h4 class="text-xs sm:text-sm font-bold text-gray-800 dark:text-gray-200 flex items-center gap-1.5">
+            <i class="fa-solid fa-book-bookmark text-teal-500"></i>
+            <span>Các bài học trọng tâm trong chủ đề:</span>
+          </h4>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            
+      <div class="p-3.5 rounded-2xl bg-white dark:bg-dark-card border border-teal-100/80 dark:border-teal-900/40 space-y-2">
+        <div class="flex items-center justify-between pb-1.5 border-b border-gray-100 dark:border-gray-800">
+          <span class="text-xs font-bold text-teal-700 dark:text-teal-300">Bài 9: Hoạt động sản xuất nông nghiệp</span>
+          <button onclick="speakTNXH('Hoạt động sản xuất nông nghiệp. Các ngành chính: Trồng trọt (lúa, ngô, rau, cây ăn quả), Chăn nuôi (bò, lợn, gà), Trồng và bảo vệ rừng, Nuôi trồng và đánh bắt thuỷ hải sản.. Sản phẩm tạo ra: Gạo, thịt, cá, sữa, trứng, gỗ, rau củ quả... phục vụ bữa ăn và xuất khẩu.. Ý nghĩa: Đảm bảo an ninh lương thực và cung cấp nguyên liệu chế biến.. Thái độ: Biết ơn người nông dân, ăn uống tiết kiệm không bỏ thừa thức ăn.')" class="p-1 rounded-md text-teal-600 dark:text-teal-400 hover:bg-teal-50 dark:hover:bg-teal-900/50 text-[11px]" title="Nghe tóm tắt bài học">
+            <i class="fa-solid fa-volume-high"></i>
+          </button>
+        </div>
+        <ul class="text-xs text-gray-600 dark:text-gray-300 space-y-1">
+          <li>• Các ngành chính: Trồng trọt (lúa, ngô, rau, cây ăn quả), Chăn nuôi (bò, lợn, gà), Trồng và bảo vệ rừng, Nuôi trồng và đánh bắt thuỷ hải sản.</li><li>• Sản phẩm tạo ra: Gạo, thịt, cá, sữa, trứng, gỗ, rau củ quả... phục vụ bữa ăn và xuất khẩu.</li><li>• Ý nghĩa: Đảm bảo an ninh lương thực và cung cấp nguyên liệu chế biến.</li><li>• Thái độ: Biết ơn người nông dân, ăn uống tiết kiệm không bỏ thừa thức ăn.</li>
+        </ul>
+      </div>
+    
+      <div class="p-3.5 rounded-2xl bg-white dark:bg-dark-card border border-teal-100/80 dark:border-teal-900/40 space-y-2">
+        <div class="flex items-center justify-between pb-1.5 border-b border-gray-100 dark:border-gray-800">
+          <span class="text-xs font-bold text-teal-700 dark:text-teal-300">Bài 10: Hoạt động sản xuất thủ công và công nghiệp</span>
+          <button onclick="speakTNXH('Hoạt động sản xuất thủ công và công nghiệp. Sản xuất thủ công: Dùng bàn tay khéo léo và công cụ đơn giản (gốm Bát Tràng, dệt lụa Vạn Phúc, đan mây tre).. Sản xuất công nghiệp: Dùng máy móc hiện đại trong nhà máy, dây chuyền (lắp ráp xe máy, dệt may, chế biến sữa).. Lợi ích: Cung cấp hàng tiêu dùng, máy móc, nâng cao đời sống và giải quyết việc làm.. Bảo vệ môi trường: Các nhà máy cần xử lý rác, khói bụi và nước thải trước khi thải ra thiên nhiên.')" class="p-1 rounded-md text-teal-600 dark:text-teal-400 hover:bg-teal-50 dark:hover:bg-teal-900/50 text-[11px]" title="Nghe tóm tắt bài học">
+            <i class="fa-solid fa-volume-high"></i>
+          </button>
+        </div>
+        <ul class="text-xs text-gray-600 dark:text-gray-300 space-y-1">
+          <li>• Sản xuất thủ công: Dùng bàn tay khéo léo và công cụ đơn giản (gốm Bát Tràng, dệt lụa Vạn Phúc, đan mây tre).</li><li>• Sản xuất công nghiệp: Dùng máy móc hiện đại trong nhà máy, dây chuyền (lắp ráp xe máy, dệt may, chế biến sữa).</li><li>• Lợi ích: Cung cấp hàng tiêu dùng, máy móc, nâng cao đời sống và giải quyết việc làm.</li><li>• Bảo vệ môi trường: Các nhà máy cần xử lý rác, khói bụi và nước thải trước khi thải ra thiên nhiên.</li>
+        </ul>
+      </div>
+    
+      <div class="p-3.5 rounded-2xl bg-white dark:bg-dark-card border border-teal-100/80 dark:border-teal-900/40 space-y-2">
+        <div class="flex items-center justify-between pb-1.5 border-b border-gray-100 dark:border-gray-800">
+          <span class="text-xs font-bold text-teal-700 dark:text-teal-300">Bài 11: Di tích lịch sử – văn hoá và cảnh quan thiên nhiên</span>
+          <button onclick="speakTNXH('Di tích lịch sử – văn hoá và cảnh quan thiên nhiên. Di tích lịch sử - văn hóa: Đền Hùng, Cố đô Huế, Văn Miếu - Quốc Tử Giám, Nhà tù Hỏa Lò.... Cảnh quan thiên nhiên: Vịnh Hạ Long, Động Phong Nha, Hồ Ba Bể, bãi biển Đà Nẵng.... Quy tắc văn minh khi tham quan: Mặc trang phục lịch sự, không xả rác, không sờ vào hiện vật, không khắc vẽ bậy.. Tự hào giới thiệu danh lam thắng cảnh của quê hương với bạn bè.')" class="p-1 rounded-md text-teal-600 dark:text-teal-400 hover:bg-teal-50 dark:hover:bg-teal-900/50 text-[11px]" title="Nghe tóm tắt bài học">
+            <i class="fa-solid fa-volume-high"></i>
+          </button>
+        </div>
+        <ul class="text-xs text-gray-600 dark:text-gray-300 space-y-1">
+          <li>• Di tích lịch sử - văn hóa: Đền Hùng, Cố đô Huế, Văn Miếu - Quốc Tử Giám, Nhà tù Hỏa Lò...</li><li>• Cảnh quan thiên nhiên: Vịnh Hạ Long, Động Phong Nha, Hồ Ba Bể, bãi biển Đà Nẵng...</li><li>• Quy tắc văn minh khi tham quan: Mặc trang phục lịch sự, không xả rác, không sờ vào hiện vật, không khắc vẽ bậy.</li><li>• Tự hào giới thiệu danh lam thắng cảnh của quê hương với bạn bè.</li>
+        </ul>
+      </div>
+    
+      <div class="p-3.5 rounded-2xl bg-white dark:bg-dark-card border border-teal-100/80 dark:border-teal-900/40 space-y-2">
+        <div class="flex items-center justify-between pb-1.5 border-b border-gray-100 dark:border-gray-800">
+          <span class="text-xs font-bold text-teal-700 dark:text-teal-300">Bài 12: Ôn tập chủ đề Cộng đồng địa phương</span>
+          <button onclick="speakTNXH('Ôn tập chủ đề Cộng đồng địa phương. Lập bảng so sánh sản xuất thủ công và công nghiệp về công cụ, năng suất và sản phẩm.. Làm poster tuyên truyền bảo tồn di tích lịch sử và danh thắng thiên nhiên ở địa phương.')" class="p-1 rounded-md text-teal-600 dark:text-teal-400 hover:bg-teal-50 dark:hover:bg-teal-900/50 text-[11px]" title="Nghe tóm tắt bài học">
+            <i class="fa-solid fa-volume-high"></i>
+          </button>
+        </div>
+        <ul class="text-xs text-gray-600 dark:text-gray-300 space-y-1">
+          <li>• Lập bảng so sánh sản xuất thủ công và công nghiệp về công cụ, năng suất và sản phẩm.</li><li>• Làm poster tuyên truyền bảo tồn di tích lịch sử và danh thắng thiên nhiên ở địa phương.</li>
+        </ul>
+      </div>
+    
+          </div>
+        </div>
+
+        <!-- Practice Quizzes -->
+        <div class="pt-4 border-t border-gray-100 dark:border-gray-800">
+          <h4 class="font-bold text-gray-900 dark:text-white text-xs sm:text-sm flex items-center gap-1.5 mb-3">
+            <i class="fa-solid fa-circle-question text-teal-500"></i> Quick Check Quiz (2 câu hỏi tình huống thực tế)
+          </h4>
+          <div class="space-y-3">
+            
+        <div class="p-3.5 sm:p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-2.5">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-bold text-teal-600 dark:text-teal-400 uppercase tracking-wider">Tình huống thực tế 1</span>
+          </div>
+          <p class="text-xs sm:text-sm font-bold text-gray-900 dark:text-white">Điểm khác biệt cơ bản giữa sản xuất thủ công và sản xuất công nghiệp là gì?</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2" id="opts_quiz_2_0">
+            
+        <button onclick="checkQuiz('quiz_2_0', 0, 1, 'Sản xuất thủ công chủ yếu dựa vào bàn tay khéo léo và dụng cụ thủ công; sản xuất công nghiệp sử dụng máy móc hiện đại và dây chuyền năng suất cao.')" class="quiz-btn-quiz_2_0 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-teal-50 dark:hover:bg-teal-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">A.</span> Sản xuất thủ công làm bằng máy móc hiện đại, công nghiệp làm bằng tay
+        </button>
+      
+        <button onclick="checkQuiz('quiz_2_0', 1, 1, 'Sản xuất thủ công chủ yếu dựa vào bàn tay khéo léo và dụng cụ thủ công; sản xuất công nghiệp sử dụng máy móc hiện đại và dây chuyền năng suất cao.')" class="quiz-btn-quiz_2_0 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-teal-50 dark:hover:bg-teal-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">B.</span> Sản xuất thủ công dùng công cụ thô sơ và bàn tay khéo léo; công nghiệp sử dụng máy móc, nhà xưởng lớn
+        </button>
+      
+        <button onclick="checkQuiz('quiz_2_0', 2, 1, 'Sản xuất thủ công chủ yếu dựa vào bàn tay khéo léo và dụng cụ thủ công; sản xuất công nghiệp sử dụng máy móc hiện đại và dây chuyền năng suất cao.')" class="quiz-btn-quiz_2_0 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-teal-50 dark:hover:bg-teal-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">C.</span> Sản xuất thủ công chỉ diễn ra ở thành phố lớn
+        </button>
+      
+        <button onclick="checkQuiz('quiz_2_0', 3, 1, 'Sản xuất thủ công chủ yếu dựa vào bàn tay khéo léo và dụng cụ thủ công; sản xuất công nghiệp sử dụng máy móc hiện đại và dây chuyền năng suất cao.')" class="quiz-btn-quiz_2_0 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-teal-50 dark:hover:bg-teal-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">D.</span> Sản xuất công nghiệp không tạo ra của cải vật chất
+        </button>
+      
+          </div>
+          <div id="fb_quiz_2_0" class="hidden p-2.5 rounded-xl text-xs"></div>
+        </div>
+      
+        <div class="p-3.5 sm:p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-2.5">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-bold text-teal-600 dark:text-teal-400 uppercase tracking-wider">Tình huống thực tế 2</span>
+          </div>
+          <p class="text-xs sm:text-sm font-bold text-gray-900 dark:text-white">Hành vi nào dưới đây thể hiện ý thức BẢO VỆ di tích lịch sử và danh lam thắng cảnh?</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2" id="opts_quiz_2_1">
+            
+        <button onclick="checkQuiz('quiz_2_1', 0, 2, 'Giữ gìn vệ sinh, không viết bậy, không phá hoại hiện vật là hành vi văn minh khi đến thăm di tích.')" class="quiz-btn-quiz_2_1 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-teal-50 dark:hover:bg-teal-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">A.</span> Dùng bút viết, khắc tên của mình lên cột đền hoặc vách đá
+        </button>
+      
+        <button onclick="checkQuiz('quiz_2_1', 1, 2, 'Giữ gìn vệ sinh, không viết bậy, không phá hoại hiện vật là hành vi văn minh khi đến thăm di tích.')" class="quiz-btn-quiz_2_1 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-teal-50 dark:hover:bg-teal-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">B.</span> Leo trèo lên các bức tượng cổ để chụp ảnh
+        </button>
+      
+        <button onclick="checkQuiz('quiz_2_1', 2, 2, 'Giữ gìn vệ sinh, không viết bậy, không phá hoại hiện vật là hành vi văn minh khi đến thăm di tích.')" class="quiz-btn-quiz_2_1 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-teal-50 dark:hover:bg-teal-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">C.</span> Đi theo lối chỉ dẫn, vứt rác đúng nơi quy định và giữ trật tự trang nghiêm
+        </button>
+      
+        <button onclick="checkQuiz('quiz_2_1', 3, 2, 'Giữ gìn vệ sinh, không viết bậy, không phá hoại hiện vật là hành vi văn minh khi đến thăm di tích.')" class="quiz-btn-quiz_2_1 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-teal-50 dark:hover:bg-teal-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">D.</span> Hái hoa, bẻ cành cây quý trong khu di tích
+        </button>
+      
+          </div>
+          <div id="fb_quiz_2_1" class="hidden p-2.5 rounded-xl text-xs"></div>
+        </div>
+      
+          </div>
+        </div>
+      </article>
+    
+      <!-- Chủ đề 04: Thực vật và động vật -->
+      <article id="chude-4" class="bg-white dark:bg-dark-surface rounded-3xl p-6 sm:p-7 shadow-sm border border-gray-100 dark:border-gray-800 space-y-5 scroll-mt-24">
+        <!-- Header -->
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-gray-100 dark:border-gray-800">
+          <div class="flex items-center gap-3">
+            <span class="w-10 h-10 rounded-2xl bg-gradient-to-br from-teal-500 via-emerald-600 to-cyan-600 text-white flex items-center justify-center font-black text-sm shadow-md shadow-teal-500/20">
+              04
+            </span>
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="px-2 py-0.5 rounded-full bg-teal-100 dark:bg-teal-950 text-teal-700 dark:text-teal-300 font-bold text-[10px] uppercase tracking-wider">
+                  Bài 13–17
+                </span>
+                <span class="text-[11px] font-semibold text-gray-400">Thế giới sinh vật</span>
+              </div>
+              <h3 class="text-lg sm:text-xl font-black text-gray-900 dark:text-white mt-0.5">Chủ đề 4: Thực vật và động vật</h3>
+              <p class="text-xs text-gray-500 dark:text-gray-400 font-medium">Bộ phận và chức năng của thực vật, động vật; sử dụng hợp lí và bảo vệ chúng</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 text-xs font-bold bg-teal-50 dark:bg-teal-950/50 text-teal-600 dark:text-teal-300 px-3 py-1.5 rounded-xl border border-teal-100 dark:border-teal-900">
+            <i class="fa-solid fa-leaf"></i> Chuẩn SGK TN&XH 3
+          </div>
+        </div>
+
+        <!-- Summary & Audio Button -->
+        <div class="p-3.5 bg-teal-50/60 dark:bg-teal-950/20 rounded-2xl border border-teal-100 dark:border-teal-900/40 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-teal-900 dark:text-teal-300 flex items-center gap-1.5">
+              <i class="fa-solid fa-compass"></i> Tóm lược nội dung chủ đề
+            </span>
+            <button onclick="speakTNXH('Khám phá cấu tạo giải phẫu và chức năng sinh học kì diệu của thực vật (rễ, thân, lá, hoa, quả) và động vật (lớp che phủ, cơ quan di chuyển). Nâng cao nhận thức bảo tồn đa dạng sinh học, không săn bắt và tiêu thụ trái phép động thực vật hoang dã.')" class="text-xs text-teal-600 dark:text-teal-400 font-bold hover:underline flex items-center gap-1">
+              <i class="fa-solid fa-play"></i> Nghe tóm tắt chủ đề
+            </button>
+          </div>
+          <p class="text-xs sm:text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
+            Khám phá cấu tạo giải phẫu và chức năng sinh học kì diệu của thực vật (rễ, thân, lá, hoa, quả) và động vật (lớp che phủ, cơ quan di chuyển). Nâng cao nhận thức bảo tồn đa dạng sinh học, không săn bắt và tiêu thụ trái phép động thực vật hoang dã.
+          </p>
+        </div>
+
+        <!-- Lessons Cards Grid -->
+        <div class="space-y-3">
+          <h4 class="text-xs sm:text-sm font-bold text-gray-800 dark:text-gray-200 flex items-center gap-1.5">
+            <i class="fa-solid fa-book-bookmark text-teal-500"></i>
+            <span>Các bài học trọng tâm trong chủ đề:</span>
+          </h4>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            
+      <div class="p-3.5 rounded-2xl bg-white dark:bg-dark-card border border-teal-100/80 dark:border-teal-900/40 space-y-2">
+        <div class="flex items-center justify-between pb-1.5 border-b border-gray-100 dark:border-gray-800">
+          <span class="text-xs font-bold text-teal-700 dark:text-teal-300">Bài 13: Một số bộ phận của thực vật</span>
+          <button onclick="speakTNXH('Một số bộ phận của thực vật. Các cơ quan chính: Rễ, thân, lá, hoa và quả.. Phân loại rễ: Rễ cọc (gồm một rễ cái to và nhiều rễ con xung quanh: cải, đậu, xoài); Rễ chùm (nhiều rễ dài gần bằng nhau mọc từ gốc: lúa, hành, ngô).. Phân loại thân cây: Thân đứng (cây bàng, cây phượng), thân leo (mướp, dưa leo, trầu không), thân bò (rau má, khoai lang).. Lá cây: Có cuống lá, phiến lá; gân lá hình mạng, hình song song hoặc hình quạt.')" class="p-1 rounded-md text-teal-600 dark:text-teal-400 hover:bg-teal-50 dark:hover:bg-teal-900/50 text-[11px]" title="Nghe tóm tắt bài học">
+            <i class="fa-solid fa-volume-high"></i>
+          </button>
+        </div>
+        <ul class="text-xs text-gray-600 dark:text-gray-300 space-y-1">
+          <li>• Các cơ quan chính: Rễ, thân, lá, hoa và quả.</li><li>• Phân loại rễ: Rễ cọc (gồm một rễ cái to và nhiều rễ con xung quanh: cải, đậu, xoài); Rễ chùm (nhiều rễ dài gần bằng nhau mọc từ gốc: lúa, hành, ngô).</li><li>• Phân loại thân cây: Thân đứng (cây bàng, cây phượng), thân leo (mướp, dưa leo, trầu không), thân bò (rau má, khoai lang).</li><li>• Lá cây: Có cuống lá, phiến lá; gân lá hình mạng, hình song song hoặc hình quạt.</li>
+        </ul>
+      </div>
+    
+      <div class="p-3.5 rounded-2xl bg-white dark:bg-dark-card border border-teal-100/80 dark:border-teal-900/40 space-y-2">
+        <div class="flex items-center justify-between pb-1.5 border-b border-gray-100 dark:border-gray-800">
+          <span class="text-xs font-bold text-teal-700 dark:text-teal-300">Bài 14: Chức năng một số bộ phận của thực vật</span>
+          <button onclick="speakTNXH('Chức năng một số bộ phận của thực vật. Rễ: Hút nước và chất khoáng hòa tan trong đất để nuôi cây; giúp cây bám chặt vào đất không bị đổ ngã.. Thân cây: Nâng đỡ tán lá, hoa, quả; vận chuyển nước, muối khoáng từ rễ lên lá và chất dinh dưỡng từ lá đi khắp cây.. Lá cây: Thực hiện quá trình quang hợp (hấp thụ khí các-bô-níc, nhả ô-xy dưới ánh sáng), hô hấp và thoát hơi nước.. Hoa và quả: Có chức năng sinh sản, tạo ra hạt để duy trì nòi giống.')" class="p-1 rounded-md text-teal-600 dark:text-teal-400 hover:bg-teal-50 dark:hover:bg-teal-900/50 text-[11px]" title="Nghe tóm tắt bài học">
+            <i class="fa-solid fa-volume-high"></i>
+          </button>
+        </div>
+        <ul class="text-xs text-gray-600 dark:text-gray-300 space-y-1">
+          <li>• Rễ: Hút nước và chất khoáng hòa tan trong đất để nuôi cây; giúp cây bám chặt vào đất không bị đổ ngã.</li><li>• Thân cây: Nâng đỡ tán lá, hoa, quả; vận chuyển nước, muối khoáng từ rễ lên lá và chất dinh dưỡng từ lá đi khắp cây.</li><li>• Lá cây: Thực hiện quá trình quang hợp (hấp thụ khí các-bô-níc, nhả ô-xy dưới ánh sáng), hô hấp và thoát hơi nước.</li><li>• Hoa và quả: Có chức năng sinh sản, tạo ra hạt để duy trì nòi giống.</li>
+        </ul>
+      </div>
+    
+      <div class="p-3.5 rounded-2xl bg-white dark:bg-dark-card border border-teal-100/80 dark:border-teal-900/40 space-y-2">
+        <div class="flex items-center justify-between pb-1.5 border-b border-gray-100 dark:border-gray-800">
+          <span class="text-xs font-bold text-teal-700 dark:text-teal-300">Bài 15: Một số bộ phận của động vật và chức năng</span>
+          <button onclick="speakTNXH('Một số bộ phận của động vật và chức năng. Lớp bao phủ bảo vệ cơ thể: Lông mao (chó, mèo, bò - giữ ấm); Lông vũ (chim, gà, vịt - giữ ấm, hỗ trợ bay); Vảy (cá mè, cá chép, rắn - bảo vệ cơ thể); Mai/vỏ cứng (rùa, cua, ốc).. Cơ quan di chuyển: Chân (chạy, nhảy, leo trèo); Cánh (bay lượn); Vây và đuôi (bơi lội trong nước).. Mỗi loài có đặc điểm cấu tạo thích nghi tuyệt vời với môi trường sống của chúng.')" class="p-1 rounded-md text-teal-600 dark:text-teal-400 hover:bg-teal-50 dark:hover:bg-teal-900/50 text-[11px]" title="Nghe tóm tắt bài học">
+            <i class="fa-solid fa-volume-high"></i>
+          </button>
+        </div>
+        <ul class="text-xs text-gray-600 dark:text-gray-300 space-y-1">
+          <li>• Lớp bao phủ bảo vệ cơ thể: Lông mao (chó, mèo, bò - giữ ấm); Lông vũ (chim, gà, vịt - giữ ấm, hỗ trợ bay); Vảy (cá mè, cá chép, rắn - bảo vệ cơ thể); Mai/vỏ cứng (rùa, cua, ốc).</li><li>• Cơ quan di chuyển: Chân (chạy, nhảy, leo trèo); Cánh (bay lượn); Vây và đuôi (bơi lội trong nước).</li><li>• Mỗi loài có đặc điểm cấu tạo thích nghi tuyệt vời với môi trường sống của chúng.</li>
+        </ul>
+      </div>
+    
+      <div class="p-3.5 rounded-2xl bg-white dark:bg-dark-card border border-teal-100/80 dark:border-teal-900/40 space-y-2">
+        <div class="flex items-center justify-between pb-1.5 border-b border-gray-100 dark:border-gray-800">
+          <span class="text-xs font-bold text-teal-700 dark:text-teal-300">Bài 16: Sử dụng hợp lí thực vật và động vật</span>
+          <button onclick="speakTNXH('Sử dụng hợp lí thực vật và động vật. Lợi ích: Cung cấp thức ăn, thuốc chữa bệnh, bóng mát, cảnh quan, sức kéo và nguyên liệu công nghiệp.. Sử dụng hợp lý: Khai thác đi đôi với trồng mới và tái sinh; không chặt phá rừng bừa bãi.. Hành động bảo vệ: Lên án việc săn bắt, buôn bán động vật quý hiếm (tê giác, hổ, tê tê); không lãng phí thực phẩm.')" class="p-1 rounded-md text-teal-600 dark:text-teal-400 hover:bg-teal-50 dark:hover:bg-teal-900/50 text-[11px]" title="Nghe tóm tắt bài học">
+            <i class="fa-solid fa-volume-high"></i>
+          </button>
+        </div>
+        <ul class="text-xs text-gray-600 dark:text-gray-300 space-y-1">
+          <li>• Lợi ích: Cung cấp thức ăn, thuốc chữa bệnh, bóng mát, cảnh quan, sức kéo và nguyên liệu công nghiệp.</li><li>• Sử dụng hợp lý: Khai thác đi đôi với trồng mới và tái sinh; không chặt phá rừng bừa bãi.</li><li>• Hành động bảo vệ: Lên án việc săn bắt, buôn bán động vật quý hiếm (tê giác, hổ, tê tê); không lãng phí thực phẩm.</li>
+        </ul>
+      </div>
+    
+      <div class="p-3.5 rounded-2xl bg-white dark:bg-dark-card border border-teal-100/80 dark:border-teal-900/40 space-y-2">
+        <div class="flex items-center justify-between pb-1.5 border-b border-gray-100 dark:border-gray-800">
+          <span class="text-xs font-bold text-teal-700 dark:text-teal-300">Bài 17: Ôn tập chủ đề Thực vật và động vật</span>
+          <button onclick="speakTNXH('Ôn tập chủ đề Thực vật và động vật. Vẽ sơ đồ tư duy phân loại rễ, thân cây và các nhóm cơ quan di chuyển của động vật.. Thực hành chăm sóc chậu cây cảnh hoặc vật nuôi trong gia đình.')" class="p-1 rounded-md text-teal-600 dark:text-teal-400 hover:bg-teal-50 dark:hover:bg-teal-900/50 text-[11px]" title="Nghe tóm tắt bài học">
+            <i class="fa-solid fa-volume-high"></i>
+          </button>
+        </div>
+        <ul class="text-xs text-gray-600 dark:text-gray-300 space-y-1">
+          <li>• Vẽ sơ đồ tư duy phân loại rễ, thân cây và các nhóm cơ quan di chuyển của động vật.</li><li>• Thực hành chăm sóc chậu cây cảnh hoặc vật nuôi trong gia đình.</li>
+        </ul>
+      </div>
+    
+          </div>
+        </div>
+
+        <!-- Practice Quizzes -->
+        <div class="pt-4 border-t border-gray-100 dark:border-gray-800">
+          <h4 class="font-bold text-gray-900 dark:text-white text-xs sm:text-sm flex items-center gap-1.5 mb-3">
+            <i class="fa-solid fa-circle-question text-teal-500"></i> Quick Check Quiz (2 câu hỏi tình huống thực tế)
+          </h4>
+          <div class="space-y-3">
+            
+        <div class="p-3.5 sm:p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-2.5">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-bold text-teal-600 dark:text-teal-400 uppercase tracking-wider">Tình huống thực tế 1</span>
+          </div>
+          <p class="text-xs sm:text-sm font-bold text-gray-900 dark:text-white">Bộ phận nào của cây có chức năng chính là QUANG HỢP, tổng hợp chất dinh dưỡng và nhả khí ô-xy dưới ánh sáng mặt trời?</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2" id="opts_quiz_3_0">
+            
+        <button onclick="checkQuiz('quiz_3_0', 0, 1, 'Lá cây chứa chất diệp lục giúp thực hiện quá trình quang hợp hấp thụ CO2 và giải phóng O2 dưới ánh sáng mặt trời.')" class="quiz-btn-quiz_3_0 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-teal-50 dark:hover:bg-teal-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">A.</span> Rễ cây
+        </button>
+      
+        <button onclick="checkQuiz('quiz_3_0', 1, 1, 'Lá cây chứa chất diệp lục giúp thực hiện quá trình quang hợp hấp thụ CO2 và giải phóng O2 dưới ánh sáng mặt trời.')" class="quiz-btn-quiz_3_0 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-teal-50 dark:hover:bg-teal-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">B.</span> Lá cây
+        </button>
+      
+        <button onclick="checkQuiz('quiz_3_0', 2, 1, 'Lá cây chứa chất diệp lục giúp thực hiện quá trình quang hợp hấp thụ CO2 và giải phóng O2 dưới ánh sáng mặt trời.')" class="quiz-btn-quiz_3_0 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-teal-50 dark:hover:bg-teal-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">C.</span> Thân cây
+        </button>
+      
+        <button onclick="checkQuiz('quiz_3_0', 3, 1, 'Lá cây chứa chất diệp lục giúp thực hiện quá trình quang hợp hấp thụ CO2 và giải phóng O2 dưới ánh sáng mặt trời.')" class="quiz-btn-quiz_3_0 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-teal-50 dark:hover:bg-teal-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">D.</span> Hoa
+        </button>
+      
+          </div>
+          <div id="fb_quiz_3_0" class="hidden p-2.5 rounded-xl text-xs"></div>
+        </div>
+      
+        <div class="p-3.5 sm:p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-2.5">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-bold text-teal-600 dark:text-teal-400 uppercase tracking-wider">Tình huống thực tế 2</span>
+          </div>
+          <p class="text-xs sm:text-sm font-bold text-gray-900 dark:text-white">Cây lúa, cây hành và cây ngô có đặc điểm chung về loại rễ là gì?</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2" id="opts_quiz_3_1">
+            
+        <button onclick="checkQuiz('quiz_3_1', 0, 1, 'Lúa, hành, ngô, tỏi đều là những cây có hệ rễ chùm mọc toả đều từ phần gốc thân.')" class="quiz-btn-quiz_3_1 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-teal-50 dark:hover:bg-teal-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">A.</span> Đều có rễ cọc to khỏe
+        </button>
+      
+        <button onclick="checkQuiz('quiz_3_1', 1, 1, 'Lúa, hành, ngô, tỏi đều là những cây có hệ rễ chùm mọc toả đều từ phần gốc thân.')" class="quiz-btn-quiz_3_1 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-teal-50 dark:hover:bg-teal-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">B.</span> Đều có rễ chùm gồm nhiều rễ dài mọc đều từ gốc thân
+        </button>
+      
+        <button onclick="checkQuiz('quiz_3_1', 2, 1, 'Lúa, hành, ngô, tỏi đều là những cây có hệ rễ chùm mọc toả đều từ phần gốc thân.')" class="quiz-btn-quiz_3_1 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-teal-50 dark:hover:bg-teal-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">C.</span> Đều là cây thân gỗ to lớn
+        </button>
+      
+        <button onclick="checkQuiz('quiz_3_1', 3, 1, 'Lúa, hành, ngô, tỏi đều là những cây có hệ rễ chùm mọc toả đều từ phần gốc thân.')" class="quiz-btn-quiz_3_1 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-teal-50 dark:hover:bg-teal-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">D.</span> Không có rễ bám vào đất
+        </button>
+      
+          </div>
+          <div id="fb_quiz_3_1" class="hidden p-2.5 rounded-xl text-xs"></div>
+        </div>
+      
+          </div>
+        </div>
+      </article>
+    
+      <!-- Chủ đề 05: Con người và sức khoẻ -->
+      <article id="chude-5" class="bg-white dark:bg-dark-surface rounded-3xl p-6 sm:p-7 shadow-sm border border-gray-100 dark:border-gray-800 space-y-5 scroll-mt-24">
+        <!-- Header -->
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-gray-100 dark:border-gray-800">
+          <div class="flex items-center gap-3">
+            <span class="w-10 h-10 rounded-2xl bg-gradient-to-br from-teal-500 via-emerald-600 to-cyan-600 text-white flex items-center justify-center font-black text-sm shadow-md shadow-teal-500/20">
+              05
+            </span>
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="px-2 py-0.5 rounded-full bg-teal-100 dark:bg-teal-950 text-teal-700 dark:text-teal-300 font-bold text-[10px] uppercase tracking-wider">
+                  Bài 18–25
+                </span>
+                <span class="text-[11px] font-semibold text-gray-400">Giải phẫu & Y tế học đường</span>
+              </div>
+              <h3 class="text-lg sm:text-xl font-black text-gray-900 dark:text-white mt-0.5">Chủ đề 5: Con người và sức khoẻ</h3>
+              <p class="text-xs text-gray-500 dark:text-gray-400 font-medium">Cơ quan tiêu hoá, tuần hoàn, thần kinh; chăm sóc, bảo vệ sức khoẻ; chất và hoạt động có hại</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 text-xs font-bold bg-teal-50 dark:bg-teal-950/50 text-teal-600 dark:text-teal-300 px-3 py-1.5 rounded-xl border border-teal-100 dark:border-teal-900">
+            <i class="fa-solid fa-heart-pulse"></i> Chuẩn SGK TN&XH 3
+          </div>
+        </div>
+
+        <!-- Summary & Audio Button -->
+        <div class="p-3.5 bg-teal-50/60 dark:bg-teal-950/20 rounded-2xl border border-teal-100 dark:border-teal-900/40 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-teal-900 dark:text-teal-300 flex items-center gap-1.5">
+              <i class="fa-solid fa-compass"></i> Tóm lược nội dung chủ đề
+            </span>
+            <button onclick="speakTNXH('Tìm hiểu chi tiết cấu tạo giải phẫu và nguyên lý vận hành của 3 hệ cơ quan tối quan trọng: Tiêu hóa, Tuần hoàn và Thần kinh. Xây dựng thói quen dinh dưỡng lành mạnh, vận động thể chất khoa học, ngủ đủ giấc và phòng tránh các chất kích thích độc hại.')" class="text-xs text-teal-600 dark:text-teal-400 font-bold hover:underline flex items-center gap-1">
+              <i class="fa-solid fa-play"></i> Nghe tóm tắt chủ đề
+            </button>
+          </div>
+          <p class="text-xs sm:text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
+            Tìm hiểu chi tiết cấu tạo giải phẫu và nguyên lý vận hành của 3 hệ cơ quan tối quan trọng: Tiêu hóa, Tuần hoàn và Thần kinh. Xây dựng thói quen dinh dưỡng lành mạnh, vận động thể chất khoa học, ngủ đủ giấc và phòng tránh các chất kích thích độc hại.
+          </p>
+        </div>
+
+        <!-- Lessons Cards Grid -->
+        <div class="space-y-3">
+          <h4 class="text-xs sm:text-sm font-bold text-gray-800 dark:text-gray-200 flex items-center gap-1.5">
+            <i class="fa-solid fa-book-bookmark text-teal-500"></i>
+            <span>Các bài học trọng tâm trong chủ đề:</span>
+          </h4>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            
+      <div class="p-3.5 rounded-2xl bg-white dark:bg-dark-card border border-teal-100/80 dark:border-teal-900/40 space-y-2">
+        <div class="flex items-center justify-between pb-1.5 border-b border-gray-100 dark:border-gray-800">
+          <span class="text-xs font-bold text-teal-700 dark:text-teal-300">Bài 18: Cơ quan tiêu hoá</span>
+          <button onclick="speakTNXH('Cơ quan tiêu hoá. Ống tiêu hóa: Miệng, thực quản, dạ dày, ruột non, ruột già và hậu môn.. Tuyến tiêu hóa: Tuyến nước bọt, gan, túi mật, tuyến tụy tiết dịch tiêu hóa.. Chức năng: Biến đổi thức ăn thành các chất dinh dưỡng hòa tan mà cơ thể có thể hấp thụ qua thành ruột non vào máu; thải bã ra ngoài qua hậu môn.')" class="p-1 rounded-md text-teal-600 dark:text-teal-400 hover:bg-teal-50 dark:hover:bg-teal-900/50 text-[11px]" title="Nghe tóm tắt bài học">
+            <i class="fa-solid fa-volume-high"></i>
+          </button>
+        </div>
+        <ul class="text-xs text-gray-600 dark:text-gray-300 space-y-1">
+          <li>• Ống tiêu hóa: Miệng, thực quản, dạ dày, ruột non, ruột già và hậu môn.</li><li>• Tuyến tiêu hóa: Tuyến nước bọt, gan, túi mật, tuyến tụy tiết dịch tiêu hóa.</li><li>• Chức năng: Biến đổi thức ăn thành các chất dinh dưỡng hòa tan mà cơ thể có thể hấp thụ qua thành ruột non vào máu; thải bã ra ngoài qua hậu môn.</li>
+        </ul>
+      </div>
+    
+      <div class="p-3.5 rounded-2xl bg-white dark:bg-dark-card border border-teal-100/80 dark:border-teal-900/40 space-y-2">
+        <div class="flex items-center justify-between pb-1.5 border-b border-gray-100 dark:border-gray-800">
+          <span class="text-xs font-bold text-teal-700 dark:text-teal-300">Bài 19: Chăm sóc và bảo vệ cơ quan tiêu hoá</span>
+          <button onclick="speakTNXH('Chăm sóc và bảo vệ cơ quan tiêu hoá. Ăn uống khoa học: Ăn chín, uống sôi, rửa sạch tay bằng xà phòng trước khi ăn và sau khi đi vệ sinh.. Thói quen tốt: Ăn chậm nhai kĩ, ăn đúng bữa, không vừa ăn vừa chạy nhảy hoặc xem điện thoại.. Phòng tránh bệnh: Không ăn thức ăn ôi thiu, thực phẩm lạ, đồ ăn bán rong không che đậy để tránh ngộ độc tiêu hóa.')" class="p-1 rounded-md text-teal-600 dark:text-teal-400 hover:bg-teal-50 dark:hover:bg-teal-900/50 text-[11px]" title="Nghe tóm tắt bài học">
+            <i class="fa-solid fa-volume-high"></i>
+          </button>
+        </div>
+        <ul class="text-xs text-gray-600 dark:text-gray-300 space-y-1">
+          <li>• Ăn uống khoa học: Ăn chín, uống sôi, rửa sạch tay bằng xà phòng trước khi ăn và sau khi đi vệ sinh.</li><li>• Thói quen tốt: Ăn chậm nhai kĩ, ăn đúng bữa, không vừa ăn vừa chạy nhảy hoặc xem điện thoại.</li><li>• Phòng tránh bệnh: Không ăn thức ăn ôi thiu, thực phẩm lạ, đồ ăn bán rong không che đậy để tránh ngộ độc tiêu hóa.</li>
+        </ul>
+      </div>
+    
+      <div class="p-3.5 rounded-2xl bg-white dark:bg-dark-card border border-teal-100/80 dark:border-teal-900/40 space-y-2">
+        <div class="flex items-center justify-between pb-1.5 border-b border-gray-100 dark:border-gray-800">
+          <span class="text-xs font-bold text-teal-700 dark:text-teal-300">Bài 20: Cơ quan tuần hoàn</span>
+          <button onclick="speakTNXH('Cơ quan tuần hoàn. Cấu tạo: Gồm quả tim và hệ thống mạch máu (động mạch, tĩnh mạch, mao mạch) khắp cơ thể.. Chức năng: Tim hoạt động như một máy bơm co bóp liên tục đẩy máu lưu thông trong mạch máu, đưa khí ô-xy và dưỡng chất đến từng tế bào, đồng thời thu nhận khí các-bô-níc và chất thải để đào thải.. Thực hành: Đặt bàn tay lên ngực trái hoặc ngón tay lên cổ tay để cảm nhận nhịp tim và mạch đập.')" class="p-1 rounded-md text-teal-600 dark:text-teal-400 hover:bg-teal-50 dark:hover:bg-teal-900/50 text-[11px]" title="Nghe tóm tắt bài học">
+            <i class="fa-solid fa-volume-high"></i>
+          </button>
+        </div>
+        <ul class="text-xs text-gray-600 dark:text-gray-300 space-y-1">
+          <li>• Cấu tạo: Gồm quả tim và hệ thống mạch máu (động mạch, tĩnh mạch, mao mạch) khắp cơ thể.</li><li>• Chức năng: Tim hoạt động như một máy bơm co bóp liên tục đẩy máu lưu thông trong mạch máu, đưa khí ô-xy và dưỡng chất đến từng tế bào, đồng thời thu nhận khí các-bô-níc và chất thải để đào thải.</li><li>• Thực hành: Đặt bàn tay lên ngực trái hoặc ngón tay lên cổ tay để cảm nhận nhịp tim và mạch đập.</li>
+        </ul>
+      </div>
+    
+      <div class="p-3.5 rounded-2xl bg-white dark:bg-dark-card border border-teal-100/80 dark:border-teal-900/40 space-y-2">
+        <div class="flex items-center justify-between pb-1.5 border-b border-gray-100 dark:border-gray-800">
+          <span class="text-xs font-bold text-teal-700 dark:text-teal-300">Bài 21: Chăm sóc và bảo vệ cơ quan tuần hoàn</span>
+          <button onclick="speakTNXH('Chăm sóc và bảo vệ cơ quan tuần hoàn. Lối sống tốt cho tim mạch: Thường xuyên tập thể dục buổi sáng, đi bộ, bơi lội, chơi thể thao vừa sức.. Dinh dưỡng: Ăn nhiều rau xanh, trái cây, hạn chế đồ chiên xào nhiều dầu mỡ và thức ăn quá mặn.. Tránh nguy hại: Không làm việc, vận động quá sức khiến tim đập quá nhanh gây kiệt sức.')" class="p-1 rounded-md text-teal-600 dark:text-teal-400 hover:bg-teal-50 dark:hover:bg-teal-900/50 text-[11px]" title="Nghe tóm tắt bài học">
+            <i class="fa-solid fa-volume-high"></i>
+          </button>
+        </div>
+        <ul class="text-xs text-gray-600 dark:text-gray-300 space-y-1">
+          <li>• Lối sống tốt cho tim mạch: Thường xuyên tập thể dục buổi sáng, đi bộ, bơi lội, chơi thể thao vừa sức.</li><li>• Dinh dưỡng: Ăn nhiều rau xanh, trái cây, hạn chế đồ chiên xào nhiều dầu mỡ và thức ăn quá mặn.</li><li>• Tránh nguy hại: Không làm việc, vận động quá sức khiến tim đập quá nhanh gây kiệt sức.</li>
+        </ul>
+      </div>
+    
+      <div class="p-3.5 rounded-2xl bg-white dark:bg-dark-card border border-teal-100/80 dark:border-teal-900/40 space-y-2">
+        <div class="flex items-center justify-between pb-1.5 border-b border-gray-100 dark:border-gray-800">
+          <span class="text-xs font-bold text-teal-700 dark:text-teal-300">Bài 22: Cơ quan thần kinh</span>
+          <button onclick="speakTNXH('Cơ quan thần kinh. Cấu tạo: Gồm não (nằm trong hộp sọ), tuỷ sống (nằm trong cột sống) và các dây thần kinh toả đi khắp cơ thể.. Chức năng: Não và tủy sống là trung ương thần kinh điều khiển, điều hòa và phối hợp mọi hoạt động, cảm giác, suy nghĩ và phản xạ của con người với môi trường sống.')" class="p-1 rounded-md text-teal-600 dark:text-teal-400 hover:bg-teal-50 dark:hover:bg-teal-900/50 text-[11px]" title="Nghe tóm tắt bài học">
+            <i class="fa-solid fa-volume-high"></i>
+          </button>
+        </div>
+        <ul class="text-xs text-gray-600 dark:text-gray-300 space-y-1">
+          <li>• Cấu tạo: Gồm não (nằm trong hộp sọ), tuỷ sống (nằm trong cột sống) và các dây thần kinh toả đi khắp cơ thể.</li><li>• Chức năng: Não và tủy sống là trung ương thần kinh điều khiển, điều hòa và phối hợp mọi hoạt động, cảm giác, suy nghĩ và phản xạ của con người với môi trường sống.</li>
+        </ul>
+      </div>
+    
+      <div class="p-3.5 rounded-2xl bg-white dark:bg-dark-card border border-teal-100/80 dark:border-teal-900/40 space-y-2">
+        <div class="flex items-center justify-between pb-1.5 border-b border-gray-100 dark:border-gray-800">
+          <span class="text-xs font-bold text-teal-700 dark:text-teal-300">Bài 23: Chăm sóc và bảo vệ cơ quan thần kinh</span>
+          <button onclick="speakTNXH('Chăm sóc và bảo vệ cơ quan thần kinh. Ngủ đủ giấc: Học sinh tiểu học cần ngủ từ 9 đến 10 tiếng mỗi ngày (đi ngủ trước 22 giờ).. Phân bổ thời gian: Cân bằng giữa học tập, vận động vui chơi giải trí và nghỉ ngơi thư giãn.. Tâm lý lành mạnh: Giữ tinh thần vui vẻ, chan hòa với bạn bè, tránh căng thẳng lo âu kéo dài.')" class="p-1 rounded-md text-teal-600 dark:text-teal-400 hover:bg-teal-50 dark:hover:bg-teal-900/50 text-[11px]" title="Nghe tóm tắt bài học">
+            <i class="fa-solid fa-volume-high"></i>
+          </button>
+        </div>
+        <ul class="text-xs text-gray-600 dark:text-gray-300 space-y-1">
+          <li>• Ngủ đủ giấc: Học sinh tiểu học cần ngủ từ 9 đến 10 tiếng mỗi ngày (đi ngủ trước 22 giờ).</li><li>• Phân bổ thời gian: Cân bằng giữa học tập, vận động vui chơi giải trí và nghỉ ngơi thư giãn.</li><li>• Tâm lý lành mạnh: Giữ tinh thần vui vẻ, chan hòa với bạn bè, tránh căng thẳng lo âu kéo dài.</li>
+        </ul>
+      </div>
+    
+      <div class="p-3.5 rounded-2xl bg-white dark:bg-dark-card border border-teal-100/80 dark:border-teal-900/40 space-y-2">
+        <div class="flex items-center justify-between pb-1.5 border-b border-gray-100 dark:border-gray-800">
+          <span class="text-xs font-bold text-teal-700 dark:text-teal-300">Bài 24: Thu thập thông tin về các chất và hoạt động có hại</span>
+          <button onclick="speakTNXH('Thu thập thông tin về các chất và hoạt động có hại. Chất độc hại cần tránh xa: Rượu, bia, thuốc lá, thuốc lào, ma túy, nước ngọt có ga dùng quá nhiều.. Tác hại: Gây tổn thương não bộ, suy tim, loét dạ dày, suy giảm trí nhớ và làm biến đổi hành vi.. Hoạt động có hại: Thức khuya, chơi điện tử liên tục nhiều giờ, tiếp xúc màn hình xanh trong bóng tối.')" class="p-1 rounded-md text-teal-600 dark:text-teal-400 hover:bg-teal-50 dark:hover:bg-teal-900/50 text-[11px]" title="Nghe tóm tắt bài học">
+            <i class="fa-solid fa-volume-high"></i>
+          </button>
+        </div>
+        <ul class="text-xs text-gray-600 dark:text-gray-300 space-y-1">
+          <li>• Chất độc hại cần tránh xa: Rượu, bia, thuốc lá, thuốc lào, ma túy, nước ngọt có ga dùng quá nhiều.</li><li>• Tác hại: Gây tổn thương não bộ, suy tim, loét dạ dày, suy giảm trí nhớ và làm biến đổi hành vi.</li><li>• Hoạt động có hại: Thức khuya, chơi điện tử liên tục nhiều giờ, tiếp xúc màn hình xanh trong bóng tối.</li>
+        </ul>
+      </div>
+    
+      <div class="p-3.5 rounded-2xl bg-white dark:bg-dark-card border border-teal-100/80 dark:border-teal-900/40 space-y-2">
+        <div class="flex items-center justify-between pb-1.5 border-b border-gray-100 dark:border-gray-800">
+          <span class="text-xs font-bold text-teal-700 dark:text-teal-300">Bài 25: Ôn tập chủ đề Con người và sức khoẻ</span>
+          <button onclick="speakTNXH('Ôn tập chủ đề Con người và sức khoẻ. Lập bảng tóm tắt cấu tạo, chức năng và việc nên làm / không nên làm cho 3 hệ cơ quan: Tiêu hóa, Tuần hoàn, Thần kinh.. Xây dựng thực đơn 1 ngày đầy đủ 4 nhóm chất dinh dưỡng và lịch sinh hoạt khoa học.')" class="p-1 rounded-md text-teal-600 dark:text-teal-400 hover:bg-teal-50 dark:hover:bg-teal-900/50 text-[11px]" title="Nghe tóm tắt bài học">
+            <i class="fa-solid fa-volume-high"></i>
+          </button>
+        </div>
+        <ul class="text-xs text-gray-600 dark:text-gray-300 space-y-1">
+          <li>• Lập bảng tóm tắt cấu tạo, chức năng và việc nên làm / không nên làm cho 3 hệ cơ quan: Tiêu hóa, Tuần hoàn, Thần kinh.</li><li>• Xây dựng thực đơn 1 ngày đầy đủ 4 nhóm chất dinh dưỡng và lịch sinh hoạt khoa học.</li>
+        </ul>
+      </div>
+    
+          </div>
+        </div>
+
+        <!-- Practice Quizzes -->
+        <div class="pt-4 border-t border-gray-100 dark:border-gray-800">
+          <h4 class="font-bold text-gray-900 dark:text-white text-xs sm:text-sm flex items-center gap-1.5 mb-3">
+            <i class="fa-solid fa-circle-question text-teal-500"></i> Quick Check Quiz (2 câu hỏi tình huống thực tế)
+          </h4>
+          <div class="space-y-3">
+            
+        <div class="p-3.5 sm:p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-2.5">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-bold text-teal-600 dark:text-teal-400 uppercase tracking-wider">Tình huống thực tế 1</span>
+          </div>
+          <p class="text-xs sm:text-sm font-bold text-gray-900 dark:text-white">Cơ quan nào trong cơ thể đóng vai trò như 'máy bơm' co bóp liên tục để đẩy máu lưu thông khắp cơ thể?</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2" id="opts_quiz_4_0">
+            
+        <button onclick="checkQuiz('quiz_4_0', 0, 1, 'Tim là cơ quan cơ bắp rỗng, co bóp nhịp nhàng như một chiếc bơm đẩy máu qua mạng lưới mạch máu đi khắp các cơ quan.')" class="quiz-btn-quiz_4_0 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-teal-50 dark:hover:bg-teal-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">A.</span> Dạ dày
+        </button>
+      
+        <button onclick="checkQuiz('quiz_4_0', 1, 1, 'Tim là cơ quan cơ bắp rỗng, co bóp nhịp nhàng như một chiếc bơm đẩy máu qua mạng lưới mạch máu đi khắp các cơ quan.')" class="quiz-btn-quiz_4_0 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-teal-50 dark:hover:bg-teal-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">B.</span> Quả tim
+        </button>
+      
+        <button onclick="checkQuiz('quiz_4_0', 2, 1, 'Tim là cơ quan cơ bắp rỗng, co bóp nhịp nhàng như một chiếc bơm đẩy máu qua mạng lưới mạch máu đi khắp các cơ quan.')" class="quiz-btn-quiz_4_0 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-teal-50 dark:hover:bg-teal-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">C.</span> Phổi
+        </button>
+      
+        <button onclick="checkQuiz('quiz_4_0', 3, 1, 'Tim là cơ quan cơ bắp rỗng, co bóp nhịp nhàng như một chiếc bơm đẩy máu qua mạng lưới mạch máu đi khắp các cơ quan.')" class="quiz-btn-quiz_4_0 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-teal-50 dark:hover:bg-teal-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">D.</span> Bộ não
+        </button>
+      
+          </div>
+          <div id="fb_quiz_4_0" class="hidden p-2.5 rounded-xl text-xs"></div>
+        </div>
+      
+        <div class="p-3.5 sm:p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-2.5">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-bold text-teal-600 dark:text-teal-400 uppercase tracking-wider">Tình huống thực tế 2</span>
+          </div>
+          <p class="text-xs sm:text-sm font-bold text-gray-900 dark:text-white">Hành động nào dưới đây có lợi nhất cho sức khoẻ của cơ quan thần kinh?</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2" id="opts_quiz_4_1">
+            
+        <button onclick="checkQuiz('quiz_4_1', 0, 2, 'Giấc ngủ đủ từ 9–10 tiếng và tinh thần thư thái giúp não bộ nghỉ ngơi, phục hồi năng lượng và phát triển trí tuệ tối ưu.')" class="quiz-btn-quiz_4_1 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-teal-50 dark:hover:bg-teal-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">A.</span> Chơi game thâu đêm trên điện thoại di động
+        </button>
+      
+        <button onclick="checkQuiz('quiz_4_1', 1, 2, 'Giấc ngủ đủ từ 9–10 tiếng và tinh thần thư thái giúp não bộ nghỉ ngơi, phục hồi năng lượng và phát triển trí tuệ tối ưu.')" class="quiz-btn-quiz_4_1 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-teal-50 dark:hover:bg-teal-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">B.</span> Uống nhiều nước ngọt có ga và cà phê đặc
+        </button>
+      
+        <button onclick="checkQuiz('quiz_4_1', 2, 2, 'Giấc ngủ đủ từ 9–10 tiếng và tinh thần thư thái giúp não bộ nghỉ ngơi, phục hồi năng lượng và phát triển trí tuệ tối ưu.')" class="quiz-btn-quiz_4_1 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-teal-50 dark:hover:bg-teal-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">C.</span> Đi ngủ đúng giờ, ngủ đủ 9-10 tiếng mỗi ngày và giữ tinh thần vui vẻ
+        </button>
+      
+        <button onclick="checkQuiz('quiz_4_1', 3, 2, 'Giấc ngủ đủ từ 9–10 tiếng và tinh thần thư thái giúp não bộ nghỉ ngơi, phục hồi năng lượng và phát triển trí tuệ tối ưu.')" class="quiz-btn-quiz_4_1 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-teal-50 dark:hover:bg-teal-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">D.</span> Vừa ăn cơm vừa ngồi học bài căng thẳng
+        </button>
+      
+          </div>
+          <div id="fb_quiz_4_1" class="hidden p-2.5 rounded-xl text-xs"></div>
+        </div>
+      
+          </div>
+        </div>
+      </article>
+    
+      <!-- Chủ đề 06: Trái Đất và bầu trời -->
+      <article id="chude-6" class="bg-white dark:bg-dark-surface rounded-3xl p-6 sm:p-7 shadow-sm border border-gray-100 dark:border-gray-800 space-y-5 scroll-mt-24">
+        <!-- Header -->
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-gray-100 dark:border-gray-800">
+          <div class="flex items-center gap-3">
+            <span class="w-10 h-10 rounded-2xl bg-gradient-to-br from-teal-500 via-emerald-600 to-cyan-600 text-white flex items-center justify-center font-black text-sm shadow-md shadow-teal-500/20">
+              06
+            </span>
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="px-2 py-0.5 rounded-full bg-teal-100 dark:bg-teal-950 text-teal-700 dark:text-teal-300 font-bold text-[10px] uppercase tracking-wider">
+                  Bài 26–30
+                </span>
+                <span class="text-[11px] font-semibold text-gray-400">Địa lý & Vũ trụ</span>
+              </div>
+              <h3 class="text-lg sm:text-xl font-black text-gray-900 dark:text-white mt-0.5">Chủ đề 6: Trái Đất và bầu trời</h3>
+              <p class="text-xs text-gray-500 dark:text-gray-400 font-medium">Phương hướng; Trái Đất và các đới khí hậu; bề mặt Trái Đất; Mặt Trời, Trái Đất, Mặt Trăng</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 text-xs font-bold bg-teal-50 dark:bg-teal-950/50 text-teal-600 dark:text-teal-300 px-3 py-1.5 rounded-xl border border-teal-100 dark:border-teal-900">
+            <i class="fa-solid fa-earth-americas"></i> Chuẩn SGK TN&XH 3
+          </div>
+        </div>
+
+        <!-- Summary & Audio Button -->
+        <div class="p-3.5 bg-teal-50/60 dark:bg-teal-950/20 rounded-2xl border border-teal-100 dark:border-teal-900/40 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-teal-900 dark:text-teal-300 flex items-center gap-1.5">
+              <i class="fa-solid fa-compass"></i> Tóm lược nội dung chủ đề
+            </span>
+            <button onclick="speakTNXH('Xác định chuẩn xác 4 phương chính (Đông, Tây, Nam, Bắc) qua Mặt Trời và la bàn. Nhận diện hình dạng cầu, đường Xích đạo, 3 đới khí hậu và các dạng địa hình chính trên Trái Đất. Giải thích nguồn gốc sinh ra hiện tượng ngày và đêm qua chuyển động tự quay của hành tinh.')" class="text-xs text-teal-600 dark:text-teal-400 font-bold hover:underline flex items-center gap-1">
+              <i class="fa-solid fa-play"></i> Nghe tóm tắt chủ đề
+            </button>
+          </div>
+          <p class="text-xs sm:text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
+            Xác định chuẩn xác 4 phương chính (Đông, Tây, Nam, Bắc) qua Mặt Trời và la bàn. Nhận diện hình dạng cầu, đường Xích đạo, 3 đới khí hậu và các dạng địa hình chính trên Trái Đất. Giải thích nguồn gốc sinh ra hiện tượng ngày và đêm qua chuyển động tự quay của hành tinh.
+          </p>
+        </div>
+
+        <!-- Lessons Cards Grid -->
+        <div class="space-y-3">
+          <h4 class="text-xs sm:text-sm font-bold text-gray-800 dark:text-gray-200 flex items-center gap-1.5">
+            <i class="fa-solid fa-book-bookmark text-teal-500"></i>
+            <span>Các bài học trọng tâm trong chủ đề:</span>
+          </h4>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            
+      <div class="p-3.5 rounded-2xl bg-white dark:bg-dark-card border border-teal-100/80 dark:border-teal-900/40 space-y-2">
+        <div class="flex items-center justify-between pb-1.5 border-b border-gray-100 dark:border-gray-800">
+          <span class="text-xs font-bold text-teal-700 dark:text-teal-300">Bài 26: Xác định các phương trong không gian</span>
+          <button onclick="speakTNXH('Xác định các phương trong không gian. Bốn phương chính: Đông (Đ), Tây (T), Nam (N), Bắc (B).. Quy tắc Mặt Trời: Mặt Trời mọc ở phương Đông vào buổi sáng và lặn ở phương Tây vào buổi chiều.. Cách xác định thực tế: Buổi sáng giang hai tay, tay phải chỉ về hướng Mặt Trời mọc (phía Đông) thì tay trái là phía Tây, trước mặt là phía Bắc, sau lưng là phía Nam.. Sử dụng La bàn: Kim nam châm tự do luôn chỉ hướng Bắc (đầu sơn đỏ) - Nam.')" class="p-1 rounded-md text-teal-600 dark:text-teal-400 hover:bg-teal-50 dark:hover:bg-teal-900/50 text-[11px]" title="Nghe tóm tắt bài học">
+            <i class="fa-solid fa-volume-high"></i>
+          </button>
+        </div>
+        <ul class="text-xs text-gray-600 dark:text-gray-300 space-y-1">
+          <li>• Bốn phương chính: Đông (Đ), Tây (T), Nam (N), Bắc (B).</li><li>• Quy tắc Mặt Trời: Mặt Trời mọc ở phương Đông vào buổi sáng và lặn ở phương Tây vào buổi chiều.</li><li>• Cách xác định thực tế: Buổi sáng giang hai tay, tay phải chỉ về hướng Mặt Trời mọc (phía Đông) thì tay trái là phía Tây, trước mặt là phía Bắc, sau lưng là phía Nam.</li><li>• Sử dụng La bàn: Kim nam châm tự do luôn chỉ hướng Bắc (đầu sơn đỏ) - Nam.</li>
+        </ul>
+      </div>
+    
+      <div class="p-3.5 rounded-2xl bg-white dark:bg-dark-card border border-teal-100/80 dark:border-teal-900/40 space-y-2">
+        <div class="flex items-center justify-between pb-1.5 border-b border-gray-100 dark:border-gray-800">
+          <span class="text-xs font-bold text-teal-700 dark:text-teal-300">Bài 27: Trái Đất và các đới khí hậu</span>
+          <button onclick="speakTNXH('Trái Đất và các đới khí hậu. Hình dạng Trái Đất: Dạng gần hình cầu, hơi dẹt ở hai cực.. Các đường ranh giới: Cực Bắc, cực Nam, đường Xích đạo chia quả cầu thành bán cầu Bắc và bán cầu Nam.. Ba đới khí hậu chính:. + Đới nóng (Nhiệt đới): Quanh năm nóng nực, mưa nhiều (nằm gần Xích đạo; Việt Nam nằm trong đới nóng).. + Đới ôn hoà (Ôn đới): Bốn mùa xuân hạ thu đông rõ rệt, thời tiết mát mẻ vừa phải.. + Đới lạnh (Hàn đới): Nằm gần hai cực, quanh năm giá buốt băng tuyết bao phủ.')" class="p-1 rounded-md text-teal-600 dark:text-teal-400 hover:bg-teal-50 dark:hover:bg-teal-900/50 text-[11px]" title="Nghe tóm tắt bài học">
+            <i class="fa-solid fa-volume-high"></i>
+          </button>
+        </div>
+        <ul class="text-xs text-gray-600 dark:text-gray-300 space-y-1">
+          <li>• Hình dạng Trái Đất: Dạng gần hình cầu, hơi dẹt ở hai cực.</li><li>• Các đường ranh giới: Cực Bắc, cực Nam, đường Xích đạo chia quả cầu thành bán cầu Bắc và bán cầu Nam.</li><li>• Ba đới khí hậu chính:</li><li>• + Đới nóng (Nhiệt đới): Quanh năm nóng nực, mưa nhiều (nằm gần Xích đạo; Việt Nam nằm trong đới nóng).</li><li>• + Đới ôn hoà (Ôn đới): Bốn mùa xuân hạ thu đông rõ rệt, thời tiết mát mẻ vừa phải.</li><li>• + Đới lạnh (Hàn đới): Nằm gần hai cực, quanh năm giá buốt băng tuyết bao phủ.</li>
+        </ul>
+      </div>
+    
+      <div class="p-3.5 rounded-2xl bg-white dark:bg-dark-card border border-teal-100/80 dark:border-teal-900/40 space-y-2">
+        <div class="flex items-center justify-between pb-1.5 border-b border-gray-100 dark:border-gray-800">
+          <span class="text-xs font-bold text-teal-700 dark:text-teal-300">Bài 28: Bề mặt Trái Đất</span>
+          <button onclick="speakTNXH('Bề mặt Trái Đất. Các châu lục (Lục địa): 6 châu lục gồm Châu Á (lớn nhất, có Việt Nam), Châu Âu, Châu Phi, Châu Mĩ, Châu Đại Dương, Châu Nam Cực.. Các đại dương: 4 đại dương lớn gồm Thái Bình Dương (lớn nhất), Đại Tây Dương, Ấn Độ Dương, Bắc Băng Dương.. Các dạng địa hình trên cạn: Đồi, núi (cao, đỉnh nhọn, sườn dốc), cao nguyên (vùng đất cao, bề mặt tương đối bằng phẳng), đồng bằng (vùng đất thấp, bằng phẳng, đất đai màu mỡ).. Địa hình chứa nước: Sông (dòng nước chảy tự nhiên), hồ (vùng nước đọng sâu trong đất liền), biển và đại dương (vùng nước mặn bao la).')" class="p-1 rounded-md text-teal-600 dark:text-teal-400 hover:bg-teal-50 dark:hover:bg-teal-900/50 text-[11px]" title="Nghe tóm tắt bài học">
+            <i class="fa-solid fa-volume-high"></i>
+          </button>
+        </div>
+        <ul class="text-xs text-gray-600 dark:text-gray-300 space-y-1">
+          <li>• Các châu lục (Lục địa): 6 châu lục gồm Châu Á (lớn nhất, có Việt Nam), Châu Âu, Châu Phi, Châu Mĩ, Châu Đại Dương, Châu Nam Cực.</li><li>• Các đại dương: 4 đại dương lớn gồm Thái Bình Dương (lớn nhất), Đại Tây Dương, Ấn Độ Dương, Bắc Băng Dương.</li><li>• Các dạng địa hình trên cạn: Đồi, núi (cao, đỉnh nhọn, sườn dốc), cao nguyên (vùng đất cao, bề mặt tương đối bằng phẳng), đồng bằng (vùng đất thấp, bằng phẳng, đất đai màu mỡ).</li><li>• Địa hình chứa nước: Sông (dòng nước chảy tự nhiên), hồ (vùng nước đọng sâu trong đất liền), biển và đại dương (vùng nước mặn bao la).</li>
+        </ul>
+      </div>
+    
+      <div class="p-3.5 rounded-2xl bg-white dark:bg-dark-card border border-teal-100/80 dark:border-teal-900/40 space-y-2">
+        <div class="flex items-center justify-between pb-1.5 border-b border-gray-100 dark:border-gray-800">
+          <span class="text-xs font-bold text-teal-700 dark:text-teal-300">Bài 29: Mặt Trời, Trái Đất, Mặt Trăng</span>
+          <button onclick="speakTNXH('Mặt Trời, Trái Đất, Mặt Trăng. Vị trí: Mặt Trời là một ngôi sao khổng lồ tự phát sáng nằm ở trung tâm Hệ Mặt Trời.. Chuyển động của Trái Đất:. + Trái Đất tự quay quanh trục của nó theo chiều từ Tây sang Đông: Mất khoảng 1 ngày đêm (24 giờ).. + Hiện tượng ngày và đêm: Vì Trái Đất hình cầu nên Mặt Trời chỉ chiếu sáng được một nửa (nửa được chiếu sáng là ban ngày, nửa bị che khuất là ban đêm). Do Trái Đất tự quay nên mọi nơi lần lượt có ngày và đêm liên tiếp.. + Trái Đất chuyển động quanh Mặt Trời: Mất khoảng 1 năm (365 ngày hoặc 366 ngày).. Mặt Trăng: Là vệ tinh tự nhiên chuyển động quanh Trái Đất (mất khoảng 1 tháng), phản chiếu lại ánh sáng của Mặt Trời.')" class="p-1 rounded-md text-teal-600 dark:text-teal-400 hover:bg-teal-50 dark:hover:bg-teal-900/50 text-[11px]" title="Nghe tóm tắt bài học">
+            <i class="fa-solid fa-volume-high"></i>
+          </button>
+        </div>
+        <ul class="text-xs text-gray-600 dark:text-gray-300 space-y-1">
+          <li>• Vị trí: Mặt Trời là một ngôi sao khổng lồ tự phát sáng nằm ở trung tâm Hệ Mặt Trời.</li><li>• Chuyển động của Trái Đất:</li><li>• + Trái Đất tự quay quanh trục của nó theo chiều từ Tây sang Đông: Mất khoảng 1 ngày đêm (24 giờ).</li><li>• + Hiện tượng ngày và đêm: Vì Trái Đất hình cầu nên Mặt Trời chỉ chiếu sáng được một nửa (nửa được chiếu sáng là ban ngày, nửa bị che khuất là ban đêm). Do Trái Đất tự quay nên mọi nơi lần lượt có ngày và đêm liên tiếp.</li><li>• + Trái Đất chuyển động quanh Mặt Trời: Mất khoảng 1 năm (365 ngày hoặc 366 ngày).</li><li>• Mặt Trăng: Là vệ tinh tự nhiên chuyển động quanh Trái Đất (mất khoảng 1 tháng), phản chiếu lại ánh sáng của Mặt Trời.</li>
+        </ul>
+      </div>
+    
+      <div class="p-3.5 rounded-2xl bg-white dark:bg-dark-card border border-teal-100/80 dark:border-teal-900/40 space-y-2">
+        <div class="flex items-center justify-between pb-1.5 border-b border-gray-100 dark:border-gray-800">
+          <span class="text-xs font-bold text-teal-700 dark:text-teal-300">Bài 30: Ôn tập chủ đề Trái Đất và bầu trời</span>
+          <button onclick="speakTNXH('Ôn tập chủ đề Trái Đất và bầu trời. Thực hành dùng quả địa cầu để chỉ cực Bắc, cực Nam, Xích đạo và tìm vị trí nước Việt Nam trên bản đồ thế giới.. Mô phỏng chuyển động của Trái Đất quanh Mặt Trời bằng đèn pin và quả bóng tròn để giải thích hiện tượng ngày đêm.')" class="p-1 rounded-md text-teal-600 dark:text-teal-400 hover:bg-teal-50 dark:hover:bg-teal-900/50 text-[11px]" title="Nghe tóm tắt bài học">
+            <i class="fa-solid fa-volume-high"></i>
+          </button>
+        </div>
+        <ul class="text-xs text-gray-600 dark:text-gray-300 space-y-1">
+          <li>• Thực hành dùng quả địa cầu để chỉ cực Bắc, cực Nam, Xích đạo và tìm vị trí nước Việt Nam trên bản đồ thế giới.</li><li>• Mô phỏng chuyển động của Trái Đất quanh Mặt Trời bằng đèn pin và quả bóng tròn để giải thích hiện tượng ngày đêm.</li>
+        </ul>
+      </div>
+    
+          </div>
+        </div>
+
+        <!-- Practice Quizzes -->
+        <div class="pt-4 border-t border-gray-100 dark:border-gray-800">
+          <h4 class="font-bold text-gray-900 dark:text-white text-xs sm:text-sm flex items-center gap-1.5 mb-3">
+            <i class="fa-solid fa-circle-question text-teal-500"></i> Quick Check Quiz (2 câu hỏi tình huống thực tế)
+          </h4>
+          <div class="space-y-3">
+            
+        <div class="p-3.5 sm:p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-2.5">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-bold text-teal-600 dark:text-teal-400 uppercase tracking-wider">Tình huống thực tế 1</span>
+          </div>
+          <p class="text-xs sm:text-sm font-bold text-gray-900 dark:text-white">Hiện tượng ngày và đêm liên tiếp luân phiên nhau trên Trái Đất sinh ra do nguyên nhân nào?</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2" id="opts_quiz_5_0">
+            
+        <button onclick="checkQuiz('quiz_5_0', 0, 2, 'Vì Trái Đất hình cầu nên ánh sáng Mặt Trời chỉ chiếu sáng được một nửa, và do Trái Đất tự quay quanh trục liên tục nên mọi nơi đều lần lượt có ngày và đêm.')" class="quiz-btn-quiz_5_0 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-teal-50 dark:hover:bg-teal-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">A.</span> Do Mặt Trời lúc sáng lúc tắt
+        </button>
+      
+        <button onclick="checkQuiz('quiz_5_0', 1, 2, 'Vì Trái Đất hình cầu nên ánh sáng Mặt Trời chỉ chiếu sáng được một nửa, và do Trái Đất tự quay quanh trục liên tục nên mọi nơi đều lần lượt có ngày và đêm.')" class="quiz-btn-quiz_5_0 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-teal-50 dark:hover:bg-teal-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">B.</span> Do Mặt Trăng che khuất Mặt Trời
+        </button>
+      
+        <button onclick="checkQuiz('quiz_5_0', 2, 2, 'Vì Trái Đất hình cầu nên ánh sáng Mặt Trời chỉ chiếu sáng được một nửa, và do Trái Đất tự quay quanh trục liên tục nên mọi nơi đều lần lượt có ngày và đêm.')" class="quiz-btn-quiz_5_0 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-teal-50 dark:hover:bg-teal-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">C.</span> Do Trái Đất có hình cầu và tự quay quanh trục của mình từ Tây sang Đông
+        </button>
+      
+        <button onclick="checkQuiz('quiz_5_0', 3, 2, 'Vì Trái Đất hình cầu nên ánh sáng Mặt Trời chỉ chiếu sáng được một nửa, và do Trái Đất tự quay quanh trục liên tục nên mọi nơi đều lần lượt có ngày và đêm.')" class="quiz-btn-quiz_5_0 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-teal-50 dark:hover:bg-teal-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">D.</span> Do các đám mây đen che khuất ánh sáng
+        </button>
+      
+          </div>
+          <div id="fb_quiz_5_0" class="hidden p-2.5 rounded-xl text-xs"></div>
+        </div>
+      
+        <div class="p-3.5 sm:p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-2.5">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-bold text-teal-600 dark:text-teal-400 uppercase tracking-wider">Tình huống thực tế 2</span>
+          </div>
+          <p class="text-xs sm:text-sm font-bold text-gray-900 dark:text-white">Việt Nam nằm ở châu lục nào và thuộc đới khí hậu nào trên Trái Đất?</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2" id="opts_quiz_5_1">
+            
+        <button onclick="checkQuiz('quiz_5_1', 0, 1, 'Việt Nam nằm ở khu vực Đông Nam Á thuộc Châu Á, có khí hậu nhiệt đới gió mùa thuộc đới nóng quanh năm chan hòa ánh nắng.')" class="quiz-btn-quiz_5_1 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-teal-50 dark:hover:bg-teal-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">A.</span> Châu Âu - Đới lạnh
+        </button>
+      
+        <button onclick="checkQuiz('quiz_5_1', 1, 1, 'Việt Nam nằm ở khu vực Đông Nam Á thuộc Châu Á, có khí hậu nhiệt đới gió mùa thuộc đới nóng quanh năm chan hòa ánh nắng.')" class="quiz-btn-quiz_5_1 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-teal-50 dark:hover:bg-teal-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">B.</span> Châu Á - Đới nóng (Nhiệt đới)
+        </button>
+      
+        <button onclick="checkQuiz('quiz_5_1', 2, 1, 'Việt Nam nằm ở khu vực Đông Nam Á thuộc Châu Á, có khí hậu nhiệt đới gió mùa thuộc đới nóng quanh năm chan hòa ánh nắng.')" class="quiz-btn-quiz_5_1 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-teal-50 dark:hover:bg-teal-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">C.</span> Châu Phi - Đới ôn hoà
+        </button>
+      
+        <button onclick="checkQuiz('quiz_5_1', 3, 1, 'Việt Nam nằm ở khu vực Đông Nam Á thuộc Châu Á, có khí hậu nhiệt đới gió mùa thuộc đới nóng quanh năm chan hòa ánh nắng.')" class="quiz-btn-quiz_5_1 text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs text-gray-800 dark:text-gray-200 hover:bg-teal-50 dark:hover:bg-teal-950/40 transition w-full font-medium">
+          <span class="font-bold text-gray-400 mr-1.5">D.</span> Châu Mĩ - Đới hàn đới
+        </button>
+      
+          </div>
+          <div id="fb_quiz_5_1" class="hidden p-2.5 rounded-xl text-xs"></div>
+        </div>
+      
+          </div>
+        </div>
+      </article>
+    
+        </div>
+
+        <!-- Section II: Kiến thức trọng tâm & Bảng mức ưu tiên câu hỏi -->
+        <section id="kienthuc-trongtam" class="bg-white dark:bg-dark-surface rounded-3xl p-6 sm:p-7 shadow-sm border border-gray-100 dark:border-gray-800 space-y-6 scroll-mt-24">
+          <div class="flex items-center justify-between pb-3 border-b border-gray-100 dark:border-gray-800">
+            <div>
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-xs font-extrabold uppercase text-teal-600 dark:text-teal-400 tracking-wider">Phần III</span>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-teal-100 dark:bg-teal-950 text-teal-700 dark:text-teal-300">Khung Đánh Giá</span>
+              </div>
+              <h2 class="text-xl sm:text-2xl font-black text-gray-900 dark:text-white">Kiến Thức Trọng Tâm Xây Dựng Câu Hỏi Kiểm Tra</h2>
+              <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Mức độ ưu tiên đề xuất để ôn tập kiểm tra định kì đạt kết quả tốt nhất.</p>
+            </div>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs text-gray-700 dark:text-gray-300 border-collapse">
+              <thead>
+                <tr class="bg-gray-100 dark:bg-dark-card text-gray-900 dark:text-white uppercase font-extrabold border-b border-gray-200 dark:border-gray-700">
+                  <th class="p-3 rounded-l-xl">Nhóm kiến thức</th>
+                  <th class="p-3">Yêu cầu đánh giá cốt lõi</th>
+                  <th class="p-3 rounded-r-xl">Mức ưu tiên</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-100 dark:divide-gray-800 font-medium">
+                <tr class="hover:bg-teal-50/50 dark:hover:bg-dark-card/60 transition">
+                  <td class="p-3 font-bold text-gray-900 dark:text-white">1. Gia đình</td>
+                  <td class="p-3">Nhận biết họ nội/ngoại, xưng hô lễ phép, kỹ năng phòng tránh và xử lý hoả hoạn an toàn (114), giữ vệ sinh nơi ở.</td>
+                  <td class="p-3 font-semibold text-amber-600 dark:text-amber-400">
+                    <span class="px-2 py-0.5 rounded-full bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-300 text-[10px] uppercase font-bold">Cao</span>
+                  </td>
+                </tr>
+                <tr class="hover:bg-teal-50/50 dark:hover:bg-dark-card/60 transition">
+                  <td class="p-3 font-bold text-gray-900 dark:text-white">2. Trường học</td>
+                  <td class="p-3">Giữ an toàn học đường, tránh tai nạn thương tích, vệ sinh trường lớp, tự hào truyền thống và tham gia kết nối cộng đồng.</td>
+                  <td class="p-3 font-semibold text-amber-600 dark:text-amber-400">
+                    <span class="px-2 py-0.5 rounded-full bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-300 text-[10px] uppercase font-bold">Cao</span>
+                  </td>
+                </tr>
+                <tr class="hover:bg-teal-50/50 dark:hover:bg-dark-card/60 transition">
+                  <td class="p-3 font-bold text-gray-900 dark:text-white">3. Cộng đồng địa phương</td>
+                  <td class="p-3">Phân biệt hoạt động sản xuất nông nghiệp, thủ công, công nghiệp; có ý thức giữ gìn di tích lịch sử và cảnh quan thiên nhiên.</td>
+                  <td class="p-3 font-semibold text-amber-600 dark:text-amber-400">
+                    <span class="px-2 py-0.5 rounded-full bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-300 text-[10px] uppercase font-bold">Cao</span>
+                  </td>
+                </tr>
+                <tr class="hover:bg-teal-50/50 dark:hover:bg-dark-card/60 transition">
+                  <td class="p-3 font-bold text-gray-900 dark:text-white">4. Thực vật và động vật</td>
+                  <td class="p-3">Nhận biết cấu tạo, phân loại (rễ, thân, lá; lớp bao phủ, cơ quan di chuyển), chức năng sinh học và hành động bảo vệ đa dạng sinh học.</td>
+                  <td class="p-3 font-bold text-red-600 dark:text-red-400">
+                    <span class="px-2 py-0.5 rounded-full bg-red-100 dark:bg-red-950 text-red-700 dark:text-red-300 text-[10px] uppercase font-bold">Rất cao</span>
+                  </td>
+                </tr>
+                <tr class="hover:bg-teal-50/50 dark:hover:bg-dark-card/60 transition">
+                  <td class="p-3 font-bold text-gray-900 dark:text-white">5. Con người và sức khoẻ</td>
+                  <td class="p-3">Nhận diện cấu tạo và chức năng 3 cơ quan: Tiêu hoá, Tuần hoàn, Thần kinh; biện pháp chăm sóc sức khoẻ và phòng tránh các chất có hại.</td>
+                  <td class="p-3 font-bold text-red-600 dark:text-red-400">
+                    <span class="px-2 py-0.5 rounded-full bg-red-100 dark:bg-red-950 text-red-700 dark:text-red-300 text-[10px] uppercase font-bold">Rất cao</span>
+                  </td>
+                </tr>
+                <tr class="hover:bg-teal-50/50 dark:hover:bg-dark-card/60 transition">
+                  <td class="p-3 font-bold text-gray-900 dark:text-white">6. Trái Đất và bầu trời</td>
+                  <td class="p-3">Xác định 4 phương chính (Đông, Tây, Nam, Bắc), nhận biết 3 đới khí hậu, các châu lục/đại dương, hiện tượng ngày và đêm do Trái Đất tự quay.</td>
+                  <td class="p-3 font-bold text-red-600 dark:text-red-400">
+                    <span class="px-2 py-0.5 rounded-full bg-red-100 dark:bg-red-950 text-red-700 dark:text-red-300 text-[10px] uppercase font-bold">Rất cao</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Section IV: Gợi ý chuẩn hoá dữ liệu cho CodeHub -->
+        <section id="chuanhoa-dulieu" class="bg-white dark:bg-dark-surface rounded-3xl p-6 sm:p-7 shadow-sm border border-gray-100 dark:border-gray-800 space-y-6 scroll-mt-24">
+          <div class="flex items-center justify-between pb-3 border-b border-gray-100 dark:border-gray-800">
+            <div>
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-xs font-extrabold uppercase text-teal-600 dark:text-teal-400 tracking-wider">Phần IV</span>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-teal-100 dark:bg-teal-950 text-teal-700 dark:text-teal-300">Chuẩn Hoá Dữ Liệu</span>
+              </div>
+              <h2 class="text-xl sm:text-2xl font-black text-gray-900 dark:text-white">Gợi Ý Chuẩn Hoá Ngân Hàng Câu Hỏi CodeHub</h2>
+            </div>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-teal-50/60 dark:bg-dark-card border border-teal-100 dark:border-teal-900/60 space-y-3">
+            <div class="font-bold text-teal-900 dark:text-teal-300 text-xs sm:text-sm flex items-center gap-2">
+              <i class="fa-solid fa-diagram-project"></i> Mô hình chuỗi dữ liệu phân cấp kiến thức:
+            </div>
+            <div class="p-3 rounded-xl bg-white dark:bg-dark-surface border border-teal-200 dark:border-teal-900/50 font-mono text-xs text-teal-800 dark:text-teal-300 leading-relaxed overflow-x-auto">
+              Môn học (TNXH 3) &rarr; Chủ đề (6 chủ đề) &rarr; Bài học (30 bài) &rarr; Kiến thức cốt lõi &rarr; Yêu cầu cần đạt &rarr; Mức độ câu hỏi &rarr; Đáp án & Lời giải chi tiết
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 pt-2">
+              <div class="p-3 rounded-xl bg-white dark:bg-dark-surface border border-gray-100 dark:border-gray-800 space-y-1">
+                <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-300">1. Nhận biết</span>
+                <p class="text-xs text-gray-600 dark:text-gray-300">Ghi nhớ tên bộ phận, cơ quan, tên 4 phương hướng, tên đới khí hậu, số điện thoại cứu hoả 114.</p>
+              </div>
+              <div class="p-3 rounded-xl bg-white dark:bg-dark-surface border border-gray-100 dark:border-gray-800 space-y-1">
+                <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300">2. Thông hiểu</span>
+                <p class="text-xs text-gray-600 dark:text-gray-300">Giải thích chức năng cơ quan tiêu hoá, tuần hoàn, nguyên nhân ngày đêm, phân biệt rễ cọc - rễ chùm.</p>
+              </div>
+              <div class="p-3 rounded-xl bg-white dark:bg-dark-surface border border-gray-100 dark:border-gray-800 space-y-1">
+                <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-purple-100 dark:bg-purple-950 text-purple-700 dark:text-purple-300">3. Vận dụng</span>
+                <p class="text-xs text-gray-600 dark:text-gray-300">Xử lý tình huống thoát hiểm khi cháy, xác định hướng bằng Mặt Trời, lựa chọn thực đơn dinh dưỡng lành mạnh.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Certification Exam Modal (Trạng Nguyên TN&XH 3) -->
+  <div id="certificationModal" class="fixed inset-0 z-50 hidden bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-dark-surface rounded-3xl border border-gray-100 dark:border-gray-800 w-full max-w-3xl max-h-[90vh] flex flex-col shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
+      
+      <!-- Modal Header -->
+      <div class="p-5 sm:p-6 bg-gradient-to-r from-teal-500 via-emerald-600 to-cyan-600 text-white flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-11 h-11 rounded-2xl bg-white/20 backdrop-blur flex items-center justify-center text-xl shadow-inner">
+            <i class="fa-solid fa-award"></i>
+          </div>
+          <div>
+            <h3 class="font-black text-lg">Hội Thi Trạng Nguyên Tự Nhiên & Xã Hội Lớp 3</h3>
+            <p class="text-xs text-teal-100">Đề thi khảo sát năng lực 6 chủ đề • Đề thi tổng hợp 10 câu</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-3">
+          <div class="px-3 py-1.5 rounded-xl bg-black/30 backdrop-blur text-xs font-mono font-bold flex items-center gap-1.5 border border-white/20">
+            <i class="fa-regular fa-clock text-amber-300"></i>
+            <span id="examTimer">60:00</span>
+          </div>
+          <button onclick="closeCertificationModal()" class="w-8 h-8 rounded-xl bg-white/10 hover:bg-white/25 flex items-center justify-center text-white transition">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Modal Body (Questions) -->
+      <div class="p-5 sm:p-6 overflow-y-auto flex-1 space-y-6" id="examQuestionsContainer">
+        <!-- Rendered via JS -->
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="p-4 sm:p-5 border-t border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-dark-card flex items-center justify-between">
+        <div class="text-xs text-gray-500 dark:text-gray-400 font-medium">
+          Đã trả lời: <span id="answeredCount" class="font-bold text-teal-600 dark:text-teal-400">0</span>/10 câu
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="closeCertificationModal()" class="px-4 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-xs font-semibold text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-dark-surface transition">
+            Đóng
+          </button>
+          <button onclick="submitCertificationExam()" class="px-5 py-2 rounded-xl bg-gradient-to-r from-teal-500 to-emerald-600 hover:opacity-95 text-white font-bold text-xs shadow-md shadow-teal-500/20 transition">
+            Nộp bài & Chấm điểm
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Score Result Modal -->
+  <div id="resultModal" class="fixed inset-0 z-50 hidden bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-dark-surface rounded-3xl border border-gray-100 dark:border-gray-800 w-full max-w-md p-6 sm:p-7 text-center shadow-2xl space-y-4">
+      <div class="w-16 h-16 rounded-2xl bg-amber-100 dark:bg-amber-950/60 text-amber-500 mx-auto flex items-center justify-center text-3xl shadow-inner">
+        <i class="fa-solid fa-trophy"></i>
+      </div>
+      <div>
+        <h3 class="text-xl font-black text-gray-900 dark:text-white">Kết Quả Khảo Sát Năng Lực</h3>
+        <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Chứng nhận Trạng Nguyên Tự Nhiên & Xã Hội 3</p>
+      </div>
+
+      <div class="p-4 rounded-2xl bg-teal-50 dark:bg-dark-card border border-teal-100 dark:border-teal-900/60 space-y-1">
+        <div class="text-4xl font-black text-teal-600 dark:text-teal-400" id="scoreDisplay">0 / 10</div>
+        <div class="text-xs font-semibold text-gray-700 dark:text-gray-300" id="resultVerdict">Đang chấm điểm...</div>
+      </div>
+
+      <button onclick="closeResultModal()" class="w-full py-2.5 rounded-xl bg-teal-600 hover:bg-teal-700 text-white font-bold text-xs shadow-md shadow-teal-600/25 transition">
+        Xác nhận & Hoàn tất
+      </button>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-white dark:bg-dark-surface border-t border-gray-200 dark:border-gray-800 py-8 transition-colors mt-auto">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-gray-500 dark:text-gray-400">
+      <div class="flex items-center gap-2">
+        <div class="w-6 h-6 rounded bg-gradient-to-br from-teal-500 to-emerald-600 text-white flex items-center justify-center text-[10px] font-bold">XH</div>
+        <span>Chương trình Tự Nhiên Và Xã Hội Lớp 3 (GDPT 2018) • Học Viện CodeHub</span>
+      </div>
+      <div class="flex items-center gap-4">
+        <a href="#overview-section" class="hover:text-teal-600 dark:hover:text-teal-400 transition">Lên đầu trang</a>
+        <span>•</span>
+        <a href="../index.html" class="hover:text-teal-600 dark:hover:text-teal-400 transition">Trang chủ Khóa học</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    // 1. Theme Management
+    function initTheme() {
+      if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    }
+    initTheme();
+
+    function toggleDarkMode() {
+      if (document.documentElement.classList.contains('dark')) {
+        document.documentElement.classList.remove('dark');
+        localStorage.theme = 'light';
+      } else {
+        document.documentElement.classList.add('dark');
+        localStorage.theme = 'dark';
+      }
+    }
+
+    // 2. Mobile Drawer Toggle
+    function toggleDrawer() {
+      const drawer = document.getElementById('mobile-drawer');
+      const backdrop = document.getElementById('drawer-backdrop');
+      if (!drawer || !backdrop) return;
+      if (drawer.classList.contains('-translate-x-full')) {
+        drawer.classList.remove('-translate-x-full');
+        backdrop.classList.remove('hidden');
+      } else {
+        drawer.classList.add('-translate-x-full');
+        backdrop.classList.add('hidden');
+      }
+    }
+
+    // 3. Web Speech API for Vietnamese (vi-VN)
+    function speakTNXH(text) {
+      if (!('speechSynthesis' in window)) {
+        alert('Trình duyệt không hỗ trợ phát âm tự động.');
+        return;
+      }
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'vi-VN';
+      utterance.rate = 0.88;
+      utterance.pitch = 1.0;
+
+      const voices = window.speechSynthesis.getVoices();
+      const viVoice = voices.find(v => v.lang.startsWith('vi') || v.name.toLowerCase().includes('vietnam'));
+      if (viVoice) {
+        utterance.voice = viVoice;
+      }
+
+      window.speechSynthesis.speak(utterance);
+    }
+
+    // 4. Quick Check Quiz logic
+    function checkQuiz(qId, selectedIdx, correctIdx, exp) {
+      const fb = document.getElementById('fb_' + qId);
+      const btns = document.querySelectorAll('.quiz-btn-' + qId);
+      if (!fb || !btns) return;
+
+      btns.forEach((btn, idx) => {
+        btn.disabled = true;
+        if (idx === correctIdx) {
+          btn.className = 'quiz-btn-' + qId + ' text-left px-3 py-2 rounded-xl bg-emerald-100 dark:bg-emerald-950/80 border border-emerald-500 text-xs text-emerald-900 dark:text-emerald-200 font-bold w-full';
+        } else if (idx === selectedIdx) {
+          btn.className = 'quiz-btn-' + qId + ' text-left px-3 py-2 rounded-xl bg-rose-100 dark:bg-rose-950/80 border border-rose-500 text-xs text-rose-900 dark:text-rose-200 font-bold w-full';
+        } else {
+          btn.className = 'quiz-btn-' + qId + ' text-left px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-800 text-xs opacity-50 w-full';
+        }
+      });
+
+      fb.classList.remove('hidden');
+      if (selectedIdx === correctIdx) {
+        fb.className = 'p-3 rounded-xl text-xs bg-emerald-50 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800';
+        fb.innerHTML = '<i class="fa-solid fa-circle-check text-emerald-600 mr-1.5"></i><strong>Chính xác!</strong> ' + exp;
+      } else {
+        fb.className = 'p-3 rounded-xl text-xs bg-rose-50 dark:bg-rose-950/60 text-rose-800 dark:text-rose-300 border border-rose-200 dark:border-rose-800';
+        fb.innerHTML = '<i class="fa-solid fa-circle-xmark text-rose-600 mr-1.5"></i><strong>Chưa đúng!</strong> ' + exp;
+      }
+    }
+
+    // 5. Certification Exam Logic
+    const examData = [{"q":"Khi ở nhà một mình và chẳng may ngửi thấy mùi khét hoặc phát hiện có ngọn lửa bốc cháy, hành vi nào sau đây là ĐÚNG ĐẮN nhất?","options":["Đóng kín cửa phòng lại rồi ngồi im chờ đám cháy tự tắt","Lập tức hô to báo động cho xung quanh, chạy nhanh ra ngoài theo lối thoát hiểm an toàn và gọi số cứu hỏa 114","Quay lại phòng tìm tiền bạc và đồ chơi yêu thích mang theo","Dùng quạt điện bật số to nhất để thổi khói ra ngoài"],"ans":1,"exp":"Kỹ năng thoát hiểm: Cần báo động lớn tiếng, nhanh chóng thoát ra lối an toàn và gọi số điện thoại 114 để được lực lượng cứu hỏa ứng cứu."},{"q":"Trong các cơ quan của thực vật, bộ phận nào có chức năng chính là HÚT NƯỚC và MUỐI KHOÁNG hòa tan từ lòng đất?","options":["Thân cây","Rễ cây","Lá cây","Hoa quả"],"ans":1,"exp":"Rễ cây có chức năng hút nước và chất khoáng hòa tan trong đất để nuôi dưỡng toàn bộ cây cối và giúp cây đứng vững."},{"q":"Cơ quan tuần hoàn trong cơ thể người gồm có những bộ phận nào?","options":["Não và các dây thần kinh","Dạ dày, ruột non và ruột già","Quả tim và hệ thống các mạch máu","Hai lá phổi và khí quản"],"ans":2,"exp":"Cơ quan tuần hoàn gồm có tim (máy bơm máu) và các mạch máu (động mạch, tĩnh mạch, mao mạch) dẫn máu đi khắp cơ thể."},{"q":"Thời gian Trái Đất tự quay một vòng quanh trục của mình mất khoảng bao lâu?","options":["Một giờ","Một ngày đêm (khoảng 24 giờ)","Một tháng (khoảng 30 ngày)","Một năm (khoảng 365 ngày)"],"ans":1,"exp":"Trái Đất tự quay quanh trục từ Tây sang Đông mất khoảng 24 giờ (tức 1 ngày đêm)."},{"q":"Buổi sáng sớm khi quan sát Mặt Trời mọc, em giang hai tay sang ngang. Tay phải em chỉ về hướng Mặt Trời mọc (phía Đông), thì trước mặt em sẽ là hướng nào?","options":["Hướng Nam","Hướng Bắc","Hướng Tây","Hướng Đông"],"ans":1,"exp":"Quy tắc xác định phương hướng: Nếu tay phải chỉ hướng Đông (Mặt Trời mọc), tay trái chỉ hướng Tây, thì trước mặt là hướng Bắc và sau lưng là hướng Nam."},{"q":"Cơ quan nào có chức năng biến đổi thức ăn thành chất dinh dưỡng mà cơ thể có thể hấp thụ được?","options":["Cơ quan tuần hoàn","Cơ quan tiêu hoá","Cơ quan thần kinh","Cơ quan hô hấp"],"ans":1,"exp":"Cơ quan tiêu hóa (miệng, dạ dày, ruột non...) thực hiện quá trình nghiền nát, tiêu hóa và hấp thụ thức ăn thành chất dinh dưỡng nuôi cơ thể."},{"q":"Đới khí hậu nào trên Trái Đất có đặc điểm quanh năm giá buốt, băng tuyết bao phủ dày đặc ở gần hai cực?","options":["Đới nóng (Nhiệt đới)","Đới ôn hoà (Ôn đới)","Đới lạnh (Hàn đới)","Đới xích đạo"],"ans":2,"exp":"Đới lạnh (Hàn đới) nằm quanh hai vùng cực Trái Đất, có nhiệt độ quanh năm đóng băng và vô cùng khắc nghiệt."},{"q":"Hành động nào dưới đây thể hiện sự tôn trọng và bảo vệ môi trường, sinh vật tự nhiên?","options":["Bắn chim, bắt thú rừng hoang dã về nuôi nhốt hoặc bán kiếm tiền","Chặt trộm cây gỗ lớn trong rừng phòng hộ","Trồng thêm cây xanh, chăm sóc thú cưng và không xả rác bừa bãi","Đổ dầu thải và rác độc hại xuống dòng sông ao hồ"],"ans":2,"exp":"Trồng cây, bảo vệ động vật và giữ gìn nguồn nước là những hành động cụ thể để bảo vệ hệ sinh thái và sự sống trên Trái Đất."},{"q":"Chất nào dưới đây là chất kích thích CÓ HẠI gây suy giảm trí nhớ, tổn hại não bộ và sức khoẻ học sinh?","options":["Nước khoáng tinh khiết","Sữa tươi tiệt trùng","Rượu, bia và thuốc lá","Nước ép cam nguyên chất"],"ans":2,"exp":"Rượu, bia, thuốc lá và ma túy chứa nhiều độc chất tàn phá tế bào thần kinh, gây tổn thương dạ dày, tim mạch và trí não."},{"q":"Việt Nam có đường bờ biển dài và thuộc châu lục nào sau đây?","options":["Châu Âu","Châu Mĩ","Châu Á","Châu Phi"],"ans":2,"exp":"Nước Việt Nam nằm trên bán đảo Đông Dương thuộc khu vực Đông Nam Á của Châu Á - châu lục rộng lớn và đông dân nhất thế giới."}];
+    let userAnswers = {};
+    let timerInterval = null;
+    let secondsLeft = 3600;
+
+    function renderCertificationQuestions() {
+      const container = document.getElementById('examQuestionsContainer');
+      if (!container) return;
+      container.innerHTML = examData.map((item, qIdx) => {
+        const opts = item.options.map((opt, optIdx) => {
+          return '<label class="flex items-start gap-2.5 p-3 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-teal-50 dark:hover:bg-teal-950/40 cursor-pointer text-xs font-medium transition">' +
+                 '<input type="radio" name="cert_q_' + qIdx + '" value="' + optIdx + '" onchange="selectExamAnswer(' + qIdx + ', ' + optIdx + ')" class="mt-0.5 text-teal-600">' +
+                 '<span><strong class="text-gray-400 mr-1">' + String.fromCharCode(65 + optIdx) + '.</strong> ' + opt + '</span>' +
+                 '</label>';
+        }).join('');
+
+        return '<div class="p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-2.5">' +
+               '<div class="flex items-center justify-between">' +
+               '<span class="text-xs font-bold text-teal-600 dark:text-teal-400">Câu ' + (qIdx + 1) + ' / 10</span>' +
+               '</div>' +
+               '<p class="text-xs sm:text-sm font-bold text-gray-900 dark:text-white">' + item.q + '</p>' +
+               '<div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">' + opts + '</div>' +
+               '</div>';
+      }).join('');
+    }
+
+    function selectExamAnswer(qIdx, optIdx) {
+      userAnswers[qIdx] = optIdx;
+      document.getElementById('answeredCount').innerText = Object.keys(userAnswers).length;
+    }
+
+    function openCertificationModal() {
+      userAnswers = {};
+      secondsLeft = 3600;
+      document.getElementById('answeredCount').innerText = '0';
+      renderCertificationQuestions();
+      document.getElementById('certificationModal').classList.remove('hidden');
+
+      if (timerInterval) clearInterval(timerInterval);
+      timerInterval = setInterval(() => {
+        secondsLeft--;
+        if (secondsLeft <= 0) {
+          clearInterval(timerInterval);
+          submitCertificationExam();
+          return;
+        }
+        const m = Math.floor(secondsLeft / 60);
+        const s = secondsLeft % 60;
+        document.getElementById('examTimer').innerText = (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
+      }, 1000);
+    }
+
+    function closeCertificationModal() {
+      if (timerInterval) clearInterval(timerInterval);
+      document.getElementById('certificationModal').classList.add('hidden');
+    }
+
+    function submitCertificationExam() {
+      if (timerInterval) clearInterval(timerInterval);
+      let score = 0;
+      examData.forEach((item, idx) => {
+        if (userAnswers[idx] === item.ans) {
+          score++;
+        }
+      });
+
+      closeCertificationModal();
+      document.getElementById('scoreDisplay').innerText = score + ' / 10';
+      const verdict = document.getElementById('resultVerdict');
+      if (score >= 9) {
+        verdict.innerText = 'Xuất sắc! Đạt danh hiệu Trạng Nguyên Tự Nhiên & Xã Hội Lớp 3!';
+      } else if (score >= 7) {
+        verdict.innerText = 'Giỏi! Nắm rất vững các kiến thức khoa học và kĩ năng sống.';
+      } else if (score >= 5) {
+        verdict.innerText = 'Đạt yêu cầu! Cần ôn luyện thêm về cơ quan cơ thể và bề mặt Trái Đất.';
+      } else {
+        verdict.innerText = 'Cần cố gắng! Hãy xem lại các bài học và thực hành tình huống.';
+      }
+      document.getElementById('resultModal').classList.remove('hidden');
+    }
+
+    function closeResultModal() {
+      document.getElementById('resultModal').classList.add('hidden');
+    }
+  </script>
+</body>
+</html>
