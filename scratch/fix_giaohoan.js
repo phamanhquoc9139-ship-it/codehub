@@ -1,0 +1,11 @@
+const fs = require('fs');
+const p = 'C:/Users/ADMIN/.gemini/antigravity/scratch/cs-learning-platform/scratch/toan10_data.js';
+let c = fs.readFileSync(p, 'utf8');
+const idx = c.indexOf('Giao hoán');
+const sub = c.slice(idx, idx + 140);
+console.log('Sub:', JSON.stringify(sub));
+const fixedSub = sub.replace('kết hợp ((\\', 'kết hợp ($(\\').replace('\\vec{c}))', '\\vec{c})$)');
+console.log('FixedSub:', JSON.stringify(fixedSub));
+c = c.replace(sub, fixedSub);
+fs.writeFileSync(p, c, 'utf8');
+console.log('Done replacement!');

@@ -61,45 +61,48 @@
 
   <!-- Header Navigation -->
   <header class="sticky top-0 z-50 bg-white/90 dark:bg-dark-surface/90 backdrop-blur border-b border-gray-200 dark:border-gray-800">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-      <div class="flex items-center gap-4">
-        <a href="../index.html" class="flex items-center gap-2 text-blue-600 dark:text-blue-400 font-bold text-lg hover:opacity-90">
-          <i class="fa-solid fa-graduation-cap text-xl"></i>
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-2 overflow-hidden">
+      <div class="flex items-center gap-2 sm:gap-4 min-w-0">
+        <a href="../index.html" class="flex items-center gap-1.5 sm:gap-2 text-blue-600 dark:text-blue-400 font-bold text-base sm:text-lg hover:opacity-90 shrink-0">
+          <i class="fa-solid fa-graduation-cap text-lg sm:text-xl"></i>
           <span class="hidden sm:inline">CodeHub</span>
         </a>
-        <div class="h-5 w-px bg-gray-300 dark:bg-gray-700"></div>
-        <div class="flex items-center gap-1.5 bg-gray-100 dark:bg-gray-800 p-1 rounded-xl text-xs sm:text-sm font-semibold">
-          <span class="px-2.5 py-1 rounded-lg bg-white dark:bg-gray-700 shadow-sm text-blue-600 dark:text-blue-400 flex items-center gap-1.5">
+        <div class="h-5 w-px bg-gray-300 dark:bg-gray-700 shrink-0 hidden sm:block"></div>
+        <div class="flex items-center gap-1.5 bg-gray-100 dark:bg-gray-800 p-1 rounded-xl text-xs sm:text-sm font-semibold overflow-hidden">
+          <span class="px-2.5 py-1 rounded-lg bg-white dark:bg-gray-700 shadow-sm text-blue-600 dark:text-blue-400 flex items-center gap-1.5 shrink-0 truncate max-w-[130px] sm:max-w-none">
             <i class="fa-solid fa-code"></i> HSG Tin THPT
           </span>
-          <a href="tinhoc_12.html" class="px-2.5 py-1 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-white dark:hover:bg-gray-700 flex items-center gap-1">
+          <a href="olympic_tin_thpt.html" class="hidden md:flex px-2.5 py-1 rounded-lg text-amber-600 dark:text-amber-400 hover:bg-white dark:hover:bg-gray-700 items-center gap-1 shrink-0">
+            <i class="fa-solid fa-trophy"></i> Olympic Tin
+          </a>
+          <a href="tinhoc_12.html" class="hidden lg:flex px-2.5 py-1 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-white dark:hover:bg-gray-700 items-center gap-1 shrink-0">
             <i class="fa-solid fa-laptop-code"></i> Tin 12
           </a>
-          <a href="canva.html" class="px-2.5 py-1 rounded-lg text-purple-600 dark:text-purple-400 hover:bg-white dark:hover:bg-gray-700 flex items-center gap-1">
+          <a href="canva.html" class="hidden xl:flex px-2.5 py-1 rounded-lg text-purple-600 dark:text-purple-400 hover:bg-white dark:hover:bg-gray-700 items-center gap-1 shrink-0">
             <i class="fa-solid fa-palette"></i> Canva
           </a>
-          <a href="claude.html" class="px-2.5 py-1 rounded-lg text-amber-600 dark:text-amber-400 hover:bg-white dark:hover:bg-gray-700 flex items-center gap-1">
+          <a href="claude.html" class="hidden xl:flex px-2.5 py-1 rounded-lg text-amber-600 dark:text-amber-400 hover:bg-white dark:hover:bg-gray-700 items-center gap-1 shrink-0">
             <i class="fa-solid fa-feather-pointed"></i> Claude
           </a>
         </div>
       </div>
 
-      <div class="flex items-center gap-3">
+      <div class="flex items-center gap-1.5 sm:gap-3 shrink-0">
         <span class="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg cp-badge-gradient text-white text-xs font-semibold shadow-sm">
           <i class="fa-solid fa-trophy text-amber-300"></i>
-          <span>VNOI • VOI • Olympic Tin học</span>
+          <span>VNOI • VOI</span>
         </span>
-        <button onclick="openCourseQuizModal()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white text-xs sm:text-sm font-semibold shadow-sm transition">
+        <button onclick="openCourseQuizModal()" class="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white text-xs sm:text-sm font-semibold shadow-sm transition">
           <i class="fa-solid fa-file-signature text-amber-300"></i>
-          <span class="hidden sm:inline">Đề thi HSG cuối khóa</span>
-          <span>(10 câu)</span>
+          <span class="hidden sm:inline">Đề thi HSG</span>
+          <span class="sm:hidden">Thi HSG</span>
         </button>
         <!-- Dark/Light Mode Button -->
         <button id="theme-toggle" class="p-2 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-300 transition" aria-label="Đổi giao diện">
           <i id="theme-icon" class="fa-solid fa-moon"></i>
         </button>
         <!-- Mobile Drawer Button -->
-        <button id="mobile-menu-btn" class="lg:hidden p-2 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-300 transition" aria-label="Menu bài học">
+        <button id="mobile-menu-btn" onclick="toggleDrawer(true)" class="lg:hidden p-2 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-300 transition" aria-label="Menu bài học">
           <i class="fa-solid fa-bars"></i>
         </button>
       </div>
@@ -2227,12 +2230,32 @@ struct FenwickTree {
       }
     }
 
+    function toggleDrawer(show) {
+      const drawer = document.getElementById('mobile-drawer');
+      const backdrop = document.getElementById('drawer-backdrop');
+      if (!drawer || !backdrop) return;
+      if (show) {
+        backdrop.classList.remove('hidden');
+        drawer.classList.remove('translate-x-full');
+        document.body.style.overflow = 'hidden';
+      } else {
+        backdrop.classList.add('hidden');
+        drawer.classList.add('translate-x-full');
+        document.body.style.overflow = '';
+      }
+    }
+
     // ScrollSpy cho Sidebar navigation & Render Math
     document.addEventListener('DOMContentLoaded', () => {
       renderAllMath();
       setTimeout(renderAllMath, 200);
       setTimeout(renderAllMath, 800);
       updateProgressDisplay();
+
+      const mobileBtn = document.getElementById('mobile-menu-btn');
+      if (mobileBtn) {
+        mobileBtn.addEventListener('click', () => toggleDrawer(true));
+      }
 
       const sections = document.querySelectorAll('.lesson-section');
       const navLinks = document.querySelectorAll('.nav-link');

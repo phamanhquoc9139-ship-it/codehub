@@ -1,0 +1,1253 @@
+const fs = require('fs');
+
+const lessonsData = [
+  // BÀI 1
+  {
+    id: "bai-1",
+    volume: 1,
+    number: 1,
+    title: "Bài 1. Thế giới kì ảo",
+    genre: "Truyện truyền kì & Yếu tố kì ảo",
+    pages: "Tập một • Trang 10 – 35",
+    time: "12 tiết",
+    objectives: [
+      "Nhận biết và phân tích được các đặc điểm của truyện truyền kì: đề tài, nhân vật, không gian, thời gian và sự kết hợp giữa hiện thực với yếu tố kì ảo.",
+      "Phân tích được số phận bi kịch và vẻ đẹp phẩm chất của người phụ nữ trong xã hội phong kiến qua nhân vật Vũ Nương (Chuyện người con gái Nam Xương).",
+      "Nhận diện và hiểu được ý nghĩa của các yếu tố Hán Việt, phân biệt được yếu tố đồng âm, gần âm và sử dụng đúng sắc thái trang trọng."
+    ],
+    genreKnowledge: `
+      <div class="space-y-3 text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+        <p><strong class="text-rose-600 dark:text-rose-400">1. Khái niệm truyện truyền kì:</strong> Là thể loại văn xuôi tự sự thời trung đại, phản ánh hiện thực qua lăng kính hoang đường, kì ảo. Cốt truyện thường lồng ghép thế giới con người trần thế với thế giới thần tiên, ma quái, thuỷ cung.</p>
+        <p><strong class="text-rose-600 dark:text-rose-400">2. Vai trò của yếu tố kì ảo:</strong></p>
+        <ul class="list-disc pl-5 space-y-1">
+          <li>Làm tăng sức hấp dẫn, li kì cho câu chuyện.</li>
+          <li>Mở rộng không gian phản ánh hiện thực, bày tỏ khát vọng công lí và sự bù đắp cho những oan khuất của người lương thiện.</li>
+          <li>Tạo biểu tượng nghệ thuật sâu sắc (như chiếc bóng, cuộc gặp gỡ nơi động rùa kì bí).</li>
+        </ul>
+        <p><strong class="text-rose-600 dark:text-rose-400">3. Cách đọc hiểu:</strong> Cần phân định rõ hạt nhân hiện thực lịch sử và lớp vỏ kì ảo; giải mã ý nghĩa tư tưởng nhân đạo mà tác giả gửi gắm qua chi tiết hoang đường.</p>
+      </div>
+    `,
+    readings: [
+      {
+        title: "Chuyện người con gái Nam Xương (Nguyễn Dữ)",
+        author: "Nguyễn Dữ (trích Truyền kì mạn lục)",
+        summary: "Vũ Nương (Vũ Thị Thiết) là người con gái thuỳ mị, nết na, lấy Trương Sinh - con nhà hào phú nhưng ít học, đa nghi. Chồng đi lính, nàng ở nhà phụng dưỡng mẹ già, nuôi dạy con thơ. Đêm đêm, nàng chỉ bóng mình trên vách bảo đó là cha Đản. Khi Trương Sinh trở về, nghe lời ngây thơ của con trẻ bèn nghi oan vợ thất tiết, ruồng rẫy đánh đuổi đi. Vũ Nương uất ức gieo mình xuống sông Hoàng Giang tự vẫn. Nàng được Linh Phi cứu sống dưới thuỷ cung. Về sau Trương Sinh hiểu ra nỗi oan nhờ chiếc bóng nhưng đã muộn. Chàng lập đàn tràng giải oan bên bến sông, Vũ Nương hiện về lộng lẫy giữa dòng nước rồi biến mất vĩnh viễn.",
+        keyPoints: [
+          "Vẻ đẹp toàn diện của Vũ Nương: hiếu thảo với mẹ chồng, thuỷ chung với chồng, hết lòng thương con.",
+          "Nguyên nhân bi kịch: sự đa nghi mù quáng của Trương Sinh, định kiến nam quyền gia trưởng phong kiến và cuộc chiến tranh phi nghĩa chia rẽ gia đình.",
+          "Chi tiết chiếc bóng: nút thắt mở bi kịch, biểu tượng cho tình yêu thương nhưng cũng là nguồn cơn ngộ nhận đau xót.",
+          "Yếu tố kì ảo ở thuỷ cung: minh oan và bù đắp phẩm giá cho nàng, nhưng bi kịch trần thế vẫn không thể vãn hồi (âm dương cách trở)."
+        ]
+      },
+      {
+        title: "Dế chọi (Bồ Tùng Linh)",
+        author: "Bồ Tùng Linh (trích Liêu trai chí dị)",
+        summary: "Triều đình nhà vua mê trò chọi dế, sức ép nộp cống dế quý đè nặng lên quan lại và làm gia đình thường dân Thành Danh tan cửa nát nhà. Khi con trai sơ ý làm chết con dế bắt được, đứa trẻ sợ hãi nhảy xuống giếng. Hồn đứa trẻ hoá thân thành một con dế nhỏ phi thường, bách chiến bách thắng, cứu cả gia đình thoát nạn và được ban thưởng. Tác phẩm vạch trần thói xa hoa, vô cảm của tầng lớp thống trị đẩy nhân dân vào bước đường cùng.",
+        keyPoints: [
+          "Bức tranh hiện thực đen tối: thú vui tiêu khiển của vua chúa trở thành tai hoạ huỷ diệt cuộc sống người dân nghèo.",
+          "Yếu tố kì ảo: sự hoá thân của đứa trẻ thành dế chọi vừa bi tráng vừa châm biếm sâu sắc.",
+          "Giá trị nhân đạo: xót thương cho phận người thấp cổ bé họng trong xã hội phong kiến thối nát."
+        ]
+      },
+      {
+        title: "Sơn Tinh – Thuỷ Tinh (Nguyễn Nhược Pháp)",
+        author: "Nguyễn Nhược Pháp",
+        summary: "Thi phẩm kể lại truyền thuyết dân gian về cuộc cầu hôn công chúa Mị Nương và cuộc đọ sức giữa hai vị thần bằng giọng thơ 7 chữ dí dỏm, tươi vui, mang đậm tinh thần lãng mạn hiện đại của phong trào Thơ mới.",
+        keyPoints: [
+          "Tạo hình Sơn Tinh uy nghi vững chãi, Thuỷ Tinh cuồng nộ dữ dội bằng ngôn ngữ thơ giàu nhạc tính.",
+          "Giọng kể hóm hỉnh, hiện đại hoá chất liệu huyền thoại cổ tích dân tộc."
+        ]
+      }
+    ],
+    vietnamese: {
+      topic: "Yếu tố Hán Việt & Phân biệt đồng âm, gần âm",
+      content: `
+        <div class="space-y-3 text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+          <p><strong>1. Khái niệm:</strong> Yếu tố Hán Việt là các đơn vị cấu tạo từ mượn gốc Hán, được đọc theo ngữ âm tiếng Việt và đã hoà nhập sâu sắc vào hệ thống từ vựng dân tộc.</p>
+          <p><strong>2. Giá trị biểu cảm:</strong> Tạo sắc thái trang trọng, thiêng liêng, cổ kính (VD: <em>phu nhân, phụ mẫu, từ trần, giang sơn</em> thay cho <em>vợ, cha mẹ, chết, sông núi</em>).</p>
+          <p><strong>3. Phân biệt yếu tố đồng âm, gần âm:</strong></p>
+          <ul class="list-disc pl-5 space-y-1">
+            <li><strong>Đồng âm:</strong> Có âm đọc giống nhau nhưng chữ Hán và nghĩa hoàn toàn khác nhau. VD: <em>phi</em> trong <em>phi công</em> (bay), <em>phi lí</em> (không, trái), <em>cung phi</em> (vợ vua).</li>
+            <li><strong>Gần âm:</strong> Đọc gần giống nhau, dễ nhầm lẫn chính tả: <em>chuẩn đoán</em> (sai) → phải là <em>chẩn đoán</em>; <em>tham quan</em> (động từ) vs <em>tham quan</em> (kẻ tham nhũng).</li>
+          </ul>
+        </div>
+      `
+    },
+    writing: {
+      genre: "Nghị luận về một vấn đề cần giải quyết liên quan đến con người với tự nhiên",
+      outline: "Mở bài: Nêu hiện tượng/vấn đề tác động tiêu cực đến môi trường tự nhiên. Thân bài: Thực trạng ô nhiễm/khủng hoảng sinh thái → Nguyên nhân chủ quan, khách quan → Hậu quả nghiêm trọng → Đề xuất hệ thống giải pháp khả thi (công nghệ, luật pháp, ý thức cá nhân). Kết bài: Khẳng định trách nhiệm cộng đồng và cam kết hành động."
+    },
+    speaking: {
+      task: "Trình bày ý kiến về một sự việc thời sự liên quan đến môi trường hoặc đời sống",
+      tips: "Dẫn nguồn thông tin báo chí chính xác, phân biệt rõ dữ kiện thực tế và quan điểm cá nhân, lập luận mạch lạc và lắng nghe phản biện văn minh."
+    },
+    quiz: [
+      {
+        q: "Chi tiết chiếc bóng trên vách trong 'Chuyện người con gái Nam Xương' giữ vai trò nghệ thuật gì quan trọng nhất?",
+        options: [
+          "Chỉ là đồ chơi giải trí cho đứa trẻ buổi tối",
+          "Vừa là nút thắt tạo nên bi kịch nghi oan, vừa là nút mở giải toả nỗi oan khuất cho Vũ Nương",
+          "Dùng để thắp sáng ngôi nhà vắng",
+          "Minh hoạ cho phép thuật biến hoá của thần tiên"
+        ],
+        answer: 1,
+        explain: "Chiếc bóng là chi tiết then chốt: lời nói ngây thơ của bé Đản về chiếc bóng khiến Trương Sinh ghen tuông mù quáng (thắt nút); và cũng chính chiếc bóng của chàng đêm sau đã giúp chàng hiểu ra sự thật (mở nút)."
+      },
+      {
+        q: "Ý nghĩa của phần kết thúc kì ảo ở thuỷ cung trong 'Chuyện người con gái Nam Xương' là gì?",
+        options: [
+          "Khẳng định Vũ Nương đã sống lại trọn vẹn và trở về sống hạnh phúc cùng Trương Sinh",
+          "Minh oan và bù đắp phẩm giá cho người phụ nữ bạc mệnh, nhưng đồng thời nhấn mạnh bi kịch hiện thực không thể cứu vãn",
+          "Khuyên mọi người nên xuống thuỷ cung sinh sống",
+          "Chỉ nhằm mục đích kéo dài câu chuyện cho thêm hấp dẫn"
+        ],
+        answer: 1,
+        explain: "Cuộc gặp gỡ ở thuỷ cung thể hiện ước mơ công lí của nhân dân, nhưng lời từ biệt nghẹn ngào 'thiếp chẳng thể về với nhân gian được nữa' đã làm nổi bật tính chất bi kịch không thể vãn hồi của cuộc đời."
+      },
+      {
+        q: "Yếu tố 'phi' trong từ 'phi pháp' có nghĩa là gì?",
+        options: ["Bay lượn trên không", "Vợ thứ của vua chúa", "Không, trái với quy định", "Màu mỡ, tốt tươi"],
+        answer: 2,
+        explain: "Yếu tố 'phi' (非) trong Hán Việt có nghĩa là không, trái ngược (phi pháp = trái pháp luật, phi lí = trái lẽ thường)."
+      },
+      {
+        q: "Tác phẩm 'Dế chọi' của Bồ Tùng Linh sử dụng yếu tố kì ảo nhằm mục đích chính nào?",
+        options: ["Quảng cáo nghệ thuật nuôi côn trùng", "Châm biếm thói xa hoa độc ác của triều đình phong kiến và bày tỏ niềm thương cảm với nhân dân nghèo", "Ca ngợi sức mạnh của loài dế thiên nhiên", "Răn dạy trẻ con không nên bắt dế"],
+        answer: 1,
+        explain: "Sự hoá thân của đứa trẻ thành con dế chọi thần kì là đòn châm biếm sâu cay thói bạo ngược của giai cấp thống trị, biến mạng người thành trò giải trí."
+      }
+    ]
+  },
+
+  // BÀI 2
+  {
+    id: "bai-2",
+    volume: 1,
+    number: 2,
+    title: "Bài 2. Những cung bậc tâm trạng",
+    genre: "Thơ song thất lục bát & Chơi chữ, điệp thanh, điệp vần",
+    pages: "Tập một • Trang 36 – 58",
+    time: "12 tiết",
+    objectives: [
+      "Nhận biết và phân tích được đặc trưng của thể thơ song thất lục bát: số tiếng, vần nối, phối hợp bằng trắc và nhạc điệu sầu bi, oán thán.",
+      "Cảm nhận sâu sắc nỗi cô đơn, khắc khoải chờ mong và bi kịch của người chinh phụ trong chiến tranh phong kiến qua 'Nỗi niềm chinh phụ'.",
+      "Hiểu và phân tích được tác dụng tu từ của biện pháp chơi chữ, điệp thanh và điệp vần trong văn bản nghệ thuật."
+    ],
+    genreKnowledge: `
+      <div class="space-y-3 text-slate-700 dark:text-slate-300 text-sm leading-relaxed">
+        <p><strong class="text-rose-600 dark:text-rose-400">1. Đặc điểm thể thơ song thất lục bát:</strong> Là thể thơ thuần Việt kết hợp một cặp câu 7 tiếng (song thất) với một cặp câu lục bát (6-8 tiếng). Mỗi khổ 4 câu tạo thành một đơn vị trọn vẹn, có thể liên kết thành bài ngâm khúc dài hàng trăm câu.</p>
+        <p><strong class="text-rose-600 dark:text-rose-400">2. Luật vần và ngắt nhịp:</strong></p>
+        <ul class="list-disc pl-5 space-y-1">
+          <li><strong>Vần:</strong> Vần lưng kết hợp vần chân, tạo sự đan cài liên hoàn giữa các câu (vần trắc ở 2 câu thất, vần bằng ở cặp lục bát).</li>
+          <li><strong>Nhịp điệu:</strong> Câu thất thường ngắt nhịp 3/4 hoặc 3/2/2; câu lục bát ngắt nhịp 2/2/2, 4/4 tạo âm điệu dập dềnh như sóng nước, đặc biệt thích hợp diễn tả tâm trạng sầu bi, oán hờn, thương nhớ kéo dài.</li>
+        </ul>
+      </div>
+    `,
+    readings: [
+      {
+        title: "Nỗi niềm chinh phụ (trích Chinh phụ ngâm)",
+        author: "Nguyên tác chữ Hán: Đặng Trần Côn; Bản dịch: Đoàn Thị Điểm (hoặc Phan Huy Ích)",
+        summary: "Đoạn trích thể hiện tâm trạng cô đơn, trống trải tột cùng của người vợ trẻ khi chồng phải xông pha nơi chiến trường xa xôi, mịt mùng. Nàng đếm từng bước chân dạo hiên vắng, buông rèm rồi lại cuốn rèm, ngồi đối diện với ngọn đèn hoa tàn lụi mà ngập tràn dự cảm âu lo. Nỗi nhớ thương da diết và niềm khát khao hạnh phúc lứa đôi cất lên thành lời tố cáo thầm lặng nhưng quyết liệt cuộc chiến tranh phi nghĩa.",
+        keyPoints: [
+          "Ngoại cảnh và hành động quẩn quanh: dạo hiên vắng, cuốn rèm, ngắm đèn hoa tàn - khắc hoạ nỗi bồn chồn, vô vọng.",
+          "Nghệ thuật tả cảnh ngụ tình: 'Gà eo óc gáy sương năm trống / Hoè phất phơ rủ bóng bốn bên'.",
+          "Âm hưởng song thất lục bát triền miên, réo rắt như khúc bi ca lay động lòng người."
+        ]
+      },
+      {
+        title: "Tiếng đàn mưa",
+        author: "Bích Khê",
+        summary: "Bài thơ tượng trưng siêu thực độc đáo viết theo thể song thất lục bát biến thể, tạo nên sự giao thoa kì diệu giữa âm thanh giọt mưa rơi tí tách, tiếng tơ đồng ai oán và nỗi sầu thiên thu của kiếp thi nhân.",
+        keyPoints: [
+          "Sự tương giao cảm giác: thính giác (tiếng mưa, tiếng đàn), thị giác (bóng mưa mờ ảo) và xúc giác tê tái.",
+          "Nhạc tính đỉnh cao qua hệ thống điệp vần và điệp thanh réo rắt."
+        ]
+      },
+      {
+        title: "Một thể thơ độc đáo của người Việt",
+        author: "Dương Lâm An",
+        summary: "Văn bản nhật dụng nghị luận phân tích nguồn gốc, cấu trúc hình thức và giá trị thẩm mĩ đặc sắc của thể thơ song thất lục bát trong kho tàng thi ca dân tộc.",
+        keyPoints: [
+          "Khẳng định song thất lục bát là sáng tạo thi ca độc bản của tâm hồn Việt Nam, kết tinh nhạc tính bác học và dân gian."
+        ]
+      }
+    ],
+    vietnamese: {
+      topic: "Chơi chữ, Điệp thanh và Điệp vần",
+      content: `
+        <div class="space-y-3 text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+          <p><strong>1. Chơi chữ:</strong> Khai thác các đặc điểm ngữ âm, chữ viết và nghĩa của từ (đồng âm, gần âm, nói lái, tách từ) để tạo tiếng cười hài hước hoặc hàm ý thâm thuý.</p>
+          <p><strong>2. Điệp thanh:</strong> Lặp lại có dụng ý các thanh điệu (chuỗi thanh bằng gợi cảm giác êm đềm, thanh thản, mênh mông; chuỗi thanh trắc gợi sự trắc trở, gãy gọn, nghẹn ngào).</p>
+          <p><strong>3. Điệp vần:</strong> Lặp lại cùng một khuôn âm vần trong nhiều dòng thơ, liên kết dòng thơ và tạo hiệu quả cộng hưởng âm thanh vang ngân.</p>
+        </div>
+      `
+    },
+    writing: {
+      genre: "Viết bài văn phân tích một đoạn trích thơ song thất lục bát",
+      outline: "Mở bài: Giới thiệu tác giả, tác phẩm, đoạn trích và nhận định khái quát về giá trị nội dung, thể loại. Thân bài: Phân tích theo từng khổ/mạch cảm xúc (từ hành động quẩn quanh đến nỗi cô đơn, nhớ thương); làm nổi bật nhạc điệu song thất lục bát, vần nhịp, từ ngữ chỉ không gian - thời gian. Kết bài: Khái quát giá trị nhân đạo sâu sắc và sức sống của thi phẩm."
+    },
+    speaking: {
+      task: "Trao đổi về một vấn đề đời sống do tác phẩm văn học gợi ra (nỗi cô đơn, sự thấu cảm, khát vọng hoà bình)",
+      tips: "Dùng lí lẽ chân thành, kết nối trải nghiệm tâm lí lứa tuổi với thông điệp tác phẩm, giữ thái độ cởi mở và tôn trọng góc nhìn khác biệt."
+    },
+    quiz: [
+      {
+        q: "Cấu trúc một khổ thơ tiêu chuẩn của thể thơ song thất lục bát gồm những câu nào?",
+        options: [
+          "Bốn câu bảy tiếng liên tiếp",
+          "Hai câu bảy tiếng đi liền với một câu sáu tiếng và một câu tám tiếng (7-7-6-8)",
+          "Hai câu sáu tiếng và hai câu tám tiếng",
+          "Một câu năm tiếng và một câu bảy tiếng"
+        ],
+        answer: 1,
+        explain: "Thể song thất lục bát gồm 4 câu trong một khổ: 2 câu 7 chữ (song thất) đi trước, tiếp theo là cặp lục bát (6-8 chữ)."
+      },
+      {
+        q: "Hành động 'dạo hiên vắng thầm gieo từng bước' và 'rèm thưa rủ thác đòi phen' của người chinh phụ biểu đạt trạng thái tâm lí gì?",
+        options: [
+          "Thói quen tập thể dục rèn luyện sức khoẻ",
+          "Tâm trạng bồn chồn, khắc khoải, cô đơn và lo âu không thể sẻ chia",
+          "Niềm vui mừng khôn xiết khi sắp gặp lại chồng",
+          "Sự giận dữ muốn đập phá đồ đạc"
+        ],
+        answer: 1,
+        explain: "Những động tác quẩn quanh lặp đi lặp lại trong không gian khép kín thể hiện nỗi cô đơn tuyệt vọng, tâm trạng bồn chồn ngóng trông tin chồng ngoài chiến trận."
+      },
+      {
+        q: "Biện pháp tu từ nào được sử dụng trong câu đối nổi tiếng của bà Huyện Thanh Quan: 'Nhớ nước đau lòng con quốc quốc / Thương nhà mỏi miệng cái gia gia'?",
+        options: ["Nói quá phóng đại", "Chơi chữ đồng âm (quốc = nước, gia = nhà)", "So sánh ngầm ẩn dụ", "Nói giảm nói tránh"],
+        answer: 1,
+        explain: "Tác giả chơi chữ dựa trên từ Hán Việt: 'quốc quốc' (chim cuốc đồng âm với quốc = nước), 'gia gia' (chim đa đa đồng âm với gia = nhà), bộc lộ nỗi niềm hoài cổ tha thiết."
+      },
+      {
+        q: "Hiệu quả thẩm mĩ nổi bật của sự phối hợp thanh bằng - trắc trong thơ song thất lục bát là gì?",
+        options: [
+          "Làm cho câu thơ ngắn bớt lại",
+          "Tạo nhạc điệu triền miên dập dềnh, réo rắt, rất phù hợp diễn tả nỗi buồn thương da diết",
+          "Khiến bài thơ nghe như một bài văn xuôi",
+          "Làm tăng tốc độ đọc của người xem"
+        ],
+        answer: 1,
+        explain: "Luật phối thanh bằng trắc và nhịp điệu dập dềnh của song thất lục bát tạo nên giọng ngâm sầu bi, diễn tả tuyệt vời những cung bậc bi thương của tâm hồn."
+      }
+    ]
+  },
+
+  // BÀI 3
+  {
+    id: "bai-3",
+    volume: 1,
+    number: 3,
+    title: "Bài 3. Hồn nước nằm trong tiếng mẹ cha",
+    genre: "Truyện thơ Nôm & Chữ Nôm, chữ Quốc ngữ",
+    pages: "Tập một • Trang 59 – 82",
+    time: "12 tiết",
+    objectives: [
+      "Hiểu đặc điểm của truyện thơ Nôm: kết cấu chương hồi, ngôn ngữ thơ lục bát kết hợp từ ngữ bác học và bình dân, nghệ thuật tả cảnh ngụ tình và khắc hoạ tính cách nhân vật.",
+      "Phân tích được vẻ đẹp tài hoa, lí tưởng nhân nghĩa và khát vọng tự do công lí qua các kiệt tác Truyện Kiều và Lục Vân Tiên.",
+      "Hiểu nguồn gốc, lịch sử hình thành và giá trị văn hoá vô giá của chữ Nôm và chữ Quốc ngữ đối với việc bảo tồn tâm hồn Việt."
+    ],
+    genreKnowledge: `
+      <div class="space-y-3 text-slate-700 dark:text-slate-300 text-sm leading-relaxed">
+        <p><strong class="text-rose-600 dark:text-rose-400">1. Truyện thơ Nôm - Đỉnh cao văn học trung đại:</strong> Là tác phẩm tự sự dài bằng thơ, viết bằng chữ Nôm (chủ yếu dùng thể thơ lục bát), phản ánh số phận con người, khát vọng tình yêu tự do, đạo lí nhân nghĩa và phê phán hiện thực xã hội bất công.</p>
+        <p><strong class="text-rose-600 dark:text-rose-400">2. Mô hình cốt truyện truyền thống:</strong> Thường trải qua ba chặng: <em>Gặp gỡ và đính ước → Biến cố và lưu lạc → Đoàn tụ</em>. Tuy nhiên, các kiệt tác lớn như Truyện Kiều đã vượt thoát khuôn khổ ước lệ để phản ánh bi kịch hiện thực xé lòng.</p>
+      </div>
+    `,
+    readings: [
+      {
+        title: "Kim – Kiều gặp gỡ (trích Truyện Kiều)",
+        author: "Đại thi hào Nguyễn Du",
+        summary: "Đoạn trích miêu tả cuộc kì ngộ định mệnh giữa Kim Trọng và Thuý Kiều trong buổi chiều thanh minh êm đềm bên dòng suối nhỏ. Vẻ đẹp phong nhã, hào hoa của chàng Kim hoà quyện với nhan sắc nghiêng nước nghiêng thành, sự e ấp thẹn thùng của nàng Kiều, mở ra một mối tình trong sáng, tự do vượt lên trên lễ giáo phong kiến hà khắc.",
+        keyPoints: [
+          "Khắc hoạ nhân vật qua ngoại hình và phong thái: 'Phong tư tài mạo tót vời / Vào trong phong nhã ra ngoài hào hoa'.",
+          "Cảm xúc rung động tình đầu: 'Người quốc sắc, kẻ thiên tài / Tình trong như đã, mặt ngoài còn e'.",
+          "Cảnh sắc thiên nhiên thanh minh đượm chất thơ, dự báo mối duyên tình sâu đậm nhưng trắc trở."
+        ]
+      },
+      {
+        title: "Lục Vân Tiên đánh cướp, cứu Kiều Nguyệt Nga",
+        author: "Nguyễn Đình Chiểu (trích Truyện Lục Vân Tiên)",
+        summary: "Trên đường đi thi, gặp toán cướp Phong Lai hung hãn cướp bóc nhân dân, Lục Vân Tiên một mình bẻ cây làm gậy xông vào diệt trừ bọn gian ác. Cứu được Kiều Nguyệt Nga, chàng từ chối tiền bạc đền ơn, khẳng định đạo lí 'Làm ơn há dễ trông người trả ơn'. Tác phẩm khắc hoạ mẫu hình người anh hùng trượng nghĩa xả thân vì dân.",
+        keyPoints: [
+          "Hành động quả cảm của Vân Tiên: 'bẻ cây làm gậy', đánh tan lũ cướp như Triệu Tử Long ở trận Đương Dương.",
+          "Vẻ đẹp đoan trang, hiếu thảo và trọng ân nghĩa của Kiều Nguyệt Nga.",
+          "Ngôn ngữ Nam Bộ mộc mạc, đậm chất nghĩa khí anh hùng hào hiệp."
+        ]
+      },
+      {
+        title: "Tự tình (bài 2)",
+        author: "Hồ Xuân Hương",
+        summary: "Bài thơ thất ngôn bát cú Đường luật thể hiện tâm trạng cay đắng, xót xa trước duyên phận éo le lận đận của người phụ nữ, nhưng đồng thời bộc lộ sức sống mãnh liệt và thái độ phản kháng, thách thức duyên số.",
+        keyPoints: [
+          "Không gian đêm vắng với tiếng trống canh dồn dập biểu hiện bước đi nghiệt ngã của thời gian.",
+          "Hình tượng thiên nhiên phản kháng: 'Rêu từng chòm bứt vách xao / Đá mấy hòn xoi toạc đất'.",
+          "Nghệ thuật sử dụng từ láy, động từ mạnh và tài nghệ Việt hoá thơ Đường đỉnh cao."
+        ]
+      }
+    ],
+    vietnamese: {
+      topic: "Chữ Nôm và Chữ Quốc ngữ",
+      content: `
+        <div class="space-y-3 text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+          <p><strong>1. Chữ Nôm:</strong> Hệ thống văn tự ghi âm tiếng Việt dựa trên kí tự Hán, khẳng định ý thức tự chủ văn hoá và tinh thần độc lập dân tộc của cha ông từ thế kỉ X đến đầu thế kỉ XX.</p>
+          <p><strong>2. Chữ Quốc ngữ:</strong> Hệ chữ viết dùng kí tự La-tinh ghi âm tiếng Việt, manh nha từ thế kỉ XVII bởi các giáo sĩ phương Tây và người Việt, được chuẩn hoá và trở thành chữ viết chính thức của đất nước.</p>
+          <p><strong>3. Tầm quan trọng:</strong> Giúp bảo tồn di sản văn học dân tộc, phát triển tư duy khoa học và giao lưu văn hoá quốc tế thuận tiện.</p>
+        </div>
+      `
+    },
+    writing: {
+      genre: "Viết bài văn nghị luận về một vấn đề cần giải quyết trong đời sống học sinh",
+      outline: "Mở bài: Nêu thực trạng vấn đề (bạo lực mạng, lãng phí thời gian vào mạng xã hội, áp lực học tập). Thân bài: Phân tích biểu hiện và tác hại tiêu cực → Chỉ rõ nguyên nhân từ tâm lí lứa tuổi, gia đình, nhà trường → Đề xuất giải pháp hành động cụ thể ở cá nhân và tập thể. Kết bài: Bài học nhận thức và lời kêu gọi hành động tích cực."
+    },
+    speaking: {
+      task: "Thảo luận về một vấn đề chung trong nhà trường hoặc cộng đồng",
+      tips: "Lập luận bằng dẫn chứng xác thực, không công kích cá nhân, lắng nghe ý kiến phản biện và tìm tiếng nói đồng thuận vì mục tiêu chung."
+    },
+    quiz: [
+      {
+        q: "Thể thơ truyền thống nào của dân tộc được Đại thi hào Nguyễn Du sử dụng xuất chúng trong kiệt tác 'Truyện Kiều'?",
+        options: ["Thể thơ song thất lục bát", "Thể thơ lục bát", "Thể thơ thất ngôn bát cú Đường luật", "Thể thơ tự do"],
+        answer: 1,
+        explain: "Truyện Kiều gồm 3.254 câu thơ lục bát tuyệt mĩ, được xem là đỉnh cao chói lọi nhất của nghệ thuật thơ ca lục bát tiếng Việt."
+      },
+      {
+        q: "Hành động Lục Vân Tiên 'bẻ cây làm gậy' đánh tan tướng cướp Phong Lai thể hiện phẩm chất cao đẹp nào của người anh hùng?",
+        options: ["Ham thích tiền thưởng của triều đình", "Trọng nghĩa khinh tài, dũng cảm xả thân bảo vệ dân lành khỏi áp bức", "Khoe khoang tài nghệ võ công", "Muốn được công chúa kiệu vàng đón về"],
+        answer: 1,
+        explain: "Hành động quả cảm của Vân Tiên xuất phát từ tấm lòng hiệp nghĩa vô tư: 'Làm ơn há dễ trông người trả ơn', tiêu biểu cho đạo lí sống cao thượng của nhân dân."
+      },
+      {
+        q: "Chữ Nôm là hệ thống chữ viết được sáng tạo trên cơ sở cải biến chữ viết nào?",
+        options: ["Chữ viết La-tinh", "Chữ Hán", "Chữ Phạn cổ", "Chữ Ả Rập"],
+        answer: 1,
+        explain: "Chữ Nôm ra đời dựa trên cơ sở mượn và cải biến kí tự chữ Hán để ghi lại âm thanh và ngữ nghĩa của tiếng mẹ đẻ Việt Nam."
+      },
+      {
+        q: "Hai câu thơ 'Tình trong như đã, mặt ngoài còn e' miêu tả tâm trạng của ai trong buổi đầu gặp gỡ?",
+        options: ["Thuý Vân và Mã Giám Sinh", "Kim Trọng và Thuý Kiều", "Lục Vân Tiên và Kiều Nguyệt Nga", "Từ Hải và Thuý Kiều"],
+        answer: 1,
+        explain: "Câu thơ thể hiện tinh tế tâm trạng xao xuyến, thẹn thùng e ấp nhưng đầy ắp tình ý sâu đậm trong cuộc hội ngộ đầu tiên giữa Kim Trọng và Thuý Kiều."
+      }
+    ]
+  },
+
+  // BÀI 4
+  {
+    id: "bai-4",
+    volume: 1,
+    number: 4,
+    title: "Bài 4. Khám phá vẻ đẹp văn chương",
+    genre: "Nghị luận văn học & Trích dẫn, ghi nguồn",
+    pages: "Tập một • Trang 83 – 105",
+    time: "12 tiết",
+    objectives: [
+      "Nhận biết và phân tích được đặc điểm của văn bản nghị luận văn học: luận đề, luận điểm, lí lẽ, bằng chứng và nghệ thuật lập luận thuyết phục.",
+      "Hiểu mối quan hệ biện chứng giữa người đọc và tác phẩm trong quá trình tiếp nhận văn học (tiếp nhận tích cực, sáng tạo nhưng có căn cứ văn bản).",
+      "Nắm vững quy tắc trích dẫn trực tiếp, trích dẫn gián tiếp và ghi nguồn tài liệu tham khảo chuẩn xác, tránh lỗi đạo văn."
+    ],
+    genreKnowledge: `
+      <div class="space-y-3 text-slate-700 dark:text-slate-300 text-sm leading-relaxed">
+        <p><strong class="text-rose-600 dark:text-rose-400">1. Cấu trúc văn bản nghị luận văn học:</strong> Xoay quanh một luận đề bao quát (vấn đề tư tưởng hoặc nghệ thuật của tác phẩm), được làm sáng tỏ qua các luận điểm mạch lạc, lí lẽ sắc sảo và bằng chứng trích dẫn chính xác từ văn bản.</p>
+        <p><strong class="text-rose-600 dark:text-rose-400">2. Tiếp nhận văn học:</strong> Tác phẩm chỉ thực sự sống khi được bạn đọc tiếp nhận. Mỗi thế hệ có thể có những khám phá mới mẻ dựa trên vốn sống cá nhân, nhưng mọi cách hiểu đều phải xuất phát từ văn bản ngôn từ thực tế chứ không suy diễn tuỳ tiện.</p>
+      </div>
+    `,
+    readings: [
+      {
+        title: "“Người con gái Nam Xương” – một bi kịch của con người",
+        author: "GS. Nguyễn Đăng Na",
+        summary: "Văn bản nghị luận xuất sắc phân tích tác phẩm của Nguyễn Dữ dưới góc nhìn bi kịch nhân sinh: bi kịch của người phụ nữ chịu oan khuất, bi kịch của người đàn ông mù quáng vì ghen tuông và bi kịch tan vỡ mái ấm gia đình thời chiến loạn. Tác giả lập luận chặt chẽ, soi sáng chiều sâu nhân văn của tác phẩm cổ điển.",
+        keyPoints: [
+          "Xác lập luận đề: bi kịch thân phận người phụ nữ trong xã hội phong kiến.",
+          "Hệ thống luận điểm rành mạch: bi kịch bị nghi oan, bi kịch hôn nhân thiếu bình đẳng và bi kịch không thể đoàn tụ.",
+          "Cách phân tích dẫn chứng chiếc bóng và lời thoại đầy sức thuyết phục."
+        ]
+      },
+      {
+        title: "Từ “Thằng quỷ nhỏ” của Nguyễn Nhật Ánh nghĩ về những phẩm chất của một tác phẩm viết cho thiếu nhi",
+        author: "Trần Văn Toàn",
+        summary: "Bài viết đúc rút các phẩm chất cốt tử làm nên sức cuốn hút bền lâu của văn học thiếu nhi: sự thấu hiểu thế giới tâm hồn trẻ thơ, khiếu hài hước trong sáng và bài học nhân văn sâu sắc nhẹ nhàng.",
+        keyPoints: [
+          "Văn học thiếu nhi không dạy đời khô khan mà lay động bằng tiếng cười ấm áp và sự đồng cảm tinh tế."
+        ]
+      },
+      {
+        title: "Ngày xưa",
+        author: "Vũ Cao",
+        summary: "Bài thơ mang dòng hoài niệm trong trẻo về tuổi thơ, thời gian đã qua và vẻ đẹp mộc mạc của quê hương xứ sở.",
+        keyPoints: [
+          "Hình ảnh thơ bình dị, gợi nhắc những giá trị tình cảm thiêng liêng cội nguồn."
+        ]
+      }
+    ],
+    vietnamese: {
+      topic: "Trích dẫn và Ghi nguồn tài liệu",
+      content: `
+        <div class="space-y-3 text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+          <p><strong>1. Trích dẫn trực tiếp:</strong> Dẫn nguyên văn câu chữ của tác giả/nguồn tài liệu, bắt buộc phải đặt trong dấu ngoặc kép <em>"..."</em> và ghi rõ thông tin tác giả, trang sách.</p>
+          <p><strong>2. Trích dẫn gián tiếp:</strong> Diễn đạt lại ý tưởng của nguồn bằng lời văn của mình nhưng phải trung thành tuyệt đối với ý nghĩa gốc, không được bóp méo và vẫn phải ghi rõ nguồn tham khảo.</p>
+          <p><strong>3. Tránh đạo văn:</strong> Tôn trọng quyền sở hữu trí tuệ, tạo độ tin cậy và giá trị khoa học cho bài nghiên cứu/nghị luận.</p>
+        </div>
+      `
+    },
+    writing: {
+      genre: "Viết bài văn phân tích một tác phẩm truyện (cốt truyện, nhân vật, chủ đề)",
+      outline: "Mở bài: Giới thiệu tác giả, tác phẩm truyện và định hướng phân tích. Thân bài: Phân tích cốt truyện và tình huống độc đáo → Khắc hoạ nhân vật qua hành động, lời thoại, nội tâm → Phân tích nghệ thuật trần thuật và điểm nhìn → Khái quát chủ đề tư tưởng. Kết bài: Đánh giá thành công nghệ thuật và sức sống của thiên truyện."
+    },
+    speaking: {
+      task: "Trao đổi, chia sẻ phương pháp học tốt môn Ngữ văn",
+      tips: "Trình bày cụ thể các mẹo đọc sâu (ghi chép nhật kí đọc, sơ đồ tư duy, liên hệ thực tế), nói ngắn gọn, tự tin và giải đáp thắc mắc của bạn bè."
+    },
+    quiz: [
+      {
+        q: "Quy chuẩn bắt buộc khi thực hiện trích dẫn trực tiếp một câu nói hoặc đoạn văn trong bài viết nghị luận là gì?",
+        options: [
+          "Phải thay đổi toàn bộ từ ngữ theo ý mình",
+          "Giữ nguyên văn câu chữ, đặt trong dấu ngoặc kép và ghi rõ nguồn dẫn",
+          "Viết hoa toàn bộ các chữ cái",
+          "Không cần chú thích tên tác giả"
+        ],
+        answer: 1,
+        explain: "Trích dẫn trực tiếp đòi hỏi độ chính xác tuyệt đối từng câu chữ của bản gốc, phải đóng mở ngoặc kép và ghi nguồn để tránh vi phạm bản quyền (đạo văn)."
+      },
+      {
+        q: "Theo GS. Nguyễn Đăng Na, cội nguồn sâu xa dẫn đến bi kịch của nàng Vũ Nương xuất phát từ đâu?",
+        options: [
+          "Sự nghèo đói cùng cực",
+          "Sự bất bình đẳng giới của xã hội phụ quyền phong kiến và hậu quả tàn khốc của chiến tranh phi nghĩa",
+          "Do nàng không biết bơi lội",
+          "Do lời khuyên của người hàng xóm"
+        ],
+        answer: 1,
+        explain: "Bi kịch của Vũ Nương không chỉ do ngẫu nhiên chiếc bóng mà gốc rễ nằm ở chế độ nam quyền độc đoán (chồng có quyền phán xét vợ vô tội vạ) và chiến tranh phong kiến chia cắt."
+      },
+      {
+        q: "Sự tiếp nhận văn học của người đọc đối với một tác phẩm nghệ thuật có đặc điểm gì?",
+        options: [
+          "Chỉ được hiểu đúng y hệt như một đáp án duy nhất có sẵn",
+          "Mang tính tích cực, sáng tạo riêng theo vốn sống cá nhân nhưng phải dựa trên căn cứ văn bản nghệ thuật",
+          "Hoàn toàn tuỳ tiện, muốn hiểu thế nào cũng đúng",
+          "Không cần đọc tác phẩm vẫn tiếp nhận được"
+        ],
+        answer: 1,
+        explain: "Tiếp nhận văn học mang tính đồng sáng tạo: mỗi độc giả có cảm thụ riêng nhưng mọi diễn giải đều phải có căn cứ xác thực từ câu chữ, hình tượng của tác phẩm."
+      },
+      {
+        q: "Hình thức trích dẫn gián tiếp có đặc điểm nào sau đây?",
+        options: [
+          "Sao chép nguyên si từng dấu phẩy",
+          "Diễn đạt lại ý tưởng của tác giả bằng lời văn của mình nhưng vẫn trung thành với nội dung và ghi nguồn",
+          "Xoá bỏ tên tác giả bài viết",
+          "Chỉ dùng cho văn bản dịch thuật tiếng nước ngoài"
+        ],
+        answer: 1,
+        explain: "Trích dẫn gián tiếp là thuật lại, tóm lược lại tư tưởng của tác giả bằng câu văn của người viết mà không làm sai lệch ý nghĩa ban đầu."
+      }
+    ]
+  },
+
+  // BÀI 5
+  {
+    id: "bai-5",
+    volume: 1,
+    number: 5,
+    title: "Bài 5. Đối diện với nỗi đau",
+    genre: "Bi kịch & Câu rút gọn, câu đặc biệt",
+    pages: "Tập một • Trang 106 – 130",
+    time: "12 tiết",
+    objectives: [
+      "Nhận biết và phân tích được đặc trưng của thể loại bi kịch: xung đột kịch liệt không thể dung hoà, tính cách bi kịch và kết cục bi thương nhưng thức tỉnh lương tri.",
+      "Cảm nhận sâu sắc vẻ đẹp của tình yêu tự do, khát vọng vượt lên trên thù hận dòng họ qua kiệt tác sân khấu Rô-mê-ô và Giu-li-ét.",
+      "Phân biệt chính xác câu rút gọn và câu đặc biệt, vận dụng linh hoạt trong giao tiếp và viết bài văn nghệ thuật."
+    ],
+    genreKnowledge: `
+      <div class="space-y-3 text-slate-700 dark:text-slate-300 text-sm leading-relaxed">
+        <p><strong class="text-rose-600 dark:text-rose-400">1. Đặc trưng của thể loại Bi kịch (Tragedy):</strong> Là thể loại kịch kịch tính cao độ, xây dựng những xung đột không thể hoá giải giữa khát vọng tốt đẹp, cao cả của con người với những thế lực đen tối, định kiến tàn bạo hoặc quy luật khắc nghiệt của số phận.</p>
+        <p><strong class="text-rose-600 dark:text-rose-400">2. Nhân vật và cái kết bi kịch:</strong> Nhân vật bi kịch mang phẩm chất cao quý nhưng rơi vào hoàn cảnh éo le bế tắc. Kết cục cái chết hoặc sự đổ vỡ của nhân vật không khiến người xem tuyệt vọng mà có tác dụng thanh lọc tâm hồn (Catharsis), khơi dậy niềm tin vào cái đẹp và tinh thần đấu tranh vì công lí.</p>
+      </div>
+    `,
+    readings: [
+      {
+        title: "Rô-mê-ô và Giu-li-ét (trích)",
+        author: "Uy-li-am Sếch-xpia (William Shakespeare)",
+        summary: "Đoạn trích (cảnh thề nguyền tại vườn nhà Ca-piu-lét) diễn tả tình yêu đắm say, trong sáng và bất chấp hiểm nguy của Rô-mê-ô và Giu-li-ét - hai người con của hai dòng họ Mông-ta-giu và Ca-piu-lét vốn có mối thù truyền kiếp thâm sâu. Lời thoại trữ tình đẫm chất thơ khẳng định sức mạnh kì diệu của tình yêu chân chính đã vượt qua bức tường thù hận dòng tộc.",
+        keyPoints: [
+          "Xung đột kịch gay gắt giữa tình yêu tự do cá nhân và mối thù thâm căn cố đế của hai gia tộc phong kiến.",
+          "Nghệ thuật đối thoại và độc thoại nội tâm lãng mạn, hình ảnh so sánh mặt trời, ánh trăng, các vì sao tuyệt mĩ.",
+          "Ý nghĩa nhân văn: ca ngợi tình yêu tự do và tư tưởng nhân đạo thời kì Phục Hưng."
+        ]
+      },
+      {
+        title: "Lơ Xít (trích)",
+        author: "Coóc-nây (Pierre Corneille)",
+        summary: "Vở bi kịch cổ điển Pháp đặt đôi trai tài gái sắc Rô-đơ-ri-gơ và Si-men trước xung đột dữ dội giữa tình yêu đôi lứa nồng thắm và danh dự, bổn phận báo thù cho gia đình, làm nổi bật vẻ đẹp của tinh thần trách nhiệm và lòng quả cảm phi thường.",
+        keyPoints: [
+          "Xung đột nội tâm xé lòng giữa tiếng gọi con tim và mệnh lệnh danh dự khắc nghiệt."
+        ]
+      },
+      {
+        title: "Bí ẩn của làn nước",
+        author: "Bảo Ninh",
+        summary: "Truyện ngắn kể về nỗi đau ám ảnh khôn nguôi của người cha sau trận đại hồng thuỷ kinh hoàng: cứu được đứa con sơ sinh nhưng dòng nước lũ đã vĩnh viễn cuốn trôi người vợ và một người phụ nữ xa lạ. Dòng nước vừa là thiên tai tàn khốc vừa là chứng nhân cho sự hi sinh và nỗi đau câm lặng của kiếp người.",
+        keyPoints: [
+          "Bút pháp trần thuật hồi tưởng trầm buồn, giàu chất thơ và chiều sâu chiêm nghiệm về nỗi mất mát sau chiến tranh và bão lũ."
+        ]
+      }
+    ],
+    vietnamese: {
+      topic: "Câu rút gọn và Câu đặc biệt",
+      content: `
+        <div class="space-y-3 text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+          <p><strong>1. Câu rút gọn:</strong> Là câu bị lược bỏ một hoặc một số thành phần nòng cốt (chủ ngữ, vị ngữ) nhưng <em>hoàn toàn có thể khôi phục lại</em> dựa vào văn cảnh giao tiếp. Tác dụng: làm thông tin cô đọng, tránh lặp từ (VD: <em>— Bao giờ bạn đi? — Ngày mai.</em>).</p>
+          <p><strong>2. Câu đặc biệt:</strong> Là câu <em>không cấu tạo theo mô hình chủ ngữ – vị ngữ</em> thông thường và <em>không thể khôi phục</em> được thành phần C-V. Tác dụng: gọi đáp, bộc lộ cảm xúc, thông báo sự tồn tại hoặc xác định thời gian/nơi chốn (VD: <em>Ôi! Trời ơi! Mưa. Gió rét căm căm.</em>).</p>
+        </div>
+      `
+    },
+    writing: {
+      genre: "Viết bài văn phân tích một đoạn trích bi kịch",
+      outline: "Mở bài: Giới thiệu tác giả Sếch-xpia, vở kịch Rô-mê-ô và Giu-li-ét và đoạn trích. Thân bài: Phân tích hoàn cảnh ngặt nghèo của cuộc gặp gỡ → Phân tích xung đột giữa tình yêu say đắm và mối thù dòng tộc qua lời thoại hai nhân vật → Đánh giá nghệ thuật độc thoại, chỉ dẫn sân khấu và ngôn ngữ thơ mộng. Kết bài: Ý nghĩa thức tỉnh nhân văn và bài học nhân sinh sâu sắc."
+    },
+    speaking: {
+      task: "Thảo luận về cách đối diện với nỗi đau và vượt qua khủng hoảng tâm lí",
+      tips: "Chia sẻ chân thành, dùng ví dụ từ tác phẩm và đời sống thực tế, động viên tinh thần lạc quan và lắng nghe bằng sự thấu cảm."
+    },
+    quiz: [
+      {
+        q: "Điểm khác biệt bản chất nhất giữa câu rút gọn và câu đặc biệt trong tiếng Việt là gì?",
+        options: [
+          "Câu rút gọn dài hơn câu đặc biệt",
+          "Câu rút gọn có thể khôi phục lại thành phần chủ - vị nhờ ngữ cảnh, còn câu đặc biệt không có mô hình chủ - vị và không thể khôi phục",
+          "Câu đặc biệt luôn luôn có dấu chấm than ở cuối câu",
+          "Câu rút gọn chỉ được dùng trong thơ ca"
+        ],
+        answer: 1,
+        explain: "Bản chất: Câu rút gọn vốn có cấu trúc C-V nhưng bị tỉnh lược để ngắn gọn; Câu đặc biệt không hình thành theo cấu trúc C-V nên không thể thêm C-V vào được."
+      },
+      {
+        q: "Xung đột kịch trung tâm trong tác phẩm 'Rô-mê-ô và Giu-li-ét' của Shakespeare là gì?",
+        options: [
+          "Cuộc tranh giành kho báu vàng bạc",
+          "Khát vọng tình yêu tự do trong sáng đối lập gay gắt với mối thù truyền kiếp tàn bạo giữa hai dòng họ",
+          "Sự cạnh tranh quyền lực của hai vương triều",
+          "Mâu thuẫn thế hệ giữa cha mẹ và con cái về việc học hành"
+        ],
+        answer: 1,
+        explain: "Xung đột bi kịch cốt lõi là sự va đập giữa khát vọng yêu đương tự do cao đẹp của thế hệ trẻ với định kiến thù hận phong kiến mù quáng của hai dòng họ."
+      },
+      {
+        q: "Trong đoạn hội thoại: '— Bạn đang đọc sách gì đấy? — Truyện Kiều.', câu trả lời 'Truyện Kiều.' thuộc loại câu nào?",
+        options: ["Câu ghép chính phụ", "Câu rút gọn (lược bỏ chủ ngữ và vị ngữ: Mình đang đọc Truyện Kiều)", "Câu đặc biệt", "Câu phủ định"],
+        answer: 1,
+        explain: "Đây là câu rút gọn cả C và V, dựa vào ngữ cảnh câu hỏi trước đó ta dễ dàng khôi phục đầy đủ: '(Tôi đang đọc) Truyện Kiều.'."
+      },
+      {
+        q: "Tác dụng thanh lọc tâm hồn (Catharsis) của thể loại bi kịch đối với người xem là gì?",
+        options: [
+          "Khiến khán giả chán chường, thất vọng về cuộc đời",
+          "Làm cho người xem sợ hãi không dám ra đường",
+          "Nâng đỡ tâm hồn, khơi gợi lòng trắc ẩn, niềm tin vào cái đẹp cao thượng và ý chí đấu tranh loại trừ cái ác",
+          "Giải trí cười đùa sảng khoái"
+        ],
+        answer: 2,
+        explain: "Bi kịch không gieo rắc sự tuyệt vọng; cái chết của nhân vật cao thượng có sức mạnh thanh lọc tâm hồn, bừng tỉnh lương tri con người trước bất công."
+      }
+    ]
+  },
+
+  // BÀI 6
+  {
+    id: "bai-6",
+    volume: 2,
+    number: 6,
+    title: "Bài 6. Giải mã những bí mật",
+    genre: "Truyện trinh thám & Câu đơn, câu ghép",
+    pages: "Tập hai • Trang 6 – 30",
+    time: "12 tiết",
+    objectives: [
+      "Nhận biết và phân tích được đặc trưng của truyện trinh thám: tình huống bí ẩn, chuỗi manh mối li kì, phương pháp suy luận logic suy lí và cái kết bất ngờ hợp lí.",
+      "Cảm phục tài trí, khả năng quan sát nhạy bén và tinh thần thượng tôn công lí của các thám tử tài ba (Sherlock Holmes, Kỳ Phát).",
+      "Phân biệt chính xác câu đơn và câu ghép, nhận diện và sử dụng đúng các kiểu quan hệ ý nghĩa giữa các vế câu ghép."
+    ],
+    genreKnowledge: `
+      <div class="space-y-3 text-slate-700 dark:text-slate-300 text-sm leading-relaxed">
+        <p><strong class="text-rose-600 dark:text-rose-400">1. Đặc trưng của truyện trinh thám (Detective Fiction):</strong> Cốt truyện xoay quanh một vụ án hoặc bí ẩn hóc búa cần được giải mã. Trọng tâm của tác phẩm không nằm ở cảnh bạo lực mà ở <em>trò chơi trí tuệ</em>: quá trình thám tử thu thập dấu vết, loại suy giả thuyết và giải mã chân tướng sự thật.</p>
+        <p><strong class="text-rose-600 dark:text-rose-400">2. Kết cấu suy luận logic:</strong> Dấu vết tưởng chừng vụn vặt (vết đất cát, mẩu gọt bút chì, thói quen đi đứng) qua bàn tay phân tích khoa học sẽ trở thành bằng chứng thép vạch mặt thủ phạm.</p>
+      </div>
+    `,
+    readings: [
+      {
+        title: "Ba chàng sinh viên (Arthur Conan Doyle)",
+        author: "Arthur Conan Doyle (trích Những vụ án của Sherlock Holmes)",
+        summary: "Trước kì thi học bổng danh giá của trường đại học, một tập đề thi tiếng Hy Lạp bị xáo trộn kì lạ tại phòng giáo sư Soames. Ba sinh viên sống cùng tầng đều có dấu hiệu khả nghi. Bằng phương pháp quan sát siêu phàm các mẩu gọt bút chì, vết đất sét lạ trên bàn và đôi giày nhảy xa, Sherlock Holmes đã tìm ra thủ phạm là Gilchrist mà không làm tổn hại đến danh dự của chàng trai trẻ khi anh tự nguyện rút lui khỏi kì thi để chuộc lỗi.",
+        keyPoints: [
+          "Nghệ thuật quan sát vi mô: vụn than bút chì, phoi gọt, vết đất sét đỏ của bãi nhảy.",
+          "Phương pháp loại trừ logic chặt chẽ, loại bỏ hai sinh viên còn lại dựa trên chiều cao và tâm lí.",
+          "Ý nghĩa nhân văn: Holmes bảo vệ công lí đồng thời cứu rỗi lương tâm của một người trẻ lầm lỡ."
+        ]
+      },
+      {
+        title: "Bài hát đồng sáu xu",
+        author: "Agatha Christie",
+        summary: "Nữ văn sĩ trinh thám số một thế giới dẫn dắt người xem vào vụ án mạng kì bí xoay quanh một bài đồng dao thiếu nhi, nơi mỗi chi tiết tưởng như ngây thơ lại là một mắt xích vạch trần âm mưu thâm hiểm.",
+        keyPoints: [
+          "Bố cục cài cắm manh mối giả (Red Herring) đánh lừa sự phán đoán của người đọc.",
+          "Sự suy luận tâm lí tội phạm sắc sảo."
+        ]
+      },
+      {
+        title: "Phạm Xuân Ẩn – tên người như cuộc đời (trích)",
+        author: "Nguyễn Thị Ngọc Hải",
+        summary: "Văn bản kí chân dung phi hư cấu tái hiện cuộc đời huyền thoại của nhà báo, điệp viên tình báo Phạm Xuân Ẩn - người mang vỏ bọc hoàn hảo hoạt động giữa sào huyệt kẻ thù với sự mưu lược phi thường và lòng yêu nước son sắt.",
+        keyPoints: [
+          "Tài trí ứng biến linh hoạt, sự bình tĩnh xuất thần giữa hiểm nguy rình rập.",
+          "Nhân cách thanh cao, trọn tình trọn nghĩa với đất nước."
+        ]
+      }
+    ],
+    vietnamese: {
+      topic: "Câu đơn và Câu ghép & Các quan hệ ngữ nghĩa",
+      content: `
+        <div class="space-y-3 text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+          <p><strong>1. Câu đơn:</strong> Chỉ có 1 cụm Chủ ngữ – Vị ngữ (C-V) làm nòng cốt diễn đạt một sự việc trọn vẹn.</p>
+          <p><strong>2. Câu ghép:</strong> Có từ 2 cụm C-V trở lên, mỗi cụm tạo thành một vế câu và không bao chứa nhau.</p>
+          <p><strong>3. Các kiểu quan hệ ngữ nghĩa giữa các vế câu ghép:</strong></p>
+          <ul class="list-disc pl-5 space-y-1">
+            <li><strong>Nguyên nhân – Kết quả:</strong> <em>Vì... nên...; Do... cho nên...</em></li>
+            <li><strong>Điều kiện / Giả thiết – Kết quả:</strong> <em>Nếu... thì...; Hễ... thì...</em></li>
+            <li><strong>Tương phản:</strong> <em>Tuy... nhưng...; Mặc dù... song...</em></li>
+            <li><strong>Tăng tiến:</strong> <em>Không những... mà còn...; Càng... càng...</em></li>
+            <li><strong>Tiếp nối / Lựa chọn:</strong> <em>hoặc, hay, rồi...</em></li>
+          </ul>
+        </div>
+      `
+    },
+    writing: {
+      genre: "Kể một câu chuyện sáng tạo (có yếu tố bí ẩn, trinh thám hoặc phiêu lưu)",
+      outline: "Mở bài: Thiết lập tình huống bất thường gợi trí tò mò (vật phẩm bị mất, hiện trường bí hiểm). Thân bài: Cuộc điều tra tìm kiếm manh mối → Phát hiện những dấu vết đánh lạc hướng → Phút thắt nút căng thẳng → Suy luận logic tìm ra sự thật. Kết bài: Chân tướng bất ngờ được phơi bày và bài học rút ra."
+    },
+    speaking: {
+      task: "Kể miệng một câu chuyện trinh thám/suy luận logic trước tập thể",
+      tips: "Điều tiết nhịp điệu hồi hộp, nhấn giọng ở các chi tiết then chốt, biểu cảm gương mặt hấp dẫn và kết thúc bất ngờ thuyết phục."
+    },
+    quiz: [
+      {
+        q: "Manh mối vật chất nào đã giúp Sherlock Holmes xác định được Gilchrist là người đã lẻn vào phòng sao chép đề thi trong 'Ba chàng sinh viên'?",
+        options: [
+          "Một chiếc khăn tay thêu tên",
+          "Mẩu gọt bút chì, vết rạch trên bàn và nắm đất sét đỏ đặc trưng của hố nhảy xa bám trên giày",
+          "Dấu vân tay trên cửa kính",
+          "Một bức thư thú tội để lại"
+        ],
+        answer: 1,
+        explain: "Holmes đã thu thập phoi gọt bút chì, vụn than chì gãy và đặc biệt là đất sét dẻo ở hố cát nhảy xa vương lại trên bàn và trong rèm cửa để khoanh vùng chính xác vận động viên nhảy xa Gilchrist."
+      },
+      {
+        q: "Câu văn: 'Tuy trời mưa rất to nhưng các thám tử vẫn kiên trì bám sát hiện trường.' là câu gì và thể hiện quan hệ ý nghĩa nào?",
+        options: [
+          "Câu đơn mở rộng thành phần",
+          "Câu ghép có quan hệ tương phản (nghịch đối)",
+          "Câu ghép có quan hệ nguyên nhân - kết quả",
+          "Câu đặc biệt"
+        ],
+        answer: 1,
+        explain: "Câu có 2 cụm C-V ('trời / mưa rất to' và 'các thám tử / vẫn kiên trì...') nối với nhau bằng cặp quan hệ từ 'Tuy... nhưng...' biểu thị quan hệ tương phản."
+      },
+      {
+        q: "Yếu tố cốt lõi tạo nên sức lôi cuốn trí tuệ của một tác phẩm truyện trinh thám chân chính là gì?",
+        options: [
+          "Những cảnh rượt đuổi giật gân, bạo lực kinh hoàng",
+          "Nghệ thuật cài cắm manh mối vi mô và quá trình suy luận logic sắc bén của nhà điều tra",
+          "Sự can thiệp của phép thuật thần thánh",
+          "Độ dài hàng nghìn trang sách"
+        ],
+        answer: 1,
+        explain: "Truyện trinh thám là trò chơi trí tuệ đỉnh cao, người đọc bị cuốn hút bởi nghệ thuật phân tích logic khoa học và khả năng liên kết mắt xích manh mối của thám tử."
+      },
+      {
+        q: "Cách cư xử của Sherlock Holmes đối với Gilchrist ở cuối truyện 'Ba chàng sinh viên' thể hiện phẩm chất gì của ông?",
+        options: [
+          "Sự kiêu ngạo muốn khoe khoang tài năng",
+          "Sự nghiêm khắc lạnh lùng tống giam thủ phạm",
+          "Lòng nhân hậu, cao thượng, cho kẻ lầm lỡ một cơ hội sửa sai để làm lại cuộc đời",
+          "Sự thờ ơ không quan tâm đến kết quả"
+        ],
+        answer: 2,
+        explain: "Holmes kín đáo khuyên giải, giúp Gilchrist tự nhận thức lỗi lầm và chọn con đường sang Nam Phi lập nghiệp, cứu lấy cả tương lai của một thanh niên có tài."
+      }
+    ]
+  },
+
+  // BÀI 7
+  {
+    id: "bai-7",
+    volume: 2,
+    number: 7,
+    title: "Bài 7. Hồn thơ muôn điệu",
+    genre: "Thơ hiện đại (6, 7, 8 chữ); Kết cấu, chủ đề & Sự phát triển từ vựng",
+    pages: "Tập hai • Trang 31 – 54",
+    time: "12 tiết",
+    objectives: [
+      "Nhận biết và phân tích được đặc điểm của thơ 6, 7, 8 chữ hiện đại: nhịp điệu linh hoạt, vần chân vần lưng phong phú, cấu tứ độc đáo và sự vận động của mạch cảm xúc.",
+      "Cảm nhận sâu sắc tình yêu quê hương, niềm tự hào thiêng liêng đối với tiếng Việt qua thi phẩm bất hủ của Lưu Quang Vũ và nét xuân thôn dã của Nguyễn Bính.",
+      "Hiểu các phương thức phát triển từ vựng tiếng Việt: chuyển nghĩa từ vựng (ẩn dụ, hoán dụ), tạo từ mới và mượn từ ngữ nước ngoài."
+    ],
+    genreKnowledge: `
+      <div class="space-y-3 text-slate-700 dark:text-slate-300 text-sm leading-relaxed">
+        <p><strong class="text-rose-600 dark:text-rose-400">1. Đặc điểm thơ 6, 7, 8 chữ hiện đại:</strong> Không gò bó bởi luật thi Đường cổ điển, số dòng trong khổ và cách gieo vần, ngắt nhịp biến hoá uyển chuyển theo dòng cảm xúc nội tâm của nhà thơ.</p>
+        <p><strong class="text-rose-600 dark:text-rose-400">2. Kết cấu và Chủ đề của bài thơ:</strong></p>
+        <ul class="list-disc pl-5 space-y-1">
+          <li><strong>Kết cấu:</strong> Là trật tự tổ chức các phần, hình ảnh, mạch cảm xúc từ mở đầu, phát triển đến cao trào và lắng đọng.</li>
+          <li><strong>Chủ đề:</strong> Là thông điệp nhân sinh, vấn đề cốt lõi mà bài thơ gợi mở cho tâm hồn độc giả.</li>
+        </ul>
+      </div>
+    `,
+    readings: [
+      {
+        title: "Tiếng Việt",
+        author: "Lưu Quang Vũ",
+        summary: "Thi phẩm bất hủ viết bằng thể thơ 8 chữ ngợi ca vẻ đẹp bình dị mà huyền diệu, sức sống dẻo dai trường tồn của tiếng mẹ đẻ qua nghìn năm bão táp lịch sử. Tiếng Việt gắn liền với bùn đất quê hương, lời ru của mẹ, ca dao ngàn đời và là điểm tựa tâm hồn của người Việt ở khắp năm châu.",
+        keyPoints: [
+          "Hình tượng tiếng Việt phong phú: 'như bùn qua nắng lửa', 'như lụa mềm', 'vút ngàn cao'.",
+          "Mối gắn kết máu thịt giữa tiếng nói dân tộc với vận mệnh độc lập của Tổ quốc.",
+          "Cảm xúc thiết tha, tự hào và trách nhiệm giữ gìn sự trong sáng của tiếng Việt."
+        ]
+      },
+      {
+        title: "Mưa xuân",
+        author: "Nguyễn Bính",
+        summary: "Bài thơ kể về tâm trạng hồi hộp, háo hức chờ đợi và nỗi buồn tủi hụt hẫng của cô thôn nữ hội đồng làng khi cuộc hẹn hò trong đêm hội chèo xuân không thành. Cảnh mưa bụi giăng mắc, hoa xoan rụng tơi bời hoà quyện với nỗi niềm tương tư mộc mạc đậm chất ca dao.",
+        keyPoints: [
+          "Không gian hội xuân làng quê Bắc Bộ: mưa xuân phơi phới, hoa xoan lớp lớp rụng.",
+          "Diễn biến tâm trạng tinh tế: từ rạo rực thẹn thùng đến khắc khoải bơ vơ.",
+          "Chất liệu văn hoá dân gian đậm đà trong phong cách thơ Nguyễn Bính."
+        ]
+      },
+      {
+        title: "Một kiểu phát biểu luận đề độc đáo của Xuân Diệu ở bài thơ “Vội vàng”",
+        author: "Phan Huy Dũng",
+        summary: "Bài tiểu luận phân tích cách lập luận độc đáo bằng cảm xúc và hình ảnh của 'nhà thơ mới nhất trong các nhà thơ mới' về triết lí sống tận hưởng, trân quý từng giây phút tuổi trẻ.",
+        keyPoints: [
+          "Phân tích sự kết hợp giữa tư duy luận lí sắc sảo và cảm xúc nồng nàn đắm say."
+        ]
+      }
+    ],
+    vietnamese: {
+      topic: "Sự phát triển của từ vựng tiếng Việt",
+      content: `
+        <div class="space-y-3 text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+          <p><strong>1. Phát triển nghĩa của từ:</strong> Từ nghĩa gốc ban đầu, tạo ra các nghĩa chuyển nhờ phương thức <em>ẩn dụ</em> (dựa trên sự tương đồng: <em>mũi dao, chân bàn</em>) hoặc <em>hoán dụ</em> (dựa trên sự tương cận: <em>áo chàm, đầu bạc</em>).</p>
+          <p><strong>2. Tạo từ ngữ mới:</strong> Ghép các yếu tố tiếng Việt hoặc dùng yếu tố gốc Hán để tạo từ phù hợp với thời đại (VD: <em>kinh tế số, trí tuệ nhân tạo, công nghệ xanh</em>).</p>
+          <p><strong>3. Mượn từ ngữ tiếng nước ngoài:</strong> Tiếp thu từ ngữ quốc tế đáp ứng nhu cầu hội nhập (VD: <em>internet, fanpage, marketing, vaccine</em>).</p>
+        </div>
+      `
+    },
+    writing: {
+      genre: "Tập làm thơ tám chữ hoặc Viết đoạn văn ghi lại cảm nghĩ về một bài thơ tám chữ",
+      outline: "Mở đoạn: Nêu ấn tượng bao quát về bài thơ tám chữ đã chọn. Thân đoạn: Phân tích 2-3 nét đặc sắc về hình ảnh, cách ngắt nhịp, gieo vần chân/lưng và tác dụng bộc lộ cảm xúc sâu sắc. Kết đoạn: Khái quát ý nghĩa thi phẩm đối với bản thân."
+    },
+    speaking: {
+      task: "Thảo luận về lòng tự hào và trách nhiệm giữ gìn sự trong sáng của tiếng Việt",
+      tips: "Dẫn các ví dụ thực tế về hiện tượng lạm dụng tiếng lóng, pha tạp tiếng Anh sai chỗ; nêu giải pháp rèn luyện ngôn ngữ đẹp từ học đường."
+    },
+    quiz: [
+      {
+        q: "Trong bài thơ 'Tiếng Việt' của Lưu Quang Vũ, hình tượng tiếng Việt được so sánh với những hình ảnh nào sau đây?",
+        options: [
+          "Đá hoa cương lạnh lùng và sắt thép công nghiệp",
+          "Đất cày, lụa mềm, bùn qua nắng lửa và cánh buồm lộng gió",
+          "Những toà nhà cao tầng chọc trời",
+          "Những cỗ máy vi tính hiện đại"
+        ],
+        answer: 1,
+        explain: "Lưu Quang Vũ sử dụng những so sánh giàu chất đất đai quê hương: 'Ôi tiếng Việt như bùn và như lụa / Rửa nắng mưa qua bão tố nghìn đời' để tôn vinh sự mộc mạc mà kì diệu của tiếng mẹ đẻ."
+      },
+      {
+        q: "Hai phương thức chuyển nghĩa chủ yếu giúp phát triển nghĩa của từ vựng tiếng Việt là gì?",
+        options: [
+          "Nhân hoá và chơi chữ",
+          "Ẩn dụ và hoán dụ",
+          "So sánh và điệp từ",
+          "Nói quá và nói giảm nói tránh"
+        ],
+        answer: 1,
+        explain: "Từ vựng phát triển nghĩa chủ yếu qua hai con đường tu từ học: ẩn dụ (dựa trên liên tưởng tương đồng) và hoán dụ (dựa trên liên tưởng tiếp cận gần gũi)."
+      },
+      {
+        q: "Không gian làng quê trong bài thơ 'Mưa xuân' của Nguyễn Bính được khắc hoạ với những hình ảnh đặc trưng nào?",
+        options: [
+          "Phố thị đông đúc còi xe rộn rã",
+          "Mưa bụi ấm áp, hoa xoan rụng lớp lớp bên đường, bến đò, con đê và đêm hội chèo làng",
+          "Rừng tuyết trắng xóa mùa đông lạnh buốt",
+          "Bãi biển đầy cát vàng và sóng lớn"
+        ],
+        answer: 1,
+        explain: "Nguyễn Bính được mệnh danh là thi sĩ của đồng quê Bắc Bộ; 'Mưa xuân' hội tụ cảnh sắc mộc mạc: mưa phùn giăng mắc, hoa xoan rụng, cô gái đi xem hội chèo làng."
+      },
+      {
+        q: "Từ 'chuột' trong 'chuột máy tính' là ví dụ minh hoạ cho hiện tượng phát triển từ vựng nào?",
+        options: [
+          "Tạo ra một từ ghép hoàn toàn mới",
+          "Mượn nguyên dạng chữ viết của nước ngoài",
+          "Phát triển nghĩa mới của từ có sẵn dựa trên phương thức ẩn dụ (tương đồng về hình dáng)",
+          "Từ tượng thanh bắt chước tiếng kêu"
+        ],
+        answer: 2,
+        explain: "Từ nghĩa gốc 'con chuột' (loài động vật gặm nhấm), dựa trên sự tương đồng hình dáng nhỏ gọn có dây giống đuôi, tiếng Việt đã phát triển nghĩa mới 'chuột máy tính' (thiết bị trỏ)."
+      }
+    ]
+  },
+
+  // BÀI 8
+  {
+    id: "bai-8",
+    volume: 2,
+    number: 8,
+    title: "Bài 8. Tiếng nói của lương tri",
+    genre: "Nghị luận xã hội & Tên viết tắt của tổ chức quốc tế",
+    pages: "Tập hai • Trang 55 – 78",
+    time: "12 tiết",
+    objectives: [
+      "Nhận biết và phân tích được đặc trưng của văn bản nghị luận xã hội: luận đề cấp thiết, lập luận sắc bén, hệ thống chứng cứ xác thực mang tính toàn cầu.",
+      "Thấu hiểu mối hiểm hoạ diệt vong từ chiến tranh hạt nhân và biến đổi khí hậu, nâng cao ý thức trách nhiệm công dân toàn cầu bảo vệ hoà bình và hành tinh xanh.",
+      "Nắm vững quy tắc viết hoa, tra cứu và sử dụng tên viết tắt của các tổ chức quốc tế phổ biến (UN, UNESCO, UNICEF, ASEAN, WHO)."
+    ],
+    genreKnowledge: `
+      <div class="space-y-3 text-slate-700 dark:text-slate-300 text-sm leading-relaxed">
+        <p><strong class="text-rose-600 dark:text-rose-400">1. Đặc điểm nghị luận xã hội tầm quốc tế:</strong> Bàn về những vấn đề sống còn liên quan đến vận mệnh nhân loại (hoà bình, giải trừ vũ khí hạt nhân, biến đổi khí hậu, đói nghèo, bảo vệ trẻ em). Văn bản kết hợp lập luận chặt chẽ với số liệu khoa học xác thực và cảm xúc nhân đạo nồng nàn.</p>
+        <p><strong class="text-rose-600 dark:text-rose-400">2. Nghệ thuật đối lập tương phản:</strong> Sử dụng sự tương phản ghê gớm giữa chi phí khổng lồ cho vũ khí huỷ diệt với số tiền khiêm tốn đủ cứu sống hàng triệu trẻ em nghèo đói để thức tỉnh lương tâm nhân loại.</p>
+      </div>
+    `,
+    readings: [
+      {
+        title: "Đấu tranh cho một thế giới hoà bình (trích)",
+        author: "Gabriel García Márquez",
+        summary: "Nhà văn Colombia đoạt giải Nobel cảnh báo nguy cơ chiến tranh hạt nhân đang đe doạ huỷ diệt toàn bộ sự sống trên Trái Đất. Ông so sánh chi phí vũ khí với chi phí y tế, giáo dục cứu trợ nhân loại; đồng thời kêu gọi toàn thế giới lên tiếng ngăn chặn thảm hoạ, đề xuất mở một 'nhà băng trí nhớ' để các thế hệ tương lai biết rằng từng có một nền văn minh rực rỡ bị huỷ diệt chỉ vì thói dã man của chiến tranh.",
+        keyPoints: [
+          "Con số thống kê choáng ngợp: kho vũ khí hạt nhân đủ sức xoá sổ hành tinh nhiều lần.",
+          "Nghệ thuật so sánh tương phản sắc bén giữa phát triển xã hội và chạy đua vũ trang.",
+          "Lời kêu gọi khẩn thiết hành động vì sự tồn vong của nhân loại."
+        ]
+      },
+      {
+        title: "Biến đổi khí hậu – mối đe doạ sự tồn vong của hành tinh chúng ta",
+        author: "Tổng Thư kí Liên hợp quốc António Guterres",
+        summary: "Thông điệp báo động đỏ về tình trạng nóng lên toàn cầu, băng tan, bão lũ và cháy rừng tàn khốc, hối thúc các quốc gia cắt giảm khí thải nhà kính và chuyển đổi sang năng lượng sạch tái tạo.",
+        keyPoints: [
+          "Tính cấp bách không thể trì hoãn của cuộc khủng hoảng môi trường.",
+          "Trách nhiệm chung nhưng có phân hoá giữa các nước phát triển và đang phát triển."
+        ]
+      },
+      {
+        title: "Bài ca chúc Tết thanh niên",
+        author: "Chí sĩ Phan Bội Châu",
+        summary: "Bài thơ hiệu triệu tuổi trẻ thức tỉnh tinh thần tự tôn dân tộc, xoá bỏ lối sống ươn hèn thụ động, dấn thân học tập và đấu tranh vì độc lập, tiến bộ của giống nòi.",
+        keyPoints: [
+          "Giọng điệu sục sôi, nhiệt huyết của bậc chí sĩ cách mạng tiền bối."
+        ]
+      }
+    ],
+    vietnamese: {
+      topic: "Tên viết tắt của các tổ chức quốc tế",
+      content: `
+        <div class="space-y-3 text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+          <p><strong>1. Quy tắc viết tắt:</strong> Lấy các chữ cái đầu tiên trong tên tiếng Anh đầy đủ của tổ chức, viết hoa toàn bộ và không có dấu chấm ngăn cách.</p>
+          <p><strong>2. Các tổ chức quốc tế phổ biến:</strong></p>
+          <ul class="list-disc pl-5 space-y-1">
+            <li><strong>UN (United Nations):</strong> Liên hợp quốc.</li>
+            <li><strong>UNESCO:</strong> Tổ chức Giáo dục, Khoa học và Văn hoá Liên hợp quốc.</li>
+            <li><strong>UNICEF:</strong> Quỹ Nhi đồng Liên hợp quốc.</li>
+            <li><strong>WHO:</strong> Tổ chức Y tế Thế giới.</li>
+            <li><strong>ASEAN:</strong> Hiệp hội các quốc gia Đông Nam Á.</li>
+          </ul>
+          <p><strong>3. Lưu ý:</strong> Lần đầu xuất hiện trong bài viết cần ghi rõ tên đầy đủ kèm tên viết tắt trong ngoặc đơn.</p>
+        </div>
+      `
+    },
+    writing: {
+      genre: "Viết bài văn nghị luận về một vấn đề xã hội có ý nghĩa toàn cầu hoặc đời sống",
+      outline: "Mở bài: Nêu vấn đề nghị luận mang tính cấp thiết (rác thải nhựa, biến đổi khí hậu, bạo lực học đường). Thân bài: Giải thích khái niệm → Phân tích thực trạng với số liệu cụ thể → Làm rõ nguyên nhân sâu xa → Đánh giá hậu quả nghiêm trọng → Đề xuất hệ thống giải pháp nhiều cấp độ. Kết bài: Khẳng định thông điệp và lời kêu gọi trách nhiệm cá nhân."
+    },
+    speaking: {
+      task: "Thuyết trình bài phát biểu kêu gọi hành động bảo vệ môi trường hoặc hoà bình thế giới",
+      tips: "Dùng giọng điệu thuyết phục, đanh thép, kết hợp trình chiếu infographic hoặc hình ảnh tác động thị giác mạnh mẽ."
+    },
+    quiz: [
+      {
+        q: "Tổ chức UNESCO là tên viết tắt của cơ quan quốc tế nào?",
+        options: [
+          "Quỹ Tiền tệ Quốc tế",
+          "Tổ chức Giáo dục, Khoa học và Văn hoá của Liên hợp quốc",
+          "Tổ chức Y tế Thế giới",
+          "Hiệp hội các quốc gia Đông Nam Á"
+        ],
+        answer: 1,
+        explain: "UNESCO là viết tắt của 'United Nations Educational, Scientific and Cultural Organization' (Tổ chức Giáo dục, Khoa học và Văn hoá Liên hợp quốc)."
+      },
+      {
+        q: "Trong bài 'Đấu tranh cho một thế giới hoà bình', Márquez đã sử dụng phép đối lập nào để lên án sự phi lí của chạy đua vũ trang?",
+        options: [
+          "Đối lập giữa mùa đông lạnh và mùa hè nóng",
+          "Đối lập giữa chi phí khổng lồ cho vũ khí hạt nhân với chi phí giải quyết nạn đói nghèo, dịch bệnh của trẻ em",
+          "Đối lập giữa máy bay và xe đạp",
+          "Đối lập giữa nông thôn và thành thị"
+        ],
+        answer: 1,
+        explain: "Tác giả chỉ ra sự phi lí kinh hoàng: giá trị 10 chiếc tàu ngầm hạt nhân mang vũ khí đủ nuôi sống toàn bộ trẻ em nghèo khổ trên thế giới."
+      },
+      {
+        q: "Lời kêu gọi mở một 'nhà băng trí nhớ' của nhà văn Márquez nhằm mục đích gì?",
+        options: [
+          "Để cất giữ tiền tiết kiệm sau chiến tranh",
+          "Để thế hệ tương lai biết rằng nhân loại từng có nền văn minh rực rỡ và biết thủ phạm đã huỷ diệt sự sống là chiến tranh hạt nhân",
+          "Để lưu trữ các bộ phim khoa học viễn tưởng",
+          "Để chế tạo máy tính thông minh hơn"
+        ],
+        answer: 1,
+        explain: "Nhà băng trí nhớ là lời cảnh báo đanh thép: nếu thảm hoạ hạt nhân xảy ra, sự sống tuyệt diệt, kí ức lưu lại sẽ tố cáo tội ác man rợ của những kẻ hiếu chiến."
+      },
+      {
+        q: "Theo quy chuẩn tiếng Việt, khi một tên viết tắt của tổ chức quốc tế xuất hiện lần đầu tiên trong bài viết, người viết cần làm gì?",
+        options: [
+          "Chỉ viết tắt không cần giải thích",
+          "Viết tên đầy đủ kèm theo chữ viết tắt trong ngoặc đơn",
+          "Dịch sang tiếng Pháp",
+          "Ghi số điện thoại của tổ chức đó"
+        ],
+        answer: 1,
+        explain: "Quy chuẩn xuất bản yêu cầu lần đầu tiên nhắc đến phải ghi rõ tên đầy đủ kèm chữ viết tắt trong ngoặc đơn (VD: Liên hợp quốc (UN)) để bạn đọc hiểu rõ."
+      }
+    ]
+  },
+
+  // BÀI 9
+  {
+    id: "bai-9",
+    volume: 2,
+    number: 9,
+    title: "Bài 9. Đi và suy ngẫm",
+    genre: "Văn bản thông tin giới thiệu di tích, danh lam & Biến đổi cấu trúc câu",
+    pages: "Tập hai • Trang 79 – 102",
+    time: "12 tiết",
+    objectives: [
+      "Nhận biết và phân tích được đặc điểm của văn bản thông tin thuyết minh đa phương thức giới thiệu danh lam thắng cảnh và di tích lịch sử.",
+      "Cảm nhận sâu sắc vẻ đẹp non sông gấm vóc, chiều sâu lịch sử văn hoá của các di sản dân tộc (Yên Tử, Hoàng thành Thăng Long).",
+      "Nắm vững các phương thức biến đổi và mở rộng cấu trúc câu (thay đổi trật tự từ, chuyển chủ động sang bị động, mở rộng cụm C-V) để nâng cao hiệu quả diễn đạt."
+    ],
+    genreKnowledge: `
+      <div class="space-y-3 text-slate-700 dark:text-slate-300 text-sm leading-relaxed">
+        <p><strong class="text-rose-600 dark:text-rose-400">1. Đặc điểm văn bản giới thiệu di tích, danh lam thắng cảnh:</strong> Cung cấp thông tin chuẩn xác về vị trí địa lí, bối cảnh lịch sử, cấu trúc kiến trúc, cảnh quan và giá trị văn hoá tâm linh của di sản. Thường sử dụng hình thức <em>thuyết minh đa phương thức</em> (chữ viết kết hợp bản đồ, sơ đồ mặt bằng, hình ảnh chụp thực tế).</p>
+        <p><strong class="text-rose-600 dark:text-rose-400">2. Phương pháp đọc hiểu:</strong> Phân biệt rõ thông tin khách quan (dữ liệu lịch sử, kích thước, niên đại) với lời bình luận, đánh giá cảm xúc của tác giả.</p>
+      </div>
+    `,
+    readings: [
+      {
+        title: "Yên Tử, núi thiêng",
+        author: "Thi Sảnh",
+        summary: "Văn bản đưa người đọc vào hành trình chiêm bái non thiêng Yên Tử (Quảng Ninh) - cái nôi của Thiền phái Trúc Lâm do Phật hoàng Trần Nhân Tông sáng lập. Bài viết miêu tả cảnh sắc hùng vĩ của núi rừng mây mù bao phủ, tháp Huệ Quang cổ kính và chùa Đồng trên đỉnh cao ngất, khơi gợi niềm tự hào về cội nguồn tâm linh dân tộc.",
+        keyPoints: [
+          "Hành trình leo núi kết hợp khảo sát di tích và cảm nhận không gian tâm linh thanh tịnh.",
+          "Ý nghĩa lịch sử của Phật hoàng Trần Nhân Tông - vị vua hiền từ bỏ ngai vàng tìm về chân lí giải thoát.",
+          "Sự hoà quyện tuyệt mĩ giữa thiên nhiên kì vĩ và kiến trúc tâm linh cổ truyền."
+        ]
+      },
+      {
+        title: "Văn hoá hoa – cây cảnh",
+        author: "GS. Trần Quốc Vượng",
+        summary: "Văn bản nghiên cứu văn hoá sâu sắc lí giải thú chơi hoa và cây cảnh của người Việt không đơn thuần là thú vui tao nhã mà là một nét văn hoá triết lí, thể hiện đạo lí sống thuận hoà với thiên nhiên và sự tinh tế trong tâm hồn dân tộc.",
+        keyPoints: [
+          "Cây cảnh phản ánh phẩm cách, khí tiết và triết lí sống nhân văn của con người Việt Nam."
+        ]
+      },
+      {
+        title: "Tình sông núi",
+        author: "Trần Mai Ninh",
+        summary: "Bài thơ mang âm hưởng hào sảng, cuồn cuộn sức sống ca ngợi dải đất miền Trung kiên cường và tình cảm gắn bó máu thịt với sông núi quê hương trong những năm đầu kháng chiến chống Pháp.",
+        keyPoints: [
+          "Nhịp thơ dồn dập, hình ảnh gân guốc thể hiện lòng yêu nước mãnh liệt."
+        ]
+      }
+    ],
+    vietnamese: {
+      topic: "Biến đổi và Mở rộng cấu trúc câu",
+      content: `
+        <div class="space-y-3 text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+          <p><strong>1. Thay đổi trật tự từ:</strong> Nhấn mạnh thông tin trọng tâm bằng cách đưa thành phần muốn nhấn mạnh lên đầu câu (VD: <em>Nổi tiếng nhất là chùa Đồng trên đỉnh Yên Tử.</em>).</p>
+          <p><strong>2. Chuyển câu chủ động thành bị động (hoặc ngược lại):</strong> Đổi góc nhìn và tiêu điểm thông tin từ chủ thể hành động sang đối tượng tiếp nhận (VD: <em>Chùa Một Cột được vua Lý Thái Tông xây dựng năm 1049.</em>).</p>
+          <p><strong>3. Mở rộng thành phần câu:</strong> Dùng cụm từ hoặc cụm C-V làm thành phần phụ (trạng ngữ, khởi ngữ, định ngữ) giúp câu văn cụ thể, sinh động và chính xác về bối cảnh thời gian, không gian.</p>
+        </div>
+      `
+    },
+    writing: {
+      genre: "Viết bài văn thuyết minh về một danh lam thắng cảnh hoặc di tích lịch sử",
+      outline: "Mở bài: Giới thiệu tên gọi, vị trí và ấn tượng bao quát về thắng cảnh/di tích. Thân bài: Nêu lịch sử hình thành và truyền thuyết gắn liền → Miêu tả chi tiết đường đi, cấu trúc các công trình kiến trúc, cảnh quan → Khẳng định giá trị văn hoá, lịch sử và tiềm năng du lịch. Kết bài: Nêu ý thức bảo tồn và niềm tự hào di sản quê hương."
+    },
+    speaking: {
+      task: "Thuyết minh hướng dẫn viên du lịch giới thiệu một di tích lịch sử địa phương",
+      tips: "Nhập vai tự nhiên, sử dụng sơ đồ tham quan hoặc hình ảnh minh hoạ, truyền tải cảm xúc tự hào và giải đáp thân thiện các câu hỏi của du khách."
+    },
+    quiz: [
+      {
+        q: "Quần thể di tích danh thắng Yên Tử gắn liền với sự nghiệp tu hành và sáng lập dòng thiền nào của Phật hoàng Trần Nhân Tông?",
+        options: [
+          "Thiền phái Tì-ni-đa-lưu-chi",
+          "Thiền phái Trúc Lâm Yên Tử",
+          "Phái Mật tông Tây Tạng",
+          "Phái Thiền Tào Động"
+        ],
+        answer: 1,
+        explain: "Phật hoàng Trần Nhân Tông sau khi lãnh đạo quân dân đánh tan giặc Mông Cổ đã lên Yên Tử xuất gia, thống nhất các dòng thiền lập nên Thiền phái Trúc Lâm mang bản sắc Phật giáo Việt Nam."
+      },
+      {
+        q: "Thao tác biến đổi câu: 'Vua Lý Thái Tổ dời đô về Thăng Long năm 1010' thành 'Năm 1010, vua Lý Thái Tổ dời đô về Thăng Long' có tác dụng gì?",
+        options: [
+          "Làm cho câu văn sai ngữ pháp",
+          "Đưa trạng ngữ thời gian lên đầu câu nhằm nhấn mạnh mốc thời gian lịch sử trọng đại",
+          "Biến câu đơn thành câu ghép",
+          "Làm câu văn ngắn hơn"
+        ],
+        answer: 1,
+        explain: "Việc thay đổi trật tự từ, đảo trạng ngữ chỉ thời gian 'Năm 1010' lên đầu câu nhằm làm nổi bật tiêu điểm thời gian lịch sử của sự kiện dời đô."
+      },
+      {
+        q: "Đặc trưng nổi bật của văn bản thuyết minh đa phương thức giới thiệu danh lam thắng cảnh là gì?",
+        options: [
+          "Chỉ toàn là những bài thơ hư cấu tưởng tượng",
+          "Kết hợp hài hoà giữa chữ viết mô tả thông tin với hình ảnh thực tế, sơ đồ mặt bằng và bản đồ chỉ dẫn",
+          "Chỉ dùng các phương trình toán học",
+          "Không có bất kì thông tin thực tế nào"
+        ],
+        answer: 1,
+        explain: "Thuyết minh đa phương thức tận dụng kênh chữ và kênh hình (ảnh chụp, bản đồ, sơ đồ) giúp người đọc hình dung trực quan, chính xác về di tích."
+      },
+      {
+        q: "Theo GS. Trần Quốc Vượng trong 'Văn hoá hoa – cây cảnh', thú chơi hoa và cây cảnh của người Việt phản ánh nét đẹp gì?",
+        options: [
+          "Sự lãng phí tiền bạc của giới quý tộc",
+          "Tâm hồn tinh tế, triết lí sống thuận hoà với tự nhiên và sự thanh tao trong lối sống dân tộc",
+          "Kĩ thuật lai tạo giống cây trồng công nghiệp",
+          "Sự đối đầu chinh phục tự nhiên"
+        ],
+        answer: 1,
+        explain: "Chơi cây cảnh ở Việt Nam là một nghệ thuật sống triết lí, thể hiện sự giao hoà âm dương, hướng thiện và thái độ tôn trọng tự nhiên của cha ông."
+      }
+    ]
+  },
+
+  // BÀI 10
+  {
+    id: "bai-10",
+    volume: 2,
+    number: 10,
+    title: "Bài 10. Văn học – lịch sử tâm hồn",
+    genre: "Đọc mở rộng, Lịch sử văn học & Dự án đọc sách, phỏng vấn",
+    pages: "Tập hai • Trang 103 – 125",
+    time: "12 tiết",
+    objectives: [
+      "Hệ thống hoá tiến trình lịch sử văn học Việt Nam qua các thời kì: văn học dân gian, văn học trung đại (chữ Hán, chữ Nôm) và văn học hiện đại chữ Quốc ngữ.",
+      "Hiểu mối quan hệ sâu sắc giữa văn học và đời sống tinh thần dân tộc: văn học là tấm gương phản chiếu lịch sử tâm hồn của con người Việt Nam qua thăng trầm thời đại.",
+      "Triển khai dự án đọc sách cá nhân và nhóm; rèn luyện kĩ năng phỏng vấn chuyên nghiệp, quảng bá lan toả văn hoá đọc trong học đường."
+    ],
+    genreKnowledge: `
+      <div class="space-y-3 text-slate-700 dark:text-slate-300 text-sm leading-relaxed">
+        <p><strong class="text-rose-600 dark:text-rose-400">1. Tiến trình Lịch sử Văn học Việt Nam:</strong></p>
+        <ul class="list-disc pl-5 space-y-1">
+          <li><strong>Văn học dân gian:</strong> Sáng tác truyền miệng của nhân dân lao động (thần thoại, cổ tích, ca dao, sử thi...), lưu giữ cội nguồn tâm thức dân tộc.</li>
+          <li><strong>Văn học trung đại (thế kỉ X – hết thế kỉ XIX):</strong> Phát triển song song bằng chữ Hán và chữ Nôm, mang cảm hứng yêu nước nồng nàn và tinh thần nhân đạo cao cả (Nguyễn Trãi, Nguyễn Du, Hồ Xuân Hương...).</li>
+          <li><strong>Văn học hiện đại (từ đầu thế kỉ XX đến nay):</strong> Viết bằng chữ Quốc ngữ, đổi mới toàn diện về thể loại, tiếp thu tinh hoa văn học thế giới và phản ánh chân thực các cuộc kháng chiến vệ quốc cùng công cuộc xây dựng đất nước hôm nay.</li>
+        </ul>
+        <p><strong class="text-rose-600 dark:text-rose-400">2. Văn học - Lịch sử tâm hồn:</strong> Văn học lưu giữ những rung động tinh tế nhất, nỗi đau, khát vọng sống và lí tưởng cao đẹp của con người mà các con số lịch sử khô khan không thể ghi lại trọn vẹn.</p>
+      </div>
+    `,
+    readings: [
+      {
+        title: "Dự án đọc sách: “Văn học – lịch sử tâm hồn”",
+        author: "Hướng dẫn đọc mở rộng SGK Ngữ văn 9",
+        summary: "Hướng dẫn học sinh phương pháp tự chọn và đọc các tác phẩm văn học kinh điển của Việt Nam; lập hồ sơ đọc sách (Reading Journal), xây dựng bản đồ dòng thời gian tác phẩm và thiết kế sản phẩm quảng bá sách (Bookmark, Book Review, Infographic).",
+        keyPoints: [
+          "Rèn luyện thói quen đọc sách chủ động, sâu sắc và có phương pháp khoa học.",
+          "Biết cách trích dẫn trang sách và viết cảm nhận cá nhân có căn cứ văn bản."
+        ]
+      }
+    ],
+    vietnamese: {
+      topic: "Kĩ năng Phỏng vấn & Biên tập văn bản phỏng vấn",
+      content: `
+        <div class="space-y-3 text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+          <p><strong>1. Mục đích phỏng vấn:</strong> Thu thập thông tin, ý kiến, cảm xúc hoặc góc nhìn chuyên môn của người được phỏng vấn về một chủ đề cụ thể.</p>
+          <p><strong>2. Quy trình phỏng vấn chuẩn:</strong></p>
+          <ul class="list-disc pl-5 space-y-1">
+            <li><strong>Chuẩn bị:</strong> Xác định mục tiêu, tìm hiểu kĩ nhân vật, soạn thảo hệ thống câu hỏi mở (bắt đầu bằng <em>Tại sao, Như thế nào, Cảm nghĩ gì...</em>).</li>
+            <li><strong>Thực hiện:</strong> Chào hỏi lịch thiệp, lắng nghe chăm chú, ghi chép hoặc ghi âm (được sự đồng ý), đặt câu hỏi phụ linh hoạt.</li>
+            <li><strong>Biên tập:</strong> Chuyển lời nói thành văn bản trung thực, mạch lạc; gửi duyệt trước khi công bố.</li>
+          </ul>
+        </div>
+      `
+    },
+    writing: {
+      genre: "Viết bài giới thiệu hoặc bài phỏng vấn quảng bá giá trị cuốn sách em yêu thích",
+      outline: "Tiêu đề: Hấp dẫn, tóm lược chủ đề. Lời dẫn: Nêu lí do gặp gỡ và giới thiệu nhân vật/cuốn sách. Nội dung phỏng vấn: Trình bày các cặp câu hỏi - câu trả lời xoay quanh giá trị tư tưởng và trải nghiệm đọc. Lời kết: Lời cảm ơn và thông điệp lan toả văn hoá đọc."
+    },
+    speaking: {
+      task: "Thực hiện cuộc phỏng vấn trực tiếp tại lớp học về sở thích và thói quen đọc sách",
+      tips: "Tác phong tự tin, ánh mắt thân thiện, câu hỏi rõ ràng, phản hồi linh hoạt và kiểm soát tốt thời lượng."
+    },
+    quiz: [
+      {
+        q: "Ba bộ phận cấu thành tiến trình phát triển của lịch sử văn học Việt Nam gồm những bộ phận nào?",
+        options: [
+          "Thơ ca, truyện ngắn và kịch nói",
+          "Văn học dân gian, văn học trung đại và văn học hiện đại",
+          "Văn học thiếu nhi, văn học trinh thám và văn học khoa học viễn tưởng",
+          "Văn xuôi và thơ tự do"
+        ],
+        answer: 1,
+        explain: "Tiến trình văn học dân tộc phát triển qua 3 chặng đường lịch sử lớn: Văn học dân gian truyền miệng → Văn học trung đại (chữ Hán, Nôm) → Văn học hiện đại (chữ Quốc ngữ)."
+      },
+      {
+        q: "Vì sao văn học lại được xem là 'lịch sử tâm hồn' của một dân tộc?",
+        options: [
+          "Vì văn học chỉ ghi chép những ngày tháng năm khô khan",
+          "Vì văn học lưu giữ chân thực chiều sâu tình cảm, tư tưởng, khát vọng và vẻ đẹp tâm hồn con người qua các giai đoạn lịch sử",
+          "Vì mọi nhà văn đều là bác sĩ tâm lí",
+          "Vì văn học chỉ viết về những câu chuyện buồn"
+        ],
+        answer: 1,
+        explain: "Lịch sử ghi lại sự kiện chính trị xã hội, còn văn học tái hiện sinh động thế giới cảm xúc, nỗi đau, niềm tự hào và khát vọng sống nhân văn của con người thời đại đó."
+      },
+      {
+        q: "Khi xây dựng bảng câu hỏi phỏng vấn, loại câu hỏi nào được khuyến khích sử dụng nhiều nhất để người trả lời bộc lộ sâu sắc suy nghĩ của mình?",
+        options: [
+          "Câu hỏi đóng 'Có hoặc Không'",
+          "Câu hỏi mở (bắt đầu bằng 'Vì sao', 'Như thế nào', 'Ý kiến của bạn là gì...')",
+          "Câu hỏi áp đặt câu trả lời có sẵn",
+          "Câu hỏi chỉ đòi hỏi một con số"
+        ],
+        answer: 1,
+        explain: "Câu hỏi mở (Open-ended questions) khơi gợi người được phỏng vấn tự do chia sẻ góc nhìn, cảm xúc và quan điểm cá nhân sâu sắc."
+      },
+      {
+        q: "Một bài phỏng vấn đạt chuẩn báo chí bắt buộc phải tuân thủ nguyên tắc đạo đức nào sau đây?",
+        options: [
+          "Tự ý bịa đặt câu trả lời cho nhân vật hấp dẫn hơn",
+          "Ghi chép trung thực ý kiến người trả lời, không cắt ghép bóp méo ngữ cảnh và có sự đồng ý của nhân vật",
+          "Chỉ phỏng vấn những người nổi tiếng",
+          "Thu tiền của người được phỏng vấn"
+        ],
+        answer: 1,
+        explain: "Tính trung thực và tôn trọng nhân vật là đạo đức nghề nghiệp tối thượng: người viết tuyệt đối không được bóp méo câu chữ làm sai lệch quan điểm của người được phỏng vấn."
+      }
+    ]
+  }
+];
+
+// Add Review Milestones for Semester I and Semester II
+const reviewMilestones = [
+  {
+    id: "on-tap-hki",
+    volume: 1,
+    title: "Ôn tập và Tự đánh giá cuối học kì I",
+    desc: "Tổng kết 5 bài học Tập một: Truyện truyền kì, Thơ song thất lục bát, Truyện thơ Nôm, Nghị luận văn học, Bi kịch và hệ thống kiến thức Tiếng Việt.",
+    pages: "Tập một • Trang 131 – 136",
+    quiz: [
+      {
+        q: "Điểm tương đồng về cảm hứng nhân đạo trong hai kiệt tác 'Chuyện người con gái Nam Xương' và 'Truyện Kiều' là gì?",
+        options: [
+          "Cả hai đều ca ngợi cuộc sống giàu sang của địa chủ",
+          "Cùng thấu hiểu, trân trọng vẻ đẹp phẩm giá và xót thương sâu sắc cho số phận oan khuất, bất hạnh của người phụ nữ phong kiến",
+          "Cùng khuyên người phụ nữ cam chịu số phận",
+          "Cùng kể về các cuộc chiến tranh giành đất đai"
+        ],
+        answer: 1,
+        explain: "Cả Nguyễn Dữ và Nguyễn Du đều dành tấm lòng nhân đạo cao cả để bảo vệ, ngợi ca nhân phẩm và cất lên tiếng khóc xé lòng trước bi kịch người phụ nữ trong xã hội cũ."
+      },
+      {
+        q: "Đặc điểm nào sau đây KHÔNG PHẢI là đặc trưng của thể loại thơ song thất lục bát?",
+        options: [
+          "Khổ thơ gồm 4 câu (7-7-6-8)",
+          "Có sự đan cài giữa vần trắc (câu thất) và vần bằng (cặp lục bát)",
+          "Bắt buộc tất cả các câu phải có cùng 7 tiếng",
+          "Nhịp điệu dập dềnh réo rắt thích hợp diễn tả tâm trạng sầu bi"
+        ],
+        answer: 2,
+        explain: "Song thất lục bát có cấu trúc 7-7-6-8 xen kẽ; thể thơ gồm toàn câu 7 tiếng là thể thất ngôn Đường luật."
+      },
+      {
+        q: "Tác dụng nổi bật nhất của câu rút gọn trong giao tiếp hội thoại là gì?",
+        options: [
+          "Làm cho câu văn trang trọng hơn",
+          "Thông tin nhanh gọn, tránh lặp lại những từ ngữ đã xuất hiện ở câu trước",
+          "Khiến người nghe không thể hiểu được gì",
+          "Dùng để ra lệnh một cách khiếm nhã"
+        ],
+        answer: 1,
+        explain: "Câu rút gọn lược bớt những thành phần đã rõ trong ngữ cảnh giúp cuộc giao tiếp nhanh gọn, tự nhiên và súc tích."
+      },
+      {
+        q: "Yếu tố kì ảo trong 'Chuyện người con gái Nam Xương' thể hiện điều gì?",
+        options: [
+          "Tác giả tin rằng ma quỷ là có thật trên đời",
+          "Ước mơ ngàn đời của nhân dân về sự công bằng, người lương thiện phải được minh oan và bù đắp",
+          "Truyện chỉ dành cho trẻ em giải trí",
+          "Nguyễn Dữ muốn doạ người đọc"
+        ],
+        answer: 1,
+        explain: "Yếu tố hoang đường kì ảo là phương tiện nghệ thuật chở nặng ước mơ công lí của nhân dân: người hiền phải được minh oan thơm thảo."
+      }
+    ]
+  },
+  {
+    id: "on-tap-hkii",
+    volume: 2,
+    title: "Ôn tập và Hệ thống hoá cuối năm học",
+    desc: "Tổng kết toàn diện 10 bài học cả năm: Trinh thám, Thơ hiện đại, Nghị luận xã hội, Thuyết minh danh lam di tích, Lịch sử tâm hồn văn học Việt Nam.",
+    pages: "Tập hai • Trang 126 – 132",
+    quiz: [
+      {
+        q: "Hành trình phát triển của chữ viết văn học Việt Nam diễn ra theo trình tự lịch sử nào?",
+        options: [
+          "Chữ Quốc ngữ → Chữ Hán → Chữ Nôm",
+          "Chữ Hán → Chữ Nôm → Chữ Quốc ngữ",
+          "Chữ Pháp → Chữ Anh → Chữ Việt",
+          "Chữ Nôm có trước chữ Hán"
+        ],
+        answer: 1,
+        explain: "Trình tự văn tự dân tộc: Tiếp thu chữ Hán thời Bắc thuộc → Sáng tạo chữ Nôm thế kỉ X để ghi âm tiếng Việt → Hình thành và phổ biến chữ Quốc ngữ từ thế kỉ XVII đến nay."
+      },
+      {
+        q: "Điểm mấu chốt để phân biệt câu đơn và câu ghép trong tiếng Việt là gì?",
+        options: [
+          "Độ dài số lượng từ ngữ trong câu",
+          "Số lượng cụm Chủ ngữ - Vị ngữ nòng cốt (câu đơn có 1 cụm C-V, câu ghép có từ 2 cụm C-V không bao chứa nhau)",
+          "Dấu chấm câu ở cuối",
+          "Câu ghép luôn có nhiều danh từ hơn"
+        ],
+        answer: 1,
+        explain: "Tiêu chí ngữ pháp: Câu đơn chỉ có 1 cụm C-V nòng cốt; câu ghép được cấu tạo từ 2 hay nhiều cụm C-V nòng cốt đẳng lập hoặc phụ thuộc."
+      },
+      {
+        q: "Trong văn bản nghị luận xã hội, yếu tố nào tạo nên sức nặng thuyết phục lớn nhất đối với người đọc?",
+        options: [
+          "Những lời khen ngợi bay bổng",
+          "Luận điểm rõ ràng, lí lẽ xác đáng và bằng chứng số liệu khách quan, có thật từ đời sống",
+          "Độ dài của bài viết càng dài càng tốt",
+          "Sử dụng thật nhiều từ ngữ cổ"
+        ],
+        answer: 1,
+        explain: "Nghị luận xã hội thuyết phục độc giả bằng tính chân thực: lí lẽ chặt chẽ kết hợp dẫn chứng người thật việc thật và số liệu chính xác."
+      },
+      {
+        q: "Văn bản thuyết minh đa phương thức giới thiệu danh lam thắng cảnh thường kết hợp các yếu tố nào?",
+        options: [
+          "Chỉ duy nhất chữ viết dài dằng dặc",
+          "Văn bản ngôn từ kết hợp hình ảnh, bản đồ, sơ đồ mặt bằng và bảng biểu trực quan",
+          "Tranh biếm hoạ phóng đại",
+          "Lời bài hát rap sôi động"
+        ],
+        answer: 1,
+        explain: "Đa phương thức (Multimodal) là sự phối hợp kênh chữ và kênh hình, âm thanh, bản đồ để người đọc tiếp nhận thông tin đa giác quan sinh động."
+      }
+    ]
+  }
+];
+
+fs.writeFileSync('C:/Users/ADMIN/.gemini/antigravity/scratch/cs-learning-platform/scratch/nguvan9_dataset.json', JSON.stringify({ lessonsData, reviewMilestones }, null, 2), 'utf8');
+console.log('Successfully saved nguvan9_dataset.json with 10 lessons and 2 review milestones.');

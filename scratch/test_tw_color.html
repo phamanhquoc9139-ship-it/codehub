@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html class="dark">
+<head>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            gray: {
+              850: '#151b28'
+            }
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body>
+  <div id="test1" class="bg-white dark:bg-gray-850">Test 1</div>
+  <div id="test2" class="bg-white dark:bg-gray-900">Test 2</div>
+  <script>
+    setTimeout(() => {
+      const s1 = window.getComputedStyle(document.getElementById('test1')).backgroundColor;
+      const s2 = window.getComputedStyle(document.getElementById('test2')).backgroundColor;
+      console.log('test1 (gray-850) bg:', s1);
+      console.log('test2 (gray-900) bg:', s2);
+    }, 500);
+  </script>
+</body>
+</html>

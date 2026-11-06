@@ -1,0 +1,2246 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Khóa Học Lịch Sử Và Địa Lí Lớp 5 - Chương Trình GDPT 2018 | CodeHub</title>
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            dark: {
+              bg: '#0A0B14',
+              surface: '#121422',
+              card: '#1B1E34'
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <meta name="codehub-activity-name" content="Khóa Học Lịch Sử Và Địa Lí Lớp 5">
+  <meta name="description" content="Khóa học Lịch Sử Và Địa Lí Lớp 5 (GDPT 2018): Trọn bộ 6 chủ đề, 28 bài học, câu hỏi kiểm tra chuẩn form lớp 4, sơ đồ tư duy vector SVG độc quyền và Hội thi Trạng Nguyên.">
+
+  <style>
+    .sidebar-scroll::-webkit-scrollbar { width: 4px; }
+    .sidebar-scroll::-webkit-scrollbar-thumb { background: #059669; border-radius: 4px; }
+    .lsdl-hero-bg {
+      background: radial-gradient(circle at 10% 20%, rgba(5, 150, 105, 0.15) 0%, transparent 40%),
+                  radial-gradient(circle at 90% 80%, rgba(16, 185, 129, 0.15) 0%, transparent 40%);
+    }
+  </style>
+</head>
+<body class="bg-gray-50 dark:bg-dark-bg text-gray-800 dark:text-gray-100 font-sans min-h-screen flex flex-col transition-colors duration-200">
+
+  <!-- Mobile Drawer Backdrop -->
+  <div id="drawerBackdrop" onclick="toggleDrawer()" class="fixed inset-0 bg-black/50 z-40 lg:hidden hidden transition-opacity duration-300"></div>
+
+  <!-- Mobile Drawer Navigation -->
+  <aside id="mobileDrawer" class="fixed top-0 left-0 bottom-0 w-80 max-w-[85vw] bg-white dark:bg-dark-surface z-50 lg:hidden transform -translate-x-full transition-transform duration-300 shadow-2xl flex flex-col">
+    <div class="p-4 border-b border-gray-100 dark:border-gray-800 flex items-center justify-between bg-gradient-to-r from-emerald-600 via-teal-600 to-green-700 text-white">
+      <div class="flex items-center gap-2 font-bold text-sm">
+        <i class="fa-solid fa-map-location-dot"></i>
+        <span>Mục lục Lịch Sử &amp; Địa Lí 5</span>
+      </div>
+      <button onclick="toggleDrawer()" class="p-1.5 rounded-lg hover:bg-white/20 text-white transition">
+        <i class="fa-solid fa-xmark text-base"></i>
+      </button>
+    </div>
+    <div class="p-4 overflow-y-auto sidebar-scroll flex-1 text-xs space-y-2">
+      <div class="text-[11px] font-black uppercase text-gray-400 tracking-wider">Mục lục 6 Chủ đề</div>
+      
+      <a href="#chude-1" onclick="toggleDrawer()" class="flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-emerald-50 dark:hover:bg-emerald-950/40 text-gray-700 dark:text-gray-300 font-semibold">
+        <i class="fa-solid fa-landmark text-emerald-600 w-4"></i> Chủ đề 1 (Bài 1–4, trang 5–25)
+      </a>
+      <a href="#chude-2" onclick="toggleDrawer()" class="flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-emerald-50 dark:hover:bg-emerald-950/40 text-gray-700 dark:text-gray-300 font-semibold">
+        <i class="fa-solid fa-landmark text-emerald-600 w-4"></i> Chủ đề 2 (Bài 5–7, trang 26–39)
+      </a>
+      <a href="#chude-3" onclick="toggleDrawer()" class="flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-emerald-50 dark:hover:bg-emerald-950/40 text-gray-700 dark:text-gray-300 font-semibold">
+        <i class="fa-solid fa-landmark text-emerald-600 w-4"></i> Chủ đề 3 (Bài 8–17, trang 40–80)
+      </a>
+      <a href="#chude-4" onclick="toggleDrawer()" class="flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-emerald-50 dark:hover:bg-emerald-950/40 text-gray-700 dark:text-gray-300 font-semibold">
+        <i class="fa-solid fa-landmark text-emerald-600 w-4"></i> Chủ đề 4 (Bài 18–21, trang 81–95)
+      </a>
+      <a href="#chude-5" onclick="toggleDrawer()" class="flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-emerald-50 dark:hover:bg-emerald-950/40 text-gray-700 dark:text-gray-300 font-semibold">
+        <i class="fa-solid fa-landmark text-emerald-600 w-4"></i> Chủ đề 5 (Bài 22–25, trang 96–112)
+      </a>
+      <a href="#chude-6" onclick="toggleDrawer()" class="flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-emerald-50 dark:hover:bg-emerald-950/40 text-gray-700 dark:text-gray-300 font-semibold">
+        <i class="fa-solid fa-landmark text-emerald-600 w-4"></i> Chủ đề 6 (Bài 26–28, trang 113–120)
+      </a>
+    </div>
+    <div class="p-3 border-t border-gray-100 dark:border-gray-800">
+      <button onclick="openExamModal(); toggleDrawer();" class="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-700 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-md">
+        <i class="fa-solid fa-award"></i>
+        <span>Thi Trạng Nguyên Sử Địa (60p)</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Sticky Top Header -->
+  <header class="sticky top-0 z-30 bg-white/80 dark:bg-dark-surface/80 backdrop-blur-md border-b border-gray-100 dark:border-gray-800 transition-colors">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+      
+      <div class="flex items-center gap-3">
+        <a href="../index.html" class="p-2 rounded-xl text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-dark-card transition" title="Về trang chủ">
+          <i class="fa-solid fa-arrow-left text-lg"></i>
+        </a>
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-white shadow-md">
+            <i class="fa-solid fa-earth-asia text-base"></i>
+          </div>
+          <div>
+            <div class="text-[11px] font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">Tiểu học &bull; Lớp 5</div>
+            <h1 class="text-sm sm:text-base font-extrabold text-gray-900 dark:text-white leading-tight">Lịch Sử Và Địa Lí 5</h1>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <button onclick="toggleDarkMode()" class="p-2 rounded-xl text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-dark-card transition" title="Chuyển chế độ sáng/tối">
+          <i id="themeIcon" class="fa-solid fa-moon text-base"></i>
+        </button>
+
+        <button onclick="openExamModal()" class="hidden md:flex items-center gap-2 px-3.5 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-bold text-xs shadow-md hover:opacity-95 transition">
+          <i class="fa-solid fa-award"></i>
+          <span>Hội Thi Trạng Nguyên (60p)</span>
+        </button>
+
+        <button onclick="toggleDrawer()" class="lg:hidden p-2 rounded-xl text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-dark-card transition">
+          <i class="fa-solid fa-bars text-lg"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Layout -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full">
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8 items-start">
+      
+      <!-- Desktop Sidebar Navigator -->
+      <aside class="hidden lg:block lg:col-span-1 sticky top-24 space-y-4">
+        <div class="p-5 rounded-3xl bg-white dark:bg-dark-surface border border-gray-100 dark:border-gray-800 shadow-sm space-y-3">
+          <div class="flex items-center gap-2 pb-3 border-b border-gray-100 dark:border-gray-800 text-xs font-black uppercase text-gray-400 tracking-wider">
+            <i class="fa-solid fa-compass text-emerald-600"></i>
+            <span>Mục lục 6 Chủ đề</span>
+          </div>
+          <div class="space-y-1.5 text-xs">
+            
+            <a href="#chude-1" class="block px-3 py-2 rounded-xl hover:bg-emerald-50 dark:hover:bg-emerald-950/40 text-gray-700 dark:text-gray-300 font-semibold transition">
+              <span class="text-emerald-600 font-black mr-1">1.</span> Chủ đề 1
+              <div class="text-[10px] text-gray-400 pl-4">Bài 1–4, trang 5–25</div>
+            </a>
+            <a href="#chude-2" class="block px-3 py-2 rounded-xl hover:bg-emerald-50 dark:hover:bg-emerald-950/40 text-gray-700 dark:text-gray-300 font-semibold transition">
+              <span class="text-emerald-600 font-black mr-1">2.</span> Chủ đề 2
+              <div class="text-[10px] text-gray-400 pl-4">Bài 5–7, trang 26–39</div>
+            </a>
+            <a href="#chude-3" class="block px-3 py-2 rounded-xl hover:bg-emerald-50 dark:hover:bg-emerald-950/40 text-gray-700 dark:text-gray-300 font-semibold transition">
+              <span class="text-emerald-600 font-black mr-1">3.</span> Chủ đề 3
+              <div class="text-[10px] text-gray-400 pl-4">Bài 8–17, trang 40–80</div>
+            </a>
+            <a href="#chude-4" class="block px-3 py-2 rounded-xl hover:bg-emerald-50 dark:hover:bg-emerald-950/40 text-gray-700 dark:text-gray-300 font-semibold transition">
+              <span class="text-emerald-600 font-black mr-1">4.</span> Chủ đề 4
+              <div class="text-[10px] text-gray-400 pl-4">Bài 18–21, trang 81–95</div>
+            </a>
+            <a href="#chude-5" class="block px-3 py-2 rounded-xl hover:bg-emerald-50 dark:hover:bg-emerald-950/40 text-gray-700 dark:text-gray-300 font-semibold transition">
+              <span class="text-emerald-600 font-black mr-1">5.</span> Chủ đề 5
+              <div class="text-[10px] text-gray-400 pl-4">Bài 22–25, trang 96–112</div>
+            </a>
+            <a href="#chude-6" class="block px-3 py-2 rounded-xl hover:bg-emerald-50 dark:hover:bg-emerald-950/40 text-gray-700 dark:text-gray-300 font-semibold transition">
+              <span class="text-emerald-600 font-black mr-1">6.</span> Chủ đề 6
+              <div class="text-[10px] text-gray-400 pl-4">Bài 26–28, trang 113–120</div>
+            </a>
+          </div>
+        </div>
+
+        <!-- Exam Promotion Card -->
+        <div class="p-5 rounded-3xl bg-gradient-to-br from-emerald-600 via-teal-600 to-green-700 text-white shadow-lg space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-black uppercase tracking-wider text-emerald-200">Kì Thi Trực Tuyến</span>
+            <span class="text-[11px] text-emerald-100 font-medium">Trạng Nguyên 5</span>
+          </div>
+          <h3 class="font-extrabold text-sm leading-snug">Hội Thi Trạng Nguyên Lịch Sử &amp; Địa Lí 5</h3>
+          <p class="text-[11px] text-emerald-100 leading-relaxed">
+            25 Câu hỏi trắc nghiệm tổng hợp toàn bộ 6 chủ đề với đồng hồ đếm ngược 60:00 và chấm điểm xếp loại tự động.
+          </p>
+          <button onclick="openExamModal()" class="w-full py-2 px-3 rounded-xl bg-white text-emerald-800 font-bold text-xs hover:bg-emerald-50 transition shadow-sm flex items-center justify-center gap-2">
+            <i class="fa-solid fa-award"></i> Thi Trạng Nguyên (60p)
+          </button>
+        </div>
+      </aside>
+
+      <!-- Content Area -->
+      <div class="lg:col-span-3 space-y-8">
+        
+        <!-- Hero Banner -->
+        <div class="p-6 sm:p-8 rounded-3xl bg-white dark:bg-dark-surface border border-gray-100 dark:border-gray-800 shadow-sm relative overflow-hidden lsdl-hero-bg">
+          <div class="relative z-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+            <div class="space-y-3">
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 text-xs font-bold border border-emerald-200 dark:border-emerald-800">
+                <i class="fa-solid fa-certificate"></i> Chuẩn Chương Trình GDPT 2018
+              </div>
+              <h2 class="text-xl sm:text-3xl font-black text-gray-900 dark:text-white tracking-tight">
+                Lịch Sử Và Địa Lí Lớp 5
+              </h2>
+              <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-300 max-w-2xl leading-relaxed">
+                Biên soạn trọn vẹn <strong>6 chủ đề cốt lõi</strong> gồm <strong>28 bài học</strong>: <em>Đất nước và con người Việt Nam &bull; Những quốc gia đầu tiên &bull; Xây dựng và bảo vệ đất nước &bull; Các nước láng giềng &bull; Tìm hiểu thế giới &bull; Chung tay xây dựng thế giới</em>. Tích hợp sơ đồ tư duy vector SVG độc quyền, câu hỏi kiểm tra chuẩn form lớp 4, và Hội thi Trạng Nguyên Sử Địa 5 (60:00).
+              </p>
+              <div class="flex flex-wrap items-center gap-2 pt-1">
+                <span class="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950 px-2.5 py-1 rounded-lg border border-emerald-200 dark:border-emerald-800">
+                  <i class="fa-solid fa-book-bookmark"></i> 28 Bài học chi tiết
+                </span>
+                <span class="inline-flex items-center gap-1.5 text-xs font-bold text-teal-700 dark:text-teal-300 bg-teal-50 dark:bg-teal-950 px-2.5 py-1 rounded-lg border border-teal-200 dark:border-teal-800">
+                  <i class="fa-solid fa-circle-question"></i> Form câu hỏi kiểm tra lớp 4
+                </span>
+                <span class="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950 px-2.5 py-1 rounded-lg border border-emerald-200 dark:border-emerald-800">
+                  <i class="fa-solid fa-shield-halved"></i> 100% Không Vi Phạm Bản Quyền
+                </span>
+              </div>
+            </div>
+
+            <div class="hidden sm:flex flex-col items-center justify-center p-4 rounded-2xl bg-gradient-to-br from-emerald-600 to-teal-700 text-white shadow-lg text-center min-w-[140px] shrink-0">
+              <span class="text-3xl font-black">28</span>
+              <span class="text-[11px] font-semibold text-emerald-100">Bài học đầy đủ</span>
+              <span class="mt-2 text-[10px] px-2 py-0.5 rounded-full bg-white/20 font-bold">Lớp 5 Chuẩn Mực</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 6 CHỦ ĐỀ CHI TIẾT -->
+        <section class="space-y-10">
+          
+          <div id="chude-1" class="p-6 sm:p-7 rounded-3xl bg-white dark:bg-dark-surface border border-gray-100 dark:border-gray-800 shadow-sm space-y-6 scroll-mt-24">
+            
+            <!-- Topic Header -->
+            <div class="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-gray-100 dark:border-gray-800">
+              <div>
+                <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">Chủ đề 1</span>
+                <h3 class="text-lg sm:text-xl font-black text-gray-900 dark:text-white flex items-center gap-2 mt-0.5">
+                  <i class="fa-solid fa-landmark text-emerald-600"></i> Chủ đề 1. Đất nước và con người Việt Nam
+                </h3>
+              </div>
+              <span class="px-3 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 text-xs font-bold border border-emerald-200 dark:border-emerald-800">
+                Bài 1–4, trang 5–25
+              </span>
+            </div>
+
+            <!-- Vector SVG Diagram -->
+            <div class="space-y-2">
+              <div class="flex items-center justify-between text-xs">
+                <span class="flex items-center gap-1.5 text-emerald-700 dark:text-emerald-300 font-bold"><i class="fa-solid fa-diagram-project"></i> Sơ đồ trực quan số hóa: Chủ đề 1. Đất nước và con người Việt Nam</span>
+                <span class="text-[11px] text-emerald-600 dark:text-emerald-400 font-bold">Vector SVG Chuẩn Bản Quyền</span>
+              </div>
+              <svg viewBox="0 0 700 240" class="w-full h-auto rounded-2xl bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-dark-card dark:to-dark-surface border border-emerald-100 dark:border-emerald-900/40 p-4 shadow-sm" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="lsdl5g1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#059669" />
+      <stop offset="100%" stop-color="#047857" />
+    </linearGradient>
+  </defs>
+  <rect x="20" y="20" width="180" height="70" rx="14" fill="url(#lsdl5g1)" filter="drop-shadow(0 4px 6px rgba(0,0,0,0.08))" />
+  <text x="110" y="50" font-family="system-ui, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">Vị trí &amp; Lãnh thổ</text>
+  <text x="110" y="70" font-family="system-ui, sans-serif" font-size="10" fill="#a7f3d0" text-anchor="middle">Hình chữ S &bull; Đông Nam Á</text>
+
+  <rect x="260" y="20" width="180" height="70" rx="14" fill="#ffffff" stroke="#059669" stroke-width="2" />
+  <text x="350" y="50" font-family="system-ui, sans-serif" font-size="12" font-weight="bold" fill="#047857" text-anchor="middle">Thiên nhiên 3/4 Đồi núi</text>
+  <text x="350" y="70" font-family="system-ui, sans-serif" font-size="10" fill="#4b5563" text-anchor="middle">Nhiệt đới gió mùa &bull; Sông ngòi</text>
+
+  <rect x="500" y="20" width="180" height="70" rx="14" fill="url(#lsdl5g1)" filter="drop-shadow(0 4px 6px rgba(0,0,0,0.08))" />
+  <text x="590" y="50" font-family="system-ui, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">Biển Đảo &bull; Hoàng Sa</text>
+  <text x="590" y="70" font-family="system-ui, sans-serif" font-size="10" fill="#a7f3d0" text-anchor="middle">Trường Sa &bull; Vùng đặc quyền kinh tế</text>
+
+  <path d="M 200 55 L 260 55" stroke="#059669" stroke-width="2" stroke-dasharray="4,4" />
+  <path d="M 440 55 L 500 55" stroke="#059669" stroke-width="2" stroke-dasharray="4,4" />
+
+  <rect x="140" y="140" width="420" height="75" rx="16" fill="#ecfdf5" stroke="#10b981" stroke-width="2" />
+  <text x="350" y="168" font-family="system-ui, sans-serif" font-size="13" font-weight="black" fill="#065f46" text-anchor="middle">DÂN CƯ &amp; 54 DÂN TỘC ANH EM</text>
+  <text x="350" y="192" font-family="system-ui, sans-serif" font-size="11" fill="#047857" text-anchor="middle">Dân số &gt;101,3 triệu người (2024) &bull; Khối đại đoàn kết bền vững non sông</text>
+
+  <path d="M 110 90 L 250 140" stroke="#059669" stroke-width="2" />
+  <path d="M 350 90 L 350 140" stroke="#059669" stroke-width="2" />
+  <path d="M 590 90 L 450 140" stroke="#059669" stroke-width="2" />
+</svg>
+            </div>
+
+            <!-- Lessons List Formatted Exactly Like Grade 4 -->
+            <div class="space-y-4">
+              <h4 class="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-300 flex items-center gap-1.5">
+                <i class="fa-solid fa-book-bookmark"></i> Nội dung các bài học chi tiết:
+              </h4>
+
+              <div class="space-y-4">
+                
+                <article id="bai-1" class="p-6 rounded-3xl bg-white dark:bg-dark-surface border border-gray-100 dark:border-gray-800 shadow-sm space-y-4 scroll-mt-24">
+                  <div class="flex items-center justify-between border-b pb-3 border-gray-100 dark:border-gray-800">
+                    <h4 class="text-base font-black text-gray-900 dark:text-white flex items-center gap-2">
+                      <span class="w-6 h-6 rounded-lg bg-emerald-500 text-white text-xs flex items-center justify-center font-bold">1</span>
+                      Bài 1. Vị trí địa lí, lãnh thổ, đơn vị hành chính, Quốc kì, Quốc huy, Quốc ca
+                    </h4>
+                    <span class="text-xs text-gray-400">Vị trí & Hành chính</span>
+                  </div>
+                  <ul class="list-disc pl-5 space-y-1.5 text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+                    <li>Việt Nam nằm ở khu vực Đông Nam Á, thuộc châu Á, tiếp giáp Trung Quốc, Lào, Cam-pu-chia và Biển Đông.</li><li>Lãnh thổ gồm vùng đất, vùng biển và vùng trời. Phần đất liền có hình chữ S, kéo dài theo hướng bắc – nam.</li><li>Vị trí địa lí tạo thuận lợi cho giao lưu, phát triển kinh tế và giao thông biển nhưng cũng khiến nước ta chịu ảnh hưởng của bão, thiên tai.</li><li>Theo thông tin năm 2025 trong sách, Việt Nam có 34 đơn vị hành chính cấp tỉnh, gồm 6 thành phố và 28 tỉnh.</li><li>Quốc kì nền đỏ, ở giữa có ngôi sao vàng năm cánh; Quốc huy có ngôi sao vàng trên nền đỏ cùng các biểu tượng đặc trưng; Quốc ca là bài Tiến quân ca của nhạc sĩ Văn Cao.</li><li>Quốc kì, Quốc huy, Quốc ca thể hiện độc lập, chủ quyền, truyền thống yêu nước và đoàn kết dân tộc.</li>
+                  </ul>
+                  <div class="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 text-xs font-semibold text-emerald-900 dark:text-emerald-200">
+                    <strong>Kiến thức phải nhớ:</strong> Vị trí địa lí thuộc Đông Nam Á, hình chữ S; 34 đơn vị hành chính cấp tỉnh (2025); Quốc kì cờ đỏ sao vàng; Quốc ca bài Tiến quân ca.
+                  </div>
+
+                  <!-- Câu hỏi ôn tập cuối bài học -->
+                  <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-dark-card border border-emerald-200/60 dark:border-emerald-900/40 space-y-2">
+                    <div class="flex items-center gap-1.5 text-xs font-bold text-emerald-700 dark:text-emerald-300">
+                      <i class="fa-solid fa-circle-question"></i>
+                      <span>Câu hỏi ôn tập cuối bài:</span>
+                    </div>
+                    <p class="text-xs text-gray-800 dark:text-gray-200 font-semibold italic">
+                      "Nêu vị trí địa lí của Việt Nam và ý nghĩa thiêng liêng của Quốc kì, Quốc huy, Quốc ca đối với mỗi công dân?"
+                    </p>
+                    <details class="text-xs text-slate-600 dark:text-slate-400 cursor-pointer">
+                      <summary class="font-bold text-emerald-600 dark:text-emerald-400 hover:underline select-none">
+                        &rarr; Bấm để xem gợi ý trả lời
+                      </summary>
+                      <div class="mt-1.5 p-2 rounded-lg bg-white dark:bg-dark-surface border border-gray-200/50 dark:border-gray-700/50 leading-relaxed text-[11px]">
+                        <strong>Gợi ý đáp án:</strong> Việt Nam nằm ở Đông Nam Á, tiếp giáp Trung Quốc, Lào, Cam-pu-chia và Biển Đông. Quốc kì, Quốc huy, Quốc ca là biểu tượng thiêng liêng khẳng định chủ quyền độc lập, lòng tự hào dân tộc và tinh thần đoàn kết toàn dân.
+                      </div>
+                    </details>
+                  </div>
+                </article>
+                <article id="bai-2" class="p-6 rounded-3xl bg-white dark:bg-dark-surface border border-gray-100 dark:border-gray-800 shadow-sm space-y-4 scroll-mt-24">
+                  <div class="flex items-center justify-between border-b pb-3 border-gray-100 dark:border-gray-800">
+                    <h4 class="text-base font-black text-gray-900 dark:text-white flex items-center gap-2">
+                      <span class="w-6 h-6 rounded-lg bg-emerald-500 text-white text-xs flex items-center justify-center font-bold">2</span>
+                      Bài 2. Thiên nhiên Việt Nam
+                    </h4>
+                    <span class="text-xs text-gray-400">Tự nhiên Việt Nam</span>
+                  </div>
+                  <ul class="list-disc pl-5 space-y-1.5 text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+                    <li>Địa hình nước ta chủ yếu là đồi núi, chiếm khoảng ba phần tư diện tích đất liền; đồng bằng chiếm khoảng một phần tư.</li><li>Các dãy núi chủ yếu có hướng tây bắc – đông nam và hướng vòng cung.</li><li>Khoáng sản đa dạng, gồm than đá, dầu mỏ, khí tự nhiên, bô-xít, a-pa-tít, sắt, ti-tan…</li><li>Khí hậu nhiệt đới ẩm gió mùa, có sự khác biệt rõ nét giữa miền Bắc và miền Nam.</li><li>Mạng lưới sông ngòi dày đặc, cung cấp nước cho sinh hoạt, sản xuất, giao thông thủy và thủy điện; mùa mưa có thể gây lũ lụt.</li><li>Đất chủ yếu gồm nhóm đất phe-ra-lít ở vùng đồi núi và đất phù sa màu mỡ ở đồng bằng.</li><li>Rừng nhiệt đới và rừng ngập mặn có vai trò bảo vệ môi trường, chống xói mòn và duy trì đa dạng sinh học.</li><li>Cần khai thác tài nguyên hợp lí, tích cực trồng rừng, dự báo và chủ động phòng chống thiên tai.</li>
+                  </ul>
+                  <div class="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 text-xs font-semibold text-emerald-900 dark:text-emerald-200">
+                    <strong>Kiến thức phải nhớ:</strong> Địa hình 3/4 đồi núi, 1/4 đồng bằng; khí hậu nhiệt đới ẩm gió mùa; sông ngòi dày đặc; tài nguyên khoáng sản phong phú.
+                  </div>
+
+                  <!-- Câu hỏi ôn tập cuối bài học -->
+                  <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-dark-card border border-emerald-200/60 dark:border-emerald-900/40 space-y-2">
+                    <div class="flex items-center gap-1.5 text-xs font-bold text-emerald-700 dark:text-emerald-300">
+                      <i class="fa-solid fa-circle-question"></i>
+                      <span>Câu hỏi ôn tập cuối bài:</span>
+                    </div>
+                    <p class="text-xs text-gray-800 dark:text-gray-200 font-semibold italic">
+                      "Địa hình và khí hậu nước ta có đặc điểm gì nổi bật? Vì sao cần phải tích cực bảo vệ rừng?"
+                    </p>
+                    <details class="text-xs text-slate-600 dark:text-slate-400 cursor-pointer">
+                      <summary class="font-bold text-emerald-600 dark:text-emerald-400 hover:underline select-none">
+                        &rarr; Bấm để xem gợi ý trả lời
+                      </summary>
+                      <div class="mt-1.5 p-2 rounded-lg bg-white dark:bg-dark-surface border border-gray-200/50 dark:border-gray-700/50 leading-relaxed text-[11px]">
+                        <strong>Gợi ý đáp án:</strong> Địa hình 3/4 là đồi núi, 1/4 đồng bằng; khí hậu nhiệt đới ẩm gió mùa. Rừng giúp giữ đất, ngăn xói mòn lũ quét, điều hòa nguồn nước, bảo vệ môi trường và bảo tồn đa dạng sinh vật quý.
+                      </div>
+                    </details>
+                  </div>
+                </article>
+                <article id="bai-3" class="p-6 rounded-3xl bg-white dark:bg-dark-surface border border-gray-100 dark:border-gray-800 shadow-sm space-y-4 scroll-mt-24">
+                  <div class="flex items-center justify-between border-b pb-3 border-gray-100 dark:border-gray-800">
+                    <h4 class="text-base font-black text-gray-900 dark:text-white flex items-center gap-2">
+                      <span class="w-6 h-6 rounded-lg bg-emerald-500 text-white text-xs flex items-center justify-center font-bold">3</span>
+                      Bài 3. Biển, đảo Việt Nam
+                    </h4>
+                    <span class="text-xs text-gray-400">Biển đảo & Chủ quyền</span>
+                  </div>
+                  <ul class="list-disc pl-5 space-y-1.5 text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+                    <li>Vùng biển Việt Nam thuộc Biển Đông, có hàng nghìn đảo và quần đảo lớn nhỏ.</li><li>Một số đảo, quần đảo tiêu biểu: Cát Bà, Côn Cỏ, Lý Sơn, Phú Quốc, Côn Đảo, Hoàng Sa và Trường Sa.</li><li>Biển, đảo có vai trò chiến lược đối với giao thông hàng hải quốc tế, đánh bắt và nuôi trồng thủy sản, du lịch, an ninh quốc phòng.</li><li>Từ lâu đời, các nhà nước Việt Nam đã xác lập, thực thi và bảo vệ chủ quyền liên tục đối với các quần đảo Hoàng Sa và Trường Sa.</li><li>Bảo vệ chủ quyền biển, đảo thiêng liêng là trách nhiệm của toàn dân; học sinh tích cực học tập, bảo vệ môi trường biển và chia sẻ thông tin đúng đắn.</li>
+                  </ul>
+                  <div class="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 text-xs font-semibold text-emerald-900 dark:text-emerald-200">
+                    <strong>Kiến thức phải nhớ:</strong> Vùng biển Việt Nam thuộc Biển Đông; hai quần đảo Hoàng Sa và Trường Sa là lãnh thổ thiêng liêng; bảo vệ chủ quyền là trách nhiệm toàn dân.
+                  </div>
+
+                  <!-- Câu hỏi ôn tập cuối bài học -->
+                  <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-dark-card border border-emerald-200/60 dark:border-emerald-900/40 space-y-2">
+                    <div class="flex items-center gap-1.5 text-xs font-bold text-emerald-700 dark:text-emerald-300">
+                      <i class="fa-solid fa-circle-question"></i>
+                      <span>Câu hỏi ôn tập cuối bài:</span>
+                    </div>
+                    <p class="text-xs text-gray-800 dark:text-gray-200 font-semibold italic">
+                      "Kể tên các đảo, quần đảo tiêu biểu của nước ta và nêu trách nhiệm của học sinh trong việc bảo vệ chủ quyền biển đảo?"
+                    </p>
+                    <details class="text-xs text-slate-600 dark:text-slate-400 cursor-pointer">
+                      <summary class="font-bold text-emerald-600 dark:text-emerald-400 hover:underline select-none">
+                        &rarr; Bấm để xem gợi ý trả lời
+                      </summary>
+                      <div class="mt-1.5 p-2 rounded-lg bg-white dark:bg-dark-surface border border-gray-200/50 dark:border-gray-700/50 leading-relaxed text-[11px]">
+                        <strong>Gợi ý đáp án:</strong> Đảo Cát Bà, Lý Sơn, Phú Quốc, Côn Đảo; hai quần đảo Hoàng Sa và Trường Sa. Học sinh cần chăm ngoan học tập, giữ gìn vệ sinh biển đảo, tìm hiểu lịch sử và lan tỏa tình yêu quê hương đất nước.
+                      </div>
+                    </details>
+                  </div>
+                </article>
+                <article id="bai-4" class="p-6 rounded-3xl bg-white dark:bg-dark-surface border border-gray-100 dark:border-gray-800 shadow-sm space-y-4 scroll-mt-24">
+                  <div class="flex items-center justify-between border-b pb-3 border-gray-100 dark:border-gray-800">
+                    <h4 class="text-base font-black text-gray-900 dark:text-white flex items-center gap-2">
+                      <span class="w-6 h-6 rounded-lg bg-emerald-500 text-white text-xs flex items-center justify-center font-bold">4</span>
+                      Bài 4. Dân cư và dân tộc ở Việt Nam
+                    </h4>
+                    <span class="text-xs text-gray-400">Dân cư & Dân tộc</span>
+                  </div>
+                  <ul class="list-disc pl-5 space-y-1.5 text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+                    <li>Việt Nam là nước đông dân; theo số liệu năm 2024 trong sách, dân số nước ta đạt hơn 101,3 triệu người.</li><li>Dân số đông tạo nguồn lao động dồi dào và thị trường tiêu thụ rộng lớn, nhưng cũng đặt ra yêu cầu cao về giải quyết việc làm, y tế và giáo dục.</li><li>Dân cư phân bố không đồng đều: tập trung đông đúc ở đồng bằng và ven biển, thưa thớt hơn ở miền núi, cao nguyên.</li><li>Nước ta có 54 dân tộc anh em; dân tộc Kinh chiếm số lượng đông nhất.</li><li>Mỗi dân tộc có nét văn hóa, trang phục, phong tục và lễ hội đặc sắc riêng.</li><li>Các dân tộc luôn đoàn kết, yêu thương, tương trợ lẫn nhau trong xây dựng và bảo vệ vững chắc Tổ quốc.</li>
+                  </ul>
+                  <div class="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 text-xs font-semibold text-emerald-900 dark:text-emerald-200">
+                    <strong>Kiến thức phải nhớ:</strong> Dân số hơn 101,3 triệu người (2024); khối đại đoàn kết keo sơn của 54 dân tộc anh em khắp mọi miền Tổ quốc.
+                  </div>
+
+                  <!-- Câu hỏi ôn tập cuối bài học -->
+                  <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-dark-card border border-emerald-200/60 dark:border-emerald-900/40 space-y-2">
+                    <div class="flex items-center gap-1.5 text-xs font-bold text-emerald-700 dark:text-emerald-300">
+                      <i class="fa-solid fa-circle-question"></i>
+                      <span>Câu hỏi ôn tập cuối bài:</span>
+                    </div>
+                    <p class="text-xs text-gray-800 dark:text-gray-200 font-semibold italic">
+                      "Nêu đặc điểm dân số và sự phân bố dân cư ở nước ta? Tinh thần đại đoàn kết các dân tộc thể hiện như thế nào?"
+                    </p>
+                    <details class="text-xs text-slate-600 dark:text-slate-400 cursor-pointer">
+                      <summary class="font-bold text-emerald-600 dark:text-emerald-400 hover:underline select-none">
+                        &rarr; Bấm để xem gợi ý trả lời
+                      </summary>
+                      <div class="mt-1.5 p-2 rounded-lg bg-white dark:bg-dark-surface border border-gray-200/50 dark:border-gray-700/50 leading-relaxed text-[11px]">
+                        <strong>Gợi ý đáp án:</strong> Dân số hơn 101,3 triệu người (2024), phân bố không đồng đều (đông ở đồng bằng, thưa ở miền núi). 54 dân tộc anh em luôn bình đẳng, kề vai sát cánh, đoàn kết keo sơn qua các thời kì lịch sử.
+                      </div>
+                    </details>
+                  </div>
+                </article>
+              </div>
+            </div>
+
+            <!-- Mini Quiz 1 (Form Lớp 4 chuẩn) -->
+            <div class="p-5 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-800 space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">
+                  <i class="fa-solid fa-circle-question mr-1"></i> Câu hỏi kiểm tra Chủ đề 1
+                </span>
+                <span class="text-[11px] text-gray-400">Kiểm tra tức thì</span>
+              </div>
+              <p class="text-xs sm:text-sm font-bold text-gray-800 dark:text-gray-200">
+                Để xác định vị trí địa lí, ranh giới hành chính và các tỉnh thành tiếp giáp của Việt Nam, phương tiện nào sau đây là phù hợp nhất?
+              </p>
+              <div class="space-y-2 text-xs">
+                <label class="flex items-center gap-2 p-2 rounded-lg hover:bg-white dark:hover:bg-gray-800 cursor-pointer border border-transparent hover:border-gray-200 dark:hover:border-gray-700 transition">
+                  <input type="radio" name="quiz1" value="A" class="text-emerald-600">
+                  <span>A. Trục thời gian lịch sử</span>
+                </label>
+                <label class="flex items-center gap-2 p-2 rounded-lg hover:bg-white dark:hover:bg-gray-800 cursor-pointer border border-transparent hover:border-gray-200 dark:hover:border-gray-700 transition">
+                  <input type="radio" name="quiz1" value="B" class="text-emerald-600">
+                  <span>B. Bản đồ hành chính Việt Nam</span>
+                </label>
+                <label class="flex items-center gap-2 p-2 rounded-lg hover:bg-white dark:hover:bg-gray-800 cursor-pointer border border-transparent hover:border-gray-200 dark:hover:border-gray-700 transition">
+                  <input type="radio" name="quiz1" value="C" class="text-emerald-600">
+                  <span>C. Biểu đồ cột nhiệt độ trung bình năm</span>
+                </label>
+              </div>
+              <div class="flex items-center justify-between pt-2">
+                <button onclick="checkTopicQuiz('1', 'B', 'Chính xác! Bản đồ hành chính thể hiện rõ vị trí địa lí, ranh giới các đơn vị hành chính và các nước láng giềng tiếp giáp.')" 
+                  class="px-4 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs transition">
+                  Kiểm tra đáp án
+                </button>
+                <div id="quiz-result-1" class="text-xs font-bold hidden"></div>
+              </div>
+            </div>
+
+            <!-- Mini Quiz 2 (Câu hỏi kiểm tra mở rộng Chủ đề) -->
+            <div class="p-5 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-800 space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">
+                  <i class="fa-solid fa-circle-question mr-1"></i> Câu hỏi kiểm tra mở rộng Chủ đề 1
+                </span>
+                <span class="text-[11px] text-gray-400">Kiểm tra tức thì</span>
+              </div>
+              <p class="text-xs sm:text-sm font-bold text-gray-800 dark:text-gray-200">
+                Theo số liệu năm 2025 trong sách, Việt Nam có bao nhiêu đơn vị hành chính cấp tỉnh và đặc điểm địa hình phần đất liền ra sao?
+              </p>
+              <div class="space-y-2 text-xs">
+                <label class="flex items-center gap-2 p-2 rounded-lg hover:bg-white dark:hover:bg-gray-800 cursor-pointer border border-transparent hover:border-gray-200 dark:hover:border-gray-700 transition">
+                  <input type="radio" name="quiz1b" value="A" class="text-emerald-600">
+                  <span>A. Có 63 đơn vị hành chính, địa hình chủ yếu là đồng bằng phù sa màu mỡ</span>
+                </label>
+                <label class="flex items-center gap-2 p-2 rounded-lg hover:bg-white dark:hover:bg-gray-800 cursor-pointer border border-transparent hover:border-gray-200 dark:hover:border-gray-700 transition">
+                  <input type="radio" name="quiz1b" value="B" class="text-emerald-600">
+                  <span>B. Có 34 đơn vị hành chính cấp tỉnh (gồm 6 thành phố và 28 tỉnh), đồi núi chiếm 3/4 diện tích</span>
+                </label>
+                <label class="flex items-center gap-2 p-2 rounded-lg hover:bg-white dark:hover:bg-gray-800 cursor-pointer border border-transparent hover:border-gray-200 dark:hover:border-gray-700 transition">
+                  <input type="radio" name="quiz1b" value="C" class="text-emerald-600">
+                  <span>C. Có 54 đơn vị hành chính cấp tỉnh tương ứng số lượng các dân tộc anh em</span>
+                </label>
+              </div>
+              <div class="flex items-center justify-between pt-2">
+                <button onclick="checkTopicQuiz('1b', 'B', 'Chính xác! Theo số liệu năm 2025 trong sách, Việt Nam có 34 đơn vị hành chính cấp tỉnh (6 thành phố, 28 tỉnh), địa hình 3/4 diện tích là đồi núi.')" 
+                  class="px-4 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs transition">
+                  Kiểm tra đáp án
+                </button>
+                <div id="quiz-result-1b" class="text-xs font-bold hidden"></div>
+              </div>
+            </div>
+
+          </div>
+          <div id="chude-2" class="p-6 sm:p-7 rounded-3xl bg-white dark:bg-dark-surface border border-gray-100 dark:border-gray-800 shadow-sm space-y-6 scroll-mt-24">
+            
+            <!-- Topic Header -->
+            <div class="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-gray-100 dark:border-gray-800">
+              <div>
+                <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">Chủ đề 2</span>
+                <h3 class="text-lg sm:text-xl font-black text-gray-900 dark:text-white flex items-center gap-2 mt-0.5">
+                  <i class="fa-solid fa-landmark text-emerald-600"></i> Chủ đề 2. Những quốc gia đầu tiên trên lãnh thổ Việt Nam
+                </h3>
+              </div>
+              <span class="px-3 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 text-xs font-bold border border-emerald-200 dark:border-emerald-800">
+                Bài 5–7, trang 26–39
+              </span>
+            </div>
+
+            <!-- Vector SVG Diagram -->
+            <div class="space-y-2">
+              <div class="flex items-center justify-between text-xs">
+                <span class="flex items-center gap-1.5 text-emerald-700 dark:text-emerald-300 font-bold"><i class="fa-solid fa-diagram-project"></i> Sơ đồ trực quan số hóa: Chủ đề 2. Những quốc gia đầu tiên trên lãnh thổ Việt Nam</span>
+                <span class="text-[11px] text-emerald-600 dark:text-emerald-400 font-bold">Vector SVG Chuẩn Bản Quyền</span>
+              </div>
+              <svg viewBox="0 0 700 240" class="w-full h-auto rounded-2xl bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-dark-card dark:to-dark-surface border border-emerald-100 dark:border-emerald-900/40 p-4 shadow-sm" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="lsdl5g2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#059669" />
+      <stop offset="100%" stop-color="#047857" />
+    </linearGradient>
+  </defs>
+  <circle cx="120" cy="120" r="70" fill="url(#lsdl5g2)" filter="drop-shadow(0 4px 6px rgba(0,0,0,0.1))" />
+  <text x="120" y="110" font-family="system-ui, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">VĂN LANG</text>
+  <text x="120" y="128" font-family="system-ui, sans-serif" font-size="11" font-weight="bold" fill="#a7f3d0" text-anchor="middle">&amp; ÂU LẠC</text>
+  <text x="120" y="146" font-family="system-ui, sans-serif" font-size="9" fill="#e6fffa" text-anchor="middle">Bắc Bộ &bull; Phong Châu / Cổ Loa</text>
+
+  <circle cx="350" cy="120" r="70" fill="#ffffff" stroke="#059669" stroke-width="3" />
+  <text x="350" y="110" font-family="system-ui, sans-serif" font-size="13" font-weight="bold" fill="#047857" text-anchor="middle">CHĂM-PA</text>
+  <text x="350" y="130" font-family="system-ui, sans-serif" font-size="10" fill="#374151" text-anchor="middle">Duyên hải Miền Trung</text>
+  <text x="350" y="146" font-family="system-ui, sans-serif" font-size="9" fill="#059669" text-anchor="middle">Tháp Chăm &bull; Chữ Phạn</text>
+
+  <circle cx="580" cy="120" r="70" fill="url(#lsdl5g2)" filter="drop-shadow(0 4px 6px rgba(0,0,0,0.1))" />
+  <text x="580" y="110" font-family="system-ui, sans-serif" font-size="13" font-weight="bold" fill="#ffffff" text-anchor="middle">PHÙ NAM</text>
+  <text x="580" y="130" font-family="system-ui, sans-serif" font-size="10" fill="#a7f3d0" text-anchor="middle">Khu vực Nam Bộ</text>
+  <text x="580" y="146" font-family="system-ui, sans-serif" font-size="9" fill="#e6fffa" text-anchor="middle">Cảng thị Óc Eo &bull; Giao thương</text>
+
+  <path d="M 190 120 L 280 120" stroke="#059669" stroke-width="2" stroke-dasharray="4,4" />
+  <path d="M 420 120 L 510 120" stroke="#059669" stroke-width="2" stroke-dasharray="4,4" />
+</svg>
+            </div>
+
+            <!-- Lessons List Formatted Exactly Like Grade 4 -->
+            <div class="space-y-4">
+              <h4 class="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-300 flex items-center gap-1.5">
+                <i class="fa-solid fa-book-bookmark"></i> Nội dung các bài học chi tiết:
+              </h4>
+
+              <div class="space-y-4">
+                
+                <article id="bai-5" class="p-6 rounded-3xl bg-white dark:bg-dark-surface border border-gray-100 dark:border-gray-800 shadow-sm space-y-4 scroll-mt-24">
+                  <div class="flex items-center justify-between border-b pb-3 border-gray-100 dark:border-gray-800">
+                    <h4 class="text-base font-black text-gray-900 dark:text-white flex items-center gap-2">
+                      <span class="w-6 h-6 rounded-lg bg-emerald-500 text-white text-xs flex items-center justify-center font-bold">5</span>
+                      Bài 5. Nhà nước Văn Lang, Nhà nước Âu Lạc
+                    </h4>
+                    <span class="text-xs text-gray-400">Văn minh sông Hồng</span>
+                  </div>
+                  <ul class="list-disc pl-5 space-y-1.5 text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+                    <li>Văn Lang là nhà nước đầu tiên trên lãnh thổ Việt Nam, hình thành vào khoảng thế kỉ VII TCN; đứng đầu là Hùng Vương, đóng đô ở Phong Châu (Phú Thọ).</li><li>Đời sống kinh tế chủ yếu là trồng lúa nước, chăn nuôi, làm gốm và đúc đồng (tiêu biểu là trống đồng Đông Sơn).</li><li>Khoảng thế kỉ III TCN, Thục Phán hợp nhất người Tây Âu và Lạc Việt, lập ra Nhà nước Âu Lạc, xưng là An Dương Vương.</li><li>Âu Lạc đóng đô ở Cổ Loa (Đông Anh, Hà Nội) với tòa thành nhiều vòng độc đáo và vũ khí nỏ thần bắn được nhiều mũi tên đồng.</li><li>Thành Cổ Loa là công trình quân sự và kiến trúc đặc sắc của dân tộc ta thời cổ đại.</li>
+                  </ul>
+                  <div class="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 text-xs font-semibold text-emerald-900 dark:text-emerald-200">
+                    <strong>Kiến thức phải nhớ:</strong> Văn Lang và Âu Lạc là những nhà nước đầu tiên; vua Hùng dựng nước Phong Châu, An Dương Vương xây thành Cổ Loa.
+                  </div>
+
+                  <!-- Câu hỏi ôn tập cuối bài học -->
+                  <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-dark-card border border-emerald-200/60 dark:border-emerald-900/40 space-y-2">
+                    <div class="flex items-center gap-1.5 text-xs font-bold text-emerald-700 dark:text-emerald-300">
+                      <i class="fa-solid fa-circle-question"></i>
+                      <span>Câu hỏi ôn tập cuối bài:</span>
+                    </div>
+                    <p class="text-xs text-gray-800 dark:text-gray-200 font-semibold italic">
+                      "Nhà nước Văn Lang và Âu Lạc ra đời vào thời gian nào? Điểm độc đáo của thành Cổ Loa là gì?"
+                    </p>
+                    <details class="text-xs text-slate-600 dark:text-slate-400 cursor-pointer">
+                      <summary class="font-bold text-emerald-600 dark:text-emerald-400 hover:underline select-none">
+                        &rarr; Bấm để xem gợi ý trả lời
+                      </summary>
+                      <div class="mt-1.5 p-2 rounded-lg bg-white dark:bg-dark-surface border border-gray-200/50 dark:border-gray-700/50 leading-relaxed text-[11px]">
+                        <strong>Gợi ý đáp án:</strong> Văn Lang ra đời khoảng thế kỉ VII TCN; Âu Lạc khoảng thế kỉ III TCN. Thành Cổ Loa có cấu trúc nhiều vòng khép kín bằng đất, kết hợp hào nước sâu và nỏ bắn nhiều mũi tên đồng phòng thủ kiên cố.
+                      </div>
+                    </details>
+                  </div>
+                </article>
+                <article id="bai-6" class="p-6 rounded-3xl bg-white dark:bg-dark-surface border border-gray-100 dark:border-gray-800 shadow-sm space-y-4 scroll-mt-24">
+                  <div class="flex items-center justify-between border-b pb-3 border-gray-100 dark:border-gray-800">
+                    <h4 class="text-base font-black text-gray-900 dark:text-white flex items-center gap-2">
+                      <span class="w-6 h-6 rounded-lg bg-emerald-500 text-white text-xs flex items-center justify-center font-bold">6</span>
+                      Bài 6. Vương quốc Phù Nam
+                    </h4>
+                    <span class="text-xs text-gray-400">Văn minh Óc Eo</span>
+                  </div>
+                  <ul class="list-disc pl-5 space-y-1.5 text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+                    <li>Vương quốc Phù Nam hình thành vào khoảng thế kỉ I ở khu vực Nam Bộ ngày nay và phát triển rực rỡ đến thế kỉ VII.</li><li>Người dân làm nông nghiệp, đánh bắt thủy sản, làm đồ thủ công mỹ nghệ và phát triển thương nghiệp đường biển.</li><li>Óc Eo (thuộc An Giang) là đô thị - cảng thị sầm uất, nơi giao thương nhộn nhịp với nhiều nước châu Á.</li><li>Hệ thống kênh đào cổ phục vụ đi lại và tưới tiêu nông nghiệp.</li><li>Dấu tích khảo cổ văn hóa Óc Eo thể hiện nghệ thuật điêu khắc gỗ, đá và đồ kim hoàn tinh xảo.</li>
+                  </ul>
+                  <div class="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 text-xs font-semibold text-emerald-900 dark:text-emerald-200">
+                    <strong>Kiến thức phải nhớ:</strong> Vương quốc Phù Nam tồn tại từ thế kỉ I đến VII ở Nam Bộ, rực rỡ với văn hóa Óc Eo và thương cảng quốc tế sầm uất.
+                  </div>
+
+                  <!-- Câu hỏi ôn tập cuối bài học -->
+                  <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-dark-card border border-emerald-200/60 dark:border-emerald-900/40 space-y-2">
+                    <div class="flex items-center gap-1.5 text-xs font-bold text-emerald-700 dark:text-emerald-300">
+                      <i class="fa-solid fa-circle-question"></i>
+                      <span>Câu hỏi ôn tập cuối bài:</span>
+                    </div>
+                    <p class="text-xs text-gray-800 dark:text-gray-200 font-semibold italic">
+                      "Nêu vị trí địa bàn và nét nổi bật của cảng thị Óc Eo thuộc Vương quốc Phù Nam?"
+                    </p>
+                    <details class="text-xs text-slate-600 dark:text-slate-400 cursor-pointer">
+                      <summary class="font-bold text-emerald-600 dark:text-emerald-400 hover:underline select-none">
+                        &rarr; Bấm để xem gợi ý trả lời
+                      </summary>
+                      <div class="mt-1.5 p-2 rounded-lg bg-white dark:bg-dark-surface border border-gray-200/50 dark:border-gray-700/50 leading-relaxed text-[11px]">
+                        <strong>Gợi ý đáp án:</strong> Địa bàn ở Nam Bộ. Cảng thị Óc Eo (An Giang) là trung tâm thương mại đường biển quốc tế sầm uất, giao lưu buôn bán với nhiều đoàn thuyền buôn Á - Âu cổ đại.
+                      </div>
+                    </details>
+                  </div>
+                </article>
+                <article id="bai-7" class="p-6 rounded-3xl bg-white dark:bg-dark-surface border border-gray-100 dark:border-gray-800 shadow-sm space-y-4 scroll-mt-24">
+                  <div class="flex items-center justify-between border-b pb-3 border-gray-100 dark:border-gray-800">
+                    <h4 class="text-base font-black text-gray-900 dark:text-white flex items-center gap-2">
+                      <span class="w-6 h-6 rounded-lg bg-emerald-500 text-white text-xs flex items-center justify-center font-bold">7</span>
+                      Bài 7. Vương quốc Chăm-pa
+                    </h4>
+                    <span class="text-xs text-gray-400">Văn minh Sa Huỳnh</span>
+                  </div>
+                  <ul class="list-disc pl-5 space-y-1.5 text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+                    <li>Vương quốc Chăm-pa ra đời vào cuối thế kỉ II ở dải đất duyên hải miền Trung nước ta.</li><li>Địa bàn gồm dải đất duyên hải miền Trung, núi giáp biển, nhiều sông ngắn.</li><li>Kinh tế: trồng lúa nước (dẫn nước bằng guồng xe), khai thác lâm thổ sản quý (trầm hương, ngà voi), làm gốm và đi biển.</li><li>Xã hội có vua, quan lại và các tầng lớp nhân dân; chịu ảnh hưởng của Ấn Độ giáo và Phật giáo.</li><li>Di sản kiến trúc: các tháp Chăm bằng gạch nung độc đáo (Mỹ Sơn, Tháp Bà Ponagar...), nghệ thuật điêu khắc đá tinh xảo và chữ viết Phạn - Chăm cổ.</li>
+                  </ul>
+                  <div class="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 text-xs font-semibold text-emerald-900 dark:text-emerald-200">
+                    <strong>Kiến thức phải nhớ:</strong> Vương quốc Chăm-pa hình thành ở Duyên hải miền Trung từ thế kỉ II, nổi tiếng với quần thể tháp Chăm và văn hóa Sa Huỳnh.
+                  </div>
+
+                  <!-- Câu hỏi ôn tập cuối bài học -->
+                  <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-dark-card border border-emerald-200/60 dark:border-emerald-900/40 space-y-2">
+                    <div class="flex items-center gap-1.5 text-xs font-bold text-emerald-700 dark:text-emerald-300">
+                      <i class="fa-solid fa-circle-question"></i>
+                      <span>Câu hỏi ôn tập cuối bài:</span>
+                    </div>
+                    <p class="text-xs text-gray-800 dark:text-gray-200 font-semibold italic">
+                      "Người Chăm cổ đã để lại những công trình di sản văn hóa và kiến trúc tiêu biểu nào?"
+                    </p>
+                    <details class="text-xs text-slate-600 dark:text-slate-400 cursor-pointer">
+                      <summary class="font-bold text-emerald-600 dark:text-emerald-400 hover:underline select-none">
+                        &rarr; Bấm để xem gợi ý trả lời
+                      </summary>
+                      <div class="mt-1.5 p-2 rounded-lg bg-white dark:bg-dark-surface border border-gray-200/50 dark:border-gray-700/50 leading-relaxed text-[11px]">
+                        <strong>Gợi ý đáp án:</strong> Các quần thể tháp Chăm bằng gạch nung xây dựng không lộ mạch vữa (tiêu biểu như Thánh địa Mỹ Sơn, Tháp Po Klong Garai) cùng nghệ thuật điêu khắc phù điêu đá vũ nữ Apsara tuyệt mĩ.
+                      </div>
+                    </details>
+                  </div>
+                </article>
+              </div>
+            </div>
+
+            <!-- Mini Quiz 1 (Form Lớp 4 chuẩn) -->
+            <div class="p-5 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-800 space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">
+                  <i class="fa-solid fa-circle-question mr-1"></i> Câu hỏi kiểm tra Chủ đề 2
+                </span>
+                <span class="text-[11px] text-gray-400">Kiểm tra tức thì</span>
+              </div>
+              <p class="text-xs sm:text-sm font-bold text-gray-800 dark:text-gray-200">
+                Nhà nước Âu Lạc được hình thành gắn liền với công lao của vị vua nào và công trình phòng thủ quân sự nổi tiếng nào?
+              </p>
+              <div class="space-y-2 text-xs">
+                <label class="flex items-center gap-2 p-2 rounded-lg hover:bg-white dark:hover:bg-gray-800 cursor-pointer border border-transparent hover:border-gray-200 dark:hover:border-gray-700 transition">
+                  <input type="radio" name="quiz2" value="A" class="text-emerald-600">
+                  <span>A. Vua Hùng Vương và kinh đô Phong Châu</span>
+                </label>
+                <label class="flex items-center gap-2 p-2 rounded-lg hover:bg-white dark:hover:bg-gray-800 cursor-pointer border border-transparent hover:border-gray-200 dark:hover:border-gray-700 transition">
+                  <input type="radio" name="quiz2" value="B" class="text-emerald-600">
+                  <span>B. Thục Phán An Dương Vương và thành Cổ Loa kiên cố</span>
+                </label>
+                <label class="flex items-center gap-2 p-2 rounded-lg hover:bg-white dark:hover:bg-gray-800 cursor-pointer border border-transparent hover:border-gray-200 dark:hover:border-gray-700 transition">
+                  <input type="radio" name="quiz2" value="C" class="text-emerald-600">
+                  <span>C. Hai Bà Trưng và căn cứ Mê Linh hào hùng</span>
+                </label>
+              </div>
+              <div class="flex items-center justify-between pt-2">
+                <button onclick="checkTopicQuiz('2', 'B', 'Chính xác! Thục Phán An Dương Vương lập nên nhà nước Âu Lạc, dời đô về Cổ Loa (Đông Anh, Hà Nội) và xây dựng tòa thành xoáy ốc kiên cố.')" 
+                  class="px-4 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs transition">
+                  Kiểm tra đáp án
+                </button>
+                <div id="quiz-result-2" class="text-xs font-bold hidden"></div>
+              </div>
+            </div>
+
+            <!-- Mini Quiz 2 (Câu hỏi kiểm tra mở rộng Chủ đề) -->
+            <div class="p-5 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-800 space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">
+                  <i class="fa-solid fa-circle-question mr-1"></i> Câu hỏi kiểm tra mở rộng Chủ đề 2
+                </span>
+                <span class="text-[11px] text-gray-400">Kiểm tra tức thì</span>
+              </div>
+              <p class="text-xs sm:text-sm font-bold text-gray-800 dark:text-gray-200">
+                Nền văn hóa cổ Óc Eo gắn liền với sự phát triển rực rỡ của vương quốc cổ nào trên vùng đất Nam Bộ nước ta?
+              </p>
+              <div class="space-y-2 text-xs">
+                <label class="flex items-center gap-2 p-2 rounded-lg hover:bg-white dark:hover:bg-gray-800 cursor-pointer border border-transparent hover:border-gray-200 dark:hover:border-gray-700 transition">
+                  <input type="radio" name="quiz2b" value="A" class="text-emerald-600">
+                  <span>A. Vương quốc Phù Nam</span>
+                </label>
+                <label class="flex items-center gap-2 p-2 rounded-lg hover:bg-white dark:hover:bg-gray-800 cursor-pointer border border-transparent hover:border-gray-200 dark:hover:border-gray-700 transition">
+                  <input type="radio" name="quiz2b" value="B" class="text-emerald-600">
+                  <span>B. Vương quốc Chăm-pa</span>
+                </label>
+                <label class="flex items-center gap-2 p-2 rounded-lg hover:bg-white dark:hover:bg-gray-800 cursor-pointer border border-transparent hover:border-gray-200 dark:hover:border-gray-700 transition">
+                  <input type="radio" name="quiz2b" value="C" class="text-emerald-600">
+                  <span>C. Nhà nước Văn Lang</span>
+                </label>
+              </div>
+              <div class="flex items-center justify-between pt-2">
+                <button onclick="checkTopicQuiz('2b', 'A', 'Chính xác! Văn hóa Óc Eo (An Giang) là trung tâm văn hóa và thương cảng sầm uất bậc nhất của Vương quốc Phù Nam cổ xưa.')" 
+                  class="px-4 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs transition">
+                  Kiểm tra đáp án
+                </button>
+                <div id="quiz-result-2b" class="text-xs font-bold hidden"></div>
+              </div>
+            </div>
+
+          </div>
+          <div id="chude-3" class="p-6 sm:p-7 rounded-3xl bg-white dark:bg-dark-surface border border-gray-100 dark:border-gray-800 shadow-sm space-y-6 scroll-mt-24">
+            
+            <!-- Topic Header -->
+            <div class="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-gray-100 dark:border-gray-800">
+              <div>
+                <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">Chủ đề 3</span>
+                <h3 class="text-lg sm:text-xl font-black text-gray-900 dark:text-white flex items-center gap-2 mt-0.5">
+                  <i class="fa-solid fa-landmark text-emerald-600"></i> Chủ đề 3. Xây dựng và bảo vệ đất nước Việt Nam
+                </h3>
+              </div>
+              <span class="px-3 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 text-xs font-bold border border-emerald-200 dark:border-emerald-800">
+                Bài 8–17, trang 40–80
+              </span>
+            </div>
+
+            <!-- Vector SVG Diagram -->
+            <div class="space-y-2">
+              <div class="flex items-center justify-between text-xs">
+                <span class="flex items-center gap-1.5 text-emerald-700 dark:text-emerald-300 font-bold"><i class="fa-solid fa-diagram-project"></i> Sơ đồ trực quan số hóa: Chủ đề 3. Xây dựng và bảo vệ đất nước Việt Nam</span>
+                <span class="text-[11px] text-emerald-600 dark:text-emerald-400 font-bold">Vector SVG Chuẩn Bản Quyền</span>
+              </div>
+              <svg viewBox="0 0 700 240" class="w-full h-auto rounded-2xl bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-dark-card dark:to-dark-surface border border-emerald-100 dark:border-emerald-900/40 p-4 shadow-sm" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="lsdl5g3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#059669" />
+      <stop offset="100%" stop-color="#047857" />
+    </linearGradient>
+  </defs>
+  <rect x="20" y="30" width="120" height="60" rx="12" fill="url(#lsdl5g3)" />
+  <text x="80" y="55" font-family="system-ui, sans-serif" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">Năm 938</text>
+  <text x="80" y="75" font-family="system-ui, sans-serif" font-size="9" fill="#a7f3d0" text-anchor="middle">Bạch Đằng &bull; Ngô Quyền</text>
+
+  <rect x="190" y="30" width="120" height="60" rx="12" fill="#ffffff" stroke="#059669" stroke-width="2" />
+  <text x="250" y="55" font-family="system-ui, sans-serif" font-size="11" font-weight="bold" fill="#047857" text-anchor="middle">Năm 1010</text>
+  <text x="250" y="75" font-family="system-ui, sans-serif" font-size="9" fill="#4b5563" text-anchor="middle">Dời đô Thăng Long</text>
+
+  <rect x="360" y="30" width="130" height="60" rx="12" fill="url(#lsdl5g3)" />
+  <text x="425" y="55" font-family="system-ui, sans-serif" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">Trần &bull; Hậu Lê</text>
+  <text x="425" y="75" font-family="system-ui, sans-serif" font-size="9" fill="#a7f3d0" text-anchor="middle">Diên Hồng &bull; Lam Sơn</text>
+
+  <rect x="540" y="30" width="140" height="60" rx="12" fill="#ffffff" stroke="#059669" stroke-width="2" />
+  <text x="610" y="55" font-family="system-ui, sans-serif" font-size="11" font-weight="bold" fill="#047857" text-anchor="middle">1945 &bull; 1954 &bull; 1975</text>
+  <text x="610" y="75" font-family="system-ui, sans-serif" font-size="9" fill="#4b5563" text-anchor="middle">CMT8 &bull; ĐBP &bull; Thống nhất</text>
+
+  <line x1="80" y1="130" x2="610" y2="130" stroke="#059669" stroke-width="3" stroke-linecap="round" />
+  <circle cx="80" cy="130" r="7" fill="#059669" />
+  <circle cx="250" cy="130" r="7" fill="#059669" />
+  <circle cx="425" cy="130" r="7" fill="#059669" />
+  <circle cx="610" cy="130" r="7" fill="#059669" />
+
+  <text x="350" y="170" font-family="system-ui, sans-serif" font-size="12" font-weight="black" fill="#065f46" text-anchor="middle">TRỤC THỜI GIAN LỊCH SỬ DỰNG NƯỚC &amp; GIỮ NƯỚC HÀO HÙNG</text>
+  <text x="350" y="195" font-family="system-ui, sans-serif" font-size="10" fill="#047857" text-anchor="middle">Từ kỉ nguyên độc lập đến Đổi Mới và Hội Nhập Phát Triển Bền Vững</text>
+</svg>
+            </div>
+
+            <!-- Lessons List Formatted Exactly Like Grade 4 -->
+            <div class="space-y-4">
+              <h4 class="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-300 flex items-center gap-1.5">
+                <i class="fa-solid fa-book-bookmark"></i> Nội dung các bài học chi tiết:
+              </h4>
+
+              <div class="space-y-4">
+                
+                <article id="bai-8" class="p-6 rounded-3xl bg-white dark:bg-dark-surface border border-gray-100 dark:border-gray-800 shadow-sm space-y-4 scroll-mt-24">
+                  <div class="flex items-center justify-between border-b pb-3 border-gray-100 dark:border-gray-800">
+                    <h4 class="text-base font-black text-gray-900 dark:text-white flex items-center gap-2">
+                      <span class="w-6 h-6 rounded-lg bg-emerald-500 text-white text-xs flex items-center justify-center font-bold">8</span>
+                      Bài 8. Đấu tranh giành độc lập thời kì Bắc thuộc
+                    </h4>
+                    <span class="text-xs text-gray-400">Thời kì Bắc thuộc</span>
+                  </div>
+                  <ul class="list-disc pl-5 space-y-1.5 text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+                    <li>Thời kì Bắc thuộc kéo dài hơn một nghìn năm với chính sách đô hộ hà khắc của phong kiến phương Bắc.</li><li>Nhân dân ta kiên quyết không khuất phục, liên tục nổi dậy đấu tranh.</li><li>Các cuộc khởi nghĩa tiêu biểu: Khởi nghĩa Hai Bà Trưng (năm 40), Khởi nghĩa Bà Triệu (năm 248), Khởi nghĩa Lý Bí (năm 542), Khởi nghĩa Mai Thúc Loan (năm 713), Khởi nghĩa Phùng Hưng (khoảng năm 776).</li><li>Năm 938, Ngô Quyền chỉ huy trận Bạch Đằng lịch sử, cắm cọc ngầm bẫy thuyền giặc, đánh tan quân Nam Hán.</li><li>Chiến thắng Bạch Đằng chấm dứt hơn 1000 năm Bắc thuộc, mở ra kỉ nguyên độc lập tự chủ lâu dài cho dân tộc.</li>
+                  </ul>
+                  <div class="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 text-xs font-semibold text-emerald-900 dark:text-emerald-200">
+                    <strong>Kiến thức phải nhớ:</strong> Hơn 1000 năm Bắc thuộc kiên cường bất khuất với các cuộc khởi nghĩa Hai Bà Trưng, Bà Triệu, Lý Bí, Mai Thúc Loan và chiến thắng Bạch Đằng 938.
+                  </div>
+
+                  <!-- Câu hỏi ôn tập cuối bài học -->
+                  <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-dark-card border border-emerald-200/60 dark:border-emerald-900/40 space-y-2">
+                    <div class="flex items-center gap-1.5 text-xs font-bold text-emerald-700 dark:text-emerald-300">
+                      <i class="fa-solid fa-circle-question"></i>
+                      <span>Câu hỏi ôn tập cuối bài:</span>
+                    </div>
+                    <p class="text-xs text-gray-800 dark:text-gray-200 font-semibold italic">
+                      "Nêu ý nghĩa to lớn của chiến thắng Bạch Đằng năm 938 do Ngô Quyền chỉ huy?"
+                    </p>
+                    <details class="text-xs text-slate-600 dark:text-slate-400 cursor-pointer">
+                      <summary class="font-bold text-emerald-600 dark:text-emerald-400 hover:underline select-none">
+                        &rarr; Bấm để xem gợi ý trả lời
+                      </summary>
+                      <div class="mt-1.5 p-2 rounded-lg bg-white dark:bg-dark-surface border border-gray-200/50 dark:border-gray-700/50 leading-relaxed text-[11px]">
+                        <strong>Gợi ý đáp án:</strong> Chấm dứt hoàn toàn hơn 1000 năm đô hộ của phong kiến phương Bắc, mở ra kỉ nguyên độc lập tự chủ lâu dài cho non sông đất nước Việt Nam.
+                      </div>
+                    </details>
+                  </div>
+                </article>
+                <article id="bai-9" class="p-6 rounded-3xl bg-white dark:bg-dark-surface border border-gray-100 dark:border-gray-800 shadow-sm space-y-4 scroll-mt-24">
+                  <div class="flex items-center justify-between border-b pb-3 border-gray-100 dark:border-gray-800">
+                    <h4 class="text-base font-black text-gray-900 dark:text-white flex items-center gap-2">
+                      <span class="w-6 h-6 rounded-lg bg-emerald-500 text-white text-xs flex items-center justify-center font-bold">9</span>
+                      Bài 9. Triều Lý và việc định đô ở Thăng Long
+                    </h4>
+                    <span class="text-xs text-gray-400">Định đô Thăng Long</span>
+                  </div>
+                  <ul class="list-disc pl-5 space-y-1.5 text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+                    <li>Năm 1009, Lý Công Uẩn lên ngôi vua, sáng lập triều Lý (vua Lý Thái Tổ).</li><li>Mùa thu năm 1010, vua Lý Thái Tổ ban Chiếu dời đô từ Hoa Lư về Đại La và đổi tên là Thăng Long (rồng bay lên).</li><li>Thăng Long có vị trí trung tâm, đất đai bằng phẳng, thuận lợi giao thương và phát triển lâu dài.</li><li>Triều Lý xây dựng Hoàng thành Thăng Long, phát triển nông nghiệp và bảo vệ độc lập dân tộc.</li><li>Năm 1070 lập Văn Miếu và năm 1076 lập Quốc Tử Giám - trường đại học đầu tiên của Việt Nam.</li>
+                  </ul>
+                  <div class="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 text-xs font-semibold text-emerald-900 dark:text-emerald-200">
+                    <strong>Kiến thức phải nhớ:</strong> Năm 1010, vua Lý Thái Tổ dời đô từ Hoa Lư về Đại La đổi tên là Thăng Long; xây dựng Văn Miếu – Quốc Tử Giám đào tạo nhân tài.
+                  </div>
+
+                  <!-- Câu hỏi ôn tập cuối bài học -->
+                  <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-dark-card border border-emerald-200/60 dark:border-emerald-900/40 space-y-2">
+                    <div class="flex items-center gap-1.5 text-xs font-bold text-emerald-700 dark:text-emerald-300">
+                      <i class="fa-solid fa-circle-question"></i>
+                      <span>Câu hỏi ôn tập cuối bài:</span>
+                    </div>
+                    <p class="text-xs text-gray-800 dark:text-gray-200 font-semibold italic">
+                      "Vì sao vua Lý Thái Tổ quyết định dời đô về Thăng Long năm 1010?"
+                    </p>
+                    <details class="text-xs text-slate-600 dark:text-slate-400 cursor-pointer">
+                      <summary class="font-bold text-emerald-600 dark:text-emerald-400 hover:underline select-none">
+                        &rarr; Bấm để xem gợi ý trả lời
+                      </summary>
+                      <div class="mt-1.5 p-2 rounded-lg bg-white dark:bg-dark-surface border border-gray-200/50 dark:border-gray-700/50 leading-relaxed text-[11px]">
+                        <strong>Gợi ý đáp án:</strong> Vì Thăng Long là vùng đất trung tâm màu mỡ bằng phẳng, thuận tiện giao thương thủy bộ muôn phương, hội tụ linh khí vững bền cho non sông.
+                      </div>
+                    </details>
+                  </div>
+                </article>
+                <article id="bai-10" class="p-6 rounded-3xl bg-white dark:bg-dark-surface border border-gray-100 dark:border-gray-800 shadow-sm space-y-4 scroll-mt-24">
+                  <div class="flex items-center justify-between border-b pb-3 border-gray-100 dark:border-gray-800">
+                    <h4 class="text-base font-black text-gray-900 dark:text-white flex items-center gap-2">
+                      <span class="w-6 h-6 rounded-lg bg-emerald-500 text-white text-xs flex items-center justify-center font-bold">10</span>
+                      Bài 10. Triều Trần xây dựng đất nước và kháng chiến chống quân Mông – Nguyên xâm lược
+                    </h4>
+                    <span class="text-xs text-gray-400">Kháng chiến Mông – Nguyên</span>
+                  </div>
+                  <ul class="list-disc pl-5 space-y-1.5 text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+                    <li>Năm 1226, triều Trần được thành lập, củng cố bộ máy hành chính, phát triển kinh tế và quân đội.</li><li>Quân và dân triều Trần ba lần kháng chiến chống quân xâm lược Mông – Nguyên vào các năm 1258, 1285 và 1287–1288.</li><li>Chiến thuật tiêu biểu: 'vườn không nhà trống', chủ động rút lui bảo toàn lực lượng rồi phản công quyết định.</li><li>Những tấm gương tiêu biểu: Trần Hưng Đạo với Hịch tướng sĩ, Hội nghị Bình Than, Hội nghị Diên Hồng (tiếng hô 'Đánh!' vang dội), Trần Quốc Toản bóp nát quả cam.</li><li>Chiến thắng trên sông Bạch Đằng năm 1288 đập tan hoàn toàn dã tâm xâm lược của đế chế Mông – Nguyên.</li>
+                  </ul>
+                  <div class="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 text-xs font-semibold text-emerald-900 dark:text-emerald-200">
+                    <strong>Kiến thức phải nhớ:</strong> Quân dân nhà Trần ba lần toàn thắng quân xâm lược Mông – Nguyên với hào khí Đông A, Hội nghị Diên Hồng và Bạch Đằng 1288.
+                  </div>
+
+                  <!-- Câu hỏi ôn tập cuối bài học -->
+                  <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-dark-card border border-emerald-200/60 dark:border-emerald-900/40 space-y-2">
+                    <div class="flex items-center gap-1.5 text-xs font-bold text-emerald-700 dark:text-emerald-300">
+                      <i class="fa-solid fa-circle-question"></i>
+                      <span>Câu hỏi ôn tập cuối bài:</span>
+                    </div>
+                    <p class="text-xs text-gray-800 dark:text-gray-200 font-semibold italic">
+                      "Nêu các chiến thuật và tinh thần yêu nước tiêu biểu làm nên 3 lần toàn thắng quân Mông – Nguyên của triều Trần?"
+                    </p>
+                    <details class="text-xs text-slate-600 dark:text-slate-400 cursor-pointer">
+                      <summary class="font-bold text-emerald-600 dark:text-emerald-400 hover:underline select-none">
+                        &rarr; Bấm để xem gợi ý trả lời
+                      </summary>
+                      <div class="mt-1.5 p-2 rounded-lg bg-white dark:bg-dark-surface border border-gray-200/50 dark:border-gray-700/50 leading-relaxed text-[11px]">
+                        <strong>Gợi ý đáp án:</strong> Kế sách 'vườn không nhà trống', tinh thần Sát Thát quyết chiến, khối đoàn kết quân dân một lòng qua Hội nghị Diên Hồng và sự lãnh đạo tài ba của Trần Hưng Đạo.
+                      </div>
+                    </details>
+                  </div>
+                </article>
+                <article id="bai-11" class="p-6 rounded-3xl bg-white dark:bg-dark-surface border border-gray-100 dark:border-gray-800 shadow-sm space-y-4 scroll-mt-24">
+                  <div class="flex items-center justify-between border-b pb-3 border-gray-100 dark:border-gray-800">
+                    <h4 class="text-base font-black text-gray-900 dark:text-white flex items-center gap-2">
+                      <span class="w-6 h-6 rounded-lg bg-emerald-500 text-white text-xs flex items-center justify-center font-bold">11</span>
+                      Bài 11. Khởi nghĩa Lam Sơn và Triều Hậu Lê
+                    </h4>
+                    <span class="text-xs text-gray-400">Khởi nghĩa Lam Sơn</span>
+                  </div>
+                  <ul class="list-disc pl-5 space-y-1.5 text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+                    <li>Đầu thế kỉ XV, nhà Minh xâm lược nước ta, đô hộ tàn bạo.</li><li>Năm 1418, Lê Lợi phất cờ khởi nghĩa tại Lam Sơn (Thanh Hóa), cùng quân sư Nguyễn Trãi lãnh đạo nhân dân chiến đấu kiên cường.</li><li>Sau 10 năm nếm mật nằm gai gian khổ, cuộc khởi nghĩa Lam Sơn toàn thắng (nổi bật là chiến thắng Tốt Động – Chúc Động và Chi Lăng – Xương Giang).</li><li>Năm 1428, Lê Lợi lên ngôi vua (Lê Thái Tổ), lập ra triều Hậu Lê, khôi phục tên nước Đại Việt.</li><li>Triều Hậu Lê phát triển thịnh trị dưới thời vua Lê Thánh Tông; ban hành bộ Quốc triều hình luật (luật Hồng Đức) bảo vệ quyền lợi quốc gia và phụ nữ.</li>
+                  </ul>
+                  <div class="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 text-xs font-semibold text-emerald-900 dark:text-emerald-200">
+                    <strong>Kiến thức phải nhớ:</strong> Lê Lợi và Nguyễn Trãi lãnh đạo khởi nghĩa Lam Sơn 10 năm toàn thắng; triều Hậu Lê ban hành Quốc triều hình luật (luật Hồng Đức).
+                  </div>
+
+                  <!-- Câu hỏi ôn tập cuối bài học -->
+                  <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-dark-card border border-emerald-200/60 dark:border-emerald-900/40 space-y-2">
+                    <div class="flex items-center gap-1.5 text-xs font-bold text-emerald-700 dark:text-emerald-300">
+                      <i class="fa-solid fa-circle-question"></i>
+                      <span>Câu hỏi ôn tập cuối bài:</span>
+                    </div>
+                    <p class="text-xs text-gray-800 dark:text-gray-200 font-semibold italic">
+                      "Cuộc khởi nghĩa Lam Sơn do ai lãnh đạo và bộ luật Hồng Đức thời Hậu Lê có điểm gì tiến bộ?"
+                    </p>
+                    <details class="text-xs text-slate-600 dark:text-slate-400 cursor-pointer">
+                      <summary class="font-bold text-emerald-600 dark:text-emerald-400 hover:underline select-none">
+                        &rarr; Bấm để xem gợi ý trả lời
+                      </summary>
+                      <div class="mt-1.5 p-2 rounded-lg bg-white dark:bg-dark-surface border border-gray-200/50 dark:border-gray-700/50 leading-relaxed text-[11px]">
+                        <strong>Gợi ý đáp án:</strong> Do Lê Lợi và Nguyễn Trãi lãnh đạo 10 năm toàn thắng. Luật Hồng Đức tiến bộ vì bảo vệ chủ quyền biên giới, giữ trật tự xã hội và lần đầu bảo vệ quyền lợi phụ nữ.
+                      </div>
+                    </details>
+                  </div>
+                </article>
+                <article id="bai-12" class="p-6 rounded-3xl bg-white dark:bg-dark-surface border border-gray-100 dark:border-gray-800 shadow-sm space-y-4 scroll-mt-24">
+                  <div class="flex items-center justify-between border-b pb-3 border-gray-100 dark:border-gray-800">
+                    <h4 class="text-base font-black text-gray-900 dark:text-white flex items-center gap-2">
+                      <span class="w-6 h-6 rounded-lg bg-emerald-500 text-white text-xs flex items-center justify-center font-bold">12</span>
+                      Bài 12. Triều Nguyễn
+                    </h4>
+                    <span class="text-xs text-gray-400">Thời kì nhà Nguyễn</span>
+                  </div>
+                  <ul class="list-disc pl-5 space-y-1.5 text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+                    <li>Năm 1802, Nguyễn Ánh lên ngôi vua (Gia Long), lập ra triều Nguyễn, chọn Phú Xuân (Huế) làm kinh đô.</li><li>Năm 1804, vua Gia Long đặt quốc hiệu là Việt Nam.</li><li>Triều Nguyễn củng cố quản lí lãnh thổ thống nhất từ ải Nam Quan đến mũi Cà Mau, chia đất nước thành các tỉnh dưới thời vua Minh Mạng.</li><li>Ban hành Hoàng triều luật lệ (luật Gia Long), củng cố bộ máy hành chính tập quyền.</li><li>Thực thi và khẳng định chủ quyền đối với các quần đảo Hoàng Sa và Trường Sa qua các đội Hoàng Sa, Bắc Hải cắm mốc, lập miếu và đo đạc hải trình.</li><li>Để lại quần thể di tích Cố đô Huế và Nhã nhạc cung đình Huế được UNESCO vinh danh di sản văn hóa thế giới.</li>
+                  </ul>
+                  <div class="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 text-xs font-semibold text-emerald-900 dark:text-emerald-200">
+                    <strong>Kiến thức phải nhớ:</strong> Triều Nguyễn định đô ở Phú Xuân (Huế), củng cố đất nước thống nhất và xác lập, thực thi chủ quyền ở Hoàng Sa, Trường Sa.
+                  </div>
+
+                  <!-- Câu hỏi ôn tập cuối bài học -->
+                  <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-dark-card border border-emerald-200/60 dark:border-emerald-900/40 space-y-2">
+                    <div class="flex items-center gap-1.5 text-xs font-bold text-emerald-700 dark:text-emerald-300">
+                      <i class="fa-solid fa-circle-question"></i>
+                      <span>Câu hỏi ôn tập cuối bài:</span>
+                    </div>
+                    <p class="text-xs text-gray-800 dark:text-gray-200 font-semibold italic">
+                      "Triều Nguyễn đã thực hiện những hoạt động nào để khẳng định và thực thi chủ quyền đối với Hoàng Sa, Trường Sa?"
+                    </p>
+                    <details class="text-xs text-slate-600 dark:text-slate-400 cursor-pointer">
+                      <summary class="font-bold text-emerald-600 dark:text-emerald-400 hover:underline select-none">
+                        &rarr; Bấm để xem gợi ý trả lời
+                      </summary>
+                      <div class="mt-1.5 p-2 rounded-lg bg-white dark:bg-dark-surface border border-gray-200/50 dark:border-gray-700/50 leading-relaxed text-[11px]">
+                        <strong>Gợi ý đáp án:</strong> Cử hải đội Hoàng Sa, Bắc Hải đo đạc hải trình, vẽ bản đồ, cắm cọc tiêu, dựng miếu bia, trồng cây và thu lượm hải vật khẳng định chủ quyền thiêng liêng liên tục.
+                      </div>
+                    </details>
+                  </div>
+                </article>
+                <article id="bai-13" class="p-6 rounded-3xl bg-white dark:bg-dark-surface border border-gray-100 dark:border-gray-800 shadow-sm space-y-4 scroll-mt-24">
+                  <div class="flex items-center justify-between border-b pb-3 border-gray-100 dark:border-gray-800">
+                    <h4 class="text-base font-black text-gray-900 dark:text-white flex items-center gap-2">
+                      <span class="w-6 h-6 rounded-lg bg-emerald-500 text-white text-xs flex items-center justify-center font-bold">13</span>
+                      Bài 13. Cách mạng tháng Tám năm 1945
+                    </h4>
+                    <span class="text-xs text-gray-400">Cách mạng tháng Tám 1945</span>
+                  </div>
+                  <ul class="list-disc pl-5 space-y-1.5 text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+                    <li>Năm 1945, thời cơ cách mạng chín muồi khi phát xít Nhật đầu hàng đồng minh.</li><li>Dưới sự lãnh đạo của Đảng và Chủ tịch Hồ Chí Minh, toàn thể nhân dân đứng lên Tổng khởi nghĩa giành chính quyền trên cả nước.</li><li>Khởi nghĩa thắng lợi nhanh chóng ở Hà Nội (19/8), Huế (23/8), Sài Gòn (25/8).</li><li>Ngày 2 tháng 9 năm 1945, tại Quảng trường Ba Đình (Hà Nội), Chủ tịch Hồ Chí Minh đọc bản Tuyên ngôn Độc lập.</li><li>Tuyên ngôn Độc lập tuyên bố trước quốc dân và thế giới sự ra đời của nước Việt Nam Dân chủ Cộng hòa, mở ra kỉ nguyên độc lập, tự do.</li>
+                  </ul>
+                  <div class="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 text-xs font-semibold text-emerald-900 dark:text-emerald-200">
+                    <strong>Kiến thức phải nhớ:</strong> Cách mạng tháng Tám 1945 thắng lợi vĩ đại; ngày 2/9/1945 Chủ tịch Hồ Chí Minh đọc Tuyên ngôn Độc lập khai sinh nước VNDCCH.
+                  </div>
+
+                  <!-- Câu hỏi ôn tập cuối bài học -->
+                  <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-dark-card border border-emerald-200/60 dark:border-emerald-900/40 space-y-2">
+                    <div class="flex items-center gap-1.5 text-xs font-bold text-emerald-700 dark:text-emerald-300">
+                      <i class="fa-solid fa-circle-question"></i>
+                      <span>Câu hỏi ôn tập cuối bài:</span>
+                    </div>
+                    <p class="text-xs text-gray-800 dark:text-gray-200 font-semibold italic">
+                      "Nêu ý nghĩa lịch sử của bản Tuyên ngôn Độc lập ngày 2/9/1945 do Chủ tịch Hồ Chí Minh tuyên đọc?"
+                    </p>
+                    <details class="text-xs text-slate-600 dark:text-slate-400 cursor-pointer">
+                      <summary class="font-bold text-emerald-600 dark:text-emerald-400 hover:underline select-none">
+                        &rarr; Bấm để xem gợi ý trả lời
+                      </summary>
+                      <div class="mt-1.5 p-2 rounded-lg bg-white dark:bg-dark-surface border border-gray-200/50 dark:border-gray-700/50 leading-relaxed text-[11px]">
+                        <strong>Gợi ý đáp án:</strong> Khai sinh ra nước Việt Nam Dân chủ Cộng hòa, chấm dứt hoàn toàn ách thống trị thực dân phong kiến, mở ra kỉ nguyên tự do, độc lập vẻ vang cho dân tộc.
+                      </div>
+                    </details>
+                  </div>
+                </article>
+                <article id="bai-14" class="p-6 rounded-3xl bg-white dark:bg-dark-surface border border-gray-100 dark:border-gray-800 shadow-sm space-y-4 scroll-mt-24">
+                  <div class="flex items-center justify-between border-b pb-3 border-gray-100 dark:border-gray-800">
+                    <h4 class="text-base font-black text-gray-900 dark:text-white flex items-center gap-2">
+                      <span class="w-6 h-6 rounded-lg bg-emerald-500 text-white text-xs flex items-center justify-center font-bold">14</span>
+                      Bài 14. Chiến dịch Điện Biên Phủ năm 1954
+                    </h4>
+                    <span class="text-xs text-gray-400">Chiến dịch Điện Biên Phủ 1954</span>
+                  </div>
+                  <ul class="list-disc pl-5 space-y-1.5 text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+                    <li>Điện Biên Phủ là tập đoàn cứ điểm quân sự kiên cố nhất của thực dân Pháp tại Đông Dương.</li><li>Đầu năm 1954, Trung ương Đảng và Chủ tịch Hồ Chí Minh quyết định mở Chiến dịch Điện Biên Phủ do Đại tướng Võ Nguyên Giáp chỉ huy.</li><li>Quân và dân ta vượt muôn vàn gian nan, 'khoét núi, ngủ hầm, mưa dầm, cơm vắt', kéo pháo vào trận địa.</li><li>Trải qua 56 ngày đêm chiến đấu ngoan cường từ 13/3 đến 7/5/1954, quân ta tiêu diệt hoàn toàn tập đoàn cứ điểm.</li><li>Chiều 7/5/1954, lá cờ Quyết chiến Quyết thắng tung bay trên nóc hầm tướng Đờ Ca-xtơ-ri.</li><li>Ý nghĩa: 'Lừng lẫy năm châu, chấn động địa cầu', buộc Pháp kí Hiệp định Giơ-ne-vơ lập lại hòa bình ở miền Bắc.</li>
+                  </ul>
+                  <div class="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 text-xs font-semibold text-emerald-900 dark:text-emerald-200">
+                    <strong>Kiến thức phải nhớ:</strong> Chiến dịch Điện Biên Phủ 1954 kéo dài 56 ngày đêm kết thúc thắng lợi, đập tan cứ điểm của thực dân Pháp, chấn động địa cầu.
+                  </div>
+
+                  <!-- Câu hỏi ôn tập cuối bài học -->
+                  <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-dark-card border border-emerald-200/60 dark:border-emerald-900/40 space-y-2">
+                    <div class="flex items-center gap-1.5 text-xs font-bold text-emerald-700 dark:text-emerald-300">
+                      <i class="fa-solid fa-circle-question"></i>
+                      <span>Câu hỏi ôn tập cuối bài:</span>
+                    </div>
+                    <p class="text-xs text-gray-800 dark:text-gray-200 font-semibold italic">
+                      "Chiến dịch Điện Biên Phủ năm 1954 diễn ra trong bao nhiêu ngày đêm và mang ý nghĩa lịch sử như thế nào?"
+                    </p>
+                    <details class="text-xs text-slate-600 dark:text-slate-400 cursor-pointer">
+                      <summary class="font-bold text-emerald-600 dark:text-emerald-400 hover:underline select-none">
+                        &rarr; Bấm để xem gợi ý trả lời
+                      </summary>
+                      <div class="mt-1.5 p-2 rounded-lg bg-white dark:bg-dark-surface border border-gray-200/50 dark:border-gray-700/50 leading-relaxed text-[11px]">
+                        <strong>Gợi ý đáp án:</strong> Diễn ra trong 56 ngày đêm (13/3 - 7/5/1954). Chiến dịch toàn thắng 'Lừng lẫy năm châu, chấn động địa cầu', giải phóng hoàn toàn miền Bắc nước ta.
+                      </div>
+                    </details>
+                  </div>
+                </article>
+                <article id="bai-15" class="p-6 rounded-3xl bg-white dark:bg-dark-surface border border-gray-100 dark:border-gray-800 shadow-sm space-y-4 scroll-mt-24">
+                  <div class="flex items-center justify-between border-b pb-3 border-gray-100 dark:border-gray-800">
+                    <h4 class="text-base font-black text-gray-900 dark:text-white flex items-center gap-2">
+                      <span class="w-6 h-6 rounded-lg bg-emerald-500 text-white text-xs flex items-center justify-center font-bold">15</span>
+                      Bài 15. Chiến dịch Hồ Chí Minh năm 1975
+                    </h4>
+                    <span class="text-xs text-gray-400">Chiến dịch Hồ Chí Minh 1975</span>
+                  </div>
+                  <ul class="list-disc pl-5 space-y-1.5 text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+                    <li>Mùa xuân năm 1975, quân và dân ta mở cuộc Tổng tiến công và nổi dậy với các chiến dịch Tây Nguyên, Huế – Đà Nẵng.</li><li>Chiến dịch Hồ Chí Minh là chiến dịch quyết chiến chiến lược giải phóng Sài Gòn – Gia Định.</li><li>Đúng 11 giờ 30 phút ngày 30 tháng 4 năm 1975, xe tăng quân giải phóng húc đổ cổng Dinh Độc Lập; lá cờ cách mạng tung bay trên nóc dinh.</li><li>Tổng thống Dương Văn Minh tuyên bố đầu hàng không điều kiện, chiến dịch Hồ Chí Minh toàn thắng.</li><li>Đất nước thống nhất trọn vẹn, non sông thu về một mối, mở ra kỉ nguyên độc lập, thống nhất và đi lên chủ nghĩa xã hội.</li>
+                  </ul>
+                  <div class="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 text-xs font-semibold text-emerald-900 dark:text-emerald-200">
+                    <strong>Kiến thức phải nhớ:</strong> Chiến dịch Hồ Chí Minh lịch sử giải phóng hoàn toàn miền Nam ngày 30/4/1975, non sông nối liền một dải thống nhất.
+                  </div>
+
+                  <!-- Câu hỏi ôn tập cuối bài học -->
+                  <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-dark-card border border-emerald-200/60 dark:border-emerald-900/40 space-y-2">
+                    <div class="flex items-center gap-1.5 text-xs font-bold text-emerald-700 dark:text-emerald-300">
+                      <i class="fa-solid fa-circle-question"></i>
+                      <span>Câu hỏi ôn tập cuối bài:</span>
+                    </div>
+                    <p class="text-xs text-gray-800 dark:text-gray-200 font-semibold italic">
+                      "Thời khắc 11 giờ 30 phút ngày 30/4/1975 mang ý nghĩa lịch sử trọng đại gì đối với dân tộc Việt Nam?"
+                    </p>
+                    <details class="text-xs text-slate-600 dark:text-slate-400 cursor-pointer">
+                      <summary class="font-bold text-emerald-600 dark:text-emerald-400 hover:underline select-none">
+                        &rarr; Bấm để xem gợi ý trả lời
+                      </summary>
+                      <div class="mt-1.5 p-2 rounded-lg bg-white dark:bg-dark-surface border border-gray-200/50 dark:border-gray-700/50 leading-relaxed text-[11px]">
+                        <strong>Gợi ý đáp án:</strong> Đó là khoảnh khắc Chiến dịch Hồ Chí Minh toàn thắng, giải phóng hoàn toàn miền Nam, thống nhất non sông đất nước sau 21 năm kháng chiến gian khổ.
+                      </div>
+                    </details>
+                  </div>
+                </article>
+                <article id="bai-16" class="p-6 rounded-3xl bg-white dark:bg-dark-surface border border-gray-100 dark:border-gray-800 shadow-sm space-y-4 scroll-mt-24">
+                  <div class="flex items-center justify-between border-b pb-3 border-gray-100 dark:border-gray-800">
+                    <h4 class="text-base font-black text-gray-900 dark:text-white flex items-center gap-2">
+                      <span class="w-6 h-6 rounded-lg bg-emerald-500 text-white text-xs flex items-center justify-center font-bold">16</span>
+                      Bài 16. Đất nước Đổi mới
+                    </h4>
+                    <span class="text-xs text-gray-400">Đất nước Đổi mới</span>
+                  </div>
+                  <ul class="list-disc pl-5 space-y-1.5 text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+                    <li>Sau năm 1975, đất nước bước vào công cuộc khôi phục và xây dựng nhưng gặp nhiều khó khăn về kinh tế - xã hội.</li><li>Năm 1986, Đại hội Đảng lần thứ VI đề ra đường lối Đổi mới toàn diện đất nước.</li><li>Nội dung Đổi mới: chuyển dịch sang nền kinh tế thị trường định hướng XHCN, phát triển nông nghiệp, công nghiệp và dịch vụ, mở rộng hợp tác quốc tế.</li><li>Thành tựu: từ nước thiếu lương thực trở thành nước xuất khẩu gạo hàng đầu; đời sống nhân dân cải thiện rõ rệt.</li><li>Cơ sở hạ tầng hiện đại (cầu đường, sân bay, cảng biển), vị thế đối ngoại của Việt Nam ngày càng nâng cao trên trường quốc tế.</li>
+                  </ul>
+                  <div class="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 text-xs font-semibold text-emerald-900 dark:text-emerald-200">
+                    <strong>Kiến thức phải nhớ:</strong> Đất nước tiến hành Đổi mới từ năm 1986, kinh tế xã hội phát triển vượt bậc, đời sống nâng cao và hội nhập quốc tế toàn diện.
+                  </div>
+
+                  <!-- Câu hỏi ôn tập cuối bài học -->
+                  <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-dark-card border border-emerald-200/60 dark:border-emerald-900/40 space-y-2">
+                    <div class="flex items-center gap-1.5 text-xs font-bold text-emerald-700 dark:text-emerald-300">
+                      <i class="fa-solid fa-circle-question"></i>
+                      <span>Câu hỏi ôn tập cuối bài:</span>
+                    </div>
+                    <p class="text-xs text-gray-800 dark:text-gray-200 font-semibold italic">
+                      "Chủ trương Đổi mới đất nước được đề ra từ năm nào và mang lại những thành tựu to lớn gì?"
+                    </p>
+                    <details class="text-xs text-slate-600 dark:text-slate-400 cursor-pointer">
+                      <summary class="font-bold text-emerald-600 dark:text-emerald-400 hover:underline select-none">
+                        &rarr; Bấm để xem gợi ý trả lời
+                      </summary>
+                      <div class="mt-1.5 p-2 rounded-lg bg-white dark:bg-dark-surface border border-gray-200/50 dark:border-gray-700/50 leading-relaxed text-[11px]">
+                        <strong>Gợi ý đáp án:</strong> Được khởi xướng từ Đại hội VI năm 1986. Đưa đất nước thoát khỏi khủng hoảng, kinh tế phát triển vượt bậc, trở thành nước xuất khẩu hàng đầu và nâng cao vị thế quốc tế.
+                      </div>
+                    </details>
+                  </div>
+                </article>
+                <article id="bai-17" class="p-6 rounded-3xl bg-white dark:bg-dark-surface border border-gray-100 dark:border-gray-800 shadow-sm space-y-4 scroll-mt-24">
+                  <div class="flex items-center justify-between border-b pb-3 border-gray-100 dark:border-gray-800">
+                    <h4 class="text-base font-black text-gray-900 dark:text-white flex items-center gap-2">
+                      <span class="w-6 h-6 rounded-lg bg-emerald-500 text-white text-xs flex items-center justify-center font-bold">17</span>
+                      Bài 17. Các di tích lịch sử và văn hóa tiêu biểu của Việt Nam
+                    </h4>
+                    <span class="text-xs text-gray-400">Di tích lịch sử văn hóa</span>
+                  </div>
+                  <ul class="list-disc pl-5 space-y-1.5 text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+                    <li>Việt Nam có hệ thống di tích lịch sử - văn hóa phong phú trải dài trên khắp mọi miền Tổ quốc.</li><li>Một số di tích tiêu biểu: Khu di tích Đền Hùng (Phú Thọ), Thành Cổ Loa (Hà Nội), Hoàng thành Thăng Long (Hà Nội), Quần thể di tích Cố đô Huế (Thừa Thiên Huế), Phố cổ Hội An (Quảng Nam), Thánh địa Mỹ Sơn (Quảng Nam), Địa đạo Củ Chi (TP. Hồ Chí Minh).</li><li>Các di tích là bằng chứng sống động về trí tuệ, nghệ thuật kiến trúc và tinh thần đấu tranh kiên cường của cha ông.</li><li>Bảo vệ, tôn tạo di tích và ứng xử văn minh khi tham quan là trách nhiệm của mỗi công dân và học sinh.</li>
+                  </ul>
+                  <div class="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 text-xs font-semibold text-emerald-900 dark:text-emerald-200">
+                    <strong>Kiến thức phải nhớ:</strong> Di tích lịch sử như Cổ Loa, Cố đô Huế, Hoàng thành Thăng Long, Địa đạo Củ Chi là di sản văn hóa trường tồn của dân tộc.
+                  </div>
+
+                  <!-- Câu hỏi ôn tập cuối bài học -->
+                  <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-dark-card border border-emerald-200/60 dark:border-emerald-900/40 space-y-2">
+                    <div class="flex items-center gap-1.5 text-xs font-bold text-emerald-700 dark:text-emerald-300">
+                      <i class="fa-solid fa-circle-question"></i>
+                      <span>Câu hỏi ôn tập cuối bài:</span>
+                    </div>
+                    <p class="text-xs text-gray-800 dark:text-gray-200 font-semibold italic">
+                      "Kể tên các di tích lịch sử văn hóa tiêu biểu của nước ta được UNESCO công nhận và nêu cách gìn giữ di tích khi đi tham quan?"
+                    </p>
+                    <details class="text-xs text-slate-600 dark:text-slate-400 cursor-pointer">
+                      <summary class="font-bold text-emerald-600 dark:text-emerald-400 hover:underline select-none">
+                        &rarr; Bấm để xem gợi ý trả lời
+                      </summary>
+                      <div class="mt-1.5 p-2 rounded-lg bg-white dark:bg-dark-surface border border-gray-200/50 dark:border-gray-700/50 leading-relaxed text-[11px]">
+                        <strong>Gợi ý đáp án:</strong> Hoàng thành Thăng Long, Cố đô Huế, Phố cổ Hội An, Thánh địa Mỹ Sơn. Khi tham quan cần giữ vệ sinh chung, không vẽ bậy, tôn trọng hiện vật và tuân thủ nội quy di tích.
+                      </div>
+                    </details>
+                  </div>
+                </article>
+              </div>
+            </div>
+
+            <!-- Mini Quiz 1 (Form Lớp 4 chuẩn) -->
+            <div class="p-5 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-800 space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">
+                  <i class="fa-solid fa-circle-question mr-1"></i> Câu hỏi kiểm tra Chủ đề 3
+                </span>
+                <span class="text-[11px] text-gray-400">Kiểm tra tức thì</span>
+              </div>
+              <p class="text-xs sm:text-sm font-bold text-gray-800 dark:text-gray-200">
+                Sự kiện lịch sử trọng đại nào vào mùa thu năm 1010 đã mở ra kỉ nguyên định đô lâu dài và phồn thịnh của kinh đô Thăng Long?
+              </p>
+              <div class="space-y-2 text-xs">
+                <label class="flex items-center gap-2 p-2 rounded-lg hover:bg-white dark:hover:bg-gray-800 cursor-pointer border border-transparent hover:border-gray-200 dark:hover:border-gray-700 transition">
+                  <input type="radio" name="quiz3" value="A" class="text-emerald-600">
+                  <span>A. Ngô Quyền đánh tan quân Nam Hán trên sông Bạch Đằng</span>
+                </label>
+                <label class="flex items-center gap-2 p-2 rounded-lg hover:bg-white dark:hover:bg-gray-800 cursor-pointer border border-transparent hover:border-gray-200 dark:hover:border-gray-700 transition">
+                  <input type="radio" name="quiz3" value="B" class="text-emerald-600">
+                  <span>B. Vua Lý Thái Tổ ban Chiếu dời đô từ Hoa Lư về Thăng Long</span>
+                </label>
+                <label class="flex items-center gap-2 p-2 rounded-lg hover:bg-white dark:hover:bg-gray-800 cursor-pointer border border-transparent hover:border-gray-200 dark:hover:border-gray-700 transition">
+                  <input type="radio" name="quiz3" value="C" class="text-emerald-600">
+                  <span>C. Lê Lợi toàn thắng quân Minh lên ngôi vua lập triều Hậu Lê</span>
+                </label>
+              </div>
+              <div class="flex items-center justify-between pt-2">
+                <button onclick="checkTopicQuiz('3', 'B', 'Chính xác! Năm 1010, vua Lý Thái Tổ ban Chiếu dời đô từ Hoa Lư về thành Đại La và đổi tên là Thăng Long (rồng bay lên).')" 
+                  class="px-4 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs transition">
+                  Kiểm tra đáp án
+                </button>
+                <div id="quiz-result-3" class="text-xs font-bold hidden"></div>
+              </div>
+            </div>
+
+            <!-- Mini Quiz 2 (Câu hỏi kiểm tra mở rộng Chủ đề) -->
+            <div class="p-5 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-800 space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">
+                  <i class="fa-solid fa-circle-question mr-1"></i> Câu hỏi kiểm tra mở rộng Chủ đề 3
+                </span>
+                <span class="text-[11px] text-gray-400">Kiểm tra tức thì</span>
+              </div>
+              <p class="text-xs sm:text-sm font-bold text-gray-800 dark:text-gray-200">
+                Chiến dịch lịch sử nào đã 'Lừng lẫy năm châu, chấn động địa cầu', đập tan tập đoàn cứ điểm mạnh nhất của thực dân Pháp năm 1954?
+              </p>
+              <div class="space-y-2 text-xs">
+                <label class="flex items-center gap-2 p-2 rounded-lg hover:bg-white dark:hover:bg-gray-800 cursor-pointer border border-transparent hover:border-gray-200 dark:hover:border-gray-700 transition">
+                  <input type="radio" name="quiz3b" value="A" class="text-emerald-600">
+                  <span>A. Chiến dịch Biên giới thu - đông 1950</span>
+                </label>
+                <label class="flex items-center gap-2 p-2 rounded-lg hover:bg-white dark:hover:bg-gray-800 cursor-pointer border border-transparent hover:border-gray-200 dark:hover:border-gray-700 transition">
+                  <input type="radio" name="quiz3b" value="B" class="text-emerald-600">
+                  <span>B. Chiến dịch Điện Biên Phủ năm 1954</span>
+                </label>
+                <label class="flex items-center gap-2 p-2 rounded-lg hover:bg-white dark:hover:bg-gray-800 cursor-pointer border border-transparent hover:border-gray-200 dark:hover:border-gray-700 transition">
+                  <input type="radio" name="quiz3b" value="C" class="text-emerald-600">
+                  <span>C. Chiến dịch Hồ Chí Minh giải phóng Sài Gòn năm 1975</span>
+                </label>
+              </div>
+              <div class="flex items-center justify-between pt-2">
+                <button onclick="checkTopicQuiz('3b', 'B', 'Chính xác! Chiến dịch Điện Biên Phủ 1954 kéo dài 56 ngày đêm toàn thắng, đánh dấu mốc son chói lọi trong lịch sử dân tộc.')" 
+                  class="px-4 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs transition">
+                  Kiểm tra đáp án
+                </button>
+                <div id="quiz-result-3b" class="text-xs font-bold hidden"></div>
+              </div>
+            </div>
+
+          </div>
+          <div id="chude-4" class="p-6 sm:p-7 rounded-3xl bg-white dark:bg-dark-surface border border-gray-100 dark:border-gray-800 shadow-sm space-y-6 scroll-mt-24">
+            
+            <!-- Topic Header -->
+            <div class="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-gray-100 dark:border-gray-800">
+              <div>
+                <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">Chủ đề 4</span>
+                <h3 class="text-lg sm:text-xl font-black text-gray-900 dark:text-white flex items-center gap-2 mt-0.5">
+                  <i class="fa-solid fa-landmark text-emerald-600"></i> Chủ đề 4. Các nước láng giềng
+                </h3>
+              </div>
+              <span class="px-3 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 text-xs font-bold border border-emerald-200 dark:border-emerald-800">
+                Bài 18–21, trang 81–95
+              </span>
+            </div>
+
+            <!-- Vector SVG Diagram -->
+            <div class="space-y-2">
+              <div class="flex items-center justify-between text-xs">
+                <span class="flex items-center gap-1.5 text-emerald-700 dark:text-emerald-300 font-bold"><i class="fa-solid fa-diagram-project"></i> Sơ đồ trực quan số hóa: Chủ đề 4. Các nước láng giềng</span>
+                <span class="text-[11px] text-emerald-600 dark:text-emerald-400 font-bold">Vector SVG Chuẩn Bản Quyền</span>
+              </div>
+              <svg viewBox="0 0 700 240" class="w-full h-auto rounded-2xl bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-dark-card dark:to-dark-surface border border-emerald-100 dark:border-emerald-900/40 p-4 shadow-sm" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="lsdl5g4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#059669" />
+      <stop offset="100%" stop-color="#047857" />
+    </linearGradient>
+  </defs>
+  <rect x="30" y="25" width="140" height="75" rx="14" fill="url(#lsdl5g4)" />
+  <text x="100" y="55" font-family="system-ui, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">LÀO</text>
+  <text x="100" y="75" font-family="system-ui, sans-serif" font-size="10" fill="#a7f3d0" text-anchor="middle">Viêng Chăn &bull; Thạt Luổng</text>
+
+  <rect x="200" y="25" width="140" height="75" rx="14" fill="#ffffff" stroke="#059669" stroke-width="2" />
+  <text x="270" y="55" font-family="system-ui, sans-serif" font-size="12" font-weight="bold" fill="#047857" text-anchor="middle">CAM-PU-CHIA</text>
+  <text x="270" y="75" font-family="system-ui, sans-serif" font-size="10" fill="#374151" text-anchor="middle">Phnôm Pênh &bull; Angkor Wat</text>
+
+  <rect x="370" y="25" width="140" height="75" rx="14" fill="url(#lsdl5g4)" />
+  <text x="440" y="55" font-family="system-ui, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">TRUNG QUỐC</text>
+  <text x="440" y="75" font-family="system-ui, sans-serif" font-size="10" fill="#a7f3d0" text-anchor="middle">Bắc Kinh &bull; Vạn Lí Trường Thành</text>
+
+  <rect x="540" y="25" width="130" height="75" rx="14" fill="#ffffff" stroke="#059669" stroke-width="2" />
+  <text x="605" y="55" font-family="system-ui, sans-serif" font-size="12" font-weight="bold" fill="#047857" text-anchor="middle">ASEAN</text>
+  <text x="605" y="75" font-family="system-ui, sans-serif" font-size="10" fill="#374151" text-anchor="middle">10 Quốc gia hợp tác</text>
+
+  <rect x="60" y="135" width="580" height="75" rx="16" fill="#ecfdf5" stroke="#10b981" stroke-width="2" />
+  <text x="350" y="165" font-family="system-ui, sans-serif" font-size="13" font-weight="black" fill="#065f46" text-anchor="middle">CỘNG ĐỒNG HỮU NGHỊ - HÒA BÌNH - HỢP TÁC TOÀN DIỆN</text>
+  <text x="350" y="190" font-family="system-ui, sans-serif" font-size="11" fill="#047857" text-anchor="middle">Thúc đẩy giao lưu kinh tế, văn hóa và giữ gìn môi trường hòa bình khu vực</text>
+</svg>
+            </div>
+
+            <!-- Lessons List Formatted Exactly Like Grade 4 -->
+            <div class="space-y-4">
+              <h4 class="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-300 flex items-center gap-1.5">
+                <i class="fa-solid fa-book-bookmark"></i> Nội dung các bài học chi tiết:
+              </h4>
+
+              <div class="space-y-4">
+                
+                <article id="bai-18" class="p-6 rounded-3xl bg-white dark:bg-dark-surface border border-gray-100 dark:border-gray-800 shadow-sm space-y-4 scroll-mt-24">
+                  <div class="flex items-center justify-between border-b pb-3 border-gray-100 dark:border-gray-800">
+                    <h4 class="text-base font-black text-gray-900 dark:text-white flex items-center gap-2">
+                      <span class="w-6 h-6 rounded-lg bg-emerald-500 text-white text-xs flex items-center justify-center font-bold">18</span>
+                      Bài 18. Nước Cộng hòa Dân chủ Nhân dân Lào
+                    </h4>
+                    <span class="text-xs text-gray-400">Nước láng giềng Lào</span>
+                  </div>
+                  <ul class="list-disc pl-5 space-y-1.5 text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+                    <li>Lào là nước láng giềng phía tây của Việt Nam, không giáp biển; thủ đô là Viêng Chăn.</li><li>Địa hình phần lớn là núi và cao nguyên; dòng sông Mê Công chảy qua bồi đắp các đồng bằng phù sa màu mỡ.</li><li>Kinh tế chủ yếu là nông nghiệp trồng trọt, khai thác thủy điện và lâm sản.</li><li>Người dân hiền hòa, đa số theo Phật giáo Nam truyền.</li><li>Công trình văn hóa tiêu biểu: Chùa Thạt Luổng (biểu tượng quốc gia), Cố đô Luông-pha-bang.</li><li>Quan hệ hữu nghị đặc biệt Việt Nam – Lào gắn bó keo sơn và hợp tác toàn diện.</li>
+                  </ul>
+                  <div class="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 text-xs font-semibold text-emerald-900 dark:text-emerald-200">
+                    <strong>Kiến thức phải nhớ:</strong> Nước Lào láng giềng có thủ đô Viêng Chăn, chùa Thạt Luổng cổ kính, dòng Mê Công uốn lượn và tình hữu nghị Việt - Lào thủy chung.
+                  </div>
+
+                  <!-- Câu hỏi ôn tập cuối bài học -->
+                  <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-dark-card border border-emerald-200/60 dark:border-emerald-900/40 space-y-2">
+                    <div class="flex items-center gap-1.5 text-xs font-bold text-emerald-700 dark:text-emerald-300">
+                      <i class="fa-solid fa-circle-question"></i>
+                      <span>Câu hỏi ôn tập cuối bài:</span>
+                    </div>
+                    <p class="text-xs text-gray-800 dark:text-gray-200 font-semibold italic">
+                      "Nêu đặc điểm địa hình, thủ đô và công trình biểu tượng văn hóa nổi tiếng của nước Lào?"
+                    </p>
+                    <details class="text-xs text-slate-600 dark:text-slate-400 cursor-pointer">
+                      <summary class="font-bold text-emerald-600 dark:text-emerald-400 hover:underline select-none">
+                        &rarr; Bấm để xem gợi ý trả lời
+                      </summary>
+                      <div class="mt-1.5 p-2 rounded-lg bg-white dark:bg-dark-surface border border-gray-200/50 dark:border-gray-700/50 leading-relaxed text-[11px]">
+                        <strong>Gợi ý đáp án:</strong> Lào không giáp biển, địa hình chủ yếu là núi và cao nguyên. Thủ đô là Viêng Chăn. Công trình kiến trúc Phật giáo tiêu biểu nhất là chùa Thạt Luổng mạ vàng tráng lệ.
+                      </div>
+                    </details>
+                  </div>
+                </article>
+                <article id="bai-19" class="p-6 rounded-3xl bg-white dark:bg-dark-surface border border-gray-100 dark:border-gray-800 shadow-sm space-y-4 scroll-mt-24">
+                  <div class="flex items-center justify-between border-b pb-3 border-gray-100 dark:border-gray-800">
+                    <h4 class="text-base font-black text-gray-900 dark:text-white flex items-center gap-2">
+                      <span class="w-6 h-6 rounded-lg bg-emerald-500 text-white text-xs flex items-center justify-center font-bold">19</span>
+                      Bài 19. Vương quốc Cam-pu-chia
+                    </h4>
+                    <span class="text-xs text-gray-400">Vương quốc Cam-pu-chia</span>
+                  </div>
+                  <ul class="list-disc pl-5 space-y-1.5 text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+                    <li>Cam-pu-chia giáp tây nam Việt Nam; thủ đô là Phnôm Pênh.</li><li>Địa hình dạng lòng chảo trũng, ở giữa có đồng bằng rộng lớn và Biển Hồ (Tôn-lê Sáp) - nguồn lợi thủy sản to lớn.</li><li>Kinh tế: nông nghiệp trồng lúa nước, cao su, đánh bắt thủy sản và du lịch.</li><li>Tôn giáo: đa số người dân theo đạo Phật.</li><li>Di sản kiến trúc nổi tiếng thế giới: quần thể đền đài Angkor Wat và Angkor Thom.</li><li>Việt Nam và Cam-pu-chia có mối quan hệ láng giềng tốt đẹp, hợp tác cùng phát triển.</li>
+                  </ul>
+                  <div class="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 text-xs font-semibold text-emerald-900 dark:text-emerald-200">
+                    <strong>Kiến thức phải nhớ:</strong> Vương quốc Cam-pu-chia có Biển Hồ trù phú, quần thể đền đài Angkor Wat kì vĩ là di sản văn hóa nhân loại.
+                  </div>
+
+                  <!-- Câu hỏi ôn tập cuối bài học -->
+                  <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-dark-card border border-emerald-200/60 dark:border-emerald-900/40 space-y-2">
+                    <div class="flex items-center gap-1.5 text-xs font-bold text-emerald-700 dark:text-emerald-300">
+                      <i class="fa-solid fa-circle-question"></i>
+                      <span>Câu hỏi ôn tập cuối bài:</span>
+                    </div>
+                    <p class="text-xs text-gray-800 dark:text-gray-200 font-semibold italic">
+                      "Biển Hồ mang lại lợi ích gì cho Cam-pu-chia và công trình kiến trúc nào là niềm tự hào của nhân dân Cam-pu-chia?"
+                    </p>
+                    <details class="text-xs text-slate-600 dark:text-slate-400 cursor-pointer">
+                      <summary class="font-bold text-emerald-600 dark:text-emerald-400 hover:underline select-none">
+                        &rarr; Bấm để xem gợi ý trả lời
+                      </summary>
+                      <div class="mt-1.5 p-2 rounded-lg bg-white dark:bg-dark-surface border border-gray-200/50 dark:border-gray-700/50 leading-relaxed text-[11px]">
+                        <strong>Gợi ý đáp án:</strong> Biển Hồ cung cấp nguồn lợi thủy sản khổng lồ và phù sa màu mỡ. Quần thể Angkor Wat là niềm tự hào dân tộc và được khắc họa trang trọng trên quốc kì.
+                      </div>
+                    </details>
+                  </div>
+                </article>
+                <article id="bai-20" class="p-6 rounded-3xl bg-white dark:bg-dark-surface border border-gray-100 dark:border-gray-800 shadow-sm space-y-4 scroll-mt-24">
+                  <div class="flex items-center justify-between border-b pb-3 border-gray-100 dark:border-gray-800">
+                    <h4 class="text-base font-black text-gray-900 dark:text-white flex items-center gap-2">
+                      <span class="w-6 h-6 rounded-lg bg-emerald-500 text-white text-xs flex items-center justify-center font-bold">20</span>
+                      Bài 20. Nước Cộng hòa Nhân dân Trung Hoa
+                    </h4>
+                    <span class="text-xs text-gray-400">Nước CHND Trung Hoa</span>
+                  </div>
+                  <ul class="list-disc pl-5 space-y-1.5 text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+                    <li>Trung Quốc là nước láng giềng phía bắc rộng lớn của Việt Nam; thủ đô là Bắc Kinh.</li><li>Diện tích đứng hàng thứ tư thế giới, dân số đứng thứ hai thế giới (hơn 1,4 tỉ người).</li><li>Địa hình miền Tây nhiều núi cao hiểm trở, miền Đông là các đồng bằng châu thổ màu mỡ (sông Hoàng Hà, Trường Giang).</li><li>Kinh tế phát triển mạnh mẽ, là nền kinh tế lớn thứ hai toàn cầu, sản xuất công nghiệp và công nghệ hiện đại hàng đầu thế giới.</li><li>Nền văn minh lâu đời với những phát minh lớn (chữ viết, la bàn, thuốc súng, nghề làm giấy) và công trình Vạn Lí Trường Thành kì vĩ.</li><li>Quan hệ hợp tác kinh tế - thương mại lớn và giao lưu văn hóa sâu sắc với Việt Nam.</li>
+                  </ul>
+                  <div class="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 text-xs font-semibold text-emerald-900 dark:text-emerald-200">
+                    <strong>Kiến thức phải nhớ:</strong> Trung Quốc láng giềng phía Bắc có diện tích lớn thứ tư, dân số đông thứ hai thế giới, thủ đô Bắc Kinh và Vạn Lí Trường Thành.
+                  </div>
+
+                  <!-- Câu hỏi ôn tập cuối bài học -->
+                  <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-dark-card border border-emerald-200/60 dark:border-emerald-900/40 space-y-2">
+                    <div class="flex items-center gap-1.5 text-xs font-bold text-emerald-700 dark:text-emerald-300">
+                      <i class="fa-solid fa-circle-question"></i>
+                      <span>Câu hỏi ôn tập cuối bài:</span>
+                    </div>
+                    <p class="text-xs text-gray-800 dark:text-gray-200 font-semibold italic">
+                      "Nêu vị thế kinh tế và một số thành tựu văn minh tiêu biểu của đất nước Trung Hoa?"
+                    </p>
+                    <details class="text-xs text-slate-600 dark:text-slate-400 cursor-pointer">
+                      <summary class="font-bold text-emerald-600 dark:text-emerald-400 hover:underline select-none">
+                        &rarr; Bấm để xem gợi ý trả lời
+                      </summary>
+                      <div class="mt-1.5 p-2 rounded-lg bg-white dark:bg-dark-surface border border-gray-200/50 dark:border-gray-700/50 leading-relaxed text-[11px]">
+                        <strong>Gợi ý đáp án:</strong> Trung Quốc là nền kinh tế lớn thứ hai thế giới. Đất nước này có nền văn minh lâu đời với 4 phát minh lớn (giấy, in, la bàn, thuốc súng) và Vạn Lí Trường Thành.
+                      </div>
+                    </details>
+                  </div>
+                </article>
+                <article id="bai-21" class="p-6 rounded-3xl bg-white dark:bg-dark-surface border border-gray-100 dark:border-gray-800 shadow-sm space-y-4 scroll-mt-24">
+                  <div class="flex items-center justify-between border-b pb-3 border-gray-100 dark:border-gray-800">
+                    <h4 class="text-base font-black text-gray-900 dark:text-white flex items-center gap-2">
+                      <span class="w-6 h-6 rounded-lg bg-emerald-500 text-white text-xs flex items-center justify-center font-bold">21</span>
+                      Bài 21. Hiệp hội các quốc gia Đông Nam Á (ASEAN)
+                    </h4>
+                    <span class="text-xs text-gray-400">Cộng đồng ASEAN</span>
+                  </div>
+                  <ul class="list-disc pl-5 space-y-1.5 text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+                    <li>ASEAN được thành lập ngày 8/8/1967 tại Băng Cốc (Thái Lan) nhằm duy trì hòa bình, an ninh và hợp tác kinh tế - xã hội khu vực.</li><li>Hiện nay ASEAN có 10 quốc gia thành viên: Bru-nây, Cam-pu-chia, In-đô-nê-xi-a, Lào, Ma-lai-xi-a, Mi-an-ma, Phi-líp-pin, Xin-ga-po, Thái Lan và Việt Nam.</li><li>Mục tiêu: thúc đẩy tăng trưởng kinh tế, tiến bộ xã hội, phát triển văn hóa và giữ gìn hòa bình, ổn định khu vực Đông Nam Á.</li><li>Việt Nam chính thức gia nhập ASEAN vào ngày 28/7/1995.</li><li>Việt Nam luôn là thành viên tích cực, có trách nhiệm, đóng góp quan trọng vào sự lớn mạnh của Cộng đồng ASEAN.</li>
+                  </ul>
+                  <div class="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 text-xs font-semibold text-emerald-900 dark:text-emerald-200">
+                    <strong>Kiến thức phải nhớ:</strong> Hiệp hội các quốc gia Đông Nam Á (ASEAN) thành lập năm 1967 gồm 10 nước, hợp tác hòa bình, hữu nghị và phát triển bền vững.
+                  </div>
+
+                  <!-- Câu hỏi ôn tập cuối bài học -->
+                  <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-dark-card border border-emerald-200/60 dark:border-emerald-900/40 space-y-2">
+                    <div class="flex items-center gap-1.5 text-xs font-bold text-emerald-700 dark:text-emerald-300">
+                      <i class="fa-solid fa-circle-question"></i>
+                      <span>Câu hỏi ôn tập cuối bài:</span>
+                    </div>
+                    <p class="text-xs text-gray-800 dark:text-gray-200 font-semibold italic">
+                      "ASEAN gồm có bao nhiêu quốc gia thành viên? Việt Nam gia nhập ASEAN vào năm nào?"
+                    </p>
+                    <details class="text-xs text-slate-600 dark:text-slate-400 cursor-pointer">
+                      <summary class="font-bold text-emerald-600 dark:text-emerald-400 hover:underline select-none">
+                        &rarr; Bấm để xem gợi ý trả lời
+                      </summary>
+                      <div class="mt-1.5 p-2 rounded-lg bg-white dark:bg-dark-surface border border-gray-200/50 dark:border-gray-700/50 leading-relaxed text-[11px]">
+                        <strong>Gợi ý đáp án:</strong> ASEAN gồm 10 quốc gia thành viên tại Đông Nam Á. Việt Nam chính thức gia nhập vào ngày 28/7/1995, luôn là thành viên chủ động và trách nhiệm.
+                      </div>
+                    </details>
+                  </div>
+                </article>
+              </div>
+            </div>
+
+            <!-- Mini Quiz 1 (Form Lớp 4 chuẩn) -->
+            <div class="p-5 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-800 space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">
+                  <i class="fa-solid fa-circle-question mr-1"></i> Câu hỏi kiểm tra Chủ đề 4
+                </span>
+                <span class="text-[11px] text-gray-400">Kiểm tra tức thì</span>
+              </div>
+              <p class="text-xs sm:text-sm font-bold text-gray-800 dark:text-gray-200">
+                Quần thể kiến trúc đền đài tôn giáo kì vĩ, là niềm tự hào và xuất hiện trên quốc kì của đất nước láng giềng Cam-pu-chia là gì?
+              </p>
+              <div class="space-y-2 text-xs">
+                <label class="flex items-center gap-2 p-2 rounded-lg hover:bg-white dark:hover:bg-gray-800 cursor-pointer border border-transparent hover:border-gray-200 dark:hover:border-gray-700 transition">
+                  <input type="radio" name="quiz4" value="A" class="text-emerald-600">
+                  <span>A. Chùa Thạt Luổng cổ kính</span>
+                </label>
+                <label class="flex items-center gap-2 p-2 rounded-lg hover:bg-white dark:hover:bg-gray-800 cursor-pointer border border-transparent hover:border-gray-200 dark:hover:border-gray-700 transition">
+                  <input type="radio" name="quiz4" value="B" class="text-emerald-600">
+                  <span>B. Quần thể đền đài Angkor Wat (Ăng-co Vát)</span>
+                </label>
+                <label class="flex items-center gap-2 p-2 rounded-lg hover:bg-white dark:hover:bg-gray-800 cursor-pointer border border-transparent hover:border-gray-200 dark:hover:border-gray-700 transition">
+                  <input type="radio" name="quiz4" value="C" class="text-emerald-600">
+                  <span>C. Vạn Lí Trường Thành kì vĩ</span>
+                </label>
+              </div>
+              <div class="flex items-center justify-between pt-2">
+                <button onclick="checkTopicQuiz('4', 'B', 'Chính xác! Angkor Wat là kì quan tôn giáo tráng lệ và biểu tượng thiêng liêng trên quốc kì của Vương quốc Cam-pu-chia.')" 
+                  class="px-4 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs transition">
+                  Kiểm tra đáp án
+                </button>
+                <div id="quiz-result-4" class="text-xs font-bold hidden"></div>
+              </div>
+            </div>
+
+            <!-- Mini Quiz 2 (Câu hỏi kiểm tra mở rộng Chủ đề) -->
+            <div class="p-5 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-800 space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">
+                  <i class="fa-solid fa-circle-question mr-1"></i> Câu hỏi kiểm tra mở rộng Chủ đề 4
+                </span>
+                <span class="text-[11px] text-gray-400">Kiểm tra tức thì</span>
+              </div>
+              <p class="text-xs sm:text-sm font-bold text-gray-800 dark:text-gray-200">
+                Hiệp hội các quốc gia Đông Nam Á (ASEAN) hiện nay có bao nhiêu quốc gia thành viên cùng hợp tác phát triển?
+              </p>
+              <div class="space-y-2 text-xs">
+                <label class="flex items-center gap-2 p-2 rounded-lg hover:bg-white dark:hover:bg-gray-800 cursor-pointer border border-transparent hover:border-gray-200 dark:hover:border-gray-700 transition">
+                  <input type="radio" name="quiz4b" value="A" class="text-emerald-600">
+                  <span>A. 8 quốc gia thành viên</span>
+                </label>
+                <label class="flex items-center gap-2 p-2 rounded-lg hover:bg-white dark:hover:bg-gray-800 cursor-pointer border border-transparent hover:border-gray-200 dark:hover:border-gray-700 transition">
+                  <input type="radio" name="quiz4b" value="B" class="text-emerald-600">
+                  <span>B. 10 quốc gia thành viên</span>
+                </label>
+                <label class="flex items-center gap-2 p-2 rounded-lg hover:bg-white dark:hover:bg-gray-800 cursor-pointer border border-transparent hover:border-gray-200 dark:hover:border-gray-700 transition">
+                  <input type="radio" name="quiz4b" value="C" class="text-emerald-600">
+                  <span>C. 12 quốc gia thành viên</span>
+                </label>
+              </div>
+              <div class="flex items-center justify-between pt-2">
+                <button onclick="checkTopicQuiz('4b', 'B', 'Chính xác! ASEAN hiện có 10 quốc gia thành viên trong khu vực Đông Nam Á, cùng hợp tác hòa bình, ổn định và thịnh vượng.')" 
+                  class="px-4 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs transition">
+                  Kiểm tra đáp án
+                </button>
+                <div id="quiz-result-4b" class="text-xs font-bold hidden"></div>
+              </div>
+            </div>
+
+          </div>
+          <div id="chude-5" class="p-6 sm:p-7 rounded-3xl bg-white dark:bg-dark-surface border border-gray-100 dark:border-gray-800 shadow-sm space-y-6 scroll-mt-24">
+            
+            <!-- Topic Header -->
+            <div class="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-gray-100 dark:border-gray-800">
+              <div>
+                <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">Chủ đề 5</span>
+                <h3 class="text-lg sm:text-xl font-black text-gray-900 dark:text-white flex items-center gap-2 mt-0.5">
+                  <i class="fa-solid fa-landmark text-emerald-600"></i> Chủ đề 5. Tìm hiểu thế giới
+                </h3>
+              </div>
+              <span class="px-3 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 text-xs font-bold border border-emerald-200 dark:border-emerald-800">
+                Bài 22–25, trang 96–112
+              </span>
+            </div>
+
+            <!-- Vector SVG Diagram -->
+            <div class="space-y-2">
+              <div class="flex items-center justify-between text-xs">
+                <span class="flex items-center gap-1.5 text-emerald-700 dark:text-emerald-300 font-bold"><i class="fa-solid fa-diagram-project"></i> Sơ đồ trực quan số hóa: Chủ đề 5. Tìm hiểu thế giới</span>
+                <span class="text-[11px] text-emerald-600 dark:text-emerald-400 font-bold">Vector SVG Chuẩn Bản Quyền</span>
+              </div>
+              <svg viewBox="0 0 700 240" class="w-full h-auto rounded-2xl bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-dark-card dark:to-dark-surface border border-emerald-100 dark:border-emerald-900/40 p-4 shadow-sm" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="lsdl5g5" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#059669" />
+      <stop offset="100%" stop-color="#047857" />
+    </linearGradient>
+  </defs>
+  <rect x="30" y="25" width="190" height="70" rx="14" fill="url(#lsdl5g5)" />
+  <text x="125" y="55" font-family="system-ui, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">6 CHÂU LỤC</text>
+  <text x="125" y="75" font-family="system-ui, sans-serif" font-size="10" fill="#a7f3d0" text-anchor="middle">Á &bull; Âu &bull; Phi &bull; Mĩ &bull; Đại Dương &bull; Nam Cực</text>
+
+  <rect x="255" y="25" width="190" height="70" rx="14" fill="#ffffff" stroke="#059669" stroke-width="2" />
+  <text x="350" y="55" font-family="system-ui, sans-serif" font-size="12" font-weight="bold" fill="#047857" text-anchor="middle">5 ĐẠI DƯƠNG</text>
+  <text x="350" y="75" font-family="system-ui, sans-serif" font-size="10" fill="#374151" text-anchor="middle">Thái Bình &bull; Đại Tây &bull; Ấn Độ &bull; Bắc Băng &bull; Nam</text>
+
+  <rect x="480" y="25" width="190" height="70" rx="14" fill="url(#lsdl5g5)" />
+  <text x="575" y="55" font-family="system-ui, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">CÁC NỀN VĂN MINH</text>
+  <text x="575" y="75" font-family="system-ui, sans-serif" font-size="10" fill="#a7f3d0" text-anchor="middle">Ai Cập &bull; Lưỡng Hà &bull; Hy Lạp &bull; La Mã</text>
+
+  <rect x="60" y="130" width="580" height="80" rx="16" fill="#ecfdf5" stroke="#10b981" stroke-width="2" />
+  <text x="350" y="160" font-family="system-ui, sans-serif" font-size="13" font-weight="black" fill="#065f46" text-anchor="middle">CÁCH MẠNG CÔNG NGHIỆP &amp; SỰ PHÁT TRIỂN CỦA NHÂN LOẠI</text>
+  <text x="350" y="185" font-family="system-ui, sans-serif" font-size="11" fill="#047857" text-anchor="middle">Từ máy hơi nước thế kỉ XVIII đến cách mạng công nghệ hiện đại thông minh</text>
+</svg>
+            </div>
+
+            <!-- Lessons List Formatted Exactly Like Grade 4 -->
+            <div class="space-y-4">
+              <h4 class="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-300 flex items-center gap-1.5">
+                <i class="fa-solid fa-book-bookmark"></i> Nội dung các bài học chi tiết:
+              </h4>
+
+              <div class="space-y-4">
+                
+                <article id="bai-22" class="p-6 rounded-3xl bg-white dark:bg-dark-surface border border-gray-100 dark:border-gray-800 shadow-sm space-y-4 scroll-mt-24">
+                  <div class="flex items-center justify-between border-b pb-3 border-gray-100 dark:border-gray-800">
+                    <h4 class="text-base font-black text-gray-900 dark:text-white flex items-center gap-2">
+                      <span class="w-6 h-6 rounded-lg bg-emerald-500 text-white text-xs flex items-center justify-center font-bold">22</span>
+                      Bài 22. Các châu lục và đại dương trên Trái Đất
+                    </h4>
+                    <span class="text-xs text-gray-400">Châu lục & Đại dương</span>
+                  </div>
+                  <ul class="list-disc pl-5 space-y-1.5 text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+                    <li>Bề mặt Trái Đất gồm các lục địa và các đại dương; đại dương chiếm hơn 70% diện tích.</li><li>Có 6 châu lục: Châu Á (lớn nhất), Châu Mĩ, Châu Phi, Châu Âu, Châu Đại Dương và Châu Nam Cực (lạnh nhất, không có cư dân sinh sống thường xuyên).</li><li>Có 5 đại dương: Thái Bình Dương (lớn và sâu nhất), Đại Tây Dương, Ấn Độ Dương, Nam Đại Dương và Bắc Băng Dương (nhỏ nhất).</li><li>Mỗi châu lục có điều kiện tự nhiên, khí hậu và tài nguyên đặc trưng riêng.</li>
+                  </ul>
+                  <div class="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 text-xs font-semibold text-emerald-900 dark:text-emerald-200">
+                    <strong>Kiến thức phải nhớ:</strong> Trái Đất có 6 châu lục (châu Á lớn nhất) và 5 đại dương (Thái Bình Dương rộng nhất), bao phủ phần lớn bề mặt hành tinh.
+                  </div>
+
+                  <!-- Câu hỏi ôn tập cuối bài học -->
+                  <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-dark-card border border-emerald-200/60 dark:border-emerald-900/40 space-y-2">
+                    <div class="flex items-center gap-1.5 text-xs font-bold text-emerald-700 dark:text-emerald-300">
+                      <i class="fa-solid fa-circle-question"></i>
+                      <span>Câu hỏi ôn tập cuối bài:</span>
+                    </div>
+                    <p class="text-xs text-gray-800 dark:text-gray-200 font-semibold italic">
+                      "Kể tên 6 châu lục và 5 đại dương trên Trái Đất? Châu lục và đại dương nào có diện tích lớn nhất?"
+                    </p>
+                    <details class="text-xs text-slate-600 dark:text-slate-400 cursor-pointer">
+                      <summary class="font-bold text-emerald-600 dark:text-emerald-400 hover:underline select-none">
+                        &rarr; Bấm để xem gợi ý trả lời
+                      </summary>
+                      <div class="mt-1.5 p-2 rounded-lg bg-white dark:bg-dark-surface border border-gray-200/50 dark:border-gray-700/50 leading-relaxed text-[11px]">
+                        <strong>Gợi ý đáp án:</strong> 6 châu lục: Á, Âu, Phi, Mĩ, Đại Dương, Nam Cực. 5 đại dương: Thái Bình Dương, Đại Tây Dương, Ấn Độ Dương, Nam Đại Dương, Bắc Băng Dương. Châu Á và Thái Bình Dương lớn nhất.
+                      </div>
+                    </details>
+                  </div>
+                </article>
+                <article id="bai-23" class="p-6 rounded-3xl bg-white dark:bg-dark-surface border border-gray-100 dark:border-gray-800 shadow-sm space-y-4 scroll-mt-24">
+                  <div class="flex items-center justify-between border-b pb-3 border-gray-100 dark:border-gray-800">
+                    <h4 class="text-base font-black text-gray-900 dark:text-white flex items-center gap-2">
+                      <span class="w-6 h-6 rounded-lg bg-emerald-500 text-white text-xs flex items-center justify-center font-bold">23</span>
+                      Bài 23. Dân số và các chủng tộc trên thế giới
+                    </h4>
+                    <span class="text-xs text-gray-400">Dân số & Chủng tộc</span>
+                  </div>
+                  <ul class="list-disc pl-5 space-y-1.5 text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+                    <li>Dân số thế giới đã vượt mốc 8 tỉ người và tiếp tục tăng.</li><li>Dân cư phân bố không đều: tập trung đông ở các đồng bằng màu mỡ ven biển châu Á và châu Âu; thưa thớt ở sa mạc, vùng cực lạnh giá và núi cao.</li><li>Nhân loại gồm ba chủng tộc chính dựa trên đặc điểm hình thái bên ngoài: Môn-gô-lô-it (da vàng), Ơ-rô-pê-ô-it (da trắng), Nê-grô-it (da đen).</li><li>Mọi chủng tộc đều bình đẳng, có trí tuệ và quyền sống như nhau, cùng đóng góp vào kho tàng văn minh nhân loại.</li>
+                  </ul>
+                  <div class="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 text-xs font-semibold text-emerald-900 dark:text-emerald-200">
+                    <strong>Kiến thức phải nhớ:</strong> Dân số thế giới phân bố không đồng đều; gồm các chủng tộc chính Môn-gô-lô-it, Ơ-rô-pê-ô-it, Nê-grô-it đều bình đẳng và quý giá.
+                  </div>
+
+                  <!-- Câu hỏi ôn tập cuối bài học -->
+                  <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-dark-card border border-emerald-200/60 dark:border-emerald-900/40 space-y-2">
+                    <div class="flex items-center gap-1.5 text-xs font-bold text-emerald-700 dark:text-emerald-300">
+                      <i class="fa-solid fa-circle-question"></i>
+                      <span>Câu hỏi ôn tập cuối bài:</span>
+                    </div>
+                    <p class="text-xs text-gray-800 dark:text-gray-200 font-semibold italic">
+                      "Dân số thế giới phân bố như thế nào và vì sao mọi chủng tộc trên thế giới đều hoàn toàn bình đẳng?"
+                    </p>
+                    <details class="text-xs text-slate-600 dark:text-slate-400 cursor-pointer">
+                      <summary class="font-bold text-emerald-600 dark:text-emerald-400 hover:underline select-none">
+                        &rarr; Bấm để xem gợi ý trả lời
+                      </summary>
+                      <div class="mt-1.5 p-2 rounded-lg bg-white dark:bg-dark-surface border border-gray-200/50 dark:border-gray-700/50 leading-relaxed text-[11px]">
+                        <strong>Gợi ý đáp án:</strong> Dân số phân bố không đều (đông ở đồng bằng ven biển, thưa ở hoang mạc và vùng cực). Mọi chủng tộc sinh ra đều bình đẳng về quyền lợi, nhân phẩm và trí tuệ.
+                      </div>
+                    </details>
+                  </div>
+                </article>
+                <article id="bai-24" class="p-6 rounded-3xl bg-white dark:bg-dark-surface border border-gray-100 dark:border-gray-800 shadow-sm space-y-4 scroll-mt-24">
+                  <div class="flex items-center justify-between border-b pb-3 border-gray-100 dark:border-gray-800">
+                    <h4 class="text-base font-black text-gray-900 dark:text-white flex items-center gap-2">
+                      <span class="w-6 h-6 rounded-lg bg-emerald-500 text-white text-xs flex items-center justify-center font-bold">24</span>
+                      Bài 24. Một số nền văn minh thế giới tiêu biểu
+                    </h4>
+                    <span class="text-xs text-gray-400">Văn minh thế giới</span>
+                  </div>
+                  <ul class="list-disc pl-5 space-y-1.5 text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+                    <li>Văn minh Ai Cập cổ đại: hình thành bên dòng sông Nin, nổi tiếng với chữ tượng hình, thuật ướp xác và Kim tự tháp kì vĩ.</li><li>Văn minh Lưỡng Hà: bên sông Ti-grơ và Ơ-phrat, sáng tạo chữ viết hình nêm và vườn treo Ba-bi-lon.</li><li>Văn minh Hy Lạp và La Mã cổ đại: phát triển bên Địa Trung Hải, cái nôi của nền văn minh phương Tây với nền dân chủ, đấu trường Cô-li-dê, hệ thống luật pháp và Thế vận hội Olympic.</li><li>Các nền văn minh để lại di sản đồ sộ về toán học, thiên văn, triết học, điêu khắc và kiến trúc cho nhân loại.</li>
+                  </ul>
+                  <div class="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 text-xs font-semibold text-emerald-900 dark:text-emerald-200">
+                    <strong>Kiến thức phải nhớ:</strong> Ai Cập, Lưỡng Hà, Hy Lạp, La Mã là những nền văn minh cổ đại rực rỡ, đặt nền móng cho tiến bộ khoa học kĩ thuật của nhân loại.
+                  </div>
+
+                  <!-- Câu hỏi ôn tập cuối bài học -->
+                  <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-dark-card border border-emerald-200/60 dark:border-emerald-900/40 space-y-2">
+                    <div class="flex items-center gap-1.5 text-xs font-bold text-emerald-700 dark:text-emerald-300">
+                      <i class="fa-solid fa-circle-question"></i>
+                      <span>Câu hỏi ôn tập cuối bài:</span>
+                    </div>
+                    <p class="text-xs text-gray-800 dark:text-gray-200 font-semibold italic">
+                      "Kể tên các thành tựu văn minh tiêu biểu của Ai Cập cổ đại và nền văn minh Hy Lạp – La Mã?"
+                    </p>
+                    <details class="text-xs text-slate-600 dark:text-slate-400 cursor-pointer">
+                      <summary class="font-bold text-emerald-600 dark:text-emerald-400 hover:underline select-none">
+                        &rarr; Bấm để xem gợi ý trả lời
+                      </summary>
+                      <div class="mt-1.5 p-2 rounded-lg bg-white dark:bg-dark-surface border border-gray-200/50 dark:border-gray-700/50 leading-relaxed text-[11px]">
+                        <strong>Gợi ý đáp án:</strong> Ai Cập có Kim tự tháp, thuật ướp xác, lịch thiên văn. Hy Lạp - La Mã có nền dân chủ sơ khai, đấu trường Cô-li-dê, đền Pác-tê-nông, định lí toán học Pi-ta-go, Ta-lét.
+                      </div>
+                    </details>
+                  </div>
+                </article>
+                <article id="bai-25" class="p-6 rounded-3xl bg-white dark:bg-dark-surface border border-gray-100 dark:border-gray-800 shadow-sm space-y-4 scroll-mt-24">
+                  <div class="flex items-center justify-between border-b pb-3 border-gray-100 dark:border-gray-800">
+                    <h4 class="text-base font-black text-gray-900 dark:text-white flex items-center gap-2">
+                      <span class="w-6 h-6 rounded-lg bg-emerald-500 text-white text-xs flex items-center justify-center font-bold">25</span>
+                      Bài 25. Cách mạng công nghiệp
+                    </h4>
+                    <span class="text-xs text-gray-400">Cách mạng công nghiệp</span>
+                  </div>
+                  <ul class="list-disc pl-5 space-y-1.5 text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+                    <li>Bắt đầu từ nửa sau thế kỉ XVIII tại nước Anh rồi lan rộng khắp châu Âu và thế giới.</li><li>Khởi đầu bằng các phát minh máy móc trong ngành dệt: máy kéo sợi Giên-ni, máy dệt thoi bay.</li><li>Phát minh máy hơi nước của James Watt (1784) đã tạo ra nguồn động lực mới, giải phóng sức lao động thủ công.</li><li>Đường sắt và tàu thủy chạy bằng hơi nước ra đời thúc đẩy giao thương quốc tế nhanh chóng.</li><li>Tác động: chuyển từ sản xuất thủ công sang cơ khí hóa hàng loạt, làm thay đổi bộ mặt các đô thị và thúc đẩy văn minh nhân loại phát triển vượt bậc.</li>
+                  </ul>
+                  <div class="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 text-xs font-semibold text-emerald-900 dark:text-emerald-200">
+                    <strong>Kiến thức phải nhớ:</strong> Cách mạng công nghiệp bắt đầu từ nước Anh thế kỉ XVIII với động cơ hơi nước, thúc đẩy sản xuất và hình thành xã hội văn minh hiện đại.
+                  </div>
+
+                  <!-- Câu hỏi ôn tập cuối bài học -->
+                  <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-dark-card border border-emerald-200/60 dark:border-emerald-900/40 space-y-2">
+                    <div class="flex items-center gap-1.5 text-xs font-bold text-emerald-700 dark:text-emerald-300">
+                      <i class="fa-solid fa-circle-question"></i>
+                      <span>Câu hỏi ôn tập cuối bài:</span>
+                    </div>
+                    <p class="text-xs text-gray-800 dark:text-gray-200 font-semibold italic">
+                      "Phát minh máy hơi nước của James Watt có ý nghĩa như thế nào đối với cuộc Cách mạng công nghiệp?"
+                    </p>
+                    <details class="text-xs text-slate-600 dark:text-slate-400 cursor-pointer">
+                      <summary class="font-bold text-emerald-600 dark:text-emerald-400 hover:underline select-none">
+                        &rarr; Bấm để xem gợi ý trả lời
+                      </summary>
+                      <div class="mt-1.5 p-2 rounded-lg bg-white dark:bg-dark-surface border border-gray-200/50 dark:border-gray-700/50 leading-relaxed text-[11px]">
+                        <strong>Gợi ý đáp án:</strong> Cung cấp nguồn động lực máy móc mạnh mẽ, không phụ thuộc vào sức người và điều kiện tự nhiên, tạo bước nhảy vọt từ sản xuất thủ công sang cơ khí hiện đại.
+                      </div>
+                    </details>
+                  </div>
+                </article>
+              </div>
+            </div>
+
+            <!-- Mini Quiz 1 (Form Lớp 4 chuẩn) -->
+            <div class="p-5 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-800 space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">
+                  <i class="fa-solid fa-circle-question mr-1"></i> Câu hỏi kiểm tra Chủ đề 5
+                </span>
+                <span class="text-[11px] text-gray-400">Kiểm tra tức thì</span>
+              </div>
+              <p class="text-xs sm:text-sm font-bold text-gray-800 dark:text-gray-200">
+                Trên bề mặt Trái Đất có 6 châu lục và 5 đại dương. Châu lục nào có diện tích rộng nhất và số dân đông nhất hành tinh?
+              </p>
+              <div class="space-y-2 text-xs">
+                <label class="flex items-center gap-2 p-2 rounded-lg hover:bg-white dark:hover:bg-gray-800 cursor-pointer border border-transparent hover:border-gray-200 dark:hover:border-gray-700 transition">
+                  <input type="radio" name="quiz5" value="A" class="text-emerald-600">
+                  <span>A. Châu Phi</span>
+                </label>
+                <label class="flex items-center gap-2 p-2 rounded-lg hover:bg-white dark:hover:bg-gray-800 cursor-pointer border border-transparent hover:border-gray-200 dark:hover:border-gray-700 transition">
+                  <input type="radio" name="quiz5" value="B" class="text-emerald-600">
+                  <span>B. Châu Á</span>
+                </label>
+                <label class="flex items-center gap-2 p-2 rounded-lg hover:bg-white dark:hover:bg-gray-800 cursor-pointer border border-transparent hover:border-gray-200 dark:hover:border-gray-700 transition">
+                  <input type="radio" name="quiz5" value="C" class="text-emerald-600">
+                  <span>C. Châu Âu</span>
+                </label>
+              </div>
+              <div class="flex items-center justify-between pt-2">
+                <button onclick="checkTopicQuiz('5', 'B', 'Chính xác! Châu Á là châu lục có diện tích lớn nhất (khoảng 44,4 triệu km2) và đông dân nhất thế giới, chiếm gần 60% dân số toàn cầu.')" 
+                  class="px-4 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs transition">
+                  Kiểm tra đáp án
+                </button>
+                <div id="quiz-result-5" class="text-xs font-bold hidden"></div>
+              </div>
+            </div>
+
+            <!-- Mini Quiz 2 (Câu hỏi kiểm tra mở rộng Chủ đề) -->
+            <div class="p-5 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-800 space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">
+                  <i class="fa-solid fa-circle-question mr-1"></i> Câu hỏi kiểm tra mở rộng Chủ đề 5
+                </span>
+                <span class="text-[11px] text-gray-400">Kiểm tra tức thì</span>
+              </div>
+              <p class="text-xs sm:text-sm font-bold text-gray-800 dark:text-gray-200">
+                Cuộc cách mạng nào khởi đầu từ nước Anh vào nửa sau thế kỉ XVIII đã làm thay đổi căn bản nền sản xuất của toàn nhân loại?
+              </p>
+              <div class="space-y-2 text-xs">
+                <label class="flex items-center gap-2 p-2 rounded-lg hover:bg-white dark:hover:bg-gray-800 cursor-pointer border border-transparent hover:border-gray-200 dark:hover:border-gray-700 transition">
+                  <input type="radio" name="quiz5b" value="A" class="text-emerald-600">
+                  <span>A. Cách mạng khám phá vũ trụ</span>
+                </label>
+                <label class="flex items-center gap-2 p-2 rounded-lg hover:bg-white dark:hover:bg-gray-800 cursor-pointer border border-transparent hover:border-gray-200 dark:hover:border-gray-700 transition">
+                  <input type="radio" name="quiz5b" value="B" class="text-emerald-600">
+                  <span>B. Cách mạng công nghiệp (động cơ hơi nước)</span>
+                </label>
+                <label class="flex items-center gap-2 p-2 rounded-lg hover:bg-white dark:hover:bg-gray-800 cursor-pointer border border-transparent hover:border-gray-200 dark:hover:border-gray-700 transition">
+                  <input type="radio" name="quiz5b" value="C" class="text-emerald-600">
+                  <span>C. Cách mạng nông nghiệp hữu cơ</span>
+                </label>
+              </div>
+              <div class="flex items-center justify-between pt-2">
+                <button onclick="checkTopicQuiz('5b', 'B', 'Chính xác! Cách mạng công nghiệp bắt đầu từ việc phát minh máy hơi nước của James Watt tại Anh, chuyển từ lao động thủ công sang máy móc.')" 
+                  class="px-4 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs transition">
+                  Kiểm tra đáp án
+                </button>
+                <div id="quiz-result-5b" class="text-xs font-bold hidden"></div>
+              </div>
+            </div>
+
+          </div>
+          <div id="chude-6" class="p-6 sm:p-7 rounded-3xl bg-white dark:bg-dark-surface border border-gray-100 dark:border-gray-800 shadow-sm space-y-6 scroll-mt-24">
+            
+            <!-- Topic Header -->
+            <div class="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-gray-100 dark:border-gray-800">
+              <div>
+                <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">Chủ đề 6</span>
+                <h3 class="text-lg sm:text-xl font-black text-gray-900 dark:text-white flex items-center gap-2 mt-0.5">
+                  <i class="fa-solid fa-landmark text-emerald-600"></i> Chủ đề 6. Chung tay xây dựng thế giới
+                </h3>
+              </div>
+              <span class="px-3 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 text-xs font-bold border border-emerald-200 dark:border-emerald-800">
+                Bài 26–28, trang 113–120
+              </span>
+            </div>
+
+            <!-- Vector SVG Diagram -->
+            <div class="space-y-2">
+              <div class="flex items-center justify-between text-xs">
+                <span class="flex items-center gap-1.5 text-emerald-700 dark:text-emerald-300 font-bold"><i class="fa-solid fa-diagram-project"></i> Sơ đồ trực quan số hóa: Chủ đề 6. Chung tay xây dựng thế giới</span>
+                <span class="text-[11px] text-emerald-600 dark:text-emerald-400 font-bold">Vector SVG Chuẩn Bản Quyền</span>
+              </div>
+              <svg viewBox="0 0 700 240" class="w-full h-auto rounded-2xl bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-dark-card dark:to-dark-surface border border-emerald-100 dark:border-emerald-900/40 p-4 shadow-sm" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="lsdl5g6" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#059669" />
+      <stop offset="100%" stop-color="#047857" />
+    </linearGradient>
+  </defs>
+  <circle cx="130" cy="90" r="55" fill="url(#lsdl5g6)" filter="drop-shadow(0 4px 6px rgba(0,0,0,0.1))" />
+  <text x="130" y="85" font-family="system-ui, sans-serif" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">BẢO VỆ</text>
+  <text x="130" y="103" font-family="system-ui, sans-serif" font-size="10" font-weight="bold" fill="#a7f3d0" text-anchor="middle">MÔI TRƯỜNG</text>
+
+  <circle cx="350" cy="90" r="55" fill="#ffffff" stroke="#059669" stroke-width="3" />
+  <text x="350" y="85" font-family="system-ui, sans-serif" font-size="11" font-weight="bold" fill="#047857" text-anchor="middle">GÌN GIỮ</text>
+  <text x="350" y="103" font-family="system-ui, sans-serif" font-size="10" font-weight="bold" fill="#374151" text-anchor="middle">HÒA BÌNH</text>
+
+  <circle cx="570" cy="90" r="55" fill="url(#lsdl5g6)" filter="drop-shadow(0 4px 6px rgba(0,0,0,0.1))" />
+  <text x="570" y="85" font-family="system-ui, sans-serif" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">TÔN TRỌNG</text>
+  <text x="570" y="103" font-family="system-ui, sans-serif" font-size="10" font-weight="bold" fill="#a7f3d0" text-anchor="middle">ĐA DẠNG VĂN HÓA</text>
+
+  <path d="M 185 90 L 295 90" stroke="#059669" stroke-width="2" stroke-dasharray="4,4" />
+  <path d="M 405 90 L 515 90" stroke="#059669" stroke-width="2" stroke-dasharray="4,4" />
+
+  <rect x="70" y="165" width="560" height="55" rx="14" fill="#ecfdf5" stroke="#10b981" stroke-width="1.5" />
+  <text x="350" y="198" font-family="system-ui, sans-serif" font-size="12" font-weight="black" fill="#065f46" text-anchor="middle">MỤC TIÊU PHÁT TRIỂN BỀN VỮNG VÌ HÀNH TINH XANH &amp; TƯƠNG LAI TỐT ĐẸP</text>
+</svg>
+            </div>
+
+            <!-- Lessons List Formatted Exactly Like Grade 4 -->
+            <div class="space-y-4">
+              <h4 class="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-300 flex items-center gap-1.5">
+                <i class="fa-solid fa-book-bookmark"></i> Nội dung các bài học chi tiết:
+              </h4>
+
+              <div class="space-y-4">
+                
+                <article id="bai-26" class="p-6 rounded-3xl bg-white dark:bg-dark-surface border border-gray-100 dark:border-gray-800 shadow-sm space-y-4 scroll-mt-24">
+                  <div class="flex items-center justify-between border-b pb-3 border-gray-100 dark:border-gray-800">
+                    <h4 class="text-base font-black text-gray-900 dark:text-white flex items-center gap-2">
+                      <span class="w-6 h-6 rounded-lg bg-emerald-500 text-white text-xs flex items-center justify-center font-bold">26</span>
+                      Bài 26. Bảo vệ môi trường và ứng phó với biến đổi khí hậu
+                    </h4>
+                    <span class="text-xs text-gray-400">Bảo vệ môi trường</span>
+                  </div>
+                  <ul class="list-disc pl-5 space-y-1.5 text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+                    <li>Trái Đất đang đối mặt với ô nhiễm môi trường và biến đổi khí hậu toàn cầu (nhiệt độ tăng, băng tan, bão lũ khắc nghiệt).</li><li>Nguyên nhân: chặt phá rừng, khí thải từ công nghiệp và phương tiện giao thông, rác thải nhựa chưa qua xử lí.</li><li>Hậu quả: đe dọa sự sống của động thực vật, thiên tai cực đoan và ảnh hưởng trực tiếp đến sức khỏe con người.</li><li>Biện pháp: sử dụng năng lượng tái tạo (gió, mặt trời), trồng và bảo vệ rừng, hạn chế đồ nhựa dùng một lần, tiết kiệm điện nước.</li><li>Hành động của học sinh: giữ vệ sinh trường lớp, phân loại rác, tích cực trồng và chăm sóc cây xanh.</li>
+                  </ul>
+                  <div class="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 text-xs font-semibold text-emerald-900 dark:text-emerald-200">
+                    <strong>Kiến thức phải nhớ:</strong> Biến đổi khí hậu là thách thức toàn cầu; cần chung tay giảm phát thải khí nhà kính, trồng rừng, sử dụng năng lượng tái tạo.
+                  </div>
+
+                  <!-- Câu hỏi ôn tập cuối bài học -->
+                  <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-dark-card border border-emerald-200/60 dark:border-emerald-900/40 space-y-2">
+                    <div class="flex items-center gap-1.5 text-xs font-bold text-emerald-700 dark:text-emerald-300">
+                      <i class="fa-solid fa-circle-question"></i>
+                      <span>Câu hỏi ôn tập cuối bài:</span>
+                    </div>
+                    <p class="text-xs text-gray-800 dark:text-gray-200 font-semibold italic">
+                      "Nêu nguyên nhân gây biến đổi khí hậu toàn cầu và các hành động thiết thực học sinh có thể làm để bảo vệ môi trường?"
+                    </p>
+                    <details class="text-xs text-slate-600 dark:text-slate-400 cursor-pointer">
+                      <summary class="font-bold text-emerald-600 dark:text-emerald-400 hover:underline select-none">
+                        &rarr; Bấm để xem gợi ý trả lời
+                      </summary>
+                      <div class="mt-1.5 p-2 rounded-lg bg-white dark:bg-dark-surface border border-gray-200/50 dark:border-gray-700/50 leading-relaxed text-[11px]">
+                        <strong>Gợi ý đáp án:</strong> Nguyên nhân do khí thải công nghiệp, chặt phá rừng và rác thải nhựa. Học sinh cần tiết kiệm điện nước, phân loại rác, trồng cây xanh và nói không với túi ni-lông.
+                      </div>
+                    </details>
+                  </div>
+                </article>
+                <article id="bai-27" class="p-6 rounded-3xl bg-white dark:bg-dark-surface border border-gray-100 dark:border-gray-800 shadow-sm space-y-4 scroll-mt-24">
+                  <div class="flex items-center justify-between border-b pb-3 border-gray-100 dark:border-gray-800">
+                    <h4 class="text-base font-black text-gray-900 dark:text-white flex items-center gap-2">
+                      <span class="w-6 h-6 rounded-lg bg-emerald-500 text-white text-xs flex items-center justify-center font-bold">27</span>
+                      Bài 27. Giữ gìn hòa bình và hợp tác quốc tế
+                    </h4>
+                    <span class="text-xs text-gray-400">Giữ gìn hòa bình</span>
+                  </div>
+                  <ul class="list-disc pl-5 space-y-1.5 text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+                    <li>Hòa bình là điều kiện tiên quyết để con người sống hạnh phúc và phát triển thịnh vượng.</li><li>Chiến tranh và xung đột gây đau thương, tàn phá nhà cửa và cướp đi sinh mạng vô tội.</li><li>Liên Hợp Quốc (thành lập năm 1945) là tổ chức quốc tế lớn nhất giữ gìn hòa bình và an ninh thế giới.</li><li>Việt Nam là thành viên Liên Hợp Quốc từ năm 1977, luôn ủng hộ hòa bình, giải quyết tranh chấp bằng đàm phán hữu nghị.</li><li>Bộ đội và bác sĩ Việt Nam tích cực tham gia các phái bộ gìn giữ hòa bình của Liên Hợp Quốc tại Nam Xu-đăng, Cộng hòa Trung Phi.</li>
+                  </ul>
+                  <div class="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 text-xs font-semibold text-emerald-900 dark:text-emerald-200">
+                    <strong>Kiến thức phải nhớ:</strong> Liên Hợp Quốc gìn giữ hòa bình thế giới; Việt Nam luôn tích cực tham gia lực lượng gìn giữ hòa bình quốc tế và thúc đẩy hữu nghị.
+                  </div>
+
+                  <!-- Câu hỏi ôn tập cuối bài học -->
+                  <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-dark-card border border-emerald-200/60 dark:border-emerald-900/40 space-y-2">
+                    <div class="flex items-center gap-1.5 text-xs font-bold text-emerald-700 dark:text-emerald-300">
+                      <i class="fa-solid fa-circle-question"></i>
+                      <span>Câu hỏi ôn tập cuối bài:</span>
+                    </div>
+                    <p class="text-xs text-gray-800 dark:text-gray-200 font-semibold italic">
+                      "Vì sao các dân tộc trên thế giới cần chung tay gìn giữ hòa bình? Việt Nam đóng góp gì cho hòa bình quốc tế?"
+                    </p>
+                    <details class="text-xs text-slate-600 dark:text-slate-400 cursor-pointer">
+                      <summary class="font-bold text-emerald-600 dark:text-emerald-400 hover:underline select-none">
+                        &rarr; Bấm để xem gợi ý trả lời
+                      </summary>
+                      <div class="mt-1.5 p-2 rounded-lg bg-white dark:bg-dark-surface border border-gray-200/50 dark:border-gray-700/50 leading-relaxed text-[11px]">
+                        <strong>Gợi ý đáp án:</strong> Vì hòa bình giúp bảo vệ cuộc sống ấm no, bảo vệ trẻ em và phát triển kinh tế. Việt Nam cử lực lượng gìn giữ hòa bình, bệnh viện dã chiến hỗ trợ Liên Hợp Quốc.
+                      </div>
+                    </details>
+                  </div>
+                </article>
+                <article id="bai-28" class="p-6 rounded-3xl bg-white dark:bg-dark-surface border border-gray-100 dark:border-gray-800 shadow-sm space-y-4 scroll-mt-24">
+                  <div class="flex items-center justify-between border-b pb-3 border-gray-100 dark:border-gray-800">
+                    <h4 class="text-base font-black text-gray-900 dark:text-white flex items-center gap-2">
+                      <span class="w-6 h-6 rounded-lg bg-emerald-500 text-white text-xs flex items-center justify-center font-bold">28</span>
+                      Bài 28. Tôn trọng sự đa dạng văn hóa
+                    </h4>
+                    <span class="text-xs text-gray-400">Đa dạng văn hóa</span>
+                  </div>
+                  <ul class="list-disc pl-5 space-y-1.5 text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+                    <li>Mỗi dân tộc, quốc gia đều có ngôn ngữ, trang phục, phong tục, ẩm thực và nghệ thuật mang bản sắc riêng.</li><li>Sự đa dạng văn hóa làm cho cuộc sống nhân loại thêm phong phú, muôn màu muôn vẻ.</li><li>Cần tôn trọng phong tục, tập quán và tín ngưỡng lành mạnh của các dân tộc; không định kiến hay kì thị.</li><li>Tích cực học hỏi, giao lưu văn hóa lành mạnh, tiếp thu tinh hoa văn hóa nhân loại đồng thời giữ gìn bản sắc văn hóa dân tộc Việt Nam.</li><li>Xây dựng thái độ thân thiện, cởi mở và hòa nhã với bạn bè quốc tế.</li>
+                  </ul>
+                  <div class="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 text-xs font-semibold text-emerald-900 dark:text-emerald-200">
+                    <strong>Kiến thức phải nhớ:</strong> Mỗi dân tộc đều có bản sắc và di sản văn hóa riêng; cần tôn trọng sự khác biệt và chung tay xây dựng thế giới đoàn kết, bác ái.
+                  </div>
+
+                  <!-- Câu hỏi ôn tập cuối bài học -->
+                  <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-dark-card border border-emerald-200/60 dark:border-emerald-900/40 space-y-2">
+                    <div class="flex items-center gap-1.5 text-xs font-bold text-emerald-700 dark:text-emerald-300">
+                      <i class="fa-solid fa-circle-question"></i>
+                      <span>Câu hỏi ôn tập cuối bài:</span>
+                    </div>
+                    <p class="text-xs text-gray-800 dark:text-gray-200 font-semibold italic">
+                      "Thế nào là tôn trọng sự đa dạng văn hóa? Học sinh cần thể hiện thái độ như thế nào khi giao lưu văn hóa?"
+                    </p>
+                    <details class="text-xs text-slate-600 dark:text-slate-400 cursor-pointer">
+                      <summary class="font-bold text-emerald-600 dark:text-emerald-400 hover:underline select-none">
+                        &rarr; Bấm để xem gợi ý trả lời
+                      </summary>
+                      <div class="mt-1.5 p-2 rounded-lg bg-white dark:bg-dark-surface border border-gray-200/50 dark:border-gray-700/50 leading-relaxed text-[11px]">
+                        <strong>Gợi ý đáp án:</strong> Là tôn trọng trang phục, tiếng nói, phong tục và lối sống của các dân tộc. Học sinh cần giữ thái độ lễ phép, cởi mở, không chê bai và tự hào giới thiệu nét đẹp Việt Nam.
+                      </div>
+                    </details>
+                  </div>
+                </article>
+              </div>
+            </div>
+
+            <!-- Mini Quiz 1 (Form Lớp 4 chuẩn) -->
+            <div class="p-5 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-800 space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">
+                  <i class="fa-solid fa-circle-question mr-1"></i> Câu hỏi kiểm tra Chủ đề 6
+                </span>
+                <span class="text-[11px] text-gray-400">Kiểm tra tức thì</span>
+              </div>
+              <p class="text-xs sm:text-sm font-bold text-gray-800 dark:text-gray-200">
+                Để chung tay phòng chống biến đổi khí hậu và bảo vệ môi trường Trái Đất, việc làm nào sau đây phù hợp nhất với lứa tuổi học sinh?
+              </p>
+              <div class="space-y-2 text-xs">
+                <label class="flex items-center gap-2 p-2 rounded-lg hover:bg-white dark:hover:bg-gray-800 cursor-pointer border border-transparent hover:border-gray-200 dark:hover:border-gray-700 transition">
+                  <input type="radio" name="quiz6" value="A" class="text-emerald-600">
+                  <span>A. Tăng cường dùng bao bì ni-lông và đồ nhựa dùng một lần</span>
+                </label>
+                <label class="flex items-center gap-2 p-2 rounded-lg hover:bg-white dark:hover:bg-gray-800 cursor-pointer border border-transparent hover:border-gray-200 dark:hover:border-gray-700 transition">
+                  <input type="radio" name="quiz6" value="B" class="text-emerald-600">
+                  <span>B. Tiết kiệm điện nước, tích cực trồng cây xanh và phân loại rác thải</span>
+                </label>
+                <label class="flex items-center gap-2 p-2 rounded-lg hover:bg-white dark:hover:bg-gray-800 cursor-pointer border border-transparent hover:border-gray-200 dark:hover:border-gray-700 transition">
+                  <input type="radio" name="quiz6" value="C" class="text-emerald-600">
+                  <span>C. Đốt rơm rạ và xả rác bừa bãi ra sông hồ</span>
+                </label>
+              </div>
+              <div class="flex items-center justify-between pt-2">
+                <button onclick="checkTopicQuiz('6', 'B', 'Chính xác! Tiết kiệm năng lượng, trồng cây xanh và phân loại rác là những hành động thiết thực của mỗi học sinh bảo vệ hành tinh xanh.')" 
+                  class="px-4 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs transition">
+                  Kiểm tra đáp án
+                </button>
+                <div id="quiz-result-6" class="text-xs font-bold hidden"></div>
+              </div>
+            </div>
+
+            <!-- Mini Quiz 2 (Câu hỏi kiểm tra mở rộng Chủ đề) -->
+            <div class="p-5 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-800 space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">
+                  <i class="fa-solid fa-circle-question mr-1"></i> Câu hỏi kiểm tra mở rộng Chủ đề 6
+                </span>
+                <span class="text-[11px] text-gray-400">Kiểm tra tức thì</span>
+              </div>
+              <p class="text-xs sm:text-sm font-bold text-gray-800 dark:text-gray-200">
+                Tổ chức quốc tế lớn nhất hành tinh có nhiệm vụ gìn giữ hòa bình, an ninh quốc tế và thúc đẩy hữu nghị giữa các quốc gia là:
+              </p>
+              <div class="space-y-2 text-xs">
+                <label class="flex items-center gap-2 p-2 rounded-lg hover:bg-white dark:hover:bg-gray-800 cursor-pointer border border-transparent hover:border-gray-200 dark:hover:border-gray-700 transition">
+                  <input type="radio" name="quiz6b" value="A" class="text-emerald-600">
+                  <span>A. Tổ chức Y tế Thế giới (WHO)</span>
+                </label>
+                <label class="flex items-center gap-2 p-2 rounded-lg hover:bg-white dark:hover:bg-gray-800 cursor-pointer border border-transparent hover:border-gray-200 dark:hover:border-gray-700 transition">
+                  <input type="radio" name="quiz6b" value="B" class="text-emerald-600">
+                  <span>B. Liên Hợp Quốc (UN)</span>
+                </label>
+                <label class="flex items-center gap-2 p-2 rounded-lg hover:bg-white dark:hover:bg-gray-800 cursor-pointer border border-transparent hover:border-gray-200 dark:hover:border-gray-700 transition">
+                  <input type="radio" name="quiz6b" value="C" class="text-emerald-600">
+                  <span>C. Hiệp hội Vận tải Hàng không Quốc tế (IATA)</span>
+                </label>
+              </div>
+              <div class="flex items-center justify-between pt-2">
+                <button onclick="checkTopicQuiz('6b', 'B', 'Chính xác! Liên Hợp Quốc được thành lập năm 1945 với mục tiêu tối thượng là duy trì hòa bình, an ninh quốc tế và thúc đẩy phát triển bền vững.')" 
+                  class="px-4 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs transition">
+                  Kiểm tra đáp án
+                </button>
+                <div id="quiz-result-6b" class="text-xs font-bold hidden"></div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Certification Exam Modal: Hội Thi Trạng Nguyên Sử Địa 5 -->
+  <div id="examModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-dark-surface w-full max-w-2xl rounded-3xl shadow-2xl border border-gray-100 dark:border-gray-800 flex flex-col max-h-[90vh] overflow-hidden">
+      
+      <!-- Modal Header -->
+      <div class="px-6 py-4 bg-gradient-to-r from-emerald-600 via-teal-600 to-green-700 text-white flex items-center justify-between shrink-0">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-xl bg-white/20 flex items-center justify-center text-lg">
+            <i class="fa-solid fa-award"></i>
+          </div>
+          <div>
+            <h3 class="font-extrabold text-sm sm:text-base">Hội Thi Trạng Nguyên Lịch Sử &amp; Địa Lí 5</h3>
+            <p class="text-[11px] text-emerald-100">Thời gian làm bài: 60:00 &bull; 25 câu hỏi chuẩn GDPT 2018</p>
+          </div>
+        </div>
+        <button onclick="closeExamModal()" class="p-1.5 rounded-lg hover:bg-white/20 text-white transition">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="p-6 overflow-y-auto space-y-6 flex-1 text-xs">
+        
+        <!-- Timer Bar -->
+        <div class="flex items-center justify-between p-3.5 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-100 dark:border-emerald-900/40 text-emerald-800 dark:text-emerald-300">
+          <div class="flex items-center gap-2 font-bold">
+            <i class="fa-solid fa-stopwatch text-base text-emerald-600"></i>
+            <span>Thời gian còn lại:</span>
+          </div>
+          <span id="examTimer" class="font-mono text-base font-black text-emerald-700 dark:text-emerald-300">60:00</span>
+        </div>
+
+        <!-- Exam Questions Container -->
+        <form id="examForm" class="space-y-6">
+          <div id="examQuestionsList" class="space-y-5">
+            <!-- Rendered by JS -->
+          </div>
+
+          <div class="pt-4 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between">
+            <button type="button" onclick="closeExamModal()" class="px-4 py-2 rounded-xl border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 font-bold hover:bg-gray-100 dark:hover:bg-dark-card transition">
+              Đóng lại
+            </button>
+            <button type="button" onclick="submitExam()" class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-extrabold shadow-md hover:opacity-95 transition">
+              Nộp bài thi Trạng Nguyên
+            </button>
+          </div>
+        </form>
+
+        <!-- Exam Result Area -->
+        <div id="examResult" class="hidden p-5 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-gray-700 text-center space-y-3">
+          <div id="resultIcon" class="text-4xl text-amber-500">
+            <i class="fa-solid fa-trophy"></i>
+          </div>
+          <h4 id="resultTitle" class="text-base font-black text-gray-900 dark:text-white"></h4>
+          <p id="resultScore" class="text-xs text-gray-600 dark:text-gray-300"></p>
+          <div id="resultFeedback" class="text-xs font-semibold text-emerald-600 dark:text-emerald-400"></div>
+          <button onclick="resetExam()" class="mt-2 px-4 py-1.5 rounded-xl bg-emerald-600 text-white font-bold text-xs hover:bg-emerald-700 transition">
+            Làm lại bài thi
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="mt-auto border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-dark-surface py-6 text-center text-xs text-gray-500 dark:text-gray-400">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div class="flex items-center gap-2 font-bold text-gray-700 dark:text-gray-300">
+        <i class="fa-solid fa-graduation-cap text-emerald-600"></i> CodeHub Learning Platform &bull; GDPT 2018
+      </div>
+      <div>Khóa học Lịch Sử Và Địa Lí Lớp 5 &bull; Biên soạn chuẩn mực &amp; Không vi phạm bản quyền</div>
+    </div>
+  </footer>
+
+  <script>
+    // Dark mode toggle
+    function toggleDarkMode() {
+      const html = document.documentElement;
+      const themeIcon = document.getElementById('themeIcon');
+      if (html.classList.contains('dark')) {
+        html.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+        if (themeIcon) themeIcon.className = 'fa-solid fa-moon text-base';
+      } else {
+        html.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+        if (themeIcon) themeIcon.className = 'fa-solid fa-sun text-base';
+      }
+    }
+
+    if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+      const themeIcon = document.getElementById('themeIcon');
+      if (themeIcon) themeIcon.className = 'fa-solid fa-sun text-base';
+    }
+
+    // Drawer toggle
+    function toggleDrawer() {
+      const drawer = document.getElementById('mobileDrawer');
+      const backdrop = document.getElementById('drawerBackdrop');
+      if (drawer.classList.contains('-translate-x-full')) {
+        drawer.classList.remove('-translate-x-full');
+        backdrop.classList.remove('hidden');
+      } else {
+        drawer.classList.add('-translate-x-full');
+        backdrop.classList.add('hidden');
+      }
+    }
+
+    // Interactive Topic Quiz Function (Exact Grade 4 Logic)
+    function checkTopicQuiz(quizId, correctVal, explanation) {
+      const radios = document.getElementsByName('quiz' + quizId);
+      let selected = null;
+      for (let i = 0; i < radios.length; i++) {
+        if (radios[i].checked) {
+          selected = radios[i].value;
+          break;
+        }
+      }
+      const resultDiv = document.getElementById('quiz-result-' + quizId);
+      resultDiv.classList.remove('hidden');
+      if (!selected) {
+        resultDiv.className = 'text-xs font-bold text-amber-500';
+        resultDiv.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Vui lòng chọn một đáp án!';
+        return;
+      }
+      if (selected === correctVal) {
+        resultDiv.className = 'text-xs font-bold text-emerald-600 dark:text-emerald-400';
+        resultDiv.innerHTML = '<i class="fa-solid fa-circle-check"></i> ' + explanation;
+      } else {
+        resultDiv.className = 'text-xs font-bold text-rose-600 dark:text-rose-400';
+        resultDiv.innerHTML = '<i class="fa-solid fa-circle-xmark"></i> Chưa đúng rồi! ' + explanation;
+      }
+    }
+
+    // 25 Questions for Hội Thi Trạng Nguyên Sử Địa 5
+    const examQuestionsData = [
+      { q: "Việt Nam nằm ở khu vực nào của châu Á và tiếp giáp với biển nào?", a: "A. Tây Á và Ấn Độ Dương", b: "B. Đông Nam Á và Biển Đông", c: "C. Đông Bắc Á và Thái Bình Dương", ans: "B" },
+      { q: "Theo thông tin năm 2025 trong sách giáo khoa, Việt Nam có bao nhiêu đơn vị hành chính cấp tỉnh?", a: "A. 63 đơn vị hành chính", b: "B. 34 đơn vị hành chính cấp tỉnh (gồm 6 thành phố và 28 tỉnh)", c: "C. 54 đơn vị hành chính", ans: "B" },
+      { q: "Quốc ca của nước Cộng hòa Xã hội Chủ nghĩa Việt Nam là bài hát nào?", a: "A. Tiến quân ca (nhạc sĩ Văn Cao)", b: "B. Như có Bác trong ngày đại thắng", c: "C. Hồn tử sĩ", ans: "A" },
+      { q: "Địa hình phần đất liền nước ta có đặc điểm chủ yếu là gì?", a: "A. 3/4 là đồng bằng, 1/4 là đồi núi", b: "B. 3/4 là đồi núi, 1/4 là đồng bằng", c: "C. Toàn bộ là cao nguyên đồi núi đá vôi", ans: "B" },
+      { q: "Hai quần đảo thiêng liêng ngoài khơi xa thuộc chủ quyền không thể tách rời của Việt Nam là:", a: "A. Cát Bà và Côn Đảo", b: "B. Phú Quốc và Lý Sơn", c: "C. Hoàng Sa và Trường Sa", ans: "C" },
+      { q: "Nước ta có bao nhiêu dân tộc anh em cùng chung sống hòa thuận đoàn kết?", a: "A. 52 dân tộc", b: "B. 54 dân tộc", c: "C. 56 dân tộc", ans: "B" },
+      { q: "Nhà nước đầu tiên trong lịch sử dân tộc ta là nhà nước nào?", a: "A. Nhà nước Văn Lang", b: "B. Nhà nước Âu Lạc", c: "C. Nhà nước Đại Cồ Việt", ans: "A" },
+      { q: "Kinh đô của Nhà nước Âu Lạc dưới thời Thục Phán An Dương Vương đặt tại:", a: "A. Phong Châu (Phú Thọ)", b: "B. Cổ Loa (Đông Anh, Hà Nội)", c: "C. Hoa Lư (Ninh Bình)", ans: "B" },
+      { q: "Đô thị - cảng thị cổ sầm uất gắn liền với Vương quốc Phù Nam là:", a: "A. Hội An", b: "B. Óc Eo", c: "C. Vân Đồn", ans: "B" },
+      { q: "Tháp Chăm là công trình kiến trúc độc đáo bằng gạch nung của vương quốc cổ nào?", a: "A. Vương quốc Phù Nam", b: "B. Vương quốc Chăm-pa", c: "C. Nhà nước Âu Lạc", ans: "B" },
+      { q: "Chiến thắng trên sông Bạch Đằng năm 938 do ai chỉ huy đã chấm dứt hơn 1000 năm Bắc thuộc?", a: "A. Ngô Quyền", b: "B. Hai Bà Trưng", c: "C. Lý Bí", ans: "A" },
+      { q: "Năm 1010, vị vua nào đã ban Chiếu dời đô từ Hoa Lư về Thăng Long?", a: "A. Vua Đinh Tiên Hoàng", b: "B. Vua Lý Thái Tổ (Lý Công Uẩn)", c: "C. Vua Lê Đại Hành", ans: "B" },
+      { q: "Trường đại học đầu tiên của Việt Nam được xây dựng dưới triều đại nào?", a: "A. Triều Lý (Quốc Tử Giám 1076)", b: "B. Triều Trần", c: "C. Triều Hậu Lê", ans: "A" },
+      { q: "Hội nghị Diên Hồng thể hiện ý chí quyết tâm 'Đánh!' của toàn dân diễn ra dưới triều đại nào?", a: "A. Triều Lý", b: "B. Triều Trần", c: "C. Triều Tiền Lê", ans: "B" },
+      { q: "Người lãnh đạo cuộc khởi nghĩa Lam Sơn 10 năm toàn thắng chống quân Minh là:", a: "A. Trần Hưng Đạo", b: "B. Lê Lợi", c: "C. Quang Trung", ans: "B" },
+      { q: "Quốc hiệu nước ta được vua Gia Long chính thức đặt năm 1804 dưới triều Nguyễn là:", a: "A. Đại Việt", b: "B. Việt Nam", c: "C. Đại Nam", ans: "B" },
+      { q: "Chủ tịch Hồ Chí Minh đọc Tuyên ngôn Độc lập khai sinh nước VNDCCH vào ngày tháng năm nào?", a: "A. Ngày 19/8/1945", b: "B. Ngày 2/9/1945", c: "C. Ngày 30/4/1975", ans: "B" },
+      { q: "Chiến dịch Điện Biên Phủ toàn thắng 'Lừng lẫy năm châu, chấn động địa cầu' vào năm nào?", a: "A. Năm 1950", b: "B. Năm 1954", c: "C. Năm 1975", ans: "B" },
+      { q: "Thời khắc 11 giờ 30 phút ngày 30/4/1975 gắn liền với thắng lợi trọn vẹn của chiến dịch nào?", a: "A. Chiến dịch Tây Nguyên", b: "B. Chiến dịch Huế - Đà Nẵng", c: "C. Chiến dịch Hồ Chí Minh lịch sử", ans: "C" },
+      { q: "Đường lối Đổi mới toàn diện đất nước được Đảng ta đề ra tại Đại hội lần thứ mấy?", a: "A. Đại hội VI (năm 1986)", b: "B. Đại hội IV (năm 1976)", c: "C. Đại hội VII (năm 1991)", ans: "A" },
+      { q: "Thủ đô của nước bạn Cộng hòa Dân chủ Nhân dân Lào là gì?", a: "A. Phnôm Pênh", b: "B. Viêng Chăn", c: "C. Băng Cốc", ans: "B" },
+      { q: "Kì quan tôn giáo nổi tiếng thế giới của Vương quốc Cam-pu-chia là:", a: "A. Angkor Wat", b: "B. Thạt Luổng", c: "C. Vạn Lí Trường Thành", ans: "A" },
+      { q: "Châu lục nào có diện tích rộng nhất và số dân đông nhất trên Trái Đất?", a: "A. Châu Phi", b: "B. Châu Á", c: "C. Châu Âu", ans: "B" },
+      { q: "Phát minh máy hơi nước của James Watt mở đầu cuộc Cách mạng công nghiệp diễn ra ở nước nào?", a: "A. Nước Pháp", b: "B. Nước Anh", c: "C. Nước Đức", ans: "B" },
+      { q: "Tổ chức quốc tế lớn nhất thế giới thành lập năm 1945 có vai trò gìn giữ hòa bình là:", a: "A. ASEAN", b: "B. Liên Hợp Quốc (UN)", c: "C. UNESCO", ans: "B" }
+    ];
+
+    let timerInterval = null;
+    let secondsLeft = 3600;
+
+    function renderExamQuestions() {
+      const list = document.getElementById('examQuestionsList');
+      if (!list) return;
+      list.innerHTML = examQuestionsData.map((item, idx) => {
+        const qNum = idx + 1;
+        return '<div class="p-4 rounded-2xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-gray-800 space-y-3">' +
+          '<div class="font-bold text-gray-900 dark:text-white leading-relaxed flex items-start gap-2">' +
+            '<span class="w-5 h-5 rounded-full bg-emerald-600 text-white text-[11px] flex items-center justify-center shrink-0 mt-0.5">' + qNum + '</span>' +
+            '<span>' + item.q + '</span>' +
+          '</div>' +
+          '<div class="space-y-2 pl-7">' +
+            '<label class="flex items-center gap-2 cursor-pointer hover:text-emerald-600 transition">' +
+              '<input type="radio" name="eq' + qNum + '" value="A" class="text-emerald-600 focus:ring-emerald-500">' +
+              '<span>' + item.a + '</span>' +
+            '</label>' +
+            '<label class="flex items-center gap-2 cursor-pointer hover:text-emerald-600 transition">' +
+              '<input type="radio" name="eq' + qNum + '" value="B" class="text-emerald-600 focus:ring-emerald-500">' +
+              '<span>' + item.b + '</span>' +
+            '</label>' +
+            '<label class="flex items-center gap-2 cursor-pointer hover:text-emerald-600 transition">' +
+              '<input type="radio" name="eq' + qNum + '" value="C" class="text-emerald-600 focus:ring-emerald-500">' +
+              '<span>' + item.c + '</span>' +
+            '</label>' +
+          '</div>' +
+        '</div>';
+      }).join('');
+    }
+
+    function openExamModal() {
+      const modal = document.getElementById('examModal');
+      modal.classList.remove('hidden');
+      renderExamQuestions();
+      resetExamState();
+      startTimer();
+    }
+
+    function closeExamModal() {
+      const modal = document.getElementById('examModal');
+      modal.classList.add('hidden');
+      clearInterval(timerInterval);
+    }
+
+    function startTimer() {
+      clearInterval(timerInterval);
+      secondsLeft = 3600;
+      updateTimerDisplay();
+      timerInterval = setInterval(() => {
+        secondsLeft--;
+        updateTimerDisplay();
+        if (secondsLeft <= 0) {
+          clearInterval(timerInterval);
+          alert('Đã hết thời gian làm bài thi Trạng Nguyên!');
+          submitExam();
+        }
+      }, 1000);
+    }
+
+    function updateTimerDisplay() {
+      const timerEl = document.getElementById('examTimer');
+      if (!timerEl) return;
+      const m = Math.floor(secondsLeft / 60);
+      const s = secondsLeft % 60;
+      timerEl.textContent = (m < 10 ? '0' + m : m) + ':' + (s < 10 ? '0' + s : s);
+    }
+
+    function resetExamState() {
+      const form = document.getElementById('examForm');
+      const result = document.getElementById('examResult');
+      if (form) form.classList.remove('hidden');
+      if (result) result.classList.add('hidden');
+      if (form) form.reset();
+    }
+
+    function resetExam() {
+      resetExamState();
+      startTimer();
+    }
+
+    function submitExam() {
+      clearInterval(timerInterval);
+      let correctCount = 0;
+      examQuestionsData.forEach((item, idx) => {
+        const qNum = idx + 1;
+        const radios = document.getElementsByName('eq' + qNum);
+        for (let r of radios) {
+          if (r.checked && r.value === item.ans) {
+            correctCount++;
+          }
+        }
+      });
+
+      const total = examQuestionsData.length;
+      const pct = Math.round((correctCount / total) * 100);
+
+      const form = document.getElementById('examForm');
+      const result = document.getElementById('examResult');
+      const resultTitle = document.getElementById('resultTitle');
+      const resultScore = document.getElementById('resultScore');
+      const resultFeedback = document.getElementById('resultFeedback');
+
+      form.classList.add('hidden');
+      result.classList.remove('hidden');
+
+      let rank = 'Tiếp Tục Rèn Luyện 📚';
+      if (pct >= 90) rank = 'Xuất Sắc - Trạng Nguyên Sử Địa 🌟';
+      else if (pct >= 75) rank = 'Giỏi - Bảng Nhãn Tài Ba 🏅';
+      else if (pct >= 50) rank = 'Khá - Thám Hoa Chăm Học 🎖️';
+
+      resultTitle.textContent = rank;
+      resultScore.textContent = 'Bạn đạt ' + correctCount + '/' + total + ' câu chính xác (' + pct + '%).';
+
+      if (pct >= 75) {
+        resultFeedback.textContent = 'Chúc mừng em! Em đã nắm rất vững kiến thức Lịch Sử Và Địa Lí Lớp 5!';
+      } else {
+        resultFeedback.textContent = 'Em hãy ôn lại các chủ đề và luyện tập thêm nhé!';
+      }
+    }
+  </script>
+</body>
+</html>

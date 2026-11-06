@@ -1,0 +1,400 @@
+const fs = require('fs');
+
+const examQuestions = [
+  // 15 Lịch sử
+  {
+    id: 1,
+    subject: "Lịch sử",
+    q: "Chính sách kinh tế mới (NEP) được V.I. Lê-nin và Đảng Bôn-sê-vích đề xướng vào tháng 3-1921 với nội dung cốt lõi nào trong nông nghiệp?",
+    options: [
+      "Thay chế độ trưng thu lương thực thừa bằng thuế lương thực có định mức",
+      "Quốc hữu hóa toàn bộ đất đai và tịch thu nông sản",
+      "Thực hiện tập thể hóa bắt buộc 100% nông hộ",
+      "Cấm nông dân mua bán, trao đổi nông sản trên thị trường tự do"
+    ],
+    ans: 0,
+    expl: "Nội dung cốt lõi của NEP là thay trưng thu lương thực thừa bằng nộp thuế lương thực; phần nông sản dôi dư nông dân được tự do trao đổi buôn bán."
+  },
+  {
+    id: 2,
+    subject: "Lịch sử",
+    q: "Cuộc Đại suy thoái kinh tế thế giới tư bản (1929–1933) đã dẫn tới hậu quả chính trị nghiêm trọng nào ở Đức và I-ta-li-a?",
+    options: [
+      "Sự hình thành và lên nắm quyền của chủ nghĩa phát xít độc tài, quân phiệt",
+      "Gia nhập khối các nước xã hội chủ nghĩa",
+      "Xây dựng thành công nhà nước phúc lợi dân chủ",
+      "Tuyên bố giải giáp vũ khí và từ bỏ chiến tranh"
+    ],
+    ans: 0,
+    expl: "Để đối phó với khủng hoảng, giới tư bản cầm quyền ở Đức và I-ta-li-a đã phát xít hoá bộ máy nhà nước, thiết lập chế độ độc tài chuẩn bị gây chiến."
+  },
+  {
+    id: 3,
+    subject: "Lịch sử",
+    q: "Chiến thắng nào của quân và dân Liên Xô được coi là bước ngoặt quyết định làm xoay chuyển toàn bộ cục diện Chiến tranh thế giới thứ hai?",
+    options: [
+      "Chiến thắng Trân Châu Cảng (1941)",
+      "Chiến thắng trận Xta-lin-grát (1942–1943)",
+      "Chiến dịch eo biển Mác-xen (1940)",
+      "Cuộc đổ bộ Noóc-măng-đi (1944)"
+    ],
+    ans: 1,
+    expl: "Trận Xta-lin-grát (1942–1943) đã giáng đòn chí mạng vào quân đội phát xít Đức, mở đầu giai đoạn phản công chiến lược của phe Đồng minh."
+  },
+  {
+    id: 4,
+    subject: "Lịch sử",
+    q: "Cuộc bãi công của công nhân xưởng Ba Son (Sài Gòn) vào tháng 8-1925 đánh dấu bước chuyển biến nào của phong trào công nhân Việt Nam?",
+    options: [
+      "Bắt đầu chuyển từ đấu tranh tự phát sang đấu tranh tự giác có tổ chức và tinh thần quốc tế vô sản",
+      "Kết thúc hoàn toàn sự bóc lột của thực dân Pháp",
+      "Thành lập Đảng Cộng sản Đông Dương",
+      "Chuyển sang giai đoạn đấu tranh nghị trường hợp pháp"
+    ],
+    ans: 0,
+    expl: "Bãi công Ba Son do Tôn Đức Thắng tổ chức nhằm ủng hộ công nhân Quảng Châu bãi công, thể hiện ý thức chính trị và tinh thần quốc tế rõ rệt."
+  },
+  {
+    id: 5,
+    subject: "Lịch sử",
+    q: "Tháng 7-1920, sự kiện nào đã tạo ra bước ngoặt quyết định giúp Nguyễn Ái Quốc tìm thấy con đường cứu nước đúng đắn cho dân tộc?",
+    options: [
+      "Gửi bản Yêu sách của nhân dân An Nam tới Hội nghị Véc-xai",
+      "Đọc bản Sơ thảo lần thứ nhất những luận cương về vấn đề dân tộc và vấn đề thuộc địa của V.I. Lê-nin",
+      "Thành lập Hội Việt Nam Cách mạng Thanh niên tại Quảng Châu",
+      "Bỏ phiếu tán thành Quốc tế thứ hai tại Pháp"
+    ],
+    ans: 1,
+    expl: "Luận cương của Lê-nin đã giải đáp cho Nguyễn Ái Quốc con đường giải phóng dân tộc: muốn cứu nước và giải phóng dân tộc không có con đường nào khác con đường cách mạng vô sản."
+  },
+  {
+    id: 6,
+    subject: "Lịch sử",
+    q: "Hội nghị hợp nhất các tổ chức cộng sản do Nguyễn Ái Quốc chủ trì đầu năm 1930 đã thống nhất đặt tên Đảng là gì?",
+    options: [
+      "Đông Dương Cộng sản đảng",
+      "An Nam Cộng sản đảng",
+      "Đảng Cộng sản Việt Nam",
+      "Đảng Lao động Việt Nam"
+    ],
+    ans: 2,
+    expl: "Hội nghị diễn ra từ ngày 6-1-1930 tại Hương Cảng (Trung Quốc) đã quyết định hợp nhất các tổ chức cộng sản thành một đảng duy nhất lấy tên là Đảng Cộng sản Việt Nam."
+  },
+  {
+    id: 7,
+    subject: "Lịch sử",
+    q: "Đỉnh cao của cao trào cách mạng 1930–1931 ở Việt Nam được ghi nhận bằng sự ra đời của hình thái chính quyền nào?",
+    options: [
+      "Chính phủ Cách mạng Lâm thời Cộng hòa miền Nam Việt Nam",
+      "Các Xô viết ở Nghệ An và Hà Tĩnh",
+      "Ủy ban Dân tộc Giải phóng Việt Nam",
+      "Chính quyền Việt Nam Dân chủ Cộng hòa"
+    ],
+    ans: 1,
+    expl: "Xô viết Nghệ – Tĩnh là đỉnh cao của phong trào 1930–1931, lần đầu tiên quần chúng công nông nắm chính quyền quản lí xã hội."
+  },
+  {
+    id: 8,
+    subject: "Lịch sử",
+    q: "Mặt trận dân tộc thống nhất nào được thành lập tại Hội nghị Trung ương 8 (tháng 5-1941) ở Pác Bó (Cao Bằng)?",
+    options: [
+      "Mặt trận Dân chủ Đông Dương",
+      "Việt Nam Độc lập Đồng minh (Mặt trận Việt Minh)",
+      "Mặt trận Thống nhất Dân tộc Phản đế",
+      "Mặt trận Liên Việt"
+    ],
+    ans: 1,
+    expl: "Mặt trận Việt Minh thành lập ngày 19-5-1941 nhằm tập hợp mọi lực lượng yêu nước không phân biệt tôn giáo, giai tầng để đánh Pháp, đuổi Nhật."
+  },
+  {
+    id: 9,
+    subject: "Lịch sử",
+    q: "Ngày 2-9-1945, tại Quảng trường Ba Đình (Hà Nội), Chủ tịch Hồ Chí Minh đã đọc văn kiện lịch sử bất hủ nào?",
+    options: [
+      "Lời kêu gọi Toàn quốc kháng chiến",
+      "Tuyên ngôn Độc lập khai sinh nước Việt Nam Dân chủ Cộng hòa",
+      "Chỉ thị Kháng chiến kiến quốc",
+      "Bản án chế độ thực dân Pháp"
+    ],
+    ans: 1,
+    expl: "Bản Tuyên ngôn Độc lập tuyên bố trước quốc dân đồng bào và toàn thế giới về sự ra đời của nước Việt Nam Dân chủ Cộng hòa tự do, độc lập."
+  },
+  {
+    id: 10,
+    subject: "Lịch sử",
+    q: "Chiến dịch Biên giới thu - đông năm 1950 của quân đội ta có ý nghĩa chiến lược then chốt nào?",
+    options: [
+      "Làm thất bại hoàn toàn âm mưu 'đánh nhanh thắng nhanh' của Pháp",
+      "Khai thông biên giới Việt - Trung, giành quyền chủ động chiến lược trên chiến trường chính Bắc Bộ",
+      "Buộc thực dân Pháp phải ký Hiệp định Giơ-ne-vơ ngay",
+      "Giải phóng hoàn toàn các đô thị đồng bằng sông Hồng"
+    ],
+    ans: 1,
+    expl: "Chiến dịch Biên giới 1950 mở đường liên lạc với các nước XHCN và đánh dấu quân ta giành quyền chủ động chiến dịch, chiến lược."
+  },
+  {
+    id: 11,
+    subject: "Lịch sử",
+    q: "Chiến dịch lịch sử Điện Biên Phủ (13-3 đến 7-5-1954) kết thúc thắng lợi đã trực tiếp dẫn đến văn kiện quốc tế nào?",
+    options: [
+      "Hiệp định Sơ bộ (6-3-1946)",
+      "Tạm ước (14-9-1946)",
+      "Hiệp định Giơ-ne-vơ năm 1954 về Đông Dương",
+      "Hiệp định Pa-ri năm 1973"
+    ],
+    ans: 2,
+    expl: "Thắng lợi Điện Biên Phủ 'lừng lẫy năm châu, chấn động địa cầu' buộc Pháp phải ký Hiệp định Giơ-ne-vơ công nhận độc lập, chủ quyền của Việt Nam, Lào, Cam-pu-chia."
+  },
+  {
+    id: 12,
+    subject: "Lịch sử",
+    q: "Phong trào 'Đồng khởi' (1959–1960) bùng nổ mạnh mẽ nhất tại tỉnh Bến Tre đã đưa cách mạng miền Nam chuyển từ thế gì sang thế gì?",
+    options: [
+      "Từ thế hòa hoãn sang đấu tranh nghị trường",
+      "Từ thế giữ gìn lực lượng sang thế tiến công liên tục",
+      "Từ đấu tranh vũ trang chuyển về bí mật",
+      "Từ phòng ngự bị động sang hòa đàm"
+    ],
+    ans: 1,
+    expl: "Đồng khởi giáng đòn nặng nề vào chính sách thực dân mới của Mỹ - Diệm, đưa cách mạng miền Nam sang thế chủ động tiến công."
+  },
+  {
+    id: 13,
+    subject: "Lịch sử",
+    q: "Chiến thắng nào của quân dân miền Bắc cuối năm 1972 được ca ngợi là 'Điện Biên Phủ trên không'?",
+    options: [
+      "Đánh bại cuộc tập kích chiến lược 12 ngày đêm bằng máy bay B-52 của Mỹ vào Hà Nội, Hải Phòng",
+      "Chiến thắng trận Vạn Tường",
+      "Bắn rơi tàu đổ bộ ở vịnh Bắc Bộ",
+      "Phá tan căn cứ Khe Sanh"
+    ],
+    ans: 0,
+    expl: "Trận tập kích đường không 12 ngày đêm cuối tháng 12-1972 bị đập tan, buộc chính quyền Ních-xơn phải ký Hiệp định Pa-ri rút quân về nước."
+  },
+  {
+    id: 14,
+    subject: "Lịch sử",
+    q: "Đại hội đại biểu toàn quốc lần thứ VI của Đảng (tháng 12-1986) có ý nghĩa lịch sử trọng đại gì đối với đất nước?",
+    options: [
+      "Quyết định phát động Tổng khởi nghĩa toàn quốc",
+      "Đề ra đường lối Đổi mới toàn diện đất nước, trọng tâm là đổi mới kinh tế",
+      "Thành lập Mặt trận Tổ quốc Việt Nam",
+      "Ký kết hiệp định gia nhập khối SEV"
+    ],
+    ans: 1,
+    expl: "Đại hội VI (12-1986) khởi xướng công cuộc Đổi mới đất nước, chuyển sang kinh tế thị trường định hướng XHCN, mở ra kỉ nguyên phát triển mới."
+  },
+  {
+    id: 15,
+    subject: "Lịch sử",
+    q: "Việt Nam chính thức trở thành thành viên thứ 7 của Hiệp hội các quốc gia Đông Nam Á (ASEAN) vào ngày tháng năm nào?",
+    options: [
+      "8-8-1967",
+      "28-7-1995",
+      "11-1-2007",
+      "31-12-2015"
+    ],
+    ans: 1,
+    expl: "Ngày 28-7-1995, Việt Nam chính thức gia nhập ASEAN, mở ra thời kì hội nhập sâu rộng với khu vực và thế giới."
+  },
+
+  // 15 Địa lí & Chủ đề chung
+  {
+    id: 16,
+    subject: "Địa lí",
+    q: "Hiện nay quy mô dân số nước ta (năm 2024) đã vượt mốc bao nhiêu triệu người và có đặc điểm cơ cấu nào?",
+    options: [
+      "Dưới 80 triệu người, dân số trẻ hoàn toàn",
+      "Vượt mốc 100 triệu người, đang trong thời kì 'cơ cấu dân số vàng' song tốc độ già hóa diễn ra nhanh",
+      "Đạt 150 triệu người, thiếu hụt lao động",
+      "Khoảng 60 triệu người, tỉ lệ nam nữ cân bằng tuyệt đối"
+    ],
+    ans: 1,
+    expl: "Dân số nước ta năm 2024 vượt 100 triệu người (đứng thứ 15 thế giới), sở hữu dân số vàng nhưng cũng già hóa nhanh chóng."
+  },
+  {
+    id: 17,
+    subject: "Địa lí",
+    q: "Vùng nào ở nước ta hiện nay có mật độ dân số cao nhất cả nước?",
+    options: [
+      "Trung du và miền núi Bắc Bộ",
+      "Đồng bằng sông Hồng",
+      "Tây Nguyên",
+      "Duyên hải Nam Trung Bộ"
+    ],
+    ans: 1,
+    expl: "Đồng bằng sông Hồng có mật độ dân số cao nhất cả nước (trung bình trên 1.000 người/km²), tập trung đông đúc tại Hà Nội và các đô thị vệ tinh."
+  },
+  {
+    id: 18,
+    subject: "Địa lí",
+    q: "Vùng kinh tế nào ở nước ta giữ vai trò là vựa lúa, vựa trái cây và thủy sản xuất khẩu lớn nhất cả nước?",
+    options: [
+      "Đồng bằng sông Hồng",
+      "Đồng bằng sông Cửu Long",
+      "Đông Nam Bộ",
+      "Bắc Trung Bộ"
+    ],
+    ans: 1,
+    expl: "Đồng bằng sông Cửu Long đóng góp trên 50% sản lượng lúa, trên 60% sản lượng trái cây và hơn 50% giá trị thủy sản cả nước."
+  },
+  {
+    id: 19,
+    subject: "Địa lí",
+    q: "Vùng kinh tế nào là 'thủ phủ' chuyên canh cây cà phê lớn nhất của Việt Nam?",
+    options: [
+      "Đông Nam Bộ",
+      "Tây Nguyên",
+      "Trung du và miền núi Bắc Bộ",
+      "Đồng bằng sông Cửu Long"
+    ],
+    ans: 1,
+    expl: "Tây Nguyên với đất đỏ bazan màu mỡ và khí hậu cao nguyên là vùng trồng cà phê lớn nhất nước ta (nổi tiếng Buôn Ma Thuột)."
+  },
+  {
+    id: 20,
+    subject: "Địa lí",
+    q: "Thế mạnh công nghiệp nổi trội hàng đầu của vùng Trung du và miền núi Bắc Bộ là gì?",
+    options: [
+      "Lọc hóa dầu và hóa chất",
+      "Khai thác khoáng sản và phát triển thủy điện công suất lớn (Hòa Bình, Sơn La, Lai Châu)",
+      "Sản xuất ô tô con và điện thoại di động cao cấp",
+      "Dệt may xuất khẩu quy mô lớn nhất"
+    ],
+    ans: 1,
+    expl: "Vùng giàu tài nguyên khoáng sản nhất cả nước và có tiềm năng thủy điện khổng lồ trên hệ thống sông Đà, sông Chảy."
+  },
+  {
+    id: 21,
+    subject: "Địa lí",
+    q: "Đặc điểm hình thái lãnh thổ tự nhiên nổi bật của vùng Bắc Trung Bộ là gì?",
+    options: [
+      "Bằng phẳng, rộng lớn không có đồi núi",
+      "Kéo dài và hẹp ngang nhất cả nước, địa hình dốc từ Tây sang Đông",
+      "Toàn bộ là cao nguyên xếp tầng",
+      "Chia cắt thành các đảo xa bờ"
+    ],
+    ans: 1,
+    expl: "Bắc Trung Bộ có hình thể hẹp ngang (chưa đầy 50 km ở Quảng Bình), lưng tựa dãy Trường Sơn, mặt hướng ra Biển Đông."
+  },
+  {
+    id: 22,
+    subject: "Địa lí",
+    q: "Vùng Đông Nam Bộ giữ vị trí như thế nào trong nền kinh tế quốc gia?",
+    options: [
+      "Vùng có thu nhập bình quân thấp nhất",
+      "Đầu tàu kinh tế, vùng phát triển năng động nhất, đóng góp lớn nhất vào GDP và thu ngân sách cả nước",
+      "Vùng thuần nông chuyên canh lúa nước",
+      "Vùng kinh tế bị cô lập về logistics"
+    ],
+    ans: 1,
+    expl: "Đông Nam Bộ là cực tăng trưởng kinh tế lớn nhất cả nước với TP. Hồ Chí Minh là trung tâm công nghiệp, tài chính, đổi mới sáng tạo."
+  },
+  {
+    id: 23,
+    subject: "Địa lí",
+    q: "Dự án cảng hàng không quốc tế trọng điểm quốc gia lớn nhất đang được thi công tại vùng Đông Nam Bộ là sân bay nào?",
+    options: [
+      "Sân bay Nội Bài",
+      "Sân bay Quốc tế Long Thành (Đồng Nai)",
+      "Sân bay Chu Lai",
+      "Sân bay Cần Thơ"
+    ],
+    ans: 1,
+    expl: "Sân bay Quốc tế Long Thành được quy hoạch trở thành trung tâm trung chuyển hàng không quốc tế tầm cỡ khu vực Đông Nam Á."
+  },
+  {
+    id: 24,
+    subject: "Địa lí",
+    q: "Cụm cảng nước sâu quốc tế quan trọng nhất của vùng Đông Nam Bộ có khả năng tiếp nhận tàu container mẹ siêu trọng tải là gì?",
+    options: [
+      "Cảng Cửa Lò",
+      "Cụm cảng Cái Mép – Thị Vải (Bà Rịa – Vũng Tàu)",
+      "Cảng sông Hàn",
+      "Cảng Sa Kỳ"
+    ],
+    ans: 1,
+    expl: "Cái Mép – Thị Vải là cụm cảng nước sâu chiến lược giúp hàng hóa Việt Nam đi thẳng sang châu Âu, châu Mỹ mà không cần trung chuyển."
+  },
+  {
+    id: 25,
+    subject: "Địa lí",
+    q: "Chiến lược thích ứng với biến đổi khí hậu theo phương châm 'thuận thiên' tại Đồng bằng sông Cửu Long nhằm mục đích gì?",
+    options: [
+      "Đắp đê bao bê tông ngăn chặn triệt để dòng nước",
+      "Chủ động thích ứng theo quy luật tự nhiên, phân chia 3 vùng sinh thái nước ngọt, nước lợ và nước mặn để chuyển đổi sinh kế bền vững",
+      "Bỏ hoang đất nông nghiệp",
+      "Di dời toàn bộ người dân lên miền núi"
+    ],
+    ans: 1,
+    expl: "Nghị quyết 120/NQ-CP đề ra quan điểm 'thuận thiên', tôn trọng quy luật tự nhiên, coi nước mặn và lợ cũng là nguồn tài nguyên phát triển kinh tế."
+  },
+  {
+    id: 26,
+    subject: "Địa lí",
+    q: "Đường bờ biển nước ta trải dài bao nhiêu km và tiếp giáp với vùng biển nào?",
+    options: [
+      "Hơn 3.260 km, tiếp giáp Biển Đông với vùng đặc quyền kinh tế trên 1 triệu km²",
+      "1.200 km, tiếp giáp vịnh Thái Lan",
+      "2.000 km, tiếp giáp biển Andaman",
+      "4.500 km, tiếp giáp Ấn Độ Dương"
+    ],
+    ans: 0,
+    expl: "Bờ biển Việt Nam dài hơn 3.260 km từ Móng Cái (Quảng Ninh) đến Hà Tiên (Kiên Giang), mở ra vùng biển chủ quyền rộng lớn trên Biển Đông."
+  },
+  {
+    id: 27,
+    subject: "Địa lí",
+    q: "Bốn trụ cột phát triển kinh tế biển Việt Nam bao gồm những ngành nào?",
+    options: [
+      "Khai thác hải sản; Du lịch biển; Giao thông vận tải biển; Khai thác khoáng sản và năng lượng biển",
+      "Làm muối thủ công; Săn bắt san hô; Đóng bè gỗ; Trồng lúa nước ngập mặn",
+      "Chế biến than bùn; Nuôi cá nước ngọt; Đúc đồng; Chế biến cao su",
+      "Chỉ gồm công nghiệp cơ khí đóng tàu"
+    ],
+    ans: 0,
+    expl: "Chiến lược phát triển bền vững kinh tế biển Việt Nam đến năm 2030, tầm nhìn 2045 xác định phát triển 4 ngành kinh tế biển then chốt."
+  },
+  {
+    id: 28,
+    subject: "Chủ đề chung",
+    q: "Nét đặc trưng khác biệt tiêu biểu nhất trong văn hóa ứng xử với nguồn nước giữa văn minh sông Hồng và văn minh sông Cửu Long là gì?",
+    options: [
+      "Sông Hồng đắp đê ngăn lũ, chế ngự thiên nhiên; sông Cửu Long thích nghi, 'sống chung với lũ'",
+      "Sông Hồng phụ thuộc hoàn toàn vào nước trời, sông Cửu Long xây đập chắn",
+      "Cả hai nơi đều chỉ làm nghề chài lưới ven biển",
+      "Không có sự khác biệt nào"
+    ],
+    ans: 0,
+    expl: "Sông Hồng có hệ thống đê hàng ngàn năm kì vĩ để ngăn lũ; sông Cửu Long thuận theo tự nhiên 'sống chung với lũ' đón phù sa và tôm cá."
+  },
+  {
+    id: 29,
+    subject: "Chủ đề chung",
+    q: "Tư liệu lịch sử nào khẳng định các chúa Nguyễn và triều Nguyễn đã liên tục xác lập, thực thi chủ quyền của Việt Nam đối với quần đảo Hoàng Sa và Trường Sa?",
+    options: [
+      "Châu bản triều Nguyễn, Đại Nam thực lục, Hoàng Việt địa dư chí và hoạt động của Đội Hoàng Sa, Bắc Hải",
+      "Bản đồ hàng hải phương Tây không rõ nguồn gốc",
+      "Truyền thuyết thần thoại dân gian",
+      "Các bản dịch tiểu thuyết Trung Quốc"
+    ],
+    ans: 0,
+    expl: "Nhà nước phong kiến Việt Nam qua nhiều thế kỉ đã quản lí liên tục, hòa bình và công khai Hoàng Sa, Trường Sa bằng hệ thống văn bản pháp lí Châu bản triều Nguyễn."
+  },
+  {
+    id: 30,
+    subject: "Chủ đề chung",
+    q: "Văn bản pháp lí quốc tế mang tính phổ quát, được coi là 'Hiến pháp về biển và đại dương' hiện nay là gì?",
+    options: [
+      "Tuyên bố Băng Cốc 1967",
+      "Công ước Liên hợp quốc về Luật Biển năm 1982 (UNCLOS 1982)",
+      "Hiệp định Giơ-ne-vơ 1954",
+      "Hiến chương Liên hợp quốc 1945"
+    ],
+    ans: 1,
+    expl: "UNCLOS 1982 quy định đầy đủ các vùng biển quốc gia, quy chế pháp lí thềm lục địa, vùng đặc quyền kinh tế và nguyên tắc giải quyết hòa bình các tranh chấp."
+  }
+];
+
+fs.writeFileSync('C:/Users/ADMIN/.gemini/antigravity/scratch/lsdl9_exam_data.json', JSON.stringify(examQuestions, null, 2), 'utf8');
+console.log('Saved 30 Trạng Nguyên Grand Exam questions for LSDL 9!');

@@ -1,0 +1,499 @@
+const fs = require('fs');
+
+const themes = [
+  { num: 1, title: "CUỘC SỐNG MUÔN MÀU", desc: "Khai thác đề tài thiên nhiên, con người, sinh hoạt đời thường và vận dụng vào thiết kế tạo hình phụ kiện thời trang.", lessons: [1, 2] },
+  { num: 2, title: "NGHỆ THUẬT ĐƯƠNG ĐẠI THẾ GIỚI", desc: "Tìm hiểu các trào lưu nghệ thuật đương đại (Sắp đặt, Trình diễn, Video Art) và thiết kế sản phẩm ứng dụng công nghệ đời sống.", lessons: [3, 4] },
+  { num: 3, title: "THIẾT KẾ MĨ THUẬT SÁCH", desc: "Nghệ thuật thiết kế bìa sách, nguyên tắc thứ bậc thông tin và sáng tác tranh minh hoạ chuyển tải hình tượng văn học.", lessons: [5, 6] },
+  { num: 4, title: "CẢM HỨNG TRONG SÁNG TÁC MĨ THUẬT", desc: "Phương pháp tìm kiếm cảm hứng trực tiếp và chủ quan; thiết kế hệ thống nhận diện thương hiệu chuẩn mực.", lessons: [7, 8] },
+  { num: 5, title: "VẺ ĐẸP CỦA NGUYÊN MẪU TRONG THỰC HÀNH, SÁNG TẠO", desc: "Cấu trúc hình khối, tỉ lệ đo đạc và ngôn ngữ điêu khắc (tượng tròn, phù điêu đắp nổi bằng đất nặn).", lessons: [9, 10] },
+  { num: 6, title: "NGHỆ THUẬT MÚA RỐI", desc: "Vẻ đẹp tạo hình sân khấu múa rối: rối que, rối bóng và nghệ thuật múa rối nước độc đáo của văn minh lúa nước.", lessons: [11, 12] },
+  { num: 7, title: "MĨ THUẬT ĐƯƠNG ĐẠI VIỆT NAM", desc: "Các khuynh hướng sáng tác kết hợp truyền thống với hiện đại; thiết kế đồ gia dụng sáng tạo từ vật liệu tái sử dụng.", lessons: [13, 14] },
+  { num: 8, title: "HƯỚNG NGHIỆP", desc: "Khám phá các ngành nghề mĩ thuật ứng dụng (UI/UX, Đồ hoạ, Thời trang, Nội thất, Đa phương tiện) và 4 đặc trưng cốt lõi.", lessons: [15, 16] }
+];
+
+const lessonsData = [
+  {
+    num: 1,
+    themeNum: 1,
+    themeTitle: "CUỘC SỐNG MUÔN MÀU",
+    title: "Vẻ đẹp cuộc sống trong tác phẩm mĩ thuật",
+    page: "Trang 5–9",
+    objectives: "Nhận biết nguồn đề tài phong phú từ thiên nhiên và đời sống; phân tích được bố cục (mảng chính – mảng phụ), đường nét, đậm nhạt, hoà sắc và chất liệu trong tác phẩm hội họa.",
+    keywords: ["Mảng chính - mảng phụ", "Hoà sắc biểu cảm", "Cắt cảnh khuôn hình", "Chất liệu sơn dầu/lụa", "Mô phỏng tỉ lệ"],
+    knowledge: [
+      "Thiên nhiên, sinh hoạt, lao động, con người và cảnh vật đời thường là nguồn đề tài vô tận cho sáng tác mĩ thuật.",
+      "Nghệ sĩ lựa chọn hình ảnh từ thực tế, tổ chức lại bằng bố cục, hình, nét, đậm nhạt, màu sắc, không gian và chất liệu để làm nổi bật nội dung.",
+      "Tác phẩm có thể thể hiện cảnh sinh hoạt, tĩnh vật, phong cảnh hoặc vẻ đẹp của thiên nhiên bằng các chất liệu phong phú: sơn dầu, sơn mài, tranh khắc gỗ, màu bột, tranh lụa.",
+      "Khi thưởng thức tác phẩm: cần nhận biết đề tài, hình ảnh chính, cách phân chia mảng chính - mảng phụ, hoà sắc chủ đạo, chất liệu và cảm xúc/thông điệp nhân văn.",
+      "Tỉ lệ trong bài mô phỏng cần có quan hệ hợp lí với nguyên mẫu; có thể biến đổi cách điệu theo ý tưởng nhưng phải phục vụ chủ đề chung."
+    ],
+    process: [
+      "Bước 1: Chọn chủ đề/hình ảnh cuộc sống và xác định khuôn hình (cắt cảnh phù hợp).",
+      "Bước 2: Dựng bố cục tổng thể, phân định rõ mảng chính và mảng phụ.",
+      "Bước 3: Điều chỉnh hình theo ý tưởng cá nhân; xác định tỉ lệ và tương quan giữa các vật thể.",
+      "Bước 4: Chọn hoà sắc chủ đạo, thể hiện chi tiết, đậm nhạt và hoàn thiện tác phẩm."
+    ],
+    evaluation: "Bố cục tranh có cân đối và nổi bật mảng chính không? Hoà sắc có gợi được cảm xúc của đề tài? Tỉ lệ hình thể có hài hoà với nguyên mẫu thực tế?",
+    application: "Quan sát, ghi chép và kí hoạ các hình ảnh đẹp trong cuộc sống xung quanh; xây dựng tập tư liệu mĩ thuật cá nhân để sử dụng cho các bài sáng tác tiếp theo.",
+    quiz: [
+      { q: "Nguồn đề tài chủ yếu cho sáng tác mĩ thuật trong đời sống bắt nguồn từ đâu?", options: ["Chỉ từ tranh ảnh nước ngoài", "Thiên nhiên, lao động, sinh hoạt đời thường và con người", "Chỉ từ sách giáo khoa", "Chỉ từ các hình khối hình học"], ans: 1, expl: "Thiên nhiên và sinh hoạt đời thường của con người là nguồn cảm hứng phong phú nhất cho nghệ thuật." },
+      { q: "Yếu tố tạo hình nào giúp người xem nhận biết ngay trọng tâm của một bức tranh?", options: ["Màu viền khung tranh", "Mảng chính được đặt ở vị trí điểm nhấn nổi bật", "Chữ kí của tác giả", "Giá vẽ của bức tranh"], ans: 1, expl: "Mảng chính với hình khối và màu sắc tương phản giúp định hình tiêu điểm thị giác của tác phẩm." },
+      { q: "Bước đầu tiên trong quy trình sáng tạo tranh từ quan sát cuộc sống là gì?", options: ["Tô màu hoàn thiện ngay", "Chọn chủ đề và xác định khuôn hình (cắt cảnh)", "Vẽ chi tiết mắt mũi", "Đóng khung tranh gỗ"], ans: 1, expl: "Trước hết cần chọn chủ đề và giới hạn khuôn hình cắt cảnh phù hợp với ý tưởng." },
+      { q: "Chất liệu hội họa truyền thống độc đáo của Việt Nam được nhắc đến trong bài là gì?", options: ["Tranh sơn mài và tranh lụa", "Tranh sơn xịt", "Tranh in 3D", "Tranh bút chì kim"], ans: 0, expl: "Sơn mài và lụa là hai chất liệu đỉnh cao mang đậm bản sắc văn hoá nghệ thuật Việt Nam." }
+    ]
+  },
+  {
+    num: 2,
+    themeNum: 1,
+    themeTitle: "CUỘC SỐNG MUÔN MÀU",
+    title: "Thiết kế phụ kiện thời trang",
+    page: "Trang 10–14",
+    objectives: "Hiểu được vai trò bổ trợ và công năng của phụ kiện thời trang (mũ, túi, giày, trang sức); vận dụng các nguyên lí tạo hình (cân bằng, nhịp điệu, điểm nhấn) để thiết kế phụ kiện từ vật liệu sẵn có.",
+    keywords: ["Phụ kiện thời trang", "Công năng sử dụng", "Nguyên lí nhịp điệu", "Điểm nhấn tạo hình", "Vật liệu tái chế"],
+    knowledge: [
+      "Phụ kiện thời trang gồm các sản phẩm bổ trợ trang phục như mũ, túi xách, giày, cà vạt, thắt lưng, trang sức…; vừa tạo điểm nhấn thị giác vừa có công năng sử dụng thực tế.",
+      "Ý tưởng thiết kế có thể lấy từ thiên nhiên, đời sống, văn hoá dân gian hoặc hình dáng cách điệu của con vật, hoa lá.",
+      "Cần bảo đảm sự liên kết hài hòa giữa phụ kiện và trang phục chính; lựa chọn kiểu dáng, màu sắc, hoạ tiết và chất liệu sao cho cân đối, phù hợp với hoàn cảnh sử dụng.",
+      "Nguyên lí tạo hình được vận dụng linh hoạt: cân bằng (đối xứng hoặc bất đối xứng), nhịp điệu/lặp lại, tương phản màu sắc, điểm nhấn độc đáo và tính thống nhất phong cách."
+    ],
+    process: [
+      "Bước 1: Chọn loại phụ kiện (túi, mũ, vòng tay...) và xác định đối tượng người dùng, công năng.",
+      "Bước 2: Phác thảo kiểu dáng; lựa chọn hoạ tiết trang trí, bảng màu và vật liệu phù hợp.",
+      "Bước 3: Tạo hình từ vật liệu sẵn có (vải vụn, da nhân tạo, bìa, dây dù, hạt cườm...); gia công các chi tiết.",
+      "Bước 4: Ghép nối, hoàn thiện trang trí, kiểm tra độ bền chắc và tính tiện dụng khi mang đeo."
+    ],
+    evaluation: "Phụ kiện có kiểu dáng độc đáo và tiện dụng không? Màu sắc và hoạ tiết có tạo được điểm nhấn thẩm mĩ? Các chi tiết liên kết có chắc chắn và an toàn khi sử dụng?",
+    application: "Thiết kế một phụ kiện thời trang bằng vật liệu tái chế (như túi xách từ vải jeans cũ, vòng tay từ dây bện) để sử dụng trong sinh hoạt học đường.",
+    quiz: [
+      { q: "Phụ kiện thời trang có vai trò gì đối với trang phục của người mặc?", options: ["Chỉ để cất giữ trong tủ", "Vừa có công năng sử dụng vừa tạo điểm nhấn thẩm mĩ hài hòa", "Làm trang phục trở nên rườm rà", "Không có tác dụng tạo hình"], ans: 1, expl: "Phụ kiện bổ trợ công năng và tạo phong cách riêng cho bộ trang phục." },
+      { q: "Nguyên lí tạo hình nào giúp các hoạ tiết trên phụ kiện có sự chuyển động và liên kết nhịp nhàng?", options: ["Nguyên lí hỗn loạn", "Nguyên lí nhịp điệu và lặp lại", "Nguyên lí đơn điệu", "Nguyên lí triệt tiêu"], ans: 1, expl: "Nhịp điệu và sự lặp lại có biến tấu tạo nên dòng chảy thị giác sinh động cho sản phẩm." },
+      { q: "Khi thiết kế phụ kiện thời trang, cần lưu ý điều gì về mối quan hệ với trang phục chính?", options: ["Càng to và nặng càng tốt", "Phải đảm bảo sự liên kết, đồng điệu về phong cách và màu sắc", "Không cần quan tâm đến trang phục", "Dùng màu sắc đối kháng gay gắt hoàn toàn"], ans: 1, expl: "Phụ kiện cần ăn nhập và tôn lên vẻ đẹp của tổng thể bộ trang phục." },
+      { q: "Vật liệu nào sau đây thích hợp để học sinh tự làm phụ kiện thời trang sáng tạo?", options: ["Kim loại phóng xạ", "Vải vụn, bìa cứng, dây dù, hạt cườm tái chế", "Thủy tinh sắc nhọn", "Hóa chất chưa qua xử lí"], ans: 1, expl: "Vật liệu an toàn, dễ kiếm và thân thiện với môi trường rất phù hợp cho học sinh thực hành." }
+    ]
+  },
+  {
+    num: 3,
+    themeNum: 2,
+    themeTitle: "NGHỆ THUẬT ĐƯƠNG ĐẠI THẾ GIỚI",
+    title: "Một số trào lưu của nghệ thuật đương đại thế giới",
+    page: "Trang 15–20",
+    objectives: "Hiểu được khái niệm và đặc trưng của nghệ thuật đương đại thế giới từ nửa sau thế kỉ XX; phân biệt được 3 hình thức tiêu biểu: Nghệ thuật Sắp đặt (Installation), Trình diễn (Performance) và Video Art.",
+    keywords: ["Nghệ thuật đương đại", "Sắp đặt (Installation)", "Trình diễn (Performance)", "Hình ảnh động (Video Art)", "Trải nghiệm đa giác quan"],
+    knowledge: [
+      "Nghệ thuật đương đại là thực hành sáng tạo từ thập niên 1960 đến nay, sử dụng phương thức và vật liệu phi truyền thống để phản ánh đời sống, công nghệ, môi trường và tư tưởng xã hội.",
+      "Tác phẩm đương đại vượt ra khỏi khuôn khổ tranh vẽ hay tượng truyền thống; người xem không chỉ đứng nhìn mà trở thành một phần trải nghiệm tương tác của tác phẩm.",
+      "Nghệ thuật Sắp đặt (Installation): tổ chức, sắp xếp các vật thể, âm thanh, ánh sáng trong một không gian 3 chiều cụ thể để truyền tải một ý niệm hoặc thông điệp xã hội sâu sắc.",
+      "Nghệ thuật Trình diễn (Performance): hành động, thời gian thực và sự tương tác giữa cơ thể nghệ sĩ với khán giả đóng vai trò là yếu tố cốt lõi của tác phẩm.",
+      "Video Art (Nghệ thuật video): sử dụng công nghệ hình ảnh chuyển động, âm thanh và màn chiếu đa phương tiện làm phương tiện biểu đạt ngôn ngữ nghệ thuật."
+    ],
+    process: [
+      "Bước 1: Chọn một chủ đề xã hội có ý nghĩa (bảo vệ môi trường, rác thải nhựa, biến đổi khí hậu...).",
+      "Bước 2: Tìm ý tưởng ý niệm và lựa chọn hình thức thể hiện (Sắp đặt, Trình diễn hoặc Video clip ngắn).",
+      "Bước 3: Thu thập vật liệu sẵn có, thiết kế không gian sắp đặt hoặc kịch bản hành động trình diễn.",
+      "Bước 4: Bố trí hoàn thiện tác phẩm trong không gian lớp học; thuyết minh thông điệp gửi tới người xem."
+    ],
+    evaluation: "Tác phẩm có truyền tải được thông điệp xã hội rõ ràng không? Không gian sắp đặt có tạo được cảm xúc trải nghiệm cho người xem? Vật liệu lựa chọn có sáng tạo và an toàn không?",
+    application: "Tổ chức một không gian sắp đặt nhỏ trong lớp học với chủ đề 'Thông điệp xanh - Giảm rác thải nhựa' từ các vật liệu vỏ chai, nắp nhựa tái chế.",
+    quiz: [
+      { q: "Hình thức nghệ thuật sắp xếp các vật thể, ánh sáng, âm thanh trong một không gian cụ thể gọi là gì?", options: ["Nghệ thuật khắc gỗ", "Nghệ thuật Sắp đặt (Installation art)", "Nghệ thuật tranh thủy mặc", "Nghệ thuật đan lát"], ans: 1, expl: "Installation art tổ chức không gian 3 chiều để tạo trải nghiệm tương tác với người xem." },
+      { q: "Yếu tố biểu đạt then chốt của Nghệ thuật Trình diễn (Performance art) là gì?", options: ["Khung tranh gỗ mạ vàng", "Hành động, thời gian và sự hiện diện của cơ thể nghệ sĩ", "Kĩ thuật vẽ chì than", "Nhiệt độ nung gốm"], ans: 1, expl: "Performance art lấy chính hành động sống và thời gian của nghệ sĩ làm tác phẩm." },
+      { q: "Trong nghệ thuật đương đại, vai trò của người xem có điểm gì đặc biệt so với nghệ thuật truyền thống?", options: ["Bị cấm bước vào phòng trưng bày", "Có thể tương tác và trở thành một phần trải nghiệm của tác phẩm", "Chỉ được xem qua ảnh chụp", "Bắt buộc phải mua tác phẩm"], ans: 1, expl: "Nghệ thuật đương đại xóa nhòa ranh giới giữa tác giả, tác phẩm và khán giả." },
+      { q: "Nghệ thuật Video Art sử dụng phương tiện chủ yếu nào sau đây?", options: ["Đục và búa sắt", "Hình ảnh chuyển động kĩ thuật số, thiết bị trình chiếu và âm thanh", "Màu sáp dầu trên giấy", "Khung cửi dệt vải"], ans: 1, expl: "Video art khai thác hình ảnh chuyển động và công nghệ trình chiếu đa phương tiện." }
+    ]
+  },
+  {
+    num: 4,
+    themeNum: 2,
+    themeTitle: "NGHỆ THUẬT ĐƯƠNG ĐẠI THẾ GIỚI",
+    title: "Thiết kế giá đỡ thiết bị công nghệ",
+    page: "Trang 21–25",
+    objectives: "Nắm vững nguyên lí thiết kế sản phẩm ứng dụng: kết hợp hài hoà giữa công năng (nâng đỡ vững chắc, góc nhìn tối ưu) với kiểu dáng thẩm mĩ; biết gia công vật liệu an toàn.",
+    keywords: ["Thiết kế công nghiệp", "Công năng nâng đỡ", "Góc nhìn tối ưu", "Cấu trúc chịu lực", "An toàn thao tác"],
+    knowledge: [
+      "Giá đỡ thiết bị công nghệ (điện thoại thông minh, máy tính bảng) cần bảo đảm sự ổn định, chống trượt đổ và thuận tiện khi học tập, giải trí.",
+      "Ba yếu tố thiết kế cơ bản: ý tưởng sáng tạo, kiểu dáng công thái học và màu sắc hài hoà; đồng thời xem xét kích thước thiết bị, độ bền và tính kinh tế.",
+      "Có thể tích hợp chức năng phụ trợ thông minh: khay đựng bút, khe cắm sạc, khả năng gấp gọn linh hoạt hoặc trang trí bàn học.",
+      "Vật liệu thiết kế phong phú: dây kim loại dẻo, gỗ vụn, bìa carton sóng, ống giấy hoặc nhựa tái sinh."
+    ],
+    process: [
+      "Bước 1: Quan sát kích thước, trọng lượng của thiết bị công nghệ cần nâng đỡ.",
+      "Bước 2: Phác thảo kiểu dáng 3 chiều, xác định góc nghiêng (khoảng 45° - 60°) và các điểm tựa chịu lực.",
+      "Bước 3: Chọn vật liệu; dùng dụng cụ uốn, cắt, gấp hoặc ghép các bộ phận theo bản phác thảo.",
+      "Bước 4: Lắp ráp hoàn thiện, thử tải trọng thiết bị, kiểm tra độ cân bằng và tinh chỉnh thẩm mĩ."
+    ],
+    evaluation: "Giá đỡ có nâng giữ thiết bị vững chắc không? Góc nhìn màn hình có thoải mái không? Các góc cạnh có được bo tròn an toàn không gây xước máy?",
+    application: "Tự chế tạo giá đỡ điện thoại/tablet thông minh bằng bìa carton cứng hoặc dây nhôm bọc nhựa để phục vụ góc học tập cá nhân tại nhà.",
+    quiz: [
+      { q: "Yêu cầu quan trọng hàng đầu đối với một sản phẩm giá đỡ thiết bị công nghệ là gì?", options: ["Phải thật đắt tiền", "Bảo đảm nâng đỡ vững chắc, ổn định và thuận tiện khi sử dụng", "Phải có kích thước thật cồng kềnh", "Chỉ dùng để ngắm không được để máy lên"], ans: 1, expl: "Công năng nâng giữ vững chắc, chống đổ ngã là tiêu chí số 1 của giá đỡ." },
+      { q: "Góc nghiêng lý tưởng của giá đỡ điện thoại để người dùng quan sát thoải mái thường dao động trong khoảng nào?", options: ["0 độ (nằm ngang)", "Khoảng 45° đến 60°", "180 độ", "360 độ"], ans: 1, expl: "Góc nghiêng 45° - 60° tạo tầm nhìn tối ưu, hạn chế mỏi cổ và chống chói ánh sáng." },
+      { q: "Khi sử dụng các dụng cụ như kéo, dao rọc giấy, kìm cắt để làm sản phẩm, cần lưu ý điều gì?", options: ["Cắt hướng vào lòng bàn tay", "Thao tác cẩn thận, bo tròn hoặc mài nhẵn các cạnh sắc nhọn để đảm bảo an toàn", "Vừa làm vừa đùa nghịch", "Bỏ qua đồ bảo hộ"], ans: 1, expl: "Quy tắc an toàn lao động đòi hỏi mài nhẵn góc cạnh và thao tác chuẩn xác." },
+      { q: "Việc tích hợp thêm khe cắm dây sạc hoặc khay đựng bút trên giá đỡ thể hiện điều gì trong thiết kế?", options: ["Làm tăng trọng lượng vô ích", "Tính đa năng và tối ưu hoá công năng sử dụng của sản phẩm", "Sai sót kĩ thuật", "Làm xấu kiểu dáng"], ans: 1, expl: "Tích hợp công năng phụ trợ giúp sản phẩm gia tăng giá trị sử dụng cho người dùng." }
+    ]
+  },
+  {
+    num: 5,
+    themeNum: 3,
+    themeTitle: "THIẾT KẾ MĨ THUẬT SÁCH",
+    title: "Thiết kế bìa sách",
+    page: "Trang 26–31",
+    objectives: "Hiểu được các thành phần cấu tạo và thứ bậc thông tin của bìa sách; vận dụng kiến thức về chữ nghệ thuật (typography), hình ảnh đồ hoạ và hoà sắc để thiết kế bìa sách ấn tượng.",
+    keywords: ["Bìa sách", "Thứ bậc thị giác", "Nghệ thuật chữ (Typography)", "Hình ảnh biểu trưng", "Phong cách thể loại"],
+    knowledge: [
+      "Bìa sách là bộ mặt đại diện giới thiệu nội dung cuốn sách và tạo ấn tượng thị giác đầu tiên thu hút độc giả.",
+      "Các thành phần bắt buộc của bìa sách: Tên sách (chính - phụ), Tên tác giả/dịch giả, Hình ảnh minh hoạ, Tên và logo Nhà xuất bản.",
+      "Quy tắc thứ bậc thông tin: Tên sách phải là yếu tố nổi bật nhất về kích thước, vị trí và màu sắc; sau đó đến hình ảnh và tên tác giả.",
+      "Phong cách thiết kế phải phù hợp thể loại: sách thiếu nhi (tươi vui, ngộ nghĩnh), sách văn học (sâu lắng, biểu tượng), sách khoa học (chính xác, mạch lạc, hiện đại)."
+    ],
+    process: [
+      "Bước 1: Chọn cuốn sách yêu thích, phân tích nội dung tư tưởng cốt lõi và đối tượng bạn đọc.",
+      "Bước 2: Tìm ý tưởng biểu trưng, phác thảo bố cục phân chia tỉ lệ giữa phần chữ và phần hình.",
+      "Bước 3: Vẽ nét tạo hình minh họa, chọn kiểu chữ (font chữ) phù hợp phong cách và sắp xếp tên tác giả, NXB.",
+      "Bước 4: Chọn bảng màu hòa sắc, tô màu hoàn thiện, kiểm tra độ tương phản và lỗi chính tả."
+    ],
+    evaluation: "Tên sách có nổi bật và dễ đọc từ xa không? Hình ảnh minh họa có thể hiện được linh hồn của tác phẩm? Bố cục tổng thể có chặt chẽ và chuyên nghiệp không?",
+    application: "Thiết kế bìa mới cho một tác phẩm văn học lớp 9 mà em yêu thích (như 'Truyện Kiều', 'Làng', 'Chiếc lược ngà'...) bằng tay hoặc phần mềm đồ hoạ.",
+    quiz: [
+      { q: "Thành phần nào trên bìa sách cần được ưu tiên làm nổi bật nhất về thị giác?", options: ["Mã vạch số", "Tên sách", "Địa chỉ nhà in", "Số trang sách"], ans: 1, expl: "Tên sách là thông tin quan trọng nhất cần nhận diện đầu tiên." },
+      { q: "Bìa dành cho thể loại sách thiếu nhi thường có đặc điểm thiết kế như thế nào?", options: ["Chỉ có chữ đen trắng u buồn", "Màu sắc tươi sáng, rực rỡ, hình vẽ ngộ nghĩnh, sinh động", "Chằng chịt sơ đồ kĩ thuật phức tạp", "Font chữ cổ điển khó đọc"], ans: 1, expl: "Trẻ em yêu thích màu sắc tươi sáng và các nhân vật ngộ nghĩnh, giàu trí tưởng tượng." },
+      { q: "Nghệ thuật sắp đặt và tạo hình các con chữ trên bìa sách được gọi là gì trong thiết kế đồ họa?", options: ["Nghệ thuật Điêu khắc", "Typography (Nghệ thuật chữ)", "Thư pháp cổ", "Hội họa dã thú"], ans: 1, expl: "Typography là nghệ thuật sắp xếp, thiết kế chữ để truyền tải thông điệp thị giác." },
+      { q: "Khi sử dụng hình ảnh minh họa từ trên mạng để thiết kế bìa sách, người thiết kế cần chú ý điều gì?", options: ["Tự do sao chép không cần hỏi", "Tôn trọng bản quyền tác giả và ghi rõ nguồn hợp lệ", "Xoá chữ kí của tác giả gốc", "Bán lại kiếm lời ngay"], ans: 1, expl: "Tôn trọng quyền sở hữu trí tuệ và bản quyền là đạo đức nghề nghiệp bắt buộc." }
+    ]
+  },
+  {
+    num: 6,
+    themeNum: 3,
+    themeTitle: "THIẾT KẾ MĨ THUẬT SÁCH",
+    title: "Tranh minh hoạ",
+    page: "Trang 32–36",
+    objectives: "Hiểu được vai trò của tranh minh hoạ trong việc chuyển tải hình tượng văn học thành ngôn ngữ tạo hình; phân biệt được 2 dạng minh hoạ (bổ trợ cho chữ và biểu hiện độc lập).",
+    keywords: ["Tranh minh hoạ", "Hình tượng tạo hình", "Minh họa bổ trợ", "Minh họa biểu hiện", "Không gian truyện tranh"],
+    knowledge: [
+      "Tranh minh hoạ trực quan hoá nội dung văn bản, giúp người đọc dễ dàng hình dung bối cảnh, ngoại hình nhân vật, hành động và cảm xúc.",
+      "Hai dạng minh hoạ chính trong xuất bản: (1) Hình ảnh bổ trợ giải thích nội dung đi kèm khối văn bản chữ; (2) Hình ảnh giữ vai trò biểu hiện chính, chữ chỉ đóng vai trò thoại ngắn (truyện tranh, infographic).",
+      "Kĩ năng chuyển thể: chọn lọc phân đoạn cao trào hoặc khoảnh khắc đắt giá nhất của câu chuyện để diễn tả.",
+      "Phong cách thể hiện đa dạng: từ hiện thực tả thực chi tiết đến khái quát ước lệ, hoạt hình cách điệu; sử dụng màu nước, chì màu, mực nho hoặc vẽ kĩ thuật số (digital art)."
+    ],
+    process: [
+      "Bước 1: Đọc kĩ đoạn trích tác phẩm văn học, xác định bối cảnh không gian và nhân vật trung tâm.",
+      "Bước 2: Phác thảo bố cục khung hình, xác định góc nhìn (cận cảnh, trung cảnh, toàn cảnh).",
+      "Bước 3: Dựng hình nhân vật với tư thế, biểu cảm và trang phục đặc trưng; tạo các mảng không gian nền.",
+      "Bước 4: Lên màu sắc phù hợp với tâm trạng của câu chuyện; hoàn thiện nét và tương phản sáng tối."
+    ],
+    evaluation: "Bức tranh có diễn đạt đúng tinh thần đoạn trích không? Nhân vật có nét biểu cảm sinh động không? Màu sắc có hỗ trợ không khí câu chuyện không?",
+    application: "Vẽ một bức tranh minh họa cho một bài thơ hoặc truyện ngắn trong chương trình Ngữ văn 9 để làm kỷ niệm góc học tập.",
+    quiz: [
+      { q: "Mục đích chính của tranh minh hoạ trong sách báo là gì?", options: ["Để làm tăng độ dày của cuốn sách", "Chuyển tải nội dung văn bản bằng hình ảnh, giúp độc giả hình dung sinh động câu chuyện", "Để che bớt các lỗi in ấn", "Thay thế hoàn toàn việc đọc chữ"], ans: 1, expl: "Tranh minh họa trực quan hóa hình tượng văn học giúp câu chuyện trở nên sống động." },
+      { q: "Trong dạng truyện tranh hoặc sách tranh (picture book), tranh minh hoạ giữ vai trò như thế nào?", options: ["Chỉ là hình phụ nhỏ bé", "Giữ vai trò dẫn dắt nội dung chính, phần chữ ngắn gọn", "Không có vai trò gì", "Chỉ xuất hiện ở trang bìa"], ans: 1, expl: "Trong truyện tranh, ngôn ngữ hình ảnh là phương tiện dẫn dắt cốt truyện chủ đạo." },
+      { q: "Khi vẽ tranh minh hoạ cho tác phẩm văn học, bước đầu tiên người vẽ cần làm là gì?", options: ["Mua màu thật đắt tiền", "Đọc kĩ nội dung và chọn lọc phân đoạn giàu tính tạo hình nhất", "Vẽ viền khung trước", "Kí tên vào góc giấy"], ans: 1, expl: "Thấu hiểu văn bản là tiền đề để chuyển thể chính xác sang ngôn ngữ tạo hình." },
+      { q: "Các phương tiện chất liệu nào có thể sử dụng để vẽ tranh minh hoạ hiện nay?", options: ["Chỉ duy nhất màu nước", "Màu sáp, màu bột, mực vẽ, chì màu hoặc vẽ trên máy tính (Digital painting)", "Chỉ dùng bút chì đen", "Chỉ dùng đất sét"], ans: 1, expl: "Chất liệu minh họa rất đa dạng từ thủ công truyền thống đến phần mềm đồ họa số." }
+    ]
+  },
+  {
+    num: 7,
+    themeNum: 4,
+    themeTitle: "CẢM HỨNG TRONG SÁNG TÁC MĨ THUẬT",
+    title: "Cảm hứng trong sáng tác hội hoạ",
+    page: "Trang 37–41",
+    objectives: "Phân biệt được hai cách tiếp cận cảm hứng sáng tạo: Cảm hứng trực tiếp (trực hoạ ngoài đời) và Cảm hứng chủ quan (biến đổi theo tâm tưởng nghệ sĩ); rèn luyện thói quen ghi chép kí hoạ thực tế.",
+    keywords: ["Cảm hứng trực tiếp", "Cảm hứng chủ quan", "Trực hoạ phong cảnh", "Kí hoạ tư liệu", "Biểu đạt tâm tưởng"],
+    knowledge: [
+      "Nguồn cảm hứng sáng tác bắt nguồn từ thiên nhiên kì vĩ, cuộc sống con người, trải nghiệm kí ức cá nhân hoặc các tác phẩm nghệ thuật kinh điển.",
+      "Cảm hứng trực tiếp: nghệ sĩ quan sát trực tiếp đối tượng thực tế; vẽ kí hoạ nhanh để lưu giữ tư liệu hoặc vẽ trực hoạ để hoàn thành tác phẩm ngay tại không gian đó.",
+      "Cảm hứng chủ quan: nghệ sĩ tiếp nhận ấn tượng từ cuộc sống nhưng tái hiện lại thông qua bộ lọc cảm xúc, trí tưởng tượng, liên tưởng và phong cách cá nhân.",
+      "Kí hoạ là phương tiện ghi chép thị giác vô cùng quan trọng: ghi lại đường nét, cấu trúc dáng người, hướng ánh sáng và nhịp điệu chuyển động của đời sống."
+    ],
+    process: [
+      "Bước 1: Quan sát một khung cảnh thực tế hoặc hồi tưởng một kỉ niệm sâu sắc trong kí ức.",
+      "Bước 2: Phác thảo nhanh các nét ghi chép cấu trúc chính (kí hoạ đường nét).",
+      "Bước 3: Phát triển ý tưởng: có thể giữ vẻ đẹp hiện thực hoặc cách điệu, biến đổi màu sắc theo cảm xúc chủ quan.",
+      "Bước 4: Thể hiện bức tranh với hoà sắc biểu cảm và hoàn thiện chi tiết."
+    ],
+    evaluation: "Bức tranh có bộc lộ được cảm xúc chân thực của người vẽ không? Cách tổ chức hình và nét có mang dấu ấn cá nhân không? Sự kết hợp màu sắc có gợi được tâm trạng không?",
+    application: "Cùng một góc sân trường hoặc góc phố quen thuộc, hãy thử vẽ 2 bức tranh: một bức vẽ tả thực trực tiếp và một bức biến đổi màu sắc theo cảm xúc chủ quan của em.",
+    quiz: [
+      { q: "Phương pháp sáng tác mà nghệ sĩ vẽ trực tiếp đối tượng ngay tại hiện trường gọi là gì?", options: ["Kí họa gián tiếp", "Trực hoạ (vẽ trực tiếp ngoài đời)", "Vẽ tranh sao chép", "Vẽ theo trí nhớ"], ans: 1, expl: "Trực họa là vẽ trực tiếp trước cảnh sắc, con người thực tế để bắt trọn ánh sáng và cảm xúc." },
+      { q: "Khác biệt cốt lõi của 'Cảm hứng chủ quan' so với 'Cảm hứng trực tiếp' là gì?", options: ["Không dùng màu sắc", "Đối tượng được biến đổi qua trí tưởng tượng, cảm xúc và phong cách riêng của nghệ sĩ", "Vẽ bằng mắt nhắm", "Bắt buộc phải vẽ giống như ảnh chụp"], ans: 1, expl: "Cảm hứng chủ quan thể hiện thế giới nội tâm và sự khúc xạ cảm xúc của tác giả." },
+      { q: "Hoạt động 'Kí hoạ' mang lại lợi ích gì cho người học mĩ thuật?", options: ["Làm tốn thời gian", "Rèn luyện khả năng quan sát nhanh, ghi chép cấu trúc, dáng dấp làm nguồn tư liệu sáng tác", "Chỉ để chơi", "Không có giá trị gì"], ans: 1, expl: "Kí họa là 'nhật kí thị giác' giúp nghệ sĩ lưu trữ tư liệu sống động của cuộc sống." },
+      { q: "Khi vẽ một bức tranh theo cảm hứng chủ quan về một ngày mưa, nghệ sĩ có thể sử dụng gam màu nào để gợi cảm giác man mác buồn?", options: ["Gam màu vàng neon rực rỡ", "Gam màu lạnh, trầm (xanh lam, xám, tím mờ)", "Gam màu đỏ cờ chói chang", "Gam màu cam tươi"], ans: 1, expl: "Gam màu lạnh trầm tạo nên không khí lắng đọng và biểu đạt tâm trạng sâu sắc." }
+    ]
+  },
+  {
+    num: 8,
+    themeNum: 4,
+    themeTitle: "CẢM HỨNG TRONG SÁNG TÁC MĨ THUẬT",
+    title: "Thiết kế hình ảnh nhận diện thương hiệu",
+    page: "Trang 42–47",
+    objectives: "Hiểu được khái niệm và các thành phần của hệ thống nhận diện thương hiệu (Brand Identity); biết cách thiết kế biểu trưng (Logo) cô đọng, giàu ý nghĩa và ứng dụng lên các sản phẩm thực tế.",
+    keywords: ["Nhận diện thương hiệu", "Thiết kế Logo", "Màu sắc định vị", "Tính ứng dụng Mockup", "Tính nhất quán thị giác"],
+    knowledge: [
+      "Hệ thống nhận diện thương hiệu là tập hợp các yếu tố thị giác giúp công chúng phân biệt và ghi nhớ một thương hiệu, tổ chức hoặc sự kiện.",
+      "Các thành phần cơ bản: Logo (biểu trưng), Tên thương hiệu (Brand name), Câu khẩu hiệu (Slogan), Màu sắc nhận diện đặc trưng và Quy chuẩn kiểu chữ.",
+      "Ba dạng cấu trúc logo phổ biến: Logo dạng biểu tượng hình ảnh, Logo dạng chữ cách điệu (Wordmark), Logo kết hợp biểu tượng và chữ.",
+      "Nguyên tắc vàng khi thiết kế Logo: Đơn giản, cô đọng, dễ ghi nhớ, độc đáo, truyền tải thông điệp rõ ràng và hiển thị sắc nét ở mọi kích thước (từ favicon nhỏ đến biển quảng cáo khổng lồ).",
+      "Tính ứng dụng: Logo được in ấn nhất quán trên danh thiếp, bì thư, áo đồng phục, cốc sứ, sổ tay, website và quà tặng lưu niệm."
+    ],
+    process: [
+      "Bước 1: Xác định rõ đối tượng thương hiệu (lớp học, câu lạc bộ, dự án môi trường) và thông điệp cốt lõi.",
+      "Bước 2: Tìm cảm hứng biểu trưng từ thiên nhiên hoặc chữ viết; phác thảo nhiều phương án biểu tượng đơn giản.",
+      "Bước 3: Chọn lọc phương án tối ưu, trau chuốt hình nét kĩ càng, kết hợp kiểu chữ tên thương hiệu.",
+      "Bước 4: Chọn bảng màu chuẩn (tối đa 2–3 màu); ứng dụng thử nghiệm logo lên các vật phẩm (áo thun, sổ tay, huy hiệu)."
+    ],
+    evaluation: "Logo có đơn giản, cô đọng và dễ nhớ không? Biểu tượng có truyền tải được thông điệp của nhóm không? Khi thu nhỏ lại logo có bị mất chi tiết không?",
+    application: "Thiết kế một logo biểu trưng độc đáo cho lớp học hoặc câu lạc bộ ngoại khóa của trường em; mô phỏng logo trên mẫu áo đồng phục lớp.",
+    quiz: [
+      { q: "Hệ thống nhận diện thương hiệu bao gồm những yếu tố thị giác cơ bản nào?", options: ["Chỉ có bảng giá tiền", "Logo, màu sắc nhận diện, kiểu chữ chuẩn và cách ứng dụng đồng bộ", "Chỉ có địa chỉ văn phòng", "Chỉ có hợp đồng kinh doanh"], ans: 1, expl: "Hệ thống nhận diện là tổng hòa của logo, màu sắc, font chữ và các ấn phẩm đồng bộ." },
+      { q: "Tiêu chí quan trọng hàng đầu của một mẫu thiết kế Logo chuyên nghiệp là gì?", options: ["Vẽ càng nhiều chi tiết rườm rà càng tốt", "Đơn giản, cô đọng, dễ nhớ, dễ nhận biết và sử dụng linh hoạt ở nhiều kích thước", "Phải sử dụng đủ 12 màu cầu vồng", "Sao chép nguyên mẫu của thương hiệu khác"], ans: 1, expl: "Tính cô đọng, đơn giản và độc quyền là linh hồn của thiết kế logo." },
+      { q: "Vì sao khi thiết kế logo thường chỉ nên sử dụng từ 2 đến 3 màu sắc chủ đạo?", options: ["Vì thiếu màu vẽ", "Để tạo sự tập trung nhận diện, tránh rối mắt và thuận tiện cho việc in ấn hàng loạt", "Quy định bắt buộc của nhà nước", "Để tiết kiệm giấy vẽ"], ans: 1, expl: "Hạn chế màu sắc giúp tăng khả năng ghi nhớ thị giác và tối ưu chi phí sản xuất." },
+      { q: "Việc đưa logo lên hình ảnh mô phỏng áo thun, cốc sứ, danh thiếp được gọi là gì trong thiết kế?", options: ["Vẽ tranh phong cảnh", "Ứng dụng mockup sản phẩm", "Cắt dán thủ công", "Khắc dấu cao su"], ans: 1, expl: "Mockup là việc áp dụng thiết kế đồ họa lên mô hình sản phẩm thực tế để kiểm tra hiệu quả." }
+    ]
+  },
+  {
+    num: 9,
+    themeNum: 5,
+    themeTitle: "VẺ ĐẸP CỦA NGUYÊN MẪU TRONG THỰC HÀNH, SÁNG TẠO",
+    title: "Tỉ lệ và hình khối của đồ vật",
+    page: "Trang 48–53",
+    objectives: "Hiểu được cấu trúc hình khối cơ bản (cầu, trụ, nón, hộp) trong đồ vật đời sống; nắm vững phương pháp đo tỉ lệ so sánh (que đo, ngắm mắt) và kĩ thuật tạo hình đắp nổi phù điêu bằng đất nặn.",
+    keywords: ["Khối cơ bản (cầu, trụ, hộp)", "Tỉ lệ so sánh", "Phương pháp que đo", "Đắp nổi đất nặn", "Chất cảm bề mặt"],
+    knowledge: [
+      "Mọi đồ vật trong đời sống đều được cấu tạo từ các khối hình học cơ bản hoặc sự kết hợp, biến đổi tinh tế của các khối cầu, trụ, nón, chóp, hộp chữ nhật.",
+      "Tỉ lệ là tương quan kích thước giữa chiều cao, chiều rộng và chiều sâu của đồ vật; giữa các bộ phận với nhau và giữa đồ vật với không gian xung quanh.",
+      "Phương pháp so sánh tỉ lệ bằng que đo: giữ thẳng tay, nheo một mắt, lấy một đoạn chuẩn (ví dụ chiều rộng cổ chai) để so sánh các đoạn kích thước khác.",
+      "Chất cảm bề mặt và sắc độ đậm nhạt: độ nhám, mịn, bóng, sần sùi của đồ vật được diễn tả qua đường nét, chấm màu, mảng tối sáng hoặc các lớp đắp nổi cao thấp."
+    ],
+    process: [
+      "Bước 1: Quan sát mẫu đồ vật tĩnh vật; phân tích cấu trúc khối cơ bản và đo tỉ lệ các bộ phận.",
+      "Bước 2: Phác thảo khung hình chung và khung hình từng bộ phận lên mặt nền phẳng.",
+      "Bước 3: Chuẩn bị đất nặn; nặn thành các khối cơ bản tương ứng rồi đắp nổi lên mặt nền theo tỉ lệ.",
+      "Bước 4: Dùng dụng cụ miết, khắc tỉa chi tiết; tạo chất cảm bề mặt, kiểm tra độ cân đối và hoàn thiện."
+    ],
+    evaluation: "Tỉ lệ giữa các phần của đồ vật có cân đối không? Khối hình có rõ ràng và tạo cảm giác không gian 3 chiều không? Bề mặt đắp nổi có chắc chắn và thẩm mĩ không?",
+    application: "Tạo hình một bức phù điêu đắp nổi tĩnh vật (bình hoa và quả) bằng đất nặn hoặc bột thạch cao gắn trên tấm bìa cứng trang trí phòng học.",
+    quiz: [
+      { q: "Các đồ vật trong đời sống thường được cấu tạo từ những khối hình học cơ bản nào?", options: ["Khối hình sao và hình tim", "Khối cầu, khối trụ, khối nón, khối hộp", "Không có hình khối xác định", "Chỉ có đường thẳng mỏng"], ans: 1, expl: "Cầu, trụ, nón, hộp là các khối cơ bản cấu tạo nên mọi vật thể xung quanh ta." },
+      { q: "Khi dùng phương pháp que đo để ngắm tỉ lệ mẫu vẽ, thao tác kĩ thuật nào sau đây là ĐÚNG?", options: ["Co tay sát mắt", "Duỗi thẳng cánh tay, giữ que đo vuông góc với tầm nhìn và nheo một mắt", "Vừa đi lại vừa đo", "Để que đo nghiêng ngả tự do"], ans: 1, expl: "Cánh tay phải luôn duỗi thẳng cố định để tỉ lệ đo ngắm không bị sai lệch khoảng cách." },
+      { q: "Tương quan kích thước giữa các bộ phận của một đồ vật được gọi là thuật ngữ gì?", options: ["Bố cục", "Tỉ lệ", "Hoà sắc", "Nhịp điệu"], ans: 1, expl: "Tỉ lệ là quan hệ so sánh về kích thước giữa các phần của một vật thể." },
+      { q: "Trong kĩ thuật đắp nổi bằng đất nặn, bộ phận nào cần được xử lí trước?", options: ["Các chi tiết hoa văn nhỏ li ti", "Tạo nền và đắp các mảng khối lớn chính", "Phủ sơn bóng ngay", "Cắt bỏ khung nền"], ans: 1, expl: "Nguyên tắc tạo hình luôn đi từ tổng thể khối lớn đến chi tiết nhỏ." }
+    ]
+  },
+  {
+    num: 10,
+    themeNum: 5,
+    themeTitle: "VẺ ĐẸP CỦA NGUYÊN MẪU TRONG THỰC HÀNH, SÁNG TẠO",
+    title: "Nguyên mẫu trong tác phẩm điêu khắc",
+    page: "Trang 54–59",
+    objectives: "Hiểu được khái niệm 'nguyên mẫu' trong nghệ thuật điêu khắc; phân biệt được hai hình thức điêu khắc: Tượng tròn (quan sát đa chiều 360°) và Phù điêu (đắp nổi trên mặt phẳng); nhận biết các chất liệu điêu khắc truyền thống và hiện đại.",
+    keywords: ["Nguyên mẫu điêu khắc", "Tượng tròn 360°", "Phù điêu (Relief)", "Chất liệu điêu khắc (gỗ, đá, đồng, gốm)", "Không gian ba chiều"],
+    knowledge: [
+      "Nguyên mẫu trong điêu khắc là sự vật, con người hoặc hiện tượng trong đời sống được nghệ sĩ quan sát, chắt lọc để sáng tạo nên hình tượng nghệ thuật không gian.",
+      "Ngôn ngữ đặc trưng của điêu khắc là khối ba chiều (chiều cao, chiều rộng và chiều sâu thực tế) cùng sự tương tác với ánh sáng và không gian xung quanh.",
+      "Hai hình thức thể hiện cơ bản: (1) Tượng tròn - tác phẩm đứng độc lập trong không gian, có thể ngắm nhìn trọn vẹn từ 360 độ quanh tượng; (2) Phù điêu - hình khối được đắp nổi hoặc khoét lõm trên một mặt nền phẳng hoặc cong.",
+      "Chất liệu điêu khắc phong phú: đá tự nhiên, gỗ lũa, đồng đúc, gốm đất nung, thạch cao, xi măng, kim loại hàn; mỗi chất liệu mang lại biểu cảm bề mặt và ngôn ngữ riêng biệt."
+    ],
+    process: [
+      "Bước 1: Chọn một nguyên mẫu trong đời sống (con vật nuôi, tĩnh vật hoa quả hoặc chân dung người).",
+      "Bước 2: Phân tích cấu trúc khối chính và phác thảo các hướng nhìn (nhìn thẳng, nhìn nghiêng).",
+      "Bước 3: Chuẩn bị vật liệu (đất nặn, xốp cứng, thạch cao...); đắp hoặc gọt khối tổng thể từ lớn đến nhỏ.",
+      "Bước 4: Chỉnh sửa các đường nét biểu cảm, hoàn thiện chất cảm bề mặt và đặt tác phẩm vào không gian ánh sáng thích hợp."
+    ],
+    evaluation: "Tác phẩm có giữ được nét đặc trưng của nguyên mẫu không? Khối tròn hoặc độ nổi phù điêu có chắc khỏe không? Không gian ba chiều có được biểu đạt rõ ràng không?",
+    application: "Tạo hình một con vật quen thuộc (mèo, chó, chim...) bằng đất nặn theo dạng tượng tròn và quan sát bóng đổ của tác phẩm dưới ánh sáng tự nhiên.",
+    quiz: [
+      { q: "Điểm khác biệt cơ bản nhất giữa Tượng tròn và Phù điêu trong nghệ thuật điêu khắc là gì?", options: ["Tượng tròn vẽ bằng chì, phù điêu vẽ bằng màu", "Tượng tròn đứng độc lập quan sát được từ nhiều phía 360°, phù điêu gắn liền với mặt nền phẳng", "Tượng tròn luôn nhỏ hơn phù điêu", "Phù điêu không dùng được đất sét"], ans: 1, expl: "Tượng tròn chiếm lĩnh không gian 3 chiều độc lập, còn phù điêu luôn có mặt phẳng nền tựa." },
+      { q: "Nguyên mẫu trong tác phẩm điêu khắc được hiểu là gì?", options: ["Khuôn đúc bằng silicon", "Sự vật, con người ngoài đời thực được chọn làm căn cứ để sáng tạo hình tượng", "Bản vẽ thiết kế nhà", "Tên của người mua tượng"], ans: 1, expl: "Nguyên mẫu là hình tượng thực tế truyền cảm hứng và dữ liệu cho tác phẩm." },
+      { q: "Ngôn ngữ tạo hình chủ yếu của nghệ thuật điêu khắc là gì?", options: ["Ngôn ngữ chữ viết", "Ngôn ngữ hình khối 3 chiều, đường nét và sự tương tác với không gian ánh sáng", "Âm thanh giai điệu", "Ngôn ngữ kí hiệu"], ans: 1, expl: "Điêu khắc biểu đạt thông qua hình khối ba chiều thực trong không gian vật lí." },
+      { q: "Chất liệu nào sau đây là chất liệu điêu khắc truyền thống lâu đời của người Việt?", options: ["Nhựa composite", "Đá sa thạch, gỗ mít, đồng đúc, gốm đất nung", "Bọt xốp EPS", "Mút xốp eva"], ans: 1, expl: "Đá, gỗ, đồng và đất nung là các chất liệu điêu khắc cổ truyền tuyệt mĩ của cha ông." }
+    ]
+  },
+  {
+    num: 11,
+    themeNum: 6,
+    themeTitle: "NGHỆ THUẬT MÚA RỐI",
+    title: "Vẻ đẹp tạo hình con rối",
+    page: "Trang 60–65",
+    objectives: "Hiểu được đặc trưng tạo hình và biểu diễn của nghệ thuật múa rối sân khấu; phân biệt được các loại hình con rối (rối que, rối bóng, rối tay); thực hành chế tác con rối que hoặc rối bóng theo kịch bản ngắn.",
+    keywords: ["Múa rối sân khấu", "Rối que (Rod puppet)", "Rối bóng (Shadow puppet)", "Rối ngón tay", "Kịch bản và khớp động"],
+    knowledge: [
+      "Múa rối là nghệ thuật sân khấu dân gian độc đáo kết hợp giữa tạo hình mĩ thuật, nghệ thuật biểu diễn, âm thanh, ánh sáng và lời thoại.",
+      "Tạo hình con rối mang tính cách điệu cao, cường điệu hoá nét mặt, vóc dáng và trang phục để người xem ở xa nhận biết rõ tính cách nhân vật (hiền lành, hung dữ, hài hước).",
+      "Rối que: nhân vật có thân gắn que chính để nâng đỡ và các que phụ nối vào tay chân để điều khiển cử động linh hoạt trước phông màn sân khấu.",
+      "Rối bóng: nhân vật được cắt phẳng từ da hoặc bìa cứng mỏng, đục lỗ hoa văn trang trí; khi biểu diễn, nghệ nhân áp sát rối vào màn vải mờ có nguồn sáng chiếu từ phía sau để tạo bóng chuyển động huyền ảo."
+    ],
+    process: [
+      "Bước 1: Lên ý tưởng kịch bản chuyện kể ngắn và phân vai nhân vật.",
+      "Bước 2: Vẽ phác tạo hình nhân vật cách điệu; chia các bộ phận có thể cử động (đầu, cánh tay, cẳng chân).",
+      "Bước 3: Cắt rời các bộ phận từ bìa cứng; gắn chốt khớp động (đinh tán xỏ dù) và gắn que tre/que gỗ điều khiển.",
+      "Bước 4: Vẽ trang trí màu sắc rực rỡ; dựng phông màn/nguồn sáng và tập dượt điều khiển cử động rối."
+    ],
+    evaluation: "Con rối có toát lên tính cách nhân vật không? Các khớp nối cử động có trơn tru không? Que điều khiển có chắc chắn và thuận tiện cho tay cầm không?",
+    application: "Tập hợp nhóm bạn cùng lớp, chế tác các con rối que và biểu diễn một tiểu phẩm kịch rối ngắn về chủ đề học đường hoặc bảo vệ môi trường.",
+    quiz: [
+      { q: "Nét đặc trưng nổi bật nhất trong tạo hình con rối sân khấu là gì?", options: ["Phải vẽ thật tỉ mỉ giống hệt ảnh chụp", "Cách điệu hoá, cường điệu các nét biểu cảm và màu sắc để nêu bật tính cách nhân vật", "Chỉ sơn màu xám tro", "Không được có mắt mũi"], ans: 1, expl: "Cường điệu và cách điệu giúp con rối dễ truyền cảm xúc trên sân khấu." },
+      { q: "Trong biểu diễn múa rối bóng, yếu tố nào đóng vai trò then chốt để tạo nên hình ảnh trên màn chiếu?", options: ["Sơn dạ quang phát sáng", "Nguồn ánh sáng chiếu từ phía sau ép bóng nhân vật phẳng lên màn vải mờ", "Máy chiếu phim laser", "Khói màu sân khấu"], ans: 1, expl: "Rối bóng hoạt động dựa trên nguyên lí chiếu sáng hắt bóng qua màn chắn mờ." },
+      { q: "Để con rối que có thể cử động được tay hoặc chân, người chế tác cần làm gì?", options: ["Dán keo dính chặt cố định hoàn toàn", "Cắt rời các chi và liên kết bằng chốt khớp động xoay linh hoạt", "Dùng dây xích sắt to", "Khoét rỗng bên trong"], ans: 1, expl: "Chốt khớp động giúp các chi gập duỗi tự nhiên theo điều khiển của que phụ." },
+      { q: "Vật liệu nào sau đây dễ kiếm và rất thích hợp để học sinh tự làm rối que sân khấu?", options: ["Bìa carton cứng, que tre, đinh tán giấy, màu vẽ", "Thỏi chì nguyên chất", "Kính cường lực", "Bê tông cốt thép"], ans: 0, expl: "Bìa cứng và que tre là vật liệu nhẹ, an toàn và dễ gia công cho học sinh." }
+    ]
+  },
+  {
+    num: 12,
+    themeNum: 6,
+    themeTitle: "NGHỆ THUẬT MÚA RỐI",
+    title: "Tạo hình nhân vật múa rối nước",
+    page: "Trang 66–71",
+    objectives: "Nhận biết giá trị di sản văn hoá phi vật thể đặc sắc của nghệ thuật Múa rối nước Việt Nam; nắm vững cấu trúc nhân vật rối nước (thân nổi, sào dây ngầm) và tạo hình mô hình nhân vật Chú Tễu.",
+    keywords: ["Múa rối nước Việt Nam", "Thuỷ đình sân khấu nước", "Hình tượng Chú Tễu", "Gỗ sung truyền thống", "Cơ cấu sào dây ngầm"],
+    knowledge: [
+      "Múa rối nước là loại hình nghệ thuật sân khấu dân gian độc nhất vô nhị trên thế giới, sinh ra từ nền văn minh lúa nước sông Hồng.",
+      "Sân khấu biểu diễn là mặt nước của ao làng hoặc bể nước tại 'Thuỷ đình'; nghệ nhân lội sau rèm mành buồng trò để điều khiển rối thông qua hệ thống sào, dây và bàn máy ngầm dưới nước.",
+      "Chất liệu làm rối nước truyền thống thường là gỗ cây sung (nhẹ, nổi tốt trên mặt nước, bền chắc, ít nứt nẻ); bề mặt được sơn son thếp vàng, phủ lớp sơn ta chống ngấm nước.",
+      "Hình tượng nhân vật tiêu biểu nhất là Chú Tễu: thân hình tròn trĩnh, nụ cười hóm hỉnh cởi mở, đóng khố, cởi trần, giữ vai trò người mở màn dẫn chuyện, châm biếm sâu cay và tràn đầy tinh thần lạc quan yêu đời."
+    ],
+    process: [
+      "Bước 1: Tìm hiểu tích trò rối nước và chọn nhân vật điển hình (Chú Tễu, Tiên nữ, Rồng phun nước, Em bé chăn trâu).",
+      "Bước 2: Phác thảo dáng vẻ nhân vật cách điệu ngộ nghĩnh trên giấy bìa hoặc tấm xốp mỏng.",
+      "Bước 3: Cắt tạo hình các bộ phận, vẽ màu nước hoặc màu acrylic rực rỡ (đỏ, vàng, hồng, xanh).",
+      "Bước 4: Gắn đế nổi hoặc que sào điều khiển; dựng mô hình thuỷ đình mini từ hộp giấy để trình diễn thử nghiệm."
+    ],
+    evaluation: "Nhân vật rối nước có giữ được nét hóm hỉnh, mộc mạc dân gian không? Màu sắc có tươi tắn, rực rỡ đặc trưng không? Mô hình có đứng vững hoặc nổi được trên mặt phẳng không?",
+    application: "Tự tạo một mô hình sân khấu thuỷ đình mini bằng bìa carton và biểu diễn nhân vật chú Tễu kể chuyện chào mừng ngày hội trường.",
+    quiz: [
+      { q: "Nghệ thuật múa rối nước truyền thống của Việt Nam gắn liền với cái nôi văn hoá nào?", options: ["Văn hoá du mục thảo nguyên", "Văn minh nông nghiệp lúa nước đồng bằng sông Hồng", "Văn hoá sa mạc cát", "Văn hoá băng tuyết Bắc cực"], ans: 1, expl: "Múa rối nước ra đời gắn liền với đời sống làng quê và mùa lũ sông ngòi Bắc Bộ." },
+      { q: "Sân khấu đặc biệt dùng để biểu diễn múa rối nước được gọi là gì?", options: ["Sàn diễn xiếc", "Thuỷ đình (nhà rối trên mặt nước)", "Sân khấu hộp kín", "Sàn đấu võ đài"], ans: 1, expl: "Thủy đình là công trình kiến trúc mái đình truyền thống dựng trên mặt nước ao hồ." },
+      { q: "Nhân vật dẫn chuyện tiêu biểu, hóm hỉnh và nổi tiếng nhất trong múa rối nước là ai?", options: ["Thạch Sanh", "Chú Tễu", "Cuội ngồi gốc cây", "Tấm Cám"], ans: 1, expl: "Chú Tễu là linh hồn, người mở cờ khai hội dẫn dắt mọi tích trò rối nước." },
+      { q: "Vì sao gỗ cây sung lại được các nghệ nhân xưa ưa chuộng để đục đẽo con rối nước?", options: ["Vì gỗ sung rất nặng chìm đáy ao", "Vì gỗ sung xốp, nhẹ, nổi tốt trên mặt nước và bền bỉ khi ngâm nước", "Vì gỗ sung có mùi thơm hoa lài", "Vì gỗ sung trong suốt"], ans: 1, expl: "Gỗ sung nhẹ xốp, sức nổi lớn và chịu ngâm nước rất tốt không bị nứt vỡ." }
+    ]
+  },
+  {
+    num: 13,
+    themeNum: 7,
+    themeTitle: "MĨ THUẬT ĐƯƠNG ĐẠI VIỆT NAM",
+    title: "Khuynh hướng sáng tác mĩ thuật",
+    page: "Trang 72–77",
+    objectives: "Nắm bắt các khuynh hướng sáng tạo nổi bật của mĩ thuật đương đại Việt Nam; hiểu cách kết hợp tinh hoa truyền thống với ngôn ngữ biểu đạt hiện đại; sáng tác tác phẩm thể hiện góc nhìn cá nhân về cuộc sống hôm nay.",
+    keywords: ["Mĩ thuật đương đại Việt Nam", "Khuynh hướng kết hợp truyền thống - hiện đại", "Chất liệu mới thử nghiệm", "Đề tài bình dị đời thường", "Bản sắc văn hoá"],
+    knowledge: [
+      "Mĩ thuật đương đại Việt Nam từ thời kì Đổi mới đến nay phát triển vô cùng năng động, giao lưu quốc tế sâu rộng nhưng luôn nỗ lực gìn giữ cốt cách bản sắc dân tộc.",
+      "Ba khuynh hướng sáng tác chính: (1) Kết hợp chất liệu/đề tài truyền thống (sơn mài, lụa, hoạ tiết trống đồng, hoa sen) với ngôn ngữ tạo hình trừu tượng, lập thể hiện đại; (2) Tìm tòi thử nghiệm hình thức và vật liệu mới (sắp đặt, đa chất liệu mixed-media, nghệ thuật ý niệm); (3) Quan tâm sâu sắc đến những điều bình dị, nhịp sống thường nhật của con người và phố phường đô thị hoá.",
+      "Khuynh hướng sáng tác không phải công thức cứng nhắc mà là con đường tự do lựa chọn của mỗi nghệ sĩ để bày tỏ cảm xúc và góc nhìn nhân sinh."
+    ],
+    process: [
+      "Bước 1: Lựa chọn một khuynh hướng sáng tạo yêu thích (kết hợp truyền thống - hiện đại hoặc đề tài bình dị).",
+      "Bước 2: Tìm ý tưởng, phác thảo bố cục đường nét trên giấy vẽ.",
+      "Bước 3: Lựa chọn chất liệu (màu bột, màu acrylic kết hợp dán chất liệu giấy điệp, vải gai, vỏ cây...).",
+      "Bước 4: Hoàn thiện màu sắc, thể hiện chiều sâu không gian và viết lời tự sự giới thiệu ý niệm tác phẩm."
+    ],
+    evaluation: "Tác phẩm có thể hiện được sự giao thoa hài hòa giữa bản sắc truyền thống và nét mới hiện đại không? Chất liệu sử dụng có sáng tạo và hỗ trợ biểu đạt nội dung không?",
+    application: "Sáng tác một bức tranh với chủ đề 'Kí ức phố cổ trong dòng chảy hiện đại' bằng chất liệu màu acrylic kết hợp giấy báo cũ dán collage.",
+    quiz: [
+      { q: "Một trong những khuynh hướng sáng tác tiêu biểu của mĩ thuật đương đại Việt Nam là gì?", options: ["Sao chép nguyên bản tranh thời Phục hưng", "Kết hợp chất liệu, đề tài truyền thống dân tộc với ngôn ngữ tạo hình hiện đại", "Chỉ vẽ tranh cổ động", "Không dùng màu sắc"], ans: 1, expl: "Giao thoa giữa bản sắc dân tộc và ngôn ngữ quốc tế hiện đại là xu thế chủ đạo." },
+      { q: "Chất liệu 'Mixed-media' trong mĩ thuật đương đại được hiểu như thế nào?", options: ["Chỉ vẽ bằng một cây bút bi", "Nghệ thuật kết hợp đa chất liệu (màu vẽ kết hợp giấy báo, vải, gỗ, kim loại...)", "Tranh in vi tính 100%", "Chỉ dùng mực tàu đen"], ans: 1, expl: "Mixed-media mở rộng biên giới tạo hình bằng cách kết hợp phong phú nhiều vật liệu." },
+      { q: "Khuynh hướng 'Quan tâm đến điều bình dị của cuộc sống' thường khai thác hình ảnh nào?", options: ["Các cuộc chiến không gian viễn tưởng", "Gánh hàng rong, góc phố nhỏ, sinh hoạt đời thường mộc mạc của người dân", "Lâu đài cổ tích phương Tây", "Sinh vật ngoài hành tinh"], ans: 1, expl: "Vẻ đẹp của những điều giản dị quanh ta mang lại rung cảm chân thật sâu lắng." },
+      { q: "Mục đích lớn nhất của các nghệ sĩ đương đại Việt Nam khi tìm tòi hình thức mới là gì?", options: ["Để gây sốc vô nghĩa", "Truyền tải những thông điệp nhân văn về con người, môi trường và thời đại hôm nay", "Để tăng giá tiền tranh", "Bỏ qua mọi giá trị thẩm mĩ"], ans: 1, expl: "Nghệ thuật đích thực luôn hướng tới giá trị nhân văn và thức tỉnh trách nhiệm xã hội." }
+    ]
+  },
+  {
+    num: 14,
+    themeNum: 7,
+    themeTitle: "MĨ THUẬT ĐƯƠNG ĐẠI VIỆT NAM",
+    title: "Thiết kế sản phẩm đồ gia dụng từ vật liệu đã qua sử dụng",
+    page: "Trang 78–83",
+    objectives: "Nắm vững nguyên tắc thiết kế đồ gia dụng thông minh: công năng tiện dụng, kiểu dáng thẩm mĩ, kết cấu bền vững; có ý thức bảo vệ môi trường thông qua việc tái chế vật liệu phế thải thành vật dụng hữu ích.",
+    keywords: ["Đồ gia dụng tái chế", "Thiết kế bền vững (Upcycling)", "Công năng tiện lợi", "Thẩm mĩ tối giản", "Trách nhiệm môi trường"],
+    knowledge: [
+      "Thiết kế đồ gia dụng tái chế (Upcycling) biến những vật liệu tưởng như bỏ đi (vỏ chai nhựa, lốp xe cũ, hộp thiếc, thìa gỗ, bìa cứng) thành những sản phẩm mới có giá trị sử dụng và thẩm mĩ cao hơn.",
+      "Sản phẩm gia dụng cần kết hợp 4 tiêu chí: (1) Công năng tiện dụng; (2) Kiểu dáng đẹp mắt, hài hoà không gian nội thất; (3) Kết cấu chắc chắn, chịu lực tốt; (4) Tuyệt đối an toàn cho sức khỏe người sử dụng.",
+      "Phong cách thiết kế đương đại chuộng đường nét tối giản, tinh tế, hạn chế các chi tiết trang trí rườm rà không cần thiết.",
+      "Ý thức an toàn lao động và bảo vệ môi trường: làm sạch kĩ vật liệu, khử khuẩn, bo tròn góc cạnh, không dùng các bình chứa hoá chất độc hại."
+    ],
+    process: [
+      "Bước 1: Khảo sát nhu cầu sử dụng trong gia đình (hộp đựng bút, chao đèn ngủ, chậu hoa ban công, khay đựng đồ...).",
+      "Bước 2: Phác thảo kiểu dáng 3 chiều, đo đạc kích thước và tính toán cách ghép nối vật liệu.",
+      "Bước 3: Thu gom, làm sạch vật liệu tái chế; dùng kéo, kìm, keo nến, khoan mini để gia công định hình sản phẩm.",
+      "Bước 4: Sơn phủ trang trí bảo vệ bề mặt; thử nghiệm độ bền, khả năng chịu lực và hoàn thiện công năng."
+    ],
+    evaluation: "Sản phẩm có dùng được đúng công năng thiết kế không? Kiểu dáng có thẩm mĩ và gọn gàng không? Mối ghép có chắc chắn và an toàn không gây xước tay khi sử dụng?",
+    application: "Tái chế các chai nhựa hoặc lon thiếc thành bộ chậu cây mini để bàn hoặc ống đựng đồ dùng học tập độc đáo tặng người thân.",
+    quiz: [
+      { q: "Khái niệm 'Upcycling' trong thiết kế đồ gia dụng tái chế được hiểu là gì?", options: ["Vứt rác ra bãi phế liệu", "Biến vật liệu phế thải thành sản phẩm mới có chất lượng, công năng và giá trị thẩm mĩ cao hơn", "Đốt rác tạo khói", "Chôn lấp rác dưới đất"], ans: 1, expl: "Upcycling là tái chế nâng cấp giá trị sử dụng và tính thẩm mĩ của vật liệu bỏ đi." },
+      { q: "Nguyên tắc thiết kế nào sau đây là quan trọng hàng đầu đối với đồ gia dụng?", options: ["Chỉ đẹp không cần dùng được", "Phải đảm bảo công năng sử dụng thuận tiện, bền chắc và an toàn cho người dùng", "Càng nặng càng tốt", "Phải dùng vật liệu đắt tiền nhất"], ans: 1, expl: "Đồ gia dụng sinh ra trước hết để phục vụ nhu cầu đời sống, do đó công năng là số 1." },
+      { q: "Yêu cầu an toàn nào bắt buộc phải tuân thủ khi thu gom vật liệu tái chế để làm đồ gia dụng?", options: ["Dùng ngay không cần rửa", "Phải vệ sinh làm sạch, khử khuẩn và tuyệt đối không dùng bình từng chứa hoá chất độc hại", "Chọn vật liệu dễ vỡ sắc nhọn", "Để nguyên cạnh rỉ sét"], ans: 1, expl: "An toàn vệ sinh và sức khỏe người dùng là quy tắc bắt buộc." },
+      { q: "Xu hướng thẩm mĩ trong thiết kế đồ gia dụng đương đại hiện nay là gì?", options: ["Đắp thật nhiều chi tiết rườm rà", "Tối giản (Minimalism), thanh thoát, tiện lợi và thân thiện với môi trường xanh", "Sơn sặc sỡ hoa văn lòe loẹt", "Bắt chước đồ thời cổ đại"], ans: 1, expl: "Thiết kế tối giản và bền vững đang là xu thế dẫn đầu của thiết kế thế giới." }
+    ]
+  },
+  {
+    num: 15,
+    themeNum: 8,
+    themeTitle: "HƯỚNG NGHIỆP",
+    title: "Ngành, nghề liên quan đến mĩ thuật ứng dụng",
+    page: "Trang 84–89",
+    objectives: "Nhận biết bức tranh toàn cảnh về các ngành nghề phong phú của mĩ thuật ứng dụng trong xã hội hiện đại; tìm hiểu yêu cầu năng lực, công cụ làm việc và cơ hội phát triển nghề nghiệp; định hướng sở thích cá nhân.",
+    keywords: ["Mĩ thuật ứng dụng", "Thiết kế đồ hoạ (Graphic Design)", "Thiết kế UI/UX", "Thiết kế thời trang", "Kiến trúc & Nội thất"],
+    knowledge: [
+      "Mĩ thuật ứng dụng (Applied Arts) là lĩnh vực kết nối nghệ thuật tạo hình với sản xuất công nghiệp và đời sống, tạo ra các sản phẩm vừa có giá trị thẩm mĩ cao vừa có công năng sử dụng hữu ích.",
+      "Các nhóm ngành nghề chính: (1) Thiết kế đồ hoạ & Truyền thông thị giác (nhận diện thương hiệu, bao bì, quảng cáo, typography); (2) Thiết kế giao diện & Trải nghiệm người dùng (UI/UX Design, website, mobile app, game); (3) Thiết kế thời trang & Phụ kiện; (4) Thiết kế công nghiệp & Sản phẩm (xe cộ, đồ gia dụng, thiết bị số); (5) Thiết kế kiến trúc & Nội thất; (6) Mĩ thuật đa phương tiện, Hoạt hình 3D & Kĩ xảo điện ảnh.",
+      "Năng lực cần thiết: tư duy thị giác sáng tạo, khiếu thẩm mĩ, khả năng sử dụng phần mềm đồ hoạ chuyên nghiệp, kĩ năng giao tiếp và làm việc nhóm.",
+      "Mĩ thuật ứng dụng mở ra cơ hội việc làm rộng mở, thu nhập hấp dẫn và đóng góp trực tiếp vào nền kinh tế sáng tạo của quốc gia."
+    ],
+    process: [
+      "Bước 1: Khảo sát và lựa chọn một ngành nghề mĩ thuật ứng dụng mà bản thân cảm thấy say mê nhất.",
+      "Bước 2: Tìm hiểu thông tin: sản phẩm đặc trưng, công cụ phần mềm làm việc, các trường đại học/cao đẳng đào tạo.",
+      "Bước 3: Thu thập hình ảnh sản phẩm tiêu biểu của ngành nghề đó và lập sơ đồ tư duy hướng nghiệp.",
+      "Bước 4: Viết bài chia sẻ hoặc thuyết trình ngắn nêu rõ lí do ngành nghề đó phù hợp với tố chất của bản thân."
+    ],
+    evaluation: "Bài tìm hiểu nghề nghiệp có đầy đủ thông tin thực tế không? Sơ đồ giới thiệu có trực quan, khoa học không? Sự liên hệ với năng lực cá nhân có thực tế và thuyết phục không?",
+    application: "Lập một bản kế hoạch học tập cá nhân (học vẽ căn bản, học phần mềm Photoshop/Illustrator, rèn luyện tiếng Anh) để chuẩn bị hành trang theo đuổi ngành thiết kế đồ hoạ hoặc kiến trúc.",
+    quiz: [
+      { q: "Lĩnh vực mĩ thuật nào chuyên sáng tạo các sản phẩm kết hợp giữa vẻ đẹp nghệ thuật với công năng phục vụ đời sống xã hội?", options: ["Mĩ thuật ứng dụng (Applied Arts)", "Mĩ thuật thuần túy chỉ treo bảo tàng", "Nhiếp ảnh tài liệu", "Khảo cổ học"], ans: 0, expl: "Mĩ thuật ứng dụng đưa cái đẹp vào từng sản phẩm hàng ngày của con người." },
+      { q: "Ngành thiết kế UI/UX trong thời đại số có nhiệm vụ chính là gì?", options: ["May đo quần áo dạ hội", "Thiết kế giao diện đẹp mắt và tối ưu hoá trải nghiệm người dùng trên website, ứng dụng điện thoại", "Vẽ tranh tường khổ lớn", "Đúc tượng đài đá"], ans: 1, expl: "UI/UX chuyên sâu về thiết kế giao diện và trải nghiệm tương tác trên các thiết bị số." },
+      { q: "Một nhà thiết kế thời trang cần có những tố chất quan trọng nào?", options: ["Chỉ cần biết may vá cơ bản", "Khả năng nhạy bén với xu hướng màu sắc, sáng tạo kiểu dáng, hiểu biết chất liệu vải và tư duy thẩm mĩ", "Chỉ cần biết tính toán giá tiền", "Không cần quan sát cuộc sống"], ans: 1, expl: "Nhà thiết kế thời trang là người định hình xu hướng phong cách bằng thẩm mĩ tinh tế." },
+      { q: "Các phần mềm công nghệ đồ họa nào đang được sử dụng phổ biến trong các nghề mĩ thuật ứng dụng hiện nay?", options: ["Word và Excel", "Photoshop, Illustrator, Figma, Blender, AutoCAD", "Phần mềm diệt virus", "Trình duyệt web"], ans: 1, expl: "Bộ công cụ đồ họa Adobe, Figma, AutoCAD, Blender là vũ khí tác nghiệp hàng ngày của Designer." }
+    ]
+  },
+  {
+    num: 16,
+    themeNum: 8,
+    themeTitle: "HƯỚNG NGHIỆP",
+    title: "Đặc trưng của ngành, nghề liên quan đến mĩ thuật ứng dụng",
+    page: "Trang 90–95",
+    objectives: "Phân tích được 4 yếu tố đặc trưng cốt lõi của ngành thiết kế ứng dụng: Thẩm mĩ • Công năng & Nhu cầu • Công nghệ & Sản xuất hàng loạt • Thị trường & Chi phí; tự đánh giá sự phù hợp của bản thân với nghề.",
+    keywords: ["4 đặc trưng thiết kế", "Sản xuất hàng loạt", "Nghiên cứu thị trường", "Cân bằng chi phí", "Tố chất nhà thiết kế"],
+    knowledge: [
+      "Khác với hội họa tự do bộc lộ cảm xúc cá nhân, mĩ thuật ứng dụng đòi hỏi sự cân bằng hài hòa giữa 4 yếu tố trụ cột:",
+      "1. Yếu tố Thẩm mĩ: kiểu dáng, tỉ lệ, màu sắc, hoạ tiết tạo nên vẻ đẹp cuốn hút và dấu ấn bản sắc nhận diện thương hiệu.",
+      "2. Yếu tố Nhu cầu và Công năng: thiết kế phải giải quyết bài toán thực tế của người dùng, mang lại sự tiện nghi, an toàn, bền bỉ và dễ thao tác.",
+      "3. Yếu tố Công nghệ và Sản xuất: thiết kế phải khả thi về mặt kĩ thuật để đưa vào dây chuyền sản xuất hàng loạt, tiêu chuẩn hóa chi tiết và tối ưu hóa thời gian gia công.",
+      "4. Yếu tố Thị trường và Kinh tế: sản phẩm phải phù hợp thị hiếu khách hàng mục tiêu, có sức cạnh tranh về giá thành và đem lại hiệu quả kinh tế cho doanh nghiệp.",
+      "Nhà thiết kế chuyên nghiệp là người dung hòa được tính nghệ sĩ bay bổng với tư duy kĩ thuật logic và trách nhiệm xã hội."
+    ],
+    process: [
+      "Bước 1: Chọn một sản phẩm ứng dụng cụ thể (chiếc mũ bảo hiểm, đôi giày thể thao, chai nước ngọt, bàn ghế học sinh).",
+      "Bước 2: Lập bảng phân tích sản phẩm dựa trên 4 đặc trưng: Thẩm mĩ, Công năng, Công nghệ sản xuất và Giá thành thị trường.",
+      "Bước 3: Đề xuất một giải pháp cải tiến sáng tạo cho sản phẩm đó (ví dụ: làm nhẹ hơn, dùng vật liệu tái sinh, thêm công năng gấp gọn).",
+      "Bước 4: Vẽ bản vẽ phác thảo phương án cải tiến và thuyết minh bảo vệ ý tưởng trước tập thể lớp."
+    ],
+    evaluation: "Bản phân tích có chỉ rõ được mối quan hệ giữa 4 yếu tố đặc trưng không? Giải pháp cải tiến có mang tính khả thi và thẩm mĩ không? Tư duy phản biện có sắc sảo không?",
+    application: "Tự viết một bài luận ngắn (khoảng 300 từ) tự đánh giá điểm mạnh, điểm yếu và sở thích của bản thân đối với các ngành nghề mĩ thuật ứng dụng trong tương lai.",
+    quiz: [
+      { q: "Bốn yếu tố đặc trưng cốt lõi chi phối một sản phẩm mĩ thuật ứng dụng bao gồm những gì?", options: ["Chỉ có vẽ đẹp và bán đắt", "Thẩm mĩ • Công năng & Nhu cầu • Công nghệ & Sản xuất • Thị trường & Kinh tế", "Chỉ có kích thước và trọng lượng", "Chỉ có màu sơn và tem mác"], ans: 1, expl: "4 trụ cột này quyết định sự thành bại và sức sống của sản phẩm trên thị trường." },
+      { q: "Nếu một sản phẩm thiết kế có kiểu dáng rất đẹp nhưng không sử dụng được hoặc gây nguy hiểm, sản phẩm đó bị coi là gì?", options: ["Một kiệt tác hoàn hảo", "Một thiết kế thất bại vì không đáp ứng được yếu tố công năng và an toàn", "Sản phẩm công nghệ cao", "Tác phẩm điêu khắc giá trị"], ans: 1, expl: "Trong mĩ thuật ứng dụng, công năng sử dụng là nền tảng sống còn của sản phẩm." },
+      { q: "Yếu tố 'Công nghệ và Sản xuất' đòi hỏi người thiết kế phải tính toán điều gì ngay từ trên bản vẽ?", options: ["Màu mực viết tên mình", "Khả năng sản xuất hàng loạt, tính khả thi về khuôn mẫu và vật liệu gia công", "Đóng dấu bản quyền", "Bỏ qua chi phí máy móc"], ans: 1, expl: "Bản vẽ phải sản xuất được trên dây chuyền công nghiệp với chi phí hợp lí." },
+      { q: "Khác biệt lớn nhất giữa một 'Họa sĩ sáng tác thuần túy' và một 'Nhà thiết kế mĩ thuật ứng dụng' là gì?", options: ["Họa sĩ không biết vẽ", "Họa sĩ tự do bộc lộ cảm xúc cá nhân, còn nhà thiết kế sáng tạo để giải quyết nhu cầu thực tế của người dùng và thị trường", "Nhà thiết kế không cần học vẽ", "Hai nghề hoàn toàn giống hệt nhau"], ans: 1, expl: "Nhà thiết kế luôn bắt đầu từ bài toán nhu cầu của người dùng và xã hội." }
+    ]
+  }
+];
+
+const glossaryTerms = [
+  { term: "Nguyên mẫu", desc: "Vật thể, con người hoặc sự việc ngoài đời thực được quan sát, làm căn cứ gốc để nghệ sĩ sáng tạo, mô phỏng hoặc cách điệu thành tác phẩm." },
+  { term: "Tỉ lệ", desc: "Quan hệ so sánh về kích thước (dài, rộng, cao), số lượng, sắc độ hoặc vị trí không gian giữa các phần của một vật hoặc giữa các vật với nhau." },
+  { term: "Bố cục", desc: "Cách tổ chức, sắp đặt các yếu tố tạo hình (hình mảng, đường nét, màu sắc, khoảng trống) trong một khuôn hình thị giác nhằm làm nổi bật ý đồ sáng tác." },
+  { term: "Hoà sắc", desc: "Mối quan hệ phối hợp giữa các màu sắc trong một tác phẩm, tạo nên cảm giác thống nhất, hài hòa và gợi nên sắc thái cảm xúc thẩm mĩ nhất định." },
+  { term: "Tượng tròn", desc: "Tác phẩm điêu khắc ba chiều độc lập, chiếm lĩnh không gian thực, cho phép người xem có thể chiêm ngưỡng trọn vẹn từ nhiều góc độ 360 độ xung quanh." },
+  { term: "Phù điêu", desc: "Hình thức điêu khắc mà các hình khối được đắp nổi hoặc khoét lõm trực tiếp trên một mặt nền phẳng hoặc cong (gồm phù điêu nổi cao và nổi thấp)." },
+  { term: "Sắp đặt (Installation)", desc: "Hình thức nghệ thuật đương đại tổ chức các vật thể, âm thanh, ánh sáng trong một không gian cụ thể nhằm tạo ra trải nghiệm đa giác quan và truyền tải ý niệm." },
+  { term: "Trình diễn (Performance)", desc: "Hình thức nghệ thuật đương đại lấy hành động sống, thời gian thực và sự hiện diện tương tác của cơ thể nghệ sĩ làm phương tiện biểu đạt chủ đạo." },
+  { term: "Mĩ thuật ứng dụng", desc: "Lĩnh vực nghệ thuật kết hợp yếu tố thẩm mĩ thị giác với công năng thực tế để tạo ra các sản phẩm hữu ích, tiện nghi phục vụ đời sống con người." },
+  { term: "Nhận diện thương hiệu", desc: "Hệ thống các dấu hiệu thị giác chuẩn mực (logo, slogan, màu sắc, font chữ, bao bì) giúp công chúng nhận biết và phân biệt một thương hiệu tổ chức." }
+];
+
+fs.writeFileSync('C:/Users/ADMIN/.gemini/antigravity/scratch/mithuat9_dataset.json', JSON.stringify({ themes, lessonsData, glossaryTerms }, null, 2), 'utf8');
+console.log('Successfully saved mithuat9_dataset.json with 8 themes, 16 lessons, 64 quizzes and 10 glossary terms!');

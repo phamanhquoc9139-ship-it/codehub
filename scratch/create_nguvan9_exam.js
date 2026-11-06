@@ -1,0 +1,272 @@
+const fs = require('fs');
+
+const examQuestions = [
+  {
+    q: "Đặc trưng thể loại nổi bật nhất của 'Truyện truyền kì' thời trung đại là gì?",
+    options: [
+      "Kể chuyện hoàn toàn có thật 100% bằng tiếng Pháp",
+      "Văn xuôi tự sự phản ánh hiện thực đời sống thông qua các yếu tố kì ảo, hoang đường, ma quái hoặc thần tiên",
+      "Chỉ là các bài thơ trữ tình ngắn",
+      "Kịch bản biểu diễn tuồng cổ"
+    ],
+    answer: 1,
+    explain: "Truyện truyền kì dùng yếu tố kì ảo làm phương thức nghệ thuật phản ánh hiện thực, gửi gắm ước mơ công lí và tư tưởng nhân đạo."
+  },
+  {
+    q: "Trong 'Chuyện người con gái Nam Xương', phẩm chất nổi bật nhất của nhân vật Vũ Nương là gì?",
+    options: [
+      "Tài năng võ nghệ phi thường",
+      "Vẻ đẹp toàn diện: thuỳ mị nết na, hiếu thảo với mẹ chồng, thuỷ chung son sắt với chồng và hết lòng vì con",
+      "Sự tham lam giàu sang",
+      "Lòng kiêu hãnh bất cần gia đình"
+    ],
+    answer: 1,
+    explain: "Vũ Nương là hình tượng kết tinh vẻ đẹp truyền thống của phụ nữ Việt Nam: giữ trọn tam tòng tứ đức, hiếu thảo, thuỷ chung nhưng chịu số phận bất hạnh."
+  },
+  {
+    q: "Thể thơ song thất lục bát có nguồn gốc từ đâu?",
+    options: [
+      "Du nhập nguyên vẹn từ văn học Pháp thời kì cận đại",
+      "Là thể thơ thuần túy do người Việt Nam sáng tạo, kết hợp câu bảy tiếng và cặp lục bát",
+      "Bắt nguồn từ thơ cổ Hi Lạp",
+      "Dịch từ thơ haiku Nhật Bản"
+    ],
+    answer: 1,
+    explain: "Song thất lục bát là sáng tạo thi ca độc bản của dân tộc Việt Nam, kết tinh tài tình chất bác học và dân gian để bộc lộ những cung bậc sầu oán."
+  },
+  {
+    q: "Đoạn trích 'Nỗi niềm chinh phụ' (Chinh phụ ngâm) diễn tả tâm trạng gì của người vợ trẻ?",
+    options: [
+      "Niềm hân hoan khi chồng lập chiến công hiển hách",
+      "Nỗi cô đơn quặn thắt, bồn chồn lo âu và khát khao hạnh phúc lứa đôi khi chồng đi lính xa",
+      "Sự thờ ơ, lạnh nhạt trước biến cố gia đình",
+      "Ý chí quyết tâm lên đường tòng quân đánh giặc"
+    ],
+    answer: 1,
+    explain: "Tác phẩm miêu tả chân thực bi kịch nội tâm của người chinh phụ: sống trong cô độc mòn mỏi, ngày đêm ngóng đợi tin chồng giữa chiến tranh phi nghĩa."
+  },
+  {
+    q: "Điểm giống nhau về chữ viết giữa 'Chữ Nôm' và 'Chữ Quốc ngữ' là gì?",
+    options: [
+      "Cùng sử dụng hệ thống chữ cái La-tinh",
+      "Cùng được sáng tạo nhằm mục đích ghi lại âm thanh và tiếng nói của dân tộc Việt Nam",
+      "Cùng do các giáo sĩ phương Tây sáng lập vào thế kỉ XVII",
+      "Cùng có cách viết từ phải sang trái"
+    ],
+    answer: 1,
+    explain: "Cả chữ Nôm và chữ Quốc ngữ đều là văn tự ghi âm tiếng mẹ đẻ Việt Nam, thể hiện ý thức tự cường dân tộc và phát triển văn hoá bản địa."
+  },
+  {
+    q: "Trong đoạn trích 'Kim – Kiều gặp gỡ', câu thơ 'Người quốc sắc, kẻ thiên tài / Tình trong như đã, mặt ngoài còn e' thể hiện điều gì?",
+    options: [
+      "Sự ganh ghét đố kị giữa hai nhân vật",
+      "Sự xứng đôi vừa lứa hoàn hảo và cảm xúc rung động tinh tế của mối tình đầu trong sáng",
+      "Sự giận dỗi không muốn nói chuyện",
+      "Lời từ chối hôn nhân khéo léo"
+    ],
+    answer: 1,
+    explain: "Câu thơ ca ngợi sự tài sắc vẹn toàn 'trai anh hùng, gái thuyền quyên' và tâm trạng xao xuyến, thẹn thùng e ấp của buổi đầu gặp gỡ."
+  },
+  {
+    q: "Quan niệm đạo lí sống cao cả của Lục Vân Tiên được thể hiện qua câu thơ bất hủ nào?",
+    options: [
+      "Vào trong phong nhã ra ngoài hào hoa",
+      "Làm ơn há dễ trông người trả ơn",
+      "Trăm năm trong cõi người ta",
+      "Hoa trôi man mác biết là về đâu"
+    ],
+    answer: 1,
+    explain: "Lục Vân Tiên từ chối trâm vàng trả ơn của Nguyệt Nga bằng câu: 'Làm ơn há dễ trông người trả ơn', tiêu biểu cho đạo lí nghĩa hiệp vô tư của nhân dân Nam Bộ."
+  },
+  {
+    q: "Khi trích dẫn nguyên văn một câu nhận định của tác giả khác vào bài văn nghị luận, quy tắc nào sau đây là BẮT BUỘC?",
+    options: [
+      "Viết hoa tất cả các từ và không cần chú thích",
+      "Đặt phần trích dẫn trong dấu ngoặc kép và ghi rõ nguồn gốc tài liệu tham khảo",
+      "Tự do thay đổi các từ ngữ bên trong dấu ngoặc kép",
+      "Dịch câu đó sang tiếng Anh"
+    ],
+    answer: 1,
+    explain: "Trích dẫn trực tiếp bắt buộc phải đặt trong dấu ngoặc kép và chú thích nguồn rõ ràng để tôn trọng quyền tác giả và bảo đảm tính trung thực khoa học."
+  },
+  {
+    q: "Đặc trưng cốt lõi của xung đột trong thể loại Bi kịch (Tragedy) là gì?",
+    options: [
+      "Xung đột nhẹ nhàng có thể dễ dàng giải quyết qua một cuộc trò chuyện ngắn",
+      "Xung đột kịch liệt không thể dung hoà giữa khát vọng cao đẹp của con người với hoàn cảnh hoặc định kiến tàn bạo",
+      "Xung đột chỉ xoay quanh tranh cãi tiền bạc nhỏ nhặt",
+      "Không hề có xung đột nào"
+    ],
+    answer: 1,
+    explain: "Xung đột bi kịch là sự va đập gay gắt, bế tắc giữa cái cao cả, khát vọng tự do với thế lực hắc ám, dẫn đến kết cục bi thương nhưng làm thức tỉnh lương tri."
+  },
+  {
+    q: "Câu văn: 'Mưa.' hoặc 'Sấm.' trong văn cảnh miêu tả cơn dông là loại câu gì?",
+    options: [
+      "Câu ghép đẳng lập",
+      "Câu rút gọn",
+      "Câu đặc biệt (thông báo sự tồn tại của sự vật, hiện tượng)",
+      "Câu cảm thán"
+    ],
+    answer: 2,
+    explain: "Đây là câu đặc biệt: câu không có cấu tạo theo mô hình C-V và không thể khôi phục C-V, dùng để thông báo sự xuất hiện của hiện tượng tự nhiên."
+  },
+  {
+    q: "Trong truyện 'Ba chàng sinh viên' của Arthur Conan Doyle, phương pháp điều tra nào là vũ khí sắc bén nhất của Sherlock Holmes?",
+    options: [
+      "Bắt giam tra khảo bạo lực",
+      "Quan sát tỉ mỉ dấu vết vi mô kết hợp suy luận logic loại trừ khoa học",
+      "Cầu xin sự giúp đỡ của thần linh",
+      "Chờ đợi thủ phạm tự thú mà không làm gì"
+    ],
+    answer: 1,
+    explain: "Sherlock Holmes nổi tiếng với phương pháp suy luận quy nạp và diễn dịch từ các chi tiết vụn vặt (vụn than chì, đất sét hố nhảy) để tìm ra sự thật."
+  },
+  {
+    q: "Câu: 'Nếu ngày mai trời không mưa thì lớp chúng ta sẽ đi tham quan bảo tàng.' có quan hệ ngữ nghĩa gì giữa hai vế câu ghép?",
+    options: [
+      "Quan hệ tương phản",
+      "Quan hệ điều kiện (giả thiết) – kết quả",
+      "Quan hệ tăng tiến",
+      "Quan hệ tiếp nối"
+    ],
+    answer: 1,
+    explain: "Cặp quan hệ từ 'Nếu... thì...' biểu thị mối quan hệ điều kiện (giả thiết) dẫn đến kết quả."
+  },
+  {
+    q: "Nhà thơ Lưu Quang Vũ đã ví vẻ đẹp của tiếng Việt qua hình tượng gợi cảm nào trong bài thơ 'Tiếng Việt'?",
+    options: [
+      "Như sắt thép lạnh lùng",
+      "Như bùn và như lụa, rửa nắng mưa qua bão tố nghìn đời",
+      "Như lâu đài bằng cát",
+      "Như những dãy số khô khan"
+    ],
+    answer: 1,
+    explain: "Lưu Quang Vũ viết: 'Ôi tiếng Việt như bùn và như lụa / Rửa nắng mưa qua bão tố nghìn đời' ca ngợi vẻ đẹp vừa bình dị mộc mạc vừa mềm mại, bền bỉ của tiếng mẹ đẻ."
+  },
+  {
+    q: "Hiện tượng từ 'sao' trong 'ngôi sao trên trời' và 'ngôi sao ca nhạc' là hiện tượng phát triển từ vựng theo phương thức nào?",
+    options: [
+      "Mượn từ vựng tiếng Pháp",
+      "Phát triển nghĩa mới qua phương thức ẩn dụ (sự tương đồng về độ toả sáng, nổi bật)",
+      "Từ tượng hình",
+      "Từ láy âm đầu"
+    ],
+    answer: 1,
+    explain: "Từ nghĩa gốc 'ngôi sao' (thiên thể phát sáng), tiếng Việt đã ẩn dụ hoá thành 'ngôi sao ca nhạc/điện ảnh' để chỉ người nghệ sĩ tài năng toả sáng trước công chúng."
+  },
+  {
+    q: "Trong tác phẩm 'Đấu tranh cho một thế giới hoà bình', nhà văn Márquez nhấn mạnh con người đang sống dưới mối hiểm hoạ nào?",
+    options: [
+      "Sự cạn kiệt tài nguyên dầu mỏ",
+      "Nguy cơ thảm hoạ chiến tranh hạt nhân có thể huỷ diệt nhiều lần sự sống trên Trái Đất",
+      "Sự phát triển quá nhanh của internet",
+      "Dịch bệnh cây trồng nông nghiệp"
+    ],
+    answer: 1,
+    explain: "Márquez cảnh báo số lượng đầu đạn hạt nhân trên thế giới đủ sức làm nổ tung toàn bộ sự sống trên Trái Đất nhiều lần, là mối đe doạ diệt vong của nhân loại."
+  },
+  {
+    q: "Tổ chức 'UNICEF' hoạt động quốc tế với sứ mệnh chính là gì?",
+    options: [
+      "Bảo tồn các di sản văn hoá thế giới",
+      "Bảo vệ, chăm sóc sức khoẻ, giáo dục và quyền lợi của trẻ em trên toàn thế giới",
+      "Quản lí thương mại hàng hải",
+      "Tổ chức các đại hội thể thao"
+    ],
+    answer: 1,
+    explain: "UNICEF (United Nations Children's Fund) là Quỹ Nhi đồng Liên hợp quốc, chuyên bảo vệ quyền lợi và sự phát triển của trẻ em."
+  },
+  {
+    q: "Danh thắng non thiêng Yên Tử (Quảng Ninh) nổi tiếng gắn liền với công đức của danh nhân lịch sử nào?",
+    options: [
+      "Hưng Đạo Đại Vương Trần Quốc Tuấn",
+      "Phật hoàng Trần Nhân Tông – vị Sơ tổ sáng lập Thiền phái Trúc Lâm Yên Tử",
+      "Nguyễn Trãi",
+      "Quang Trung – Nguyễn Huệ"
+    ],
+    answer: 1,
+    explain: "Phật hoàng Trần Nhân Tông đã xuất gia tu hành tại Yên Tử, thống nhất các thiền phái để lập nên dòng Thiền Trúc Lâm mang bản sắc văn hoá Đại Việt."
+  },
+  {
+    q: "Mục đích chính của việc chuyển đổi câu chủ động 'Người thợ xây đã hoàn thành ngôi nhà' thành câu bị động 'Ngôi nhà đã được người thợ xây hoàn thành' là gì?",
+    options: [
+      "Làm cho câu văn dài hơn",
+      "Chuyển trọng tâm và tiêu điểm thông tin vào 'ngôi nhà' (đối tượng tiếp nhận hành động)",
+      "Khẳng định người thợ xây không có công trạng gì",
+      "Thay đổi nghĩa gốc của câu"
+    ],
+    answer: 1,
+    explain: "Câu bị động đưa đối tượng chịu tác động lên đầu câu nhằm nhấn mạnh kết quả hoặc sự việc xảy ra với đối tượng đó."
+  },
+  {
+    q: "Tiến trình lịch sử văn học viết Việt Nam từ thế kỉ X đến nay trải qua hai giai đoạn lớn nào?",
+    options: [
+      "Văn học cổ đại và văn học trung đại",
+      "Văn học trung đại (thế kỉ X đến hết thế kỉ XIX) và văn học hiện đại (từ đầu thế kỉ XX đến nay)",
+      "Văn học truyền khẩu và văn học in ấn",
+      "Văn học lãng mạn và văn học hiện thực"
+    ],
+    answer: 1,
+    explain: "Văn học viết Việt Nam gồm 2 thời kì lớn: Văn học trung đại (chữ Hán và chữ Nôm) và Văn học hiện đại (chữ Quốc ngữ)."
+  },
+  {
+    q: "Một cuộc phỏng vấn báo chí đạt chất lượng cao đòi hỏi người phỏng vấn phải chuẩn bị hệ thống câu hỏi như thế nào?",
+    options: [
+      "Chỉ dùng các câu hỏi đóng Có/Không để tiết kiệm thời gian",
+      "Chuẩn bị các câu hỏi mở mạch lạc, gợi mở góc nhìn sâu sắc và lắng nghe cầu thị phản hồi của nhân vật",
+      "Đặt những câu hỏi mang tính xúc phạm cá nhân",
+      "Không cần chuẩn bị câu hỏi trước"
+    ],
+    answer: 1,
+    explain: "Câu hỏi mở logic, văn minh và thái độ lắng nghe tôn trọng là chìa khoá để người phỏng vấn thu thập được những thông tin đắt giá."
+  },
+  {
+    q: "Trong bài 'Bí ẩn của làn nước' của Bảo Ninh, hình tượng 'làn nước' mang tầng ý nghĩa biểu tượng nào?",
+    options: [
+      "Chỉ là dòng sông bình thường êm ả",
+      "Vừa là hiểm hoạ bão lũ thiên tai tàn khốc, vừa là nơi chôn giấu nỗi đau và sự hi sinh câm lặng của kiếp người",
+      "Bể bơi nhân tạo của khu đô thị",
+      "Con suối mát lành nơi núi rừng"
+    ],
+    answer: 1,
+    explain: "Làn nước lũ cuốn trôi người mẹ và người phụ nữ xa lạ, trở thành nỗi đau khắc khoải ám ảnh khôn nguôi suốt cuộc đời người cha."
+  },
+  {
+    q: "Thành ngữ 'Phong tư tài mạo tót vời / Vào trong phong nhã ra ngoài hào hoa' trong Truyện Kiều miêu tả chân dung nhân vật nào?",
+    options: ["Mã Giám Sinh", "Kim Trọng", "Sở Khanh", "Thúc Sinh"],
+    answer: 1,
+    explain: "Hai câu thơ miêu tả vẻ đẹp tuấn tú, hào hoa phong nhã và phẩm chất cao quý của chàng Kim Trọng trong lần đầu xuất hiện."
+  },
+  {
+    q: "Thể loại văn bản thông tin giới thiệu di tích lịch sử và danh lam thắng cảnh thuộc phương thức biểu đạt chính nào?",
+    options: ["Biểu cảm trữ tình", "Thuyết minh (cung cấp tri thức khách quan)", "Nghị luận xã hội", "Tự sự hư cấu"],
+    answer: 1,
+    explain: "Văn bản giới thiệu di tích, danh lam thắng cảnh là thể loại văn thuyết minh, cung cấp tri thức xác thực, khoa học về đối tượng."
+  },
+  {
+    q: "Mục đích lớn nhất của dự án học tập 'Văn học – lịch sử tâm hồn' trong chương trình Ngữ văn 9 là gì?",
+    options: [
+      "Học thuộc lòng tất cả các tác phẩm có trong sách giáo khoa",
+      "Tự chủ đọc mở rộng, cảm nhận chiều sâu tâm hồn dân tộc qua các thời kì và lan toả tình yêu văn hoá đọc",
+      "Chỉ để lấy một con điểm kiểm tra 15 phút",
+      "Sưu tầm tranh ảnh minh hoạ"
+    ],
+    answer: 1,
+    explain: "Dự án giúp học sinh hình thành thói quen đọc sách suốt đời, kết nối văn học với lịch sử và bồi dưỡng tâm hồn nhân văn trong sáng."
+  },
+  {
+    q: "Yếu tố nào sau đây là 'chìa khoá vàng' giúp học sinh đạt điểm cao khi viết bài văn phân tích tác phẩm văn học?",
+    options: [
+      "Kể lại toàn bộ cốt truyện từ đầu đến cuối một cách lan man",
+      "Nêu nhận xét, luận điểm rõ ràng và phân tích sâu sắc các dẫn chứng chi tiết, nghệ thuật trích từ văn bản",
+      "Chép y hệt các bài văn mẫu trên mạng",
+      "Dùng thật nhiều từ ngữ sáo rỗng, hoa mĩ"
+    ],
+    answer: 1,
+    explain: "Phân tích văn học đòi hỏi phải có luận điểm sắc sảo, bám sát văn bản ngôn từ và phân tích hiệu quả của các biện pháp nghệ thuật thay vì tóm tắt truyện thô thiển."
+  }
+];
+
+fs.writeFileSync('C:/Users/ADMIN/.gemini/antigravity/scratch/cs-learning-platform/scratch/nguvan9_exam.json', JSON.stringify(examQuestions, null, 2), 'utf8');
+console.log('Successfully saved nguvan9_exam.json with 25 Trạng Nguyên questions.');

@@ -1,0 +1,2571 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Khóa Học Tiếng Pháp 6 (Français 6: Unité 0 – 6 • Web Speech API fr-FR &amp; Le Lauréat 60:00) | CodeHub</title>
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            blue: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              200: '#bfdbfe',
+              300: '#93c5fd',
+              400: '#60a5fa',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              800: '#1e40af',
+              900: '#1e3a8a',
+              950: '#172554'
+            },
+            gray: {
+              750: '#262f3f',
+              850: '#151b28',
+              950: '#0a0d14'
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
+    .dark ::-webkit-scrollbar-thumb { background: #334155; }
+    ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+  </style>
+</head>
+<body class="bg-slate-50 dark:bg-gray-950 text-gray-800 dark:text-gray-100 min-h-screen antialiased transition-colors duration-200">
+
+  <!-- ==================== HEADER ==================== -->
+  <header class="sticky top-0 z-40 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+      
+      <!-- Brand -->
+      <div class="flex items-center gap-3">
+        <a href="../index.html" class="flex items-center gap-2 group">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-700 via-indigo-600 to-rose-600 flex items-center justify-center text-white shadow-md shadow-blue-500/20 group-hover:scale-105 transition">
+            <i class="fa-solid fa-earth-europe text-lg"></i>
+          </div>
+          <div>
+            <span class="text-xs font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400 block leading-tight">CodeHub THCS</span>
+            <h1 class="text-sm sm:text-base font-extrabold text-gray-900 dark:text-white leading-tight">TIẾNG PHÁP 6 (Français 6)</h1>
+          </div>
+        </a>
+        <span class="hidden sm:inline-block px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-blue-100 text-blue-700 dark:bg-blue-950 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
+          Unité 0 – 6 • Web Speech fr-FR
+        </span>
+      </div>
+
+      <!-- Quick Action Buttons -->
+      <div class="flex items-center gap-2 sm:gap-3">
+        <!-- Nút Bảng chia động từ -->
+        <button onclick="openConjugationModal()" class="px-3 py-1.5 rounded-xl bg-indigo-50 hover:bg-indigo-100 dark:bg-indigo-950/60 dark:hover:bg-indigo-900/60 text-indigo-700 dark:text-indigo-300 text-xs font-bold transition flex items-center gap-1.5 border border-indigo-200 dark:border-indigo-800">
+          <i class="fa-solid fa-table-list text-indigo-600"></i>
+          <span class="hidden md:inline">Tableau de</span> Conjugaison
+        </button>
+
+        <!-- Nút Hướng dẫn phát âm -->
+        <button onclick="openPronunciationModal()" class="px-3 py-1.5 rounded-xl bg-blue-50 hover:bg-blue-100 dark:bg-blue-950/60 dark:hover:bg-blue-900/60 text-blue-700 dark:text-blue-300 text-xs font-bold transition flex items-center gap-1.5 border border-blue-200 dark:border-blue-800">
+          <i class="fa-solid fa-microphone text-blue-600"></i>
+          <span class="hidden md:inline">Guide de</span> Prononciation
+        </button>
+
+        <!-- Nút Trạng Nguyên Pháp Ngữ (60:00) -->
+        <button onclick="openExamModal()" class="px-3 py-1.5 rounded-xl bg-gradient-to-r from-blue-700 via-indigo-600 to-rose-600 hover:from-blue-600 hover:to-rose-500 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-sm shadow-blue-500/20">
+          <i class="fa-solid fa-trophy text-amber-300"></i>
+          <span>Le Lauréat (60:00)</span>
+        </button>
+
+        <!-- Dark/Light Mode -->
+        <button id="themeToggleBtn" class="w-9 h-9 rounded-xl bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300 flex items-center justify-center transition" title="Đổi giao diện Sáng / Tối">
+          <i class="fa-solid fa-moon dark:hidden"></i>
+          <i class="fa-solid fa-sun hidden dark:inline"></i>
+        </button>
+
+        <!-- Back to Home -->
+        <a href="../index.html" class="w-9 h-9 rounded-xl bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300 flex items-center justify-center transition" title="Trang chủ CodeHub">
+          <i class="fa-solid fa-house"></i>
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ==================== BODY WRAPPER ==================== -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+    <div class="flex flex-col lg:flex-row gap-6">
+
+      <!-- ==================== SIDEBAR ==================== -->
+      <aside class="w-full lg:w-72 flex-shrink-0">
+        <div class="sticky top-20 bg-white dark:bg-gray-850 p-4 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm space-y-4">
+          
+          <!-- Search in page -->
+          <div class="relative">
+            <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-xs"></i>
+            <input type="text" id="unitSearchInput" placeholder="Tìm từ vựng, ngữ pháp, Unité..."
+              class="w-full pl-8 pr-3 py-2 rounded-xl text-xs bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-gray-100 border border-gray-200 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+          </div>
+
+          <!-- Progress Widget -->
+          <div class="p-3 rounded-xl bg-gradient-to-br from-blue-50 to-indigo-50/50 dark:from-blue-950/40 dark:to-gray-800 border border-blue-100 dark:border-blue-900/40">
+            <div class="flex items-center justify-between text-xs mb-1.5">
+              <span class="font-bold text-blue-900 dark:text-blue-300">Tiến độ bài học</span>
+              <span id="progress-percent" class="font-bold text-blue-600 dark:text-blue-400">0%</span>
+            </div>
+            <div class="w-full h-2 rounded-full bg-gray-200 dark:bg-gray-700 overflow-hidden">
+              <div id="progress-bar" class="h-full bg-blue-600 rounded-full transition-all duration-300" style="width: 0%;"></div>
+            </div>
+            <div class="mt-2 text-[10px] text-gray-500 dark:text-gray-400 flex justify-between">
+              <span>Đã trả lời <b id="answered-count">0</b>/14 câu</span>
+              <span>7 Unités (0-6)</span>
+            </div>
+          </div>
+
+          <!-- Speech Speed -->
+          <div class="p-3 rounded-xl bg-gray-50 dark:bg-gray-800/80 border border-gray-200 dark:border-gray-700 space-y-2 text-xs">
+            <div class="flex items-center justify-between font-bold text-gray-700 dark:text-gray-300">
+              <span><i class="fa-solid fa-volume-high text-blue-500"></i> Tốc độ đọc (fr-FR):</span>
+              <span id="rateLabel" class="text-blue-600 font-mono">0.85x</span>
+            </div>
+            <input type="range" id="speechRateRange" min="0.6" max="1.2" step="0.05" value="0.85" class="w-full h-1.5 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-blue-600">
+            <p class="text-[10px] text-gray-400 leading-tight">Chuẩn 0.85x chậm vừa phải cho học sinh lớp 6 luyện nghe.</p>
+          </div>
+
+          <!-- Navigation Links -->
+          <div>
+            <div class="flex items-center justify-between mb-2 px-1">
+              <span class="text-[11px] font-bold text-gray-400 uppercase tracking-wider">Danh mục Unité</span>
+              <span class="text-[10px] text-blue-600 font-bold">Unité 0 – 6</span>
+            </div>
+            <nav id="unit-nav-list" class="space-y-1">
+              
+    <a href="#unite-0" class="unit-nav-link flex items-center justify-between p-2.5 rounded-xl hover:bg-blue-50 dark:hover:bg-blue-950/40 text-gray-700 dark:text-gray-300 transition group text-xs font-semibold" data-id="0">
+      <span class="truncate flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full bg-blue-100 dark:bg-blue-900/60 text-blue-600 dark:text-blue-400 flex items-center justify-center text-[10px] font-bold">0</span>
+        Bienvenue au collège !
+      </span>
+      <span class="text-[10px] px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-500 font-normal">U0</span>
+    </a>
+  
+
+    <a href="#unite-1" class="unit-nav-link flex items-center justify-between p-2.5 rounded-xl hover:bg-blue-50 dark:hover:bg-blue-950/40 text-gray-700 dark:text-gray-300 transition group text-xs font-semibold" data-id="1">
+      <span class="truncate flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full bg-blue-100 dark:bg-blue-900/60 text-blue-600 dark:text-blue-400 flex items-center justify-center text-[10px] font-bold">1</span>
+        Au collège
+      </span>
+      <span class="text-[10px] px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-500 font-normal">U1</span>
+    </a>
+  
+
+    <a href="#unite-2" class="unit-nav-link flex items-center justify-between p-2.5 rounded-xl hover:bg-blue-50 dark:hover:bg-blue-950/40 text-gray-700 dark:text-gray-300 transition group text-xs font-semibold" data-id="2">
+      <span class="truncate flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full bg-blue-100 dark:bg-blue-900/60 text-blue-600 dark:text-blue-400 flex items-center justify-center text-[10px] font-bold">2</span>
+        Hébergement pour un week-end
+      </span>
+      <span class="text-[10px] px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-500 font-normal">U2</span>
+    </a>
+  
+
+    <a href="#unite-3" class="unit-nav-link flex items-center justify-between p-2.5 rounded-xl hover:bg-blue-50 dark:hover:bg-blue-950/40 text-gray-700 dark:text-gray-300 transition group text-xs font-semibold" data-id="3">
+      <span class="truncate flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full bg-blue-100 dark:bg-blue-900/60 text-blue-600 dark:text-blue-400 flex items-center justify-center text-[10px] font-bold">3</span>
+        À table
+      </span>
+      <span class="text-[10px] px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-500 font-normal">U3</span>
+    </a>
+  
+
+    <a href="#unite-4" class="unit-nav-link flex items-center justify-between p-2.5 rounded-xl hover:bg-blue-50 dark:hover:bg-blue-950/40 text-gray-700 dark:text-gray-300 transition group text-xs font-semibold" data-id="4">
+      <span class="truncate flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full bg-blue-100 dark:bg-blue-900/60 text-blue-600 dark:text-blue-400 flex items-center justify-center text-[10px] font-bold">4</span>
+        Vedette de cinéma
+      </span>
+      <span class="text-[10px] px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-500 font-normal">U4</span>
+    </a>
+  
+
+    <a href="#unite-5" class="unit-nav-link flex items-center justify-between p-2.5 rounded-xl hover:bg-blue-50 dark:hover:bg-blue-950/40 text-gray-700 dark:text-gray-300 transition group text-xs font-semibold" data-id="5">
+      <span class="truncate flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full bg-blue-100 dark:bg-blue-900/60 text-blue-600 dark:text-blue-400 flex items-center justify-center text-[10px] font-bold">5</span>
+        Je fais du bénévolat
+      </span>
+      <span class="text-[10px] px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-500 font-normal">U5</span>
+    </a>
+  
+
+    <a href="#unite-6" class="unit-nav-link flex items-center justify-between p-2.5 rounded-xl hover:bg-blue-50 dark:hover:bg-blue-950/40 text-gray-700 dark:text-gray-300 transition group text-xs font-semibold" data-id="6">
+      <span class="truncate flex items-center gap-2">
+        <span class="w-5 h-5 rounded-full bg-blue-100 dark:bg-blue-900/60 text-blue-600 dark:text-blue-400 flex items-center justify-center text-[10px] font-bold">6</span>
+        Quel métier veux-tu faire plus tard ?
+      </span>
+      <span class="text-[10px] px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-500 font-normal">U6</span>
+    </a>
+  
+            </nav>
+          </div>
+
+        </div>
+      </aside>
+
+      <!-- ==================== MAIN CONTENT ==================== -->
+      <main class="flex-1 space-y-6">
+
+        <!-- HERO BANNER -->
+        <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-blue-700 via-indigo-700 to-rose-700 p-6 sm:p-8 text-white shadow-xl shadow-blue-500/10">
+          <div class="absolute -right-8 -bottom-8 w-60 h-60 rounded-full bg-white/10 blur-2xl pointer-events-none"></div>
+          <div class="relative z-10 max-w-2xl">
+            <span class="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-white/20 backdrop-blur-sm text-blue-100 mb-3">
+              <i class="fa-solid fa-graduation-cap"></i> Français 6 • Ngoại Ngữ 2 THCS (GDPT 2018)
+            </span>
+            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight leading-tight mb-3">
+              TIẾNG PHÁP 6 (FRANÇAIS 6)
+            </h2>
+            <p class="text-sm sm:text-base text-blue-100 font-medium leading-relaxed mb-4">
+              Tổng hợp kiến thức cốt lõi, ngữ pháp tinh hoa, từ vựng và câu ứng dụng chuẩn mực của toàn bộ 7 Unités (từ Unité 0 đến Unité 6). Tích hợp chức năng nghe phát âm chuẩn tiếng Pháp (fr-FR) thông qua Web Speech API không cần MP3.
+            </p>
+            <div class="flex flex-wrap items-center gap-3 text-xs font-bold">
+              <span class="px-3 py-1.5 rounded-xl bg-black/20 backdrop-blur-md text-white flex items-center gap-1.5">
+                <i class="fa-solid fa-book-bookmark text-amber-300"></i> 7 Unités Toàn Diện
+              </span>
+              <span class="px-3 py-1.5 rounded-xl bg-black/20 backdrop-blur-md text-white flex items-center gap-1.5">
+                <i class="fa-solid fa-volume-high text-cyan-300"></i> Nghe Từ &amp; Cả Câu
+              </span>
+              <span class="px-3 py-1.5 rounded-xl bg-black/20 backdrop-blur-md text-white flex items-center gap-1.5">
+                <i class="fa-solid fa-circle-check text-emerald-300"></i> 14 Câu Trắc Nghiệm Tự Chấm
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 7 UNIT SECTIONS -->
+        <div class="space-y-6">
+          
+      <!-- ==================== UNITÉ 0: Unité 0: Bienvenue au collège ! ==================== -->
+      <section id="unite-0" class="unit-section scroll-mt-24 p-5 sm:p-6 rounded-2xl bg-white dark:bg-gray-850 border border-gray-200/80 dark:border-gray-800 shadow-sm transition hover:shadow-md">
+        
+        <!-- Header Unité -->
+        <div class="flex flex-wrap items-center justify-between gap-2 pb-3 mb-4 border-b border-gray-100 dark:border-gray-800">
+          <div class="flex items-center gap-2">
+            <span class="px-2.5 py-1 rounded-lg bg-blue-600 text-white font-black text-xs uppercase tracking-wider">Unité 0</span>
+            <span class="px-2.5 py-1 rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 font-semibold text-xs border border-blue-200 dark:border-blue-800">Làm quen, giới thiệu bản thân & người khác</span>
+          </div>
+          <span class="text-xs font-bold text-gray-400">Chào mừng đến trường THCS!</span>
+        </div>
+
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
+          <h3 class="text-lg sm:text-2xl font-black text-gray-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-book text-blue-600"></i> Unité 0: Bienvenue au collège !
+          </h3>
+          <!-- Nút Nghe Toàn Bài -->
+          <button onclick="playFrench('le collège. Bienvenue au collège ! la nationalité. Je suis français et elle est vietnamienne. le camarade. Je te présente un nouveau camarade de classe. se présenter. Je m\'appelle Laurent et j\'ai douze ans.')" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-xs font-bold shadow-sm shadow-blue-500/20 transition cursor-pointer w-fit">
+            <i class="fa-solid fa-headphones"></i>
+            <span>Nghe toàn bộ từ &amp; câu</span>
+          </button>
+        </div>
+
+        <!-- Sơ đồ tư duy trực quan SVG -->
+        <div class="my-4 p-4 rounded-xl bg-gradient-to-br from-blue-50/40 via-indigo-50/20 to-sky-50/30 dark:from-gray-900 dark:via-gray-850 dark:to-gray-800 border border-blue-100 dark:border-blue-900/40">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-bold text-blue-700 dark:text-blue-400 flex items-center gap-1.5">
+              <i class="fa-solid fa-diagram-project"></i> Sơ đồ trực quan • Unité 0: Bienvenue au collège !
+            </span>
+            <span class="text-[11px] text-gray-400 font-medium">Français 6 • THCS</span>
+          </div>
+          <div class="w-full overflow-x-auto py-1">
+            
+    <svg viewBox="0 0 650 130" class="w-full max-w-2xl mx-auto h-auto select-none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="fr_g_0" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#2563eb"/>
+          <stop offset="100%" stop-color="#1d4ed8"/>
+        </linearGradient>
+      </defs>
+
+      <!-- Node 1: Unité Theme -->
+      <rect x="15" y="20" width="185" height="90" rx="12" fill="url(#fr_g_0)" filter="drop-shadow(0 4px 6px rgba(0,0,0,0.1))"/>
+      <text x="107" y="48" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">UNITÉ 0: BIENVENUE</text>
+      <text x="107" y="68" fill="#ffffff" font-size="10" text-anchor="middle">Être • Avoir • Présentation</text>
+      <text x="107" y="88" fill="#ffffff" font-size="9" opacity="0.9" text-anchor="middle">🔊 Audio Web Speech (fr-FR)</text>
+
+      <!-- Arrow 1 -->
+      <path d="M 205 65 L 235 65" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round"/>
+      <polygon points="235,60 243,65 235,70" fill="#2563eb"/>
+
+      <!-- Node 2: Grammaire Cốt Lõi -->
+      <rect x="245" y="20" width="200" height="90" rx="12" fill="#1e293b" stroke="#2563eb" stroke-width="1.5" filter="drop-shadow(0 4px 6px rgba(0,0,0,0.1))"/>
+      <text x="345" y="48" fill="#38bdf8" font-size="11" font-weight="bold" text-anchor="middle">POINT DE GRAMMAIRE</text>
+      <text x="345" y="68" fill="#ffffff" font-size="10" text-anchor="middle">Règles &amp; Conjugaisons</text>
+      <text x="345" y="88" fill="#94a3b8" font-size="9" text-anchor="middle">Formules &amp; Exemples</text>
+
+      <!-- Arrow 2 -->
+      <path d="M 450 65 L 475 65" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round"/>
+      <polygon points="475,60 483,65 475,70" fill="#2563eb"/>
+
+      <!-- Node 3: Vocabulaire & Phrénétique -->
+      <rect x="485" y="20" width="150" height="90" rx="12" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+      <text x="560" y="48" fill="#2563eb" font-size="11" font-weight="bold" text-anchor="middle">VOCABULAIRE &amp; QUIZ</text>
+      <text x="560" y="68" fill="#2563eb" font-size="10" text-anchor="middle">Mots &amp; Phrases clées</text>
+      <text x="560" y="88" fill="#2563eb" font-size="9" text-anchor="middle">Auto-évaluation</text>
+    </svg>
+  
+          </div>
+        </div>
+
+        <!-- Khối Ngữ Pháp Cốt Lõi -->
+        <div class="my-5 p-4 rounded-xl bg-indigo-50/50 dark:bg-indigo-950/20 border border-indigo-200/60 dark:border-indigo-900/40">
+          <h4 class="text-sm font-bold text-indigo-900 dark:text-indigo-300 mb-2 flex items-center gap-2">
+            <i class="fa-solid fa-cube text-indigo-600"></i> Ngữ Pháp Cốt Lõi: Động từ ngôi xưng cơ bản: être (thì/là/ở), avoir (có), s'appeler (tên là)
+          </h4>
+          <div class="text-xs text-gray-700 dark:text-gray-300 leading-relaxed font-mono whitespace-pre-line bg-white/80 dark:bg-gray-800/80 p-3 rounded-lg border border-indigo-100 dark:border-indigo-800/80 mb-2">1. Être: Je suis, Tu es, Il/Elle/On est, Nous sommes, Vous êtes, Ils/Elles sont.
+2. Avoir: J'ai, Tu as, Il/Elle/On a, Nous avons, Vous avez, Ils/Elles ont.
+3. S'appeler: Je m'appelle, Tu t'appelles, Il/Elle s'appelle, Nous nous appelons, Vous vous appelez, Ils/Elles s'appellent.</div>
+          <p class="text-xs text-indigo-800 dark:text-indigo-300 italic"><i class="fa-solid fa-circle-info"></i> Dùng 'être' để nói quốc tịch/nghề nghiệp; 'avoir' để nói tuổi (J'ai 12 ans); 's'appeler' để giới thiệu tên.</p>
+        </div>
+
+        <!-- Khối Từ Vựng & Câu Ứng Dụng (Có Audio riêng từng nút) -->
+        <div class="my-5">
+          <div class="flex items-center justify-between mb-3">
+            <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider flex items-center gap-1.5">
+              <i class="fa-solid fa-spell-check text-blue-600"></i> Từ Vựng Cốt Lõi &amp; Câu Ứng Dụng (Web Speech fr-FR)
+            </h4>
+            <span class="text-[11px] text-gray-400">Bấm 🔊 để nghe tiếng Pháp chuẩn</span>
+          </div>
+          <div class="space-y-2.5">
+            
+      <div class="p-3.5 rounded-xl bg-white dark:bg-gray-800/90 border border-gray-200/80 dark:border-gray-700/80 hover:border-blue-400 dark:hover:border-blue-500 shadow-sm transition space-y-2">
+        <!-- Hàng Từ Vựng -->
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div class="flex items-center gap-2">
+            <button onclick="playFrench('le collège')" class="px-2.5 py-1 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-sm" title="Nghe phát âm từ">
+              <i class="fa-solid fa-volume-high text-[11px]"></i> <span>Từ vựng</span>
+            </button>
+            <span class="text-sm font-bold text-gray-900 dark:text-white">le collège</span>
+          </div>
+          <span class="text-xs text-gray-500 dark:text-gray-400 italic">(trường THCS (cấp 2))</span>
+        </div>
+
+        <!-- Hàng Câu Ứng Dụng -->
+        <div class="pt-2 border-t border-gray-100 dark:border-gray-700/60 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+          <div class="flex items-start sm:items-center gap-2">
+            <button onclick="playFrench('Bienvenue au collège !')" class="px-2 py-0.5 rounded-md bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-semibold transition flex items-center gap-1 flex-shrink-0 shadow-sm" title="Nghe phát âm cả câu">
+              <i class="fa-solid fa-play text-[9px]"></i> <span>Cả câu</span>
+            </button>
+            <span class="font-medium text-gray-800 dark:text-gray-200"><em>"Bienvenue au collège !"</em></span>
+          </div>
+          <span class="text-[11px] text-gray-500 dark:text-gray-400 italic sm:text-right">&rarr; Chào mừng bạn đến với trường cấp 2!</span>
+        </div>
+      </div>
+    
+
+      <div class="p-3.5 rounded-xl bg-white dark:bg-gray-800/90 border border-gray-200/80 dark:border-gray-700/80 hover:border-blue-400 dark:hover:border-blue-500 shadow-sm transition space-y-2">
+        <!-- Hàng Từ Vựng -->
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div class="flex items-center gap-2">
+            <button onclick="playFrench('la nationalité')" class="px-2.5 py-1 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-sm" title="Nghe phát âm từ">
+              <i class="fa-solid fa-volume-high text-[11px]"></i> <span>Từ vựng</span>
+            </button>
+            <span class="text-sm font-bold text-gray-900 dark:text-white">la nationalité</span>
+          </div>
+          <span class="text-xs text-gray-500 dark:text-gray-400 italic">(quốc tịch)</span>
+        </div>
+
+        <!-- Hàng Câu Ứng Dụng -->
+        <div class="pt-2 border-t border-gray-100 dark:border-gray-700/60 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+          <div class="flex items-start sm:items-center gap-2">
+            <button onclick="playFrench('Je suis français et elle est vietnamienne.')" class="px-2 py-0.5 rounded-md bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-semibold transition flex items-center gap-1 flex-shrink-0 shadow-sm" title="Nghe phát âm cả câu">
+              <i class="fa-solid fa-play text-[9px]"></i> <span>Cả câu</span>
+            </button>
+            <span class="font-medium text-gray-800 dark:text-gray-200"><em>"Je suis français et elle est vietnamienne."</em></span>
+          </div>
+          <span class="text-[11px] text-gray-500 dark:text-gray-400 italic sm:text-right">&rarr; Tôi là người Pháp và cô ấy là người Việt Nam.</span>
+        </div>
+      </div>
+    
+
+      <div class="p-3.5 rounded-xl bg-white dark:bg-gray-800/90 border border-gray-200/80 dark:border-gray-700/80 hover:border-blue-400 dark:hover:border-blue-500 shadow-sm transition space-y-2">
+        <!-- Hàng Từ Vựng -->
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div class="flex items-center gap-2">
+            <button onclick="playFrench('le camarade')" class="px-2.5 py-1 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-sm" title="Nghe phát âm từ">
+              <i class="fa-solid fa-volume-high text-[11px]"></i> <span>Từ vựng</span>
+            </button>
+            <span class="text-sm font-bold text-gray-900 dark:text-white">le camarade</span>
+          </div>
+          <span class="text-xs text-gray-500 dark:text-gray-400 italic">(bạn học, bạn cùng lớp)</span>
+        </div>
+
+        <!-- Hàng Câu Ứng Dụng -->
+        <div class="pt-2 border-t border-gray-100 dark:border-gray-700/60 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+          <div class="flex items-start sm:items-center gap-2">
+            <button onclick="playFrench('Je te présente un nouveau camarade de classe.')" class="px-2 py-0.5 rounded-md bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-semibold transition flex items-center gap-1 flex-shrink-0 shadow-sm" title="Nghe phát âm cả câu">
+              <i class="fa-solid fa-play text-[9px]"></i> <span>Cả câu</span>
+            </button>
+            <span class="font-medium text-gray-800 dark:text-gray-200"><em>"Je te présente un nouveau camarade de classe."</em></span>
+          </div>
+          <span class="text-[11px] text-gray-500 dark:text-gray-400 italic sm:text-right">&rarr; Mình xin giới thiệu với bạn một người bạn mới trong lớp.</span>
+        </div>
+      </div>
+    
+
+      <div class="p-3.5 rounded-xl bg-white dark:bg-gray-800/90 border border-gray-200/80 dark:border-gray-700/80 hover:border-blue-400 dark:hover:border-blue-500 shadow-sm transition space-y-2">
+        <!-- Hàng Từ Vựng -->
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div class="flex items-center gap-2">
+            <button onclick="playFrench('se présenter')" class="px-2.5 py-1 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-sm" title="Nghe phát âm từ">
+              <i class="fa-solid fa-volume-high text-[11px]"></i> <span>Từ vựng</span>
+            </button>
+            <span class="text-sm font-bold text-gray-900 dark:text-white">se présenter</span>
+          </div>
+          <span class="text-xs text-gray-500 dark:text-gray-400 italic">(tự giới thiệu bản thân)</span>
+        </div>
+
+        <!-- Hàng Câu Ứng Dụng -->
+        <div class="pt-2 border-t border-gray-100 dark:border-gray-700/60 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+          <div class="flex items-start sm:items-center gap-2">
+            <button onclick="playFrench('Je m\'appelle Laurent et j\'ai douze ans.')" class="px-2 py-0.5 rounded-md bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-semibold transition flex items-center gap-1 flex-shrink-0 shadow-sm" title="Nghe phát âm cả câu">
+              <i class="fa-solid fa-play text-[9px]"></i> <span>Cả câu</span>
+            </button>
+            <span class="font-medium text-gray-800 dark:text-gray-200"><em>"Je m'appelle Laurent et j'ai douze ans."</em></span>
+          </div>
+          <span class="text-[11px] text-gray-500 dark:text-gray-400 italic sm:text-right">&rarr; Tôi tên là Laurent và tôi 12 tuổi.</span>
+        </div>
+      </div>
+    
+          </div>
+        </div>
+
+        <!-- Khối Trắc Nghiệm Ôn Tập -->
+        <div class="mt-5 pt-4 border-t border-gray-100 dark:border-gray-800">
+          <h4 class="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3 flex items-center gap-1.5">
+            <i class="fa-solid fa-clipboard-question text-blue-600"></i> Auto-évaluation (Trắc Nghiệm Tự Chấm Điểm)
+          </h4>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            
+      <div class="quiz-item p-4 rounded-xl bg-gray-50/80 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700" data-unit="0" data-q="0">
+        <p class="text-xs sm:text-sm font-bold text-gray-900 dark:text-gray-100 mb-3 flex items-start gap-2">
+          <span class="px-2 py-0.5 rounded bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 text-xs font-bold">Q1</span>
+          <span>Comment dit-on 'Tôi 12 tuổi' en français ?</span>
+        </p>
+        <div class="space-y-2">
+          
+            <button onclick="checkFrenchQuiz(this, 0, 0, 0, 0)" class="quiz-opt-btn w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-850 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 text-xs text-gray-700 dark:text-gray-300 transition flex items-center justify-between">
+              <span><b>A.</b> J'ai douze ans.</span>
+              <i class="quiz-feedback-icon fa-regular fa-circle text-gray-300 text-xs"></i>
+            </button>
+          
+
+            <button onclick="checkFrenchQuiz(this, 0, 0, 1, 0)" class="quiz-opt-btn w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-850 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 text-xs text-gray-700 dark:text-gray-300 transition flex items-center justify-between">
+              <span><b>B.</b> Je suis douze ans.</span>
+              <i class="quiz-feedback-icon fa-regular fa-circle text-gray-300 text-xs"></i>
+            </button>
+          
+
+            <button onclick="checkFrenchQuiz(this, 0, 0, 2, 0)" class="quiz-opt-btn w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-850 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 text-xs text-gray-700 dark:text-gray-300 transition flex items-center justify-between">
+              <span><b>C.</b> Je m'appelle douze ans.</span>
+              <i class="quiz-feedback-icon fa-regular fa-circle text-gray-300 text-xs"></i>
+            </button>
+          
+
+            <button onclick="checkFrenchQuiz(this, 0, 0, 3, 0)" class="quiz-opt-btn w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-850 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 text-xs text-gray-700 dark:text-gray-300 transition flex items-center justify-between">
+              <span><b>D.</b> J'ai douze années.</span>
+              <i class="quiz-feedback-icon fa-regular fa-circle text-gray-300 text-xs"></i>
+            </button>
+          
+        </div>
+        <div class="quiz-expl hidden mt-3 p-2.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-xs text-emerald-800 dark:text-emerald-300">
+          <div class="font-bold flex items-center gap-1.5 mb-1"><i class="fa-solid fa-circle-check"></i> Lời giải chi tiết:</div>
+          <p>Trong tiếng Pháp, khi nói tuổi bắt buộc dùng động từ 'avoir' (J'ai + số tuổi + ans), không dùng 'être'.</p>
+        </div>
+      </div>
+    
+
+      <div class="quiz-item p-4 rounded-xl bg-gray-50/80 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700" data-unit="0" data-q="1">
+        <p class="text-xs sm:text-sm font-bold text-gray-900 dark:text-gray-100 mb-3 flex items-start gap-2">
+          <span class="px-2 py-0.5 rounded bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 text-xs font-bold">Q2</span>
+          <span>Conjuguez le verbe 'être' avec le pronom 'Nous':</span>
+        </p>
+        <div class="space-y-2">
+          
+            <button onclick="checkFrenchQuiz(this, 0, 1, 0, 0)" class="quiz-opt-btn w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-850 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 text-xs text-gray-700 dark:text-gray-300 transition flex items-center justify-between">
+              <span><b>A.</b> Nous sommes</span>
+              <i class="quiz-feedback-icon fa-regular fa-circle text-gray-300 text-xs"></i>
+            </button>
+          
+
+            <button onclick="checkFrenchQuiz(this, 0, 1, 1, 0)" class="quiz-opt-btn w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-850 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 text-xs text-gray-700 dark:text-gray-300 transition flex items-center justify-between">
+              <span><b>B.</b> Nous avez</span>
+              <i class="quiz-feedback-icon fa-regular fa-circle text-gray-300 text-xs"></i>
+            </button>
+          
+
+            <button onclick="checkFrenchQuiz(this, 0, 1, 2, 0)" class="quiz-opt-btn w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-850 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 text-xs text-gray-700 dark:text-gray-300 transition flex items-center justify-between">
+              <span><b>C.</b> Nous avons</span>
+              <i class="quiz-feedback-icon fa-regular fa-circle text-gray-300 text-xs"></i>
+            </button>
+          
+
+            <button onclick="checkFrenchQuiz(this, 0, 1, 3, 0)" class="quiz-opt-btn w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-850 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 text-xs text-gray-700 dark:text-gray-300 transition flex items-center justify-between">
+              <span><b>D.</b> Nous êtes</span>
+              <i class="quiz-feedback-icon fa-regular fa-circle text-gray-300 text-xs"></i>
+            </button>
+          
+        </div>
+        <div class="quiz-expl hidden mt-3 p-2.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-xs text-emerald-800 dark:text-emerald-300">
+          <div class="font-bold flex items-center gap-1.5 mb-1"><i class="fa-solid fa-circle-check"></i> Lời giải chi tiết:</div>
+          <p>Chia động từ être: Je suis, tu es, il/elle est, nous sommes, vous êtes, ils/elles sont.</p>
+        </div>
+      </div>
+    
+          </div>
+        </div>
+
+      </section>
+    
+
+      <!-- ==================== UNITÉ 1: Unité 1: Au collège ==================== -->
+      <section id="unite-1" class="unit-section scroll-mt-24 p-5 sm:p-6 rounded-2xl bg-white dark:bg-gray-850 border border-gray-200/80 dark:border-gray-800 shadow-sm transition hover:shadow-md">
+        
+        <!-- Header Unité -->
+        <div class="flex flex-wrap items-center justify-between gap-2 pb-3 mb-4 border-b border-gray-100 dark:border-gray-800">
+          <div class="flex items-center gap-2">
+            <span class="px-2.5 py-1 rounded-lg bg-blue-600 text-white font-black text-xs uppercase tracking-wider">Unité 1</span>
+            <span class="px-2.5 py-1 rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 font-semibold text-xs border border-blue-200 dark:border-blue-800">Môn học lớp 6, cơ sở vật chất & Tính cách bạn bè</span>
+          </div>
+          <span class="text-xs font-bold text-gray-400">Ở trường THCS</span>
+        </div>
+
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
+          <h3 class="text-lg sm:text-2xl font-black text-gray-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-book text-blue-600"></i> Unité 1: Au collège
+          </h3>
+          <!-- Nút Nghe Toàn Bài -->
+          <button onclick="playFrench('la matière. J\'apprends l\'anglais et le français au collège. les mathématiques. Nous apprenons les maths en français. gentil / gentille. Elle est gentille et toujours souriante avec tout le monde. la bibliothèque. Mon collège a une grande bibliothèque moderne.')" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-xs font-bold shadow-sm shadow-blue-500/20 transition cursor-pointer w-fit">
+            <i class="fa-solid fa-headphones"></i>
+            <span>Nghe toàn bộ từ &amp; câu</span>
+          </button>
+        </div>
+
+        <!-- Sơ đồ tư duy trực quan SVG -->
+        <div class="my-4 p-4 rounded-xl bg-gradient-to-br from-blue-50/40 via-indigo-50/20 to-sky-50/30 dark:from-gray-900 dark:via-gray-850 dark:to-gray-800 border border-blue-100 dark:border-blue-900/40">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-bold text-blue-700 dark:text-blue-400 flex items-center gap-1.5">
+              <i class="fa-solid fa-diagram-project"></i> Sơ đồ trực quan • Unité 1: Au collège
+            </span>
+            <span class="text-[11px] text-gray-400 font-medium">Français 6 • THCS</span>
+          </div>
+          <div class="w-full overflow-x-auto py-1">
+            
+    <svg viewBox="0 0 650 130" class="w-full max-w-2xl mx-auto h-auto select-none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="fr_g_1" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#059669"/>
+          <stop offset="100%" stop-color="#047857"/>
+        </linearGradient>
+      </defs>
+
+      <!-- Node 1: Unité Theme -->
+      <rect x="15" y="20" width="185" height="90" rx="12" fill="url(#fr_g_1)" filter="drop-shadow(0 4px 6px rgba(0,0,0,0.1))"/>
+      <text x="107" y="48" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">UNITÉ 1: AU COLLÈGE</text>
+      <text x="107" y="68" fill="#ffffff" font-size="10" text-anchor="middle">Matières • COD • Fréquence</text>
+      <text x="107" y="88" fill="#ffffff" font-size="9" opacity="0.9" text-anchor="middle">🔊 Audio Web Speech (fr-FR)</text>
+
+      <!-- Arrow 1 -->
+      <path d="M 205 65 L 235 65" stroke="#059669" stroke-width="2.5" stroke-linecap="round"/>
+      <polygon points="235,60 243,65 235,70" fill="#059669"/>
+
+      <!-- Node 2: Grammaire Cốt Lõi -->
+      <rect x="245" y="20" width="200" height="90" rx="12" fill="#1e293b" stroke="#059669" stroke-width="1.5" filter="drop-shadow(0 4px 6px rgba(0,0,0,0.1))"/>
+      <text x="345" y="48" fill="#38bdf8" font-size="11" font-weight="bold" text-anchor="middle">POINT DE GRAMMAIRE</text>
+      <text x="345" y="68" fill="#ffffff" font-size="10" text-anchor="middle">Règles &amp; Conjugaisons</text>
+      <text x="345" y="88" fill="#94a3b8" font-size="9" text-anchor="middle">Formules &amp; Exemples</text>
+
+      <!-- Arrow 2 -->
+      <path d="M 450 65 L 475 65" stroke="#059669" stroke-width="2.5" stroke-linecap="round"/>
+      <polygon points="475,60 483,65 475,70" fill="#059669"/>
+
+      <!-- Node 3: Vocabulaire & Phrénétique -->
+      <rect x="485" y="20" width="150" height="90" rx="12" fill="#eff6ff" stroke="#059669" stroke-width="1.5"/>
+      <text x="560" y="48" fill="#059669" font-size="11" font-weight="bold" text-anchor="middle">VOCABULAIRE &amp; QUIZ</text>
+      <text x="560" y="68" fill="#059669" font-size="10" text-anchor="middle">Mots &amp; Phrases clées</text>
+      <text x="560" y="88" fill="#059669" font-size="9" text-anchor="middle">Auto-évaluation</text>
+    </svg>
+  
+          </div>
+        </div>
+
+        <!-- Khối Ngữ Pháp Cốt Lõi -->
+        <div class="my-5 p-4 rounded-xl bg-indigo-50/50 dark:bg-indigo-950/20 border border-indigo-200/60 dark:border-indigo-900/40">
+          <h4 class="text-sm font-bold text-indigo-900 dark:text-indigo-300 mb-2 flex items-center gap-2">
+            <i class="fa-solid fa-cube text-indigo-600"></i> Ngữ Pháp Cốt Lõi: Động từ nhóm 3 (prendre, comprendre, apprendre) & Đại từ COD & Trạng từ tần suất
+          </h4>
+          <div class="text-xs text-gray-700 dark:text-gray-300 leading-relaxed font-mono whitespace-pre-line bg-white/80 dark:bg-gray-800/80 p-3 rounded-lg border border-indigo-100 dark:border-indigo-800/80 mb-2">1. Apprendre (học): J'apprends, Tu apprends, Il apprend, Nous apprenons, Vous apprenez, Ils apprennent.
+2. Đại từ bổ ngữ trực tiếp (COD: me, te, le, la, nous, vous, les) đứng TRƯỚC động từ: Je la regarde (Tôi nhìn cô ấy).
+3. Trạng từ tần suất: toujours (luôn luôn), souvent (thường), parfois (đôi khi), jamais (không bao giờ).</div>
+          <p class="text-xs text-indigo-800 dark:text-indigo-300 italic"><i class="fa-solid fa-circle-info"></i> Tính từ chỉ tính cách giống cái thêm 'e' (gentil -> gentille, souriant -> souriante, intelligent -> intelligente).</p>
+        </div>
+
+        <!-- Khối Từ Vựng & Câu Ứng Dụng (Có Audio riêng từng nút) -->
+        <div class="my-5">
+          <div class="flex items-center justify-between mb-3">
+            <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider flex items-center gap-1.5">
+              <i class="fa-solid fa-spell-check text-blue-600"></i> Từ Vựng Cốt Lõi &amp; Câu Ứng Dụng (Web Speech fr-FR)
+            </h4>
+            <span class="text-[11px] text-gray-400">Bấm 🔊 để nghe tiếng Pháp chuẩn</span>
+          </div>
+          <div class="space-y-2.5">
+            
+      <div class="p-3.5 rounded-xl bg-white dark:bg-gray-800/90 border border-gray-200/80 dark:border-gray-700/80 hover:border-blue-400 dark:hover:border-blue-500 shadow-sm transition space-y-2">
+        <!-- Hàng Từ Vựng -->
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div class="flex items-center gap-2">
+            <button onclick="playFrench('la matière')" class="px-2.5 py-1 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-sm" title="Nghe phát âm từ">
+              <i class="fa-solid fa-volume-high text-[11px]"></i> <span>Từ vựng</span>
+            </button>
+            <span class="text-sm font-bold text-gray-900 dark:text-white">la matière</span>
+          </div>
+          <span class="text-xs text-gray-500 dark:text-gray-400 italic">(môn học)</span>
+        </div>
+
+        <!-- Hàng Câu Ứng Dụng -->
+        <div class="pt-2 border-t border-gray-100 dark:border-gray-700/60 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+          <div class="flex items-start sm:items-center gap-2">
+            <button onclick="playFrench('J\'apprends l\'anglais et le français au collège.')" class="px-2 py-0.5 rounded-md bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-semibold transition flex items-center gap-1 flex-shrink-0 shadow-sm" title="Nghe phát âm cả câu">
+              <i class="fa-solid fa-play text-[9px]"></i> <span>Cả câu</span>
+            </button>
+            <span class="font-medium text-gray-800 dark:text-gray-200"><em>"J'apprends l'anglais et le français au collège."</em></span>
+          </div>
+          <span class="text-[11px] text-gray-500 dark:text-gray-400 italic sm:text-right">&rarr; Tôi học tiếng Anh và tiếng Pháp ở trường THCS.</span>
+        </div>
+      </div>
+    
+
+      <div class="p-3.5 rounded-xl bg-white dark:bg-gray-800/90 border border-gray-200/80 dark:border-gray-700/80 hover:border-blue-400 dark:hover:border-blue-500 shadow-sm transition space-y-2">
+        <!-- Hàng Từ Vựng -->
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div class="flex items-center gap-2">
+            <button onclick="playFrench('les mathématiques')" class="px-2.5 py-1 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-sm" title="Nghe phát âm từ">
+              <i class="fa-solid fa-volume-high text-[11px]"></i> <span>Từ vựng</span>
+            </button>
+            <span class="text-sm font-bold text-gray-900 dark:text-white">les mathématiques</span>
+          </div>
+          <span class="text-xs text-gray-500 dark:text-gray-400 italic">(môn Toán học (les maths))</span>
+        </div>
+
+        <!-- Hàng Câu Ứng Dụng -->
+        <div class="pt-2 border-t border-gray-100 dark:border-gray-700/60 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+          <div class="flex items-start sm:items-center gap-2">
+            <button onclick="playFrench('Nous apprenons les maths en français.')" class="px-2 py-0.5 rounded-md bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-semibold transition flex items-center gap-1 flex-shrink-0 shadow-sm" title="Nghe phát âm cả câu">
+              <i class="fa-solid fa-play text-[9px]"></i> <span>Cả câu</span>
+            </button>
+            <span class="font-medium text-gray-800 dark:text-gray-200"><em>"Nous apprenons les maths en français."</em></span>
+          </div>
+          <span class="text-[11px] text-gray-500 dark:text-gray-400 italic sm:text-right">&rarr; Chúng tôi học toán bằng tiếng Pháp.</span>
+        </div>
+      </div>
+    
+
+      <div class="p-3.5 rounded-xl bg-white dark:bg-gray-800/90 border border-gray-200/80 dark:border-gray-700/80 hover:border-blue-400 dark:hover:border-blue-500 shadow-sm transition space-y-2">
+        <!-- Hàng Từ Vựng -->
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div class="flex items-center gap-2">
+            <button onclick="playFrench('gentil / gentille')" class="px-2.5 py-1 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-sm" title="Nghe phát âm từ">
+              <i class="fa-solid fa-volume-high text-[11px]"></i> <span>Từ vựng</span>
+            </button>
+            <span class="text-sm font-bold text-gray-900 dark:text-white">gentil / gentille</span>
+          </div>
+          <span class="text-xs text-gray-500 dark:text-gray-400 italic">(tốt bụng, hiền hậu, tử tế)</span>
+        </div>
+
+        <!-- Hàng Câu Ứng Dụng -->
+        <div class="pt-2 border-t border-gray-100 dark:border-gray-700/60 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+          <div class="flex items-start sm:items-center gap-2">
+            <button onclick="playFrench('Elle est gentille et toujours souriante avec tout le monde.')" class="px-2 py-0.5 rounded-md bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-semibold transition flex items-center gap-1 flex-shrink-0 shadow-sm" title="Nghe phát âm cả câu">
+              <i class="fa-solid fa-play text-[9px]"></i> <span>Cả câu</span>
+            </button>
+            <span class="font-medium text-gray-800 dark:text-gray-200"><em>"Elle est gentille et toujours souriante avec tout le monde."</em></span>
+          </div>
+          <span class="text-[11px] text-gray-500 dark:text-gray-400 italic sm:text-right">&rarr; Cô ấy rất tốt bụng và luôn mỉm cười với mọi người.</span>
+        </div>
+      </div>
+    
+
+      <div class="p-3.5 rounded-xl bg-white dark:bg-gray-800/90 border border-gray-200/80 dark:border-gray-700/80 hover:border-blue-400 dark:hover:border-blue-500 shadow-sm transition space-y-2">
+        <!-- Hàng Từ Vựng -->
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div class="flex items-center gap-2">
+            <button onclick="playFrench('la bibliothèque')" class="px-2.5 py-1 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-sm" title="Nghe phát âm từ">
+              <i class="fa-solid fa-volume-high text-[11px]"></i> <span>Từ vựng</span>
+            </button>
+            <span class="text-sm font-bold text-gray-900 dark:text-white">la bibliothèque</span>
+          </div>
+          <span class="text-xs text-gray-500 dark:text-gray-400 italic">(thư viện trường học)</span>
+        </div>
+
+        <!-- Hàng Câu Ứng Dụng -->
+        <div class="pt-2 border-t border-gray-100 dark:border-gray-700/60 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+          <div class="flex items-start sm:items-center gap-2">
+            <button onclick="playFrench('Mon collège a une grande bibliothèque moderne.')" class="px-2 py-0.5 rounded-md bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-semibold transition flex items-center gap-1 flex-shrink-0 shadow-sm" title="Nghe phát âm cả câu">
+              <i class="fa-solid fa-play text-[9px]"></i> <span>Cả câu</span>
+            </button>
+            <span class="font-medium text-gray-800 dark:text-gray-200"><em>"Mon collège a une grande bibliothèque moderne."</em></span>
+          </div>
+          <span class="text-[11px] text-gray-500 dark:text-gray-400 italic sm:text-right">&rarr; Trường của tôi có một thư viện lớn và hiện đại.</span>
+        </div>
+      </div>
+    
+          </div>
+        </div>
+
+        <!-- Khối Trắc Nghiệm Ôn Tập -->
+        <div class="mt-5 pt-4 border-t border-gray-100 dark:border-gray-800">
+          <h4 class="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3 flex items-center gap-1.5">
+            <i class="fa-solid fa-clipboard-question text-blue-600"></i> Auto-évaluation (Trắc Nghiệm Tự Chấm Điểm)
+          </h4>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            
+      <div class="quiz-item p-4 rounded-xl bg-gray-50/80 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700" data-unit="1" data-q="0">
+        <p class="text-xs sm:text-sm font-bold text-gray-900 dark:text-gray-100 mb-3 flex items-start gap-2">
+          <span class="px-2 py-0.5 rounded bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 text-xs font-bold">Q1</span>
+          <span>Remplacez le complément par un pronom COD: 'J'aime cette bibliothèque.'</span>
+        </p>
+        <div class="space-y-2">
+          
+            <button onclick="checkFrenchQuiz(this, 1, 0, 0, 0)" class="quiz-opt-btn w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-850 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 text-xs text-gray-700 dark:text-gray-300 transition flex items-center justify-between">
+              <span><b>A.</b> Je l'aime.</span>
+              <i class="quiz-feedback-icon fa-regular fa-circle text-gray-300 text-xs"></i>
+            </button>
+          
+
+            <button onclick="checkFrenchQuiz(this, 1, 0, 1, 0)" class="quiz-opt-btn w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-850 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 text-xs text-gray-700 dark:text-gray-300 transition flex items-center justify-between">
+              <span><b>B.</b> Je lui aime.</span>
+              <i class="quiz-feedback-icon fa-regular fa-circle text-gray-300 text-xs"></i>
+            </button>
+          
+
+            <button onclick="checkFrenchQuiz(this, 1, 0, 2, 0)" class="quiz-opt-btn w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-850 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 text-xs text-gray-700 dark:text-gray-300 transition flex items-center justify-between">
+              <span><b>C.</b> Je la aime.</span>
+              <i class="quiz-feedback-icon fa-regular fa-circle text-gray-300 text-xs"></i>
+            </button>
+          
+
+            <button onclick="checkFrenchQuiz(this, 1, 0, 3, 0)" class="quiz-opt-btn w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-850 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 text-xs text-gray-700 dark:text-gray-300 transition flex items-center justify-between">
+              <span><b>D.</b> Je les aime.</span>
+              <i class="quiz-feedback-icon fa-regular fa-circle text-gray-300 text-xs"></i>
+            </button>
+          
+        </div>
+        <div class="quiz-expl hidden mt-3 p-2.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-xs text-emerald-800 dark:text-emerald-300">
+          <div class="font-bold flex items-center gap-1.5 mb-1"><i class="fa-solid fa-circle-check"></i> Lời giải chi tiết:</div>
+          <p>'cette bibliothèque' là danh từ giống cái số ít -> dùng 'la'. Đứng trước nguyên âm 'aime', 'la' tỉnh lược thành 'l'' -> 'Je l'aime'.</p>
+        </div>
+      </div>
+    
+
+      <div class="quiz-item p-4 rounded-xl bg-gray-50/80 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700" data-unit="1" data-q="1">
+        <p class="text-xs sm:text-sm font-bold text-gray-900 dark:text-gray-100 mb-3 flex items-start gap-2">
+          <span class="px-2 py-0.5 rounded bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 text-xs font-bold">Q2</span>
+          <span>Quelle est la forme féminine de l'adjectif 'gentil' ?</span>
+        </p>
+        <div class="space-y-2">
+          
+            <button onclick="checkFrenchQuiz(this, 1, 1, 0, 0)" class="quiz-opt-btn w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-850 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 text-xs text-gray-700 dark:text-gray-300 transition flex items-center justify-between">
+              <span><b>A.</b> gentille</span>
+              <i class="quiz-feedback-icon fa-regular fa-circle text-gray-300 text-xs"></i>
+            </button>
+          
+
+            <button onclick="checkFrenchQuiz(this, 1, 1, 1, 0)" class="quiz-opt-btn w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-850 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 text-xs text-gray-700 dark:text-gray-300 transition flex items-center justify-between">
+              <span><b>B.</b> gentile</span>
+              <i class="quiz-feedback-icon fa-regular fa-circle text-gray-300 text-xs"></i>
+            </button>
+          
+
+            <button onclick="checkFrenchQuiz(this, 1, 1, 2, 0)" class="quiz-opt-btn w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-850 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 text-xs text-gray-700 dark:text-gray-300 transition flex items-center justify-between">
+              <span><b>C.</b> gentiles</span>
+              <i class="quiz-feedback-icon fa-regular fa-circle text-gray-300 text-xs"></i>
+            </button>
+          
+
+            <button onclick="checkFrenchQuiz(this, 1, 1, 3, 0)" class="quiz-opt-btn w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-850 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 text-xs text-gray-700 dark:text-gray-300 transition flex items-center justify-between">
+              <span><b>D.</b> gentilles</span>
+              <i class="quiz-feedback-icon fa-regular fa-circle text-gray-300 text-xs"></i>
+            </button>
+          
+        </div>
+        <div class="quiz-expl hidden mt-3 p-2.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-xs text-emerald-800 dark:text-emerald-300">
+          <div class="font-bold flex items-center gap-1.5 mb-1"><i class="fa-solid fa-circle-check"></i> Lời giải chi tiết:</div>
+          <p>Tính từ 'gentil' có dạng giống cái đặc biệt là 'gentille' (gấp đôi phụ âm 'l' và thêm 'e').</p>
+        </div>
+      </div>
+    
+          </div>
+        </div>
+
+      </section>
+    
+
+      <!-- ==================== UNITÉ 2: Unité 2: Hébergement pour un week-end ==================== -->
+      <section id="unite-2" class="unit-section scroll-mt-24 p-5 sm:p-6 rounded-2xl bg-white dark:bg-gray-850 border border-gray-200/80 dark:border-gray-800 shadow-sm transition hover:shadow-md">
+        
+        <!-- Header Unité -->
+        <div class="flex flex-wrap items-center justify-between gap-2 pb-3 mb-4 border-b border-gray-100 dark:border-gray-800">
+          <div class="flex items-center gap-2">
+            <span class="px-2.5 py-1 rounded-lg bg-blue-600 text-white font-black text-xs uppercase tracking-wider">Unité 2</span>
+            <span class="px-2.5 py-1 rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 font-semibold text-xs border border-blue-200 dark:border-blue-800">Kế hoạch tương lai, đặt chỗ lưu trú, lời mời & chúc mừng</span>
+          </div>
+          <span class="text-xs font-bold text-gray-400">Nơi ở cho dịp cuối tuần</span>
+        </div>
+
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
+          <h3 class="text-lg sm:text-2xl font-black text-gray-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-book text-blue-600"></i> Unité 2: Hébergement pour un week-end
+          </h3>
+          <!-- Nút Nghe Toàn Bài -->
+          <button onclick="playFrench('l\'hébergement. Quel type d\'hébergement préférez-vous pour les vacances ? l\'hôtel. Nous logerons dans un hôtel près de la plage. le gîte rural. Je préfère louer un gîte rural ce week-end pour être au calme. félicitations. Toutes mes félicitations pour ton prix au concours !')" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-xs font-bold shadow-sm shadow-blue-500/20 transition cursor-pointer w-fit">
+            <i class="fa-solid fa-headphones"></i>
+            <span>Nghe toàn bộ từ &amp; câu</span>
+          </button>
+        </div>
+
+        <!-- Sơ đồ tư duy trực quan SVG -->
+        <div class="my-4 p-4 rounded-xl bg-gradient-to-br from-blue-50/40 via-indigo-50/20 to-sky-50/30 dark:from-gray-900 dark:via-gray-850 dark:to-gray-800 border border-blue-100 dark:border-blue-900/40">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-bold text-blue-700 dark:text-blue-400 flex items-center gap-1.5">
+              <i class="fa-solid fa-diagram-project"></i> Sơ đồ trực quan • Unité 2: Hébergement pour un week-end
+            </span>
+            <span class="text-[11px] text-gray-400 font-medium">Français 6 • THCS</span>
+          </div>
+          <div class="w-full overflow-x-auto py-1">
+            
+    <svg viewBox="0 0 650 130" class="w-full max-w-2xl mx-auto h-auto select-none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="fr_g_2" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#d97706"/>
+          <stop offset="100%" stop-color="#b45309"/>
+        </linearGradient>
+      </defs>
+
+      <!-- Node 1: Unité Theme -->
+      <rect x="15" y="20" width="185" height="90" rx="12" fill="url(#fr_g_2)" filter="drop-shadow(0 4px 6px rgba(0,0,0,0.1))"/>
+      <text x="107" y="48" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">UNITÉ 2: HÉBERGEMENT</text>
+      <text x="107" y="68" fill="#ffffff" font-size="10" text-anchor="middle">Futur Simple • COI • Hôtel</text>
+      <text x="107" y="88" fill="#ffffff" font-size="9" opacity="0.9" text-anchor="middle">🔊 Audio Web Speech (fr-FR)</text>
+
+      <!-- Arrow 1 -->
+      <path d="M 205 65 L 235 65" stroke="#d97706" stroke-width="2.5" stroke-linecap="round"/>
+      <polygon points="235,60 243,65 235,70" fill="#d97706"/>
+
+      <!-- Node 2: Grammaire Cốt Lõi -->
+      <rect x="245" y="20" width="200" height="90" rx="12" fill="#1e293b" stroke="#d97706" stroke-width="1.5" filter="drop-shadow(0 4px 6px rgba(0,0,0,0.1))"/>
+      <text x="345" y="48" fill="#38bdf8" font-size="11" font-weight="bold" text-anchor="middle">POINT DE GRAMMAIRE</text>
+      <text x="345" y="68" fill="#ffffff" font-size="10" text-anchor="middle">Règles &amp; Conjugaisons</text>
+      <text x="345" y="88" fill="#94a3b8" font-size="9" text-anchor="middle">Formules &amp; Exemples</text>
+
+      <!-- Arrow 2 -->
+      <path d="M 450 65 L 475 65" stroke="#d97706" stroke-width="2.5" stroke-linecap="round"/>
+      <polygon points="475,60 483,65 475,70" fill="#d97706"/>
+
+      <!-- Node 3: Vocabulaire & Phrénétique -->
+      <rect x="485" y="20" width="150" height="90" rx="12" fill="#eff6ff" stroke="#d97706" stroke-width="1.5"/>
+      <text x="560" y="48" fill="#d97706" font-size="11" font-weight="bold" text-anchor="middle">VOCABULAIRE &amp; QUIZ</text>
+      <text x="560" y="68" fill="#d97706" font-size="10" text-anchor="middle">Mots &amp; Phrases clées</text>
+      <text x="560" y="88" fill="#d97706" font-size="9" text-anchor="middle">Auto-évaluation</text>
+    </svg>
+  
+          </div>
+        </div>
+
+        <!-- Khối Ngữ Pháp Cốt Lõi -->
+        <div class="my-5 p-4 rounded-xl bg-indigo-50/50 dark:bg-indigo-950/20 border border-indigo-200/60 dark:border-indigo-900/40">
+          <h4 class="text-sm font-bold text-indigo-900 dark:text-indigo-300 mb-2 flex items-center gap-2">
+            <i class="fa-solid fa-cube text-indigo-600"></i> Ngữ Pháp Cốt Lõi: Thì Tương lai đơn (Futur simple) của động từ đuôi -er & Đại từ bổ ngữ gián tiếp (COI)
+          </h4>
+          <div class="text-xs text-gray-700 dark:text-gray-300 leading-relaxed font-mono whitespace-pre-line bg-white/80 dark:bg-gray-800/80 p-3 rounded-lg border border-indigo-100 dark:border-indigo-800/80 mb-2">1. Futur simple (động từ đuôi -er): Giữ nguyên thể nguyên mẫu + đuôi: -ai, -as, -a, -ons, -ez, -ont. (e.g., loger -> je logerai, nous logerons).
+2. Đại từ COI (me, te, lui, nous, vous, leur) thay thế cho danh từ chỉ người đứng sau giới từ 'à': Je parle à Pierre -> Je lui parle.
+3. Động từ descendre (xuống, ở trọ): je descends, tu descends, il descend, nous descendons...</div>
+          <p class="text-xs text-indigo-800 dark:text-indigo-300 italic"><i class="fa-solid fa-circle-info"></i> Cách mời và đáp lại: Tu veux venir ? - Oui, avec plaisir ! (Đồng ý) / Désolé, je ne peux pas (Từ chối).</p>
+        </div>
+
+        <!-- Khối Từ Vựng & Câu Ứng Dụng (Có Audio riêng từng nút) -->
+        <div class="my-5">
+          <div class="flex items-center justify-between mb-3">
+            <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider flex items-center gap-1.5">
+              <i class="fa-solid fa-spell-check text-blue-600"></i> Từ Vựng Cốt Lõi &amp; Câu Ứng Dụng (Web Speech fr-FR)
+            </h4>
+            <span class="text-[11px] text-gray-400">Bấm 🔊 để nghe tiếng Pháp chuẩn</span>
+          </div>
+          <div class="space-y-2.5">
+            
+      <div class="p-3.5 rounded-xl bg-white dark:bg-gray-800/90 border border-gray-200/80 dark:border-gray-700/80 hover:border-blue-400 dark:hover:border-blue-500 shadow-sm transition space-y-2">
+        <!-- Hàng Từ Vựng -->
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div class="flex items-center gap-2">
+            <button onclick="playFrench('l\'hébergement')" class="px-2.5 py-1 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-sm" title="Nghe phát âm từ">
+              <i class="fa-solid fa-volume-high text-[11px]"></i> <span>Từ vựng</span>
+            </button>
+            <span class="text-sm font-bold text-gray-900 dark:text-white">l'hébergement</span>
+          </div>
+          <span class="text-xs text-gray-500 dark:text-gray-400 italic">(nơi lưu trú, chỗ ở (nam tính))</span>
+        </div>
+
+        <!-- Hàng Câu Ứng Dụng -->
+        <div class="pt-2 border-t border-gray-100 dark:border-gray-700/60 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+          <div class="flex items-start sm:items-center gap-2">
+            <button onclick="playFrench('Quel type d\'hébergement préférez-vous pour les vacances ?')" class="px-2 py-0.5 rounded-md bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-semibold transition flex items-center gap-1 flex-shrink-0 shadow-sm" title="Nghe phát âm cả câu">
+              <i class="fa-solid fa-play text-[9px]"></i> <span>Cả câu</span>
+            </button>
+            <span class="font-medium text-gray-800 dark:text-gray-200"><em>"Quel type d'hébergement préférez-vous pour les vacances ?"</em></span>
+          </div>
+          <span class="text-[11px] text-gray-500 dark:text-gray-400 italic sm:text-right">&rarr; Bạn thích loại nơi ở nào cho kì nghỉ?</span>
+        </div>
+      </div>
+    
+
+      <div class="p-3.5 rounded-xl bg-white dark:bg-gray-800/90 border border-gray-200/80 dark:border-gray-700/80 hover:border-blue-400 dark:hover:border-blue-500 shadow-sm transition space-y-2">
+        <!-- Hàng Từ Vựng -->
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div class="flex items-center gap-2">
+            <button onclick="playFrench('l\'hôtel')" class="px-2.5 py-1 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-sm" title="Nghe phát âm từ">
+              <i class="fa-solid fa-volume-high text-[11px]"></i> <span>Từ vựng</span>
+            </button>
+            <span class="text-sm font-bold text-gray-900 dark:text-white">l'hôtel</span>
+          </div>
+          <span class="text-xs text-gray-500 dark:text-gray-400 italic">(khách sạn)</span>
+        </div>
+
+        <!-- Hàng Câu Ứng Dụng -->
+        <div class="pt-2 border-t border-gray-100 dark:border-gray-700/60 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+          <div class="flex items-start sm:items-center gap-2">
+            <button onclick="playFrench('Nous logerons dans un hôtel près de la plage.')" class="px-2 py-0.5 rounded-md bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-semibold transition flex items-center gap-1 flex-shrink-0 shadow-sm" title="Nghe phát âm cả câu">
+              <i class="fa-solid fa-play text-[9px]"></i> <span>Cả câu</span>
+            </button>
+            <span class="font-medium text-gray-800 dark:text-gray-200"><em>"Nous logerons dans un hôtel près de la plage."</em></span>
+          </div>
+          <span class="text-[11px] text-gray-500 dark:text-gray-400 italic sm:text-right">&rarr; Chúng tôi sẽ ở một khách sạn gần bãi biển.</span>
+        </div>
+      </div>
+    
+
+      <div class="p-3.5 rounded-xl bg-white dark:bg-gray-800/90 border border-gray-200/80 dark:border-gray-700/80 hover:border-blue-400 dark:hover:border-blue-500 shadow-sm transition space-y-2">
+        <!-- Hàng Từ Vựng -->
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div class="flex items-center gap-2">
+            <button onclick="playFrench('le gîte rural')" class="px-2.5 py-1 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-sm" title="Nghe phát âm từ">
+              <i class="fa-solid fa-volume-high text-[11px]"></i> <span>Từ vựng</span>
+            </button>
+            <span class="text-sm font-bold text-gray-900 dark:text-white">le gîte rural</span>
+          </div>
+          <span class="text-xs text-gray-500 dark:text-gray-400 italic">(nhà nghỉ thôn quê, homestay đồng quê)</span>
+        </div>
+
+        <!-- Hàng Câu Ứng Dụng -->
+        <div class="pt-2 border-t border-gray-100 dark:border-gray-700/60 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+          <div class="flex items-start sm:items-center gap-2">
+            <button onclick="playFrench('Je préfère louer un gîte rural ce week-end pour être au calme.')" class="px-2 py-0.5 rounded-md bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-semibold transition flex items-center gap-1 flex-shrink-0 shadow-sm" title="Nghe phát âm cả câu">
+              <i class="fa-solid fa-play text-[9px]"></i> <span>Cả câu</span>
+            </button>
+            <span class="font-medium text-gray-800 dark:text-gray-200"><em>"Je préfère louer un gîte rural ce week-end pour être au calme."</em></span>
+          </div>
+          <span class="text-[11px] text-gray-500 dark:text-gray-400 italic sm:text-right">&rarr; Tôi thích thuê một căn nhà nghỉ thôn quê vào cuối tuần này để được yên tĩnh.</span>
+        </div>
+      </div>
+    
+
+      <div class="p-3.5 rounded-xl bg-white dark:bg-gray-800/90 border border-gray-200/80 dark:border-gray-700/80 hover:border-blue-400 dark:hover:border-blue-500 shadow-sm transition space-y-2">
+        <!-- Hàng Từ Vựng -->
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div class="flex items-center gap-2">
+            <button onclick="playFrench('félicitations')" class="px-2.5 py-1 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-sm" title="Nghe phát âm từ">
+              <i class="fa-solid fa-volume-high text-[11px]"></i> <span>Từ vựng</span>
+            </button>
+            <span class="text-sm font-bold text-gray-900 dark:text-white">félicitations</span>
+          </div>
+          <span class="text-xs text-gray-500 dark:text-gray-400 italic">(lời chúc mừng)</span>
+        </div>
+
+        <!-- Hàng Câu Ứng Dụng -->
+        <div class="pt-2 border-t border-gray-100 dark:border-gray-700/60 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+          <div class="flex items-start sm:items-center gap-2">
+            <button onclick="playFrench('Toutes mes félicitations pour ton prix au concours !')" class="px-2 py-0.5 rounded-md bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-semibold transition flex items-center gap-1 flex-shrink-0 shadow-sm" title="Nghe phát âm cả câu">
+              <i class="fa-solid fa-play text-[9px]"></i> <span>Cả câu</span>
+            </button>
+            <span class="font-medium text-gray-800 dark:text-gray-200"><em>"Toutes mes félicitations pour ton prix au concours !"</em></span>
+          </div>
+          <span class="text-[11px] text-gray-500 dark:text-gray-400 italic sm:text-right">&rarr; Nhiệt liệt chúc mừng giải thưởng của bạn trong cuộc thi!</span>
+        </div>
+      </div>
+    
+          </div>
+        </div>
+
+        <!-- Khối Trắc Nghiệm Ôn Tập -->
+        <div class="mt-5 pt-4 border-t border-gray-100 dark:border-gray-800">
+          <h4 class="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3 flex items-center gap-1.5">
+            <i class="fa-solid fa-clipboard-question text-blue-600"></i> Auto-évaluation (Trắc Nghiệm Tự Chấm Điểm)
+          </h4>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            
+      <div class="quiz-item p-4 rounded-xl bg-gray-50/80 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700" data-unit="2" data-q="0">
+        <p class="text-xs sm:text-sm font-bold text-gray-900 dark:text-gray-100 mb-3 flex items-start gap-2">
+          <span class="px-2 py-0.5 rounded bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 text-xs font-bold">Q1</span>
+          <span>Conjuguez le verbe 'visiter' au Futur simple avec 'Ils':</span>
+        </p>
+        <div class="space-y-2">
+          
+            <button onclick="checkFrenchQuiz(this, 2, 0, 0, 0)" class="quiz-opt-btn w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-850 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 text-xs text-gray-700 dark:text-gray-300 transition flex items-center justify-between">
+              <span><b>A.</b> Ils visiteront</span>
+              <i class="quiz-feedback-icon fa-regular fa-circle text-gray-300 text-xs"></i>
+            </button>
+          
+
+            <button onclick="checkFrenchQuiz(this, 2, 0, 1, 0)" class="quiz-opt-btn w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-850 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 text-xs text-gray-700 dark:text-gray-300 transition flex items-center justify-between">
+              <span><b>B.</b> Ils visitent</span>
+              <i class="quiz-feedback-icon fa-regular fa-circle text-gray-300 text-xs"></i>
+            </button>
+          
+
+            <button onclick="checkFrenchQuiz(this, 2, 0, 2, 0)" class="quiz-opt-btn w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-850 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 text-xs text-gray-700 dark:text-gray-300 transition flex items-center justify-between">
+              <span><b>C.</b> Ils visiterons</span>
+              <i class="quiz-feedback-icon fa-regular fa-circle text-gray-300 text-xs"></i>
+            </button>
+          
+
+            <button onclick="checkFrenchQuiz(this, 2, 0, 3, 0)" class="quiz-opt-btn w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-850 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 text-xs text-gray-700 dark:text-gray-300 transition flex items-center justify-between">
+              <span><b>D.</b> Ils visitez</span>
+              <i class="quiz-feedback-icon fa-regular fa-circle text-gray-300 text-xs"></i>
+            </button>
+          
+        </div>
+        <div class="quiz-expl hidden mt-3 p-2.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-xs text-emerald-800 dark:text-emerald-300">
+          <div class="font-bold flex items-center gap-1.5 mb-1"><i class="fa-solid fa-circle-check"></i> Lời giải chi tiết:</div>
+          <p>Futur simple ngôi 'Ils' có đuôi '-ont' gắn vào động từ nguyên mẫu: visiter + ont = visiteront.</p>
+        </div>
+      </div>
+    
+
+      <div class="quiz-item p-4 rounded-xl bg-gray-50/80 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700" data-unit="2" data-q="1">
+        <p class="text-xs sm:text-sm font-bold text-gray-900 dark:text-gray-100 mb-3 flex items-start gap-2">
+          <span class="px-2 py-0.5 rounded bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 text-xs font-bold">Q2</span>
+          <span>Remplacez par un pronom COI: 'Je téléphone à mes parents.'</span>
+        </p>
+        <div class="space-y-2">
+          
+            <button onclick="checkFrenchQuiz(this, 2, 1, 0, 0)" class="quiz-opt-btn w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-850 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 text-xs text-gray-700 dark:text-gray-300 transition flex items-center justify-between">
+              <span><b>A.</b> Je leur téléphone.</span>
+              <i class="quiz-feedback-icon fa-regular fa-circle text-gray-300 text-xs"></i>
+            </button>
+          
+
+            <button onclick="checkFrenchQuiz(this, 2, 1, 1, 0)" class="quiz-opt-btn w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-850 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 text-xs text-gray-700 dark:text-gray-300 transition flex items-center justify-between">
+              <span><b>B.</b> Je les téléphone.</span>
+              <i class="quiz-feedback-icon fa-regular fa-circle text-gray-300 text-xs"></i>
+            </button>
+          
+
+            <button onclick="checkFrenchQuiz(this, 2, 1, 2, 0)" class="quiz-opt-btn w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-850 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 text-xs text-gray-700 dark:text-gray-300 transition flex items-center justify-between">
+              <span><b>C.</b> Je lui téléphone.</span>
+              <i class="quiz-feedback-icon fa-regular fa-circle text-gray-300 text-xs"></i>
+            </button>
+          
+
+            <button onclick="checkFrenchQuiz(this, 2, 1, 3, 0)" class="quiz-opt-btn w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-850 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 text-xs text-gray-700 dark:text-gray-300 transition flex items-center justify-between">
+              <span><b>D.</b> Je en téléphone.</span>
+              <i class="quiz-feedback-icon fa-regular fa-circle text-gray-300 text-xs"></i>
+            </button>
+          
+        </div>
+        <div class="quiz-expl hidden mt-3 p-2.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-xs text-emerald-800 dark:text-emerald-300">
+          <div class="font-bold flex items-center gap-1.5 mb-1"><i class="fa-solid fa-circle-check"></i> Lời giải chi tiết:</div>
+          <p>'à mes parents' là bổ ngữ gián tiếp chỉ người số nhiều -> dùng đại từ COI 'leur': Je leur téléphone.</p>
+        </div>
+      </div>
+    
+          </div>
+        </div>
+
+      </section>
+    
+
+      <!-- ==================== UNITÉ 3: Unité 3: À table ==================== -->
+      <section id="unite-3" class="unit-section scroll-mt-24 p-5 sm:p-6 rounded-2xl bg-white dark:bg-gray-850 border border-gray-200/80 dark:border-gray-800 shadow-sm transition hover:shadow-md">
+        
+        <!-- Header Unité -->
+        <div class="flex flex-wrap items-center justify-between gap-2 pb-3 mb-4 border-b border-gray-100 dark:border-gray-800">
+          <div class="flex items-center gap-2">
+            <span class="px-2.5 py-1 rounded-lg bg-blue-600 text-white font-black text-xs uppercase tracking-wider">Unité 3</span>
+            <span class="px-2.5 py-1 rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 font-semibold text-xs border border-blue-200 dark:border-blue-800">Đồ ăn thức uống, dinh dưỡng, mua sắm & Công thức nấu ăn</span>
+          </div>
+          <span class="text-xs font-bold text-gray-400">Vào bàn ăn</span>
+        </div>
+
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
+          <h3 class="text-lg sm:text-2xl font-black text-gray-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-book text-blue-600"></i> Unité 3: À table
+          </h3>
+          <!-- Nút Nghe Toàn Bài -->
+          <button onclick="playFrench('la nourriture. Il mange de la nourriture saine et équilibrée. les légumes. On doit manger beaucoup de légumes pour rester en forme. boire. Tu dois boire beaucoup d\'eau chaque jour. la recette. Voici la recette facile de la salade de tomates.')" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-xs font-bold shadow-sm shadow-blue-500/20 transition cursor-pointer w-fit">
+            <i class="fa-solid fa-headphones"></i>
+            <span>Nghe toàn bộ từ &amp; câu</span>
+          </button>
+        </div>
+
+        <!-- Sơ đồ tư duy trực quan SVG -->
+        <div class="my-4 p-4 rounded-xl bg-gradient-to-br from-blue-50/40 via-indigo-50/20 to-sky-50/30 dark:from-gray-900 dark:via-gray-850 dark:to-gray-800 border border-blue-100 dark:border-blue-900/40">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-bold text-blue-700 dark:text-blue-400 flex items-center gap-1.5">
+              <i class="fa-solid fa-diagram-project"></i> Sơ đồ trực quan • Unité 3: À table
+            </span>
+            <span class="text-[11px] text-gray-400 font-medium">Français 6 • THCS</span>
+          </div>
+          <div class="w-full overflow-x-auto py-1">
+            
+    <svg viewBox="0 0 650 130" class="w-full max-w-2xl mx-auto h-auto select-none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="fr_g_3" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#dc2626"/>
+          <stop offset="100%" stop-color="#b91c1c"/>
+        </linearGradient>
+      </defs>
+
+      <!-- Node 1: Unité Theme -->
+      <rect x="15" y="20" width="185" height="90" rx="12" fill="url(#fr_g_3)" filter="drop-shadow(0 4px 6px rgba(0,0,0,0.1))"/>
+      <text x="107" y="48" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">UNITÉ 3: À TABLE</text>
+      <text x="107" y="68" fill="#ffffff" font-size="10" text-anchor="middle">Partitifs • Boire • Devoir</text>
+      <text x="107" y="88" fill="#ffffff" font-size="9" opacity="0.9" text-anchor="middle">🔊 Audio Web Speech (fr-FR)</text>
+
+      <!-- Arrow 1 -->
+      <path d="M 205 65 L 235 65" stroke="#dc2626" stroke-width="2.5" stroke-linecap="round"/>
+      <polygon points="235,60 243,65 235,70" fill="#dc2626"/>
+
+      <!-- Node 2: Grammaire Cốt Lõi -->
+      <rect x="245" y="20" width="200" height="90" rx="12" fill="#1e293b" stroke="#dc2626" stroke-width="1.5" filter="drop-shadow(0 4px 6px rgba(0,0,0,0.1))"/>
+      <text x="345" y="48" fill="#38bdf8" font-size="11" font-weight="bold" text-anchor="middle">POINT DE GRAMMAIRE</text>
+      <text x="345" y="68" fill="#ffffff" font-size="10" text-anchor="middle">Règles &amp; Conjugaisons</text>
+      <text x="345" y="88" fill="#94a3b8" font-size="9" text-anchor="middle">Formules &amp; Exemples</text>
+
+      <!-- Arrow 2 -->
+      <path d="M 450 65 L 475 65" stroke="#dc2626" stroke-width="2.5" stroke-linecap="round"/>
+      <polygon points="475,60 483,65 475,70" fill="#dc2626"/>
+
+      <!-- Node 3: Vocabulaire & Phrénétique -->
+      <rect x="485" y="20" width="150" height="90" rx="12" fill="#eff6ff" stroke="#dc2626" stroke-width="1.5"/>
+      <text x="560" y="48" fill="#dc2626" font-size="11" font-weight="bold" text-anchor="middle">VOCABULAIRE &amp; QUIZ</text>
+      <text x="560" y="68" fill="#dc2626" font-size="10" text-anchor="middle">Mots &amp; Phrases clées</text>
+      <text x="560" y="88" fill="#dc2626" font-size="9" text-anchor="middle">Auto-évaluation</text>
+    </svg>
+  
+          </div>
+        </div>
+
+        <!-- Khối Ngữ Pháp Cốt Lõi -->
+        <div class="my-5 p-4 rounded-xl bg-indigo-50/50 dark:bg-indigo-950/20 border border-indigo-200/60 dark:border-indigo-900/40">
+          <h4 class="text-sm font-bold text-indigo-900 dark:text-indigo-300 mb-2 flex items-center gap-2">
+            <i class="fa-solid fa-cube text-indigo-600"></i> Ngữ Pháp Cốt Lõi: Mạo từ chỉ bộ phận (Articles partitifs: du, de la, de l', des) & Thể phủ định 'pas de/d''
+          </h4>
+          <div class="text-xs text-gray-700 dark:text-gray-300 leading-relaxed font-mono whitespace-pre-line bg-white/80 dark:bg-gray-800/80 p-3 rounded-lg border border-indigo-100 dark:border-indigo-800/80 mb-2">1. Mạo từ bộ phận chỉ lượng không xác định: du (giống đực: du pain), de la (giống cái: de la viande), de l' (trước nguyên âm: de l'eau), des (số nhiều: des légumes).
+2. Trong câu phủ định, các mạo từ bộ phận chuyển thành 'de' hoặc 'd'': Je ne bois pas de lait.
+3. Động từ boire (uống): je bois, tu bois, il boit, nous buvons, vous buvez, ils boivent.
+4. Động từ devoir (phải): tu dois manger sainement.</div>
+          <p class="text-xs text-indigo-800 dark:text-indigo-300 italic"><i class="fa-solid fa-circle-info"></i> Trạng từ chỉ số lượng + de: un peu de (một ít), beaucoup de (nhiều), assez de (đủ), trop de (quá nhiều).</p>
+        </div>
+
+        <!-- Khối Từ Vựng & Câu Ứng Dụng (Có Audio riêng từng nút) -->
+        <div class="my-5">
+          <div class="flex items-center justify-between mb-3">
+            <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider flex items-center gap-1.5">
+              <i class="fa-solid fa-spell-check text-blue-600"></i> Từ Vựng Cốt Lõi &amp; Câu Ứng Dụng (Web Speech fr-FR)
+            </h4>
+            <span class="text-[11px] text-gray-400">Bấm 🔊 để nghe tiếng Pháp chuẩn</span>
+          </div>
+          <div class="space-y-2.5">
+            
+      <div class="p-3.5 rounded-xl bg-white dark:bg-gray-800/90 border border-gray-200/80 dark:border-gray-700/80 hover:border-blue-400 dark:hover:border-blue-500 shadow-sm transition space-y-2">
+        <!-- Hàng Từ Vựng -->
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div class="flex items-center gap-2">
+            <button onclick="playFrench('la nourriture')" class="px-2.5 py-1 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-sm" title="Nghe phát âm từ">
+              <i class="fa-solid fa-volume-high text-[11px]"></i> <span>Từ vựng</span>
+            </button>
+            <span class="text-sm font-bold text-gray-900 dark:text-white">la nourriture</span>
+          </div>
+          <span class="text-xs text-gray-500 dark:text-gray-400 italic">(thực phẩm, đồ ăn thức uống)</span>
+        </div>
+
+        <!-- Hàng Câu Ứng Dụng -->
+        <div class="pt-2 border-t border-gray-100 dark:border-gray-700/60 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+          <div class="flex items-start sm:items-center gap-2">
+            <button onclick="playFrench('Il mange de la nourriture saine et équilibrée.')" class="px-2 py-0.5 rounded-md bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-semibold transition flex items-center gap-1 flex-shrink-0 shadow-sm" title="Nghe phát âm cả câu">
+              <i class="fa-solid fa-play text-[9px]"></i> <span>Cả câu</span>
+            </button>
+            <span class="font-medium text-gray-800 dark:text-gray-200"><em>"Il mange de la nourriture saine et équilibrée."</em></span>
+          </div>
+          <span class="text-[11px] text-gray-500 dark:text-gray-400 italic sm:text-right">&rarr; Cậu ấy ăn thực phẩm lành mạnh và cân bằng dinh dưỡng.</span>
+        </div>
+      </div>
+    
+
+      <div class="p-3.5 rounded-xl bg-white dark:bg-gray-800/90 border border-gray-200/80 dark:border-gray-700/80 hover:border-blue-400 dark:hover:border-blue-500 shadow-sm transition space-y-2">
+        <!-- Hàng Từ Vựng -->
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div class="flex items-center gap-2">
+            <button onclick="playFrench('les légumes')" class="px-2.5 py-1 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-sm" title="Nghe phát âm từ">
+              <i class="fa-solid fa-volume-high text-[11px]"></i> <span>Từ vựng</span>
+            </button>
+            <span class="text-sm font-bold text-gray-900 dark:text-white">les légumes</span>
+          </div>
+          <span class="text-xs text-gray-500 dark:text-gray-400 italic">(các loại rau củ)</span>
+        </div>
+
+        <!-- Hàng Câu Ứng Dụng -->
+        <div class="pt-2 border-t border-gray-100 dark:border-gray-700/60 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+          <div class="flex items-start sm:items-center gap-2">
+            <button onclick="playFrench('On doit manger beaucoup de légumes pour rester en forme.')" class="px-2 py-0.5 rounded-md bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-semibold transition flex items-center gap-1 flex-shrink-0 shadow-sm" title="Nghe phát âm cả câu">
+              <i class="fa-solid fa-play text-[9px]"></i> <span>Cả câu</span>
+            </button>
+            <span class="font-medium text-gray-800 dark:text-gray-200"><em>"On doit manger beaucoup de légumes pour rester en forme."</em></span>
+          </div>
+          <span class="text-[11px] text-gray-500 dark:text-gray-400 italic sm:text-right">&rarr; Chúng ta phải ăn nhiều rau củ để giữ gìn sức khỏe.</span>
+        </div>
+      </div>
+    
+
+      <div class="p-3.5 rounded-xl bg-white dark:bg-gray-800/90 border border-gray-200/80 dark:border-gray-700/80 hover:border-blue-400 dark:hover:border-blue-500 shadow-sm transition space-y-2">
+        <!-- Hàng Từ Vựng -->
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div class="flex items-center gap-2">
+            <button onclick="playFrench('boire')" class="px-2.5 py-1 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-sm" title="Nghe phát âm từ">
+              <i class="fa-solid fa-volume-high text-[11px]"></i> <span>Từ vựng</span>
+            </button>
+            <span class="text-sm font-bold text-gray-900 dark:text-white">boire</span>
+          </div>
+          <span class="text-xs text-gray-500 dark:text-gray-400 italic">(uống)</span>
+        </div>
+
+        <!-- Hàng Câu Ứng Dụng -->
+        <div class="pt-2 border-t border-gray-100 dark:border-gray-700/60 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+          <div class="flex items-start sm:items-center gap-2">
+            <button onclick="playFrench('Tu dois boire beaucoup d\'eau chaque jour.')" class="px-2 py-0.5 rounded-md bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-semibold transition flex items-center gap-1 flex-shrink-0 shadow-sm" title="Nghe phát âm cả câu">
+              <i class="fa-solid fa-play text-[9px]"></i> <span>Cả câu</span>
+            </button>
+            <span class="font-medium text-gray-800 dark:text-gray-200"><em>"Tu dois boire beaucoup d'eau chaque jour."</em></span>
+          </div>
+          <span class="text-[11px] text-gray-500 dark:text-gray-400 italic sm:text-right">&rarr; Bạn phải uống nhiều nước mỗi ngày.</span>
+        </div>
+      </div>
+    
+
+      <div class="p-3.5 rounded-xl bg-white dark:bg-gray-800/90 border border-gray-200/80 dark:border-gray-700/80 hover:border-blue-400 dark:hover:border-blue-500 shadow-sm transition space-y-2">
+        <!-- Hàng Từ Vựng -->
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div class="flex items-center gap-2">
+            <button onclick="playFrench('la recette')" class="px-2.5 py-1 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-sm" title="Nghe phát âm từ">
+              <i class="fa-solid fa-volume-high text-[11px]"></i> <span>Từ vựng</span>
+            </button>
+            <span class="text-sm font-bold text-gray-900 dark:text-white">la recette</span>
+          </div>
+          <span class="text-xs text-gray-500 dark:text-gray-400 italic">(công thức nấu ăn)</span>
+        </div>
+
+        <!-- Hàng Câu Ứng Dụng -->
+        <div class="pt-2 border-t border-gray-100 dark:border-gray-700/60 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+          <div class="flex items-start sm:items-center gap-2">
+            <button onclick="playFrench('Voici la recette facile de la salade de tomates.')" class="px-2 py-0.5 rounded-md bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-semibold transition flex items-center gap-1 flex-shrink-0 shadow-sm" title="Nghe phát âm cả câu">
+              <i class="fa-solid fa-play text-[9px]"></i> <span>Cả câu</span>
+            </button>
+            <span class="font-medium text-gray-800 dark:text-gray-200"><em>"Voici la recette facile de la salade de tomates."</em></span>
+          </div>
+          <span class="text-[11px] text-gray-500 dark:text-gray-400 italic sm:text-right">&rarr; Đây là công thức làm món salad cà chua rất dễ làm.</span>
+        </div>
+      </div>
+    
+          </div>
+        </div>
+
+        <!-- Khối Trắc Nghiệm Ôn Tập -->
+        <div class="mt-5 pt-4 border-t border-gray-100 dark:border-gray-800">
+          <h4 class="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3 flex items-center gap-1.5">
+            <i class="fa-solid fa-clipboard-question text-blue-600"></i> Auto-évaluation (Trắc Nghiệm Tự Chấm Điểm)
+          </h4>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            
+      <div class="quiz-item p-4 rounded-xl bg-gray-50/80 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700" data-unit="3" data-q="0">
+        <p class="text-xs sm:text-sm font-bold text-gray-900 dark:text-gray-100 mb-3 flex items-start gap-2">
+          <span class="px-2 py-0.5 rounded bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 text-xs font-bold">Q1</span>
+          <span>Complétez la phrase: 'Je ne mange pas ______ viande le soir.'</span>
+        </p>
+        <div class="space-y-2">
+          
+            <button onclick="checkFrenchQuiz(this, 3, 0, 0, 0)" class="quiz-opt-btn w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-850 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 text-xs text-gray-700 dark:text-gray-300 transition flex items-center justify-between">
+              <span><b>A.</b> de</span>
+              <i class="quiz-feedback-icon fa-regular fa-circle text-gray-300 text-xs"></i>
+            </button>
+          
+
+            <button onclick="checkFrenchQuiz(this, 3, 0, 1, 0)" class="quiz-opt-btn w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-850 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 text-xs text-gray-700 dark:text-gray-300 transition flex items-center justify-between">
+              <span><b>B.</b> de la</span>
+              <i class="quiz-feedback-icon fa-regular fa-circle text-gray-300 text-xs"></i>
+            </button>
+          
+
+            <button onclick="checkFrenchQuiz(this, 3, 0, 2, 0)" class="quiz-opt-btn w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-850 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 text-xs text-gray-700 dark:text-gray-300 transition flex items-center justify-between">
+              <span><b>C.</b> du</span>
+              <i class="quiz-feedback-icon fa-regular fa-circle text-gray-300 text-xs"></i>
+            </button>
+          
+
+            <button onclick="checkFrenchQuiz(this, 3, 0, 3, 0)" class="quiz-opt-btn w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-850 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 text-xs text-gray-700 dark:text-gray-300 transition flex items-center justify-between">
+              <span><b>D.</b> des</span>
+              <i class="quiz-feedback-icon fa-regular fa-circle text-gray-300 text-xs"></i>
+            </button>
+          
+        </div>
+        <div class="quiz-expl hidden mt-3 p-2.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-xs text-emerald-800 dark:text-emerald-300">
+          <div class="font-bold flex items-center gap-1.5 mb-1"><i class="fa-solid fa-circle-check"></i> Lời giải chi tiết:</div>
+          <p>Trong câu phủ định (ne ... pas), mạo từ bộ phận (de la) chuyển thành 'de': pas de viande.</p>
+        </div>
+      </div>
+    
+
+      <div class="quiz-item p-4 rounded-xl bg-gray-50/80 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700" data-unit="3" data-q="1">
+        <p class="text-xs sm:text-sm font-bold text-gray-900 dark:text-gray-100 mb-3 flex items-start gap-2">
+          <span class="px-2 py-0.5 rounded bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 text-xs font-bold">Q2</span>
+          <span>Conjuguez le verbe 'boire' avec le pronom 'Nous':</span>
+        </p>
+        <div class="space-y-2">
+          
+            <button onclick="checkFrenchQuiz(this, 3, 1, 0, 0)" class="quiz-opt-btn w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-850 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 text-xs text-gray-700 dark:text-gray-300 transition flex items-center justify-between">
+              <span><b>A.</b> Nous buvons</span>
+              <i class="quiz-feedback-icon fa-regular fa-circle text-gray-300 text-xs"></i>
+            </button>
+          
+
+            <button onclick="checkFrenchQuiz(this, 3, 1, 1, 0)" class="quiz-opt-btn w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-850 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 text-xs text-gray-700 dark:text-gray-300 transition flex items-center justify-between">
+              <span><b>B.</b> Nous boisons</span>
+              <i class="quiz-feedback-icon fa-regular fa-circle text-gray-300 text-xs"></i>
+            </button>
+          
+
+            <button onclick="checkFrenchQuiz(this, 3, 1, 2, 0)" class="quiz-opt-btn w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-850 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 text-xs text-gray-700 dark:text-gray-300 transition flex items-center justify-between">
+              <span><b>C.</b> Nous boivent</span>
+              <i class="quiz-feedback-icon fa-regular fa-circle text-gray-300 text-xs"></i>
+            </button>
+          
+
+            <button onclick="checkFrenchQuiz(this, 3, 1, 3, 0)" class="quiz-opt-btn w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-850 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 text-xs text-gray-700 dark:text-gray-300 transition flex items-center justify-between">
+              <span><b>D.</b> Nous buvez</span>
+              <i class="quiz-feedback-icon fa-regular fa-circle text-gray-300 text-xs"></i>
+            </button>
+          
+        </div>
+        <div class="quiz-expl hidden mt-3 p-2.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-xs text-emerald-800 dark:text-emerald-300">
+          <div class="font-bold flex items-center gap-1.5 mb-1"><i class="fa-solid fa-circle-check"></i> Lời giải chi tiết:</div>
+          <p>Chia động từ boire: je bois, tu bois, il boit, nous buvons, vous buvez, ils boivent.</p>
+        </div>
+      </div>
+    
+          </div>
+        </div>
+
+      </section>
+    
+
+      <!-- ==================== UNITÉ 4: Unité 4: Vedette de cinéma ==================== -->
+      <section id="unite-4" class="unit-section scroll-mt-24 p-5 sm:p-6 rounded-2xl bg-white dark:bg-gray-850 border border-gray-200/80 dark:border-gray-800 shadow-sm transition hover:shadow-md">
+        
+        <!-- Header Unité -->
+        <div class="flex flex-wrap items-center justify-between gap-2 pb-3 mb-4 border-b border-gray-100 dark:border-gray-800">
+          <div class="flex items-center gap-2">
+            <span class="px-2.5 py-1 rounded-lg bg-blue-600 text-white font-black text-xs uppercase tracking-wider">Unité 4</span>
+            <span class="px-2.5 py-1 rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 font-semibold text-xs border border-blue-200 dark:border-blue-800">Điện ảnh, kể lại sự việc trong quá khứ & Viết tiểu sử nhân vật</span>
+          </div>
+          <span class="text-xs font-bold text-gray-400">Ngôi sao điện ảnh</span>
+        </div>
+
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
+          <h3 class="text-lg sm:text-2xl font-black text-gray-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-book text-blue-600"></i> Unité 4: Vedette de cinéma
+          </h3>
+          <!-- Nút Nghe Toàn Bài -->
+          <button onclick="playFrench('l\'acteur / l\'actrice. C\'est mon acteur préféré dans ce film d\'action. le film. Hier, nous avons regardé un film intéressant à la télévision. le cinéma. Elle est partie au cinéma avec ses amis hier soir. la biographie. Il a lu la biographie passionnante de Jean-Paul Belmondo.')" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-xs font-bold shadow-sm shadow-blue-500/20 transition cursor-pointer w-fit">
+            <i class="fa-solid fa-headphones"></i>
+            <span>Nghe toàn bộ từ &amp; câu</span>
+          </button>
+        </div>
+
+        <!-- Sơ đồ tư duy trực quan SVG -->
+        <div class="my-4 p-4 rounded-xl bg-gradient-to-br from-blue-50/40 via-indigo-50/20 to-sky-50/30 dark:from-gray-900 dark:via-gray-850 dark:to-gray-800 border border-blue-100 dark:border-blue-900/40">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-bold text-blue-700 dark:text-blue-400 flex items-center gap-1.5">
+              <i class="fa-solid fa-diagram-project"></i> Sơ đồ trực quan • Unité 4: Vedette de cinéma
+            </span>
+            <span class="text-[11px] text-gray-400 font-medium">Français 6 • THCS</span>
+          </div>
+          <div class="w-full overflow-x-auto py-1">
+            
+    <svg viewBox="0 0 650 130" class="w-full max-w-2xl mx-auto h-auto select-none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="fr_g_4" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#7c3aed"/>
+          <stop offset="100%" stop-color="#6d28d9"/>
+        </linearGradient>
+      </defs>
+
+      <!-- Node 1: Unité Theme -->
+      <rect x="15" y="20" width="185" height="90" rx="12" fill="url(#fr_g_4)" filter="drop-shadow(0 4px 6px rgba(0,0,0,0.1))"/>
+      <text x="107" y="48" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">UNITÉ 4: CINÉMA</text>
+      <text x="107" y="68" fill="#ffffff" font-size="10" text-anchor="middle">Passé Composé • Avoir/Être</text>
+      <text x="107" y="88" fill="#ffffff" font-size="9" opacity="0.9" text-anchor="middle">🔊 Audio Web Speech (fr-FR)</text>
+
+      <!-- Arrow 1 -->
+      <path d="M 205 65 L 235 65" stroke="#7c3aed" stroke-width="2.5" stroke-linecap="round"/>
+      <polygon points="235,60 243,65 235,70" fill="#7c3aed"/>
+
+      <!-- Node 2: Grammaire Cốt Lõi -->
+      <rect x="245" y="20" width="200" height="90" rx="12" fill="#1e293b" stroke="#7c3aed" stroke-width="1.5" filter="drop-shadow(0 4px 6px rgba(0,0,0,0.1))"/>
+      <text x="345" y="48" fill="#38bdf8" font-size="11" font-weight="bold" text-anchor="middle">POINT DE GRAMMAIRE</text>
+      <text x="345" y="68" fill="#ffffff" font-size="10" text-anchor="middle">Règles &amp; Conjugaisons</text>
+      <text x="345" y="88" fill="#94a3b8" font-size="9" text-anchor="middle">Formules &amp; Exemples</text>
+
+      <!-- Arrow 2 -->
+      <path d="M 450 65 L 475 65" stroke="#7c3aed" stroke-width="2.5" stroke-linecap="round"/>
+      <polygon points="475,60 483,65 475,70" fill="#7c3aed"/>
+
+      <!-- Node 3: Vocabulaire & Phrénétique -->
+      <rect x="485" y="20" width="150" height="90" rx="12" fill="#eff6ff" stroke="#7c3aed" stroke-width="1.5"/>
+      <text x="560" y="48" fill="#7c3aed" font-size="11" font-weight="bold" text-anchor="middle">VOCABULAIRE &amp; QUIZ</text>
+      <text x="560" y="68" fill="#7c3aed" font-size="10" text-anchor="middle">Mots &amp; Phrases clées</text>
+      <text x="560" y="88" fill="#7c3aed" font-size="9" text-anchor="middle">Auto-évaluation</text>
+    </svg>
+  
+          </div>
+        </div>
+
+        <!-- Khối Ngữ Pháp Cốt Lõi -->
+        <div class="my-5 p-4 rounded-xl bg-indigo-50/50 dark:bg-indigo-950/20 border border-indigo-200/60 dark:border-indigo-900/40">
+          <h4 class="text-sm font-bold text-indigo-900 dark:text-indigo-300 mb-2 flex items-center gap-2">
+            <i class="fa-solid fa-cube text-indigo-600"></i> Ngữ Pháp Cốt Lõi: Thì Quá khứ kép (Passé composé với avoir và être) & Mốc thời gian
+          </h4>
+          <div class="text-xs text-gray-700 dark:text-gray-300 leading-relaxed font-mono whitespace-pre-line bg-white/80 dark:bg-gray-800/80 p-3 rounded-lg border border-indigo-100 dark:border-indigo-800/80 mb-2">1. Cấu trúc Passé composé: Trợ động từ (avoir / être ở hiện tại) + Quá khứ phân từ (Participe passé).
+2. Đi với AVOIR (đa số động từ): J'ai regardé, Il a lu, Nous avons fini.
+3. Đi với ÊTRE (14 động từ chuyển động & phản thân: aller, venir, partir, monter...): Elle est partie, Ils sont allés (phải hợp giống số với chủ ngữ).
+4. Mốc thời gian: hier (hôm qua), aujourd'hui (hôm nay), demain (ngày mai), déjà (đã từng) / jamais (chưa bao giờ).</div>
+          <p class="text-xs text-indigo-800 dark:text-indigo-300 italic"><i class="fa-solid fa-circle-info"></i> Cách đọc số đếm lớn từ 101 trở lên: cent un (101), deux cents (200), mille (1000).</p>
+        </div>
+
+        <!-- Khối Từ Vựng & Câu Ứng Dụng (Có Audio riêng từng nút) -->
+        <div class="my-5">
+          <div class="flex items-center justify-between mb-3">
+            <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider flex items-center gap-1.5">
+              <i class="fa-solid fa-spell-check text-blue-600"></i> Từ Vựng Cốt Lõi &amp; Câu Ứng Dụng (Web Speech fr-FR)
+            </h4>
+            <span class="text-[11px] text-gray-400">Bấm 🔊 để nghe tiếng Pháp chuẩn</span>
+          </div>
+          <div class="space-y-2.5">
+            
+      <div class="p-3.5 rounded-xl bg-white dark:bg-gray-800/90 border border-gray-200/80 dark:border-gray-700/80 hover:border-blue-400 dark:hover:border-blue-500 shadow-sm transition space-y-2">
+        <!-- Hàng Từ Vựng -->
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div class="flex items-center gap-2">
+            <button onclick="playFrench('l\'acteur / l\'actrice')" class="px-2.5 py-1 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-sm" title="Nghe phát âm từ">
+              <i class="fa-solid fa-volume-high text-[11px]"></i> <span>Từ vựng</span>
+            </button>
+            <span class="text-sm font-bold text-gray-900 dark:text-white">l'acteur / l'actrice</span>
+          </div>
+          <span class="text-xs text-gray-500 dark:text-gray-400 italic">(nam / nữ diễn viên điện ảnh)</span>
+        </div>
+
+        <!-- Hàng Câu Ứng Dụng -->
+        <div class="pt-2 border-t border-gray-100 dark:border-gray-700/60 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+          <div class="flex items-start sm:items-center gap-2">
+            <button onclick="playFrench('C\'est mon acteur préféré dans ce film d\'action.')" class="px-2 py-0.5 rounded-md bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-semibold transition flex items-center gap-1 flex-shrink-0 shadow-sm" title="Nghe phát âm cả câu">
+              <i class="fa-solid fa-play text-[9px]"></i> <span>Cả câu</span>
+            </button>
+            <span class="font-medium text-gray-800 dark:text-gray-200"><em>"C'est mon acteur préféré dans ce film d'action."</em></span>
+          </div>
+          <span class="text-[11px] text-gray-500 dark:text-gray-400 italic sm:text-right">&rarr; Đó là nam diễn viên tôi yêu thích nhất trong bộ phim hành động này.</span>
+        </div>
+      </div>
+    
+
+      <div class="p-3.5 rounded-xl bg-white dark:bg-gray-800/90 border border-gray-200/80 dark:border-gray-700/80 hover:border-blue-400 dark:hover:border-blue-500 shadow-sm transition space-y-2">
+        <!-- Hàng Từ Vựng -->
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div class="flex items-center gap-2">
+            <button onclick="playFrench('le film')" class="px-2.5 py-1 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-sm" title="Nghe phát âm từ">
+              <i class="fa-solid fa-volume-high text-[11px]"></i> <span>Từ vựng</span>
+            </button>
+            <span class="text-sm font-bold text-gray-900 dark:text-white">le film</span>
+          </div>
+          <span class="text-xs text-gray-500 dark:text-gray-400 italic">(bộ phim điện ảnh)</span>
+        </div>
+
+        <!-- Hàng Câu Ứng Dụng -->
+        <div class="pt-2 border-t border-gray-100 dark:border-gray-700/60 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+          <div class="flex items-start sm:items-center gap-2">
+            <button onclick="playFrench('Hier, nous avons regardé un film intéressant à la télévision.')" class="px-2 py-0.5 rounded-md bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-semibold transition flex items-center gap-1 flex-shrink-0 shadow-sm" title="Nghe phát âm cả câu">
+              <i class="fa-solid fa-play text-[9px]"></i> <span>Cả câu</span>
+            </button>
+            <span class="font-medium text-gray-800 dark:text-gray-200"><em>"Hier, nous avons regardé un film intéressant à la télévision."</em></span>
+          </div>
+          <span class="text-[11px] text-gray-500 dark:text-gray-400 italic sm:text-right">&rarr; Hôm qua, chúng tôi đã xem một bộ phim rất hay trên truyền hình.</span>
+        </div>
+      </div>
+    
+
+      <div class="p-3.5 rounded-xl bg-white dark:bg-gray-800/90 border border-gray-200/80 dark:border-gray-700/80 hover:border-blue-400 dark:hover:border-blue-500 shadow-sm transition space-y-2">
+        <!-- Hàng Từ Vựng -->
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div class="flex items-center gap-2">
+            <button onclick="playFrench('le cinéma')" class="px-2.5 py-1 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-sm" title="Nghe phát âm từ">
+              <i class="fa-solid fa-volume-high text-[11px]"></i> <span>Từ vựng</span>
+            </button>
+            <span class="text-sm font-bold text-gray-900 dark:text-white">le cinéma</span>
+          </div>
+          <span class="text-xs text-gray-500 dark:text-gray-400 italic">(rạp chiếu phim, nền điện ảnh)</span>
+        </div>
+
+        <!-- Hàng Câu Ứng Dụng -->
+        <div class="pt-2 border-t border-gray-100 dark:border-gray-700/60 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+          <div class="flex items-start sm:items-center gap-2">
+            <button onclick="playFrench('Elle est partie au cinéma avec ses amis hier soir.')" class="px-2 py-0.5 rounded-md bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-semibold transition flex items-center gap-1 flex-shrink-0 shadow-sm" title="Nghe phát âm cả câu">
+              <i class="fa-solid fa-play text-[9px]"></i> <span>Cả câu</span>
+            </button>
+            <span class="font-medium text-gray-800 dark:text-gray-200"><em>"Elle est partie au cinéma avec ses amis hier soir."</em></span>
+          </div>
+          <span class="text-[11px] text-gray-500 dark:text-gray-400 italic sm:text-right">&rarr; Cô ấy đã đi xem phim ở rạp cùng bạn bè tối hôm qua.</span>
+        </div>
+      </div>
+    
+
+      <div class="p-3.5 rounded-xl bg-white dark:bg-gray-800/90 border border-gray-200/80 dark:border-gray-700/80 hover:border-blue-400 dark:hover:border-blue-500 shadow-sm transition space-y-2">
+        <!-- Hàng Từ Vựng -->
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div class="flex items-center gap-2">
+            <button onclick="playFrench('la biographie')" class="px-2.5 py-1 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-sm" title="Nghe phát âm từ">
+              <i class="fa-solid fa-volume-high text-[11px]"></i> <span>Từ vựng</span>
+            </button>
+            <span class="text-sm font-bold text-gray-900 dark:text-white">la biographie</span>
+          </div>
+          <span class="text-xs text-gray-500 dark:text-gray-400 italic">(tiểu sử, truyện danh nhân)</span>
+        </div>
+
+        <!-- Hàng Câu Ứng Dụng -->
+        <div class="pt-2 border-t border-gray-100 dark:border-gray-700/60 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+          <div class="flex items-start sm:items-center gap-2">
+            <button onclick="playFrench('Il a lu la biographie passionnante de Jean-Paul Belmondo.')" class="px-2 py-0.5 rounded-md bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-semibold transition flex items-center gap-1 flex-shrink-0 shadow-sm" title="Nghe phát âm cả câu">
+              <i class="fa-solid fa-play text-[9px]"></i> <span>Cả câu</span>
+            </button>
+            <span class="font-medium text-gray-800 dark:text-gray-200"><em>"Il a lu la biographie passionnante de Jean-Paul Belmondo."</em></span>
+          </div>
+          <span class="text-[11px] text-gray-500 dark:text-gray-400 italic sm:text-right">&rarr; Cậu ấy đã đọc cuốn tiểu sử đầy hấp dẫn của Jean-Paul Belmondo.</span>
+        </div>
+      </div>
+    
+          </div>
+        </div>
+
+        <!-- Khối Trắc Nghiệm Ôn Tập -->
+        <div class="mt-5 pt-4 border-t border-gray-100 dark:border-gray-800">
+          <h4 class="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3 flex items-center gap-1.5">
+            <i class="fa-solid fa-clipboard-question text-blue-600"></i> Auto-évaluation (Trắc Nghiệm Tự Chấm Điểm)
+          </h4>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            
+      <div class="quiz-item p-4 rounded-xl bg-gray-50/80 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700" data-unit="4" data-q="0">
+        <p class="text-xs sm:text-sm font-bold text-gray-900 dark:text-gray-100 mb-3 flex items-start gap-2">
+          <span class="px-2 py-0.5 rounded bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 text-xs font-bold">Q1</span>
+          <span>Choisissez la bonne forme du Passé composé: 'Hier, Marie ______ au cinéma.'</span>
+        </p>
+        <div class="space-y-2">
+          
+            <button onclick="checkFrenchQuiz(this, 4, 0, 0, 0)" class="quiz-opt-btn w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-850 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 text-xs text-gray-700 dark:text-gray-300 transition flex items-center justify-between">
+              <span><b>A.</b> est allée</span>
+              <i class="quiz-feedback-icon fa-regular fa-circle text-gray-300 text-xs"></i>
+            </button>
+          
+
+            <button onclick="checkFrenchQuiz(this, 4, 0, 1, 0)" class="quiz-opt-btn w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-850 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 text-xs text-gray-700 dark:text-gray-300 transition flex items-center justify-between">
+              <span><b>B.</b> a allé</span>
+              <i class="quiz-feedback-icon fa-regular fa-circle text-gray-300 text-xs"></i>
+            </button>
+          
+
+            <button onclick="checkFrenchQuiz(this, 4, 0, 2, 0)" class="quiz-opt-btn w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-850 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 text-xs text-gray-700 dark:text-gray-300 transition flex items-center justify-between">
+              <span><b>C.</b> est allé</span>
+              <i class="quiz-feedback-icon fa-regular fa-circle text-gray-300 text-xs"></i>
+            </button>
+          
+
+            <button onclick="checkFrenchQuiz(this, 4, 0, 3, 0)" class="quiz-opt-btn w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-850 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 text-xs text-gray-700 dark:text-gray-300 transition flex items-center justify-between">
+              <span><b>D.</b> a allée</span>
+              <i class="quiz-feedback-icon fa-regular fa-circle text-gray-300 text-xs"></i>
+            </button>
+          
+        </div>
+        <div class="quiz-expl hidden mt-3 p-2.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-xs text-emerald-800 dark:text-emerald-300">
+          <div class="font-bold flex items-center gap-1.5 mb-1"><i class="fa-solid fa-circle-check"></i> Lời giải chi tiết:</div>
+          <p>Động từ 'aller' chia với trợ động từ 'être'. Chủ ngữ 'Marie' là giống cái số ít nên participe passé phải hợp giống cái thêm 'e' -> 'est allée'.</p>
+        </div>
+      </div>
+    
+
+      <div class="quiz-item p-4 rounded-xl bg-gray-50/80 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700" data-unit="4" data-q="1">
+        <p class="text-xs sm:text-sm font-bold text-gray-900 dark:text-gray-100 mb-3 flex items-start gap-2">
+          <span class="px-2 py-0.5 rounded bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 text-xs font-bold">Q2</span>
+          <span>Quel mot signifie 'ngày hôm qua' en français ?</span>
+        </p>
+        <div class="space-y-2">
+          
+            <button onclick="checkFrenchQuiz(this, 4, 1, 0, 0)" class="quiz-opt-btn w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-850 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 text-xs text-gray-700 dark:text-gray-300 transition flex items-center justify-between">
+              <span><b>A.</b> Hier</span>
+              <i class="quiz-feedback-icon fa-regular fa-circle text-gray-300 text-xs"></i>
+            </button>
+          
+
+            <button onclick="checkFrenchQuiz(this, 4, 1, 1, 0)" class="quiz-opt-btn w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-850 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 text-xs text-gray-700 dark:text-gray-300 transition flex items-center justify-between">
+              <span><b>B.</b> Aujourd'hui</span>
+              <i class="quiz-feedback-icon fa-regular fa-circle text-gray-300 text-xs"></i>
+            </button>
+          
+
+            <button onclick="checkFrenchQuiz(this, 4, 1, 2, 0)" class="quiz-opt-btn w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-850 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 text-xs text-gray-700 dark:text-gray-300 transition flex items-center justify-between">
+              <span><b>C.</b> Demain</span>
+              <i class="quiz-feedback-icon fa-regular fa-circle text-gray-300 text-xs"></i>
+            </button>
+          
+
+            <button onclick="checkFrenchQuiz(this, 4, 1, 3, 0)" class="quiz-opt-btn w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-850 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 text-xs text-gray-700 dark:text-gray-300 transition flex items-center justify-between">
+              <span><b>D.</b> Maintenant</span>
+              <i class="quiz-feedback-icon fa-regular fa-circle text-gray-300 text-xs"></i>
+            </button>
+          
+        </div>
+        <div class="quiz-expl hidden mt-3 p-2.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-xs text-emerald-800 dark:text-emerald-300">
+          <div class="font-bold flex items-center gap-1.5 mb-1"><i class="fa-solid fa-circle-check"></i> Lời giải chi tiết:</div>
+          <p>'Hier' = hôm qua; 'Aujourd'hui' = hôm nay; 'Demain' = ngày mai; 'Maintenant' = bây giờ.</p>
+        </div>
+      </div>
+    
+          </div>
+        </div>
+
+      </section>
+    
+
+      <!-- ==================== UNITÉ 5: Unité 5: Je fais du bénévolat ==================== -->
+      <section id="unite-5" class="unit-section scroll-mt-24 p-5 sm:p-6 rounded-2xl bg-white dark:bg-gray-850 border border-gray-200/80 dark:border-gray-800 shadow-sm transition hover:shadow-md">
+        
+        <!-- Header Unité -->
+        <div class="flex flex-wrap items-center justify-between gap-2 pb-3 mb-4 border-b border-gray-100 dark:border-gray-800">
+          <div class="flex items-center gap-2">
+            <span class="px-2.5 py-1 rounded-lg bg-blue-600 text-white font-black text-xs uppercase tracking-wider">Unité 5</span>
+            <span class="px-2.5 py-1 rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 font-semibold text-xs border border-blue-200 dark:border-blue-800">Thiện nguyện, cảm xúc, đoàn kết & Câu điều kiện</span>
+          </div>
+          <span class="text-xs font-bold text-gray-400">Tôi tham gia hoạt động tình nguyện</span>
+        </div>
+
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
+          <h3 class="text-lg sm:text-2xl font-black text-gray-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-book text-blue-600"></i> Unité 5: Je fais du bénévolat
+          </h3>
+          <!-- Nút Nghe Toàn Bài -->
+          <button onclick="playFrench('le bénévolat. Je fais du bénévolat le week-end pour aider les autres. le bénévole. L\'association caritative cherche de nouveaux bénévoles enthousiastes. l\'association caritative. C\'est une grande association caritative très active dans la ville. la solidarité. Tous les élèves participent activement à la Journée de la solidarité.')" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-xs font-bold shadow-sm shadow-blue-500/20 transition cursor-pointer w-fit">
+            <i class="fa-solid fa-headphones"></i>
+            <span>Nghe toàn bộ từ &amp; câu</span>
+          </button>
+        </div>
+
+        <!-- Sơ đồ tư duy trực quan SVG -->
+        <div class="my-4 p-4 rounded-xl bg-gradient-to-br from-blue-50/40 via-indigo-50/20 to-sky-50/30 dark:from-gray-900 dark:via-gray-850 dark:to-gray-800 border border-blue-100 dark:border-blue-900/40">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-bold text-blue-700 dark:text-blue-400 flex items-center gap-1.5">
+              <i class="fa-solid fa-diagram-project"></i> Sơ đồ trực quan • Unité 5: Je fais du bénévolat
+            </span>
+            <span class="text-[11px] text-gray-400 font-medium">Français 6 • THCS</span>
+          </div>
+          <div class="w-full overflow-x-auto py-1">
+            
+    <svg viewBox="0 0 650 130" class="w-full max-w-2xl mx-auto h-auto select-none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="fr_g_5" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#0891b2"/>
+          <stop offset="100%" stop-color="#0e7490"/>
+        </linearGradient>
+      </defs>
+
+      <!-- Node 1: Unité Theme -->
+      <rect x="15" y="20" width="185" height="90" rx="12" fill="url(#fr_g_5)" filter="drop-shadow(0 4px 6px rgba(0,0,0,0.1))"/>
+      <text x="107" y="48" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">UNITÉ 5: BÉNÉVOLAT</text>
+      <text x="107" y="68" fill="#ffffff" font-size="10" text-anchor="middle">Pronoms En / Y • Solidarité</text>
+      <text x="107" y="88" fill="#ffffff" font-size="9" opacity="0.9" text-anchor="middle">🔊 Audio Web Speech (fr-FR)</text>
+
+      <!-- Arrow 1 -->
+      <path d="M 205 65 L 235 65" stroke="#0891b2" stroke-width="2.5" stroke-linecap="round"/>
+      <polygon points="235,60 243,65 235,70" fill="#0891b2"/>
+
+      <!-- Node 2: Grammaire Cốt Lõi -->
+      <rect x="245" y="20" width="200" height="90" rx="12" fill="#1e293b" stroke="#0891b2" stroke-width="1.5" filter="drop-shadow(0 4px 6px rgba(0,0,0,0.1))"/>
+      <text x="345" y="48" fill="#38bdf8" font-size="11" font-weight="bold" text-anchor="middle">POINT DE GRAMMAIRE</text>
+      <text x="345" y="68" fill="#ffffff" font-size="10" text-anchor="middle">Règles &amp; Conjugaisons</text>
+      <text x="345" y="88" fill="#94a3b8" font-size="9" text-anchor="middle">Formules &amp; Exemples</text>
+
+      <!-- Arrow 2 -->
+      <path d="M 450 65 L 475 65" stroke="#0891b2" stroke-width="2.5" stroke-linecap="round"/>
+      <polygon points="475,60 483,65 475,70" fill="#0891b2"/>
+
+      <!-- Node 3: Vocabulaire & Phrénétique -->
+      <rect x="485" y="20" width="150" height="90" rx="12" fill="#eff6ff" stroke="#0891b2" stroke-width="1.5"/>
+      <text x="560" y="48" fill="#0891b2" font-size="11" font-weight="bold" text-anchor="middle">VOCABULAIRE &amp; QUIZ</text>
+      <text x="560" y="68" fill="#0891b2" font-size="10" text-anchor="middle">Mots &amp; Phrases clées</text>
+      <text x="560" y="88" fill="#0891b2" font-size="9" text-anchor="middle">Auto-évaluation</text>
+    </svg>
+  
+          </div>
+        </div>
+
+        <!-- Khối Ngữ Pháp Cốt Lõi -->
+        <div class="my-5 p-4 rounded-xl bg-indigo-50/50 dark:bg-indigo-950/20 border border-indigo-200/60 dark:border-indigo-900/40">
+          <h4 class="text-sm font-bold text-indigo-900 dark:text-indigo-300 mb-2 flex items-center gap-2">
+            <i class="fa-solid fa-cube text-indigo-600"></i> Ngữ Pháp Cốt Lõi: Đại từ en & Đại từ y & Đại từ bất định & Cấu trúc Si + présent
+          </h4>
+          <div class="text-xs text-gray-700 dark:text-gray-300 leading-relaxed font-mono whitespace-pre-line bg-white/80 dark:bg-gray-800/80 p-3 rounded-lg border border-indigo-100 dark:border-indigo-800/80 mb-2">1. Đại từ 'en': Thay thế cụm bắt đầu bằng 'de' hoặc danh từ có số lượng/mạo từ bộ phận (Tu fais du bénévolat ? - Oui, j'en fais).
+2. Đại từ 'y': Thay thế cụm chỉ nơi chốn hoặc cụm bắt đầu bằng 'à' (Tu vas à l'association ? - Oui, j'y vais).
+3. Đại từ bất định: quelqu'un (ai đó) / personne (không ai); quelque chose (cái gì đó) / rien (không có gì).
+4. Câu điều kiện hiện tại: Si + présent, présent (Si tu veux aider, tu participes au projet).</div>
+          <p class="text-xs text-indigo-800 dark:text-indigo-300 italic"><i class="fa-solid fa-circle-info"></i> Diễn đạt tinh thần tương thân tương ái: la solidarité, aider les personnes en difficulté.</p>
+        </div>
+
+        <!-- Khối Từ Vựng & Câu Ứng Dụng (Có Audio riêng từng nút) -->
+        <div class="my-5">
+          <div class="flex items-center justify-between mb-3">
+            <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider flex items-center gap-1.5">
+              <i class="fa-solid fa-spell-check text-blue-600"></i> Từ Vựng Cốt Lõi &amp; Câu Ứng Dụng (Web Speech fr-FR)
+            </h4>
+            <span class="text-[11px] text-gray-400">Bấm 🔊 để nghe tiếng Pháp chuẩn</span>
+          </div>
+          <div class="space-y-2.5">
+            
+      <div class="p-3.5 rounded-xl bg-white dark:bg-gray-800/90 border border-gray-200/80 dark:border-gray-700/80 hover:border-blue-400 dark:hover:border-blue-500 shadow-sm transition space-y-2">
+        <!-- Hàng Từ Vựng -->
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div class="flex items-center gap-2">
+            <button onclick="playFrench('le bénévolat')" class="px-2.5 py-1 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-sm" title="Nghe phát âm từ">
+              <i class="fa-solid fa-volume-high text-[11px]"></i> <span>Từ vựng</span>
+            </button>
+            <span class="text-sm font-bold text-gray-900 dark:text-white">le bénévolat</span>
+          </div>
+          <span class="text-xs text-gray-500 dark:text-gray-400 italic">(hoạt động thiện nguyện, việc tình nguyện)</span>
+        </div>
+
+        <!-- Hàng Câu Ứng Dụng -->
+        <div class="pt-2 border-t border-gray-100 dark:border-gray-700/60 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+          <div class="flex items-start sm:items-center gap-2">
+            <button onclick="playFrench('Je fais du bénévolat le week-end pour aider les autres.')" class="px-2 py-0.5 rounded-md bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-semibold transition flex items-center gap-1 flex-shrink-0 shadow-sm" title="Nghe phát âm cả câu">
+              <i class="fa-solid fa-play text-[9px]"></i> <span>Cả câu</span>
+            </button>
+            <span class="font-medium text-gray-800 dark:text-gray-200"><em>"Je fais du bénévolat le week-end pour aider les autres."</em></span>
+          </div>
+          <span class="text-[11px] text-gray-500 dark:text-gray-400 italic sm:text-right">&rarr; Tôi tham gia hoạt động tình nguyện vào cuối tuần để giúp đỡ người khác.</span>
+        </div>
+      </div>
+    
+
+      <div class="p-3.5 rounded-xl bg-white dark:bg-gray-800/90 border border-gray-200/80 dark:border-gray-700/80 hover:border-blue-400 dark:hover:border-blue-500 shadow-sm transition space-y-2">
+        <!-- Hàng Từ Vựng -->
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div class="flex items-center gap-2">
+            <button onclick="playFrench('le bénévole')" class="px-2.5 py-1 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-sm" title="Nghe phát âm từ">
+              <i class="fa-solid fa-volume-high text-[11px]"></i> <span>Từ vựng</span>
+            </button>
+            <span class="text-sm font-bold text-gray-900 dark:text-white">le bénévole</span>
+          </div>
+          <span class="text-xs text-gray-500 dark:text-gray-400 italic">(tình nguyện viên)</span>
+        </div>
+
+        <!-- Hàng Câu Ứng Dụng -->
+        <div class="pt-2 border-t border-gray-100 dark:border-gray-700/60 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+          <div class="flex items-start sm:items-center gap-2">
+            <button onclick="playFrench('L\'association caritative cherche de nouveaux bénévoles enthousiastes.')" class="px-2 py-0.5 rounded-md bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-semibold transition flex items-center gap-1 flex-shrink-0 shadow-sm" title="Nghe phát âm cả câu">
+              <i class="fa-solid fa-play text-[9px]"></i> <span>Cả câu</span>
+            </button>
+            <span class="font-medium text-gray-800 dark:text-gray-200"><em>"L'association caritative cherche de nouveaux bénévoles enthousiastes."</em></span>
+          </div>
+          <span class="text-[11px] text-gray-500 dark:text-gray-400 italic sm:text-right">&rarr; Hội từ thiện đang tìm kiếm các tình nguyện viên mới đầy nhiệt huyết.</span>
+        </div>
+      </div>
+    
+
+      <div class="p-3.5 rounded-xl bg-white dark:bg-gray-800/90 border border-gray-200/80 dark:border-gray-700/80 hover:border-blue-400 dark:hover:border-blue-500 shadow-sm transition space-y-2">
+        <!-- Hàng Từ Vựng -->
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div class="flex items-center gap-2">
+            <button onclick="playFrench('l\'association caritative')" class="px-2.5 py-1 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-sm" title="Nghe phát âm từ">
+              <i class="fa-solid fa-volume-high text-[11px]"></i> <span>Từ vựng</span>
+            </button>
+            <span class="text-sm font-bold text-gray-900 dark:text-white">l'association caritative</span>
+          </div>
+          <span class="text-xs text-gray-500 dark:text-gray-400 italic">(hội từ thiện, tổ chức nhân đạo)</span>
+        </div>
+
+        <!-- Hàng Câu Ứng Dụng -->
+        <div class="pt-2 border-t border-gray-100 dark:border-gray-700/60 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+          <div class="flex items-start sm:items-center gap-2">
+            <button onclick="playFrench('C\'est une grande association caritative très active dans la ville.')" class="px-2 py-0.5 rounded-md bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-semibold transition flex items-center gap-1 flex-shrink-0 shadow-sm" title="Nghe phát âm cả câu">
+              <i class="fa-solid fa-play text-[9px]"></i> <span>Cả câu</span>
+            </button>
+            <span class="font-medium text-gray-800 dark:text-gray-200"><em>"C'est une grande association caritative très active dans la ville."</em></span>
+          </div>
+          <span class="text-[11px] text-gray-500 dark:text-gray-400 italic sm:text-right">&rarr; Đó là một tổ chức từ thiện lớn hoạt động rất tích cực trong thành phố.</span>
+        </div>
+      </div>
+    
+
+      <div class="p-3.5 rounded-xl bg-white dark:bg-gray-800/90 border border-gray-200/80 dark:border-gray-700/80 hover:border-blue-400 dark:hover:border-blue-500 shadow-sm transition space-y-2">
+        <!-- Hàng Từ Vựng -->
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div class="flex items-center gap-2">
+            <button onclick="playFrench('la solidarité')" class="px-2.5 py-1 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-sm" title="Nghe phát âm từ">
+              <i class="fa-solid fa-volume-high text-[11px]"></i> <span>Từ vựng</span>
+            </button>
+            <span class="text-sm font-bold text-gray-900 dark:text-white">la solidarité</span>
+          </div>
+          <span class="text-xs text-gray-500 dark:text-gray-400 italic">(tinh thần đoàn kết, tương thân tương ái)</span>
+        </div>
+
+        <!-- Hàng Câu Ứng Dụng -->
+        <div class="pt-2 border-t border-gray-100 dark:border-gray-700/60 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+          <div class="flex items-start sm:items-center gap-2">
+            <button onclick="playFrench('Tous les élèves participent activement à la Journée de la solidarité.')" class="px-2 py-0.5 rounded-md bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-semibold transition flex items-center gap-1 flex-shrink-0 shadow-sm" title="Nghe phát âm cả câu">
+              <i class="fa-solid fa-play text-[9px]"></i> <span>Cả câu</span>
+            </button>
+            <span class="font-medium text-gray-800 dark:text-gray-200"><em>"Tous les élèves participent activement à la Journée de la solidarité."</em></span>
+          </div>
+          <span class="text-[11px] text-gray-500 dark:text-gray-400 italic sm:text-right">&rarr; Tất cả học sinh đều tham gia tích cực vào Ngày hội đoàn kết.</span>
+        </div>
+      </div>
+    
+          </div>
+        </div>
+
+        <!-- Khối Trắc Nghiệm Ôn Tập -->
+        <div class="mt-5 pt-4 border-t border-gray-100 dark:border-gray-800">
+          <h4 class="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3 flex items-center gap-1.5">
+            <i class="fa-solid fa-clipboard-question text-blue-600"></i> Auto-évaluation (Trắc Nghiệm Tự Chấm Điểm)
+          </h4>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            
+      <div class="quiz-item p-4 rounded-xl bg-gray-50/80 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700" data-unit="5" data-q="0">
+        <p class="text-xs sm:text-sm font-bold text-gray-900 dark:text-gray-100 mb-3 flex items-start gap-2">
+          <span class="px-2 py-0.5 rounded bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 text-xs font-bold">Q1</span>
+          <span>Complétez avec le bon pronom: 'Tu participes à ce projet solidaire ? - Oui, j'______ participe.'</span>
+        </p>
+        <div class="space-y-2">
+          
+            <button onclick="checkFrenchQuiz(this, 5, 0, 0, 0)" class="quiz-opt-btn w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-850 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 text-xs text-gray-700 dark:text-gray-300 transition flex items-center justify-between">
+              <span><b>A.</b> y</span>
+              <i class="quiz-feedback-icon fa-regular fa-circle text-gray-300 text-xs"></i>
+            </button>
+          
+
+            <button onclick="checkFrenchQuiz(this, 5, 0, 1, 0)" class="quiz-opt-btn w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-850 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 text-xs text-gray-700 dark:text-gray-300 transition flex items-center justify-between">
+              <span><b>B.</b> en</span>
+              <i class="quiz-feedback-icon fa-regular fa-circle text-gray-300 text-xs"></i>
+            </button>
+          
+
+            <button onclick="checkFrenchQuiz(this, 5, 0, 2, 0)" class="quiz-opt-btn w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-850 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 text-xs text-gray-700 dark:text-gray-300 transition flex items-center justify-between">
+              <span><b>C.</b> le</span>
+              <i class="quiz-feedback-icon fa-regular fa-circle text-gray-300 text-xs"></i>
+            </button>
+          
+
+            <button onclick="checkFrenchQuiz(this, 5, 0, 3, 0)" class="quiz-opt-btn w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-850 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 text-xs text-gray-700 dark:text-gray-300 transition flex items-center justify-between">
+              <span><b>D.</b> lui</span>
+              <i class="quiz-feedback-icon fa-regular fa-circle text-gray-300 text-xs"></i>
+            </button>
+          
+        </div>
+        <div class="quiz-expl hidden mt-3 p-2.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-xs text-emerald-800 dark:text-emerald-300">
+          <div class="font-bold flex items-center gap-1.5 mb-1"><i class="fa-solid fa-circle-check"></i> Lời giải chi tiết:</div>
+          <p>Cụm 'à ce projet' bắt đầu bằng giới từ 'à' chỉ sự vật/mục tiêu -> thay bằng đại từ 'y'.</p>
+        </div>
+      </div>
+    
+
+      <div class="quiz-item p-4 rounded-xl bg-gray-50/80 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700" data-unit="5" data-q="1">
+        <p class="text-xs sm:text-sm font-bold text-gray-900 dark:text-gray-100 mb-3 flex items-start gap-2">
+          <span class="px-2 py-0.5 rounded bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 text-xs font-bold">Q2</span>
+          <span>Quelle est la forme négative de 'Il y a quelqu'un dans la salle' ?</span>
+        </p>
+        <div class="space-y-2">
+          
+            <button onclick="checkFrenchQuiz(this, 5, 1, 0, 0)" class="quiz-opt-btn w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-850 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 text-xs text-gray-700 dark:text-gray-300 transition flex items-center justify-between">
+              <span><b>A.</b> Il n'y a personne dans la salle.</span>
+              <i class="quiz-feedback-icon fa-regular fa-circle text-gray-300 text-xs"></i>
+            </button>
+          
+
+            <button onclick="checkFrenchQuiz(this, 5, 1, 1, 0)" class="quiz-opt-btn w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-850 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 text-xs text-gray-700 dark:text-gray-300 transition flex items-center justify-between">
+              <span><b>B.</b> Il n'y a rien dans la salle.</span>
+              <i class="quiz-feedback-icon fa-regular fa-circle text-gray-300 text-xs"></i>
+            </button>
+          
+
+            <button onclick="checkFrenchQuiz(this, 5, 1, 2, 0)" class="quiz-opt-btn w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-850 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 text-xs text-gray-700 dark:text-gray-300 transition flex items-center justify-between">
+              <span><b>C.</b> Il n'y a jamais dans la salle.</span>
+              <i class="quiz-feedback-icon fa-regular fa-circle text-gray-300 text-xs"></i>
+            </button>
+          
+
+            <button onclick="checkFrenchQuiz(this, 5, 1, 3, 0)" class="quiz-opt-btn w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-850 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 text-xs text-gray-700 dark:text-gray-300 transition flex items-center justify-between">
+              <span><b>D.</b> Il n'y a pas quelqu'un dans la salle.</span>
+              <i class="quiz-feedback-icon fa-regular fa-circle text-gray-300 text-xs"></i>
+            </button>
+          
+        </div>
+        <div class="quiz-expl hidden mt-3 p-2.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-xs text-emerald-800 dark:text-emerald-300">
+          <div class="font-bold flex items-center gap-1.5 mb-1"><i class="fa-solid fa-circle-check"></i> Lời giải chi tiết:</div>
+          <p>Phủ định của đại từ bất định 'quelqu'un' (ai đó) là 'ne ... personne' (không có ai).</p>
+        </div>
+      </div>
+    
+          </div>
+        </div>
+
+      </section>
+    
+
+      <!-- ==================== UNITÉ 6: Unité 6: Quel métier veux-tu faire plus tard ? ==================== -->
+      <section id="unite-6" class="unit-section scroll-mt-24 p-5 sm:p-6 rounded-2xl bg-white dark:bg-gray-850 border border-gray-200/80 dark:border-gray-800 shadow-sm transition hover:shadow-md">
+        
+        <!-- Header Unité -->
+        <div class="flex flex-wrap items-center justify-between gap-2 pb-3 mb-4 border-b border-gray-100 dark:border-gray-800">
+          <div class="flex items-center gap-2">
+            <span class="px-2.5 py-1 rounded-lg bg-blue-600 text-white font-black text-xs uppercase tracking-wider">Unité 6</span>
+            <span class="px-2.5 py-1 rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 font-semibold text-xs border border-blue-200 dark:border-blue-800">Nghề nghiệp tương lai, phẩm chất cá nhân & Đảo ngữ</span>
+          </div>
+          <span class="text-xs font-bold text-gray-400">Sau này bạn muốn làm nghề gì?</span>
+        </div>
+
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
+          <h3 class="text-lg sm:text-2xl font-black text-gray-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-book text-blue-600"></i> Unité 6: Quel métier veux-tu faire plus tard ?
+          </h3>
+          <!-- Nút Nghe Toàn Bài -->
+          <button onclick="playFrench('le métier. Quel métier veux-tu faire plus tard quand tu seras grand ? l\'architecte. Il veut devenir architecte pour concevoir de belles maisons écologiques. le médecin. Pour être médecin, il faut être patient, courageux et attentif. la qualité. La créativité est une qualité nécessaire pour les métiers d\'art.')" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-xs font-bold shadow-sm shadow-blue-500/20 transition cursor-pointer w-fit">
+            <i class="fa-solid fa-headphones"></i>
+            <span>Nghe toàn bộ từ &amp; câu</span>
+          </button>
+        </div>
+
+        <!-- Sơ đồ tư duy trực quan SVG -->
+        <div class="my-4 p-4 rounded-xl bg-gradient-to-br from-blue-50/40 via-indigo-50/20 to-sky-50/30 dark:from-gray-900 dark:via-gray-850 dark:to-gray-800 border border-blue-100 dark:border-blue-900/40">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-bold text-blue-700 dark:text-blue-400 flex items-center gap-1.5">
+              <i class="fa-solid fa-diagram-project"></i> Sơ đồ trực quan • Unité 6: Quel métier veux-tu faire plus tard ?
+            </span>
+            <span class="text-[11px] text-gray-400 font-medium">Français 6 • THCS</span>
+          </div>
+          <div class="w-full overflow-x-auto py-1">
+            
+    <svg viewBox="0 0 650 130" class="w-full max-w-2xl mx-auto h-auto select-none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="fr_g_6" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#ea580c"/>
+          <stop offset="100%" stop-color="#c2410c"/>
+        </linearGradient>
+      </defs>
+
+      <!-- Node 1: Unité Theme -->
+      <rect x="15" y="20" width="185" height="90" rx="12" fill="url(#fr_g_6)" filter="drop-shadow(0 4px 6px rgba(0,0,0,0.1))"/>
+      <text x="107" y="48" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">UNITÉ 6: MÉTIERS</text>
+      <text x="107" y="68" fill="#ffffff" font-size="10" text-anchor="middle">Inversion • Il faut • Avenir</text>
+      <text x="107" y="88" fill="#ffffff" font-size="9" opacity="0.9" text-anchor="middle">🔊 Audio Web Speech (fr-FR)</text>
+
+      <!-- Arrow 1 -->
+      <path d="M 205 65 L 235 65" stroke="#ea580c" stroke-width="2.5" stroke-linecap="round"/>
+      <polygon points="235,60 243,65 235,70" fill="#ea580c"/>
+
+      <!-- Node 2: Grammaire Cốt Lõi -->
+      <rect x="245" y="20" width="200" height="90" rx="12" fill="#1e293b" stroke="#ea580c" stroke-width="1.5" filter="drop-shadow(0 4px 6px rgba(0,0,0,0.1))"/>
+      <text x="345" y="48" fill="#38bdf8" font-size="11" font-weight="bold" text-anchor="middle">POINT DE GRAMMAIRE</text>
+      <text x="345" y="68" fill="#ffffff" font-size="10" text-anchor="middle">Règles &amp; Conjugaisons</text>
+      <text x="345" y="88" fill="#94a3b8" font-size="9" text-anchor="middle">Formules &amp; Exemples</text>
+
+      <!-- Arrow 2 -->
+      <path d="M 450 65 L 475 65" stroke="#ea580c" stroke-width="2.5" stroke-linecap="round"/>
+      <polygon points="475,60 483,65 475,70" fill="#ea580c"/>
+
+      <!-- Node 3: Vocabulaire & Phrénétique -->
+      <rect x="485" y="20" width="150" height="90" rx="12" fill="#eff6ff" stroke="#ea580c" stroke-width="1.5"/>
+      <text x="560" y="48" fill="#ea580c" font-size="11" font-weight="bold" text-anchor="middle">VOCABULAIRE &amp; QUIZ</text>
+      <text x="560" y="68" fill="#ea580c" font-size="10" text-anchor="middle">Mots &amp; Phrases clées</text>
+      <text x="560" y="88" fill="#ea580c" font-size="9" text-anchor="middle">Auto-évaluation</text>
+    </svg>
+  
+          </div>
+        </div>
+
+        <!-- Khối Ngữ Pháp Cốt Lõi -->
+        <div class="my-5 p-4 rounded-xl bg-indigo-50/50 dark:bg-indigo-950/20 border border-indigo-200/60 dark:border-indigo-900/40">
+          <h4 class="text-sm font-bold text-indigo-900 dark:text-indigo-300 mb-2 flex items-center gap-2">
+            <i class="fa-solid fa-cube text-indigo-600"></i> Ngữ Pháp Cốt Lõi: Câu hỏi đảo ngữ (Inversion du sujet) & Cấu trúc Il faut / Devoir / Pouvoir
+          </h4>
+          <div class="text-xs text-gray-700 dark:text-gray-300 leading-relaxed font-mono whitespace-pre-line bg-white/80 dark:bg-gray-800/80 p-3 rounded-lg border border-indigo-100 dark:border-indigo-800/80 mb-2">1. Câu hỏi đảo ngữ trang trọng: Đổi động từ lên trước chủ ngữ và nối bằng gạch nối '-' (Veux-tu devenir médecin ? Aime-t-il ce métier ?).
+2. Giống đực / cái của nghề nghiệp: un infirmier -> une infirmière, un musicien -> une musicienne, un acteur -> une actrice, un architecte -> une architecte.
+3. Cấu trúc diễn đạt sự cần thiết và khả năng: Il faut + infinitif (Cần phải...); devoir + infinitif (Phải...); pouvoir + infinitif (Có thể...).</div>
+          <p class="text-xs text-indigo-800 dark:text-indigo-300 italic"><i class="fa-solid fa-circle-info"></i> Hỏi nghề nghiệp: Quel métier veux-tu faire plus tard ? - Je veux devenir architecte.</p>
+        </div>
+
+        <!-- Khối Từ Vựng & Câu Ứng Dụng (Có Audio riêng từng nút) -->
+        <div class="my-5">
+          <div class="flex items-center justify-between mb-3">
+            <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider flex items-center gap-1.5">
+              <i class="fa-solid fa-spell-check text-blue-600"></i> Từ Vựng Cốt Lõi &amp; Câu Ứng Dụng (Web Speech fr-FR)
+            </h4>
+            <span class="text-[11px] text-gray-400">Bấm 🔊 để nghe tiếng Pháp chuẩn</span>
+          </div>
+          <div class="space-y-2.5">
+            
+      <div class="p-3.5 rounded-xl bg-white dark:bg-gray-800/90 border border-gray-200/80 dark:border-gray-700/80 hover:border-blue-400 dark:hover:border-blue-500 shadow-sm transition space-y-2">
+        <!-- Hàng Từ Vựng -->
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div class="flex items-center gap-2">
+            <button onclick="playFrench('le métier')" class="px-2.5 py-1 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-sm" title="Nghe phát âm từ">
+              <i class="fa-solid fa-volume-high text-[11px]"></i> <span>Từ vựng</span>
+            </button>
+            <span class="text-sm font-bold text-gray-900 dark:text-white">le métier</span>
+          </div>
+          <span class="text-xs text-gray-500 dark:text-gray-400 italic">(nghề nghiệp, công việc chuyên môn)</span>
+        </div>
+
+        <!-- Hàng Câu Ứng Dụng -->
+        <div class="pt-2 border-t border-gray-100 dark:border-gray-700/60 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+          <div class="flex items-start sm:items-center gap-2">
+            <button onclick="playFrench('Quel métier veux-tu faire plus tard quand tu seras grand ?')" class="px-2 py-0.5 rounded-md bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-semibold transition flex items-center gap-1 flex-shrink-0 shadow-sm" title="Nghe phát âm cả câu">
+              <i class="fa-solid fa-play text-[9px]"></i> <span>Cả câu</span>
+            </button>
+            <span class="font-medium text-gray-800 dark:text-gray-200"><em>"Quel métier veux-tu faire plus tard quand tu seras grand ?"</em></span>
+          </div>
+          <span class="text-[11px] text-gray-500 dark:text-gray-400 italic sm:text-right">&rarr; Sau này khi lớn lên bạn muốn làm nghề gì?</span>
+        </div>
+      </div>
+    
+
+      <div class="p-3.5 rounded-xl bg-white dark:bg-gray-800/90 border border-gray-200/80 dark:border-gray-700/80 hover:border-blue-400 dark:hover:border-blue-500 shadow-sm transition space-y-2">
+        <!-- Hàng Từ Vựng -->
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div class="flex items-center gap-2">
+            <button onclick="playFrench('l\'architecte')" class="px-2.5 py-1 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-sm" title="Nghe phát âm từ">
+              <i class="fa-solid fa-volume-high text-[11px]"></i> <span>Từ vựng</span>
+            </button>
+            <span class="text-sm font-bold text-gray-900 dark:text-white">l'architecte</span>
+          </div>
+          <span class="text-xs text-gray-500 dark:text-gray-400 italic">(kiến trúc sư (danh từ chung cả nam và nữ))</span>
+        </div>
+
+        <!-- Hàng Câu Ứng Dụng -->
+        <div class="pt-2 border-t border-gray-100 dark:border-gray-700/60 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+          <div class="flex items-start sm:items-center gap-2">
+            <button onclick="playFrench('Il veut devenir architecte pour concevoir de belles maisons écologiques.')" class="px-2 py-0.5 rounded-md bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-semibold transition flex items-center gap-1 flex-shrink-0 shadow-sm" title="Nghe phát âm cả câu">
+              <i class="fa-solid fa-play text-[9px]"></i> <span>Cả câu</span>
+            </button>
+            <span class="font-medium text-gray-800 dark:text-gray-200"><em>"Il veut devenir architecte pour concevoir de belles maisons écologiques."</em></span>
+          </div>
+          <span class="text-[11px] text-gray-500 dark:text-gray-400 italic sm:text-right">&rarr; Cậu ấy muốn trở thành kiến trúc sư để thiết kế những ngôi nhà sinh thái đẹp.</span>
+        </div>
+      </div>
+    
+
+      <div class="p-3.5 rounded-xl bg-white dark:bg-gray-800/90 border border-gray-200/80 dark:border-gray-700/80 hover:border-blue-400 dark:hover:border-blue-500 shadow-sm transition space-y-2">
+        <!-- Hàng Từ Vựng -->
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div class="flex items-center gap-2">
+            <button onclick="playFrench('le médecin')" class="px-2.5 py-1 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-sm" title="Nghe phát âm từ">
+              <i class="fa-solid fa-volume-high text-[11px]"></i> <span>Từ vựng</span>
+            </button>
+            <span class="text-sm font-bold text-gray-900 dark:text-white">le médecin</span>
+          </div>
+          <span class="text-xs text-gray-500 dark:text-gray-400 italic">(bác sĩ, thầy thuốc)</span>
+        </div>
+
+        <!-- Hàng Câu Ứng Dụng -->
+        <div class="pt-2 border-t border-gray-100 dark:border-gray-700/60 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+          <div class="flex items-start sm:items-center gap-2">
+            <button onclick="playFrench('Pour être médecin, il faut être patient, courageux et attentif.')" class="px-2 py-0.5 rounded-md bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-semibold transition flex items-center gap-1 flex-shrink-0 shadow-sm" title="Nghe phát âm cả câu">
+              <i class="fa-solid fa-play text-[9px]"></i> <span>Cả câu</span>
+            </button>
+            <span class="font-medium text-gray-800 dark:text-gray-200"><em>"Pour être médecin, il faut être patient, courageux et attentif."</em></span>
+          </div>
+          <span class="text-[11px] text-gray-500 dark:text-gray-400 italic sm:text-right">&rarr; Để làm bác sĩ, cần phải kiên nhẫn, dũng cảm và chu đáo.</span>
+        </div>
+      </div>
+    
+
+      <div class="p-3.5 rounded-xl bg-white dark:bg-gray-800/90 border border-gray-200/80 dark:border-gray-700/80 hover:border-blue-400 dark:hover:border-blue-500 shadow-sm transition space-y-2">
+        <!-- Hàng Từ Vựng -->
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div class="flex items-center gap-2">
+            <button onclick="playFrench('la qualité')" class="px-2.5 py-1 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-sm" title="Nghe phát âm từ">
+              <i class="fa-solid fa-volume-high text-[11px]"></i> <span>Từ vựng</span>
+            </button>
+            <span class="text-sm font-bold text-gray-900 dark:text-white">la qualité</span>
+          </div>
+          <span class="text-xs text-gray-500 dark:text-gray-400 italic">(phẩm chất, đức tính tốt)</span>
+        </div>
+
+        <!-- Hàng Câu Ứng Dụng -->
+        <div class="pt-2 border-t border-gray-100 dark:border-gray-700/60 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+          <div class="flex items-start sm:items-center gap-2">
+            <button onclick="playFrench('La créativité est une qualité nécessaire pour les métiers d\'art.')" class="px-2 py-0.5 rounded-md bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-semibold transition flex items-center gap-1 flex-shrink-0 shadow-sm" title="Nghe phát âm cả câu">
+              <i class="fa-solid fa-play text-[9px]"></i> <span>Cả câu</span>
+            </button>
+            <span class="font-medium text-gray-800 dark:text-gray-200"><em>"La créativité est une qualité nécessaire pour les métiers d'art."</em></span>
+          </div>
+          <span class="text-[11px] text-gray-500 dark:text-gray-400 italic sm:text-right">&rarr; Sự sáng tạo là một phẩm chất cần thiết đối với các nghề nghệ thuật.</span>
+        </div>
+      </div>
+    
+          </div>
+        </div>
+
+        <!-- Khối Trắc Nghiệm Ôn Tập -->
+        <div class="mt-5 pt-4 border-t border-gray-100 dark:border-gray-800">
+          <h4 class="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3 flex items-center gap-1.5">
+            <i class="fa-solid fa-clipboard-question text-blue-600"></i> Auto-évaluation (Trắc Nghiệm Tự Chấm Điểm)
+          </h4>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            
+      <div class="quiz-item p-4 rounded-xl bg-gray-50/80 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700" data-unit="6" data-q="0">
+        <p class="text-xs sm:text-sm font-bold text-gray-900 dark:text-gray-100 mb-3 flex items-start gap-2">
+          <span class="px-2 py-0.5 rounded bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 text-xs font-bold">Q1</span>
+          <span>Transformez la phrase en question avec inversion du sujet: 'Tu veux devenir professeur.'</span>
+        </p>
+        <div class="space-y-2">
+          
+            <button onclick="checkFrenchQuiz(this, 6, 0, 0, 0)" class="quiz-opt-btn w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-850 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 text-xs text-gray-700 dark:text-gray-300 transition flex items-center justify-between">
+              <span><b>A.</b> Veux-tu devenir professeur ?</span>
+              <i class="quiz-feedback-icon fa-regular fa-circle text-gray-300 text-xs"></i>
+            </button>
+          
+
+            <button onclick="checkFrenchQuiz(this, 6, 0, 1, 0)" class="quiz-opt-btn w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-850 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 text-xs text-gray-700 dark:text-gray-300 transition flex items-center justify-between">
+              <span><b>B.</b> Tu veux-tu devenir professeur ?</span>
+              <i class="quiz-feedback-icon fa-regular fa-circle text-gray-300 text-xs"></i>
+            </button>
+          
+
+            <button onclick="checkFrenchQuiz(this, 6, 0, 2, 0)" class="quiz-opt-btn w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-850 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 text-xs text-gray-700 dark:text-gray-300 transition flex items-center justify-between">
+              <span><b>C.</b> Est-ce que veux-tu devenir professeur ?</span>
+              <i class="quiz-feedback-icon fa-regular fa-circle text-gray-300 text-xs"></i>
+            </button>
+          
+
+            <button onclick="checkFrenchQuiz(this, 6, 0, 3, 0)" class="quiz-opt-btn w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-850 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 text-xs text-gray-700 dark:text-gray-300 transition flex items-center justify-between">
+              <span><b>D.</b> Veux devenir professeur tu ?</span>
+              <i class="quiz-feedback-icon fa-regular fa-circle text-gray-300 text-xs"></i>
+            </button>
+          
+        </div>
+        <div class="quiz-expl hidden mt-3 p-2.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-xs text-emerald-800 dark:text-emerald-300">
+          <div class="font-bold flex items-center gap-1.5 mb-1"><i class="fa-solid fa-circle-check"></i> Lời giải chi tiết:</div>
+          <p>Cấu trúc đảo ngữ: Động từ + gạch nối '-' + đại từ chủ ngữ: 'Veux-tu ... ?'.</p>
+        </div>
+      </div>
+    
+
+      <div class="quiz-item p-4 rounded-xl bg-gray-50/80 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700" data-unit="6" data-q="1">
+        <p class="text-xs sm:text-sm font-bold text-gray-900 dark:text-gray-100 mb-3 flex items-start gap-2">
+          <span class="px-2 py-0.5 rounded bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 text-xs font-bold">Q2</span>
+          <span>Quelle est la forme féminine de 'un infirmier' (nam y tá)?</span>
+        </p>
+        <div class="space-y-2">
+          
+            <button onclick="checkFrenchQuiz(this, 6, 1, 0, 0)" class="quiz-opt-btn w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-850 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 text-xs text-gray-700 dark:text-gray-300 transition flex items-center justify-between">
+              <span><b>A.</b> une infirmière</span>
+              <i class="quiz-feedback-icon fa-regular fa-circle text-gray-300 text-xs"></i>
+            </button>
+          
+
+            <button onclick="checkFrenchQuiz(this, 6, 1, 1, 0)" class="quiz-opt-btn w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-850 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 text-xs text-gray-700 dark:text-gray-300 transition flex items-center justify-between">
+              <span><b>B.</b> une infirmiere</span>
+              <i class="quiz-feedback-icon fa-regular fa-circle text-gray-300 text-xs"></i>
+            </button>
+          
+
+            <button onclick="checkFrenchQuiz(this, 6, 1, 2, 0)" class="quiz-opt-btn w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-850 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 text-xs text-gray-700 dark:text-gray-300 transition flex items-center justify-between">
+              <span><b>C.</b> une infirmier</span>
+              <i class="quiz-feedback-icon fa-regular fa-circle text-gray-300 text-xs"></i>
+            </button>
+          
+
+            <button onclick="checkFrenchQuiz(this, 6, 1, 3, 0)" class="quiz-opt-btn w-full text-left p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-850 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 text-xs text-gray-700 dark:text-gray-300 transition flex items-center justify-between">
+              <span><b>D.</b> une infirmières</span>
+              <i class="quiz-feedback-icon fa-regular fa-circle text-gray-300 text-xs"></i>
+            </button>
+          
+        </div>
+        <div class="quiz-expl hidden mt-3 p-2.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-xs text-emerald-800 dark:text-emerald-300">
+          <div class="font-bold flex items-center gap-1.5 mb-1"><i class="fa-solid fa-circle-check"></i> Lời giải chi tiết:</div>
+          <p>Danh từ chỉ nghề nghiệp đuôi '-ier' đổi sang giống cái thành '-ière': un infirmier -> une infirmière.</p>
+        </div>
+      </div>
+    
+          </div>
+        </div>
+
+      </section>
+    
+        </div>
+
+      </main>
+
+    </div>
+  </div>
+
+  <!-- ==================== MODAL 1: BẢNG CHIA ĐỘNG TỪ ==================== -->
+  <div id="conjugationModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+    <div class="w-full max-w-4xl max-h-[85vh] bg-white dark:bg-gray-850 rounded-3xl shadow-2xl border border-gray-200 dark:border-gray-700 flex flex-col overflow-hidden">
+      <div class="px-6 py-4 border-b border-gray-100 dark:border-gray-800 flex items-center justify-between bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-gray-800 dark:to-gray-850">
+        <h3 class="text-base sm:text-lg font-bold text-blue-800 dark:text-blue-300 flex items-center gap-2">
+          <i class="fa-solid fa-table-list text-blue-600"></i> Tableau de Conjugaison: Các Động Từ Bất Quy Tắc Cốt Lõi
+        </h3>
+        <button onclick="closeConjugationModal()" class="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-500 hover:text-gray-800 dark:hover:text-white flex items-center justify-center">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="p-6 overflow-y-auto space-y-4 text-xs sm:text-sm">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="p-3.5 rounded-xl bg-blue-50/50 dark:bg-gray-800 border border-blue-100 dark:border-gray-700">
+            <span class="font-bold text-blue-700 dark:text-blue-400">1. ÊTRE (thì, là, ở):</span>
+            <p class="font-mono text-xs mt-1 text-gray-700 dark:text-gray-300">je suis, tu es, il/elle est, nous sommes, vous êtes, ils/elles sont.</p>
+          </div>
+          <div class="p-3.5 rounded-xl bg-indigo-50/50 dark:bg-gray-800 border border-indigo-100 dark:border-gray-700">
+            <span class="font-bold text-indigo-700 dark:text-indigo-400">2. AVOIR (có):</span>
+            <p class="font-mono text-xs mt-1 text-gray-700 dark:text-gray-300">j'ai, tu as, il/elle a, nous avons, vous avez, ils/elles ont.</p>
+          </div>
+          <div class="p-3.5 rounded-xl bg-emerald-50/50 dark:bg-gray-800 border border-emerald-100 dark:border-gray-700">
+            <span class="font-bold text-emerald-700 dark:text-emerald-400">3. PRENDRE / APPRENDRE:</span>
+            <p class="font-mono text-xs mt-1 text-gray-700 dark:text-gray-300">j'apprends, tu apprends, il apprend, nous apprenons, vous apprenez, ils apprennent.</p>
+          </div>
+          <div class="p-3.5 rounded-xl bg-amber-50/50 dark:bg-gray-800 border border-amber-100 dark:border-gray-700">
+            <span class="font-bold text-amber-700 dark:text-amber-400">4. BOIRE (uống):</span>
+            <p class="font-mono text-xs mt-1 text-gray-700 dark:text-gray-300">je bois, tu bois, il boit, nous buvons, vous buvez, ils boivent.</p>
+          </div>
+          <div class="p-3.5 rounded-xl bg-rose-50/50 dark:bg-gray-800 border border-rose-100 dark:border-gray-700">
+            <span class="font-bold text-rose-700 dark:text-rose-400">5. DEVOIR (phải):</span>
+            <p class="font-mono text-xs mt-1 text-gray-700 dark:text-gray-300">je dois, tu dois, il doit, nous devons, vous devez, ils doivent.</p>
+          </div>
+          <div class="p-3.5 rounded-xl bg-purple-50/50 dark:bg-gray-800 border border-purple-100 dark:border-gray-700">
+            <span class="font-bold text-purple-700 dark:text-purple-400">6. POUVOIR (có thể):</span>
+            <p class="font-mono text-xs mt-1 text-gray-700 dark:text-gray-300">je peux, tu peux, il peut, nous pouvons, vous pouvez, ils peuvent.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL 2: HƯỚNG DẪN PHÁT ÂM ==================== -->
+  <div id="pronunciationModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+    <div class="w-full max-w-4xl max-h-[85vh] bg-white dark:bg-gray-850 rounded-3xl shadow-2xl border border-gray-200 dark:border-gray-700 flex flex-col overflow-hidden">
+      <div class="px-6 py-4 border-b border-gray-100 dark:border-gray-800 flex items-center justify-between bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-gray-800 dark:to-gray-850">
+        <h3 class="text-base sm:text-lg font-bold text-blue-800 dark:text-blue-300 flex items-center gap-2">
+          <i class="fa-solid fa-microphone text-blue-600"></i> Guide de Prononciation: Hướng Dẫn Phát Âm Tiếng Pháp
+        </h3>
+        <button onclick="closePronunciationModal()" class="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-500 hover:text-gray-800 dark:hover:text-white flex items-center justify-center">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="p-6 overflow-y-auto space-y-3 text-xs sm:text-sm">
+        <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-between">
+          <div>
+            <span class="font-bold text-blue-600">1. Âm mũi (Voyelles nasales: on, an/en, in):</span>
+            <p class="text-gray-600 dark:text-gray-300 text-xs mt-0.5">bonbon, enfant, matin, français, maison.</p>
+          </div>
+          <button onclick="playFrench('bonbon, enfant, matin, français, maison')" class="px-2.5 py-1 rounded bg-blue-600 text-white font-bold text-xs">🔊 Nghe</button>
+        </div>
+
+        <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-between">
+          <div>
+            <span class="font-bold text-indigo-600">2. Cặp âm u /y/ và ou /u/:</span>
+            <p class="text-gray-600 dark:text-gray-300 text-xs mt-0.5">tu vs tout, rue vs roue, vu vs vous.</p>
+          </div>
+          <button onclick="playFrench('tu, tout, rue, roue, vu, vous')" class="px-2.5 py-1 rounded bg-indigo-600 text-white font-bold text-xs">🔊 Nghe</button>
+        </div>
+
+        <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-between">
+          <div>
+            <span class="font-bold text-emerald-600">3. Nối âm bắt buộc (La liaison obligatoire):</span>
+            <p class="text-gray-600 dark:text-gray-300 text-xs mt-0.5">les_amis [lez‿ami], un_hôtel [œ̃n‿otɛl], nous_avons [nuz‿avɔ̃].</p>
+          </div>
+          <button onclick="playFrench('les amis, un hôtel, nous avons')" class="px-2.5 py-1 rounded bg-emerald-600 text-white font-bold text-xs">🔊 Nghe</button>
+        </div>
+
+        <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-between">
+          <div>
+            <span class="font-bold text-rose-600">4. Âm rung họng /ʁ/ (chữ R tiếng Pháp):</span>
+            <p class="text-gray-600 dark:text-gray-300 text-xs mt-0.5">bonjour, merci, regarder, rouge, français.</p>
+          </div>
+          <button onclick="playFrench('bonjour, merci, regarder, rouge, français')" class="px-2.5 py-1 rounded bg-rose-600 text-white font-bold text-xs">🔊 Nghe</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL 3: LE LAURÉAT DE FRANÇAIS (60:00) ==================== -->
+  <div id="examModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+    <div class="w-full max-w-4xl max-h-[90vh] bg-white dark:bg-gray-850 rounded-3xl shadow-2xl border border-gray-200 dark:border-gray-700 flex flex-col overflow-hidden">
+      
+      <!-- Exam Header -->
+      <div class="px-6 py-4 border-b border-gray-100 dark:border-gray-800 flex items-center justify-between bg-gradient-to-r from-blue-700 via-indigo-600 to-rose-600 text-white">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center text-xl">
+            <i class="fa-solid fa-trophy text-amber-300"></i>
+          </div>
+          <div>
+            <h3 class="text-base sm:text-lg font-black tracking-tight">HỘI THI LE LAURÉAT DE FRANÇAIS 6</h3>
+            <p class="text-xs text-blue-100">20 câu trắc nghiệm tổng hợp Unité 0 – 6 • Tự động chấm điểm</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-4">
+          <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-black/30 backdrop-blur font-mono text-sm font-bold text-amber-300">
+            <i class="fa-solid fa-clock"></i>
+            <span id="examTimer">60:00</span>
+          </div>
+          <button onclick="closeExamModal()" class="w-8 h-8 rounded-full bg-white/20 hover:bg-white/30 text-white flex items-center justify-center">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Exam Body -->
+      <div id="examBody" class="p-6 overflow-y-auto space-y-6">
+        <!-- Render bằng JS -->
+      </div>
+
+      <!-- Exam Footer -->
+      <div class="px-6 py-4 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between bg-gray-50 dark:bg-gray-900">
+        <div id="examScoreResult" class="text-xs sm:text-sm font-bold text-gray-700 dark:text-gray-300">
+          Chưa nộp bài
+        </div>
+        <button id="submitExamBtn" onclick="submitExam()" class="px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs sm:text-sm font-bold shadow-md shadow-blue-600/30 transition">
+          Nộp bài &amp; Chấm điểm
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== JAVASCRIPT ==================== -->
+  <script>
+    // Web Speech API cho tiếng Pháp (fr-FR)
+    let currentSpeechRate = 0.85;
+    const rateRange = document.getElementById('speechRateRange');
+    const rateLabel = document.getElementById('rateLabel');
+    rateRange?.addEventListener('input', (e) => {
+      currentSpeechRate = parseFloat(e.target.value);
+      if (rateLabel) rateLabel.innerText = currentSpeechRate.toFixed(2) + 'x';
+    });
+
+    function playFrench(text) {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel(); // Ngắt lượt đọc trước
+        const cleanText = text.replace(/[\/\\#,+()$~%.'":*?<>{}]/g, ' ');
+        const utterance = new SpeechSynthesisUtterance(cleanText);
+        utterance.lang = 'fr-FR'; // Ngôn ngữ tiếng Pháp chuẩn
+        utterance.rate = currentSpeechRate; // Tốc độ điều chỉnh
+        utterance.pitch = 1.0;
+        window.speechSynthesis.speak(utterance);
+      } else {
+        alert('Trình duyệt hiện tại chưa hỗ trợ phát âm tự động qua Web Speech API.');
+      }
+    }
+
+    // Theme Toggle
+    const themeBtn = document.getElementById('themeToggleBtn');
+    themeBtn?.addEventListener('click', () => {
+      document.documentElement.classList.toggle('dark');
+      localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+    });
+    if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    }
+
+    // Modal Helpers
+    function openConjugationModal() { document.getElementById('conjugationModal').classList.remove('hidden'); }
+    function closeConjugationModal() { document.getElementById('conjugationModal').classList.add('hidden'); }
+    function openPronunciationModal() { document.getElementById('pronunciationModal').classList.remove('hidden'); }
+    function closePronunciationModal() { document.getElementById('pronunciationModal').classList.add('hidden'); }
+
+    // Quiz Check Logic
+    const answeredSet = new Set();
+    function checkFrenchQuiz(btn, unitId, qIdx, optIdx, correctIdx) {
+      const parent = btn.closest('.quiz-item');
+      const allBtns = parent.querySelectorAll('.quiz-opt-btn');
+      allBtns.forEach(b => {
+        b.disabled = true;
+        b.classList.remove('border-emerald-500', 'bg-emerald-50', 'border-rose-500', 'bg-rose-50');
+      });
+
+      const icon = btn.querySelector('.quiz-feedback-icon');
+      if (optIdx === correctIdx) {
+        btn.classList.add('border-emerald-500', 'bg-emerald-50', 'dark:bg-emerald-950/40', 'text-emerald-800', 'dark:text-emerald-300', 'font-bold');
+        icon.className = 'quiz-feedback-icon fa-solid fa-circle-check text-emerald-500';
+      } else {
+        btn.classList.add('border-rose-500', 'bg-rose-50', 'dark:bg-rose-950/40', 'text-rose-800', 'dark:text-rose-300', 'font-bold');
+        icon.className = 'quiz-feedback-icon fa-solid fa-circle-xmark text-rose-500';
+        const correctBtn = allBtns[correctIdx];
+        if (correctBtn) {
+          correctBtn.classList.add('border-emerald-500', 'bg-emerald-50/50', 'dark:bg-emerald-950/20');
+          correctBtn.querySelector('.quiz-feedback-icon').className = 'quiz-feedback-icon fa-solid fa-circle-check text-emerald-500';
+        }
+      }
+
+      parent.querySelector('.quiz-expl')?.classList.remove('hidden');
+      answeredSet.add(unitId + '-' + qIdx);
+      updateProgressBar();
+    }
+
+    function updateProgressBar() {
+      const count = answeredSet.size;
+      const total = 14;
+      const pct = Math.min(100, Math.round((count / total) * 100));
+      document.getElementById('answered-count').innerText = count;
+      document.getElementById('progress-percent').innerText = pct + '%';
+      document.getElementById('progress-bar').style.width = pct + '%';
+    }
+
+    // Live search inside unit page
+    const searchInput = document.getElementById('unitSearchInput');
+    searchInput?.addEventListener('input', () => {
+      const q = searchInput.value.toLowerCase().trim();
+      const sections = document.querySelectorAll('.unit-section');
+      sections.forEach(sec => {
+        const text = sec.innerText.toLowerCase();
+        if (!q || text.includes(q)) {
+          sec.classList.remove('hidden');
+        } else {
+          sec.classList.add('hidden');
+        }
+      });
+    });
+
+    // ==================== TRẠNG NGUYÊN (60:00) LOGIC ====================
+    let examTimeSeconds = 3600;
+    let examInterval = null;
+
+    const examQuestions = [
+      { q: "Comment dit-on 'Chào mừng bạn đến với trường cấp 2' en français ?", opts: ["Bienvenue au collège !", "Au revoir le collège !", "Bonjour à la maison !", "Merci au professeur !"], ans: 0 },
+      { q: "Conjuguez le verbe 's'appeler' avec 'Je':", opts: ["Je m'appelle", "Je t'appelles", "Je s'appelle", "Je nous appelons"], ans: 0 },
+      { q: "Quelle est la forme féminine de l'adjectif 'gentil' ?", opts: ["gentille", "gentile", "gentils", "gentiles"], ans: 0 },
+      { q: "Remplacez par un pronom COD: 'Nous regardons le film.'", opts: ["Nous le regardons.", "Nous lui regardons.", "Nous la regardons.", "Nous les regardons."], ans: 0 },
+      { q: "Quel mot exprime la fréquence 'luôn luôn' en français ?", opts: ["toujours", "jamais", "parfois", "rarement"], ans: 0 },
+      { q: "Au Futur simple, quelle est la terminaison avec le pronom 'Nous' ?", opts: ["-ons", "-ont", "-ez", "-as"], ans: 0 },
+      { q: "Remplacez par un pronom COI: 'Je parle à ma sœur.'", opts: ["Je lui parle.", "Je la parle.", "Je leur parle.", "Je en parle."], ans: 0 },
+      { q: "Quel article partitif utilise-t-on devant un nom féminin (e.g., viande) ?", opts: ["de la", "du", "de l'", "des"], ans: 0 },
+      { q: "À la forme négative, 'Je bois du lait' devient:", opts: ["Je ne bois pas de lait.", "Je ne bois pas du lait.", "Je ne bois pas le lait.", "Je ne bois de lait pas."], ans: 0 },
+      { q: "Conjuguez 'boire' avec 'Tu':", opts: ["Tu bois", "Tu boit", "Tu buvons", "Tu boivent"], ans: 0 },
+      { q: "Le participe passé du verbe 'regarder' est:", opts: ["regardé", "regardi", "regardu", "regardant"], ans: 0 },
+      { q: "Quel auxiliaire utilise-t-on au Passé composé pour le verbe 'partir' ?", opts: ["être", "avoir", "faire", "aller"], ans: 0 },
+      { q: "Quel mot signifie 'hôm qua' en français ?", opts: ["Hier", "Demain", "Aujourd'hui", "Maintenant"], ans: 0 },
+      { q: "Le pronom 'en' remplace généralement un complément introduit par:", opts: ["de", "à", "avec", "pour"], ans: 0 },
+      { q: "Quelle est la forme négative de 'quelque chose' (cái gì đó) ?", opts: ["ne ... rien", "ne ... personne", "ne ... jamais", "ne ... aucun"], ans: 0 },
+      { q: "Le pronom 'y' remplace souvent un complément de:", opts: ["lieu (nơi chốn) avec à", "temps (thời gian)", "manière (cách thức)", "cause (nguyên nhân)"], ans: 0 },
+      { q: "Comment pose-t-on une question avec inversion du sujet pour 'Tu viens' ?", opts: ["Viens-tu ?", "Tu viens-tu ?", "Est-ce viens tu ?", "Tu viens ?"], ans: 0 },
+      { q: "Quelle est la forme féminine de 'un musicien' ?", opts: ["une musicienne", "une musicien", "une musicieuse", "une musicienne"], ans: 0 },
+      { q: "Après la structure 'Il faut', le verbe se met à:", opts: ["l'infinitif", "l'indicatif présent", "l'imparfait", "futur simple"], ans: 0 },
+      { q: "Pour être médecin, quelle qualité est indispensable ?", opts: ["la patience et le dévouement", "la paresse", "la méchanceté", "la peur"], ans: 0 }
+    ];
+
+    function openExamModal() {
+      document.getElementById('examModal').classList.remove('hidden');
+      renderExamQuestions();
+      startExamTimer();
+    }
+
+    function closeExamModal() {
+      document.getElementById('examModal').classList.add('hidden');
+      clearInterval(examInterval);
+    }
+
+    function renderExamQuestions() {
+      const container = document.getElementById('examBody');
+      container.innerHTML = examQuestions.map((q, idx) => `
+        <div class="exam-q-box p-4 rounded-2xl bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700" data-idx="${idx}">
+          <p class="text-xs sm:text-sm font-bold text-gray-900 dark:text-gray-100 mb-3">
+            <span class="text-blue-600 font-extrabold mr-1">Question ${idx + 1}:</span> ${q.q}
+          </p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            ${q.opts.map((opt, oIdx) => `
+              <label class="exam-opt flex items-center gap-2 p-2.5 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-blue-50/50 dark:hover:bg-blue-950/30 cursor-pointer text-xs text-gray-700 dark:text-gray-300 transition">
+                <input type="radio" name="exam_fr_q_${idx}" value="${oIdx}" class="text-blue-600 focus:ring-blue-500">
+                <span><b>${String.fromCharCode(65 + oIdx)}.</b> ${opt}</span>
+              </label>
+            `).join('')}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function startExamTimer() {
+      clearInterval(examInterval);
+      examTimeSeconds = 3600;
+      examInterval = setInterval(() => {
+        examTimeSeconds--;
+        if (examTimeSeconds <= 0) {
+          clearInterval(examInterval);
+          submitExam();
+        }
+        const m = Math.floor(examTimeSeconds / 60);
+        const s = examTimeSeconds % 60;
+        document.getElementById('examTimer').innerText = (m < 10 ? '0' + m : m) + ':' + (s < 10 ? '0' + s : s);
+      }, 1000);
+    }
+
+    function submitExam() {
+      clearInterval(examInterval);
+      let score = 0;
+      examQuestions.forEach((q, idx) => {
+        const checked = document.querySelector(`input[name="exam_fr_q_${idx}"]:checked`);
+        const box = document.querySelector(`.exam-q-box[data-idx="${idx}"]`);
+        if (checked && parseInt(checked.value) === q.ans) {
+          score++;
+          box.classList.add('border-emerald-500', 'bg-emerald-50/40', 'dark:bg-emerald-950/20');
+        } else {
+          box.classList.add('border-rose-500', 'bg-rose-50/40', 'dark:bg-rose-950/20');
+        }
+      });
+
+      const total = examQuestions.length;
+      const pts = (score / total) * 10;
+      document.getElementById('examScoreResult').innerHTML = `
+        <span class="text-blue-600 dark:text-blue-400 font-bold">Résultat: ${score}/${total} bonnes réponses (${pts.toFixed(1)} / 10 points)</span>
+      `;
+      document.getElementById('submitExamBtn').innerText = 'Terminé';
+      document.getElementById('submitExamBtn').disabled = true;
+    }
+  </script>
+
+</body>
+</html>

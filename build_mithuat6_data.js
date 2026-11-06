@@ -1,0 +1,499 @@
+const fs = require('fs');
+
+const data = {
+  topics: [
+    {
+      id: "topic_1",
+      title: "Chủ đề 1. Xây dựng ý tưởng trong sáng tác mĩ thuật",
+      sgk: "Trang 5–11",
+      lessons: [
+        {
+          id: "mt6_b1",
+          num: 1,
+          title: "Bài 1. Một số thể loại mĩ thuật",
+          sgk: "SGK trang 5–8",
+          sections: [
+            {
+              heading: "Trọng tâm bài học",
+              content: "Nhận biết Hội hoạ, Đồ hoạ tranh in, Điêu khắc và một số ngành thiết kế; giải thích vẻ đẹp qua hình, nét, màu, khối, không gian, bố cục; sử dụng chất liệu để tạo sản phẩm sáng tạo."
+            },
+            {
+              heading: "Mĩ thuật tạo hình",
+              content: "Dùng ngôn ngữ tạo hình để biểu đạt ý tưởng, cảm xúc, quan điểm trước thiên nhiên và cuộc sống. Hội hoạ thể hiện hình ảnh trên mặt phẳng bằng đường nét, màu sắc, đậm nhạt (tranh sơn mài, sơn dầu, lụa, màu nước…). Đồ hoạ tranh in tạo hình thông qua bản in và quá trình in lên bề mặt (khắc gỗ, in kẽm, in độc bản). Điêu khắc tạo hình khối trong không gian ba chiều, gồm tượng (quan sát từ nhiều phía) và phù điêu (hình nổi/chìm gắn với nền). Không phân loại chỉ bằng đề tài: cùng một cảnh lao động có thể được vẽ, in hoặc nặn."
+            },
+            {
+              heading: "Tác phẩm kinh điển cần biết",
+              content: "• Trần Văn Cẩn, 'Tát nước đồng chiêm' (1958, sơn mài): hình, nét và màu của người lao động nổi bật trên nền đen óng ả, biểu hiện vẻ đẹp khỏe khoắn của lao động nông thôn.\n• Nguyễn Tiến Chung, 'Sau giờ lao động' (1970, khắc gỗ): ao làng, núi đá, nhà ngói, cây rơm được khái quát, ước lệ, tạo cảm giác thanh bình, mộc mạc.\n• Trần Thị Hồng, 'Những người khởi nghĩa' (1984, phù điêu gò đồng): nhân vật nhiều lớp tạo xa gần, cùng hướng tiến biểu hiện ý chí quyết tâm, đồng lòng.\n• Nguyễn Thị Hoà, 'Bà cháu' (1980, đá): nét thô, thẳng, góc cạnh ở bà tương phản nét cong, khối tròn ở cháu, diễn tả tình yêu thương ấm áp gia đình."
+            },
+            {
+              heading: "Mĩ thuật ứng dụng",
+              content: "Sử dụng yếu tố tạo hình để thiết kế sản phẩm phục vụ đời sống, gắn vẻ đẹp với mục đích sử dụng. Thiết kế đồ hoạ: bìa sách, tranh cổ động, bao bì, logo, thiệp chúc mừng; Thiết kế công nghiệp: đồ dùng sinh hoạt, ghế, thiết bị gia dụng; Thiết kế thời trang: trang phục, phụ kiện, trang sức. Tiêu biểu: tranh cổ động 'Chiến dịch Điện Biên Phủ vĩ đại đã toàn thắng' của hoạ sĩ Nguyễn Bích, ghế ngồi, tà áo dài truyền thống."
+            },
+            {
+              heading: "Tranh khắc gỗ truyền thống",
+              content: "Khắc hình trên ván gỗ rồi in lên giấy. Tranh Đông Hồ (Bắc Ninh) dùng các bản khắc gỗ in riêng từng mảng màu và đường nét trên giấy điệp; tranh Hàng Trống (Hà Nội) in bản nét đen trước rồi dùng bút tỉa tô màu phẩm nhuộm. Phân biệt rõ tranh in (có bản in nhân bản) với bức tranh trực tiếp tô vẽ bằng tay trên giấy."
+            },
+            {
+              heading: "Thực hành và vận dụng",
+              content: "Vẽ hoặc nặn một sản phẩm tự chọn, đặt tên, giới thiệu thể loại, chất liệu, nội dung và cách sử dụng hình – nét – màu – khối. Nhận diện chuẩn xác: Tượng đài Khởi nghĩa Ba Tơ thuộc Điêu khắc; Bức tranh lụa 'Rặng phi lao' của Tạ Thúc Bình thuộc Hội hoạ; Bìa sách thiếu nhi 'Hoa kết trái' thuộc Thiết kế đồ hoạ."
+            }
+          ]
+        },
+        {
+          id: "mt6_b2",
+          num: 2,
+          title: "Bài 2. Xây dựng ý tưởng trong sáng tác theo chủ đề",
+          sgk: "SGK trang 9–11",
+          sections: [
+            {
+              heading: "Nguồn gốc hình thành ý tưởng",
+              content: "Quan sát cảnh đẹp quê hương, hoạt động sinh hoạt, nghề nghiệp lao động, ảnh tư liệu; khai thác từ thơ văn, âm nhạc, kí ức và trí tưởng tượng phong phú. Chủ đề là định hướng nội dung chung, mỗi học sinh lựa chọn hình ảnh và cách thể hiện riêng (phố cổ Hội An, ruộng bậc thang mùa lúa chín, dệt thổ cẩm, chợ nổi trên sông…). Sáng tạo là chọn lọc, khái quát và tổ chức lại hình ảnh theo cảm xúc, không chỉ đơn thuần là sao chép y nguyên hiện thực."
+            },
+            {
+              heading: "Quy trình sáng tác cốt lõi",
+              content: "Xác định Chủ đề/đề tài → Xây dựng ý tưởng và tìm kiếm hình ảnh → Phác thảo bố cục, xác định mảng chính – mảng phụ, vị trí không gian → Chọn màu sắc cho hình chính, chi tiết và hậu cảnh (sản phẩm 2D) → Chỉnh sửa và hoàn thiện → Đặt tên tác phẩm. Với sản phẩm 3D, cần tính toán khối lượng, tỉ lệ và phương pháp liên kết giữa các bộ phận."
+            },
+            {
+              heading: "Thực hành sáng tác",
+              content: "Chọn chủ đề yêu thích, ghi một câu súc tích về ý định nghệ thuật, tìm hình ảnh tư liệu, phác thảo bố cục và thực hiện. Ví dụ đề tài 'Trồng cây': cần diễn tả nhịp điệu động tác xới đất, tưới nước và mối tương quan giữa người với cây; đề tài 'Phong cảnh': chọn lọc những hình ảnh biểu trưng nhất của địa danh. Nêu rõ lí do đặt hình chính ở vị trí trung tâm và lí do lựa chọn gam màu chủ đạo."
+            },
+            {
+              heading: "Phân tích tác phẩm và vận dụng",
+              content: "Khám phá vẻ đẹp tác phẩm kinh điển: 'Bình minh trên nông trang' của Nguyễn Đức Nùng (1958, sơn mài) với ánh sáng ban mai rạng rỡ trên cánh đồng và khí thế hăng say lao động; tượng thạch cao 'Hũ gạo nuôi quân' của Trần Văn Hoè (1962) khắc họa sự sẻ chia, tình nghĩa quân dân gắn bó keo sơn."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      id: "topic_2",
+      title: "Chủ đề 2. Ngôi nhà yêu thương",
+      sgk: "Trang 12–21",
+      lessons: [
+        {
+          id: "mt6_b3",
+          num: 3,
+          title: "Bài 3. Tạo hình ngôi nhà",
+          sgk: "SGK trang 12–17",
+          sections: [
+            {
+              heading: "Quan sát kiến trúc nhà ở",
+              content: "Nhận biết kiểu dáng tổng thể, cấu trúc mái, thân tường, hệ thống cửa, cột đỡ, chất liệu và cảnh quan môi trường xung quanh. Khám phá các kiểu kiến trúc đặc trưng của Việt Nam: nhà sàn vùng cao, nhà rường Huế, nhà rông Tây Nguyên, nhà cổ mái ngói Đồng bằng Bắc Bộ. So sánh tương quan mái cao – thấp, sàn nâng – tiếp đất để chắt lọc những nét tiêu biểu khi tạo hình."
+            },
+            {
+              heading: "Tạo hình không gian 2D và 3D",
+              content: "Sử dụng đường nét, mảng hình, màu sắc để vẽ hoặc in tranh ngôi nhà trên mặt phẳng; sử dụng khối hộp, hình chóp và khớp nối để dựng mô hình 3D. Chú ý tương quan tỉ lệ giữa mái – tường – cửa, sắp xếp mảng chính (ngôi nhà) – mảng phụ (cây cối, đường đi, con người), luật xa gần trong không gian."
+            },
+            {
+              heading: "Nghệ thuật Bùi Xuân Phái (1920–1988)",
+              content: "Danh họa bậc thầy nổi tiếng với đề tài Phố cổ Hà Nội ('Phố Phái'). Các tác phẩm tiêu biểu như 'Phố Hàng Mắm' (1984), 'Phố Thanh Hà' (1986) thể hiện những mái ngói rêu phong nhấp nhô, mảng tường loang lổ thời gian với viền nét đen đậm chắc khỏe và gam màu trầm ấm, tái hiện vẻ đẹp Hà Nội bằng cảm xúc và tình yêu tha thiết."
+            },
+            {
+              heading: "Kĩ thuật in độc bản (Monoprint)",
+              content: "Quy trình 4 bước in độc bản chuẩn SGK:\n1. Vẽ phác hình ảnh cần in lên tấm nhựa mica phẳng, sạch.\n2. Dùng cọ vẽ màu trực tiếp vào các mảng hình trên tấm mica.\n3. Đặt tờ giấy in lên bề mặt tấm mica, dùng tay hoặc con lăn miết đều để màu chuyển sang giấy.\n4. Nhẹ nhàng nhấc giấy in lên, quan sát và hoàn thiện tác phẩm. Mỗi bản in là duy nhất (độc bản) và hình ảnh in ra sẽ đối xứng lật ngược chiều trái – phải so với hình vẽ gốc."
+            },
+            {
+              heading: "Nguyên lí tương phản trong tạo hình",
+              content: "Đặt các yếu tố đối lập cạnh nhau để tạo điểm nhấn nổi bật:\n• Tương phản nét: nét dài – ngắn, thẳng – cong, thanh – đậm, gấp khúc – uốn lượn.\n• Tương phản màu sắc: màu sáng – tối, đậm – nhạt, gam nóng – gam lạnh, rực rỡ – trầm lắng.\n• Tương phản chất cảm (texture): bề mặt nhẵn bóng – xù xì, thô ráp – trơn láng.\n• Tương phản hình khối: khối đặc – rỗng, khối lớn – nhỏ, tĩnh – động."
+            },
+            {
+              heading: "Dấu ấn danh họa Vincent van Gogh",
+              content: "Danh họa Hà Lan trường phái Hậu Ấn tượng (1853–1890). Nổi tiếng với việc sử dụng màu sắc rực rỡ, tương phản mãnh liệt và những nét cọ xoáy cuộn đầy năng lượng. Tác phẩm 'Con đường ở vùng Auvers-sur-Oise' và 'Nhà tranh ở làng Cordeville' (1890) diễn tả mái nhà tranh uốn lượn hòa quyện vào bầu trời với gam màu vàng cam tương phản xanh lam ấn tượng."
+            }
+          ]
+        },
+        {
+          id: "mt6_b4",
+          num: 4,
+          title: "Bài 4. Thiết kế quà lưu niệm",
+          sgk: "SGK trang 18–21",
+          sections: [
+            {
+              heading: "Mục đích và ý nghĩa quà lưu niệm",
+              content: "Quà lưu niệm mang giá trị tinh thần sâu sắc, lưu giữ kỉ niệm về những chuyến đi, sự kiện, con người hoặc tình cảm gia đình; dùng để trang trí bàn học, phòng khách hoặc có công năng sử dụng thực tế (ống cắm bút, khung ảnh, móc chìa khóa, quạt trang trí). Cần xác định đối tượng tặng, nơi đặt để lựa chọn kích thước và chất liệu phù hợp."
+            },
+            {
+              heading: "Quy trình 5 bước làm mô hình nhà bằng bìa",
+              content: "1. Phác thảo bản vẽ khai triển (mặt phẳng các vách tường, cửa sổ) và dùng kéo cắt bìa theo đường bao, tạo các đường gân nếp gấp.\n2. Gập các nếp và dán mép nối tạo thành khung thân nhà chắc chắn.\n3. Cắt và gập tấm bìa thành phần mái ngói che phía trên.\n4. Vẽ, cắt các chi tiết trang trí phụ như người, ô cửa, cây cối, hoa lá.\n5. Lắp ráp mái vào khung thân, đính các chi tiết trang trí, gia cố mối nối và hoàn thiện mô hình."
+            },
+            {
+              heading: "Chất liệu và vai trò Thiết kế công nghiệp",
+              content: "Tận dụng các vật liệu sạch sẵn có như bìa carton tái chế, que gỗ kem, vải vụn, giấy màu thủ công. Thiết kế công nghiệp (Industrial Design) là nhánh quan trọng của Mĩ thuật ứng dụng ra đời từ cuộc cách mạng công nghiệp thế kỉ XIX, giúp các sản phẩm đồ gia dụng, thiết bị máy móc vừa tiện dụng vừa đạt chuẩn mực thẩm mĩ cao."
+            },
+            {
+              heading: "Đánh giá chất lượng sản phẩm",
+              content: "Kiểm tra mức độ chắc chắn của các mối dán keo, độ cân bằng khi đứng trên mặt phẳng, tính hài hòa về tỉ lệ giữa mái và tường, sự khéo léo trong việc đưa biểu trưng ngôi nhà vào sản phẩm lưu niệm. Tuyệt đối tuân thủ quy tắc an toàn khi sử dụng kéo, dao trổ và súng bắn keo nóng."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      id: "topic_3",
+      title: "Chủ đề 3. Hoạt động trong trường học",
+      sgk: "Trang 22–30",
+      lessons: [
+        {
+          id: "mt6_b5",
+          num: 5,
+          title: "Bài 5. Tạo hình hoạt động trong nhà trường",
+          sgk: "SGK trang 22–26",
+          sections: [
+            {
+              heading: "Quan sát và lựa chọn hoạt động học đường",
+              content: "Đề tài phong phú: giờ học nhóm trong lớp, tiết học Mĩ thuật ngoài trời, thi đấu bóng rổ, đá cầu, kéo co, chăm sóc bồn hoa vườn trường, quyên góp từ thiện. Quan sát kĩ chuyển động của cơ thể: góc nghiêng của đầu, độ xoay và uốn của thân mình, cử chỉ của tay chân và sự tương tác sinh động giữa các học sinh."
+            },
+            {
+              heading: "Nghệ thuật tạo hình dáng người vận động",
+              content: "Dùng đường trục dáng để thể hiện hướng vận động, dùng mảng hình để phân chia các khối đầu – thân – tay – chân. Tránh vẽ dáng người đứng thẳng đơ cứng nhắc; cần phối hợp các dáng ngồi, cúi, chạy, nhảy để tạo nhịp điệu sinh động. Sắp xếp các nhân vật thành nhóm chính (tập trung ánh nhìn) và nhóm phụ hỗ trợ."
+            },
+            {
+              heading: "Tìm hiểu tác phẩm danh họa",
+              content: "• 'Học tổ' của danh họa Nguyễn Phan Chánh (1959, tranh lụa/màu nước): bốn nữ sinh trong trang phục áo dài truyền thống ngồi quây quần bên bàn học, bố cục hài hòa với gam màu nâu trầm ấm áp, nét vẽ tinh tế biểu lộ sự tập trung chăm chỉ.\n• 'Về đích' của R. N. Galitsky (1955, sơn dầu): ghi lại khoảnh khắc hồi hộp, ánh mắt dõi theo và niềm vui vỡ òa của thầy trò khi vận động viên chạm dải băng đích."
+            },
+            {
+              heading: "Kĩ thuật đắp nổi bằng giấy bồi (6 bước)",
+              content: "1. Vẽ phác thảo bố cục hình ảnh lên bìa cứng làm nền.\n2. Xé nhỏ giấy vệ sinh mềm sạch, ngâm vào nước sạch cho tơi nhuyễn.\n3. Vắt ráo nước bớt, trộn đều màu vẽ (màu nước, gouache hoặc acrylic) và một lượng keo sữa vừa đủ vào khối bột giấy.\n4. Chuẩn bị các phần giấy màu khác nhau tương ứng với từng mảng hình.\n5. Dùng tay hoặc que đắp từng mảng giấy màu vào đúng vị trí hình vẽ phác thảo trên bìa.\n6. Chỉnh sửa chi tiết, tạo độ gồ ghề chất cảm nổi 3D và chờ tác phẩm khô hoàn toàn."
+            },
+            {
+              heading: "Trưng bày và liên kết nhóm",
+              content: "Học sinh có thể ghép các nhân vật đắp nổi riêng lẻ thành một sa bàn hoạt cảnh lớn (ví dụ: hội thao kéo co, đại cảnh sân trường rợp bóng cờ hoa) với tỉ lệ và không gian thống nhất."
+            }
+          ]
+        },
+        {
+          id: "mt6_b6",
+          num: 6,
+          title: "Bài 6. Thiết kế đồ chơi",
+          sgk: "SGK trang 27–30",
+          sections: [
+            {
+              heading: "Bản chất thiết kế đồ chơi học đường",
+              content: "Thuộc lĩnh vực Mĩ thuật ứng dụng, kết hợp giữa tạo dáng thẩm mĩ, cơ chế chuyển động cơ học đơn giản và tính an toàn cao khi chơi. Đồ chơi lấy cảm hứng từ các môn thể thao trường học: bàn bi lắc bóng đá mini, sân ném bóng rổ để bàn, trò chơi vợt cầu lông di động; hoặc đồ chơi dân gian như đèn lồng kéo quân, đèn ông sao."
+            },
+            {
+              heading: "Quy trình chế tạo trò chơi bóng đá bằng hộp giấy",
+              content: "1. Dùng kéo hoặc dao trổ tạo 2 khung thành ở hai đầu hộp carton; đục các lỗ đối xứng hai bên thành hộp và luồn que gỗ tròn làm thanh điều khiển.\n2. Vẽ vạch vôi sân cỏ, khán đài cổ vũ và khung cảnh sân vận động.\n3. Vẽ, tô màu và cắt rời hình các cầu thủ bóng đá từ bìa cứng.\n4. Dán cố định các cầu thủ vào thân que gỗ, thử nghiệm lăn bóng và xoay cần điều khiển để kiểm tra độ trơn tru của cơ chế."
+            },
+            {
+              heading: "Yêu cầu kĩ thuật và an toàn",
+              content: "Vật liệu phải sạch sẽ, không có mùi độc hại; các đầu que gỗ cần được mài nhẵn hoặc bọc nút cao su để tránh chọc vào người. Đồ chơi phải đạt cả hai tiêu chí: vận hành tốt chức năng trò chơi và có hình thức màu sắc hấp dẫn."
+            },
+            {
+              heading: "Cải tiến và tái chế sáng tạo",
+              content: "Tận dụng vỏ hộp bánh kẹo, nắp chai nhựa, bìa lịch cũ để tạo vòng đời mới cho đồ phế liệu. Khuyến khích cải tiến bổ sung cơ chế tính điểm tự động bằng thanh trượt hạt gỗ."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      id: "topic_4",
+      title: "Chủ đề 4. Mĩ thuật thời kì tiền sử",
+      sgk: "Trang 31–38",
+      lessons: [
+        {
+          id: "mt6_b7",
+          num: 7,
+          title: "Bài 7. Mĩ thuật thế giới thời kì tiền sử",
+          sgk: "SGK trang 31–35",
+          sections: [
+            {
+              heading: "Khái niệm thời kì tiền sử",
+              content: "Thời kì tiền sử là giai đoạn lịch sử loài người trước khi xuất hiện hệ thống chữ viết ghi chép. Con người thời kì này ghi lại cuộc sống, thế giới động vật và nghi lễ tâm linh thông qua các bức bích họa khắc vẽ trên vách hang đá, mái đá và các pho tượng tròn nhỏ tạc từ đá hoặc ngà voi."
+            },
+            {
+              heading: "Các kiệt tác tiền sử thế giới trong SGK",
+              content: "• Hình vẽ thú và người săn bắn tại hang Bhimbetka (Ấn Độ).\n• Hình chạm khắc hươu cao cổ trên sa mạc Sahara (Bắc Phi).\n• Tượng đá 'Vệ nữ Willendorf' (Áo, khoảng 25 000 năm TCN): pho tượng nhỏ nhấn mạnh các khối tròn căng tràn biểu trưng cho ước vọng phì nhiêu, sinh sôi.\n• Hình khắc đá tại thung lũng Camonica (Italia).\n• Tượng voi ma mút tạc bằng ngà voi tại hang Vogelherd (Đức).\n• Hình bàn tay âm bản phủ sắc tố màu đỏ trong hang Cueva de las Manos (Patagonia, Argentina)."
+            },
+            {
+              heading: "Đặc điểm ngôn ngữ tạo hình tiền sử",
+              content: "Đường nét đơn giản, thô mộc nhưng diễn tả tư thế con thú (bò rừng bison, hươu, ngựa hoang) cực kì chuẩn xác và sinh động. Sử dụng màu khoáng tự nhiên (đất son đỏ, hoàng thổ vàng, than đen). Các bộ phận cơ thể thường được cách điệu, nhấn mạnh để phục vụ niềm tin tâm linh."
+            },
+            {
+              heading: "Kĩ năng gấp ống cắm bút lục giác trang trí hoa văn tiền sử",
+              content: "Từ tờ giấy vuông, thực hiện các nếp gấp chéo và gấp mép tạo thành 1 đơn vị ống cắm bút hình lăng trụ tam giác/lục giác. Ghép 5 hoặc 6 đơn vị lại với nhau thành cụm ống bút vững chãi. Vẽ mô phỏng hoa văn người và thú tiền sử lên các mặt ngoài."
+            }
+          ]
+        },
+        {
+          id: "mt6_b8",
+          num: 8,
+          title: "Bài 8. Mĩ thuật Việt Nam thời kì tiền sử",
+          sgk: "SGK trang 36–38",
+          sections: [
+            {
+              heading: "Các nền văn hoá tiền sử tiêu biểu của Việt Nam",
+              content: "• Văn hoá Tràng An (Ninh Bình, khoảng 300 000 năm TCN): các công cụ ghè đẽo thô sơ bằng đá vôi.\n• Văn hoá Hoà Bình (khoảng 10 000 năm TCN): nổi tiếng với công cụ đá ghè một mặt, chày và bàn nghiền thức ăn, đồ trang sức vỏ sò và đặc biệt là hình khắc mặt người trên vách hang Đồng Nội (Lạc Thủy, Hòa Bình).\n• Văn hoá Bắc Sơn (Lạng Sơn, khoảng 10 000 – 8 000 năm TCN): kĩ thuật mài lưỡi rìu đá và đồ gốm thô."
+            },
+            {
+              heading: "Hình khắc hang Đồng Nội – Biểu tượng mĩ thuật cổ",
+              content: "Bức phù điêu khắc chìm trên vách đá hang Đồng Nội thể hiện các khuôn mặt người có sừng cong vút (biểu tượng của tô tem giáo hoặc nghi lễ săn bắt). Đường nét khắc sâu, dứt khoát, bố cục cân đối phản ánh tư duy thẩm mĩ và đời sống tinh thần phong phú của người Việt cổ."
+            },
+            {
+              heading: "Quy trình 5 bước nặn mô hình rìu đá",
+              content: "1. Vò giấy thành khối hình chiếc lưỡi rìu dẹt.\n2. Chọn đất nặn màu xám đen hoặc nâu đá, miết đều bao bọc kín khối lõi giấy.\n3. Lấy một cành cây hoặc que gỗ sạch làm cán, miết đất nặn lên thân que tạo chất cảm thô mộc.\n4. Dùng dây gai hoặc sợi chỉ buộc chặt lưỡi rìu vào đầu cán gỗ.\n5. Chỉnh sửa tỉ lệ, dùng que nhọn khía các vết ghè đẽo giả chất liệu đá cổ."
+            },
+            {
+              heading: "Ý thức bảo tồn di sản khảo cổ",
+              content: "Học sinh hiểu giá trị của hiện vật để trân trọng di sản dân tộc; tuyệt đối không vẽ bậy, không cạy phá hay xâm hại các di tích hang động khi đi tham quan dã ngoại."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      id: "topic_5",
+      title: "Chủ đề 5. Trò chơi dân gian",
+      sgk: "Trang 39–45",
+      lessons: [
+        {
+          id: "mt6_b9",
+          num: 9,
+          title: "Bài 9. Sáng tạo mĩ thuật với trò chơi dân gian",
+          sgk: "SGK trang 39–41",
+          sections: [
+            {
+              heading: "Giá trị văn hoá của trò chơi dân gian",
+              content: "Kéo co, bịt mắt bắt dê, rồng rắn lên mây, chơi ô ăn quan, đẩy gậy, nhảy dây, thả diều… là di sản văn hoá phi vật thể quý báu được lưu truyền qua nhiều thế hệ. Đưa trò chơi dân gian vào mĩ thuật giúp bảo tồn nét đẹp cộng đồng và rèn luyện tình đoàn kết, gắn bó tuổi thơ."
+            },
+            {
+              heading: "Quy trình sáng tác tranh trò chơi dân gian",
+              content: "1. Phác thảo bố cục: xác định góc nhìn và khoảnh khắc kịch tính nhất của trò chơi (ví dụ: người kéo co ngả người về sau, hai chân đạp đất, tay níu chặt sợi dây thừng).\n2. Tô màu các mảng lớn: phủ màu cho nhóm nhân vật chính trước, sau đó phối màu cho cảnh nền (sân đình, bãi cỏ, gốc đa).\n3. Thêm nét chi tiết và hoa văn trang trí: viền nét, tạo sắc độ đậm nhạt và hoàn thiện tác phẩm."
+            },
+            {
+              heading: "Nguyên lí cân bằng trong hội họa và điêu khắc",
+              content: "Cân bằng là sự sắp đặt các yếu tố tạo hình (đường nét, hình khối, màu sắc, đậm nhạt) để tạo nên cảm giác hài hòa, vững chãi, không bị chông chênh lệch một phía:\n• Cân bằng đối xứng (cân bằng thị giác qua trục): các phần hai bên trục trung tâm có khối lượng thị giác tương đương.\n• Cân bằng bất đối xứng (cân bằng động/bù trừ): dùng một mảng hình lớn màu nhạt cân bằng với một điểm nhấn nhỏ mang màu sắc đậm hoặc rực rỡ."
+            },
+            {
+              heading: "Tìm hiểu tác phẩm khắc gỗ 'Bác Hồ với thiếu nhi'",
+              content: "Tác phẩm khắc gỗ nổi tiếng của họa sĩ Huy Oánh (1980). Hình tượng Bác Hồ ở vị trí trung tâm hiền từ bao bọc các cháu thiếu nhi xúm xít xung quanh; mảng sáng trên tà áo Bác tương phản với các mảng tối xung quanh tạo nên bố cục cân bằng chặt chẽ, ấm áp vô ngần."
+            }
+          ]
+        },
+        {
+          id: "mt6_b10",
+          num: 10,
+          title: "Bài 10. Thiết kế thiệp chúc mừng",
+          sgk: "SGK trang 42–45",
+          sections: [
+            {
+              heading: "Công năng và cấu trúc thiệp chúc mừng",
+              content: "Thiệp chúc mừng là sản phẩm thiết kế đồ hoạ ứng dụng, truyền tải thông điệp yêu thương, lời chúc tốt đẹp vào các dịp đặc biệt (sinh nhật, ngày Nhà giáo Việt Nam 20/11, Tết Trung thu, năm mới). Cấu trúc gồm: phần hình ảnh trang trí, phần chữ tiêu đề, lời chúc viết tay và cơ chế đóng mở thuận tiện."
+            },
+            {
+              heading: "Quy trình 6 bước làm thiệp nổi Pop-up",
+              content: "1. Gập đôi tờ bìa nền, dùng kéo rạch 2 đường song song ở nếp gấp tạo thành mộng đẩy nổi.\n2. Gập mộng đẩy vào phía trong, trang trí bề mặt nền thiệp.\n3. Vẽ phác thảo hình ảnh trò chơi dân gian (nhân vật kéo co, thả diều...).\n4. Tô màu rực rỡ và dùng kéo cắt tỉa rời hình nhân vật.\n5. Bôi keo dán hình nhân vật lên mặt trước của mộng nổi.\n6. Dán thêm một lớp bìa bọc ngoài, trang trí mặt bìa và ghi dòng chữ chúc mừng ý nghĩa."
+            },
+            {
+              heading: "Các nguyên lí thiết kế đồ hoạ cốt lõi",
+              content: "• Tỉ lệ: cân đối giữa diện tích dành cho hình minh họa và không gian dành cho chữ viết lời chúc.\n• Nhịp điệu: sự lặp lại có biến tấu của hoa văn đường diềm, tạo cảm giác vui tươi.\n• Chuyển động thị giác: mắt người xem được dẫn dắt từ hình nổi bật nhất đến lời chúc chính."
+            },
+            {
+              heading: "Ứng dụng nghề nghiệp thiết kế đồ họa",
+              content: "Hiểu được vai trò của người thiết kế đồ họa trong việc sáng tạo bao bì quà tặng, logo thương hiệu, lịch bàn và các ấn phẩm truyền thông văn hóa."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      id: "topic_6",
+      title: "Chủ đề 6. Sắc màu lễ hội",
+      sgk: "Trang 46–54",
+      lessons: [
+        {
+          id: "mt6_b11",
+          num: 11,
+          title: "Bài 11. Hoà sắc trong tranh chủ đề lễ hội",
+          sgk: "SGK trang 46–50",
+          sections: [
+            {
+              heading: "Không gian và sắc màu lễ hội Việt Nam",
+              content: "Lễ hội đền Kỳ Cùng (Lạng Sơn), đua voi Buôn Đôn (Tây Nguyên), lễ hội đền Thái Vi (Ninh Bình), hội chọi trâu Đồ Sơn, hội Lim quan họ… Không khí rực rỡ của cờ hoa, kiệu rước, trang phục truyền thống và tiếng trống rộn ràng là nguồn chất liệu vô tận cho sáng tác mĩ thuật."
+            },
+            {
+              heading: "Khái niệm hoà sắc (Color Harmony)",
+              content: "Hoà sắc là sự phối hợp tinh tế giữa các màu sắc trong một tác phẩm tạo nên một tổng thể hài hòa, thống nhất về cảm xúc:\n• Gam màu chủ đạo: màu chiếm diện tích lớn và chi phối toàn bộ bức tranh (gam nóng gợi sự sôi nổi, tưng bừng; gam lạnh gợi sự linh thiêng, thanh tịnh).\n• Màu bổ trợ và điểm nhấn: những chấm màu đối lập làm nổi bật nhân vật trọng tâm.\n• Sắc độ (Value): các cung bậc đậm, nhạt, sáng, tối của từng tông màu."
+            },
+            {
+              heading: "Tạo hình tranh 3D cảnh đua thuyền nhiều lớp",
+              content: "Cắt bìa làm khung đế; vẽ và tô màu nước biểu diễn các lớp sóng biếc; cắt dán hình các con thuyền rồng và vận động viên tay chèo theo các tầng lớp trước – sau tạo nên chiều sâu không gian ba chiều sống động."
+            },
+            {
+              heading: "Kiệt tác sơn mài 'Lễ hội đầu năm' của Nguyễn Gia Trí",
+              content: "Danh họa Nguyễn Gia Trí là bậc thầy sơn mài Việt Nam. Bức tranh 'Lễ hội đầu năm' rực rỡ sắc vàng của quỳ vàng, ánh đỏ của son, màu thâm trầm của then và vỏ trứng trắng muốt, diễn tả đoàn người nô nức đi trẩy hội mùa xuân giữa cỏ cây hoa lá tưng bừng."
+            }
+          ]
+        },
+        {
+          id: "mt6_b12",
+          num: 12,
+          title: "Bài 12. Màu sắc lễ hội trong thiết kế lịch treo tường",
+          sgk: "SGK trang 51–54",
+          sections: [
+            {
+              heading: "Đặc điểm của lịch treo tường",
+              content: "Lịch treo tường là vật phẩm mĩ thuật ứng dụng kết hợp giữa tính thẩm mĩ và công năng tra cứu thời gian (ngày, tháng, năm, thứ). Bố cục gồm 2 phần rõ rệt: phần tranh minh họa chủ đề lễ hội phía trên và phần bảng số lịch rõ ràng, dễ nhìn phía dưới."
+            },
+            {
+              heading: "Ý nghĩa biểu tượng của Cờ ngũ sắc",
+              content: "Cờ ngũ sắc trong các lễ hội truyền thống chứa đựng triết lí âm dương ngũ hành phương Đông:\n• Màu lục (xanh lá cây) ứng với hành Mộc\n• Màu đỏ ứng với hành Hỏa\n• Màu vàng ứng với hành Thổ\n• Màu trắng ứng với hành Kim\n• Màu lam (xanh dương/đen) ứng với hành Thủy.\nSử dụng phối màu ngũ sắc giúp tác phẩm mang đậm phong vị văn hóa dân gian Việt Nam."
+            },
+            {
+              heading: "Quy trình 5 bước thiết kế lịch",
+              content: "1. Chuẩn bị bìa cứng, thước kẻ, compa, màu vẽ, keo dán và dây treo.\n2. Phân chia bố cục: dành 2/3 diện tích cho hình ảnh lễ hội và 1/3 cho block số lịch.\n3. Vẽ phác và tô màu tranh lễ hội (mặt nạ tuồng, múa lân, hoa mai hoa đào).\n4. Kẻ ô hoặc dán bảng ngày tháng năm chính xác.\n5. Đục lỗ, luồn dây treo bện chỉ ngũ sắc và hoàn thiện sản phẩm."
+            },
+            {
+              heading: "Mối quan hệ giữa Công năng và Thẩm mĩ",
+              content: "Một tờ lịch dù vẽ tranh rất lộng lẫy nhưng các con số ngày tháng mờ nhạt, khó đọc thì không đạt yêu cầu sử dụng. Công năng và thẩm mĩ phải luôn song hành, bổ trợ cho nhau."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      id: "topic_7",
+      title: "Chủ đề 7. Cuộc sống thường ngày",
+      sgk: "Trang 55–61",
+      lessons: [
+        {
+          id: "mt6_b13",
+          num: 13,
+          title: "Bài 13. Sáng tạo mĩ thuật với hình ảnh trong cuộc sống",
+          sgk: "SGK trang 55–58",
+          sections: [
+            {
+              heading: "Vẻ đẹp từ những điều bình dị",
+              content: "Mĩ thuật bắt nguồn từ chính hơi thở đời thường: cảnh mẹ nấu cơm trong bếp, bé phụ giúp bố quét sân, hai chị em cùng nhau đọc sách bên cửa sổ, bác nông dân gặt lúa, cô thợ may tỉ mỉ từng đường chỉ. Quan sát đời sống giúp học sinh biết nâng niu giá trị của lao động và tình cảm gia đình."
+            },
+            {
+              heading: "Danh họa Mai Trung Thứ (1906–1980) và tranh lụa",
+              content: "Họa sĩ tốt nghiệp khóa I Trường Cao đẳng Mĩ thuật Đông Dương, bậc thầy về tranh lụa. Các tác phẩm nổi tiếng như 'Viết bài' (1956), 'Niềm vui sống II' (1963) khắc họa nét thanh tú của người phụ nữ và trẻ em Việt Nam với đường nét mềm mại, mảng màu dịu ngọt, mang đậm tinh thần truyền thống phương Đông."
+            },
+            {
+              heading: "Mô hình học sinh đọc sách bằng bìa và que kem",
+              content: "1. Cắt bìa carton làm khung chân ghế bành.\n2. Gắn các que kem gỗ lên khung tạo thành nan ghế ngồi tựa lưng.\n3. Cố định ghế vào đế bìa.\n4. Vẽ và cắt rời hình bạn học sinh đang say sưa đọc cuốn sách nhỏ.\n5. Trang trí nền thảm cỏ xanh và đặt nhân vật ngồi vững vàng trên ghế."
+            },
+            {
+              heading: "Thảo luận và giáo dục giá trị sống",
+              content: "Qua việc thực hiện tác phẩm, học sinh thêm yêu quý mái ấm gia đình, biết tự giác chia sẻ công việc nhà phù hợp với lứa tuổi và nuôi dưỡng lối sống tích cực."
+            }
+          ]
+        },
+        {
+          id: "mt6_b14",
+          num: 14,
+          title: "Bài 14. Thiết kế thời gian biểu",
+          sgk: "SGK trang 59–61",
+          sections: [
+            {
+              heading: "Khái niệm biểu tượng trực quan (Icons)",
+              content: "Biểu tượng là hình ảnh được đơn giản hóa, cách điệu cao độ từ vật thể thực nhằm truyền đạt thông tin một cách tức thì và dễ hiểu: hình chiếc giường hoặc vầng trăng đại diện cho giấc ngủ; chiếc đồng hồ báo thức cho giờ dậy; quyển sách mở và cây bút cho giờ học bài; đôi giày thể thao cho giờ rèn luyện sức khỏe; chiếc bát và đôi đũa cho bữa ăn."
+            },
+            {
+              heading: "Ý nghĩa của bảng thời gian biểu cá nhân",
+              content: "Giúp học sinh rèn luyện thói quen sinh hoạt khoa học, quản lí thời gian biểu một ngày hiệu quả giữa việc học tập, giúp đỡ gia đình và nghỉ ngơi vui chơi lành mạnh."
+            },
+            {
+              heading: "Quy trình thiết kế thời gian biểu sáng tạo",
+              content: "1. Lập danh sách các hoạt động trong ngày gắn với khung giờ cụ thể (sáng, trưa, chiều, tối).\n2. Chọn lọc và thiết kế biểu tượng đặc trưng cho từng hoạt động.\n3. Phác thảo bố cục: dạng bảng lưới, dạng vòng tròn 24 giờ, hoặc dạng đường zíc zắc dòng thời gian.\n4. Dùng đất nặn đắp nổi hoặc dùng giấy màu cắt dán các biểu tượng.\n5. Viết số giờ rõ ràng và trang trí đường viền sinh động."
+            },
+            {
+              heading: "Vận dụng trang trí đồ dùng học tập",
+              content: "Ứng dụng các biểu tượng thời gian biểu để trang trí bìa sổ lưu bút, nhãn vở, thời khóa biểu trên bàn học hoặc túi đựng bài thi cá nhân."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      id: "topic_8",
+      title: "Chủ đề 8. Mĩ thuật thời kì cổ đại",
+      sgk: "Trang 62–67",
+      lessons: [
+        {
+          id: "mt6_b15",
+          num: 15,
+          title: "Bài 15. Mĩ thuật thế giới thời kì cổ đại",
+          sgk: "SGK trang 62–64",
+          sections: [
+            {
+              heading: "Bối cảnh lịch sử và các nền văn minh cổ đại",
+              content: "Gắn liền với sự ra đời của các nền văn minh rực rỡ bên các dòng sông lớn: văn minh Lưỡng Hà (Sumer, Babylon với cổng Ishtar), văn minh Ai Cập bên sông Nin (kim tự tháp, tượng Nhân sư), văn minh Ấn Độ bên sông Ấn, sông Hằng; văn minh Trung Hoa bên sông Hoàng Hà; văn minh Hy Lạp và La Mã cổ đại bên bờ Địa Trung Hải."
+            },
+            {
+              heading: "Đặc trưng ngôn ngữ tạo hình cổ đại",
+              content: "• Điêu khắc: hình khối cô đọng, khỏe khoắn, bề thế và mang tính biểu cảm trang nghiêm.\n• Kiến trúc: chuẩn mực về tỉ lệ, thức cột (Doric, Ionic, Corinthian của Hy Lạp) như đền Parthenon thờ nữ thần Athena; các công trình kim tự tháp khổng lồ.\n• Hội hoạ và đồ gốm: bích họa Ai Cập vẽ người nhìn nghiêng nhưng mắt nhìn thẳng; bình gốm Hy Lạp đen – đỏ trang trí cảnh thi đấu thể thao và huyền thoại các vị thần."
+            },
+            {
+              heading: "Quy trình 6 bước làm mô hình Kim tự tháp Ai Cập",
+              content: "1. Dùng thước kẻ và compa vẽ bản khai triển hình học gồm 1 đáy hình vuông và 4 mặt bên là các tam giác đều, chừa sẵn mép dán gập.\n2. Dùng kéo cắt rời bản khai triển theo đường viền ngoài.\n3. Vẽ trang trí các phiến đá và hoa văn Ai Cập cổ lên 4 mặt tam giác.\n4. Dùng sống dao miết nhẹ tạo nếp gấp sắc sảo dọc theo 4 cạnh đáy.\n5. Dựng 4 mặt tam giác chụm đỉnh lại với nhau và dùng keo dán mép mép nối tạo thành khối chóp kim tự tháp vững chãi.\n6. Cắt tỉa cây cọ sa mạc bằng bìa và gắn mô hình lên sa bàn cát."
+            },
+            {
+              heading: "Vận dụng hoạ tiết cổ đại vào đời sống hiện đại",
+              content: "Ứng dụng hoa văn hình học Hy Lạp cổ hoặc kí tự tượng hình Ai Cập để trang trí bìa sổ tay, chặn giấy để bàn hoặc họa tiết viền áo."
+            }
+          ]
+        },
+        {
+          id: "mt6_b16",
+          num: 16,
+          title: "Bài 16. Mĩ thuật Việt Nam thời kì cổ đại",
+          sgk: "SGK trang 65–67",
+          sections: [
+            {
+              heading: "Các nền văn hoá kim khí đỉnh cao của Việt Nam",
+              content: "Giai đoạn đồ đồng và sơ kì đồ sắt gắn với văn hoá Phùng Nguyên, Đồng Đậu, Gò Mun và đỉnh cao là nền văn hoá Đông Sơn rực rỡ ở miền Bắc; văn hoá Sa Huỳnh với gốm hoa văn khắc vạch và mộ chum ở miền Trung; văn hoá Đồng Nai và Óc Eo ở Nam Bộ. Hiện vật tiêu biểu: trống đồng Đông Sơn, tượng người cõng nhau thổi khèn bằng đồng, đèn gốm Sa Huỳnh hình thú, bình gốm Óc Eo."
+            },
+            {
+              heading: "Trống đồng Đông Sơn – Đỉnh cao nghệ thuật đúc đồng",
+              content: "Cấu trúc hình dáng gồm 3 phần cân đối: mặt trống phẳng, tang trống phình ra, thân trống hình trụ và chân trống choãi nhẹ. Hoa văn được bố trí thành các vòng tròn đồng tâm xoay quanh ngôi sao nhiều cánh ở trung tâm (biểu tượng Mặt Trời). Các vành hoa văn diễn tả sinh động hình chim Lạc bay ngược chiều kim đồng hồ, cảnh giã gạo, múa lễ hội, chèo thuyền chiến và các họa tiết răng cưa, vòng tròn đồng tâm có chấm giữa."
+            },
+            {
+              heading: "Quy trình 4 bước trang trí áo dài với hoa văn di sản",
+              content: "1. Vẽ phác dáng tà áo dài truyền thống cân đối trên giấy vẽ.\n2. Lựa chọn các họa tiết di sản tiêu biểu (chim Lạc, hoa văn Mặt Trời, đường diềm răng cưa) và phác vào các vị trí duyên dáng (cổ áo, ngực áo, viền tà hoặc gấu áo).\n3. Cắt rời hình mẫu áo dài.\n4. Phối màu hài hòa: kết hợp màu nền áo với màu hoa văn di sản để tạo điểm nhấn sang trọng, hiện đại nhưng đậm đà bản sắc."
+            },
+            {
+              heading: "Các lĩnh vực Thiết kế thời trang",
+              content: "Thiết kế thời trang bao gồm 3 phân nhánh chính: Thiết kế trang phục (quần áo, đầm, áo dài), Thiết kế phụ kiện (túi xách, giày dép, thắt lưng, khăn quàng) và Thiết kế trang sức (hoa tai, vòng cổ, nhẫn). Kế thừa vốn cổ dân tộc là con đường đưa thời trang Việt Nam vươn ra thế giới."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  terms: [
+    { term: "Hai chiều và ba chiều (2D & 3D)", desc: "Tranh thể hiện trên mặt phẳng (chiều dài, rộng); tượng và mô hình có đủ chiều cao, rộng và sâu trong không gian thực. Tranh 2D vẫn có thể gợi chiều sâu không gian bằng luật xa gần và sắc độ đậm nhạt." },
+    { term: "Bố cục (Composition)", desc: "Cách sắp xếp các yếu tố hình ảnh, đường nét, mảng màu, khối và chữ viết trong một không gian nghệ thuật; tạo sự phân định rõ ràng giữa mảng chính và mảng phụ, dẫn dắt ánh nhìn người xem." },
+    { term: "Tương phản (Contrast)", desc: "Sự đối lập giữa các yếu tố cạnh nhau: sáng – tối, đậm – nhạt, nóng – lạnh, nét thẳng – cong, khối lớn – nhỏ, chất cảm thô – mịn; giúp tạo điểm nhấn và sức lôi cuốn cho tác phẩm." },
+    { term: "Cân bằng (Balance)", desc: "Trạng thái hài hòa, vững chãi của bố cục; có thể đạt được qua cân bằng đối xứng (giống nhau qua trục) hoặc cân bằng bất đối xứng (bù trừ khối lượng thị giác giữa các mảng màu và khoảng trống)." },
+    { term: "Nhịp điệu (Rhythm)", desc: "Sự lặp lại có quy luật và biến hóa linh hoạt của đường nét, hình khối, mảng màu; tạo cảm giác chuyển động nhịp nhàng, êm ái hoặc sôi nổi như giai điệu âm nhạc." },
+    { term: "Hoà sắc và gam màu (Harmony & Palette)", desc: "Hoà sắc là mối quan hệ tổng hòa giữa các màu sắc tạo nên ấn tượng thị giác êm dịu hay rực rỡ. Gam màu là nhóm màu chủ đạo (gam nóng, gam lạnh, gam trầm, gam tươi)." },
+    { term: "Sắc độ và chất cảm (Value & Texture)", desc: "Sắc độ chỉ các mức độ sáng tối của màu sắc. Chất cảm là cảm nhận xúc giác hoặc thị giác về tính chất bề mặt của chất liệu (nhẵn bóng, xù xì, gồ ghề, mềm mại)." },
+    { term: "Khái quát và cách điệu (Stylization)", desc: "Lược bỏ những chi tiết vụn vặt, giữ lại và cường điệu những nét đặc trưng cốt lõi nhất của sự vật để tạo nên hình tượng mĩ thuật giàu tính biểu cảm và trang trí." },
+    { term: "Mô phỏng (Simulation)", desc: "Tái hiện lại vẻ đẹp, cấu trúc hoặc đặc điểm của tác phẩm gốc/mẫu vật bằng chất liệu và phương thức phù hợp với lứa tuổi học sinh, không đòi hỏi đúng tuyệt đối tỉ lệ vật lí của vật thật." },
+    { term: "Công năng và thẩm mĩ (Function & Aesthetics)", desc: "Yêu cầu cốt lõi của Mĩ thuật ứng dụng: sản phẩm vừa phải phát huy tối đa công dụng thực tiễn trong đời sống, vừa phải đạt vẻ đẹp tạo dáng và trang trí tinh tế." },
+    { term: "Tượng và phù điêu (Statue & Relief)", desc: "Tượng là khối ba chiều hoàn chỉnh trong không gian có thể đi vòng quanh ngắm nhìn từ mọi hướng; phù điêu là hình khối nổi hoặc chìm nhưng luôn gắn liền với một mặt phẳng nền." },
+    { term: "Di sản và sáng tạo (Heritage & Innovation)", desc: "Tìm hiểu, trân trọng và kế thừa những giá trị thẩm mĩ của tiền nhân, sau đó biến đổi linh hoạt và thổi luồng gió hiện đại vào sản phẩm mĩ thuật mới của chính mình." }
+  ],
+  figures: [
+    { num: 1, title: "Xây dựng ý tưởng", lesson: "Bài 2, trang 10", desc: "Sơ đồ liên hệ từ chủ đề đến hình ảnh và cách thể hiện; mỗi nhánh phát triển thành một ý tưởng sáng tác độc đáo." },
+    { num: 2, title: "Phố trong tranh Bùi Xuân Phái", lesson: "Bài 3, trang 13", desc: "Mái ngói nhấp nhô, mảng tường loang lổ, đường viền đen đậm chắc khỏe và gam màu trầm ấm của phố cổ Hà Nội." },
+    { num: 3, title: "Tạo mô hình ngôi nhà", lesson: "Bài 4, trang 19", desc: "Các bước tạo khung thân nhà, gấp mái, trổ cửa sổ, ghép nối các chi tiết và trang trí mô hình bằng bìa." },
+    { num: 4, title: "Tạo hình bằng giấy bồi", lesson: "Bài 5, trang 24", desc: "Quy trình phác hình, ngâm giấy nhuyễn, pha màu, đắp nổi bột giấy tạo chất cảm 3D cho hoạt cảnh học đường." },
+    { num: 5, title: "Hình vẽ thời tiền sử", lesson: "Bài 7, trang 31", desc: "Nét khắc vẽ sinh động, mộc mạc về con người và muông thú trên vách hang đá nguyên thủy Bhimbetka, Sahara." },
+    { num: 6, title: "Một số di vật tiền sử Việt Nam", lesson: "Bài 8, trang 36", desc: "Rìu đá Tràng An, công cụ Hoà Bình, vòng trang sức vỏ sò và mặt người khắc hang Đồng Nội." },
+    { num: 7, title: "Các bước làm thiệp nổi", lesson: "Bài 10, trang 43", desc: "Kĩ thuật cắt mộng đẩy nổi pop-up, gắn nhân vật trò chơi dân gian và trang trí bìa thiệp chúc mừng." },
+    { num: 8, title: "Thể hiện tranh lễ hội", lesson: "Bài 11, trang 47", desc: "Từ phác thảo bố cục, phủ mảng màu lớn đến viền nét chi tiết; tạo dựng không khí tưng bừng của lễ hội quê hương." },
+    { num: 9, title: "Lễ hội đầu năm của Nguyễn Gia Trí", lesson: "Bài 11, trang 50", desc: "Kiệt tác tranh sơn mài với màu son đỏ, quỳ vàng lấp lánh, màu then đen sâu thẳm diễn tả dòng người trẩy hội mùa xuân." },
+    { num: 10, title: "Thiết kế lịch treo tường", lesson: "Bài 12, trang 52", desc: "Phân vùng hợp lí giữa tranh trang trí lễ hội và block số ngày tháng; phối hợp màu cờ ngũ sắc dân gian." },
+    { num: 11, title: "Sinh hoạt trong tranh Mai Trung Thứ", lesson: "Bài 13, trang 56", desc: "Hai kiệt tác tranh lụa 'Viết bài' và 'Niềm vui sống II'; vẻ đẹp trong trẻo, bình dị của trẻ thơ và người phụ nữ Việt." },
+    { num: 12, title: "Tạo mô hình kim tự tháp", lesson: "Bài 15, trang 63", desc: "Bản khai triển đáy vuông 4 mặt tam giác, gập mép dán dựng khối chóp kim tự tháp sa mạc Ai Cập." },
+    { num: 13, title: "Di vật mĩ thuật Việt Nam cổ đại", lesson: "Bài 16, trang 65", desc: "Tượng đồng Đông Sơn người cõng nhau thổi khèn, bình gốm Óc Eo và đèn gốm Sa Huỳnh hình thú độc đáo." },
+    { num: 14, title: "Trang trí áo dài với hoa văn di sản", lesson: "Bài 16, trang 66", desc: "Đặt hoa văn chim Lạc, ngôi sao Mặt Trời lên cổ áo, ngực áo và tà áo dài truyền thống Việt Nam." }
+  ]
+};
+
+fs.writeFileSync('C:/Users/ADMIN/.gemini/antigravity/scratch/mithuat6_data.json', JSON.stringify(data, null, 2), 'utf8');
+console.log('Saved mithuat6_data.json, topics:', data.topics.length, 'lessons:', data.topics.reduce((acc, t) => acc + t.lessons.length, 0));

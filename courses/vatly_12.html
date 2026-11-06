@@ -29,14 +29,13 @@
     ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
     .smooth-scroll { scroll-behavior: smooth; }
   </style>
-
-<!-- CodeHub Activity Monitor V2 -->
-<meta name="codehub-activity-name" content="Vật Lí Lớp 12 | CodeHub">
-<meta name="codehub-activity-kind" content="subject">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="../scripts/supabase-config.js"></script>
-<script src="../scripts/activity-tracker.js"></script>
+  <!-- KaTeX for beautiful Math & Physics Formula Rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
 </head>
+  <!-- Reading Progress Bar -->
+  <div id="progressBar" class="fixed top-0 left-0 h-1 bg-gradient-to-r from-purple-500 via-pink-500 to-rose-500 z-50 transition-all duration-150" style="width: 0%;"></div>
 <body class="bg-gray-50 text-gray-900 dark:bg-dark dark:text-gray-100 transition-colors duration-200 smooth-scroll">
   
   <nav class="sticky top-0 z-50 bg-white/80 dark:bg-dark-surface/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-700">
@@ -70,6 +69,12 @@
           </div>
         </div>
         <div class="flex items-center gap-4">
+          <!-- Exam Modal Button -->
+          <button onclick="openCourseQuizModal()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white text-xs font-semibold shadow-sm transition">
+            <i class="fa-solid fa-file-signature"></i>
+            <span class="hidden sm:inline">Kiểm tra toàn khóa</span>
+            <span>(10 câu)</span>
+          </button>
           <button id="themeToggle" class="p-2 text-gray-500 hover:text-purple-600 dark:text-gray-400 dark:hover:text-purple-400 transition-colors">
             <i class="fa-solid fa-moon text-lg dark:hidden"></i>
             <i class="fa-solid fa-sun text-lg hidden dark:block"></i>
@@ -115,6 +120,16 @@
               <i class="fa-solid fa-list-ol text-purple-600"></i> Mục lục bài học
             </span>
             <span class="text-xs bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300 px-2 py-0.5 rounded-full font-bold">23 Bài</span>
+          </div>
+          <!-- Search Bar -->
+          <div class="mb-3">
+            <div class="relative">
+              <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-gray-400 text-xs"></i>
+              <input type="text" 
+                     id="lessonSearch" 
+                     placeholder="Tìm kiếm bài học Vật lí 12..." 
+                     class="w-full pl-8 pr-3 py-1.5 text-xs rounded-xl bg-gray-50 dark:bg-dark border border-gray-200 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500 text-gray-900 dark:text-gray-100 placeholder-gray-400">
+            </div>
           </div>
           <div class="space-y-6"><div>
       <h3 class="text-xs font-bold text-purple-600 dark:text-purple-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
@@ -366,6 +381,38 @@
       <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
       <input type="hidden" class="quiz-expl" value="Ở thể khí, khoảng cách giữa các phân tử rất lớn, lực tương tác rất yếu nên các phân tử chuyển động hỗn loạn không ngừng về mọi hướng.">
     </div>
+  
+    <!-- Self-check Quiz 2 -->
+    <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800">
+      <div class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+        <i class="fa-solid fa-circle-question text-purple-500"></i> Câu hỏi tự kiểm tra (Câu 2)
+      </div>
+      <p class="text-sm font-medium text-gray-900 dark:text-white mb-3">Trong quá trình nóng chảy của một chất rắn kết tinh tinh khiết:</p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+        
+          <button onclick="checkQuiz(this, true)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">A</span>
+            <span class="text-gray-700 dark:text-gray-300">Nhiệt độ của vật giữ nguyên không đổi dù vật vẫn liên tục nhận nhiệt lượng</span>
+          </button>
+        
+          <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">B</span>
+            <span class="text-gray-700 dark:text-gray-300">Nhiệt độ của vật tăng dần đều theo thời gian</span>
+          </button>
+        
+          <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">C</span>
+            <span class="text-gray-700 dark:text-gray-300">Thể tích của vật luôn luôn giảm</span>
+          </button>
+        
+          <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">D</span>
+            <span class="text-gray-700 dark:text-gray-300">Liên kết phân tử giữa các hạt trở nên bền vững hơn</span>
+          </button>
+      </div>
+      <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
+      <input type="hidden" class="quiz-expl" value="Chất rắn kết tinh có nhiệt độ nóng chảy xác định. Trong suốt thời gian nóng chảy, toàn bộ nhiệt lượng cung cấp được dùng để phá vỡ mạng tinh thể nên nhiệt độ của chất rắn không thay đổi.">
+    </div>
   </article><article id="bai-2" class="bg-white dark:bg-dark-surface rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 border-t-4 border-emerald-500 p-6 sm:p-8 transition-all hover:shadow-md">
     <div class="flex flex-wrap items-center justify-between gap-2 mb-4 pb-3 border-b border-gray-100 dark:border-gray-800">
       <div class="flex items-center gap-2">
@@ -481,6 +528,38 @@
       <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
       <input type="hidden" class="quiz-expl" value="Khí nhận công nên A = +150 J. Khí truyền nhiệt nên Q = -40 J. Theo Định luật I: ΔU = A + Q = 150 + (-40) = +110 J (nội năng tăng 110 J).">
     </div>
+  
+    <!-- Self-check Quiz 2 -->
+    <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800">
+      <div class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+        <i class="fa-solid fa-circle-question text-purple-500"></i> Câu hỏi tự kiểm tra (Câu 2)
+      </div>
+      <p class="text-sm font-medium text-gray-900 dark:text-white mb-3">Một khối khí lí tưởng nhận nhiệt lượng $Q = 100\text{ J}$ từ môi trường và đồng thời thực hiện một công $A' = 40\text{ J}$ đẩy piston di chuyển. Độ biến thiên nội năng $\Delta U$ của khối khí là:</p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+        
+          <button onclick="checkQuiz(this, true)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">A</span>
+            <span class="text-gray-700 dark:text-gray-300">$\Delta U = 60\text{ J}$</span>
+          </button>
+        
+          <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">B</span>
+            <span class="text-gray-700 dark:text-gray-300">$\Delta U = 140\text{ J}$</span>
+          </button>
+        
+          <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">C</span>
+            <span class="text-gray-700 dark:text-gray-300">$\Delta U = -60\text{ J}$</span>
+          </button>
+        
+          <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">D</span>
+            <span class="text-gray-700 dark:text-gray-300">$\Delta U = 40\text{ J}$</span>
+          </button>
+      </div>
+      <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
+      <input type="hidden" class="quiz-expl" value="Theo định luật I nhiệt động lực học: $\Delta U = Q + A$. Khí nhận nhiệt lượng $Q = +100\text{ J}$; khí sinh công $A' = 40\text{ J}$ nghĩa là công khối khí nhận vào là $A = -40\text{ J}$. Suy ra $\Delta U = 100 - 40 = 60\text{ J}$.">
+    </div>
   </article><article id="bai-3" class="bg-white dark:bg-dark-surface rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 border-t-4 border-purple-500 p-6 sm:p-8 transition-all hover:shadow-md">
     <div class="flex flex-wrap items-center justify-between gap-2 mb-4 pb-3 border-b border-gray-100 dark:border-gray-800">
       <div class="flex items-center gap-2">
@@ -594,6 +673,38 @@
       <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
       <input type="hidden" class="quiz-expl" value="Nhiệt độ tuyệt đối: T = t + 273 = 27 + 273 = 300 K (chính xác hơn là 300,15 K, chọn đáp án 300 K).">
     </div>
+  
+    <!-- Self-check Quiz 2 -->
+    <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800">
+      <div class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+        <i class="fa-solid fa-circle-question text-purple-500"></i> Câu hỏi tự kiểm tra (Câu 2)
+      </div>
+      <p class="text-sm font-medium text-gray-900 dark:text-white mb-3">Nhiệt độ đóng băng của nước tinh khiết ở áp suất tiêu chuẩn là $0^\circ\text{C}$. Theo thang nhiệt độ Kelvin, giá trị này tương ứng với:</p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+        
+          <button onclick="checkQuiz(this, true)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">A</span>
+            <span class="text-gray-700 dark:text-gray-300">$273.15\text{ K}$</span>
+          </button>
+        
+          <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">B</span>
+            <span class="text-gray-700 dark:text-gray-300">$0\text{ K}$</span>
+          </button>
+        
+          <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">C</span>
+            <span class="text-gray-700 dark:text-gray-300">$-273.15\text{ K}$</span>
+          </button>
+        
+          <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">D</span>
+            <span class="text-gray-700 dark:text-gray-300">$373.15\text{ K}$</span>
+          </button>
+      </div>
+      <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
+      <input type="hidden" class="quiz-expl" value="Mối liên hệ giữa nhiệt độ thang Celsius ($t$) và thang Kelvin ($T$) là: $T(\text{K}) = t(^\circ\text{C}) + 273.15$. Với $t = 0^\circ\text{C} \Rightarrow T = 273.15\text{ K}$.">
+    </div>
   </article><article id="bai-4" class="bg-white dark:bg-dark-surface rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 border-t-4 border-amber-500 p-6 sm:p-8 transition-all hover:shadow-md">
     <div class="flex flex-wrap items-center justify-between gap-2 mb-4 pb-3 border-b border-gray-100 dark:border-gray-800">
       <div class="flex items-center gap-2">
@@ -681,6 +792,38 @@
       </div>
       <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
       <input type="hidden" class="quiz-expl" value="Nhiệt lượng cần cung cấp: Q = m × c × Δt = 2 × 4180 × (70 - 20) = 2 × 4180 × 50 = 418 000 J = 418 kJ.">
+    </div>
+  
+    <!-- Self-check Quiz 2 -->
+    <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800">
+      <div class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+        <i class="fa-solid fa-circle-question text-purple-500"></i> Câu hỏi tự kiểm tra (Câu 2)
+      </div>
+      <p class="text-sm font-medium text-gray-900 dark:text-white mb-3">Cần cung cấp một nhiệt lượng bằng bao nhiêu để làm nóng $m = 2\text{ kg}$ nước từ $20^\circ\text{C}$ lên $80^\circ\text{C}$, biết nhiệt dung riêng của nước là $c = 4180\text{ J/(kg}\cdot\text{K)}$?</p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+        
+          <button onclick="checkQuiz(this, true)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">A</span>
+            <span class="text-gray-700 dark:text-gray-300">$501.6\text{ kJ}$</span>
+          </button>
+        
+          <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">B</span>
+            <span class="text-gray-700 dark:text-gray-300">$250.8\text{ kJ}$</span>
+          </button>
+        
+          <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">C</span>
+            <span class="text-gray-700 dark:text-gray-300">$167.2\text{ kJ}$</span>
+          </button>
+        
+          <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">D</span>
+            <span class="text-gray-700 dark:text-gray-300">$668.8\text{ kJ}$</span>
+          </button>
+      </div>
+      <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
+      <input type="hidden" class="quiz-expl" value="Công thức tính nhiệt lượng: $Q = mc\Delta T = 2 \times 4180 \times (80 - 20) = 8360 \times 60 = 501,600\text{ J} = 501.6\text{ kJ}$.">
     </div>
   </article><article id="bai-5" class="bg-white dark:bg-dark-surface rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 border-t-4 border-rose-500 p-6 sm:p-8 transition-all hover:shadow-md">
     <div class="flex flex-wrap items-center justify-between gap-2 mb-4 pb-3 border-b border-gray-100 dark:border-gray-800">
@@ -770,6 +913,38 @@
       </div>
       <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
       <input type="hidden" class="quiz-expl" value="Nhiệt lượng nóng chảy: Q = λ × m = 3,34.10⁵ × 0,5 = 1,67.10⁵ J = 167 kJ.">
+    </div>
+  
+    <!-- Self-check Quiz 2 -->
+    <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800">
+      <div class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+        <i class="fa-solid fa-circle-question text-purple-500"></i> Câu hỏi tự kiểm tra (Câu 2)
+      </div>
+      <p class="text-sm font-medium text-gray-900 dark:text-white mb-3">Nhiệt lượng cần thiết để làm nóng chảy hoàn toàn $m = 0.5\text{ kg}$ nước đá ở $0^\circ\text{C}$ là bao nhiêu, biết nhiệt nóng chảy riêng của nước đá là $\lambda = 3.34 \times 10^5\text{ J/kg}$?</p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+        
+          <button onclick="checkQuiz(this, true)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">A</span>
+            <span class="text-gray-700 dark:text-gray-300">$167\text{ kJ}$</span>
+          </button>
+        
+          <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">B</span>
+            <span class="text-gray-700 dark:text-gray-300">$334\text{ kJ}$</span>
+          </button>
+        
+          <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">C</span>
+            <span class="text-gray-700 dark:text-gray-300">$668\text{ kJ}$</span>
+          </button>
+        
+          <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">D</span>
+            <span class="text-gray-700 dark:text-gray-300">$83.5\text{ kJ}$</span>
+          </button>
+      </div>
+      <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
+      <input type="hidden" class="quiz-expl" value="Áp dụng công thức nhiệt lượng nóng chảy: $Q = \lambda m = 3.34 \times 10^5 \times 0.5 = 1.67 \times 10^5\text{ J} = 167\text{ kJ}$.">
     </div>
   </article><article id="bai-6" class="bg-white dark:bg-dark-surface rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 border-t-4 border-cyan-500 p-6 sm:p-8 transition-all hover:shadow-md">
     <div class="flex flex-wrap items-center justify-between gap-2 mb-4 pb-3 border-b border-gray-100 dark:border-gray-800">
@@ -861,6 +1036,38 @@
       </div>
       <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
       <input type="hidden" class="quiz-expl" value="Đổi m = 200 g = 0,2 kg. Nhiệt lượng hóa hơi: Q = L × m = 2,26.10⁶ × 0,2 = 452 000 J = 452 kJ.">
+    </div>
+  
+    <!-- Self-check Quiz 2 -->
+    <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800">
+      <div class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+        <i class="fa-solid fa-circle-question text-purple-500"></i> Câu hỏi tự kiểm tra (Câu 2)
+      </div>
+      <p class="text-sm font-medium text-gray-900 dark:text-white mb-3">Nhiệt lượng cần cung cấp để hóa hơi hoàn toàn $m = 1\text{ kg}$ nước ở nhiệt độ sôi $100^\circ\text{C}$ (áp suất tiêu chuẩn), biết nhiệt hóa hơi riêng của nước $L = 2.26 \times 10^6\text{ J/kg}$ là:</p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+        
+          <button onclick="checkQuiz(this, true)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">A</span>
+            <span class="text-gray-700 dark:text-gray-300">$2.26 \times 10^6\text{ J}$</span>
+          </button>
+        
+          <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">B</span>
+            <span class="text-gray-700 dark:text-gray-300">$1.13 \times 10^6\text{ J}$</span>
+          </button>
+        
+          <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">C</span>
+            <span class="text-gray-700 dark:text-gray-300">$4.52 \times 10^6\text{ J}$</span>
+          </button>
+        
+          <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">D</span>
+            <span class="text-gray-700 dark:text-gray-300">$2.26 \times 10^3\text{ J}$</span>
+          </button>
+      </div>
+      <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
+      <input type="hidden" class="quiz-expl" value="Công thức tính nhiệt lượng hóa hơi: $Q = L \cdot m = 2.26 \times 10^6 \times 1 = 2.26 \times 10^6\text{ J} = 2.26\text{ MJ}$.">
     </div>
   </article><article id="bai-7" class="bg-white dark:bg-dark-surface rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 border-t-4 border-indigo-500 p-6 sm:p-8 transition-all hover:shadow-md">
     <div class="flex flex-wrap items-center justify-between gap-2 mb-4 pb-3 border-b border-gray-100 dark:border-gray-800">
@@ -1068,6 +1275,38 @@
       <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
       <input type="hidden" class="quiz-expl" value="Theo định nghĩa khí lí tưởng: các phân tử được coi là chất điểm và chỉ tương tác với nhau khi va chạm đàn hồi.">
     </div>
+  
+    <!-- Self-check Quiz 2 -->
+    <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800">
+      <div class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+        <i class="fa-solid fa-circle-question text-purple-500"></i> Câu hỏi tự kiểm tra (Câu 2)
+      </div>
+      <p class="text-sm font-medium text-gray-900 dark:text-white mb-3">Trong mô hình động học phân tử chất khí, nhận định nào sau đây là KHÔNG chính xác đối với khí lí tưởng?</p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+        
+          <button onclick="checkQuiz(this, true)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">A</span>
+            <span class="text-gray-700 dark:text-gray-300">Các phân tử khí luôn hút nhau rất mạnh khi ở khoảng cách xa</span>
+          </button>
+        
+          <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">B</span>
+            <span class="text-gray-700 dark:text-gray-300">Các phân tử khí được coi là các chất điểm không có kích thước đáng kể</span>
+          </button>
+        
+          <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">C</span>
+            <span class="text-gray-700 dark:text-gray-300">Các phân tử khí chuyển động hỗn loạn không ngừng về mọi phía</span>
+          </button>
+        
+          <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">D</span>
+            <span class="text-gray-700 dark:text-gray-300">Các phân tử chỉ tương tác với nhau khi va chạm đàn hồi</span>
+          </button>
+      </div>
+      <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
+      <input type="hidden" class="quiz-expl" value="Trong khí lí tưởng, lực tương tác giữa các phân tử khi không va chạm được coi là bằng không (bỏ qua), chúng chỉ tương tác với nhau khi va chạm đàn hồi.">
+    </div>
   </article><article id="bai-9" class="bg-white dark:bg-dark-surface rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 border-t-4 border-orange-500 p-6 sm:p-8 transition-all hover:shadow-md">
     <div class="flex flex-wrap items-center justify-between gap-2 mb-4 pb-3 border-b border-gray-100 dark:border-gray-800">
       <div class="flex items-center gap-2">
@@ -1152,6 +1391,38 @@
       </div>
       <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
       <input type="hidden" class="quiz-expl" value="Áp dụng định luật Boyle: p₁V₁ = p₂V₂ => 1 × 6 = p₂ × 2 => p₂ = 3 atm.">
+    </div>
+  
+    <!-- Self-check Quiz 2 -->
+    <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800">
+      <div class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+        <i class="fa-solid fa-circle-question text-purple-500"></i> Câu hỏi tự kiểm tra (Câu 2)
+      </div>
+      <p class="text-sm font-medium text-gray-900 dark:text-white mb-3">Một khối khí lí tưởng có thể tích ban đầu $V_1 = 4\text{ lít}$ ở áp suất $p_1 = 1\text{ bar}$. Giữ nhiệt độ không đổi (quá trình đẳng nhiệt), nén khối khí đến thể tích $V_2 = 2\text{ lít}$. Áp suất $p_2$ sau khi nén là:</p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+        
+          <button onclick="checkQuiz(this, true)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">A</span>
+            <span class="text-gray-700 dark:text-gray-300">$p_2 = 2\text{ bar}$</span>
+          </button>
+        
+          <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">B</span>
+            <span class="text-gray-700 dark:text-gray-300">$p_2 = 0.5\text{ bar}$</span>
+          </button>
+        
+          <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">C</span>
+            <span class="text-gray-700 dark:text-gray-300">$p_2 = 4\text{ bar}$</span>
+          </button>
+        
+          <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">D</span>
+            <span class="text-gray-700 dark:text-gray-300">$p_2 = 1.5\text{ bar}$</span>
+          </button>
+      </div>
+      <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
+      <input type="hidden" class="quiz-expl" value="Theo định luật Boyle cho quá trình đẳng nhiệt: $p_1 V_1 = p_2 V_2 \Rightarrow p_2 = \frac{p_1 V_1}{V_2} = \frac{1 \times 4}{2} = 2\text{ bar}$.">
     </div>
   </article><article id="bai-10" class="bg-white dark:bg-dark-surface rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 border-t-4 border-violet-500 p-6 sm:p-8 transition-all hover:shadow-md">
     <div class="flex flex-wrap items-center justify-between gap-2 mb-4 pb-3 border-b border-gray-100 dark:border-gray-800">
@@ -1239,6 +1510,38 @@
       </div>
       <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
       <input type="hidden" class="quiz-expl" value="Đổi T₁ = 27 + 273 = 300 K; T₂ = 127 + 273 = 400 K. V₂ = V₁ × (T₂ / T₁) = 4 × (400 / 300) = 5,33 lít.">
+    </div>
+  
+    <!-- Self-check Quiz 2 -->
+    <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800">
+      <div class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+        <i class="fa-solid fa-circle-question text-purple-500"></i> Câu hỏi tự kiểm tra (Câu 2)
+      </div>
+      <p class="text-sm font-medium text-gray-900 dark:text-white mb-3">Một khối khí lí tưởng có thể tích $V_1 = 3\text{ lít}$ ở nhiệt độ $T_1 = 300\text{ K}$ ($27^\circ\text{C}$). Giữ áp suất không đổi (quá trình đẳng áp), đun nóng khối khí đến $T_2 = 400\text{ K}$. Thể tích $V_2$ của khối khí là:</p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+        
+          <button onclick="checkQuiz(this, true)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">A</span>
+            <span class="text-gray-700 dark:text-gray-300">$V_2 = 4\text{ lít}$</span>
+          </button>
+        
+          <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">B</span>
+            <span class="text-gray-700 dark:text-gray-300">$V_2 = 2.25\text{ lít}$</span>
+          </button>
+        
+          <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">C</span>
+            <span class="text-gray-700 dark:text-gray-300">$V_2 = 5\text{ lít}$</span>
+          </button>
+        
+          <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">D</span>
+            <span class="text-gray-700 dark:text-gray-300">$V_2 = 3.5\text{ lít}$</span>
+          </button>
+      </div>
+      <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
+      <input type="hidden" class="quiz-expl" value="Theo định luật Charles cho quá trình đẳng áp: $\frac{V_1}{T_1} = \frac{V_2}{T_2} \Rightarrow V_2 = V_1 \frac{T_2}{T_1} = 3 \times \frac{400}{300} = 4\text{ lít}$.">
     </div>
   </article><article id="bai-11" class="bg-white dark:bg-dark-surface rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 border-t-4 border-fuchsia-500 p-6 sm:p-8 transition-all hover:shadow-md">
     <div class="flex flex-wrap items-center justify-between gap-2 mb-4 pb-3 border-b border-gray-100 dark:border-gray-800">
@@ -1333,6 +1636,38 @@
       </div>
       <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
       <input type="hidden" class="quiz-expl" value="Từ pV = nRT => V = nRT / p = 1 × 8,31 × 273 / (1,013.10⁵) ≈ 0,0224 m³ = 22,4 lít.">
+    </div>
+  
+    <!-- Self-check Quiz 2 -->
+    <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800">
+      <div class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+        <i class="fa-solid fa-circle-question text-purple-500"></i> Câu hỏi tự kiểm tra (Câu 2)
+      </div>
+      <p class="text-sm font-medium text-gray-900 dark:text-white mb-3">Phương trình trạng thái của khí lí tưởng (phương trình Clapeyron - Mendeleev) cho $n\text{ mol}$ khí là:</p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+        
+          <button onclick="checkQuiz(this, true)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">A</span>
+            <span class="text-gray-700 dark:text-gray-300">$pV = nRT = \frac{m}{M}RT$</span>
+          </button>
+        
+          <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">B</span>
+            <span class="text-gray-700 dark:text-gray-300">$pT = nRV$</span>
+          </button>
+        
+          <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">C</span>
+            <span class="text-gray-700 dark:text-gray-300">$\frac{pV}{T} = \text{hằng số chỉ đúng cho 1 phân tử}$</span>
+          </button>
+        
+          <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">D</span>
+            <span class="text-gray-700 dark:text-gray-300">$pV = \frac{n}{R}T$</span>
+          </button>
+      </div>
+      <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
+      <input type="hidden" class="quiz-expl" value="Phương trình Clapeyron - Mendeleev: $pV = nRT = \frac{m}{M}RT$ với $R \approx 8.31\text{ J/(mol}\cdot\text{K)}$ là hằng số khí lí tưởng.">
     </div>
   </article><article id="bai-12" class="bg-white dark:bg-dark-surface rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 border-t-4 border-sky-500 p-6 sm:p-8 transition-all hover:shadow-md">
     <div class="flex flex-wrap items-center justify-between gap-2 mb-4 pb-3 border-b border-gray-100 dark:border-gray-800">
@@ -1527,6 +1862,38 @@
       <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
       <input type="hidden" class="quiz-expl" value="Do Ē_đ = (3/2)kT tỉ lệ thuận bậc nhất với T, nên khi T tăng gấp 2 lần thì Ē_đ tăng gấp 2 lần.">
     </div>
+  
+    <!-- Self-check Quiz 2 -->
+    <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800">
+      <div class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+        <i class="fa-solid fa-circle-question text-purple-500"></i> Câu hỏi tự kiểm tra (Câu 2)
+      </div>
+      <p class="text-sm font-medium text-gray-900 dark:text-white mb-3">Theo thuyết động học phân tử, động năng tịnh tiến trung bình của các phân tử khí lí tưởng tỉ lệ thuận với:</p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+        
+          <button onclick="checkQuiz(this, true)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">A</span>
+            <span class="text-gray-700 dark:text-gray-300">Nhiệt độ tuyệt đối $T$ của khối khí ($\bar{E}_d = \frac{3}{2}kT$)</span>
+          </button>
+        
+          <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">B</span>
+            <span class="text-gray-700 dark:text-gray-300">Căn bậc hai của nhiệt độ tuyệt đối</span>
+          </button>
+        
+          <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">C</span>
+            <span class="text-gray-700 dark:text-gray-300">Khối lượng của mỗi phân tử khí</span>
+          </button>
+        
+          <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">D</span>
+            <span class="text-gray-700 dark:text-gray-300">Áp suất của khối khí</span>
+          </button>
+      </div>
+      <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
+      <input type="hidden" class="quiz-expl" value="Hệ thức liên hệ giữa động năng phân tử và nhiệt độ: $\bar{E}_d = \frac{3}{2}kT$, chứng minh nhiệt độ là thước đo động năng chuyển động nhiệt trung bình của các phân tử.">
+    </div>
   </article>
     </div>
   </section><section id="chuong-3" class="space-y-8 scroll-mt-24">
@@ -1632,6 +1999,38 @@
       <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
       <input type="hidden" class="quiz-expl" value="Các đường sức từ là những đường cong khép kín (trường xoáy), không phải đường cong hở xuất phát từ điện tích.">
     </div>
+  
+    <!-- Self-check Quiz 2 -->
+    <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800">
+      <div class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+        <i class="fa-solid fa-circle-question text-purple-500"></i> Câu hỏi tự kiểm tra (Câu 2)
+      </div>
+      <p class="text-sm font-medium text-gray-900 dark:text-white mb-3">Đặc điểm cơ bản của các đường sức từ trong từ trường là:</p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+        
+          <button onclick="checkQuiz(this, true)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">A</span>
+            <span class="text-gray-700 dark:text-gray-300">Là những đường cong khép kín hoặc vô hạn ở hai đầu (từ trường là trường xoáy)</span>
+          </button>
+        
+          <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">B</span>
+            <span class="text-gray-700 dark:text-gray-300">Xuất phát từ điện tích dương và kết thúc ở điện tích âm</span>
+          </button>
+        
+          <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">C</span>
+            <span class="text-gray-700 dark:text-gray-300">Có thể cắt nhau tại những điểm có từ trường mạnh</span>
+          </button>
+        
+          <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">D</span>
+            <span class="text-gray-700 dark:text-gray-300">Luôn luôn là các đường thẳng song song cách đều</span>
+          </button>
+      </div>
+      <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
+      <input type="hidden" class="quiz-expl" value="Từ trường không có các 'từ tích' tự do, do đó các đường sức từ luôn là những đường cong kín hoặc vô hạn ở hai đầu. Từ trường là một trường véc tơ xoáy.">
+    </div>
   </article><article id="bai-15" class="bg-white dark:bg-dark-surface rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 border-t-4 border-red-500 p-6 sm:p-8 transition-all hover:shadow-md">
     <div class="flex flex-wrap items-center justify-between gap-2 mb-4 pb-3 border-b border-gray-100 dark:border-gray-800">
       <div class="flex items-center gap-2">
@@ -1719,6 +2118,38 @@
       </div>
       <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
       <input type="hidden" class="quiz-expl" value="Do dây vuông góc với từ trường nên α = 90°, sin 90° = 1. Lực từ: F = B × I × L × sin 90° = 0,4 × 5 × 0,2 × 1 = 0,4 N.">
+    </div>
+  
+    <!-- Self-check Quiz 2 -->
+    <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800">
+      <div class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+        <i class="fa-solid fa-circle-question text-purple-500"></i> Câu hỏi tự kiểm tra (Câu 2)
+      </div>
+      <p class="text-sm font-medium text-gray-900 dark:text-white mb-3">Một đoạn dây dẫn thẳng dài $L = 0.2\text{ m}$ mang dòng điện $I = 4\text{ A}$ đặt vuông góc với vectơ cảm ứng từ đều $B = 0.5\text{ T}$. Lực từ tác dụng lên đoạn dây dẫn bằng:</p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+        
+          <button onclick="checkQuiz(this, true)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">A</span>
+            <span class="text-gray-700 dark:text-gray-300">$F = 0.4\text{ N}$</span>
+          </button>
+        
+          <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">B</span>
+            <span class="text-gray-700 dark:text-gray-300">$F = 0.8\text{ N}$</span>
+          </button>
+        
+          <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">C</span>
+            <span class="text-gray-700 dark:text-gray-300">$F = 0.2\text{ N}$</span>
+          </button>
+        
+          <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">D</span>
+            <span class="text-gray-700 dark:text-gray-300">$F = 4\text{ N}$</span>
+          </button>
+      </div>
+      <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
+      <input type="hidden" class="quiz-expl" value="Lực từ tác dụng lên đoạn dây dẫn mang dòng điện: $F = I B L \sin\alpha = 4 \times 0.5 \times 0.2 \times \sin 90^\circ = 0.4\text{ N}$.">
     </div>
   </article><article id="bai-16" class="bg-white dark:bg-dark-surface rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 border-t-4 border-yellow-500 p-6 sm:p-8 transition-all hover:shadow-md">
     <div class="flex flex-wrap items-center justify-between gap-2 mb-4 pb-3 border-b border-gray-100 dark:border-gray-800">
@@ -1824,6 +2255,38 @@
       <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
       <input type="hidden" class="quiz-expl" value="Độ biến thiên từ thông |ΔΦ| = |0,2 - 1,2| = 1,0 Wb. Suất điện động cảm ứng: |e_c| = |ΔΦ / Δt| = 1,0 / 0,1 = 10 V.">
     </div>
+  
+    <!-- Self-check Quiz 2 -->
+    <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800">
+      <div class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+        <i class="fa-solid fa-circle-question text-purple-500"></i> Câu hỏi tự kiểm tra (Câu 2)
+      </div>
+      <p class="text-sm font-medium text-gray-900 dark:text-white mb-3">Khung dây phẳng diện tích $S = 0.05\text{ m}^2$ đặt trong từ trường đều $B = 0.2\text{ T}$. Góc hợp bởi vectơ cảm ứng từ $\vec{B}$ và vectơ pháp tuyến $\vec{n}$ là $\alpha = 60^\circ$. Từ thông qua khung dây là:</p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+        
+          <button onclick="checkQuiz(this, true)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">A</span>
+            <span class="text-gray-700 dark:text-gray-300">$\Phi = 5 \times 10^{-3}\text{ Wb}$</span>
+          </button>
+        
+          <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">B</span>
+            <span class="text-gray-700 dark:text-gray-300">$\Phi = 10^{-2}\text{ Wb}$</span>
+          </button>
+        
+          <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">C</span>
+            <span class="text-gray-700 dark:text-gray-300">$\Phi = 8.66 \times 10^{-3}\text{ Wb}$</span>
+          </button>
+        
+          <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">D</span>
+            <span class="text-gray-700 dark:text-gray-300">$\Phi = 0.05\text{ Wb}$</span>
+          </button>
+      </div>
+      <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
+      <input type="hidden" class="quiz-expl" value="Công thức tính từ thông: $\Phi = B \cdot S \cdot \cos\alpha = 0.2 \times 0.05 \times \cos 60^\circ = 0.01 \times 0.5 = 5 \times 10^{-3}\text{ Wb}$.">
+    </div>
   </article><article id="bai-17" class="bg-white dark:bg-dark-surface rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 border-t-4 border-blue-500 p-6 sm:p-8 transition-all hover:shadow-md">
     <div class="flex flex-wrap items-center justify-between gap-2 mb-4 pb-3 border-b border-gray-100 dark:border-gray-800">
       <div class="flex items-center gap-2">
@@ -1923,6 +2386,38 @@
       </div>
       <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
       <input type="hidden" class="quiz-expl" value="Theo công thức máy biến áp: U₂ = U₁ × (N₂ / N₁) = 220 × (200 / 1000) = 44 V (máy hạ áp).">
+    </div>
+  
+    <!-- Self-check Quiz 2 -->
+    <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800">
+      <div class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+        <i class="fa-solid fa-circle-question text-purple-500"></i> Câu hỏi tự kiểm tra (Câu 2)
+      </div>
+      <p class="text-sm font-medium text-gray-900 dark:text-white mb-3">Một máy biến áp lí tưởng có cuộn sơ cấp $N_1 = 1000\text{ vòng}$ và cuộn thứ cấp $N_2 = 200\text{ vòng}$. Khi đặt vào hai đầu cuộn sơ cấp điện áp xoay chiều $U_1 = 220\text{ V}$ thì điện áp hai đầu cuộn thứ cấp để hở là:</p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+        
+          <button onclick="checkQuiz(this, true)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">A</span>
+            <span class="text-gray-700 dark:text-gray-300">$U_2 = 44\text{ V}$</span>
+          </button>
+        
+          <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">B</span>
+            <span class="text-gray-700 dark:text-gray-300">$U_2 = 1100\text{ V}$</span>
+          </button>
+        
+          <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">C</span>
+            <span class="text-gray-700 dark:text-gray-300">$U_2 = 88\text{ V}$</span>
+          </button>
+        
+          <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">D</span>
+            <span class="text-gray-700 dark:text-gray-300">$U_2 = 22\text{ V}$</span>
+          </button>
+      </div>
+      <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
+      <input type="hidden" class="quiz-expl" value="Hệ thức máy biến áp: $\frac{U_2}{U_1} = \frac{N_2}{N_1} \Rightarrow U_2 = U_1 \frac{N_2}{N_1} = 220 \times \frac{200}{1000} = 44\text{ V}$ (đây là máy hạ áp).">
     </div>
   </article><article id="bai-18" class="bg-white dark:bg-dark-surface rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 border-t-4 border-emerald-500 p-6 sm:p-8 transition-all hover:shadow-md">
     <div class="flex flex-wrap items-center justify-between gap-2 mb-4 pb-3 border-b border-gray-100 dark:border-gray-800">
@@ -2031,6 +2526,38 @@
       <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
       <input type="hidden" class="quiz-expl" value="Đổi tốc độ quay sang vòng/giây: n = 750 / 60 = 12,5 vòng/s. Tần số f = n × p = 12,5 × 4 = 50 Hz.">
     </div>
+  
+    <!-- Self-check Quiz 2 -->
+    <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800">
+      <div class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+        <i class="fa-solid fa-circle-question text-purple-500"></i> Câu hỏi tự kiểm tra (Câu 2)
+      </div>
+      <p class="text-sm font-medium text-gray-900 dark:text-white mb-3">Nguyên tắc tạo ra dòng điện xoay chiều trong máy phát điện xoay chiều dựa trên hiện tượng:</p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+        
+          <button onclick="checkQuiz(this, true)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">A</span>
+            <span class="text-gray-700 dark:text-gray-300">Hiện tượng cảm ứng điện từ</span>
+          </button>
+        
+          <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">B</span>
+            <span class="text-gray-700 dark:text-gray-300">Hiện tượng tự cảm</span>
+          </button>
+        
+          <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">C</span>
+            <span class="text-gray-700 dark:text-gray-300">Hiện tượng quang điện</span>
+          </button>
+        
+          <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">D</span>
+            <span class="text-gray-700 dark:text-gray-300">Hiện tượng nhiệt điện</span>
+          </button>
+      </div>
+      <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
+      <input type="hidden" class="quiz-expl" value="Máy phát điện xoay chiều hoạt động dựa trên hiện tượng cảm ứng điện từ: khi quay khung dây trong từ trường (hoặc quay nam châm quanh cuộn dây), từ thông qua cuộn dây biến thiên làm xuất hiện suất điện động cảm ứng xoay chiều.">
+    </div>
   </article><article id="bai-19" class="bg-white dark:bg-dark-surface rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 border-t-4 border-purple-500 p-6 sm:p-8 transition-all hover:shadow-md">
     <div class="flex flex-wrap items-center justify-between gap-2 mb-4 pb-3 border-b border-gray-100 dark:border-gray-800">
       <div class="flex items-center gap-2">
@@ -2121,6 +2648,38 @@
       </div>
       <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
       <input type="hidden" class="quiz-expl" value="Theo luận điểm 1 của Maxwell: Từ trường biến thiên theo thời gian sẽ sinh ra một điện trường xoáy khép kín xung quanh nó.">
+    </div>
+  
+    <!-- Self-check Quiz 2 -->
+    <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800">
+      <div class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+        <i class="fa-solid fa-circle-question text-purple-500"></i> Câu hỏi tự kiểm tra (Câu 2)
+      </div>
+      <p class="text-sm font-medium text-gray-900 dark:text-white mb-3">Theo thuyết điện từ của Maxwell, mối quan hệ giữa điện trường và từ trường biến thiên là:</p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+        
+          <button onclick="checkQuiz(this, true)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">A</span>
+            <span class="text-gray-700 dark:text-gray-300">Từ trường biến thiên sinh ra điện trường xoáy, và điện trường biến thiên sinh ra từ trường xoáy</span>
+          </button>
+        
+          <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">B</span>
+            <span class="text-gray-700 dark:text-gray-300">Điện trường tĩnh sinh ra từ trường biến thiên</span>
+          </button>
+        
+          <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">C</span>
+            <span class="text-gray-700 dark:text-gray-300">Từ trường không đổi sinh ra điện trường xoáy</span>
+          </button>
+        
+          <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">D</span>
+            <span class="text-gray-700 dark:text-gray-300">Hai trường này tồn tại hoàn toàn độc lập và không tương tác lẫn nhau</span>
+          </button>
+      </div>
+      <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
+      <input type="hidden" class="quiz-expl" value="Luận điểm Maxwell: Một từ trường biến thiên theo thời gian sinh ra một điện trường xoáy; ngược lại một điện trường biến thiên theo thời gian sinh ra một từ trường xoáy. Cả hai tạo thành điện từ trường thống nhất lan truyền trong không gian.">
     </div>
   </article>
     </div>
@@ -2244,6 +2803,38 @@
       <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
       <input type="hidden" class="quiz-expl" value="Số proton Z = 92. Số khối A = 238. Số neutron N = A - Z = 238 - 92 = 146 neutron.">
     </div>
+  
+    <!-- Self-check Quiz 2 -->
+    <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800">
+      <div class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+        <i class="fa-solid fa-circle-question text-purple-500"></i> Câu hỏi tự kiểm tra (Câu 2)
+      </div>
+      <p class="text-sm font-medium text-gray-900 dark:text-white mb-3">Hạt nhân nguyên tử $^{238}_{92}\text{U}$ có cấu tạo gồm:</p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+        
+          <button onclick="checkQuiz(this, true)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">A</span>
+            <span class="text-gray-700 dark:text-gray-300">92 proton và 146 neutron</span>
+          </button>
+        
+          <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">B</span>
+            <span class="text-gray-700 dark:text-gray-300">92 proton và 238 neutron</span>
+          </button>
+        
+          <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">C</span>
+            <span class="text-gray-700 dark:text-gray-300">146 proton và 92 neutron</span>
+          </button>
+        
+          <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">D</span>
+            <span class="text-gray-700 dark:text-gray-300">238 nucleon trong đó có 146 proton</span>
+          </button>
+      </div>
+      <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
+      <input type="hidden" class="quiz-expl" value="Kí hiệu $^{A}_{Z}\text{X}$: số proton $Z = 92$, số khối $A = 238$, số neutron $N = A - Z = 238 - 92 = 146$.">
+    </div>
   </article><article id="bai-21" class="bg-white dark:bg-dark-surface rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 border-t-4 border-rose-500 p-6 sm:p-8 transition-all hover:shadow-md">
     <div class="flex flex-wrap items-center justify-between gap-2 mb-4 pb-3 border-b border-gray-100 dark:border-gray-800">
       <div class="flex items-center gap-2">
@@ -2358,6 +2949,38 @@
       </div>
       <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
       <input type="hidden" class="quiz-expl" value="Năng lượng liên kết riêng (E_lk / A) là năng lượng liên kết tính trên một nucleon, là đại lượng đặc trưng chính xác cho mức độ bền vững của hạt nhân.">
+    </div>
+  
+    <!-- Self-check Quiz 2 -->
+    <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800">
+      <div class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+        <i class="fa-solid fa-circle-question text-purple-500"></i> Câu hỏi tự kiểm tra (Câu 2)
+      </div>
+      <p class="text-sm font-medium text-gray-900 dark:text-white mb-3">Năng lượng liên kết hạt nhân được giải phóng khi các nucleon riêng rẽ liên kết tạo thành hạt nhân được tính bằng công thức:</p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+        
+          <button onclick="checkQuiz(this, true)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">A</span>
+            <span class="text-gray-700 dark:text-gray-300">$E_{lk} = \Delta m \cdot c^2 = [Z m_p + (A - Z) m_n - m_X] \cdot c^2$</span>
+          </button>
+        
+          <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">B</span>
+            <span class="text-gray-700 dark:text-gray-300">$E_{lk} = m_X \cdot c^2$</span>
+          </button>
+        
+          <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">C</span>
+            <span class="text-gray-700 dark:text-gray-300">$E_{lk} = \frac{\Delta m}{c^2}$</span>
+          </button>
+        
+          <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">D</span>
+            <span class="text-gray-700 dark:text-gray-300">$E_{lk} = \frac{1}{2}\Delta m \cdot c^2$</span>
+          </button>
+      </div>
+      <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
+      <input type="hidden" class="quiz-expl" value="Theo hệ thức Einstein: $E_{lk} = \Delta m \cdot c^2$ với $\Delta m = Z m_p + (A - Z) m_n - m_X$ là độ hụt khối của hạt nhân.">
     </div>
   </article><article id="bai-22" class="bg-white dark:bg-dark-surface rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 border-t-4 border-cyan-500 p-6 sm:p-8 transition-all hover:shadow-md">
     <div class="flex flex-wrap items-center justify-between gap-2 mb-4 pb-3 border-b border-gray-100 dark:border-gray-800">
@@ -2478,6 +3101,38 @@
       <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
       <input type="hidden" class="quiz-expl" value="Thời gian t = 30 ngày = 3 chu kì (t/T = 3). Tỉ lệ còn lại: N / N₀ = 2^(-3) = 1/8 = 0,125 = 12,5%.">
     </div>
+  
+    <!-- Self-check Quiz 2 -->
+    <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800">
+      <div class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+        <i class="fa-solid fa-circle-question text-purple-500"></i> Câu hỏi tự kiểm tra (Câu 2)
+      </div>
+      <p class="text-sm font-medium text-gray-900 dark:text-white mb-3">Một chất phóng xạ có chu kì bán rã $T = 8\text{ ngày}$. Ban đầu có khối lượng $m_0 = 100\text{ g}$. Sau thời gian $t = 24\text{ ngày}$, khối lượng chất phóng xạ còn lại chưa bị phân rã là:</p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+        
+          <button onclick="checkQuiz(this, true)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">A</span>
+            <span class="text-gray-700 dark:text-gray-300">$12.5\text{ g}$</span>
+          </button>
+        
+          <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">B</span>
+            <span class="text-gray-700 dark:text-gray-300">$25\text{ g}$</span>
+          </button>
+        
+          <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">C</span>
+            <span class="text-gray-700 dark:text-gray-300">$6.25\text{ g}$</span>
+          </button>
+        
+          <button onclick="checkQuiz(this, false)" class="p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 text-left transition-all flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center font-bold text-[10px] text-gray-500">D</span>
+            <span class="text-gray-700 dark:text-gray-300">$50\text{ g}$</span>
+          </button>
+      </div>
+      <div class="quiz-feedback hidden mt-2.5 p-2.5 rounded-lg text-xs leading-relaxed"></div>
+      <input type="hidden" class="quiz-expl" value="Thời gian phân rã $t = 24\text{ ngày} = 3T$. Khối lượng còn lại: $m = m_0 \cdot 2^{-t/T} = 100 \times 2^{-3} = \frac{100}{8} = 12.5\text{ g}$.">
+    </div>
   </article><article id="bai-23" class="bg-white dark:bg-dark-surface rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 border-t-4 border-indigo-500 p-6 sm:p-8 transition-all hover:shadow-md">
     <div class="flex flex-wrap items-center justify-between gap-2 mb-4 pb-3 border-b border-gray-100 dark:border-gray-800">
       <div class="flex items-center gap-2">
@@ -2592,6 +3247,265 @@
     </div>
   </footer>
 
+  
+
+  <!-- Course Exam Modal -->
+  <div id="courseQuizModal" class="hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white dark:bg-gray-800 rounded-3xl max-w-3xl w-full max-h-[90vh] overflow-y-auto p-6 sm:p-8 shadow-2xl border border-gray-200 dark:border-gray-700">
+      <div class="flex items-center justify-between pb-4 border-b border-gray-200 dark:border-gray-700 mb-6">
+        <div>
+          <span class="px-2.5 py-0.5 rounded-full bg-purple-100 dark:bg-purple-950/70 text-purple-700 dark:text-purple-300 font-bold text-xs">
+            Bài thi đánh giá tổng kết
+          </span>
+          <h3 class="text-xl sm:text-2xl font-black text-gray-900 dark:text-white mt-1">
+            Đánh Giá Toàn Khóa: Vật Lí Lớp 12
+          </h3>
+        </div>
+        <button onclick="closeCourseQuizModal()" class="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-500 hover:text-gray-900 dark:hover:text-white flex items-center justify-center transition">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- Exam Form -->
+      <form id="courseExamForm" onsubmit="submitCourseExam(event)" class="space-y-6 text-sm text-gray-700 dark:text-gray-300">
+        <!-- Q1 -->
+        <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600">
+          <p class="font-bold text-gray-900 dark:text-white mb-2">
+            1. Người ta thực hiện một công $A = 150\text{ J}$ để nén một lượng khí trong xilanh, đồng thời khí truyền ra môi trường xung quanh một nhiệt lượng $Q = 50\text{ J}$. Độ biến thiên nội năng $\Delta U$ của lượng khí là:
+          </p>
+          <div class="space-y-2">
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq1" value="A" required class="text-purple-600">
+              <span>A. $\Delta U = 100\text{ J}$ (do $\Delta U = Q + A = -50 + 150 = 100\text{ J}$)</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq1" value="B" class="text-purple-600">
+              <span>B. $\Delta U = 200\text{ J}$</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq1" value="C" class="text-purple-600">
+              <span>C. $\Delta U = -100\text{ J}$</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600">
+          <p class="font-bold text-gray-900 dark:text-white mb-2">
+            2. Nhiệt lượng cần cung cấp để làm nóng $m = 1\text{ kg}$ nhôm từ $25^\circ\text{C}$ lên $75^\circ\text{C}$ biết nhiệt dung riêng của nhôm $c = 880\text{ J/(kg}\cdot\text{K)}$ là:
+          </p>
+          <div class="space-y-2">
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq2" value="A" required class="text-purple-600">
+              <span>A. $44,000\text{ J}$ (do $Q = mc\Delta T = 1 \times 880 \times 50 = 44,000\text{ J}$)</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq2" value="B" class="text-purple-600">
+              <span>B. $88,000\text{ J}$</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq2" value="C" class="text-purple-600">
+              <span>C. $22,000\text{ J}$</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600">
+          <p class="font-bold text-gray-900 dark:text-white mb-2">
+            3. Một khối khí lí tưởng được nén đẳng nhiệt từ thể tích $V_1 = 6\text{ lít}$ ở áp suất $p_1 = 1.5\text{ atm}$ đến thể tích $V_2 = 2\text{ lít}$. Áp suất $p_2$ của khối khí sau khi nén là:
+          </p>
+          <div class="space-y-2">
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq3" value="A" required class="text-purple-600">
+              <span>A. $4.5\text{ atm}$ (theo định luật Boyle: $p_2 = \frac{p_1 V_1}{V_2} = \frac{1.5 \times 6}{2} = 4.5\text{ atm}$)</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq3" value="B" class="text-purple-600">
+              <span>B. $0.5\text{ atm}$</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq3" value="C" class="text-purple-600">
+              <span>C. $3.0\text{ atm}$</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600">
+          <p class="font-bold text-gray-900 dark:text-white mb-2">
+            4. Phương trình trạng thái của khí lí tưởng biểu diễn mối liên hệ giữa các thông số trạng thái $p, V, T$ của $n\text{ mol}$ khí là:
+          </p>
+          <div class="space-y-2">
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq4" value="A" required class="text-purple-600">
+              <span>A. $pV = nRT = \frac{m}{M}RT$</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq4" value="B" class="text-purple-600">
+              <span>B. $pV = \frac{n}{R}T$</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq4" value="C" class="text-purple-600">
+              <span>C. $\frac{p}{V} = nRT$</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q5 -->
+        <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600">
+          <p class="font-bold text-gray-900 dark:text-white mb-2">
+            5. Động năng tịnh tiến trung bình của các phân tử khí lí tưởng:
+          </p>
+          <div class="space-y-2">
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq5" value="A" required class="text-purple-600">
+              <span>A. Chỉ phụ thuộc vào nhiệt độ tuyệt đối $T$ của khối khí ($\bar{E}_d = \frac{3}{2}kT$)</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq5" value="B" class="text-purple-600">
+              <span>B. Tỉ lệ thuận với khối lượng của mỗi phân tử</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq5" value="C" class="text-purple-600">
+              <span>C. Tỉ lệ nghịch với nhiệt độ tuyệt đối $T$</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q6 -->
+        <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600">
+          <p class="font-bold text-gray-900 dark:text-white mb-2">
+            6. Đoạn dây dẫn thẳng dài $L = 0.5\text{ m}$ mang dòng điện $I = 2\text{ A}$ đặt vuông góc với vectơ cảm ứng từ đều $B = 0.4\text{ T}$. Lực từ tác dụng lên đoạn dây là:
+          </p>
+          <div class="space-y-2">
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq6" value="A" required class="text-purple-600">
+              <span>A. $0.4\text{ N}$ (do $F = I B L \sin 90^\circ = 2 \times 0.4 \times 0.5 \times 1 = 0.4\text{ N}$)</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq6" value="B" class="text-purple-600">
+              <span>B. $0.8\text{ N}$</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq6" value="C" class="text-purple-600">
+              <span>C. $0.2\text{ N}$</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q7 -->
+        <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600">
+          <p class="font-bold text-gray-900 dark:text-white mb-2">
+            7. Một máy biến áp lí tưởng có số vòng dây sơ cấp $N_1 = 1200\text{ vòng}$, thứ cấp $N_2 = 300\text{ vòng}$. Khi điện áp hiệu dụng sơ cấp $U_1 = 220\text{ V}$ thì điện áp thứ cấp để hở là:
+          </p>
+          <div class="space-y-2">
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq7" value="A" required class="text-purple-600">
+              <span>A. $55\text{ V}$ (do $U_2 = U_1 \frac{N_2}{N_1} = 220 \times \frac{300}{1200} = 55\text{ V}$)</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq7" value="B" class="text-purple-600">
+              <span>B. $110\text{ V}$</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq7" value="C" class="text-purple-600">
+              <span>C. $880\text{ V}$</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q8 -->
+        <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600">
+          <p class="font-bold text-gray-900 dark:text-white mb-2">
+            8. Hạt nhân nguyên tử đồng $^{64}_{29}\text{Cu}$ có cấu tạo gồm:
+          </p>
+          <div class="space-y-2">
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq8" value="A" required class="text-purple-600">
+              <span>A. 29 proton và 35 neutron (do $N = A - Z = 64 - 29 = 35$)</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq8" value="B" class="text-purple-600">
+              <span>B. 29 proton và 64 neutron</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq8" value="C" class="text-purple-600">
+              <span>C. 35 proton và 29 neutron</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q9 -->
+        <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600">
+          <p class="font-bold text-gray-900 dark:text-white mb-2">
+            9. Đại lượng vật lí nào sau đây đặc trưng cho mức độ bền vững của một hạt nhân nguyên tử?
+          </p>
+          <div class="space-y-2">
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq9" value="A" required class="text-purple-600">
+              <span>A. Năng lượng liên kết riêng ($\frac{E_{lk}}{A}$)</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq9" value="B" class="text-purple-600">
+              <span>B. Năng lượng liên kết toàn phần ($E_{lk}$)</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq9" value="C" class="text-purple-600">
+              <span>C. Độ hụt khối ($\Delta m$)</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q10 -->
+        <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600">
+          <p class="font-bold text-gray-900 dark:text-white mb-2">
+            10. Đồng vị phóng xạ Iod $^{131}_{53}\text{I}$ có chu kì bán rã $T = 8\text{ ngày}$. Sau thời gian $t = 16\text{ ngày}$, tỉ lệ phần trăm số hạt nhân Iod còn lại chưa phân rã là:
+          </p>
+          <div class="space-y-2">
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq10" value="A" required class="text-purple-600">
+              <span>A. $25\%$ (vì $t = 2T \Rightarrow N = \frac{N_0}{2^2} = 25\% N_0$)</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq10" value="B" class="text-purple-600">
+              <span>B. $50\%$</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="eq10" value="C" class="text-purple-600">
+              <span>C. $12.5\%$</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="pt-4 border-t border-gray-200 dark:border-gray-700 flex justify-end gap-3">
+          <button type="button" onclick="closeCourseQuizModal()" class="px-4 py-2 rounded-xl bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 font-semibold hover:bg-gray-200 transition">
+            Đóng
+          </button>
+          <button type="submit" class="px-5 py-2 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold transition shadow-sm">
+            Nộp bài & Chấm điểm
+          </button>
+        </div>
+      </form>
+
+      <!-- Exam Result Panel -->
+      <div id="courseExamResult" class="hidden mt-6 p-6 rounded-2xl bg-purple-50 dark:bg-purple-950/50 border border-purple-200 dark:border-purple-800 text-center space-y-3">
+        <div class="w-16 h-16 mx-auto rounded-full bg-purple-600 text-white flex items-center justify-center text-2xl shadow-lg">
+          <i class="fa-solid fa-trophy"></i>
+        </div>
+        <h4 id="examScoreText" class="text-2xl font-black text-gray-900 dark:text-white">
+          Kết quả của bạn: 0/10 điểm
+        </h4>
+        <p id="examCommentText" class="text-sm text-gray-600 dark:text-gray-300 max-w-md mx-auto leading-relaxed">
+          Đang tải đánh giá năng lực...
+        </p>
+        <button onclick="resetCourseExam()" class="mt-4 px-4 py-2 rounded-xl bg-purple-600 text-white text-xs font-bold hover:bg-purple-700 transition">
+          <i class="fa-solid fa-rotate-right mr-1"></i> Làm lại bài thi
+        </button>
+      </div>
+    </div>
+  </div>
+
   <script>
     // Theme toggle
     const themeToggle = document.getElementById('themeToggle');
@@ -2600,7 +3514,7 @@
     } else {
       document.documentElement.classList.remove('dark');
     }
-    themeToggle.addEventListener('click', () => {
+    themeToggle?.addEventListener('click', () => {
       document.documentElement.classList.toggle('dark');
       if (document.documentElement.classList.contains('dark')) {
         localStorage.theme = 'dark';
@@ -2609,9 +3523,50 @@
       }
     });
 
+    // Reading Progress Bar
+    window.addEventListener('scroll', () => {
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      const bar = document.getElementById('progressBar');
+      if (bar) bar.style.width = scrolled + '%';
+    });
+
+    // Live Search Lessons in Sidebar
+    const searchInput = document.getElementById('lessonSearch');
+    searchInput?.addEventListener('input', (e) => {
+      const query = e.target.value.toLowerCase().trim();
+      const items = document.querySelectorAll('aside ul li');
+      items.forEach(item => {
+        const text = item.textContent.toLowerCase();
+        if (text.includes(query)) {
+          item.style.display = '';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    });
+
+    // Initialize KaTeX on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      renderAllMath();
+    });
+
+    function renderAllMath() {
+      if (typeof renderMathInElement === 'function') {
+        renderMathInElement(document.body, {
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false}
+          ],
+          throwOnError: false
+        });
+      }
+    }
+
     // Quiz evaluation
     function checkQuiz(btn, isCorrect) {
-      const parent = btn.closest('article');
+      const parent = btn.closest('.border-t') || btn.closest('article');
       const feedback = parent.querySelector('.quiz-feedback');
       const expl = parent.querySelector('.quiz-expl').value;
       const allBtns = parent.querySelectorAll('button[onclick^="checkQuiz"]');
@@ -2623,15 +3578,123 @@
 
       if (isCorrect) {
         btn.classList.add('border-green-500', 'bg-green-50', 'dark:bg-green-950/40', 'text-green-700', 'dark:text-green-300');
-        feedback.className = 'quiz-feedback mt-2.5 p-3 rounded-lg text-xs leading-relaxed bg-green-50 dark:bg-green-950/40 border border-green-200 dark:border-green-800 text-green-800 dark:text-green-200';
+        feedback.className = 'quiz-feedback mt-2.5 p-3 rounded-lg text-xs leading-relaxed bg-green-50 dark:bg-green-950/40 border border-green-200 dark:border-green-800 text-green-800 dark:text-green-200 block';
         feedback.innerHTML = '<span class="font-bold flex items-center gap-1 mb-1"><i class="fa-solid fa-circle-check"></i> Chính xác!</span>' + expl;
       } else {
         btn.classList.add('border-red-500', 'bg-red-50', 'dark:bg-red-950/40', 'text-red-700', 'dark:text-red-300');
-        feedback.className = 'quiz-feedback mt-2.5 p-3 rounded-lg text-xs leading-relaxed bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800 text-red-800 dark:text-red-200';
+        feedback.className = 'quiz-feedback mt-2.5 p-3 rounded-lg text-xs leading-relaxed bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800 text-red-800 dark:text-red-200 block';
         feedback.innerHTML = '<span class="font-bold flex items-center gap-1 mb-1"><i class="fa-solid fa-circle-xmark"></i> Chưa đúng!</span>' + expl;
       }
       feedback.classList.remove('hidden');
+
+      if (typeof renderMathInElement === 'function') {
+        renderMathInElement(feedback, {
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false}
+          ],
+          throwOnError: false
+        });
+      }
     }
+
+    // Modal Course Quiz
+    function openCourseQuizModal() {
+      const modal = document.getElementById('courseQuizModal');
+      if (modal) modal.classList.remove('hidden');
+      if (typeof renderMathInElement === 'function') {
+        renderMathInElement(modal, {
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false}
+          ],
+          throwOnError: false
+        });
+      }
+    }
+
+    function closeCourseQuizModal() {
+      const modal = document.getElementById('courseQuizModal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    // Course Exam Submission
+    const examAnswers = {
+      eq1: 'A',
+      eq2: 'A',
+      eq3: 'A',
+      eq4: 'A',
+      eq5: 'A',
+      eq6: 'A',
+      eq7: 'A',
+      eq8: 'A',
+      eq9: 'A',
+      eq10: 'A'
+    };
+
+    function submitCourseExam(e) {
+      e.preventDefault();
+      const form = document.getElementById('courseExamForm');
+      let score = 0;
+
+      for (let i = 1; i <= 10; i++) {
+        const val = form['eq' + i]?.value;
+        if (val === examAnswers['eq' + i]) {
+          score++;
+        }
+      }
+
+      form.classList.add('hidden');
+      const resultBox = document.getElementById('courseExamResult');
+      resultBox.classList.remove('hidden');
+      document.getElementById('examScoreText').innerText = 'Kết quả của bạn: ' + score + '/10 điểm';
+
+      let comment = '';
+      if (score >= 9) {
+        comment = 'Xuất sắc! Bạn nắm rất vững toàn bộ chương trình Vật lí 12 GDPT 2018!';
+      } else if (score >= 7) {
+        comment = 'Rất tốt! Bạn hiểu sâu sắc về Nhiệt học, Khí lí tưởng, Từ trường và Vật lí hạt nhân.';
+      } else if (score >= 5) {
+        comment = 'Đạt yêu cầu. Hãy ôn luyện thêm các dạng bài phương trình trạng thái khí và hiện tượng phóng xạ nhé!';
+      } else {
+        comment = 'Cần cố gắng hơn. Hãy đọc kỹ lại các lý thuyết và ví dụ mẫu của từng bài học nhé!';
+      }
+      document.getElementById('examCommentText').innerText = comment;
+    }
+
+    function resetCourseExam() {
+      const form = document.getElementById('courseExamForm');
+      form.reset();
+      form.classList.remove('hidden');
+      document.getElementById('courseExamResult').classList.add('hidden');
+    }
+
+    // Active sidebar scrollspy
+    const articles = document.querySelectorAll('article[id]');
+    const sidebarLinks = document.querySelectorAll('aside a[href^="#bai-"]');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      const scrollY = window.pageYOffset;
+      articles.forEach(article => {
+        const artHeight = article.offsetHeight;
+        const artTop = article.offsetTop - 160;
+        if (scrollY > artTop && scrollY <= artTop + artHeight) {
+          current = article.getAttribute('id');
+        }
+      });
+
+      if (current) {
+        sidebarLinks.forEach(link => {
+          if (link.getAttribute('href') === '#' + current) {
+            link.classList.add('text-purple-600', 'font-bold', 'bg-purple-50', 'dark:bg-purple-900/30');
+          } else {
+            link.classList.remove('text-purple-600', 'font-bold', 'bg-purple-50', 'dark:bg-purple-900/30');
+          }
+        });
+      }
+    });
   </script>
+
 </body>
 </html>
