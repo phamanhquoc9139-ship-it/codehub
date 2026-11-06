@@ -138,7 +138,7 @@
 <!-- Khung Thống Kê Tổng Số Môn Học -->
 <section class="py-10 bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-gray-800 border-b border-gray-200/80 dark:border-gray-800" id="course-stats">
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-<div class="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 rounded-3xl p-6 sm:p-8 md:p-10 text-white shadow-xl relative overflow-hidden">
+<div class="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 rounded-3xl p-6 sm:p-8 md:p-10 text-white shadow-xl relative overflow-visible">
 <!-- Background decorative shapes -->
 <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
 <div class="absolute left-1/3 -top-12 w-48 h-48 bg-white/10 rounded-full blur-xl pointer-events-none"></div>
@@ -165,6 +165,22 @@
 <div class="text-xs sm:text-sm font-semibold text-blue-100 uppercase tracking-wider">Tổng môn học</div>
 </div>
 </div>
+</div>
+<!-- Tìm kiếm môn học nổi bật -->
+<div class="mt-6 mb-2 relative z-30" id="course-search-area">
+  <label for="courseSearchInput" class="block text-base sm:text-lg font-bold text-white text-center mb-3"><i class="fa-solid fa-magnifying-glass mr-2"></i>Tìm nhanh môn học của bạn</label>
+<!-- Search Box -->
+<div class="relative w-full max-w-3xl mx-auto">
+<i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+<input autocomplete="off" class="w-full pl-10 pr-10 py-4 rounded-2xl text-base bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-500 shadow-inner" aria-controls="liveSearchResults" aria-label="Tìm kiếm môn học" id="courseSearchInput" placeholder="Nhập môn học cần tìm, ví dụ: Tiếng Anh 10, Toán 12..." type="text"/>
+<button class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 text-sm" id="clearSearchBtn">
+<i class="fa-solid fa-xmark"></i>
+</button>
+<!-- Live Search Dropdown Popup -->
+<div class="hidden absolute left-0 right-0 top-full mt-2 bg-white dark:bg-gray-800 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 max-h-[min(420px,55vh)] overflow-y-auto z-50 p-2 space-y-1" role="listbox" aria-label="Kết quả tìm kiếm môn học" id="liveSearchResults">
+</div>
+</div>
+<p class="text-center text-blue-100 text-xs sm:text-sm mt-3">Gõ tên môn hoặc lớp học để xem gợi ý và chọn vào học ngay.</p>
 </div>
 <!-- Thống kê 6 nhóm môn / khối lớp -->
 <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4 mt-6">
@@ -225,17 +241,6 @@
 </div>
 <!-- Thanh tìm kiếm & Bộ lọc nhanh -->
 <div class="mt-6 pt-5 border-t border-white/20 flex flex-col md:flex-row items-center gap-4 justify-between">
-<!-- Search Box -->
-<div class="relative w-full md:w-96">
-<i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
-<input autocomplete="off" class="w-full pl-10 pr-10 py-2.5 rounded-xl text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-500 shadow-inner" id="courseSearchInput" placeholder="Tìm kiếm môn học (vd: Tin học 4, KHTN 6, Toán 10...)" type="text"/>
-<button class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 text-sm" id="clearSearchBtn">
-<i class="fa-solid fa-xmark"></i>
-</button>
-<!-- Live Search Dropdown Popup -->
-<div class="hidden absolute left-0 right-0 top-full mt-2 bg-white dark:bg-gray-800 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 max-h-[380px] overflow-y-auto z-50 p-2 space-y-1" id="liveSearchResults">
-</div>
-</div>
 <!-- Filter Chips & Counter -->
 <div class="flex items-center gap-2 flex-wrap w-full md:w-auto justify-start md:justify-end text-xs font-semibold">
 <button class="course-filter-btn px-3 py-1.5 rounded-lg bg-white text-blue-700 shadow-sm transition" id="btn-filter-all" onclick="filterCoursesBy('all')">Tất cả (226)</button>
@@ -6228,17 +6233,18 @@
             if (m) link = m[1];
           }
 
+          const escapeHTML = value => String(value).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
           html += `
-            <a href="${link}" class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-blue-50 dark:hover:bg-gray-700/60 transition group text-left">
+            <a href="${escapeHTML(link)}" class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-blue-50 dark:hover:bg-gray-700/60 transition group text-left">
               <div class="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-300 flex items-center justify-center flex-shrink-0 text-sm">
-                <i class="${iconClass}"></i>
+                <i class="${escapeHTML(iconClass)}"></i>
               </div>
               <div class="flex-1 min-w-0">
                 <div class="text-sm font-bold text-gray-900 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 truncate">
-                  ${title}
+                  ${escapeHTML(title)}
                 </div>
                 <div class="text-[11px] text-gray-500 dark:text-gray-400 line-clamp-1">
-                  ${desc}
+                  ${escapeHTML(desc)}
                 </div>
               </div>
               <i class="fa-solid fa-chevron-right text-xs text-gray-400 group-hover:text-blue-600 group-hover:translate-x-0.5 transition-all"></i>
