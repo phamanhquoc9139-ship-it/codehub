@@ -1,23 +1,11 @@
 const fs = require('fs');
-const path = require('path');
 
-const files = [
-  'courses/vatly_10.html',
-  'courses/toan_10.html',
-  'courses/tinhoc_10.html',
-  'courses/grade_10.html',
-  'courses/tienganh_10.html',
-  'courses/tiengtrung_10.html'
-];
+const chem = fs.readFileSync('C:/Users/ADMIN/.gemini/antigravity/scratch/cs-learning-platform/courses/hoahoc12.html', 'utf8');
+const idx3 = chem.indexOf('id="bai-3"');
+console.log('=== BAI 3 IN HOAHOC12.HTML ===');
+console.log(chem.substring(idx3, idx3 + 3000));
 
-for (const f of files) {
-  if (fs.existsSync(f)) {
-    const content = fs.readFileSync(f, 'utf8');
-    const has2Pow10 = content.includes('2^10');
-    const hasTripleBar = content.includes('\u2261') || content.includes('≡');
-    const hasCombiningArrow = content.includes('\u20D7');
-    console.log(`${f}: 2^10=${has2Pow10}, ≡=${hasTripleBar}, \\u20D7=${hasCombiningArrow}, size=${content.length}`);
-  } else {
-    console.log(`${f}: NOT FOUND`);
-  }
-}
+const geo = fs.readFileSync('C:/Users/ADMIN/.gemini/antigravity/scratch/cs-learning-platform/courses/diali_12.html', 'utf8');
+const idxGeo = geo.indexOf('Hai mặt của đô thị hóa');
+console.log('=== DIALI 12 HAI MAT CUA DO THI HOA ===');
+console.log(geo.substring(idxGeo - 100, idxGeo + 1500));

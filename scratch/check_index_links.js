@@ -1,8 +1,18 @@
 const fs = require('fs');
 
-const indexHtml = fs.readFileSync('index.html', 'utf8');
-console.log('index.html links to tienganh_10.html:', indexHtml.includes('tienganh_10.html'));
-console.log('index.html links to toan_10.html:', indexHtml.includes('toan_10.html'));
-console.log('index.html links to vatly_10.html:', indexHtml.includes('vatly_10.html'));
-console.log('index.html links to tinhoc_10.html:', indexHtml.includes('tinhoc_10.html'));
-console.log('index.html links to tiengtrung_10.html:', indexHtml.includes('tiengtrung_10.html'));
+const indexHtml = fs.readFileSync('C:/Users/ADMIN/.gemini/antigravity/scratch/cs-learning-platform/index.html', 'utf8');
+
+function findLinks(keyword) {
+  const regex = new RegExp(`href="([^"]*${keyword}[^"]*)"`, 'gi');
+  let match;
+  const matches = [];
+  while ((match = regex.exec(indexHtml)) !== null) {
+    matches.push(match[1]);
+  }
+  return matches;
+}
+
+console.log('hoa links in index.html:', findLinks('hoa'));
+console.log('dia links in index.html:', findLinks('dia'));
+console.log('gdqp links in index.html:', findLinks('gdqp'));
+console.log('quocphong links in index.html:', findLinks('quocphong'));

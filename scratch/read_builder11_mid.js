@@ -1,0 +1,4 @@
+const fs = require('fs');
+const code = fs.readFileSync('scratch/build_diali11.js', 'utf8');
+const p = code.indexOf('dau-truong-45p');
+console.log(code.slice(p, p + 2500));
