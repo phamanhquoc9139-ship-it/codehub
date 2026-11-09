@@ -1,75 +1,75 @@
 const fs = require('fs');
+const path = require('path');
+const vm = require('vm');
 
-const basePath = 'C:/Users/ADMIN/.gemini/antigravity/scratch/cs-learning-platform/';
+const baseDir = path.join(__dirname, '..');
+const coursesDir = path.join(baseDir, 'courses');
 
-function checkFile(relPath, requiredSubstrings) {
-  const full = basePath + relPath;
-  if (!fs.existsSync(full)) {
-    console.error(`FAIL: ${relPath} does not exist`);
-    return false;
+console.log('=== FINAL AUDIT OF FIXED FILES & TIẾNG PHÁP 10 ===');
+
+// 1. Verify Vật lí 11
+const vatliFiles = ['chuyende_vatli_11.html', 'chuyende_vatly_11.html', 'chuyende_ly_11.html'];
+for (const f of vatliFiles) {
+  const p = path.join(coursesDir, f);
+  const content = fs.readFileSync(p, 'utf8');
+  if (content.includes("{ left: '\n") || content.includes("{ left: '\r\n")) {
+    console.error(`FAIL: ${f} still has broken KaTeX syntax!`);
+    process.exit(1);
   }
-  const content = fs.readFileSync(full, 'utf8');
-  let ok = true;
-  requiredSubstrings.forEach(sub => {
-    if (!content.includes(sub)) {
-      console.error(`FAIL in ${relPath}: Missing substring: "${sub.substring(0, 60)}..."`);
-      ok = false;
+  const scripts = content.match(/<script(?![^>]*src=)[^>]*>([\s\S]*?)<\/script>/gi) || [];
+  scripts.forEach((s, idx) => {
+    const code = s.replace(/<script[^>]*>/i, '').replace(/<\/script>/i, '');
+    try {
+      new vm.Script(code);
+    } catch (e) {
+      console.error(`FAIL: ${f} script ${idx + 1} error:`, e.message);
+      process.exit(1);
     }
   });
-  if (ok) {
-    console.log(`PASS: ${relPath} (${content.length} bytes, all ${requiredSubstrings.length} checks passed)`);
-  }
-  return ok;
+  console.log(`PASS: ${f} KaTeX scripts 100% valid JS`);
 }
 
-let allOk = true;
+// 2. Verify Toán 10 table
+const toanFiles = ['chuyende_toan_10.html', 'chuyende_toan10.html'];
+for (const f of toanFiles) {
+  const p = path.join(coursesDir, f);
+  const content = fs.readFileSync(p, 'utf8');
+  if (!content.includes('table-layout: fixed') || !content.includes('<colgroup>')) {
+    console.error(`FAIL: ${f} table layout is not fixed!`);
+    process.exit(1);
+  }
+  console.log(`PASS: ${f} table layout fixed with colgroup`);
+}
 
-// 1. Check Music files
-const musicChecks = [
-  'NÉT NHẠC HÁT BÈ: BẢY SẮC CẦU VỒNG',
-  'Bè 1: Giai điệu chính (Soprano',
-  'Bè 2: Bè hoà âm đi kèm (Alto',
-  'viewBox="0 0 650 250"',
-  'staff-bai3-be1',
-  'staff-bai3-be2',
-  'staff-bai3'
-];
-allOk = checkFile('courses/amnhac_9.html', musicChecks) && allOk;
-allOk = checkFile('courses/music_9.html', musicChecks) && allOk;
+// 3. Verify Hóa học 10
+const hoaFiles = ['chuyende_hoahoc_10.html', 'chuyende_hoahoc10.html', 'chuyende_hoa_10.html'];
+for (const f of hoaFiles) {
+  const p = path.join(coursesDir, f);
+  const content = fs.readFileSync(p, 'utf8');
+  if (content.includes('$^\\circ$)')) {
+    console.error(`FAIL: ${f} has unanchored degree symbol!`);
+    process.exit(1);
+  }
+  console.log(`PASS: ${f} isotope & degree formulas anchored`);
+}
 
-// 2. Check Food Processing 9 files
-const foodChecks = [
-  'Mô đun: Chế Biến Thực Phẩm',
-  'Chương I — Dinh dưỡng và thực phẩm',
-  'Chương II — Tổ chức và chế biến món ăn',
-  'Bài 1', 'Bài 2', 'Bài 3', 'Bài 4', 'Bài 5', 'Bài 6', 'Bài 7',
-  'Thành phần dinh dưỡng trong thực phẩm',
-  'Lựa chọn và bảo quản thực phẩm',
-  'Một số ngành nghề liên quan đến chế biến thực phẩm',
-  'An toàn lao động và an toàn vệ sinh thực phẩm',
-  'Dự án: Tính toán chi phí bữa ăn theo thực đơn',
-  'Chế biến thực phẩm có sử dụng nhiệt',
-  'Chế biến thực phẩm không sử dụng nhiệt',
-  'meal-cost-calculator',
-  'calc-diners',
-  'calc-grand-total',
-  'terms-modal',
-  'exam-modal',
-  '70 °C'
-];
-allOk = checkFile('courses/congnghe_chebienthucpham_9.html', foodChecks) && allOk;
-allOk = checkFile('courses/technology_foodprocessing_9.html', foodChecks) && allOk;
-
-// 3. Check index.html
-const indexChecks = [
-  'courses/congnghe_chebienthucpham_9.html',
-  'Công Nghệ 9 — Chế Biến Thực Phẩm'
-];
-allOk = checkFile('index.html', indexChecks) && allOk;
-
-if (allOk) {
-  console.log('\n=== ALL VERIFICATIONS PASSED PERFECTLY (100%) ===');
-} else {
-  console.error('\n=== SOME VERIFICATIONS FAILED ===');
+// 4. Verify Tiếng Pháp 10
+const p10 = path.join(coursesDir, 'tiengphap_10.html');
+const p10Alias = path.join(coursesDir, 'tiengphap10.html');
+const b1 = fs.readFileSync(p10);
+const b2 = fs.readFileSync(p10Alias);
+if (!b1.equals(b2)) {
+  console.error('FAIL: Tiếng Pháp 10 main and alias differ!');
   process.exit(1);
 }
+console.log(`PASS: Tiếng Pháp 10 main and alias are identical byte-for-byte (${b1.length} bytes)`);
+
+// 5. Verify index.html card
+const idxContent = fs.readFileSync(path.join(baseDir, 'index.html'), 'utf8');
+if (!idxContent.includes('courses/tiengphap_10.html')) {
+  console.error('FAIL: index.html missing link to courses/tiengphap_10.html');
+  process.exit(1);
+}
+console.log('PASS: index.html card added and linked to courses/tiengphap_10.html');
+
+console.log('\n=== ALL VERIFICATIONS PASSED PERFECTLY! ===');

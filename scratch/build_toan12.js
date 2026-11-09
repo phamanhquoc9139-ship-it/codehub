@@ -1,221 +1,212 @@
-// build_toan12.js - Builds both courses/toan_12.html and courses/toan12.html
 const fs = require('fs');
 const path = require('path');
 
-const tap1 = require('./toan12_data_tap1.js');
-const tap2 = require('./toan12_data_tap2.js');
+const lessons = require('./toan12_data.js');
+const coreCards = require('./toan12_core_cards.js');
+const cases = require('./toan12_cases.js');
 const svgs = require('./toan12_svgs.js');
-const lessonDiagrams = require('./toan12_lesson_diagrams.js');
-const { renderInteractiveTools } = require('./toan12_interactive.js');
+const reviewArena = require('./toan12_review_arena.js');
 
-function renderPoint(point) {
-  let cleanPoint = point.trim();
-  let isSubBullet = cleanPoint.startsWith('•');
-  if (isSubBullet) {
-    cleanPoint = cleanPoint.replace(/^•\s*/, '');
-  }
-  
-  return `
-    <div class="flex items-start gap-3 leading-relaxed sm:leading-loose text-xs sm:text-sm text-slate-700 dark:text-slate-300 ${isSubBullet ? 'pl-4 sm:pl-6' : ''}">
-      <span class="inline-flex items-center justify-center w-5 h-5 rounded-full ${isSubBullet ? 'bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300' : 'bg-indigo-100 dark:bg-indigo-900/60 text-indigo-700 dark:text-indigo-300'} font-bold text-[10px] shrink-0 mt-0.5">
-        ${isSubBullet ? '▸' : '✓'}
-      </span>
-      <div class="flex-1">${cleanPoint}</div>
+function renderCardPoints(points) {
+  if (!points || !Array.isArray(points)) return '';
+  return points.map(p => `
+    <div class="flex items-start gap-2.5 text-xs sm:text-sm text-slate-700 dark:text-slate-300">
+      <span class="w-1.5 h-1.5 rounded-full bg-teal-500 dark:bg-teal-400 mt-2 shrink-0"></span>
+      <div class="leading-relaxed flex-1">${p}</div>
     </div>
-  `;
+  `).join('');
 }
 
-function renderLesson(lesson, badgeColor) {
-  const diagramKey = `diagram_${lesson.id.replace('-', '')}`;
-  const diagramHtml = lessonDiagrams[diagramKey] || '';
+function renderCoreCards(cards) {
+  if (!cards || !Array.isArray(cards)) return '';
+  const colorMap = {
+    teal: 'border-teal-200 dark:border-teal-800 bg-teal-50/50 dark:bg-teal-950/20 text-teal-700 dark:text-teal-300',
+    blue: 'border-blue-200 dark:border-blue-800 bg-blue-50/50 dark:bg-blue-950/20 text-blue-700 dark:text-blue-300',
+    indigo: 'border-indigo-200 dark:border-indigo-800 bg-indigo-50/50 dark:bg-indigo-950/20 text-indigo-700 dark:text-indigo-300',
+    emerald: 'border-emerald-200 dark:border-emerald-800 bg-emerald-50/50 dark:bg-emerald-950/20 text-emerald-700 dark:text-emerald-300',
+    amber: 'border-amber-200 dark:border-amber-800 bg-amber-50/50 dark:bg-amber-950/20 text-amber-700 dark:text-amber-300',
+    rose: 'border-rose-200 dark:border-rose-800 bg-rose-50/50 dark:bg-rose-950/20 text-rose-700 dark:text-rose-300',
+  };
 
-  const quizHtml = lesson.quizzes && lesson.quizzes.length > 0 ? `
-    <div class="mt-8 pt-6 border-t border-slate-200 dark:border-slate-800">
-      <div class="flex items-center justify-between mb-4">
-        <h4 class="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
-          <span>📝</span> Luyện tập nhanh: 3 câu trắc nghiệm trọng tâm (${lesson.num})
-        </h4>
-        <span class="text-xs px-2.5 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-medium">Chấm điểm tức thì</span>
+  return cards.map(c => `
+    <div class="p-4 sm:p-5 rounded-2xl border ${colorMap[c.color] || colorMap.teal} transition-all hover:shadow-sm">
+      <div class="flex items-center justify-between gap-2 mb-3">
+        <span class="px-2.5 py-0.5 rounded-full text-[11px] font-extrabold uppercase tracking-wide bg-white dark:bg-slate-900 border border-current shadow-xs">${c.tag}</span>
+        <i class="${c.icon} text-base opacity-80"></i>
       </div>
-      <div class="space-y-4">
-        ${lesson.quizzes.map((qz, idx) => `
-          <div class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40" id="quiz-${lesson.id}-${idx}">
-            <div class="font-medium text-xs sm:text-sm text-slate-900 dark:text-slate-100 mb-3">
-              <span class="font-bold text-indigo-600 dark:text-indigo-400">Câu ${idx + 1}:</span> ${qz.q}
-            </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-3">
-              ${qz.options.map((opt, oIdx) => `
-                <button type="button" onclick="checkMiniQuiz('${lesson.id}', ${idx}, ${oIdx}, ${qz.correct})" 
-                  class="mini-opt-${lesson.id}-${idx} text-left px-3 py-2 text-xs rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-indigo-50 dark:hover:bg-slate-700 transition-all text-slate-700 dark:text-slate-300">
-                  ${opt}
-                </button>
-              `).join('')}
-            </div>
-            <div id="explain-${lesson.id}-${idx}" class="hidden mt-2 p-3 rounded-lg text-xs leading-relaxed bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
-              <span class="font-bold text-emerald-600 dark:text-emerald-400">💡 Giải thích chi tiết:</span> ${qz.explain}
+      <h4 class="font-black text-sm sm:text-base text-slate-900 dark:text-white mb-2">${c.title}</h4>
+      <div class="space-y-2 mt-2">
+        ${renderCardPoints(c.points)}
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderLessonSections(sections) {
+  if (!sections || !Array.isArray(sections)) return '';
+  return sections.map(sec => `
+    <div class="space-y-4">
+      <h3 class="text-base sm:text-lg font-black text-slate-900 dark:text-white flex items-center gap-2.5 pt-2">
+        <span class="w-2.5 h-2.5 rounded-full bg-teal-600 dark:bg-teal-400"></span>
+        <span>${sec.heading}</span>
+      </h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        ${sec.cards.map(card => `
+          <div class="p-4 sm:p-5 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-teal-400 dark:hover:border-teal-600 transition shadow-xs">
+            <h4 class="font-bold text-sm sm:text-base text-teal-900 dark:text-teal-300 mb-2.5 flex items-center gap-2">
+              <i class="fa-solid fa-bookmark text-teal-500 text-xs"></i>
+              <span>${card.title}</span>
+            </h4>
+            <div class="space-y-2">
+              ${renderCardPoints(card.points)}
             </div>
           </div>
         `).join('')}
       </div>
     </div>
-  ` : '';
+  `).join('');
+}
 
-  return `
-    <article id="${lesson.id}" class="scroll-mt-24 p-6 sm:p-8 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm mb-8 transition-all hover:shadow-md">
-      <!-- Header Lesson -->
-      <div class="flex flex-wrap items-center justify-between gap-3 pb-5 border-b border-slate-100 dark:border-slate-800 mb-6">
-        <div class="flex items-center gap-3">
-          <span class="px-3 py-1 rounded-xl bg-indigo-600 text-white font-bold text-xs sm:text-sm shadow-sm">
-            ${lesson.num}
-          </span>
-          <h3 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">
-            ${lesson.title}
-          </h3>
-        </div>
-        <div class="flex items-center gap-2 text-xs font-medium text-slate-500 dark:text-slate-400">
-          <span>⏱ ${lesson.duration}</span>
-        </div>
+function renderCases(casesList) {
+  if (!casesList || !Array.isArray(casesList)) return '';
+  return casesList.map(cs => `
+    <div class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 space-y-3">
+      <h4 class="font-black text-sm sm:text-base text-slate-900 dark:text-white flex items-center gap-2">
+        <i class="fa-solid fa-lightbulb text-amber-500"></i>
+        <span>${cs.title}</span>
+      </h4>
+      <div class="text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed bg-white dark:bg-slate-900 p-3 rounded-xl border border-slate-200/60 dark:border-slate-800">
+        <strong class="text-slate-900 dark:text-white">Bối cảnh & Vấn đề:</strong> ${cs.context}
       </div>
-
-      <!-- Objective -->
-      <div class="p-3.5 rounded-xl bg-indigo-50/70 dark:bg-indigo-950/40 border border-indigo-100 dark:border-indigo-900/50 mb-6">
-        <div class="flex items-start gap-2.5 text-xs sm:text-sm text-indigo-900 dark:text-indigo-200">
-          <span class="text-indigo-600 dark:text-indigo-400 font-bold">🎯 Mục tiêu cốt lõi:</span>
-          <span>${lesson.objective}</span>
-        </div>
+      <div class="text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed bg-teal-50/50 dark:bg-teal-950/30 p-3 rounded-xl border border-teal-200/60 dark:border-teal-900/60">
+        <strong class="text-teal-900 dark:text-teal-300">Phân tích Toán học & Mô hình hóa:</strong> ${cs.analysis}
       </div>
+      <div class="text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed bg-emerald-50/50 dark:bg-emerald-950/30 p-3 rounded-xl border border-emerald-200/60 dark:border-emerald-900/60">
+        <strong class="text-emerald-900 dark:text-emerald-300">Giải pháp & Bài học Thực tế:</strong> ${cs.solution}
+      </div>
+    </div>
+  `).join('');
+}
 
-      <!-- Theory Sections -->
-      <div class="space-y-6">
-        ${lesson.theorySections.map(sec => `
-          <div class="p-4 sm:p-5 rounded-xl border border-slate-100 dark:border-slate-800/80 bg-slate-50/50 dark:bg-slate-800/30">
-            <div class="flex items-center justify-between mb-3">
-              <h4 class="font-bold text-slate-800 dark:text-slate-200 text-sm sm:text-base flex items-center gap-2">
-                <span class="w-2 h-2 rounded-full bg-indigo-500"></span>
-                ${sec.title}
-              </h4>
-              <span class="text-[11px] px-2 py-0.5 rounded-md bg-white dark:bg-slate-800 text-slate-500 border border-slate-200 dark:border-slate-700 font-medium">
-                ${sec.badge}
-              </span>
-            </div>
-            <div class="space-y-2.5 mt-2">
-              ${sec.points.map(p => renderPoint(p)).join('')}
-            </div>
-          </div>
+function renderQuizzes(quizzes, lessonId) {
+  if (!quizzes || !Array.isArray(quizzes)) return '';
+  return quizzes.map((q, qIdx) => `
+    <div class="p-4 sm:p-5 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 space-y-3 shadow-xs" id="quiz-${lessonId}-${qIdx}">
+      <div class="font-bold text-sm sm:text-base text-slate-900 dark:text-white flex items-start gap-2.5">
+        <span class="w-6 h-6 rounded-lg bg-teal-100 text-teal-800 dark:bg-teal-900/60 dark:text-teal-300 text-xs font-black flex items-center justify-center shrink-0 mt-0.5">Câu ${qIdx + 1}</span>
+        <span class="leading-snug">${q.q}</span>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+        ${q.options.map((opt, oIdx) => `
+          <button type="button" onclick="checkInlineQuiz(${lessonId}, ${qIdx}, ${oIdx}, ${q.answer})" class="quiz-btn-${lessonId}-${qIdx} w-full text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-teal-400 dark:hover:border-teal-500 hover:bg-teal-50/40 dark:hover:bg-teal-950/20 text-xs sm:text-sm text-slate-700 dark:text-slate-300 transition flex items-center gap-2.5">
+            <span class="w-5 h-5 rounded-md bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 font-bold text-[11px] flex items-center justify-center shrink-0">${['A', 'B', 'C', 'D'][oIdx]}</span>
+            <span class="flex-1">${opt}</span>
+          </button>
         `).join('')}
       </div>
+      <div id="quiz-exp-${lessonId}-${qIdx}" class="hidden p-3 rounded-xl text-xs sm:text-sm leading-relaxed border mt-2"></div>
+    </div>
+  `).join('');
+}
 
-      <!-- Dedicated Lesson Mathematical Diagram -->
-      ${diagramHtml}
+function renderLessons() {
+  return lessons.map(lesson => `
+    <article id="bai-${lesson.id}" class="lesson-card bg-white dark:bg-slate-850 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden mb-12 scroll-mt-24 transition-all">
+      <!-- Lesson Header Banner -->
+      <div class="p-6 sm:p-8 bg-gradient-to-r from-teal-900 via-slate-900 to-indigo-950 text-white relative">
+        <div class="flex flex-wrap items-center justify-between gap-3 mb-3">
+          <span class="px-3 py-1 rounded-full text-xs font-extrabold uppercase tracking-wider bg-white/10 text-teal-200 border border-white/20 backdrop-blur-sm">${lesson.badge}</span>
+          <div class="flex items-center gap-3 text-xs text-teal-200 font-medium">
+            <span><i class="fa-regular fa-clock mr-1"></i>${lesson.readTime}</span>
+            <span>•</span>
+            <span class="text-emerald-300 font-semibold"><i class="fa-solid fa-check-circle mr-1"></i>Đủ 5 phần chuẩn</span>
+          </div>
+        </div>
+        <h2 class="text-xl sm:text-2xl lg:text-3xl font-black tracking-tight text-white leading-snug">${lesson.title}</h2>
+        <p class="mt-3 text-xs sm:text-sm text-teal-100/90 leading-relaxed max-w-4xl"><strong class="text-amber-300">Mục tiêu cốt lõi:</strong> ${lesson.target}</p>
+      </div>
 
-      <!-- Mini Quiz -->
-      ${quizHtml}
+      <div class="p-5 sm:p-8 space-y-10">
+        <!-- Phần A: 4 Thẻ Quy tắc & Công thức Cốt lõi -->
+        <section class="space-y-4">
+          <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-2">
+            <h3 class="font-black text-sm sm:text-base uppercase tracking-wider text-teal-700 dark:text-teal-400 flex items-center gap-2">
+              <i class="fa-solid fa-key"></i>
+              <span>Phần A. Quy tắc & Công thức cốt lõi (4 thẻ)</span>
+            </h3>
+            <span class="text-xs text-slate-500 font-bold">4 Khung kiến thức trọng tâm</span>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            ${renderCoreCards(coreCards[lesson.id])}
+          </div>
+        </section>
+
+        <!-- Phần B: Nội dung Chi tiết Trọng tâm -->
+        <section class="space-y-6">
+          <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-2">
+            <h3 class="font-black text-sm sm:text-base uppercase tracking-wider text-teal-700 dark:text-teal-400 flex items-center gap-2">
+              <i class="fa-solid fa-book-open"></i>
+              <span>Phần B. Nội dung chi tiết trọng tâm theo SGK</span>
+            </h3>
+            <span class="text-xs text-slate-500 font-bold">Phân tích sâu phương pháp giải & định lí</span>
+          </div>
+          ${renderLessonSections(lesson.sections)}
+        </section>
+
+        <!-- Phần C: Sơ đồ Trực quan Nguyên lí / Thí nghiệm -->
+        <section class="space-y-4">
+          <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-2">
+            <h3 class="font-black text-sm sm:text-base uppercase tracking-wider text-teal-700 dark:text-teal-400 flex items-center gap-2">
+              <i class="fa-solid fa-bezier-curve"></i>
+              <span>Phần C. Sơ đồ trực quan toán học & tài chính</span>
+            </h3>
+            <span class="text-xs text-slate-500 font-bold">Vector SVG chất lượng cao</span>
+          </div>
+          <div class="w-full overflow-x-auto p-1">
+            ${svgs[lesson.id] || ''}
+          </div>
+        </section>
+
+        <!-- Phần D: Tình huống Thực tế & Kĩ năng Ứng dụng Tài chính / Tối ưu -->
+        <section class="space-y-4">
+          <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-2">
+            <h3 class="font-black text-sm sm:text-base uppercase tracking-wider text-teal-700 dark:text-teal-400 flex items-center gap-2">
+              <i class="fa-solid fa-briefcase"></i>
+              <span>Phần D. Tình huống thực tế & Kĩ năng ứng dụng tài chính / tối ưu (2 tình huống)</span>
+            </h3>
+            <span class="text-xs text-slate-500 font-bold">Ứng dụng kinh tế & quản trị rủi ro</span>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            ${renderCases(cases[lesson.id])}
+          </div>
+        </section>
+
+        <!-- Phần E: Luyện tập Trắc nghiệm Củng cố -->
+        <section class="space-y-4">
+          <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-2">
+            <h3 class="font-black text-sm sm:text-base uppercase tracking-wider text-teal-700 dark:text-teal-400 flex items-center gap-2">
+              <i class="fa-solid fa-circle-question"></i>
+              <span>Phần E. Luyện tập trắc nghiệm củng cố (3 câu)</span>
+            </h3>
+            <span class="text-xs text-slate-500 font-bold">Phản hồi tức thì & Giải thích chi tiết</span>
+          </div>
+          <div class="space-y-3">
+            ${renderQuizzes(lesson.quizzes, lesson.id)}
+          </div>
+        </section>
+      </div>
     </article>
-  `;
+  `).join('');
 }
 
-function renderChapter(ch) {
-  return `
-    <section id="${ch.id}" class="scroll-mt-20 mb-14">
-      <div class="flex items-center gap-3.5 mb-6">
-        <span class="px-3.5 py-1.5 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-extrabold text-xs sm:text-sm tracking-wide">
-          ${ch.code}
-        </span>
-        <div>
-          <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white">
-            ${ch.title}
-          </h2>
-          <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-0.5">
-            ${ch.desc}
-          </p>
-        </div>
-      </div>
-      <div>
-        ${ch.lessons.map(l => renderLesson(l, ch.badgeColor)).join('')}
-      </div>
-    </section>
-  `;
-}
-
-// Function to generate the full lesson navigation items
-function renderSidebarChapter(ch, badgeColorClass, borderClass) {
-  return `
-    <div class="sidebar-chapter-group mb-4">
-      <div class="flex items-center justify-between font-bold text-slate-900 dark:text-slate-100 py-1.5 px-2 rounded-lg bg-slate-100/80 dark:bg-slate-800/60 mb-1.5 text-xs">
-        <a href="#${ch.id}" class="hover:text-indigo-600 dark:hover:text-indigo-400 flex items-center gap-1.5 truncate">
-          <span class="w-2 h-2 rounded-full ${badgeColorClass}"></span>
-          <span class="truncate">${ch.code}: ${ch.title.split('—')[0].replace('Ứng dụng đạo hàm để ', '')}</span>
-        </a>
-        <span class="text-[10px] text-slate-500 dark:text-slate-400 shrink-0 font-semibold">${ch.lessons.length} mục</span>
-      </div>
-      <div class="pl-2 ml-2 border-l-2 ${borderClass} space-y-1">
-        ${ch.lessons.map(l => `
-          <a href="#${l.id}" 
-             data-lesson-title="${l.num} ${l.title}"
-             class="sidebar-lesson-link flex items-center gap-2 py-1 px-2 rounded-md hover:bg-indigo-50 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors text-xs leading-normal">
-            <span class="font-bold text-[11px] shrink-0 text-slate-700 dark:text-slate-200">${l.num}:</span>
-            <span class="truncate">${l.title}</span>
-          </a>
-        `).join('')}
-      </div>
-    </div>
-  `;
-}
-
-// Function to generate the Quick Lesson Picker Grid for the top hero area
-function renderQuickLessonPicker(allChapters) {
-  return `
-    <section class="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm mb-12">
-      <div class="flex items-center justify-between mb-4 border-b border-slate-100 dark:border-slate-800 pb-3">
-        <div class="flex items-center gap-2.5">
-          <span class="p-2 rounded-xl bg-indigo-100 dark:bg-indigo-900/60 text-indigo-700 dark:text-indigo-300 text-base">📚</span>
-          <div>
-            <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white">Mục Lục 19 Bài Học — Nhấp Chọn Để Học Ngay</h3>
-            <p class="text-xs text-slate-500 dark:text-slate-400">Chọn trực tiếp bất kỳ bài học nào để cuộn nhanh đến nội dung kiến thức.</p>
-          </div>
-        </div>
-        <span class="hidden sm:inline-block text-xs font-semibold px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">Đủ 6 Chương</span>
-      </div>
-
-      <div class="space-y-5">
-        ${allChapters.map(ch => `
-          <div>
-            <div class="text-xs font-bold text-slate-800 dark:text-slate-200 mb-2 flex items-center gap-2">
-              <span class="px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-[10px] font-extrabold uppercase">${ch.code}</span>
-              <span>${ch.title}</span>
-            </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
-              ${ch.lessons.map(l => `
-                <a href="#${l.id}" class="p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-800/40 hover:bg-indigo-50 dark:hover:bg-indigo-950/60 hover:border-indigo-300 dark:hover:border-indigo-700 transition-all group flex items-start gap-2">
-                  <span class="px-1.5 py-0.5 rounded bg-indigo-100 dark:bg-indigo-900/60 text-indigo-700 dark:text-indigo-300 font-bold text-[10px] shrink-0 mt-0.5 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
-                    ${l.num}
-                  </span>
-                  <div class="text-xs font-medium text-slate-700 dark:text-slate-300 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 line-clamp-1">
-                    ${l.title}
-                  </div>
-                </a>
-              `).join('')}
-            </div>
-          </div>
-        `).join('')}
-      </div>
-    </section>
-  `;
-}
-
-function buildHTML() {
-  const chaptersTap1 = [tap1.chuong1, tap1.chuong2, tap1.chuong3];
-  const chaptersTap2 = [tap2.chuong4, tap2.chuong5, tap2.chuong6];
-  const allChapters = [...chaptersTap1, ...chaptersTap2];
-
-  return `<!DOCTYPE html>
+const fullHtml = `<!DOCTYPE html>
 <html lang="vi" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Toán 12 — Tổng Hợp Kiến Thức Đủ Bài, Đủ Nội Dung (Kết Nối Tri Thức)</title>
-  <meta name="description" content="Tài liệu số hóa toàn diện môn Toán 12 theo chương trình Kết nối tri thức với cuộc sống. 6 chương, 19 bài học đầy đủ trong menu chọn bài, 19 sơ đồ hình vẽ toán học từng bài, 8 sơ đồ tổng hợp, 5 công cụ tính toán và đấu trường 45 phút.">
-
+  <title>Chuyên Đề Toán 12 — Kết Nối Tri Thức | CS Platform</title>
+  <meta name="description" content="Tổng hợp toàn diện kiến thức Chuyên đề Toán 12 Kết nối tri thức đủ 3 chuyên đề 7 bài học: Biến ngẫu nhiên rời rạc, Phân bố nhị thức, Quy hoạch tuyến tính, Đạo hàm tối ưu, Lãi suất, Tín dụng và Đấu trường Trạng Nguyên 20 câu.">
+  
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -224,583 +215,484 @@ function buildHTML() {
       theme: {
         extend: {
           colors: {
-            brand: {
-              50: '#eef2ff',
-              100: '#e0e7ff',
-              500: '#6366f1',
-              600: '#4f46e5',
-              700: '#4338ca',
-              900: '#312e81',
+            slate: {
+              850: '#151e2e'
             }
           }
         }
       }
     }
   </script>
-
-  <!-- KaTeX CSS & JS for safe mathematical rendering -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
-    onload="initKaTeX();"></script>
-
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
   <style>
-    /* Custom scrollbars */
+    /* Custom scrollbar */
     ::-webkit-scrollbar { width: 6px; height: 6px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
     .dark ::-webkit-scrollbar-thumb { background: #475569; }
-    
-    /* KaTeX display styling */
-    .katex-display { margin: 0.75em 0; overflow-x: auto; overflow-y: hidden; padding: 0.2em 0; }
+    .dark ::-webkit-scrollbar-thumb:hover { background: #64748b; }
   </style>
 </head>
-<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-200 antialiased min-h-screen flex flex-col font-sans transition-colors duration-200">
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-100 font-sans transition-colors min-h-screen flex flex-col">
 
-  <!-- Top Progress Bar -->
-  <div id="read-progress" class="fixed top-0 left-0 h-1 bg-indigo-600 dark:bg-indigo-400 z-50 transition-all duration-100" style="width: 0%"></div>
-
-  <!-- Header & Navbar -->
-  <header class="sticky top-0 z-40 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+  <!-- Top Sticky Navigation Bar -->
+  <header class="sticky top-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-sm transition-colors">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
       
-      <!-- Brand & Title -->
+      <!-- Left: Logo & Breadcrumbs -->
       <div class="flex items-center gap-3">
-        <a href="../index.html" class="p-2 rounded-xl bg-indigo-50 dark:bg-indigo-950/80 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-100 dark:hover:bg-indigo-900 transition-colors" title="Về trang chủ">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+        <a href="../index.html" class="flex items-center gap-2.5 group">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-teal-700 to-emerald-500 flex items-center justify-center text-white shadow-md shadow-teal-500/20 group-hover:scale-105 transition">
+            <i class="fa-solid fa-chart-pie text-lg"></i>
+          </div>
+          <div>
+            <div class="font-black text-sm tracking-tight text-slate-900 dark:text-white flex items-center gap-1.5">
+              <span>CHUYÊN ĐỀ TOÁN 12</span>
+              <span class="px-1.5 py-0.2 rounded text-[10px] font-extrabold bg-teal-100 text-teal-800 dark:bg-teal-900/60 dark:text-teal-300">KNTT</span>
+            </div>
+            <div class="text-[11px] text-slate-500 dark:text-slate-400 font-medium">Biến ngẫu nhiên • Tối ưu hóa • Tài chính cá nhân</div>
+          </div>
         </a>
-        <div>
-          <span class="text-[10px] font-bold tracking-wider uppercase px-2 py-0.5 rounded bg-indigo-100 dark:bg-indigo-900/80 text-indigo-700 dark:text-indigo-300">Kết nối tri thức</span>
-          <h1 class="text-sm sm:text-base font-extrabold text-slate-900 dark:text-white truncate">
-            Toán 12 — Kiến Thức Cốt Lõi 2 Tập
-          </h1>
-        </div>
       </div>
 
-      <!-- Action Buttons -->
+      <!-- Center: Quick Progress Tracker -->
+      <div class="hidden md:flex items-center gap-3 px-4 py-1.5 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+        <span class="text-xs font-bold text-slate-600 dark:text-slate-300">Tiến độ chuyên đề:</span>
+        <div class="w-28 bg-slate-200 dark:bg-slate-700 h-2 rounded-full overflow-hidden">
+          <div id="top-progress-bar" class="bg-teal-600 h-full w-0 transition-all duration-500"></div>
+        </div>
+        <span id="top-progress-text" class="text-xs font-black text-teal-600 dark:text-teal-400">0/7 bài</span>
+      </div>
+
+      <!-- Right: Action Buttons -->
       <div class="flex items-center gap-2">
-        <!-- Mobile Menu Toggle Button -->
-        <button onclick="toggleMobileMenu()" class="lg:hidden flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs shadow-sm transition-all">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
-          <span>Menu Bài</span>
+        <button type="button" onclick="openSearchModal()" class="px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs font-medium hover:border-teal-400 transition flex items-center gap-2" title="Tìm kiếm nhanh (Ctrl+K)">
+          <i class="fa-solid fa-magnifying-glass text-slate-400"></i>
+          <span class="hidden sm:inline">Tìm kiếm...</span>
+          <kbd class="hidden sm:inline-block px-1.5 py-0.5 rounded bg-white dark:bg-slate-700 text-[10px] font-mono border border-slate-200 dark:border-slate-600">Ctrl+K</kbd>
         </button>
 
-        <!-- Search Trigger (Ctrl+K) -->
-        <button onclick="openSearchModal()" class="flex items-center gap-2 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 text-xs hover:border-indigo-400 transition-all">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-          <span class="hidden md:inline">Tìm kiếm...</span>
-          <kbd class="hidden md:inline-block px-1.5 py-0.5 text-[10px] bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded">Ctrl+K</kbd>
-        </button>
+        <a href="#arena-section" class="px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold shadow-sm shadow-amber-500/20 transition flex items-center gap-1.5">
+          <i class="fa-solid fa-trophy"></i>
+          <span class="hidden sm:inline">Đấu trường Trạng Nguyên</span>
+        </a>
 
-        <!-- Dark Mode Toggle -->
-        <button onclick="toggleDarkMode()" class="p-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:text-indigo-600 transition-colors" title="Đổi giao diện sáng/tối">
-          <svg id="theme-icon-dark" class="w-4 h-4 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
-          <svg id="theme-icon-light" class="w-4 h-4 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+        <!-- Dark / Light Mode Toggle -->
+        <button type="button" onclick="toggleTheme()" class="w-9 h-9 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:text-teal-500 flex items-center justify-center transition" title="Chuyển chế độ sáng / tối">
+          <i id="theme-icon" class="fa-solid fa-moon"></i>
         </button>
       </div>
 
     </div>
   </header>
 
-  <!-- Mobile Offcanvas Menu Drawer -->
-  <div id="mobile-menu-drawer" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden lg:hidden flex">
-    <div class="bg-white dark:bg-slate-900 w-80 max-w-[85vw] h-full shadow-2xl flex flex-col p-4 border-r border-slate-200 dark:border-slate-800">
-      <div class="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800">
-        <div class="flex items-center gap-2">
-          <span class="p-1.5 rounded-lg bg-indigo-100 dark:bg-indigo-900 text-indigo-600 font-bold">📑</span>
-          <span class="font-bold text-sm text-slate-900 dark:text-white">Mục Lục Bài Học</span>
-        </div>
-        <button onclick="toggleMobileMenu()" class="p-1 rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-        </button>
-      </div>
-      <div class="py-2.5">
-        <input type="text" oninput="filterSidebar(this.value, 'mobile-nav')" placeholder="Lọc nhanh bài học..." class="w-full px-3 py-1.5 text-xs rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-      </div>
-      <div id="mobile-nav" class="flex-1 overflow-y-auto space-y-4 pr-1 text-xs">
-        <div>
-          <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wider px-2 mb-2">TẬP MỘT</div>
-          ${renderSidebarChapter(tap1.chuong1, 'bg-indigo-500', 'border-indigo-300 dark:border-indigo-800')}
-          ${renderSidebarChapter(tap1.chuong2, 'bg-emerald-500', 'border-emerald-300 dark:border-emerald-800')}
-          ${renderSidebarChapter(tap1.chuong3, 'bg-amber-500', 'border-amber-300 dark:border-amber-800')}
-        </div>
-        <div>
-          <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wider px-2 mb-2">TẬP HAI</div>
-          ${renderSidebarChapter(tap2.chuong4, 'bg-cyan-500', 'border-cyan-300 dark:border-cyan-800')}
-          ${renderSidebarChapter(tap2.chuong5, 'bg-rose-500', 'border-rose-300 dark:border-rose-800')}
-          ${renderSidebarChapter(tap2.chuong6, 'bg-purple-500', 'border-purple-300 dark:border-purple-800')}
-        </div>
-      </div>
-    </div>
-    <div class="flex-1" onclick="toggleMobileMenu()"></div>
-  </div>
-
-  <!-- Main Layout -->
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 flex gap-8">
-    
-    <!-- Left Navigation Sidebar (Sticky) -->
-    <aside class="hidden lg:block w-80 shrink-0">
-      <div class="sticky top-24 max-h-[calc(100vh-7rem)] overflow-y-auto pr-3 space-y-5">
-        
-        <!-- Header Info Card -->
-        <div class="p-3.5 rounded-2xl bg-gradient-to-br from-indigo-500/10 via-purple-500/5 to-transparent border border-indigo-200/50 dark:border-indigo-800/50">
-          <div class="flex items-center justify-between mb-1">
-            <span class="text-[10px] font-extrabold text-indigo-700 dark:text-indigo-300 uppercase tracking-wider">MỤC LỤC CHỌN BÀI</span>
-            <span class="text-[10px] px-2 py-0.5 rounded-full bg-indigo-100 dark:bg-indigo-900/60 text-indigo-800 dark:text-indigo-300 font-bold">19 Bài • 6 Chương</span>
-          </div>
-          <div class="text-xs font-bold text-slate-800 dark:text-slate-100">Bấm bài học bất kỳ để học ngay</div>
-          
-          <!-- Instant filter inside sidebar -->
-          <div class="mt-2.5">
-            <input type="text" oninput="filterSidebar(this.value, 'desktop-nav')" placeholder="🔍 Lọc bài học..." class="w-full px-2.5 py-1.5 text-xs rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-2xs">
-          </div>
-        </div>
-
-        <!-- Full Chapter & Lesson Tree Navigation -->
-        <nav id="desktop-nav" class="space-y-4 text-xs font-medium">
-          
-          <!-- TẬP MỘT -->
-          <div>
-            <div class="text-[11px] font-extrabold text-slate-400 dark:text-slate-500 uppercase tracking-wider px-2 mb-2 flex items-center justify-between">
-              <span>TẬP MỘT (10 BÀI)</span>
-              <span class="text-[10px] text-indigo-500 font-semibold">Chương I - III</span>
-            </div>
-            ${renderSidebarChapter(tap1.chuong1, 'bg-indigo-500', 'border-indigo-300 dark:border-indigo-800')}
-            ${renderSidebarChapter(tap1.chuong2, 'bg-emerald-500', 'border-emerald-300 dark:border-emerald-800')}
-            ${renderSidebarChapter(tap1.chuong3, 'bg-amber-500', 'border-amber-300 dark:border-amber-800')}
-          </div>
-
-          <!-- TẬP HAI -->
-          <div>
-            <div class="text-[11px] font-extrabold text-slate-400 dark:text-slate-500 uppercase tracking-wider px-2 mb-2 flex items-center justify-between">
-              <span>TẬP HAI (9 BÀI)</span>
-              <span class="text-[10px] text-purple-500 font-semibold">Chương IV - VI</span>
-            </div>
-            ${renderSidebarChapter(tap2.chuong4, 'bg-cyan-500', 'border-cyan-300 dark:border-cyan-800')}
-            ${renderSidebarChapter(tap2.chuong5, 'bg-rose-500', 'border-rose-300 dark:border-rose-800')}
-            ${renderSidebarChapter(tap2.chuong6, 'bg-purple-500', 'border-purple-300 dark:border-purple-800')}
-          </div>
-
-          <!-- Special Sections -->
-          <div class="pt-2 border-t border-slate-200 dark:border-slate-800">
-            <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wider px-2 mb-2">TIỆN ÍCH & THI THỬ</div>
-            <div class="space-y-1">
-              <a href="#so-do-truc-quan" class="flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-indigo-50 dark:hover:bg-indigo-950/60 transition-colors">
-                <span>🎨 8 Sơ đồ SVG tổng hợp</span>
-              </a>
-              <a href="#interactive-tools" class="flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-indigo-50 dark:hover:bg-indigo-950/60 transition-colors">
-                <span>🧮 5 Công cụ tính toán tương tác</span>
-              </a>
-              <a href="#bang-cong-thuc" class="flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-indigo-50 dark:hover:bg-indigo-950/60 transition-colors">
-                <span>📑 Bảng công thức tổng hợp</span>
-              </a>
-              <a href="#dau-truong-toan-12" class="flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-rose-600 dark:text-rose-400 font-bold hover:bg-rose-50 dark:hover:bg-rose-950/60 transition-colors">
-                <span>🏆 Đấu trường 20 câu 45 phút</span>
-              </a>
-            </div>
-          </div>
-
-        </nav>
-
-      </div>
-    </aside>
-
-    <!-- Main Content Area -->
-    <main class="flex-1 min-w-0 max-w-4xl">
+  <!-- Main Hero Banner (Broad layout to prevent text squishing) -->
+  <section class="bg-gradient-to-b from-teal-900 via-slate-900 to-indigo-950 text-white py-10 px-4 sm:px-6 lg:px-8 border-b border-teal-700/60 relative overflow-hidden">
+    <div class="max-w-7xl mx-auto relative z-10 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
       
-      <!-- HERO BANNER -->
-      <section class="p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-indigo-900 via-indigo-800 to-purple-900 text-white shadow-xl mb-8">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md text-xs font-semibold text-indigo-200 border border-white/10 mb-4">
-          <span>📚 Sách giáo khoa Kết nối tri thức với cuộc sống</span>
+      <!-- Left Hero Column (Broad) -->
+      <div class="flex-1 min-w-0">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-teal-200 border border-white/15 text-xs font-bold mb-3 backdrop-blur-sm">
+          <i class="fa-solid fa-book-bookmark text-amber-400"></i> BỘ SÁCH KẾT NỐI TRI THỨC VỚI CUỘC SỐNG
         </div>
-        <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight mb-3">
-          TOÁN 12 — TỔNG HỢP KIẾN THỨC ĐỦ BÀI, ĐỦ NỘI DUNG
+        <h1 class="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight text-white leading-tight">
+          KIẾN THỨC TOÁN 12 – CHUYÊN ĐỀ HỌC TẬP
         </h1>
-        <p class="text-xs sm:text-sm text-indigo-100 leading-relaxed max-w-3xl mb-6">
-          Hệ thống học liệu số hóa toàn diện hai tập SGK Toán 12 (6 Chương, 19 Bài học). Menu hiển thị đầy đủ từng bài học để chọn trực tiếp, đi kèm 19 hình minh họa toán học theo bài, 8 sơ đồ tổng hợp, 5 công cụ tính toán và đấu trường trắc nghiệm 45 phút.
+        <div class="mt-2 text-base sm:text-lg text-teal-300 font-bold">
+          Tổng hợp đủ 3 chuyên đề, 7 bài học toàn diện
+        </div>
+        <p class="mt-3 text-sm sm:text-base text-teal-100/90 leading-relaxed max-w-3xl">
+          Hệ thống hóa toàn bộ kiến thức xác suất biến ngẫu nhiên rời rạc, phân bố nhị thức, quy hoạch tuyến tính hai biến, đạo hàm tối ưu hóa và toán học tài chính (lãi đơn, lãi kép, lạm phát, niên kim, trả góp).
         </p>
 
-        <!-- Highlights Badges -->
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
-          <div class="p-3 rounded-2xl bg-white/10 backdrop-blur-sm border border-white/10">
-            <div class="text-xl sm:text-2xl font-black text-white">19</div>
-            <div class="text-[11px] text-indigo-200 mt-0.5">Bài học chuẩn hóa</div>
-          </div>
-          <div class="p-3 rounded-2xl bg-white/10 backdrop-blur-sm border border-white/10">
-            <div class="text-xl sm:text-2xl font-black text-indigo-300">19+8</div>
-            <div class="text-[11px] text-indigo-200 mt-0.5">Hình vẽ & Sơ đồ SVG</div>
-          </div>
-          <div class="p-3 rounded-2xl bg-white/10 backdrop-blur-sm border border-white/10">
-            <div class="text-xl sm:text-2xl font-black text-emerald-300">5</div>
-            <div class="text-[11px] text-indigo-200 mt-0.5">Tiện ích tính toán</div>
-          </div>
-          <div class="p-3 rounded-2xl bg-white/10 backdrop-blur-sm border border-white/10">
-            <div class="text-xl sm:text-2xl font-black text-rose-300">77+</div>
-            <div class="text-[11px] text-indigo-200 mt-0.5">Câu hỏi trắc nghiệm</div>
-          </div>
+        <!-- Quick Hero Badges -->
+        <div class="mt-5 flex flex-wrap items-center gap-2.5 text-xs">
+          <a href="#chuyende-1" class="px-3 py-1.5 rounded-xl bg-teal-800/80 hover:bg-teal-700 border border-teal-600/60 font-bold text-white transition flex items-center gap-1.5">
+            <i class="fa-solid fa-dice text-teal-300"></i> CĐ1: Biến ngẫu nhiên (B1–B2)
+          </a>
+          <a href="#chuyende-2" class="px-3 py-1.5 rounded-xl bg-blue-800/80 hover:bg-blue-700 border border-blue-600/60 font-bold text-white transition flex items-center gap-1.5">
+            <i class="fa-solid fa-chart-line text-sky-300"></i> CĐ2: Bài toán Tối ưu (B3–B4)
+          </a>
+          <a href="#chuyende-3" class="px-3 py-1.5 rounded-xl bg-amber-800/80 hover:bg-amber-700 border border-amber-600/60 font-bold text-white transition flex items-center gap-1.5">
+            <i class="fa-solid fa-coins text-amber-300"></i> CĐ3: Tài chính ngân hàng (B5–B7)
+          </a>
+          <a href="#formula-section" class="px-3 py-1.5 rounded-xl bg-amber-500/30 hover:bg-amber-500/40 border border-amber-400/50 font-bold text-amber-200 transition flex items-center gap-1.5">
+            <i class="fa-solid fa-calculator text-amber-400"></i> Công thức tra nhanh
+          </a>
         </div>
-      </section>
-
-      <!-- QUICK LESSON PICKER GRID (19 BÀI HỌC) -->
-      ${renderQuickLessonPicker(allChapters)}
-
-      <!-- TẬP MỘT -->
-      <div class="mb-16">
-        <div class="flex items-center gap-3 pb-3 border-b-2 border-indigo-600 mb-8">
-          <span class="text-sm font-extrabold tracking-wider uppercase px-3 py-1 rounded-lg bg-indigo-600 text-white">PHẦN 1</span>
-          <h2 class="text-2xl font-black text-slate-900 dark:text-white">TẬP MỘT — ĐẠO HÀM, VECTƠ OXYZ & THỐNG KÊ</h2>
-        </div>
-        ${chaptersTap1.map(renderChapter).join('')}
       </div>
 
-      <!-- TẬP HAI -->
-      <div class="mb-16">
-        <div class="flex items-center gap-3 pb-3 border-b-2 border-purple-600 mb-8">
-          <span class="text-sm font-extrabold tracking-wider uppercase px-3 py-1 rounded-lg bg-purple-600 text-white">PHẦN 2</span>
-          <h2 class="text-2xl font-black text-slate-900 dark:text-white">TẬP HAI — TÍCH PHÂN, HÌNH TỌA ĐỘ 3D & XÁC SUẤT BAYES</h2>
+      <!-- Right Quick Jump Box (Fixed width, 7 buttons) -->
+      <div class="w-full lg:w-[380px] p-5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 text-white shrink-0">
+        <div class="text-xs font-extrabold uppercase tracking-wider text-teal-200 mb-3 flex items-center justify-between">
+          <span>Chuyển nhanh 7 bài học</span>
+          <span class="text-[10px] text-teal-300 font-bold px-2 py-0.5 rounded bg-white/10">3 Chuyên đề</span>
         </div>
-        ${chaptersTap2.map(renderChapter).join('')}
-      </div>
-
-      <!-- 8 SƠ ĐỒ VECTOR SVG TRỰC QUAN -->
-      <section id="so-do-truc-quan" class="scroll-mt-24 mb-16 pt-8 border-t border-slate-200 dark:border-slate-800">
-        <div class="flex items-center gap-3 mb-6">
-          <span class="p-2.5 rounded-xl bg-purple-100 dark:bg-purple-900/60 text-purple-700 dark:text-purple-300 font-bold text-lg">🎨</span>
-          <div>
-            <h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">8 Sơ Đồ & Mô Hình Trực Quan Vector SVG Tổng Hợp</h2>
-            <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">Dựng trực quan các cấu trúc toán học trọng tâm: bảng biến thiên, hình hộp, Oxyz, tứ phân vị, tích phân, tích có hướng, góc và cây Bayes.</p>
-          </div>
-        </div>
-
-        <div class="space-y-8">
-          <!-- Sơ đồ 1 -->
-          <div>
-            ${svgs.svg1_variation_and_graph}
-          </div>
-
-          <!-- Sơ đồ 2 -->
-          <div>
-            ${svgs.svg2_box_vector_rule}
-          </div>
-
-          <!-- Sơ đồ 3 -->
-          <div>
-            ${svgs.svg3_oxyz_coordinate_system}
-          </div>
-
-          <!-- Sơ đồ 4 -->
-          <div>
-            ${svgs.svg4_grouped_data_quartiles}
-          </div>
-
-          <!-- Sơ đồ 5 -->
-          <div>
-            ${svgs.svg5_integral_area_and_revolution}
-          </div>
-
-          <!-- Sơ đồ 6 -->
-          <div>
-            ${svgs.svg6_cross_product_and_distance}
-          </div>
-
-          <!-- Sơ đồ 7 -->
-          <div>
-            ${svgs.svg7_spatial_angles}
-          </div>
-
-          <!-- Sơ đồ 8 -->
-          <div>
-            ${svgs.svg8_bayes_probability_tree}
-          </div>
-        </div>
-      </section>
-
-      <!-- 5 CÔNG CỤ TÍNH TOÁN TƯƠNG TÁC -->
-      ${renderInteractiveTools()}
-
-      <!-- BẢNG CÔNG THỨC TỔNG HỢP -->
-      <section id="bang-cong-thuc" class="scroll-mt-24 mt-16 pt-8 border-t border-slate-200 dark:border-slate-800">
-        <div class="flex items-center gap-3 mb-6">
-          <span class="p-2.5 rounded-xl bg-cyan-100 dark:bg-cyan-900/60 text-cyan-700 dark:text-cyan-300 font-bold text-lg">📑</span>
-          <div>
-            <h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">Bảng Công Thức Tổng Hợp Toán 12</h2>
-            <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">Tra cứu nhanh toàn bộ công thức cốt lõi phân theo 3 nhóm chuyên đề.</p>
-          </div>
-        </div>
-
-        <div class="space-y-8">
-          ${tap2.formulaSummaryTable.map(grp => `
-            <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden shadow-sm">
-              <div class="px-5 py-3.5 bg-slate-100 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-800 font-bold text-sm sm:text-base text-slate-800 dark:text-slate-100">
-                ${grp.group}
-              </div>
-              <div class="overflow-x-auto">
-                <table class="w-full text-left text-xs sm:text-sm">
-                  <thead class="bg-slate-50 dark:bg-slate-800/40 text-slate-500 border-b border-slate-200 dark:border-slate-800 text-[11px] uppercase tracking-wider">
-                    <tr>
-                      <th class="px-4 py-3 font-semibold w-1/4">Chuyên đề / Nội dung</th>
-                      <th class="px-4 py-3 font-semibold w-2/5">Công thức / Biểu thức</th>
-                      <th class="px-4 py-3 font-semibold">Ghi chú & Điều kiện áp dụng</th>
-                    </tr>
-                  </thead>
-                  <tbody class="divide-y divide-slate-100 dark:divide-slate-800 text-slate-700 dark:text-slate-300">
-                    ${grp.items.map(it => `
-                      <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
-                        <td class="px-4 py-3 font-medium text-slate-900 dark:text-slate-100">${it.name}</td>
-                        <td class="px-4 py-3 font-mono text-indigo-600 dark:text-indigo-400 text-xs">${it.formula}</td>
-                        <td class="px-4 py-3 text-slate-500 dark:text-slate-400 text-xs leading-relaxed">${it.note}</td>
-                      </tr>
-                    `).join('')}
-                  </tbody>
-                </table>
-              </div>
-            </div>
+        <div class="grid grid-cols-4 gap-2 text-center font-bold text-xs">
+          ${[1, 2, 3, 4, 5, 6, 7].map(n => `
+            <a href="#bai-${n}" class="p-2 rounded-xl bg-white/15 hover:bg-teal-600 hover:text-white transition border border-white/10">B${n}</a>
           `).join('')}
+          <a href="#arena-section" class="p-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-white transition font-black">Thi</a>
         </div>
-      </section>
+        <div class="mt-4 pt-3 border-t border-white/15 flex items-center justify-between text-xs font-bold text-teal-100">
+          <a href="#summary-table" class="hover:text-amber-300 transition flex items-center gap-1.5"><i class="fa-solid fa-table-list text-amber-400"></i> Bảng 7 bài</a>
+          <a href="#notes-section" class="hover:text-amber-300 transition flex items-center gap-1.5"><i class="fa-solid fa-circle-info text-sky-400"></i> Lưu ý website</a>
+          <a href="#arena-section" class="hover:text-amber-300 transition flex items-center gap-1.5"><i class="fa-solid fa-trophy text-amber-400"></i> Đấu trường</a>
+        </div>
+      </div>
 
-      <!-- ĐẤU TRƯỜNG THI THỬ 20 CÂU 45 PHÚT -->
-      <section id="dau-truong-toan-12" class="scroll-mt-24 mt-16 pt-8 border-t border-slate-200 dark:border-slate-800">
-        <div class="p-6 sm:p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
-          
-          <div class="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-slate-100 dark:border-slate-800">
-            <div>
-              <span class="text-xs font-bold text-rose-600 dark:text-rose-400 tracking-wider uppercase">Đề thi chuẩn hóa</span>
-              <h2 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white mt-1">
-                ${tap2.arenaExam.title}
-              </h2>
-              <p class="text-xs text-slate-500 mt-1">${tap2.arenaExam.description}</p>
-            </div>
-            
-            <!-- Timer Display -->
-            <div class="flex items-center gap-3">
-              <div class="px-4 py-2 rounded-xl bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 text-rose-600 dark:text-rose-400 font-mono font-bold text-lg" id="arena-timer">
-                45:00
-              </div>
-              <button onclick="startArenaExam()" id="btn-start-arena" class="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white font-semibold text-xs rounded-xl shadow-sm transition-all">
-                Bắt đầu làm bài
-              </button>
-            </div>
+    </div>
+  </section>
+
+  <!-- Main Content Layout (Sidebar + Main Column) -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full">
+    <div class="flex flex-col lg:flex-row items-start gap-8">
+      
+      <!-- Sticky Sidebar Navigation -->
+      <aside class="w-full lg:w-72 shrink-0 lg:sticky lg:top-24 space-y-4">
+        <div class="p-4 sm:p-5 rounded-2xl bg-white dark:bg-slate-850 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+          <div class="font-black text-xs uppercase tracking-wider text-slate-400 dark:text-slate-500 flex items-center justify-between">
+            <span>Mục lục chuyên đề</span>
+            <span class="text-teal-600 dark:text-teal-400 font-bold">7 bài</span>
           </div>
 
-          <!-- Questions Container -->
-          <div id="arena-container" class="mt-8 space-y-6">
-            ${tap2.arenaExam.questions.map((q, idx) => `
-              <div class="p-4 sm:p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/30 arena-q-card" id="arena-card-${idx}">
-                <div class="font-bold text-xs sm:text-sm text-slate-900 dark:text-slate-100 mb-3">
-                  <span class="text-rose-600">Câu ${idx + 1}:</span> ${q.q}
-                </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mb-2">
-                  ${q.options.map((opt, oIdx) => `
-                    <label class="arena-opt flex items-center gap-2.5 p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 cursor-pointer hover:bg-rose-50 dark:hover:bg-slate-700 transition-all text-xs text-slate-700 dark:text-slate-300">
-                      <input type="radio" name="arena_q_${idx}" value="${oIdx}" class="text-rose-600 focus:ring-rose-500">
-                      <span>${opt}</span>
-                    </label>
-                  `).join('')}
-                </div>
-                <div id="arena-explain-${idx}" class="hidden mt-3 p-3 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs leading-relaxed">
-                  <div class="font-bold text-emerald-600 dark:text-emerald-400 mb-1">✓ Lời giải chi tiết:</div>
-                  <div class="text-slate-600 dark:text-slate-300">${q.explain}</div>
+          <!-- Chuyên đề 1 -->
+          <div class="space-y-1.5">
+            <div class="font-extrabold text-xs text-teal-700 dark:text-teal-400 flex items-center gap-1.5 py-1">
+              <i class="fa-solid fa-dice text-xs"></i> CĐ1. BIẾN NGẪU NHIÊN RỜI RẠC
+            </div>
+            ${[1, 2].map(n => `
+              <a href="#bai-${n}" class="sidebar-link flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 dark:text-slate-300 hover:bg-teal-50 dark:hover:bg-slate-800 hover:text-teal-600 dark:hover:text-teal-400 transition" id="side-bai-${n}">
+                <span class="w-5 h-5 rounded bg-slate-100 dark:bg-slate-800 text-[10px] font-bold flex items-center justify-center shrink-0">B${n}</span>
+                <span class="truncate">${lessons[n - 1].title.split('.')[1].trim()}</span>
+              </a>
+            `).join('')}
+          </div>
+
+          <!-- Chuyên đề 2 -->
+          <div class="space-y-1.5 pt-2 border-t border-slate-100 dark:border-slate-800">
+            <div class="font-extrabold text-xs text-blue-700 dark:text-blue-400 flex items-center gap-1.5 py-1">
+              <i class="fa-solid fa-chart-line text-xs"></i> CĐ2. BÀI TOÁN TỐI ƯU
+            </div>
+            ${[3, 4].map(n => `
+              <a href="#bai-${n}" class="sidebar-link flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 dark:text-slate-300 hover:bg-blue-50 dark:hover:bg-slate-800 hover:text-blue-600 dark:hover:text-blue-400 transition" id="side-bai-${n}">
+                <span class="w-5 h-5 rounded bg-slate-100 dark:bg-slate-800 text-[10px] font-bold flex items-center justify-center shrink-0">B${n}</span>
+                <span class="truncate">${lessons[n - 1].title.split('.')[1].trim()}</span>
+              </a>
+            `).join('')}
+          </div>
+
+          <!-- Chuyên đề 3 -->
+          <div class="space-y-1.5 pt-2 border-t border-slate-100 dark:border-slate-800">
+            <div class="font-extrabold text-xs text-amber-700 dark:text-amber-400 flex items-center gap-1.5 py-1">
+              <i class="fa-solid fa-coins text-xs"></i> CĐ3. TOÁN TÀI CHÍNH
+            </div>
+            ${[5, 6, 7].map(n => `
+              <a href="#bai-${n}" class="sidebar-link flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 dark:text-slate-300 hover:bg-amber-50 dark:hover:bg-slate-800 hover:text-amber-600 dark:hover:text-amber-400 transition" id="side-bai-${n}">
+                <span class="w-5 h-5 rounded bg-slate-100 dark:bg-slate-800 text-[10px] font-bold flex items-center justify-center shrink-0">B${n}</span>
+                <span class="truncate">${lessons[n - 1].title.split('.')[1].trim()}</span>
+              </a>
+            `).join('')}
+          </div>
+
+          <!-- Special Quick Links -->
+          <div class="space-y-1.5 pt-3 border-t border-slate-200 dark:border-slate-800 text-xs font-bold">
+            <a href="#summary-table" class="flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+              <i class="fa-solid fa-table-list text-amber-500"></i> Bảng tổng kết 7 bài
+            </a>
+            <a href="#formula-section" class="flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+              <i class="fa-solid fa-calculator text-teal-500"></i> Công thức cốt lõi tra nhanh
+            </a>
+            <a href="#notes-section" class="flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+              <i class="fa-solid fa-circle-info text-blue-500"></i> Lưu ý website & tài chính
+            </a>
+            <a href="#arena-section" class="flex items-center gap-2 px-2.5 py-2 rounded-xl bg-amber-500 text-white font-extrabold hover:bg-amber-600 transition shadow-xs">
+              <i class="fa-solid fa-trophy"></i> Đấu trường 20 câu (45p)
+            </a>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Main Course Lessons Column -->
+      <section class="flex-1 min-w-0 space-y-6">
+        
+        <!-- Render 7 Lessons -->
+        ${renderLessons()}
+
+        <!-- Section: Bảng tổng kết 7 bài học -->
+        <section id="summary-table" class="bg-white dark:bg-slate-850 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm p-6 sm:p-8 space-y-6 scroll-mt-24">
+          <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-4">
+            <div>
+              <h2 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white flex items-center gap-2.5">
+                <i class="fa-solid fa-table-list text-amber-500"></i>
+                <span>BẢNG TỔNG KẾT TOÀN DIỆN 7 BÀI HỌC</span>
+              </h2>
+              <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">Đối chiếu kiến thức cốt lõi và ứng dụng thực tiễn của từng bài</p>
+            </div>
+            <span class="px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800 dark:bg-amber-950/60 dark:text-amber-300">7 Bài Học</span>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs sm:text-sm border-collapse">
+              <thead>
+                <tr class="border-b border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/60 text-slate-900 dark:text-white">
+                  <th class="p-3 font-bold w-12 text-center">STT</th>
+                  <th class="p-3 font-bold w-64">Tên bài học</th>
+                  <th class="p-3 font-bold">Khái niệm & Quy luật cốt lõi</th>
+                  <th class="p-3 font-bold">Kĩ năng & Ứng dụng thực tiễn</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+                ${reviewArena.summaryTable7.map(row => `
+                  <tr class="hover:bg-slate-50/60 dark:hover:bg-slate-800/40 transition">
+                    <td class="p-3 font-black text-center text-teal-600 dark:text-teal-400">${row.id}</td>
+                    <td class="p-3 font-bold text-slate-900 dark:text-white"><a href="#bai-${row.id}" class="hover:text-teal-600 dark:hover:text-teal-400 transition">${row.name}</a></td>
+                    <td class="p-3 text-slate-600 dark:text-slate-300 leading-relaxed">${row.core}</td>
+                    <td class="p-3 text-slate-600 dark:text-slate-300 leading-relaxed font-medium">${row.practice}</td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Section: Bảng công thức cốt lõi tra nhanh -->
+        <section id="formula-section" class="bg-white dark:bg-slate-850 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm p-6 sm:p-8 space-y-6 scroll-mt-24">
+          <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-4">
+            <div>
+              <h2 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white flex items-center gap-2.5">
+                <i class="fa-solid fa-calculator text-teal-600 dark:text-teal-400"></i>
+                <span>CÔNG THỨC CỐT LÕI TRA NHANH</span>
+              </h2>
+              <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">Hệ thống công thức xác suất, tối ưu hóa và tài chính chuẩn SGK Toán 12</p>
+            </div>
+            <span class="px-3 py-1 rounded-full text-xs font-bold bg-teal-100 text-teal-800 dark:bg-teal-950/60 dark:text-teal-300">Chuẩn KNTT</span>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs sm:text-sm border-collapse">
+              <thead>
+                <tr class="border-b border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/60 text-slate-900 dark:text-white">
+                  <th class="p-3 font-bold w-56">Chủ đề</th>
+                  <th class="p-3 font-bold text-teal-700 dark:text-teal-300">Công thức</th>
+                  <th class="p-3 font-bold">Ghi chú & Ý nghĩa đại lượng</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+                ${reviewArena.coreFormulaTable.map(item => `
+                  <tr class="hover:bg-slate-50/60 dark:hover:bg-slate-800/40 transition">
+                    <td class="p-3 font-bold text-slate-900 dark:text-white">${item.topic}</td>
+                    <td class="p-3 font-mono font-bold text-teal-700 dark:text-teal-300 text-xs sm:text-sm">${item.formula}</td>
+                    <td class="p-3 text-slate-600 dark:text-slate-400 text-xs sm:text-sm">${item.note}</td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Section: Lưu ý khi đưa nội dung lên website -->
+        <section id="notes-section" class="bg-white dark:bg-slate-850 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm p-6 sm:p-8 space-y-6 scroll-mt-24">
+          <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-4">
+            <div>
+              <h2 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white flex items-center gap-2.5">
+                <i class="fa-solid fa-circle-info text-blue-600 dark:text-blue-400"></i>
+                <span>LƯU Ý KHI ĐƯA NỘI DUNG LÊN WEBSITE</span>
+              </h2>
+              <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">Quy chuẩn về mô hình hóa, hiển thị đồ thị và tính toán tài chính</p>
+            </div>
+            <span class="px-3 py-1 rounded-full text-xs font-bold bg-blue-100 text-blue-800 dark:bg-blue-950/60 dark:text-blue-300">Chuẩn sư phạm</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            ${reviewArena.websiteNotes.map(n => `
+              <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-3">
+                <h4 class="font-black text-sm sm:text-base text-slate-900 dark:text-white flex items-center gap-2">
+                  <i class="${n.icon} text-teal-600 dark:text-teal-400"></i>
+                  <span>${n.title}</span>
+                </h4>
+                <div class="space-y-2">
+                  ${renderCardPoints(n.points)}
                 </div>
               </div>
             `).join('')}
           </div>
+        </section>
 
-          <!-- Submit Bar -->
-          <div class="mt-8 pt-6 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
-            <div id="arena-score-box" class="font-bold text-sm text-slate-700 dark:text-slate-300">
-              Chưa nộp bài
+        <!-- Section: Đấu trường Trạng Nguyên Toán 12 -->
+        <section id="arena-section" class="bg-gradient-to-br from-slate-900 via-teal-950 to-indigo-950 text-white rounded-3xl border border-teal-500/30 shadow-xl p-6 sm:p-8 space-y-6 scroll-mt-24">
+          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-white/15 pb-5">
+            <div>
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 border border-amber-400/30 text-amber-300 text-xs font-black uppercase tracking-wider mb-2">
+                <i class="fa-solid fa-trophy text-amber-400"></i> KÌ THI ĐÁNH GIÁ NĂNG LỰC CHUYÊN ĐỀ
+              </div>
+              <h2 class="text-2xl sm:text-3xl font-black text-white">ĐẤU TRƯỜNG TRẠNG NGUYÊN TOÁN 12</h2>
+              <p class="text-xs sm:text-sm text-teal-200/90 mt-1">20 câu hỏi trắc nghiệm tổng hợp toàn bộ 3 chuyên đề • Thời gian: 45 phút • Chấm điểm tự động</p>
             </div>
-            <button onclick="submitArenaExam()" id="btn-submit-arena" class="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs sm:text-sm rounded-xl shadow-sm transition-all">
-              Nộp bài thi & Chấm điểm
+            <!-- Timer & Controls -->
+            <div class="flex items-center gap-3 bg-white/10 px-4 py-2 rounded-2xl border border-white/20 backdrop-blur-md">
+              <i class="fa-solid fa-stopwatch text-amber-400 text-xl"></i>
+              <div>
+                <div class="text-[10px] text-teal-200 font-bold uppercase">Thời gian còn lại</div>
+                <div id="arena-timer" class="font-mono text-lg font-black text-white">45:00</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Arena Questions Container -->
+          <div id="arena-questions" class="space-y-5">
+            ${reviewArena.arena20Questions.map((q, idx) => `
+              <div class="p-4 sm:p-5 rounded-2xl bg-white/5 border border-white/10 space-y-3" id="arena-box-${idx}">
+                <div class="font-bold text-sm sm:text-base text-white flex items-start gap-2.5">
+                  <span class="w-6 h-6 rounded-lg bg-teal-600 text-white text-xs font-black flex items-center justify-center shrink-0 mt-0.5">${idx + 1}</span>
+                  <span class="leading-snug">${q.q}</span>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+                  ${q.options.map((opt, oIdx) => `
+                    <button type="button" onclick="selectArenaOption(${idx}, ${oIdx})" class="arena-opt-${idx} w-full text-left p-3 rounded-xl border border-white/15 hover:border-teal-400 hover:bg-white/10 text-xs sm:text-sm text-slate-200 transition flex items-center gap-2.5">
+                      <span class="w-5 h-5 rounded-md bg-white/10 text-white font-bold text-[11px] flex items-center justify-center shrink-0">${['A', 'B', 'C', 'D'][oIdx]}</span>
+                      <span class="flex-1">${opt}</span>
+                    </button>
+                  `).join('')}
+                </div>
+                <div id="arena-exp-${idx}" class="hidden p-3 rounded-xl text-xs sm:text-sm leading-relaxed border mt-2"></div>
+              </div>
+            `).join('')}
+          </div>
+
+          <!-- Arena Submit & Results Box -->
+          <div class="pt-4 border-t border-white/15 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div id="arena-status" class="text-xs text-teal-200 font-medium">Chưa nộp bài (Đã chọn: <span id="arena-answered-count">0</span>/20 câu)</div>
+            <button type="button" id="btn-submit-arena" onclick="submitArenaExam()" class="px-6 py-3 rounded-2xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-black text-sm shadow-lg shadow-amber-500/20 transition flex items-center gap-2">
+              <i class="fa-solid fa-paper-plane"></i>
+              <span>Nộp bài & Chấm điểm</span>
             </button>
           </div>
 
-        </div>
+          <!-- Score Card Modal / Banner -->
+          <div id="arena-score-banner" class="hidden p-6 rounded-2xl bg-white/10 border border-white/20 text-center space-y-3"></div>
+        </section>
+
       </section>
 
-    </main>
-  </div>
+    </div>
+  </main>
 
   <!-- Footer -->
-  <footer class="mt-20 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 py-8 text-center text-xs text-slate-500">
-    <div class="max-w-7xl mx-auto px-4 space-y-2">
-      <div>Học liệu số hóa môn <b>Toán 12 — Bộ Sách Kết Nối Tri Thức Với Cuộc Sống</b>.</div>
-      <div>Bảo đảm 100% không dính dòng bullet, KaTeX an toàn, menu chọn bài thông minh & hình vẽ toán học SVG chuẩn xác.</div>
+  <footer class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-8 px-4 sm:px-6 lg:px-8 mt-12 transition-colors">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 dark:text-slate-400">
+      <div>
+        <p class="font-bold text-slate-700 dark:text-slate-300">Học liệu Chuyên đề Toán 12 — Bộ sách Kết nối tri thức với cuộc sống</p>
+        <p class="mt-1">Biên soạn đầy đủ 3 chuyên đề • 7 bài học • 7 Sơ đồ SVG chuẩn mực • 21 Bài tập trắc nghiệm • Đấu trường 20 câu</p>
+      </div>
+      <div class="flex items-center gap-4">
+        <a href="../index.html" class="hover:text-teal-600 dark:hover:text-teal-400 font-bold transition">← Trang chủ</a>
+        <a href="#bai-1" class="hover:text-teal-600 dark:hover:text-teal-400 font-bold transition">Lên đầu trang ↑</a>
+      </div>
     </div>
   </footer>
 
   <!-- Search Modal (Ctrl+K) -->
   <div id="search-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-start justify-center pt-20 px-4">
-    <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-2xl max-w-xl w-full p-4 overflow-hidden">
-      <div class="flex items-center gap-2 border-b border-slate-200 dark:border-slate-800 pb-3">
-        <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-        <input type="text" id="search-input" oninput="handleSearch()" placeholder="Tìm kiếm bài học, định lý, công thức Toán 12..." class="flex-1 bg-transparent text-sm text-slate-800 dark:text-slate-100 focus:outline-none">
-        <button onclick="closeSearchModal()" class="text-xs text-slate-400 hover:text-slate-600">Đóng [Esc]</button>
+    <div class="bg-white dark:bg-slate-850 w-full max-w-2xl rounded-2xl border border-slate-200 dark:border-slate-700 shadow-2xl overflow-hidden">
+      <div class="p-4 border-b border-slate-200 dark:border-slate-700 flex items-center gap-3">
+        <i class="fa-solid fa-magnifying-glass text-slate-400 text-lg"></i>
+        <input type="text" id="search-input" oninput="handleSearch()" placeholder="Tìm kiếm khái niệm, bài học, công thức (VD: Bernoulli, nhị thức, quy hoạch tuyến tính, lãi kép, niên kim, 80/10/10...)" class="w-full bg-transparent border-0 outline-none text-slate-900 dark:text-white text-sm font-medium placeholder-slate-400">
+        <button type="button" onclick="closeSearchModal()" class="w-8 h-8 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-400 hover:text-slate-600 flex items-center justify-center text-xs">Esc</button>
       </div>
-      <div id="search-results" class="max-h-72 overflow-y-auto mt-3 space-y-1.5 text-xs">
-        <div class="text-slate-400 text-center py-6">Nhập từ khóa để tra cứu bài học...</div>
+      <div id="search-results" class="max-h-80 overflow-y-auto p-3 space-y-2 text-xs sm:text-sm">
+        <div class="p-3 text-slate-400 text-center">Gõ từ khóa để bắt đầu tìm kiếm trong 7 bài học...</div>
       </div>
     </div>
   </div>
 
-  <!-- Global Scripts -->
+  <!-- Client-side Interactive JavaScript -->
   <script>
-    // KaTeX safe render init (Strictly delimiters $$ and $)
-    function initKaTeX() {
-      if (typeof renderMathInElement === 'function') {
-        renderMathInElement(document.body, {
-          delimiters: [
-            { left: '$$', right: '$$', display: true },
-            { left: '$', right: '$', display: false }
-          ],
-          throwOnError: false
-        });
+    // Theme toggle
+    function initTheme() {
+      if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+        document.getElementById('theme-icon').className = 'fa-solid fa-sun';
+      } else {
+        document.documentElement.classList.remove('dark');
+        document.getElementById('theme-icon').className = 'fa-solid fa-moon';
       }
     }
-
-    // Reading progress bar
-    window.addEventListener('scroll', () => {
-      const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = totalScroll > 0 ? (window.pageYOffset / totalScroll) * 100 : 0;
-      document.getElementById('read-progress').style.width = progress + '%';
-    });
-
-    // Dark mode toggle
-    function toggleDarkMode() {
+    function toggleTheme() {
       if (document.documentElement.classList.contains('dark')) {
         document.documentElement.classList.remove('dark');
         localStorage.setItem('theme', 'light');
+        document.getElementById('theme-icon').className = 'fa-solid fa-moon';
       } else {
         document.documentElement.classList.add('dark');
         localStorage.setItem('theme', 'dark');
+        document.getElementById('theme-icon').className = 'fa-solid fa-sun';
       }
     }
-    if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
+    initTheme();
 
-    // Mobile menu drawer toggle
-    function toggleMobileMenu() {
-      const drawer = document.getElementById('mobile-menu-drawer');
-      if (drawer.classList.contains('hidden')) {
-        drawer.classList.remove('hidden');
-      } else {
-        drawer.classList.add('hidden');
-      }
-    }
-
-    // Sidebar lesson filter
-    function filterSidebar(query, navId) {
-      const q = query.toLowerCase().trim();
-      const nav = document.getElementById(navId);
-      if (!nav) return;
-      const chapters = nav.querySelectorAll('.sidebar-chapter-group');
-      chapters.forEach(chap => {
-        let hasMatch = false;
-        const links = chap.querySelectorAll('.sidebar-lesson-link');
-        links.forEach(link => {
-          const title = (link.getAttribute('data-lesson-title') || link.innerText).toLowerCase();
-          if (!q || title.includes(q)) {
-            link.style.display = 'flex';
-            hasMatch = true;
-          } else {
-            link.style.display = 'none';
-          }
-        });
-        chap.style.display = (!q || hasMatch) ? 'block' : 'none';
-      });
-    }
-
-    // Mini Quiz check
-    function checkMiniQuiz(lessonId, qIdx, chosenIdx, correctIdx) {
-      const container = document.getElementById('quiz-' + lessonId + '-' + qIdx);
-      const buttons = container.querySelectorAll('button');
-      buttons.forEach((btn, idx) => {
-        btn.disabled = true;
-        if (idx === correctIdx) {
-          btn.classList.remove('border-slate-200', 'dark:border-slate-700', 'bg-white', 'dark:bg-slate-800');
-          btn.classList.add('bg-emerald-100', 'dark:bg-emerald-950', 'border-emerald-500', 'text-emerald-800', 'dark:text-emerald-200', 'font-bold');
-        } else if (idx === chosenIdx && chosenIdx !== correctIdx) {
-          btn.classList.remove('border-slate-200', 'dark:border-slate-700', 'bg-white', 'dark:bg-slate-800');
-          btn.classList.add('bg-rose-100', 'dark:bg-rose-950', 'border-rose-500', 'text-rose-800', 'dark:text-rose-200');
-        }
-      });
-      document.getElementById('explain-' + lessonId + '-' + qIdx).classList.remove('hidden');
-    }
-
-    // Arena Exam Timer & Scoring
-    const arenaCorrectAnswers = ${JSON.stringify(tap2.arenaExam.questions.map(q => q.correct))};
-    let arenaTimer = null;
-    let arenaSecondsLeft = 45 * 60;
-
-    function startArenaExam() {
-      document.getElementById('btn-start-arena').disabled = true;
-      document.getElementById('btn-start-arena').classList.add('opacity-50', 'cursor-not-allowed');
-      if (arenaTimer) clearInterval(arenaTimer);
-      arenaTimer = setInterval(() => {
-        arenaSecondsLeft--;
-        if (arenaSecondsLeft <= 0) {
-          clearInterval(arenaTimer);
-          submitArenaExam();
-        }
-        const m = Math.floor(arenaSecondsLeft / 60);
-        const s = arenaSecondsLeft % 60;
-        document.getElementById('arena-timer').innerText = 
-          (m < 10 ? '0' + m : m) + ':' + (s < 10 ? '0' + s : s);
-      }, 1000);
-    }
-
-    function submitArenaExam() {
-      if (arenaTimer) clearInterval(arenaTimer);
-      let score = 0;
-      arenaCorrectAnswers.forEach((ans, idx) => {
-        const radios = document.getElementsByName('arena_q_' + idx);
-        let userAns = -1;
-        radios.forEach(r => {
-          if (r.checked) userAns = parseInt(r.value);
-        });
-        const card = document.getElementById('arena-card-' + idx);
-        if (userAns === ans) {
-          score++;
-          card.classList.add('border-emerald-500', 'bg-emerald-50/40', 'dark:bg-emerald-950/20');
+    // Inline Quiz checking
+    const completedQuizzes = new Set();
+    function checkInlineQuiz(lessonId, qIdx, selectedOpt, correctOpt) {
+      const btns = document.querySelectorAll('.quiz-btn-' + lessonId + '-' + qIdx);
+      btns.forEach((b, idx) => {
+        b.disabled = true;
+        b.classList.remove('hover:border-teal-400', 'hover:bg-teal-50/40');
+        if (idx === correctOpt) {
+          b.classList.add('bg-emerald-50', 'dark:bg-emerald-950/40', 'border-emerald-500', 'text-emerald-800', 'dark:text-emerald-300', 'font-bold');
+        } else if (idx === selectedOpt && selectedOpt !== correctOpt) {
+          b.classList.add('bg-rose-50', 'dark:bg-rose-950/40', 'border-rose-500', 'text-rose-800', 'dark:text-rose-300');
         } else {
-          card.classList.add('border-rose-500', 'bg-rose-50/40', 'dark:bg-rose-950/20');
+          b.classList.add('opacity-50');
         }
-        document.getElementById('arena-explain-' + idx).classList.remove('hidden');
       });
-      
-      const pct = ((score / arenaCorrectAnswers.length) * 10).toFixed(1);
-      document.getElementById('arena-score-box').innerHTML = 
-        \`<span class="text-rose-600 dark:text-rose-400 font-extrabold text-base">Kết quả: \${score}/20 câu (\${pct} điểm)</span>\`;
-      document.getElementById('btn-submit-arena').disabled = true;
-      document.getElementById('btn-submit-arena').classList.add('opacity-50');
+
+      const expBox = document.getElementById('quiz-exp-' + lessonId + '-' + qIdx);
+      if (expBox) {
+        expBox.classList.remove('hidden');
+        if (selectedOpt === correctOpt) {
+          expBox.className = 'p-3 rounded-xl text-xs sm:text-sm leading-relaxed border mt-2 bg-emerald-50 dark:bg-emerald-950/40 border-emerald-300 dark:border-emerald-800 text-emerald-900 dark:text-emerald-200';
+          expBox.innerHTML = '<strong>Chính xác!</strong> ' + (qExplains[lessonId + '-' + qIdx] || '');
+        } else {
+          expBox.className = 'p-3 rounded-xl text-xs sm:text-sm leading-relaxed border mt-2 bg-rose-50 dark:bg-rose-950/40 border-rose-300 dark:border-rose-800 text-rose-900 dark:text-rose-200';
+          expBox.innerHTML = '<strong>Chưa chính xác!</strong> Đáp án đúng là <strong>' + ['A', 'B', 'C', 'D'][correctOpt] + '</strong>. ' + (qExplains[lessonId + '-' + qIdx] || '');
+        }
+      }
+
+      completedQuizzes.add(lessonId + '-' + qIdx);
+      updateProgress();
+    }
+
+    const qExplains = ${JSON.stringify(
+      lessons.reduce((acc, l) => {
+        l.quizzes.forEach((q, i) => {
+          acc[l.id + '-' + i] = q.explain;
+        });
+        return acc;
+      }, {})
+    )};
+
+    function updateProgress() {
+      // 21 total quizzes (3 per lesson)
+      const count = completedQuizzes.size;
+      const lessonProgress = Math.min(7, Math.floor(count / 3));
+      const percent = Math.min(100, Math.round((count / 21) * 100));
+      document.getElementById('top-progress-bar').style.width = percent + '%';
+      document.getElementById('top-progress-text').innerText = lessonProgress + '/7 bài';
     }
 
     // Search Modal
-    const searchLessons = [
-      { id: 'bai-1', title: 'Bài 1. Tính đơn điệu và cực trị của hàm số', ch: 'Chương I' },
-      { id: 'bai-2', title: 'Bài 2. Giá trị lớn nhất và nhỏ nhất của hàm số', ch: 'Chương I' },
-      { id: 'bai-3', title: 'Bài 3. Đường tiệm cận của đồ thị hàm số', ch: 'Chương I' },
-      { id: 'bai-4', title: 'Bài 4. Khảo sát sự biến thiên và vẽ đồ thị hàm số', ch: 'Chương I' },
-      { id: 'bai-5', title: 'Bài 5. Ứng dụng đạo hàm giải quyết thực tiễn', ch: 'Chương I' },
-      { id: 'bai-6', title: 'Bài 6. Vectơ trong không gian', ch: 'Chương II' },
-      { id: 'bai-7', title: 'Bài 7. Hệ trục tọa độ trong không gian', ch: 'Chương II' },
-      { id: 'bai-8', title: 'Bài 8. Biểu thức tọa độ các phép toán vectơ', ch: 'Chương II' },
-      { id: 'bai-9', title: 'Bài 9. Khoảng biến thiên và khoảng tứ phân vị', ch: 'Chương III' },
-      { id: 'bai-10', title: 'Bài 10. Phương sai và độ lệch chuẩn', ch: 'Chương III' },
-      { id: 'bai-11', title: 'Bài 11. Nguyên hàm', ch: 'Chương IV' },
-      { id: 'bai-12', title: 'Bài 12. Tích phân', ch: 'Chương IV' },
-      { id: 'bai-13', title: 'Bài 13. Ứng dụng hình học của tích phân', ch: 'Chương IV' },
-      { id: 'bai-14', title: 'Bài 14. Phương trình mặt phẳng', ch: 'Chương V' },
-      { id: 'bai-15', title: 'Bài 15. Phương trình đường thẳng trong không gian', ch: 'Chương V' },
-      { id: 'bai-16', title: 'Bài 16. Công thức tính góc trong không gian', ch: 'Chương V' },
-      { id: 'bai-17', title: 'Bài 17. Phương trình mặt cầu', ch: 'Chương V' },
-      { id: 'bai-18', title: 'Bài 18. Xác suất có điều kiện', ch: 'Chương VI' },
-      { id: 'bai-19', title: 'Bài 19. Xác suất toàn phần và công thức Bayes', ch: 'Chương VI' }
-    ];
+    const searchData = ${JSON.stringify(
+      lessons.map(l => ({
+        id: l.id,
+        title: l.title,
+        target: l.target,
+        text: l.sections.map(s => s.heading + ' ' + s.cards.map(c => c.title + ' ' + (c.points ? c.points.join(' ') : '')).join(' ')).join(' ')
+      }))
+    )};
 
     function openSearchModal() {
       document.getElementById('search-modal').classList.remove('hidden');
@@ -809,8 +701,8 @@ function buildHTML() {
     function closeSearchModal() {
       document.getElementById('search-modal').classList.add('hidden');
     }
-    window.addEventListener('keydown', (e) => {
-      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+    window.addEventListener('keydown', e => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
         e.preventDefault();
         openSearchModal();
       }
@@ -818,38 +710,132 @@ function buildHTML() {
     });
 
     function handleSearch() {
-      const q = document.getElementById('search-input').value.toLowerCase().trim();
-      const resultsDiv = document.getElementById('search-results');
+      const q = document.getElementById('search-input').value.trim().toLowerCase();
+      const resBox = document.getElementById('search-results');
       if (!q) {
-        resultsDiv.innerHTML = '<div class="text-slate-400 text-center py-6">Nhập từ khóa để tra cứu bài học...</div>';
+        resBox.innerHTML = '<div class="p-3 text-slate-400 text-center">Gõ từ khóa để bắt đầu tìm kiếm trong 7 bài học...</div>';
         return;
       }
-      const matched = searchLessons.filter(l => l.title.toLowerCase().includes(q) || l.ch.toLowerCase().includes(q));
-      if (matched.length === 0) {
-        resultsDiv.innerHTML = '<div class="text-slate-400 text-center py-6">Không tìm thấy bài học phù hợp.</div>';
+      const matches = searchData.filter(item => item.title.toLowerCase().includes(q) || item.target.toLowerCase().includes(q) || item.text.toLowerCase().includes(q));
+      if (matches.length === 0) {
+        resBox.innerHTML = '<div class="p-3 text-slate-400 text-center">Không tìm thấy kết quả nào phù hợp với "' + q + '".</div>';
         return;
       }
-      resultsDiv.innerHTML = matched.map(m => \`
-        <a href="#\${m.id}" onclick="closeSearchModal()" class="block p-2.5 rounded-xl hover:bg-indigo-50 dark:hover:bg-slate-800 transition-colors">
-          <div class="font-bold text-slate-800 dark:text-slate-200">\${m.title}</div>
-          <div class="text-[10px] text-indigo-500 font-semibold">\${m.ch}</div>
+      resBox.innerHTML = matches.map(m => \`
+        <a href="#bai-\${m.id}" onclick="closeSearchModal()" class="block p-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+          <div class="font-bold text-teal-600 dark:text-teal-400 text-xs sm:text-sm">\${m.title}</div>
+          <div class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 mt-0.5">\${m.target}</div>
         </a>
       \`).join('');
     }
+
+    // Arena Exam Engine
+    const arenaAnswers = ${JSON.stringify(reviewArena.arena20Questions.map(q => q.answer))};
+    const arenaExplains = ${JSON.stringify(reviewArena.arena20Questions.map(q => q.explain))};
+    const userArenaChoice = {};
+    let arenaSubmitted = false;
+
+    function selectArenaOption(qIdx, oIdx) {
+      if (arenaSubmitted) return;
+      userArenaChoice[qIdx] = oIdx;
+      const btns = document.querySelectorAll('.arena-opt-' + qIdx);
+      btns.forEach((b, idx) => {
+        if (idx === oIdx) {
+          b.classList.add('bg-teal-600', 'text-white', 'border-teal-400', 'font-bold');
+          b.classList.remove('text-slate-200');
+        } else {
+          b.classList.remove('bg-teal-600', 'text-white', 'border-teal-400', 'font-bold');
+          b.classList.add('text-slate-200');
+        }
+      });
+      document.getElementById('arena-answered-count').innerText = Object.keys(userArenaChoice).length;
+    }
+
+    function submitArenaExam() {
+      if (arenaSubmitted) return;
+      if (Object.keys(userArenaChoice).length < 20) {
+        if (!confirm('Bạn mới làm ' + Object.keys(userArenaChoice).length + '/20 câu. Bạn có chắc chắn muốn nộp bài ngay?')) {
+          return;
+        }
+      }
+      arenaSubmitted = true;
+      clearInterval(arenaTimerInterval);
+
+      let score = 0;
+      for (let i = 0; i < 20; i++) {
+        const correct = arenaAnswers[i];
+        const user = userArenaChoice[i];
+        const btns = document.querySelectorAll('.arena-opt-' + i);
+        btns.forEach((b, idx) => {
+          b.disabled = true;
+          if (idx === correct) {
+            b.classList.add('bg-emerald-600', 'text-white', 'border-emerald-400', 'font-bold');
+          } else if (idx === user && user !== correct) {
+            b.classList.add('bg-rose-600', 'text-white', 'border-rose-400');
+          } else {
+            b.classList.add('opacity-40');
+          }
+        });
+
+        const expBox = document.getElementById('arena-exp-' + i);
+        if (expBox) {
+          expBox.classList.remove('hidden');
+          if (user === correct) {
+            score++;
+            expBox.className = 'p-3 rounded-xl text-xs sm:text-sm leading-relaxed border mt-2 bg-emerald-950/60 border-emerald-500 text-emerald-200';
+            expBox.innerHTML = '<strong>Chính xác!</strong> ' + arenaExplains[i];
+          } else {
+            expBox.className = 'p-3 rounded-xl text-xs sm:text-sm leading-relaxed border mt-2 bg-rose-950/60 border-rose-500 text-rose-200';
+            expBox.innerHTML = '<strong>Chưa chính xác!</strong> Đáp án đúng là <strong>' + ['A', 'B', 'C', 'D'][correct] + '</strong>. ' + arenaExplains[i];
+          }
+        }
+      }
+
+      // Display Score
+      const final10 = (score / 20 * 10).toFixed(1);
+      const scoreBanner = document.getElementById('arena-score-banner');
+      scoreBanner.classList.remove('hidden');
+      scoreBanner.innerHTML = \`
+        <div class="text-3xl font-black text-amber-400"><i class="fa-solid fa-trophy mr-2"></i>KẾT QUẢ THI ĐẤU</div>
+        <div class="text-xl font-bold text-white">Bạn đạt: <span class="text-emerald-400 text-3xl font-black">\${score}/20</span> câu đúng (\${final10}/10 điểm)</div>
+        <p class="text-xs sm:text-sm text-teal-200 max-w-xl mx-auto leading-relaxed">
+          \${score >= 18 ? 'Xuất sắc! Bạn xứng đáng nhận danh hiệu Trạng Nguyên Toán học 12!' : score >= 14 ? 'Rất tốt! Bạn nắm vững kiến thức trọng tâm cả 3 chuyên đề.' : 'Cố gắng lên! Hãy xem lại phần giải thích chi tiết và các sơ đồ mô hình ở trên.'}
+        </p>
+      \`;
+
+      document.getElementById('btn-submit-arena').disabled = true;
+      document.getElementById('btn-submit-arena').classList.add('opacity-50', 'cursor-not-allowed');
+      document.getElementById('arena-status').innerText = 'Đã hoàn thành kì thi • Kết quả: ' + score + '/20 câu đúng.';
+    }
+
+    // Arena 45-minute countdown timer
+    let timeLeft = 45 * 60;
+    const timerElem = document.getElementById('arena-timer');
+    const arenaTimerInterval = setInterval(() => {
+      if (timeLeft <= 0) {
+        clearInterval(arenaTimerInterval);
+        submitArenaExam();
+        return;
+      }
+      timeLeft--;
+      const m = Math.floor(timeLeft / 60);
+      const s = timeLeft % 60;
+      timerElem.innerText = (m < 10 ? '0' + m : m) + ':' + (s < 10 ? '0' + s : s);
+    }, 1000);
   </script>
-
 </body>
-</html>
-`;
-}
+</html>`;
 
-const htmlOutput = buildHTML();
-const outPath1 = path.join(__dirname, '../courses/toan_12.html');
-const outPath2 = path.join(__dirname, '../courses/toan12.html');
+const targetFiles = [
+  'courses/chuyende_toan_12.html',
+  'courses/chuyende_toan12.html'
+];
 
-fs.writeFileSync(outPath1, htmlOutput, 'utf8');
-fs.writeFileSync(outPath2, htmlOutput, 'utf8');
+targetFiles.forEach(file => {
+  const dir = path.dirname(file);
+  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+  fs.writeFileSync(file, fullHtml, 'utf8');
+  console.log(`Wrote ${fullHtml.length} bytes to ${file}`);
+});
 
-console.log('Successfully updated Toán 12 with full interactive lesson menu in sidebar!');
-console.log('File 1:', outPath1, 'Size:', fs.statSync(outPath1).size, 'bytes');
-console.log('File 2:', outPath2, 'Size:', fs.statSync(outPath2).size, 'bytes');
+console.log("Build Chuyên đề Toán 12 completed successfully!");

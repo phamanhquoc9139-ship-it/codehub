@@ -1,0 +1,1602 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Luyện Thi Chứng Chỉ Quốc Tế IC3 - GS6 (Global Standard 6) | CodeHub</title>
+  <meta name="description" content="Tài liệu luyện thi chứng chỉ tin học quốc tế thế hệ mới IC3 Global Standard 6 (GS6) chuẩn Certiport: đủ 3 Level xếp chồng (Stackable), 7 Domain năng lực số, trắc nghiệm tương tác, thuật ngữ CNTT và đề thi thử.">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            gs6: {
+              50: '#fff1f2',
+              100: '#ffe4e6',
+              200: '#fecdd3',
+              300: '#fda4af',
+              400: '#fb7185',
+              500: '#f43f5e',
+              600: '#e11d48',
+              700: '#be123c',
+              800: '#9f1239',
+              900: '#881337',
+              950: '#4c0519',
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <style>
+    /* Default base font size: 16px with smooth scaling */
+    html {
+      font-size: 16px;
+      transition: font-size 0.2s ease;
+    }
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.05);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(225, 29, 72, 0.35);
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(225, 29, 72, 0.65);
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 min-h-screen flex flex-col font-sans transition-colors duration-200 text-base sm:text-lg leading-relaxed">
+
+  <!-- Reading Progress Bar -->
+  <div id="progressBar" class="fixed top-0 left-0 h-1 bg-gradient-to-r from-rose-500 via-pink-500 to-indigo-500 z-50 transition-all duration-150" style="width: 0%;"></div>
+
+  <!-- Header Navigation -->
+  <header class="sticky top-0 z-40 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <a href="../index.html" class="flex items-center gap-2 text-slate-500 hover:text-rose-600 dark:text-slate-400 dark:hover:text-rose-400 text-sm font-medium transition" title="Trở về trang chủ">
+          <i class="fa-solid fa-arrow-left"></i>
+          <span class="hidden sm:inline">Trang chủ</span>
+        </a>
+        <span class="text-slate-300 dark:text-slate-700">|</span>
+        <div class="flex items-center gap-2 font-bold text-slate-900 dark:text-white">
+          <span class="w-8 h-8 rounded-lg bg-rose-600 text-white flex items-center justify-center text-sm shadow-sm">
+            <i class="fa-solid fa-layer-group"></i>
+          </span>
+          <span class="text-base sm:text-lg tracking-tight">Code<span class="text-rose-600">Hub</span></span>
+        </div>
+        <span class="hidden md:inline px-2.5 py-0.5 text-xs font-semibold rounded-full bg-rose-100 text-rose-800 dark:bg-rose-950/60 dark:text-rose-300 border border-rose-200 dark:border-rose-800">
+          IC3 GS6 Certiport Master
+        </span>
+      </div>
+
+      <div class="flex items-center gap-2 sm:gap-3">
+        <!-- Font Size Adjuster Controls -->
+        <div class="flex items-center bg-slate-100 dark:bg-slate-800 rounded-lg p-0.5 border border-slate-200 dark:border-slate-700 text-xs font-bold">
+          <button id="btnFontDec" class="px-2 py-1 text-slate-600 dark:text-slate-300 hover:bg-white dark:hover:bg-slate-700 rounded transition" title="Giảm cỡ chữ (A-)">A-</button>
+          <span id="fontLabel" class="px-2 text-slate-500 dark:text-slate-400 text-[11px] select-none">100%</span>
+          <button id="btnFontInc" class="px-2 py-1 text-slate-600 dark:text-slate-300 hover:bg-white dark:hover:bg-slate-700 rounded transition" title="Tăng cỡ chữ (A+)">A+</button>
+        </div>
+
+        <button onclick="openCourseQuizModal()" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-rose-600 hover:bg-rose-700 text-white flex items-center gap-1.5 shadow-sm transition">
+          <i class="fa-solid fa-clipboard-check"></i>
+          <span>Thi thử (10 câu)</span>
+        </button>
+
+        <button id="themeToggle" class="w-9 h-9 rounded-lg border border-slate-200 dark:border-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition" title="Đổi giao diện Sáng/Tối">
+          <i class="fa-solid fa-moon dark:hidden"></i>
+          <i class="fa-solid fa-sun hidden dark:inline text-amber-400"></i>
+        </button>
+
+        <button id="mobileMenuBtn" class="lg:hidden w-9 h-9 rounded-lg border border-slate-200 dark:border-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition" title="Mục lục">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Banner -->
+  <div class="bg-gradient-to-r from-rose-800 via-pink-800 to-indigo-950 text-white py-12 px-4 sm:px-6 lg:px-8 shadow-md">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
+      <div class="space-y-4 max-w-3xl">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-white/15 backdrop-blur-md border border-white/20 text-rose-200">
+          <i class="fa-solid fa-award text-amber-300"></i> Chuẩn Khảo Thí Quốc Tế Thế Hệ Mới Nhất (Certiport)
+        </div>
+        <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black tracking-tight leading-tight">
+          LUYỆN THI CHỨNG CHỈ QUỐC TẾ<br/>
+          <span class="text-rose-300 font-extrabold text-xl sm:text-2xl md:text-3xl">IC3 - Global Standard 6 (GS6)</span>
+        </h1>
+        <p class="text-base sm:text-lg text-rose-100/90 font-normal leading-relaxed">
+          Tài liệu luyện thi toàn diện chứng chỉ tin học quốc tế <strong>IC3 GS6</strong> theo cấu trúc mới: <strong>3 Cấp độ xếp chồng (Level 1, 2, 3)</strong> phát triển liên tục dựa trên <strong>7 Domain năng lực số cốt lõi</strong>: Công nghệ cơ bản, Công dân số, Quản lý thông tin, Sáng tạo nội dung, Truyền thông số, Cộng tác trực tuyến và An toàn bảo mật.
+        </p>
+        <div class="flex flex-wrap items-center gap-4 pt-2 text-sm sm:text-base text-rose-200">
+          <span class="flex items-center gap-1.5"><i class="fa-solid fa-layer-group text-amber-300"></i> 3 Cấp Độ Stackable (Level 1-2-3)</span>
+          <span class="flex items-center gap-1.5"><i class="fa-solid fa-cubes text-amber-300"></i> 7 Domain Năng Lực Số</span>
+          <span class="flex items-center gap-1.5"><i class="fa-solid fa-bullseye text-amber-300"></i> Điểm Đạt: 700/1000</span>
+          <span class="flex items-center gap-1.5"><i class="fa-solid fa-graduation-cap text-amber-300"></i> IC3 Master Certification</span>
+        </div>
+      </div>
+
+      <!-- Quick Summary Card -->
+      <div class="w-full md:w-80 p-5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 text-white space-y-3 shrink-0">
+        <div class="text-xs font-bold uppercase tracking-wider text-rose-200 flex items-center justify-between">
+          <span>3 Cấp độ IC3 GS6</span>
+          <span class="px-2 py-0.5 rounded bg-rose-500/30 text-[10px] font-bold">50 Phút / Level</span>
+        </div>
+        <ul class="text-xs sm:text-sm space-y-2 text-rose-50">
+          <li class="flex items-center justify-between py-1 border-b border-white/10">
+            <span>Level 1: Foundational</span>
+            <span class="font-bold text-rose-300">Kiến thức nền</span>
+          </li>
+          <li class="flex items-center justify-between py-1 border-b border-white/10">
+            <span>Level 2: Intermediate</span>
+            <span class="font-bold text-rose-300">Kỹ năng thực hành</span>
+          </li>
+          <li class="flex items-center justify-between py-1 border-b border-white/10">
+            <span>Level 3: Advanced</span>
+            <span class="font-bold text-rose-300">Chuyên sâu Master</span>
+          </li>
+          <li class="flex items-center justify-between py-1 text-amber-300 font-bold">
+            <span>Thuật ngữ & Checklist</span>
+            <span>Mục 4</span>
+          </li>
+        </ul>
+        <div class="text-[11px] text-rose-100/70 italic pt-1 leading-relaxed">
+          * Đạt cả 3 Level để nhận danh hiệu cao nhất <strong>IC3 Digital Literacy Master</strong>, công nhận năng lực công dân số toàn diện trên toàn cầu.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content Layout -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      
+      <!-- Left Sidebar: Sticky Table of Contents -->
+      <aside class="hidden lg:block lg:col-span-3 sticky top-20 max-h-[calc(100vh-6rem)] overflow-y-auto pr-2 space-y-4">
+        
+        <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs space-y-3">
+          <div class="flex items-center justify-between pb-2 border-b border-slate-100 dark:border-slate-800">
+            <span class="text-xs font-black uppercase tracking-wider text-slate-400">Mục lục luyện thi</span>
+            <span class="text-[11px] font-bold text-rose-600 dark:text-rose-400">GS6 Standards</span>
+          </div>
+
+          <!-- Section 1: Kiến trúc GS6 -->
+          <div>
+            <a href="#sec-overview" class="text-xs font-black uppercase text-rose-800 dark:text-rose-400 mb-1 flex items-center gap-1.5 hover:underline">
+              <i class="fa-solid fa-sitemap"></i> Phần 1: Kiến trúc 3 Level GS6
+            </a>
+            <ul class="space-y-1 text-xs">
+              <li><a href="#lvl-1" class="block py-1 px-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition">Level 1: Nền tảng (Foundational)</a></li>
+              <li><a href="#lvl-2" class="block py-1 px-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition">Level 2: Thực hành (Intermediate)</a></li>
+              <li><a href="#lvl-3" class="block py-1 px-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition">Level 3: Nâng cao (Advanced Master)</a></li>
+            </ul>
+          </div>
+
+          <!-- Section 2: 7 Core Domains -->
+          <div>
+            <a href="#sec-domains" class="text-xs font-black uppercase text-rose-800 dark:text-rose-400 mb-1 flex items-center gap-1.5 hover:underline">
+              <i class="fa-solid fa-cubes"></i> Phần 2: 7 Domain Năng Lực
+            </a>
+            <ul class="space-y-1 text-xs">
+              <li><a href="#dom-1" class="block py-1 px-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition">D1: Technology Basics</a></li>
+              <li><a href="#dom-2" class="block py-1 px-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition">D2: Digital Citizenship</a></li>
+              <li><a href="#dom-3" class="block py-1 px-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition">D3: Information Management</a></li>
+              <li><a href="#dom-4" class="block py-1 px-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition">D4: Content Creation</a></li>
+              <li><a href="#dom-5" class="block py-1 px-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition">D5: Communication</a></li>
+              <li><a href="#dom-6" class="block py-1 px-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition">D6: Collaboration</a></li>
+              <li><a href="#dom-7" class="block py-1 px-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition">D7: Safety and Security</a></li>
+            </ul>
+          </div>
+
+          <!-- Section 3: Quizzes -->
+          <div>
+            <a href="#sec-quizzes" class="text-xs font-black uppercase text-rose-800 dark:text-rose-400 mb-1 flex items-center gap-1.5 hover:underline">
+              <i class="fa-solid fa-circle-question"></i> Phần 3: Trắc nghiệm củng cố
+            </a>
+          </div>
+
+          <!-- Section 4: Summary -->
+          <div class="pt-2 border-t border-slate-100 dark:border-slate-800">
+            <a href="#sec-summary" class="text-xs font-black uppercase text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5 hover:underline">
+              <i class="fa-solid fa-list-check"></i> Phần 4: Thuật ngữ & Checklist
+            </a>
+          </div>
+
+        </div>
+
+        <!-- Tip Box -->
+        <div class="p-3.5 rounded-xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800/60 text-xs space-y-1.5">
+          <div class="font-bold text-rose-900 dark:text-rose-200 flex items-center gap-1.5">
+            <i class="fa-solid fa-lightbulb text-amber-500"></i> Điểm cốt lõi của GS6:
+          </div>
+          <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
+            Thay vì chia theo môn học riêng lẻ như GS3/GS4/GS5, IC3 GS6 đo lường năng lực số tổng hợp qua <strong>7 Domain xuyên suốt 3 Cấp độ</strong>, từ nhận thức cơ bản (Level 1) đến xử lý chuyên gia (Level 3).
+          </p>
+        </div>
+
+      </aside>
+
+      <!-- Main Content Area -->
+      <div class="lg:col-span-9 space-y-10">
+
+        <!-- ========================================== -->
+        <!-- PHẦN 1: KIẾN TRÚC 3 CẤP ĐỘ STACKABLE GS6   -->
+        <!-- ========================================== -->
+        <section id="sec-overview" class="p-6 sm:p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-8">
+          
+          <div class="border-b border-slate-200 dark:border-slate-800 pb-5">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-rose-100 text-rose-800 dark:bg-rose-950/60 dark:text-rose-300 mb-3">
+              <i class="fa-solid fa-sitemap"></i> Kiến trúc tiêu chuẩn mới
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
+              Phần 1: Kiến Trúc 3 Cấp Độ Xếp Chồng (Stackable Levels)
+            </h2>
+            <p class="text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">
+              Điểm cải tiến mang tính cách mạng của <strong>IC3 GS6</strong> là cấu trúc cấp chứng chỉ tích lũy (Stackable Certification). Thay vì thi riêng rẽ từng phần mềm, thí sinh chứng minh năng lực số toàn diện được nâng cao dần qua 3 cấp độ độc lập:
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <!-- Level 1 -->
+            <div id="lvl-1" class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-800 space-y-3">
+              <div class="w-10 h-10 rounded-xl bg-rose-100 dark:bg-rose-950 text-rose-600 dark:text-rose-400 font-black flex items-center justify-center text-base">
+                L1
+              </div>
+              <h3 class="text-lg font-bold text-slate-900 dark:text-white">Level 1: Nền Tảng (Foundational)</h3>
+              <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                Đánh giá hiểu biết cơ bản nhất về công nghệ số: nhận diện phần cứng, hệ điều hành máy tính và di động, tạo tài khoản cá nhân, kết nối Internet cơ bản và tuân thủ các quy tắc an toàn căn bản.
+              </p>
+              <div class="text-[11px] font-bold text-rose-600 dark:text-rose-400 pt-1">
+                <i class="fa-solid fa-check me-1"></i> Chứng chỉ: IC3 GS6 Level 1
+              </div>
+            </div>
+
+            <!-- Level 2 -->
+            <div id="lvl-2" class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-800 space-y-3">
+              <div class="w-10 h-10 rounded-xl bg-pink-100 dark:bg-pink-950 text-pink-600 dark:text-pink-400 font-black flex items-center justify-center text-base">
+                L2
+              </div>
+              <h3 class="text-lg font-bold text-slate-900 dark:text-white">Level 2: Thực Hành (Intermediate)</h3>
+              <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                Đánh giá kỹ năng làm việc thực tế: xử lý dữ liệu và soạn thảo văn bản thành thạo, làm việc cộng tác nhóm trên nền tảng đám mây, thẩm định tính xác thực của thông tin và phòng ngừa rủi ro mạng.
+              </p>
+              <div class="text-[11px] font-bold text-pink-600 dark:text-pink-400 pt-1">
+                <i class="fa-solid fa-check-double me-1"></i> Chứng chỉ: IC3 GS6 Level 2
+              </div>
+            </div>
+
+            <!-- Level 3 -->
+            <div id="lvl-3" class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-800 space-y-3">
+              <div class="w-10 h-10 rounded-xl bg-indigo-100 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 font-black flex items-center justify-center text-base">
+                L3
+              </div>
+              <h3 class="text-lg font-bold text-slate-900 dark:text-white">Level 3: Nâng Cao (Advanced Master)</h3>
+              <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                Đánh giá năng lực chuyên sâu của chuyên gia số: giải quyết vấn đề kỹ thuật số phức tạp, quản trị dữ liệu quy mô lớn, thiết lập an ninh mạng nâng cao (2FA, VPN), tư duy máy tính và tối ưu hóa quy trình.
+              </p>
+              <div class="text-[11px] font-bold text-indigo-600 dark:text-indigo-400 pt-1">
+                <i class="fa-solid fa-crown me-1"></i> Đạt danh hiệu: IC3 Digital Literacy Master
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- PHẦN 2: 7 DOMAIN NĂNG LỰC CỐT LÕI          -->
+        <!-- ========================================== -->
+        <section id="sec-domains" class="p-6 sm:p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-8">
+          
+          <div class="border-b border-slate-200 dark:border-slate-800 pb-5">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-rose-100 text-rose-800 dark:bg-rose-950/60 dark:text-rose-300 mb-3">
+              <i class="fa-solid fa-cubes"></i> 7 Domain Năng Lực Số
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
+              Phần 2: 7 Domain Năng Lực Cốt Lõi Chuẩn Toàn Cầu
+            </h2>
+            <p class="text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">
+              Mỗi bài thi trong IC3 GS6 đều xoay quanh 7 Domain này, chỉ khác nhau ở mức độ chuyên sâu và độ phức tạp của bài toán thực tế.
+            </p>
+          </div>
+
+          <!-- Domain 1: Technology Basics -->
+          <div id="dom-1" class="space-y-4">
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2.5">
+              <span class="w-8 h-8 rounded-xl bg-rose-100 dark:bg-rose-950/60 text-rose-700 dark:text-rose-400 flex items-center justify-center text-sm font-black">D1</span>
+              Technology Basics (Công Nghệ Cơ Bản, Thiết Bị Di Động & IoT)
+            </h3>
+            <p class="text-slate-700 dark:text-slate-300 leading-relaxed">
+              Bao quát toàn diện các thiết bị thông minh hiện đại: Máy tính để bàn, Laptop, Máy tính bảng (Tablet), Điện thoại thông minh (Smartphone) và thiết bị <strong>IoT (Internet of Things)</strong> như đồng hồ thông minh, camera an ninh, thiết bị nhà thông minh.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
+              <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-2">
+                <strong class="text-rose-600 font-bold block text-sm">Phần cứng & Chuẩn kết nối hiện đại:</strong>
+                <ul class="list-disc list-inside space-y-1 text-slate-700 dark:text-slate-300">
+                  <li><strong>Lưu trữ thế hệ mới:</strong> Ổ cứng thể rắn SSD (NVMe / PCIe) thay thế ổ đĩa quay HDD với tốc độ truyền vượt bậc.</li>
+                  <li><strong>Cổng USB Type-C & Thunderbolt:</strong> Chuẩn cắm đảo chiều hỗ trợ sạc nhanh Power Delivery và xuất tín hiệu video 4K/8K.</li>
+                  <li><strong>Kết nối không dây:</strong> Wi-Fi 6/6E, Bluetooth 5.x, mạng di động 4G/5G, giao tiếp tầm ngắn NFC (dùng cho chạm thanh toán Apple Pay/Google Wallet).</li>
+                </ul>
+              </div>
+              <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-2">
+                <strong class="text-rose-600 font-bold block text-sm">Hệ điều hành & Ứng dụng (Apps):</strong>
+                <ul class="list-disc list-inside space-y-1 text-slate-700 dark:text-slate-300">
+                  <li>Phân biệt OS máy tính (Windows, macOS, Linux) và OS di động (Android, iOS).</li>
+                  <li>Cài đặt ứng dụng an toàn từ kho chính thức: Microsoft Store, Google Play Store, Apple App Store.</li>
+                  <li>Cơ chế cấp quyền ứng dụng (App Permissions): Quyền truy cập máy ảnh Camera, Micro, Vị trí Location, Danh bạ Contacts.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Domain 2: Digital Citizenship -->
+          <div id="dom-2" class="space-y-4">
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2.5">
+              <span class="w-8 h-8 rounded-xl bg-rose-100 dark:bg-rose-950/60 text-rose-700 dark:text-rose-400 flex items-center justify-center text-sm font-black">D2</span>
+              Digital Citizenship (Công Dân Kỹ Thuật Số & Bản Quyền Sở Hữu Trí Tuệ)
+            </h3>
+            <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-3 text-xs sm:text-sm text-slate-700 dark:text-slate-300">
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div class="p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-750">
+                  <strong class="text-rose-600 block mb-1">Dấu chân số (Digital Footprint):</strong>
+                  Dấu vết chủ động (Active - ảnh, bài đăng) và bị động (Passive - lịch sử duyệt web, cookie, vị trí IP). Hãy luôn cân nhắc trước khi chia sẻ thông tin công khai.
+                </div>
+                <div class="p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-750">
+                  <strong class="text-rose-600 block mb-1">Văn minh mạng (Netiquette):</strong>
+                  Giao tiếp lịch sự, tôn trọng quan điểm khác biệt, bảo vệ bạn bè khỏi quấy rối trực tuyến (Cyberbullying) và không phát tán thông tin độc hại.
+                </div>
+                <div class="p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-750">
+                  <strong class="text-rose-600 block mb-1">Bản quyền & Creative Commons:</strong>
+                  Quyền tác giả (Copyright); Sử dụng hợp lí (Fair Use); Các loại giấy phép mở CC: CC-BY (ghi công), CC-NC (phi thương mại), CC-SA (chia sẻ tương tự).
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Domain 3: Information Management -->
+          <div id="dom-3" class="space-y-4">
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2.5">
+              <span class="w-8 h-8 rounded-xl bg-rose-100 dark:bg-rose-950/60 text-rose-700 dark:text-rose-400 flex items-center justify-center text-sm font-black">D3</span>
+              Information Management (Quản Lý Thông Tin & Phân Biệt Tin Giả Fake News)
+            </h3>
+            <p class="text-slate-700 dark:text-slate-300 leading-relaxed">
+              Kỹ năng tìm kiếm dữ liệu chính xác và thẩm định nguồn gốc thông tin trong kỷ nguyên số:
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
+              <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-750 space-y-2">
+                <strong class="text-rose-600 font-bold block text-sm">Toán tử tìm kiếm Google Search nâng cao:</strong>
+                <ul class="list-disc list-inside space-y-1 text-slate-700 dark:text-slate-300 font-mono">
+                  <li><code>"cụm từ chính xác"</code>: Tìm kiếm chính xác từng từ trong dấu ngoặc kép.</li>
+                  <li><code>site:gov.vn</code>: Chỉ tìm kiếm trên tên miền thuộc chính phủ Việt Nam.</li>
+                  <li><code>filetype:pdf</code>: Chỉ tìm các tài liệu có định dạng tệp PDF.</li>
+                  <li><code>toán tử OR / -từ_loại_trừ</code>: Tìm 1 trong 2 từ khóa hoặc loại bỏ kết quả chứa từ phía sau dấu trừ.</li>
+                </ul>
+              </div>
+              <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-750 space-y-2">
+                <strong class="text-rose-600 font-bold block text-sm">Tiêu chuẩn kiểm chứng thông tin (Fact-Checking):</strong>
+                <ul class="list-disc list-inside space-y-1 text-slate-700 dark:text-slate-300">
+                  <li><strong>Tác giả & Đơn vị xuất bản:</strong> Kiểm tra bài viết có ghi rõ danh tính chuyên gia hoặc cơ quan báo chí chính thống hay không.</li>
+                  <li><strong>Tính cập nhật:</strong> Xem ngày đăng bài để tránh áp dụng thông tin đã lỗi thời.</li>
+                  <li><strong>Xác minh chéo (Cross-referencing):</strong> So sánh thông tin với ít nhất 2 đến 3 nguồn độc lập có uy tín trước khi tin tưởng.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Domain 4: Content Creation -->
+          <div id="dom-4" class="space-y-4">
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2.5">
+              <span class="w-8 h-8 rounded-xl bg-rose-100 dark:bg-rose-950/60 text-rose-700 dark:text-rose-400 flex items-center justify-center text-sm font-black">D4</span>
+              Content Creation (Sáng Tạo Nội Dung Văn Bản, Bảng Tính, Trình Chiếu & Media)
+            </h3>
+            <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-3 text-xs sm:text-sm text-slate-700 dark:text-slate-300">
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div class="p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-750">
+                  <strong class="text-rose-600 block mb-1">Xử lý văn bản (Documents):</strong>
+                  Định dạng đoạn văn (Justify, Line Spacing), định dạng trang (A4, Margins), đánh số trang tự động, ngắt trang (Ctrl+Enter) và xuất file PDF.
+                </div>
+                <div class="p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-750">
+                  <strong class="text-rose-600 block mb-1">Bảng tính (Spreadsheets):</strong>
+                  Công thức số học, cố định ô ($A$1), các hàm =SUM, =AVERAGE, =COUNT, =IF căn bản, tạo biểu đồ trực quan hóa dữ liệu và sắp xếp lọc.
+                </div>
+                <div class="p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-750">
+                  <strong class="text-rose-600 block mb-1">Trình chiếu & Media:</strong>
+                  Thiết kế slide cô đọng, hiệu ứng Transition chuyển trang, chèn video clip và bổ sung Alt Text hỗ trợ khả năng tiếp cận (Accessibility).
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Domain 5: Communication -->
+          <div id="dom-5" class="space-y-4">
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2.5">
+              <span class="w-8 h-8 rounded-xl bg-rose-100 dark:bg-rose-950/60 text-rose-700 dark:text-rose-400 flex items-center justify-center text-sm font-black">D5</span>
+              Domain 5: Communication (Truyền Thông Số, Email Chuẩn Mực & Video Conference)
+            </h3>
+            <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-750 space-y-3">
+              <strong class="text-rose-600 font-bold block text-sm">Truyền thông số chuyên nghiệp & an toàn:</strong>
+              <ul class="list-disc list-inside space-y-1.5 text-xs sm:text-sm text-slate-700 dark:text-slate-300">
+                <li><strong>Quy chuẩn Email:</strong> Sử dụng đúng trường To (người nhận chính có trách nhiệm xử lý), Cc (đồng kính gửi để theo dõi), Bcc (gửi bảo mật ẩn danh để bảo vệ quyền riêng tư email danh sách đông người).</li>
+                <li><strong>Hội nghị trực tuyến (Video Call / Synchronous):</strong> Bật camera khi giao tiếp tương tác, tắt micro (Mute) khi lắng nghe để tránh tạp âm, sử dụng tính năng giơ tay (Raise Hand) và chia sẻ màn hình (Screen Share) có chọn lọc tab an toàn.</li>
+                <li><strong>Phân biệt giao tiếp đồng bộ và không đồng bộ:</strong> Synchronous (Cuộc gọi thoại/video, tin nhắn phản hồi ngay) so với Asynchronous (Email, ticket hỗ trợ, ghi chú công việc).</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Domain 6: Collaboration -->
+          <div id="dom-6" class="space-y-4">
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2.5">
+              <span class="w-8 h-8 rounded-xl bg-rose-100 dark:bg-rose-950/60 text-rose-700 dark:text-rose-400 flex items-center justify-center text-sm font-black">D6</span>
+              Domain 6: Collaboration (Cộng Tác Trực Tuyến Đám Mây & Đồng Biên Soạn Thời Gian Thực)
+            </h3>
+            <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-750 space-y-3">
+              <strong class="text-rose-600 font-bold block text-sm">Công cụ và quy trình làm việc nhóm đám mây:</strong>
+              <ul class="list-disc list-inside space-y-1.5 text-xs sm:text-sm text-slate-700 dark:text-slate-300">
+                <li><strong>Đồng chỉnh sửa thời gian thực (Real-time Co-authoring):</strong> Nhiều thành viên cùng làm việc đồng thời trên một file tài liệu qua Google Docs, Sheets hoặc Microsoft 365, thấy con trỏ và thao tác trực tiếp của nhau.</li>
+                <li><strong>Phân quyền truy cập chính xác:</strong> Viewer (Chỉ xem, cấm sửa), Commenter (Được nhận xét góp ý), Editor (Có toàn quyền chỉnh sửa nội dung).</li>
+                <li><strong>Theo dõi & Đề xuất (Track Changes / Suggesting):</strong> Ghi nhận mọi thay đổi của người bình duyệt dưới dạng đề xuất màu sắc để chủ sở hữu tài liệu bấm Chấp nhận (Accept) hoặc Bác bỏ (Reject).</li>
+                <li><strong>Lịch sử phiên bản (Version History):</strong> Lưu lại từng mốc thời gian kèm tên người đã sửa, cho phép xem lại chi tiết hoặc khôi phục về bất kỳ phiên bản nào trong quá khứ.</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Domain 7: Safety and Security -->
+          <div id="dom-7" class="space-y-4">
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2.5">
+              <span class="w-8 h-8 rounded-xl bg-rose-100 dark:bg-rose-950/60 text-rose-700 dark:text-rose-400 flex items-center justify-center text-sm font-black">D7</span>
+              Safety and Security (An Toàn, Bảo Mật Dữ Liệu, 2FA & Phòng Chống Ransomware)
+            </h3>
+            <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-3 text-xs sm:text-sm text-slate-700 dark:text-slate-300">
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div class="p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-750">
+                  <strong class="text-rose-600 block mb-1">Xác thực hai yếu tố (2FA / MFA):</strong>
+                  Lớp bảo vệ tối thượng kết hợp mật khẩu với mã xác thực OTP gửi về điện thoại hoặc ứng dụng Authenticator, ngăn chặn 99% các cuộc tấn công đánh cắp tài khoản.
+                </div>
+                <div class="p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-750">
+                  <strong class="text-rose-600 block mb-1">Phòng chống mã độc tống tiền:</strong>
+                  Thường xuyên sao lưu dữ liệu quan trọng ra ổ cứng ngoài hoặc đám mây (Quy tắc sao lưu 3-2-1), không bấm vào tệp đính kèm lạ để tránh bị mã hoá Ransomware.
+                </div>
+                <div class="p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-750">
+                  <strong class="text-rose-600 block mb-1">Bảo vệ kết nối mạng (VPN):</strong>
+                  Sử dụng mạng riêng ảo VPN và giao thức mã hóa HTTPS khi truy cập các điểm phát Wi-Fi công cộng tại quán cà phê, sân bay để chống bị nghe lén dữ liệu.
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </section>
+
+        <!-- ========================================== -->
+        <!-- PHẦN 3: TRẮC NGHIỆM CỦNG CỐ CẢ 3 LEVEL     -->
+        <!-- ========================================== -->
+        <section id="sec-quizzes" class="p-6 sm:p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-8">
+          
+          <div class="border-b border-slate-200 dark:border-slate-800 pb-5">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-rose-100 text-rose-800 dark:bg-rose-950/60 dark:text-rose-300 mb-3">
+              <i class="fa-solid fa-circle-question"></i> Luyện tập tương tác
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
+              Phần 3: Bộ Câu Hỏi Trắc Nghiệm Mô Phỏng 7 Domain IC3 GS6
+            </h2>
+            <p class="text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">
+              12 câu hỏi trắc nghiệm tự động chấm điểm phản ánh sát các tình huống ứng dụng thực tế trong đề thi quốc tế Certiport.
+            </p>
+          </div>
+
+          <!-- Q1 -->
+          <div id="q1" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+            <p class="font-semibold text-slate-900 dark:text-white">
+              Câu 1: Điểm khác biệt cơ bản nhất về cấu trúc của kỳ thi IC3 GS6 so với các phiên bản tiền nhiệm (GS3, GS4, GS5) là gì?
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm sm:text-base">
+              <button onclick="checkQuiz('q1', 0, 0)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-rose-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">A</span>
+                <span>GS6 chia thành 3 Cấp độ xếp chồng (Level 1, 2, 3) bao quát 7 Domain năng lực số thay vì chia theo môn học riêng lẻ</span>
+              </button>
+              <button onclick="checkQuiz('q1', 1, 0)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-rose-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">B</span>
+                <span>GS6 chỉ thi duy nhất môn Lập trình Python</span>
+              </button>
+              <button onclick="checkQuiz('q1', 2, 0)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-rose-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">C</span>
+                <span>GS6 chỉ thi trên giấy, không làm bài trên máy tính</span>
+              </button>
+              <button onclick="checkQuiz('q1', 3, 0)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-rose-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">D</span>
+                <span>GS6 loại bỏ hoàn toàn phần bảo mật an ninh mạng</span>
+              </button>
+            </div>
+            <div class="quiz-feedback hidden"></div>
+            <div class="quiz-explanation-text hidden">Chính xác! IC3 GS6 tái cấu trúc thành 3 Cấp độ tích lũy (Level 1 Foundational, Level 2 Intermediate, Level 3 Advanced) phát triển liên tục dựa trên 7 Domain năng lực số quốc tế.</div>
+          </div>
+
+          <!-- Q2 -->
+          <div id="q2" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+            <p class="font-semibold text-slate-900 dark:text-white">
+              Câu 2: Thuật ngữ IoT (Internet of Things - Internet vạn vật) trong Domain 1 dùng để chỉ điều gì?
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm sm:text-base">
+              <button onclick="checkQuiz('q2', 0, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-rose-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">A</span>
+                <span>Chỉ bao gồm các máy tính siêu cấp dùng trong quân sự</span>
+              </button>
+              <button onclick="checkQuiz('q2', 1, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-rose-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">B</span>
+                <span>Mạng lưới các thiết bị thông minh (đồng hồ, bóng đèn, cảm biến, camera...) được kết nối Internet để thu thập và trao đổi dữ liệu</span>
+              </button>
+              <button onclick="checkQuiz('q2', 2, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-rose-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">C</span>
+                <span>Một phần mềm dùng để diệt virus trên điện thoại</span>
+              </button>
+              <button onclick="checkQuiz('q2', 3, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-rose-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">D</span>
+                <span>Giao diện dòng lệnh trong hệ điều hành Linux</span>
+              </button>
+            </div>
+            <div class="quiz-feedback hidden"></div>
+            <div class="quiz-explanation-text hidden">Đúng! IoT là mạng lưới vạn vật kết nối Internet, từ thiết bị đeo sức khoẻ đến đồ gia dụng thông minh và cảm biến công nghiệp.</div>
+          </div>
+
+          <!-- Q3 -->
+          <div id="q3" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+            <p class="font-semibold text-slate-900 dark:text-white">
+              Câu 3: Khái niệm "Dấu chân kỹ thuật số bị động" (Passive Digital Footprint) thể hiện qua trường hợp nào sau đây?
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm sm:text-base">
+              <button onclick="checkQuiz('q3', 0, 2)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-rose-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">A</span>
+                <span>Bạn chủ động đăng tải một bức ảnh lên trang Facebook cá nhân</span>
+              </button>
+              <button onclick="checkQuiz('q3', 1, 2)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-rose-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">B</span>
+                <span>Bạn gửi email trực tiếp cho thầy cô giáo</span>
+              </button>
+              <button onclick="checkQuiz('q3', 2, 2)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-rose-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">C</span>
+                <span>Trang web tự động ghi lại địa chỉ IP, loại trình duyệt và cookie vị trí khi bạn truy cập mà không hỏi bạn gõ nội dung</span>
+              </button>
+              <button onclick="checkQuiz('q3', 3, 2)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-rose-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">D</span>
+                <span>Bạn viết một bài bình luận phản hồi trên diễn đàn công nghệ</span>
+              </button>
+            </div>
+            <div class="quiz-feedback hidden"></div>
+            <div class="quiz-explanation-text hidden">Chính xác! Dấu chân số bị động (Passive) là dữ liệu được các hệ thống và trang web tự động thu thập ngầm (như địa chỉ IP, lịch sử click, cookies) mà không cần sự chủ động gửi bài của người dùng.</div>
+          </div>
+
+          <!-- Q4 -->
+          <div id="q4" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+            <p class="font-semibold text-slate-900 dark:text-white">
+              Câu 4: Bạn muốn tìm kiếm các văn bản báo cáo kinh tế dưới dạng tệp tài liệu PDF phát hành duy nhất trên các cổng thông tin của chính phủ Việt Nam (.gov.vn). Cú pháp tìm kiếm Google nào sau đây chuẩn xác nhất?
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm sm:text-base">
+              <button onclick="checkQuiz('q4', 0, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-rose-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">A</span>
+                <span>báo cáo kinh tế pdf gov vn google search</span>
+              </button>
+              <button onclick="checkQuiz('q4', 1, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-rose-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">B</span>
+                <span>"báo cáo kinh tế" site:gov.vn filetype:pdf</span>
+              </button>
+              <button onclick="checkQuiz('q4', 2, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-rose-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">C</span>
+                <span>site:pdf filetype:gov.vn "báo cáo kinh tế"</span>
+              </button>
+              <button onclick="checkQuiz('q4', 3, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-rose-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">D</span>
+                <span>download pdf gov.vn report</span>
+              </button>
+            </div>
+            <div class="quiz-feedback hidden"></div>
+            <div class="quiz-explanation-text hidden">Đúng! Toán tử "site:gov.vn" giới hạn tìm kiếm trên tên miền chính phủ và "filetype:pdf" giới hạn định dạng tệp PDF.</div>
+          </div>
+
+          <!-- Q5 -->
+          <div id="q5" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+            <p class="font-semibold text-slate-900 dark:text-white">
+              Câu 5: Khi làm việc nhóm trên tài liệu Google Docs, tính năng nào giúp mọi người theo dõi lịch sử chỉnh sửa chi tiết của từng người và khôi phục lại văn bản cũ khi bị xoá nhầm?
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm sm:text-base">
+              <button onclick="checkQuiz('q5', 0, 0)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-rose-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">A</span>
+                <span>Version History (Lịch sử phiên bản)</span>
+              </button>
+              <button onclick="checkQuiz('q5', 1, 0)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-rose-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">B</span>
+                <span>Spell Check (Kiểm tra chính tả)</span>
+              </button>
+              <button onclick="checkQuiz('q5', 2, 0)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-rose-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">C</span>
+                <span>Word Count (Đếm số từ)</span>
+              </button>
+              <button onclick="checkQuiz('q5', 3, 0)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-rose-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">D</span>
+                <span>Page Setup (Thiết lập trang)</span>
+              </button>
+            </div>
+            <div class="quiz-feedback hidden"></div>
+            <div class="quiz-explanation-text hidden">Chính xác! Version History lưu lại từng mốc thời gian kèm tên người đã sửa, cho phép xem lại hoặc hoàn tác về bất kỳ phiên bản nào trong quá khứ.</div>
+          </div>
+
+          <!-- Q6 -->
+          <div id="q6" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+            <p class="font-semibold text-slate-900 dark:text-white">
+              Câu 6: Giấy phép bản quyền mở Creative Commons ký hiệu "CC BY-NC" có ý nghĩa pháp lý như thế nào?
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm sm:text-base">
+              <button onclick="checkQuiz('q6', 0, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-rose-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">A</span>
+                <span>Bị cấm hoàn toàn không được sao chép dưới mọi hình thức</span>
+              </button>
+              <button onclick="checkQuiz('q6', 1, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-rose-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">B</span>
+                <span>Được phép sao chép, chia sẻ nhưng bắt buộc phải ghi nhận tên tác giả (BY) và chỉ được dùng cho mục đích phi thương mại (NC)</span>
+              </button>
+              <button onclick="checkQuiz('q6', 2, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-rose-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">C</span>
+                <span>Được tự ý bán lại để lấy tiền mà không cần xin phép</span>
+              </button>
+              <button onclick="checkQuiz('q6', 3, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-rose-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">D</span>
+                <span>Chỉ có hiệu lực trong phạm vi 30 ngày kể từ ngày tải về</span>
+              </button>
+            </div>
+            <div class="quiz-feedback hidden"></div>
+            <div class="quiz-explanation-text hidden">Đúng! "BY" nghĩa là Attribution (ghi nhận tác giả) và "NC" nghĩa là Non-Commercial (phi thương mại, cấm kinh doanh kiếm lời).</div>
+          </div>
+
+          <!-- Q7 -->
+          <div id="q7" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+            <p class="font-semibold text-slate-900 dark:text-white">
+              Câu 7: (Domain 3) Bạn cần tìm kiếm các văn bản hướng dẫn chính thức ở định dạng PDF trên cổng thông tin cơ quan chính phủ Việt Nam. Cú pháp tìm kiếm nào trên Google là tối ưu và chính xác nhất?
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm sm:text-base">
+              <button onclick="checkQuiz('q7', 0, 0)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-rose-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">A</span>
+                <span>hướng dẫn site:gov.vn filetype:pdf</span>
+              </button>
+              <button onclick="checkQuiz('q7', 1, 0)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-rose-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">B</span>
+                <span>hướng dẫn .pdf .gov</span>
+              </button>
+              <button onclick="checkQuiz('q7', 2, 0)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-rose-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">C</span>
+                <span>site:pdf filetype:gov.vn</span>
+              </button>
+              <button onclick="checkQuiz('q7', 3, 0)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-rose-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">D</span>
+                <span>search gov.vn with pdf</span>
+              </button>
+            </div>
+            <div class="quiz-feedback hidden"></div>
+            <div class="quiz-explanation-text hidden">Chính xác! Toán tử <code>site:gov.vn</code> giới hạn tìm kiếm trong tên miền chính phủ Việt Nam, và <code>filetype:pdf</code> lọc chính xác định dạng tệp tài liệu PDF.</div>
+          </div>
+
+          <!-- Q8 -->
+          <div id="q8" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+            <p class="font-semibold text-slate-900 dark:text-white">
+              Câu 8: (Domain 4) Trong bảng tính tính toán, để thiết lập địa chỉ hỗn hợp khóa cố định cột B nhưng cho phép thay đổi chỉ số dòng khi sao chép công thức, ta viết địa chỉ như thế nào?
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm sm:text-base">
+              <button onclick="checkQuiz('q8', 0, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-rose-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">A</span>
+                <span>B$1</span>
+              </button>
+              <button onclick="checkQuiz('q8', 1, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-rose-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">B</span>
+                <span>$B1</span>
+              </button>
+              <button onclick="checkQuiz('q8', 2, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-rose-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">C</span>
+                <span>$B$1</span>
+              </button>
+              <button onclick="checkQuiz('q8', 3, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-rose-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">D</span>
+                <span>B1</span>
+              </button>
+            </div>
+            <div class="quiz-feedback hidden"></div>
+            <div class="quiz-explanation-text hidden">Chính xác! Dấu <code>$</code> đứng ngay trước ký tự cột nào thì cố định cột đó. Do đó <code>$B1</code> cố định cột B và thả nổi dòng 1.</div>
+          </div>
+
+          <!-- Q9 -->
+          <div id="q9" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+            <p class="font-semibold text-slate-900 dark:text-white">
+              Câu 9: (Domain 5) Khi gửi thư điện tử thông báo tới 100 đối tác nhưng cần bảo vệ thông tin cá nhân và tránh việc các đối tác thấy địa chỉ email của nhau, bạn cần điền danh sách vào trường nào?
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm sm:text-base">
+              <button onclick="checkQuiz('q9', 0, 2)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-rose-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">A</span>
+                <span>To (Người nhận trực tiếp)</span>
+              </button>
+              <button onclick="checkQuiz('q9', 1, 2)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-rose-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">B</span>
+                <span>Cc (Carbon Copy)</span>
+              </button>
+              <button onclick="checkQuiz('q9', 2, 2)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-rose-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">C</span>
+                <span>Bcc (Blind Carbon Copy)</span>
+              </button>
+              <button onclick="checkQuiz('q9', 3, 2)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-rose-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">D</span>
+                <span>Subject (Chủ đề)</span>
+              </button>
+            </div>
+            <div class="quiz-feedback hidden"></div>
+            <div class="quiz-explanation-text hidden">Đúng! Bcc (Blind Carbon Copy) gửi bản sao ẩn danh, toàn bộ người nhận trong Bcc hoàn toàn không nhìn thấy địa chỉ email của nhau, đảm bảo tuyệt đối quyền riêng tư.</div>
+          </div>
+
+          <!-- Q10 -->
+          <div id="q10" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+            <p class="font-semibold text-slate-900 dark:text-white">
+              Câu 10: (Domain 6) Trong ứng dụng soạn thảo tài liệu trực tuyến cộng tác, chức năng nào cho phép người bình duyệt đề xuất nội dung sửa chữa mà không xoá đè trực tiếp lên bản gốc?
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm sm:text-base">
+              <button onclick="checkQuiz('q10', 0, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-rose-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">A</span>
+                <span>AutoSave (Tự động lưu)</span>
+              </button>
+              <button onclick="checkQuiz('q10', 1, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-rose-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">B</span>
+                <span>Track Changes / Suggesting Mode (Đề xuất chỉnh sửa)</span>
+              </button>
+              <button onclick="checkQuiz('q10', 2, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-rose-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">C</span>
+                <span>Word Wrap (Tự ngắt dòng)</span>
+              </button>
+              <button onclick="checkQuiz('q10', 3, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-rose-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">D</span>
+                <span>Spell Check (Kiểm tra chính tả)</span>
+              </button>
+            </div>
+            <div class="quiz-feedback hidden"></div>
+            <div class="quiz-explanation-text hidden">Chính xác! Chế độ Suggesting Mode (hoặc Track Changes) hiển thị các chỉnh sửa dưới dạng đề xuất có màu riêng kèm bình luận để chủ sở hữu văn bản bấm Chấp nhận (Accept) hoặc Từ chối (Reject).</div>
+          </div>
+
+          <!-- Q11 -->
+          <div id="q11" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+            <p class="font-semibold text-slate-900 dark:text-white">
+              Câu 11: (Domain 7) Phương thức xác thực đa yếu tố (2FA / MFA) cung cấp mức độ an toàn cao hơn mật khẩu đơn thuần vì lý do gì?
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm sm:text-base">
+              <button onclick="checkQuiz('q11', 0, 0)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-rose-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">A</span>
+                <span>Yêu cầu kết hợp 2 yếu tố độc lập: Điều bạn biết (Mật khẩu) và Điều bạn sở hữu (Mã xác thực OTP gửi về điện thoại / Khóa bảo mật)</span>
+              </button>
+              <button onclick="checkQuiz('q11', 1, 0)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-rose-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">B</span>
+                <span>Cho phép đặt mật khẩu chỉ gồm 4 chữ số ngắn để dễ nhớ</span>
+              </button>
+              <button onclick="checkQuiz('q11', 2, 0)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-rose-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">C</span>
+                <span>Tự động gửi thông tin đăng nhập cho tất cả bạn bè trong danh bạ</span>
+              </button>
+              <button onclick="checkQuiz('q11', 3, 0)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-rose-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">D</span>
+                <span>Không cần kết nối mạng Internet vẫn đăng nhập được</span>
+              </button>
+            </div>
+            <div class="quiz-feedback hidden"></div>
+            <div class="quiz-explanation-text hidden">Đúng! Dù kẻ tấn công có đánh cắp được mật khẩu, chúng vẫn không thể xâm nhập nếu không nắm giữ thiết bị thứ hai sinh mã OTP hoặc khóa vật lý của bạn.</div>
+          </div>
+
+          <!-- Q12 -->
+          <div id="q12" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+            <p class="font-semibold text-slate-900 dark:text-white">
+              Câu 12: (Domain 7) Loại phần mềm độc hại nào âm thầm mã hoá toàn bộ tài liệu, hình ảnh trên máy tính của bạn rồi hiển thị thông báo đòi tiền chuộc để giải mã?
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm sm:text-base">
+              <button onclick="checkQuiz('q12', 0, 3)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-rose-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">A</span>
+                <span>Adware (Phần mềm quảng cáo)</span>
+              </button>
+              <button onclick="checkQuiz('q12', 1, 3)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-rose-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">B</span>
+                <span>Spyware (Phần mềm gián điệp)</span>
+              </button>
+              <button onclick="checkQuiz('q12', 2, 3)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-rose-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">C</span>
+                <span>Keylogger (Trình theo dõi bàn phím)</span>
+              </button>
+              <button onclick="checkQuiz('q12', 3, 3)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-rose-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">D</span>
+                <span>Ransomware (Mã độc tống tiền)</span>
+              </button>
+            </div>
+            <div class="quiz-feedback hidden"></div>
+            <div class="quiz-explanation-text hidden">Chính xác! Ransomware là hiểm hoạ an ninh mạng nghiêm trọng. Cách phòng vệ cốt lõi là thường xuyên sao lưu dữ liệu (Backup 3-2-1) sang ổ cứng rời hoặc đám mây độc lập.</div>
+          </div>
+
+        </section>
+
+        <!-- ========================================== -->
+        <!-- PHẦN 4: THUẬT NGỮ, CHECKLIST & ĐỀ THI THỬ -->
+        <!-- ========================================== -->
+        <section id="sec-summary" class="p-6 sm:p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-10">
+          
+          <div class="border-b border-slate-200 dark:border-slate-800 pb-5">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-rose-100 text-rose-800 dark:bg-rose-950/60 dark:text-rose-300 mb-3">
+              <i class="fa-solid fa-flag-checkered"></i> Tổng kết & Luyện thi
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
+              Phần 4: Thuật Ngữ CNTT, Bảng Kiểm Kỹ Năng & Đề Thi Thử GS6
+            </h2>
+            <p class="text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">
+              Hệ thống hóa toàn bộ từ khóa công nghệ quốc tế, tự đánh giá 15 kỹ năng cốt lõi cho cả 3 Level và thử sức với đề thi mô phỏng 1000 điểm chuẩn Certiport.
+            </p>
+          </div>
+
+          <!-- 4.1 Bảng thuật ngữ 30+ terms -->
+          <div class="space-y-4">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+              <h3 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                <i class="fa-solid fa-book-bookmark text-rose-600"></i>
+                Bảng 30+ Thuật Ngữ CNTT Trọng Tâm IC3 GS6
+              </h3>
+              <div class="relative w-full sm:w-72">
+                <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                <input type="text" id="glossarySearch" oninput="filterGlossary()" placeholder="Tìm nhanh thuật ngữ..." class="w-full pl-9 pr-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-rose-500">
+              </div>
+            </div>
+
+            <div class="overflow-x-auto rounded-2xl border border-slate-200 dark:border-slate-800">
+              <table class="w-full text-left border-collapse text-xs sm:text-sm">
+                <thead>
+                  <tr class="bg-slate-100 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white font-bold">
+                    <th class="p-3 w-1/4">Thuật ngữ / Viết tắt</th>
+                    <th class="p-3 w-1/4">Tiếng Anh & Ý nghĩa</th>
+                    <th class="p-3 w-1/2">Định nghĩa & Ứng dụng thi Certiport</th>
+                  </tr>
+                </thead>
+                <tbody id="glossaryTable" class="divide-y divide-slate-200 dark:divide-slate-800 text-slate-700 dark:text-slate-300">
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-rose-600 dark:text-rose-400">IoT</td>
+                    <td class="p-3">Internet of Things</td>
+                    <td class="p-3">Mạng lưới các thiết bị vật lý thu thập và trao đổi dữ liệu qua Internet (Smart Home, Smart Watch, Cảm biến).</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-rose-600 dark:text-rose-400">SSD</td>
+                    <td class="p-3">Solid-State Drive</td>
+                    <td class="p-3">Ổ cứng thể rắn dùng bộ nhớ flash, tốc độ đọc ghi vượt trội và chống sốc cơ học tốt hơn HDD truyền thống.</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-rose-600 dark:text-rose-400">RAM</td>
+                    <td class="p-3">Random Access Memory</td>
+                    <td class="p-3">Bộ nhớ khả biến (mất khi tắt máy), lưu trữ tạm thời dữ liệu các chương trình đang thực thi.</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-rose-600 dark:text-rose-400">ROM / BIOS</td>
+                    <td class="p-3">Read-Only Memory</td>
+                    <td class="p-3">Bộ nhớ chỉ đọc bất biến lưu lệnh khởi động bo mạch chủ của máy tính.</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-rose-600 dark:text-rose-400">Digital Footprint</td>
+                    <td class="p-3">Dấu chân kỹ thuật số</td>
+                    <td class="p-3">Toàn bộ vết tích dữ liệu người dùng để lại trên môi trường mạng: Chủ động (Active) và Bị động (Passive).</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-rose-600 dark:text-rose-400">Netiquette</td>
+                    <td class="p-3">Network Etiquette</td>
+                    <td class="p-3">Quy tắc ứng xử và giao tiếp lịch thiệp, tôn trọng trên không gian số và diễn đàn mạng.</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-rose-600 dark:text-rose-400">Creative Commons</td>
+                    <td class="p-3">Bản quyền mở CC</td>
+                    <td class="p-3">Hệ thống cấp phép linh hoạt cho phép cộng đồng tái sử dụng tác phẩm mà không vi phạm luật bản quyền.</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-rose-600 dark:text-rose-400">CC BY</td>
+                    <td class="p-3">Attribution</td>
+                    <td class="p-3">Được tự do sao chép, chỉnh sửa nhưng bắt buộc phải ghi danh tác giả ban đầu.</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-rose-600 dark:text-rose-400">CC NC</td>
+                    <td class="p-3">Non-Commercial</td>
+                    <td class="p-3">Tác phẩm chỉ được dùng cho mục đích học tập hoặc phi thương mại, cấm kinh doanh kiếm lời.</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-rose-600 dark:text-rose-400">Boolean Search</td>
+                    <td class="p-3">Toán tử tìm kiếm</td>
+                    <td class="p-3">Sử dụng AND, OR, NOT (dấu trừ -), dấu ngoặc kép "..." để tìm thông tin chính xác trên công cụ tìm kiếm.</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-rose-600 dark:text-rose-400">Fact-Checking</td>
+                    <td class="p-3">Thẩm định sự thật</td>
+                    <td class="p-3">Quy trình đối chiếu nguồn tin với các cơ quan báo chí uy tín để sàng lọc tin giả (Fake News).</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-rose-600 dark:text-rose-400">Alt-text</td>
+                    <td class="p-3">Alternative Text</td>
+                    <td class="p-3">Văn bản thay thế cho hình ảnh giúp người khiếm thị đọc nội dung qua phần mềm Screen Reader (Accessibility).</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-rose-600 dark:text-rose-400">Cloud Computing</td>
+                    <td class="p-3">Điện toán đám mây</td>
+                    <td class="p-3">Cung cấp tài nguyên CNTT (máy chủ, lưu trữ, phần mềm) qua Internet theo nhu cầu thanh toán linh hoạt.</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-rose-600 dark:text-rose-400">SaaS</td>
+                    <td class="p-3">Software as a Service</td>
+                    <td class="p-3">Mô hình phần mềm dạng dịch vụ chạy trên web (Google Workspace, Office 365, Canva).</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-rose-600 dark:text-rose-400">PaaS</td>
+                    <td class="p-3">Platform as a Service</td>
+                    <td class="p-3">Nền tảng đám mây cung cấp môi trường lập trình và triển khai ứng dụng không cần cấu hình phần cứng.</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-rose-600 dark:text-rose-400">IaaS</td>
+                    <td class="p-3">Infrastructure as a Service</td>
+                    <td class="p-3">Hạ tầng đám mây cho thuê máy chủ ảo, tường lửa và đường truyền mạng (AWS EC2, Azure VM).</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-rose-600 dark:text-rose-400">Co-authoring</td>
+                    <td class="p-3">Đồng biên soạn thời gian thực</td>
+                    <td class="p-3">Nhiều người dùng cùng chỉnh sửa chung một file văn bản/bảng tính tại cùng một thời điểm qua đám mây.</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-rose-600 dark:text-rose-400">Track Changes</td>
+                    <td class="p-3">Theo dõi thay đổi</td>
+                    <td class="p-3">Chế độ ghi nhận mọi thêm bớt sửa đổi tài liệu thành các đề xuất có màu sắc khác nhau để duyệt sau.</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-rose-600 dark:text-rose-400">Version History</td>
+                    <td class="p-3">Lịch sử phiên bản</td>
+                    <td class="p-3">Chức năng lưu trữ các mốc thời gian sửa đổi cho phép khôi phục về phiên bản cũ bất cứ lúc nào.</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-rose-600 dark:text-rose-400">Bcc</td>
+                    <td class="p-3">Blind Carbon Copy</td>
+                    <td class="p-3">Trường gửi thư điện tử bản sao ẩn danh, bảo vệ quyền riêng tư địa chỉ email người nhận.</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-rose-600 dark:text-rose-400">Synchronous Comm</td>
+                    <td class="p-3">Giao tiếp đồng bộ</td>
+                    <td class="p-3">Trao đổi thông tin tức thời đồng thời (Cuộc gọi thoại, Video conference Zoom / Meet, Chat trực tuyến).</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-rose-600 dark:text-rose-400">Asynchronous Comm</td>
+                    <td class="p-3">Giao tiếp không đồng bộ</td>
+                    <td class="p-3">Trao đổi không cần phản hồi ngay (Email, bình luận diễn đàn, ghi chú tài liệu).</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-rose-600 dark:text-rose-400">2FA / MFA</td>
+                    <td class="p-3">Xác thực đa yếu tố</td>
+                    <td class="p-3">Bảo vệ tài khoản bằng 2 hoặc nhiều lớp: Mật khẩu + Mã OTP điện thoại / Khóa bảo mật FIDO.</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-rose-600 dark:text-rose-400">Phishing</td>
+                    <td class="p-3">Tấn công lừa đảo</td>
+                    <td class="p-3">Chiêu thức giả mạo ngân hàng, trường học hoặc thương hiệu uy tín qua email/tin nhắn để đánh cắp mật khẩu.</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-rose-600 dark:text-rose-400">Ransomware</td>
+                    <td class="p-3">Mã độc tống tiền</td>
+                    <td class="p-3">Mã độc mã hoá dữ liệu cá nhân trên máy tính và đòi nộp tiền chuộc để lấy lại chìa khóa giải mã.</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-rose-600 dark:text-rose-400">VPN</td>
+                    <td class="p-3">Virtual Private Network</td>
+                    <td class="p-3">Mạng riêng ảo tạo đường hầm mã hóa bảo mật toàn bộ lưu lượng duyệt web khi sử dụng Wi-Fi công cộng.</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-rose-600 dark:text-rose-400">Firewall</td>
+                    <td class="p-3">Tường lửa</td>
+                    <td class="p-3">Hệ thống bảo vệ mạng giám sát và kiểm soát lưu lượng ra vào dựa trên các quy tắc bảo mật được thiết lập.</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-rose-600 dark:text-rose-400">Public Wi-Fi Risks</td>
+                    <td class="p-3">Rủi ro Wi-Fi mở</td>
+                    <td class="p-3">Nguy cơ bị nghe lén dữ liệu (Man-in-the-Middle) khi giao dịch tài chính trên Wi-Fi không có mật khẩu.</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-rose-600 dark:text-rose-400">Deepfake</td>
+                    <td class="p-3">Giả mạo AI</td>
+                    <td class="p-3">Công nghệ trí tuệ nhân tạo ghép khuôn mặt và giọng nói tinh vi nhằm lừa đảo chiếm đoạt tài sản.</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-rose-600 dark:text-rose-400">Digital Literacy Master</td>
+                    <td class="p-3">Danh hiệu IC3 Master</td>
+                    <td class="p-3">Danh hiệu quốc tế cao nhất được Certiport cấp cho thí sinh thi đỗ cả 3 Level của IC3 GS6.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- 4.2 Bảng kiểm 15 kỹ năng -->
+          <div class="space-y-4 pt-4 border-t border-slate-200 dark:border-slate-800">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+              <div>
+                <h3 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                  <i class="fa-solid fa-list-check text-rose-600"></i>
+                  Bảng Kiểm 15 Kỹ Năng Sẵn Sàng Chinh Phục Cả 3 Level GS6
+                </h3>
+                <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">Đánh dấu những kỹ năng bạn đã thành thạo để tự động tính tỷ lệ sẵn sàng thi Certiport.</p>
+              </div>
+              <div class="flex items-center gap-2 self-start sm:self-auto bg-slate-100 dark:bg-slate-800 px-3 py-1.5 rounded-xl text-xs font-bold text-rose-600 dark:text-rose-400 shrink-0">
+                <span>Tiến độ:</span>
+                <span id="checklistScore">0 / 15 (0%)</span>
+              </div>
+            </div>
+
+            <div class="w-full bg-slate-200 dark:bg-slate-800 h-2.5 rounded-full overflow-hidden">
+              <div id="checklistBar" class="bg-gradient-to-r from-rose-500 to-pink-500 h-full w-0 transition-all duration-300"></div>
+            </div>
+
+            <div id="checklistContainer" class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs sm:text-sm">
+              <label class="p-3 rounded-xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-750 flex items-start gap-2.5 cursor-pointer hover:border-rose-500 transition">
+                <input type="checkbox" onchange="updateChecklist()" class="mt-1 rounded text-rose-600 focus:ring-rose-500 shrink-0">
+                <span><strong>D1 (L1):</strong> Phân biệt CPU, RAM, ổ cứng SSD và thiết bị ngoại vi vào/ra cơ bản.</span>
+              </label>
+
+              <label class="p-3 rounded-xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-750 flex items-start gap-2.5 cursor-pointer hover:border-rose-500 transition">
+                <input type="checkbox" onchange="updateChecklist()" class="mt-1 rounded text-rose-600 focus:ring-rose-500 shrink-0">
+                <span><strong>D1 (L2):</strong> Hiểu nguyên lý kết nối và ứng dụng của Internet vạn vật (IoT).</span>
+              </label>
+
+              <label class="p-3 rounded-xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-750 flex items-start gap-2.5 cursor-pointer hover:border-rose-500 transition">
+                <input type="checkbox" onchange="updateChecklist()" class="mt-1 rounded text-rose-600 focus:ring-rose-500 shrink-0">
+                <span><strong>D2 (L1):</strong> Nhận biết dấu chân kỹ thuật số chủ động (Active) và bị động (Passive).</span>
+              </label>
+
+              <label class="p-3 rounded-xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-750 flex items-start gap-2.5 cursor-pointer hover:border-rose-500 transition">
+                <input type="checkbox" onchange="updateChecklist()" class="mt-1 rounded text-rose-600 focus:ring-rose-500 shrink-0">
+                <span><strong>D2 (L2):</strong> Hiểu và tuân thủ bản quyền mở Creative Commons (CC-BY, CC-NC).</span>
+              </label>
+
+              <label class="p-3 rounded-xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-750 flex items-start gap-2.5 cursor-pointer hover:border-rose-500 transition">
+                <input type="checkbox" onchange="updateChecklist()" class="mt-1 rounded text-rose-600 focus:ring-rose-500 shrink-0">
+                <span><strong>D3 (L1):</strong> Sử dụng toán tử tìm kiếm nâng cao (site:, filetype:, dấu ngoặc kép "...").</span>
+              </label>
+
+              <label class="p-3 rounded-xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-750 flex items-start gap-2.5 cursor-pointer hover:border-rose-500 transition">
+                <input type="checkbox" onchange="updateChecklist()" class="mt-1 rounded text-rose-600 focus:ring-rose-500 shrink-0">
+                <span><strong>D3 (L2):</strong> Áp dụng quy trình Fact-checking để kiểm chứng và nhận biết tin giả.</span>
+              </label>
+
+              <label class="p-3 rounded-xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-750 flex items-start gap-2.5 cursor-pointer hover:border-rose-500 transition">
+                <input type="checkbox" onchange="updateChecklist()" class="mt-1 rounded text-rose-600 focus:ring-rose-500 shrink-0">
+                <span><strong>D4 (L1):</strong> Định dạng tài liệu văn bản, bảng biểu, căn lề và sử dụng phím tắt cơ bản.</span>
+              </label>
+
+              <label class="p-3 rounded-xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-750 flex items-start gap-2.5 cursor-pointer hover:border-rose-500 transition">
+                <input type="checkbox" onchange="updateChecklist()" class="mt-1 rounded text-rose-600 focus:ring-rose-500 shrink-0">
+                <span><strong>D4 (L2):</strong> Sử dụng thành thạo địa chỉ tuyệt đối/tương đối ($A$1, $B1) và hàm bảng tính.</span>
+              </label>
+
+              <label class="p-3 rounded-xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-750 flex items-start gap-2.5 cursor-pointer hover:border-rose-500 transition">
+                <input type="checkbox" onchange="updateChecklist()" class="mt-1 rounded text-rose-600 focus:ring-rose-500 shrink-0">
+                <span><strong>D4 (L3):</strong> Thêm thuộc tính Alt-text trợ năng cho hình ảnh phục vụ người dùng khuyết tật.</span>
+              </label>
+
+              <label class="p-3 rounded-xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-750 flex items-start gap-2.5 cursor-pointer hover:border-rose-500 transition">
+                <input type="checkbox" onchange="updateChecklist()" class="mt-1 rounded text-rose-600 focus:ring-rose-500 shrink-0">
+                <span><strong>D5 (L1):</strong> Sử dụng đúng trường To, Cc và trường ẩn danh Bcc trong gửi thư điện tử.</span>
+              </label>
+
+              <label class="p-3 rounded-xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-750 flex items-start gap-2.5 cursor-pointer hover:border-rose-500 transition">
+                <input type="checkbox" onchange="updateChecklist()" class="mt-1 rounded text-rose-600 focus:ring-rose-500 shrink-0">
+                <span><strong>D5 (L2):</strong> Phân biệt giao tiếp đồng bộ (Call/Video) và không đồng bộ (Email/Docs).</span>
+              </label>
+
+              <label class="p-3 rounded-xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-750 flex items-start gap-2.5 cursor-pointer hover:border-rose-500 transition">
+                <input type="checkbox" onchange="updateChecklist()" class="mt-1 rounded text-rose-600 focus:ring-rose-500 shrink-0">
+                <span><strong>D6 (L2):</strong> Đồng biên soạn thời gian thực (Co-authoring) và phân quyền View/Comment/Edit.</span>
+              </label>
+
+              <label class="p-3 rounded-xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-750 flex items-start gap-2.5 cursor-pointer hover:border-rose-500 transition">
+                <input type="checkbox" onchange="updateChecklist()" class="mt-1 rounded text-rose-600 focus:ring-rose-500 shrink-0">
+                <span><strong>D6 (L3):</strong> Theo dõi chỉnh sửa (Track Changes) và khôi phục lịch sử phiên bản (Version History).</span>
+              </label>
+
+              <label class="p-3 rounded-xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-750 flex items-start gap-2.5 cursor-pointer hover:border-rose-500 transition">
+                <input type="checkbox" onchange="updateChecklist()" class="mt-1 rounded text-rose-600 focus:ring-rose-500 shrink-0">
+                <span><strong>D7 (L2):</strong> Kích hoạt xác thực 2 lớp (2FA/MFA) và nhận biết chiêu trò lừa đảo Phishing.</span>
+              </label>
+
+              <label class="p-3 rounded-xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-750 flex items-start gap-2.5 cursor-pointer hover:border-rose-500 transition">
+                <input type="checkbox" onchange="updateChecklist()" class="mt-1 rounded text-rose-600 focus:ring-rose-500 shrink-0">
+                <span><strong>D7 (L3):</strong> Hiểu cơ chế lây lan của Ransomware và sử dụng VPN bảo vệ kết nối Wi-Fi mở.</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- 4.3 Đề thi thử GS6 mô phỏng Certiport -->
+          <div class="p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-rose-600 to-pink-700 text-white space-y-4 shadow-xl">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              <div class="space-y-2">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-black bg-white/20 backdrop-blur-xs text-white">
+                  <i class="fa-solid fa-trophy"></i> Thử Thách Certiport IC3 GS6
+                </div>
+                <h3 class="text-2xl font-black">Luyện Đề Thi Thử IC3 GS6 (10 Câu - Thang Điểm 1000)</h3>
+                <p class="text-rose-100 text-xs sm:text-sm max-w-xl leading-relaxed">
+                  Đề thi trắc nghiệm mô phỏng toàn diện bao quát cả 3 Cấp độ (Level 1, 2, 3) và 7 Domain năng lực số. Điểm chuẩn Certiport để được cấp chứng chỉ là từ <strong>700 / 1000 điểm</strong> trở lên.
+                </p>
+              </div>
+              <button onclick="openCourseQuizModal()" class="px-6 py-3.5 rounded-2xl bg-white text-rose-700 hover:bg-rose-50 font-black shadow-lg hover:shadow-xl transition transform active:scale-95 flex items-center justify-center gap-2 shrink-0">
+                <i class="fa-solid fa-play"></i>
+                <span>Bắt Đầu Làm Bài</span>
+              </button>
+            </div>
+          </div>
+
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Final Practice Exam Modal (10 Questions) -->
+  <div id="courseQuizModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+    <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-slate-200 dark:border-slate-800 shadow-2xl p-6 sm:p-8 space-y-6">
+      
+      <div class="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800">
+        <div class="flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-rose-600 text-white flex items-center justify-center text-sm font-black">
+            <i class="fa-solid fa-graduation-cap"></i>
+          </span>
+          <h3 class="text-lg font-black text-slate-900 dark:text-white">Đề Thi Thử IC3 GS6 Chuẩn Certiport (10 Câu)</h3>
+        </div>
+        <button onclick="closeCourseQuizModal()" class="w-8 h-8 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-500 hover:text-slate-900 dark:hover:text-white flex items-center justify-center">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <form id="courseExamForm" onsubmit="submitCourseExam(event)" class="space-y-6 text-sm sm:text-base">
+        
+        <!-- EQ1 -->
+        <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-800 space-y-3">
+          <p class="font-bold text-slate-900 dark:text-white">
+            1. (Level 1) Khi một người dùng cần lưu trữ dữ liệu dung lượng lớn với tốc độ truy xuất nhanh nhất và khả năng chống sốc cơ học khi di chuyển máy tính xách tay, thiết bị phần cứng nào là lựa chọn tối ưu?
+          </p>
+          <div class="space-y-2">
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq1" value="A" required class="text-rose-600 focus:ring-rose-500">
+              <span>A. Ổ cứng thể rắn SSD (Solid-State Drive)</span>
+            </label>
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq1" value="B" class="text-rose-600 focus:ring-rose-500">
+              <span>B. Ổ cứng cơ học HDD (Hard Disk Drive)</span>
+            </label>
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq1" value="C" class="text-rose-600 focus:ring-rose-500">
+              <span>C. Đĩa quang DVD-ROM</span>
+            </label>
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq1" value="D" class="text-rose-600 focus:ring-rose-500">
+              <span>D. Băng từ sao lưu (Magnetic Tape)</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- EQ2 -->
+        <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-800 space-y-3">
+          <p class="font-bold text-slate-900 dark:text-white">
+            2. (Level 1) Dấu chân kỹ thuật số (Digital Footprint) nào sau đây được phân loại là "Chủ động" (Active Digital Footprint)?
+          </p>
+          <div class="space-y-2">
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq2" value="A" required class="text-rose-600 focus:ring-rose-500">
+              <span>A. Người dùng chủ động viết bài bình luận và đăng ảnh lên trang cá nhân mạng xã hội</span>
+            </label>
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq2" value="B" class="text-rose-600 focus:ring-rose-500">
+              <span>B. Máy chủ web tự động ghi lại địa chỉ IP khi người dùng mở trình duyệt xem tin tức</span>
+            </label>
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq2" value="C" class="text-rose-600 focus:ring-rose-500">
+              <span>C. Cookie trang thương mại điện tử theo dõi thói quen cuộn chuột của người truy cập</span>
+            </label>
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq2" value="D" class="text-rose-600 focus:ring-rose-500">
+              <span>D. Nhà mạng viễn thông ghi nhận vị trí trạm thu phát sóng di động khi điện thoại di chuyển</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- EQ3 -->
+        <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-800 space-y-3">
+          <p class="font-bold text-slate-900 dark:text-white">
+            3. (Level 2) Một sinh viên tải về một hình ảnh mang giấy phép Creative Commons "CC BY-NC-ND". Sinh viên này được phép thực hiện hành động nào sau đây?
+          </p>
+          <div class="space-y-2">
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq3" value="A" required class="text-rose-600 focus:ring-rose-500">
+              <span>A. Chia sẻ nguyên bản hình ảnh kèm ghi nhận tên tác giả trong bài thuyết trình phi thương mại</span>
+            </label>
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq3" value="B" class="text-rose-600 focus:ring-rose-500">
+              <span>B. Chỉnh sửa cắt ghép hình ảnh làm ảnh bìa sách bán lấy tiền</span>
+            </label>
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq3" value="C" class="text-rose-600 focus:ring-rose-500">
+              <span>C. Bán bản quyền hình ảnh cho một công ty quảng cáo truyền thông</span>
+            </label>
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq3" value="D" class="text-rose-600 focus:ring-rose-500">
+              <span>D. Xoá tên tác giả gốc và ký tên mình lên tác phẩm</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- EQ4 -->
+        <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-800 space-y-3">
+          <p class="font-bold text-slate-900 dark:text-white">
+            4. (Level 2) Trong ứng dụng bảng tính, công thức nào sau đây tính trung bình cộng giá trị của vùng từ ô B2 đến B10 nhưng chỉ tính các giá trị lớn hơn 50?
+          </p>
+          <div class="space-y-2">
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq4" value="A" required class="text-rose-600 focus:ring-rose-500">
+              <span>A. =AVERAGEIF(B2:B10, ">50")</span>
+            </label>
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq4" value="B" class="text-rose-600 focus:ring-rose-500">
+              <span>B. =SUMIF(B2:B10, ">50")</span>
+            </label>
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq4" value="C" class="text-rose-600 focus:ring-rose-500">
+              <span>C. =COUNTIF(B2:B10, ">50")</span>
+            </label>
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq4" value="D" class="text-rose-600 focus:ring-rose-500">
+              <span>D. =AVERAGE(B2:B10 > 50)</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- EQ5 -->
+        <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-800 space-y-3">
+          <p class="font-bold text-slate-900 dark:text-white">
+            5. (Level 2) Khi cần trình chiếu tài liệu cho đồng nghiệp ở nhiều thành phố khác nhau và nhận phản hồi trực tiếp bằng giọng nói, công cụ nào sau đây là giải pháp giao tiếp đồng bộ (Synchronous Communication) thích hợp nhất?
+          </p>
+          <div class="space-y-2">
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq5" value="A" required class="text-rose-600 focus:ring-rose-500">
+              <span>A. Phần mềm hội nghị truyền hình trực tuyến (Zoom / Google Meet / MS Teams)</span>
+            </label>
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq5" value="B" class="text-rose-600 focus:ring-rose-500">
+              <span>B. Gửi email hàng loạt có đính kèm file slide PowerPoint</span>
+            </label>
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq5" value="C" class="text-rose-600 focus:ring-rose-500">
+              <span>C. Đăng tài liệu lên diễn đàn nội bộ và chờ bình luận</span>
+            </label>
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq5" value="D" class="text-rose-600 focus:ring-rose-500">
+              <span>D. In ấn tài liệu và chuyển phát nhanh qua bưu điện</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- EQ6 -->
+        <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-800 space-y-3">
+          <p class="font-bold text-slate-900 dark:text-white">
+            6. (Level 2) Để cho phép người nhận chỉ được xem và để lại nhận xét trên tài liệu đám mây mà không thể chỉnh sửa trực tiếp nội dung, quyền chia sẻ nào cần được chọn?
+          </p>
+          <div class="space-y-2">
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq6" value="A" required class="text-rose-600 focus:ring-rose-500">
+              <span>A. Commenter (Người nhận xét)</span>
+            </label>
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq6" value="B" class="text-rose-600 focus:ring-rose-500">
+              <span>B. Editor (Người chỉnh sửa)</span>
+            </label>
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq6" value="C" class="text-rose-600 focus:ring-rose-500">
+              <span>C. Owner (Chủ sở hữu)</span>
+            </label>
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq6" value="D" class="text-rose-600 focus:ring-rose-500">
+              <span>D. Administrator (Quản trị viên)</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- EQ7 -->
+        <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-800 space-y-3">
+          <p class="font-bold text-slate-900 dark:text-white">
+            7. (Level 3) Trong thiết kế tài liệu số trợ năng (Accessibility), việc chèn văn bản thay thế (Alt-text) cho hình ảnh mang lại lợi ích chủ yếu nào?
+          </p>
+          <div class="space-y-2">
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq7" value="A" required class="text-rose-600 focus:ring-rose-500">
+              <span>A. Giúp người khiếm thị nghe đọc mô tả hình ảnh thông qua các ứng dụng đọc màn hình (Screen Reader)</span>
+            </label>
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq7" value="B" class="text-rose-600 focus:ring-rose-500">
+              <span>B. Tự động nâng cao độ phân giải hình ảnh lên chuẩn 4K</span>
+            </label>
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq7" value="C" class="text-rose-600 focus:ring-rose-500">
+              <span>C. Khoá không cho phép người khác tải hình ảnh về máy</span>
+            </label>
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq7" value="D" class="text-rose-600 focus:ring-rose-500">
+              <span>D. Nén kích thước file tài liệu giảm xuống 50%</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- EQ8 -->
+        <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-800 space-y-3">
+          <p class="font-bold text-slate-900 dark:text-white">
+            8. (Level 3) Biện pháp kỹ thuật nào sau đây là hiệu quả nhất để phòng chống và hạn chế tối đa thiệt hại do mã độc tống tiền (Ransomware) gây ra?
+          </p>
+          <div class="space-y-2">
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq8" value="A" required class="text-rose-600 focus:ring-rose-500">
+              <span>A. Thường xuyên sao lưu dữ liệu độc lập (chiến lược Backup 3-2-1) sang ổ cứng ngoại vi ngắt kết nối mạng hoặc đám mây bất biến</span>
+            </label>
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq8" value="B" class="text-rose-600 focus:ring-rose-500">
+              <span>B. Đổi đuôi tệp tin từ .docx sang .txt để giấu tài liệu</span>
+            </label>
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq8" value="C" class="text-rose-600 focus:ring-rose-500">
+              <span>C. Chuyển sang sử dụng mạng Wi-Fi công cộng quán cà phê</span>
+            </label>
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq8" value="D" class="text-rose-600 focus:ring-rose-500">
+              <span>D. Trả ngay tiền chuộc cho tin tặc khi nhận được thông báo đòi tiền</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- EQ9 -->
+        <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-800 space-y-3">
+          <p class="font-bold text-slate-900 dark:text-white">
+            9. (Level 3) Một email thông báo tài khoản ngân hàng của bạn bị khoá và yêu cầu bấm vào liên kết có địa chỉ lạ dạng <code>http://vietcom-bank-security-login.xyz</code> để xác minh ngay lập tức. Đây là hình thức tấn công gì?
+          </p>
+          <div class="space-y-2">
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq9" value="A" required class="text-rose-600 focus:ring-rose-500">
+              <span>A. Tấn công lừa đảo qua mạng (Phishing)</span>
+            </label>
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq9" value="B" class="text-rose-600 focus:ring-rose-500">
+              <span>B. Tấn công từ chối dịch vụ (DDoS)</span>
+            </label>
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq9" value="C" class="text-rose-600 focus:ring-rose-500">
+              <span>C. Mã độc trojan chèn cửa sau</span>
+            </label>
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq9" value="D" class="text-rose-600 focus:ring-rose-500">
+              <span>D. Lỗi cập nhật máy chủ của ngân hàng</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- EQ10 -->
+        <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-800 space-y-3">
+          <p class="font-bold text-slate-900 dark:text-white">
+            10. (Level 3) Để đạt được danh hiệu quốc tế cao quý nhất "IC3 Digital Literacy Master" của Certiport, thí sinh cần hoàn thành điều kiện nào?
+          </p>
+          <div class="space-y-2">
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq10" value="A" required class="text-rose-600 focus:ring-rose-500">
+              <span>A. Thi đỗ cả 3 bài thi độc lập: Level 1 (Foundational), Level 2 (Intermediate) và Level 3 (Advanced) của chuẩn IC3 GS6</span>
+            </label>
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq10" value="B" class="text-rose-600 focus:ring-rose-500">
+              <span>B. Chỉ cần thi đỗ bài thi IC3 GS5 Module 3</span>
+            </label>
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq10" value="C" class="text-rose-600 focus:ring-rose-500">
+              <span>C. Tham gia đủ 100 giờ học trực tuyến có điểm danh</span>
+            </label>
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq10" value="D" class="text-rose-600 focus:ring-rose-500">
+              <span>D. Thi đỗ bất kỳ một chứng chỉ MOS Word Specialist</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="pt-4 flex items-center justify-end gap-3">
+          <button type="button" onclick="closeCourseQuizModal()" class="px-5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 font-bold hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+            Hủy Bỏ
+          </button>
+          <button type="submit" class="px-6 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-black shadow-md hover:shadow-lg transition">
+            Nộp Bài Chấm Điểm
+          </button>
+        </div>
+      </form>
+
+      <!-- Exam Result Panel -->
+      <div id="courseExamResult" class="hidden space-y-4 pt-4 border-t border-slate-200 dark:border-slate-800 text-center">
+        <div class="w-16 h-16 mx-auto rounded-full bg-rose-100 dark:bg-rose-950/60 text-rose-600 dark:text-rose-400 flex items-center justify-center text-2xl font-black">
+          <i class="fa-solid fa-award"></i>
+        </div>
+        <h4 id="examScoreTitle" class="text-xl font-black text-slate-900 dark:text-white"></h4>
+        <p id="examScoreDetail" class="text-sm text-slate-600 dark:text-slate-300 max-w-lg mx-auto leading-relaxed"></p>
+        <div class="pt-2 flex items-center justify-center gap-3">
+          <button onclick="restartCourseExam()" class="px-5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-bold hover:bg-slate-200 transition text-sm">
+            Làm Lại Bài Thi
+          </button>
+          <button onclick="closeCourseQuizModal()" class="px-5 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold transition text-sm">
+            Đóng Lại
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Interactive JavaScript -->
+  <script>
+    // Font Scaling Controller
+    let currentScale = 100;
+    const minScale = 75;
+    const maxScale = 150;
+
+    function updateFontDisplay() {
+      const el = document.getElementById('font-scale-display');
+      if (el) el.textContent = currentScale + '%';
+      document.documentElement.style.fontSize = (currentScale / 100 * 16) + 'px';
+    }
+
+    function changeFontSize(delta) {
+      currentScale = Math.min(maxScale, Math.max(minScale, currentScale + delta));
+      updateFontDisplay();
+      localStorage.setItem('ic3_gs6_font_scale', currentScale);
+    }
+
+    function resetFontSize() {
+      currentScale = 100;
+      updateFontDisplay();
+      localStorage.setItem('ic3_gs6_font_scale', currentScale);
+    }
+
+    // Initialize Font Size
+    try {
+      const savedScale = localStorage.getItem('ic3_gs6_font_scale');
+      if (savedScale) {
+        currentScale = parseInt(savedScale, 10);
+        updateFontDisplay();
+      }
+    } catch(e) {}
+
+    // Checklist Logic
+    function updateChecklist() {
+      const boxes = document.querySelectorAll('#checklistContainer input[type="checkbox"]');
+      const total = boxes.length;
+      let checked = 0;
+      const states = [];
+      boxes.forEach(b => {
+        if (b.checked) checked++;
+        states.push(b.checked);
+      });
+      const pct = Math.round((checked / total) * 100);
+      const scoreEl = document.getElementById('checklistScore');
+      const barEl = document.getElementById('checklistBar');
+      if (scoreEl) scoreEl.textContent = checked + ' / ' + total + ' (' + pct + '%)';
+      if (barEl) barEl.style.width = pct + '%';
+
+      try {
+        localStorage.setItem('ic3_gs6_checklist', JSON.stringify(states));
+      } catch(e) {}
+    }
+
+    // Restore Checklist
+    try {
+      const savedStates = JSON.parse(localStorage.getItem('ic3_gs6_checklist') || '[]');
+      const boxes = document.querySelectorAll('#checklistContainer input[type="checkbox"]');
+      boxes.forEach((b, idx) => {
+        if (savedStates[idx] !== undefined) b.checked = savedStates[idx];
+      });
+      updateChecklist();
+    } catch(e) {}
+
+    // In-Domain Quiz Engine
+    function checkQuiz(quizId, selectedIdx, correctIdx) {
+      const container = document.getElementById(quizId);
+      if (!container) return;
+      const buttons = container.querySelectorAll('.quiz-btn');
+      const feedback = container.querySelector('.quiz-feedback');
+      const explanation = container.querySelector('.quiz-explanation-text');
+
+      buttons.forEach((btn, idx) => {
+        btn.disabled = true;
+        btn.classList.remove('hover:border-rose-500');
+        if (idx === correctIdx) {
+          btn.classList.add('border-emerald-500', 'bg-emerald-50', 'dark:bg-emerald-950/40', 'text-emerald-900', 'dark:text-emerald-200');
+        } else if (idx === selectedIdx && selectedIdx !== correctIdx) {
+          btn.classList.add('border-rose-500', 'bg-rose-50', 'dark:bg-rose-950/40', 'text-rose-900', 'dark:text-rose-200');
+        }
+      });
+
+      if (feedback) {
+        feedback.classList.remove('hidden');
+        if (selectedIdx === correctIdx) {
+          feedback.innerHTML = '<div class="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-xs sm:text-sm text-emerald-800 dark:text-emerald-200 font-bold flex items-center gap-2"><i class="fa-solid fa-circle-check text-emerald-600"></i> Chính xác! ' + (explanation ? explanation.innerHTML : '') + '</div>';
+        } else {
+          feedback.innerHTML = '<div class="p-3 rounded-xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800 text-xs sm:text-sm text-rose-800 dark:text-rose-200 font-bold flex items-center gap-2"><i class="fa-solid fa-circle-xmark text-rose-600"></i> Chưa đúng. ' + (explanation ? explanation.innerHTML : '') + '</div>';
+        }
+      }
+    }
+
+    // Glossary Search
+    function filterGlossary() {
+      const q = (document.getElementById('glossarySearch')?.value || '').toLowerCase().trim();
+      const rows = document.querySelectorAll('#glossaryTable tr');
+      rows.forEach(r => {
+        const text = r.textContent.toLowerCase();
+        r.style.display = text.includes(q) ? '' : 'none';
+      });
+    }
+
+    // Exam Modal Controllers
+    function openCourseQuizModal() {
+      document.getElementById('courseQuizModal')?.classList.remove('hidden');
+    }
+    function closeCourseQuizModal() {
+      document.getElementById('courseQuizModal')?.classList.add('hidden');
+    }
+
+    function restartCourseExam() {
+      const form = document.getElementById('courseExamForm');
+      const resultPanel = document.getElementById('courseExamResult');
+      if (form) {
+        form.reset();
+        form.classList.remove('hidden');
+      }
+      if (resultPanel) {
+        resultPanel.classList.add('hidden');
+      }
+    }
+
+    // Submit Final Practice Exam
+    function submitCourseExam(e) {
+      e.preventDefault();
+      const correctAnswers = {
+        eq1: 'A', eq2: 'A', eq3: 'A', eq4: 'A', eq5: 'A',
+        eq6: 'A', eq7: 'A', eq8: 'A', eq9: 'A', eq10: 'A'
+      };
+      let score = 0;
+      const form = document.getElementById('courseExamForm');
+      const formData = new FormData(form);
+
+      for (const [key, correctVal] of Object.entries(correctAnswers)) {
+        if (formData.get(key) === correctVal) {
+          score += 100; // 1000 max score
+        }
+      }
+
+      form.classList.add('hidden');
+      const resultPanel = document.getElementById('courseExamResult');
+      const title = document.getElementById('examScoreTitle');
+      const detail = document.getElementById('examScoreDetail');
+
+      if (resultPanel && title && detail) {
+        resultPanel.classList.remove('hidden');
+        if (score >= 700) {
+          title.textContent = '🎉 XUẤT SẮC! BẠN ĐẠT ĐIỂM CHỨNG NHẬN IC3 GS6';
+          title.className = 'text-xl font-black text-emerald-600 dark:text-emerald-400';
+          detail.textContent = 'Điểm số: ' + score + '/1000 điểm (Yêu cầu Certiport: >= 700/1000). Bạn đã nắm vững các năng lực cốt lõi trên cả 7 Domain và sẵn sàng chinh phục danh hiệu IC3 Digital Literacy Master!';
+        } else {
+          title.textContent = 'CHƯA ĐẠT ĐIỂM CHUẨN CERTIPORT';
+          title.className = 'text-xl font-black text-rose-600 dark:text-rose-400';
+          detail.textContent = 'Điểm số: ' + score + '/1000 điểm. Bạn cần đạt tối thiểu 700/1000 để đỗ bài thi quốc tế. Hãy ôn tập kỹ lại các Domain và làm lại bài thi thử!';
+        }
+      }
+    }
+  </script>
+</body>
+</html>

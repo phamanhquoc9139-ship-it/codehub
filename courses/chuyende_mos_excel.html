@@ -1,0 +1,1601 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Luyện Thi Chứng Chỉ Quốc Tế MOS Excel (Microsoft Office Specialist) | CodeHub</title>
+  <meta name="description" content="Chương trình luyện thi chứng chỉ tin học văn phòng quốc tế Microsoft Office Specialist (MOS) Excel toàn diện: Đủ 5 chuyên đề chuẩn Certiport (Quản lý trang tính, Ô & Vùng dữ liệu, Bảng Table, Công thức & Hàm tính, Biểu đồ & Sparklines), 15 câu trắc nghiệm mô phỏng đề thi và từ điển thuật ngữ IT.">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            excel: {
+              50: '#f0fdf4',
+              100: '#dcfce7',
+              200: '#bbf7d0',
+              300: '#86efac',
+              400: '#4ade80',
+              500: '#22c55e',
+              600: '#16a34a',
+              700: '#15803d',
+              800: '#166534',
+              900: '#14532d',
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    /* Default base font size with smooth scaling */
+    html {
+      font-size: 16px;
+      transition: font-size 0.2s ease;
+    }
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    .dark ::-webkit-scrollbar-track {
+      background: #0f172a;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #16a34a;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #15803d;
+    }
+    .quiz-selected {
+      border-color: #16a34a !important;
+      background-color: rgba(22, 163, 74, 0.12) !important;
+    }
+    .quiz-correct {
+      border-color: #10b981 !important;
+      background-color: rgba(16, 185, 129, 0.15) !important;
+      color: #065f46 !important;
+    }
+    .dark .quiz-correct {
+      color: #6ee7b7 !important;
+    }
+    .quiz-incorrect {
+      border-color: #ef4444 !important;
+      background-color: rgba(239, 68, 68, 0.15) !important;
+      color: #991b1b !important;
+    }
+    .dark .quiz-incorrect {
+      color: #fca5a5 !important;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 min-h-screen flex flex-col font-sans transition-colors duration-200">
+
+  <!-- Top Navigation Bar -->
+  <header class="sticky top-0 z-50 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <a href="../index.html" class="flex items-center gap-2 text-emerald-600 dark:text-emerald-400 font-bold text-sm sm:text-base hover:opacity-80 transition">
+          <i class="fa-solid fa-arrow-left"></i>
+          <span>Trang chủ</span>
+        </a>
+        <span class="text-slate-300 dark:text-slate-700">|</span>
+        <div class="flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-gradient-to-br from-emerald-600 to-green-700 text-white flex items-center justify-center font-black text-sm shadow">
+            X
+          </span>
+          <span class="font-extrabold text-sm sm:text-base tracking-tight text-slate-900 dark:text-white">
+            MOS Excel Associate
+          </span>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 sm:gap-3">
+        <!-- Font Size Controls (A- / A+) -->
+        <div class="flex items-center bg-slate-100 dark:bg-slate-800 p-1 rounded-xl border border-slate-200 dark:border-slate-700 shadow-inner">
+          <button onclick="changeFontSize(-1)" class="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-white dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-black text-xs transition" title="Giảm cỡ chữ">
+            A-
+          </button>
+          <span id="fontSizeDisplay" class="text-xs font-black px-1.5 text-emerald-600 dark:text-emerald-400 min-w-[42px] text-center select-none">100%</span>
+          <button onclick="changeFontSize(1)" class="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-white dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-black text-xs transition" title="Tăng cỡ chữ">
+            A+
+          </button>
+        </div>
+
+        <!-- Dark/Light Theme Toggle -->
+        <button id="themeToggleBtn" onclick="toggleTheme()" class="p-2 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition" title="Chuyển chế độ sáng/tối">
+          <i class="fa-solid fa-moon dark:hidden"></i>
+          <i class="fa-solid fa-sun hidden dark:block text-amber-400"></i>
+        </button>
+
+        <!-- Progress Indicator -->
+        <a href="#thuat-ngu-kiem-tra" class="hidden sm:flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/80 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 hover:bg-emerald-100 transition">
+          <i class="fa-solid fa-list-check"></i>
+          <span>Checklist & Từ điển</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Header -->
+  <section class="bg-gradient-to-br from-emerald-700 via-teal-800 to-green-900 text-white py-12 sm:py-16 px-4 sm:px-6 relative overflow-hidden">
+    <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]"></div>
+    <div class="absolute -top-24 -right-24 w-96 h-96 bg-emerald-500/30 rounded-full blur-3xl"></div>
+    <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-teal-500/30 rounded-full blur-3xl"></div>
+
+    <div class="max-w-6xl mx-auto relative z-10 space-y-6">
+      <div class="flex flex-wrap items-center gap-2">
+        <span class="px-3 py-1 rounded-full text-xs font-extrabold uppercase tracking-wider bg-white/20 backdrop-blur-md text-white border border-white/30">
+          <i class="fa-brands fa-microsoft mr-1"></i> Microsoft Certified
+        </span>
+        <span class="px-3 py-1 rounded-full text-xs font-bold bg-amber-400 text-amber-950">
+          <i class="fa-solid fa-award mr-1"></i> Chuẩn MOS Excel Associate
+        </span>
+        <span class="px-3 py-1 rounded-full text-xs font-bold bg-emerald-500 text-white">
+          <i class="fa-solid fa-check-double mr-1"></i> Đủ 5 Mục Tiêu Đề Thi (Domains)
+        </span>
+      </div>
+
+      <div class="space-y-3">
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight leading-tight">
+          Luyện Thi Chứng Chỉ Quốc Tế MOS Excel
+        </h1>
+        <p class="text-emerald-100 text-base sm:text-lg md:text-xl max-w-3xl leading-relaxed">
+          Chương trình ôn luyện chuyên sâu chứng chỉ <strong>Microsoft Office Specialist (MOS) Excel</strong> chuẩn quốc tế Certiport. Làm chủ trọn vẹn 5 mục tiêu bài thi: <em>Quản lý trang tính và sổ tính</em>, <em>Ô & Vùng dữ liệu</em>, <em>Bảng Table</em>, <em>Công thức & Hàm tính toán</em>, <em>Biểu đồ & Đồ thị vi mô Sparklines</em>.
+        </p>
+      </div>
+
+      <!-- Quick Metrics Cards -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 pt-2">
+        <div class="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/15">
+          <div class="text-xs text-emerald-200 font-semibold uppercase">5 Mục Tiêu Bài Thi</div>
+          <div class="text-xl sm:text-2xl font-black mt-1">5 Domains</div>
+          <div class="text-[11px] text-emerald-200/80 mt-0.5">Bao phủ 100% chuẩn thi</div>
+        </div>
+        <div class="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/15">
+          <div class="text-xs text-emerald-200 font-semibold uppercase">Điểm Đạt Chuẩn</div>
+          <div class="text-xl sm:text-2xl font-black mt-1">≥ 700 / 1.000</div>
+          <div class="text-[11px] text-emerald-200/80 mt-0.5">Chứng chỉ quốc tế vĩnh viễn</div>
+        </div>
+        <div class="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/15">
+          <div class="text-xs text-emerald-200 font-semibold uppercase">Thời Gian Thi</div>
+          <div class="text-xl sm:text-2xl font-black mt-1">50 Phút</div>
+          <div class="text-[11px] text-emerald-200/80 mt-0.5">5–7 Multi-projects (35 task)</div>
+        </div>
+        <div class="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/15">
+          <div class="text-xs text-emerald-200 font-semibold uppercase">Ngân Hàng Ôn Tập</div>
+          <div class="text-xl sm:text-2xl font-black mt-1">15 Câu Mock</div>
+          <div class="text-[11px] text-emerald-200/80 mt-0.5">Chấm điểm & giải thích chi tiết</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Container with Sticky Sidebar -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 flex-1 w-full">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+      <!-- Sticky Table of Contents Sidebar -->
+      <aside class="lg:col-span-3 sticky top-24 space-y-4 order-2 lg:order-1">
+        <div class="bg-white dark:bg-slate-900 rounded-2xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+          <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
+            <span class="font-bold text-slate-900 dark:text-white text-sm flex items-center gap-2">
+              <i class="fa-solid fa-compass text-emerald-600"></i> Mục lục ôn thi MOS
+            </span>
+            <span class="text-[11px] font-black px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300">
+              5 Chuyên đề
+            </span>
+          </div>
+
+          <nav class="space-y-1 text-xs sm:text-sm font-medium">
+            <!-- Domain 1 -->
+            <a href="#domain-1" class="flex items-center justify-between p-2 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-emerald-50 dark:hover:bg-slate-800 hover:text-emerald-600 transition">
+              <span class="flex items-center gap-2">
+                <i class="fa-solid fa-file-excel text-emerald-500 text-xs"></i>
+                <span class="font-bold">1. Trang Tính & Sổ Tính</span>
+              </span>
+            </a>
+            <div class="pl-6 pr-2 py-1 space-y-1 text-xs text-slate-500 dark:text-slate-400">
+              <a href="#d1-import" class="block hover:text-emerald-600 dark:hover:text-emerald-400 py-0.5">&bull; Nhập dữ liệu CSV/TXT</a>
+              <a href="#d1-freeze" class="block hover:text-emerald-600 dark:hover:text-emerald-400 py-0.5">&bull; Đóng băng Freeze Panes</a>
+              <a href="#d1-print" class="block hover:text-emerald-600 dark:hover:text-emerald-400 py-0.5">&bull; Print Titles & Vùng in</a>
+            </div>
+
+            <!-- Domain 2 -->
+            <a href="#domain-2" class="flex items-center justify-between p-2 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-emerald-50 dark:hover:bg-slate-800 hover:text-emerald-600 transition">
+              <span class="flex items-center gap-2">
+                <i class="fa-solid fa-table-cells text-teal-500 text-xs"></i>
+                <span class="font-bold">2. Ô & Vùng Dữ Liệu</span>
+              </span>
+            </a>
+            <div class="pl-6 pr-2 py-1 space-y-1 text-xs text-slate-500 dark:text-slate-400">
+              <a href="#d2-paste" class="block hover:text-emerald-600 dark:hover:text-emerald-400 py-0.5">&bull; Paste Special & Flash Fill</a>
+              <a href="#d2-cond" class="block hover:text-emerald-600 dark:hover:text-emerald-400 py-0.5">&bull; Conditional Formatting</a>
+              <a href="#d2-name" class="block hover:text-emerald-600 dark:hover:text-emerald-400 py-0.5">&bull; Đặt tên Named Ranges</a>
+            </div>
+
+            <!-- Domain 3 -->
+            <a href="#domain-3" class="flex items-center justify-between p-2 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-emerald-50 dark:hover:bg-slate-800 hover:text-emerald-600 transition">
+              <span class="flex items-center gap-2">
+                <i class="fa-solid fa-table text-green-500 text-xs"></i>
+                <span class="font-bold">3. Bảng Table & Dữ Liệu</span>
+              </span>
+            </a>
+            <div class="pl-6 pr-2 py-1 space-y-1 text-xs text-slate-500 dark:text-slate-400">
+              <a href="#d3-table-style" class="block hover:text-emerald-600 dark:hover:text-emerald-400 py-0.5">&bull; Tạo Table & Total Row</a>
+              <a href="#d3-sort-filter" class="block hover:text-emerald-600 dark:hover:text-emerald-400 py-0.5">&bull; Sắp xếp & Lọc đa cấp</a>
+              <a href="#d3-duplicates" class="block hover:text-emerald-600 dark:hover:text-emerald-400 py-0.5">&bull; Remove Duplicates lọc trùng</a>
+            </div>
+
+            <!-- Domain 4 -->
+            <a href="#domain-4" class="flex items-center justify-between p-2 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-emerald-50 dark:hover:bg-slate-800 hover:text-emerald-600 transition">
+              <span class="flex items-center gap-2">
+                <i class="fa-solid fa-calculator text-blue-500 text-xs"></i>
+                <span class="font-bold">4. Công Thức & Hàm Tính</span>
+              </span>
+            </a>
+            <div class="pl-6 pr-2 py-1 space-y-1 text-xs text-slate-500 dark:text-slate-400">
+              <a href="#d4-ref" class="block hover:text-emerald-600 dark:hover:text-emerald-400 py-0.5">&bull; Địa chỉ tuyệt đối $A$1</a>
+              <a href="#d4-cond-func" class="block hover:text-emerald-600 dark:hover:text-emerald-400 py-0.5">&bull; Hàm COUNTIF, SUMIF, IF</a>
+              <a href="#d4-text-lookup" class="block hover:text-emerald-600 dark:hover:text-emerald-400 py-0.5">&bull; Hàm Text, TRIM & VLOOKUP</a>
+            </div>
+
+            <!-- Domain 5 -->
+            <a href="#domain-5" class="flex items-center justify-between p-2 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-emerald-50 dark:hover:bg-slate-800 hover:text-emerald-600 transition">
+              <span class="flex items-center gap-2">
+                <i class="fa-solid fa-chart-pie text-amber-500 text-xs"></i>
+                <span class="font-bold">5. Biểu Đồ & Sparklines</span>
+              </span>
+            </a>
+            <div class="pl-6 pr-2 py-1 space-y-1 text-xs text-slate-500 dark:text-slate-400">
+              <a href="#d5-charts" class="block hover:text-emerald-600 dark:hover:text-emerald-400 py-0.5">&bull; Tạo biểu đồ & Chart Elements</a>
+              <a href="#d5-sparklines" class="block hover:text-emerald-600 dark:hover:text-emerald-400 py-0.5">&bull; Đồ thị vi mô Sparklines</a>
+              <a href="#d5-alt-text" class="block hover:text-emerald-600 dark:hover:text-emerald-400 py-0.5">&bull; Chèn Alt Text mô tả</a>
+            </div>
+
+            <!-- Glossary & Checklist -->
+            <a href="#thuat-ngu-kiem-tra" class="flex items-center justify-between p-2 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-emerald-50 dark:hover:bg-slate-800 hover:text-emerald-600 transition">
+              <span class="flex items-center gap-2">
+                <i class="fa-solid fa-spell-check text-purple-500 text-xs"></i>
+                <span class="font-bold">Từ Điển MOS & Tự Kiểm</span>
+              </span>
+            </a>
+          </nav>
+        </div>
+
+        <!-- Tip Box -->
+        <div class="bg-emerald-50/80 dark:bg-slate-900 rounded-2xl p-4 border border-emerald-200 dark:border-emerald-900 text-xs text-emerald-950 dark:text-emerald-200 space-y-2">
+          <div class="font-bold flex items-center gap-1.5 text-emerald-800 dark:text-emerald-300">
+            <i class="fa-solid fa-lightbulb"></i> Chiến thuật thi MOS Excel:
+          </div>
+          <p class="leading-relaxed">
+            Trong đề thi MOS Excel, hãy luôn sử dụng <strong>tên vùng (Named Range)</strong> hoặc <strong>cột bảng cấu trúc (Structured References)</strong> khi công thức yêu cầu, và lưu ý khóa chính xác địa chỉ tuyệt đối <code class="font-mono text-emerald-700 dark:text-emerald-300">$A$1</code> bằng phím <kbd class="px-1 py-0.5 bg-slate-200 dark:bg-slate-700 rounded font-mono">F4</kbd>.
+          </p>
+        </div>
+      </aside>
+
+      <!-- Main Content Column -->
+      <div class="lg:col-span-9 space-y-12 order-1 lg:order-2">
+
+    <!-- ========================================== -->
+    <!-- DOMAIN 1: TRANG TÍNH & SỔ TÍNH             -->
+    <!-- ========================================== -->
+    <section id="domain-1" class="space-y-8 scroll-mt-24">
+      <div class="border-b-2 border-emerald-500 pb-4 flex items-center justify-between">
+        <div>
+          <span class="text-xs font-black uppercase tracking-wider px-3 py-1 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300">
+            MOS Excel • Domain 1
+          </span>
+          <h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white mt-2">
+            1. QUẢN LÝ TRANG TÍNH & SỔ TÍNH (Worksheets & Workbooks)
+          </h2>
+          <p class="text-sm sm:text-base text-slate-600 dark:text-slate-400 mt-1">
+            Nhập dữ liệu tệp ngoài, đóng băng tiêu đề Freeze Panes, thiết lập vùng in Print Titles và kiểm tra bảo mật sổ tính.
+          </p>
+        </div>
+        <div class="hidden sm:flex items-center justify-center w-12 h-12 rounded-2xl bg-emerald-600 text-white text-xl shadow-lg">
+          <i class="fa-solid fa-file-excel"></i>
+        </div>
+      </div>
+
+      <!-- NHẬP DỮ LIỆU & ĐIỀU HƯỚNG -->
+      <article id="d1-import" class="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 sm:p-8 shadow-sm space-y-6 scroll-mt-24">
+        <div class="border-b border-slate-200 dark:border-slate-800 pb-4">
+          <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">Chuyên mục 1.1</span>
+          <h3 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white mt-1">
+            Nhập Dữ Liệu Tệp Ngoài (Import Data) & Quản Lý Trang Tính (Worksheet)
+          </h3>
+        </div>
+
+        <div class="space-y-4 text-base sm:text-lg leading-relaxed text-slate-700 dark:text-slate-300">
+          <h4 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-file-import text-emerald-600"></i> 1. Nhập dữ liệu từ tệp văn bản (CSV / TXT)
+          </h4>
+          <p>
+            Đề thi MOS thường yêu cầu: <em>"Import data from the file Data.csv into a new worksheet or starting at cell A1"</em>:
+          </p>
+          <ul class="list-disc list-inside space-y-1.5 text-sm sm:text-base">
+            <li>Vào thẻ <strong>Data</strong> &rarr; nhóm <em>Get & Transform Data</em> &rarr; nhấp nút <strong>From Text/CSV</strong> (hoặc <em>Get External Data &gt; From Text</em>).</li>
+            <li>Chọn tệp nguồn &rarr; trong hộp thoại xem trước, kiểm tra ký tự phân cách (<strong>Delimiter</strong>: Comma dấu phẩy, Tab, Semicolon chấm phẩy hoặc Space dấu cách).</li>
+            <li>Bấm mũi tên cạnh nút <strong>Load</strong> &rarr; chọn <strong>Load To...</strong> &rarr; chọn đưa dữ liệu vào <em>Existing worksheet</em> (chọn ô bắt đầu, e.g. <code>$A$1</code>) hoặc <em>New worksheet</em> &rarr; bấm <strong>OK</strong>.</li>
+          </ul>
+
+          <h4 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2 pt-2">
+            <i class="fa-solid fa-folder-open text-emerald-600"></i> 2. Các thao tác với thẻ Sheet (Worksheet Management)
+          </h4>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs sm:text-sm">
+            <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
+              <strong class="text-emerald-600 dark:text-emerald-400 block mb-1">Đổi tên & Đổi màu thẻ Tab</strong>
+              Nhấp chuột phải vào tên Sheet ở thanh dưới &rarr; chọn <strong>Rename</strong> (đặt tên mới) hoặc chọn <strong>Tab Color</strong> (chọn màu chính xác theo đề bài, e.g. <em>Blue, Accent 1</em>).
+            </div>
+            <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
+              <strong class="text-emerald-600 dark:text-emerald-400 block mb-1">Sao chép trang tính (Copy Sheet)</strong>
+              Nhấp chuột phải vào tên Sheet &rarr; <strong>Move or Copy...</strong> &rarr; tích chọn ô <strong>Create a copy</strong> &rarr; chọn vị trí đặt trang tính sao chép &rarr; bấm <em>OK</em>.
+            </div>
+            <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
+              <strong class="text-emerald-600 dark:text-emerald-400 block mb-1">Ẩn / Hiện trang tính</strong>
+              Nhấp chuột phải vào Sheet &rarr; chọn <strong>Hide</strong> (ẩn đi) hoặc chọn <strong>Unhide...</strong> để chọn phục hồi lại trang tính bị ẩn.
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- ĐÓNG BĂNG TIÊU ĐỀ & THIẾT LẬP IN ẤN -->
+      <article id="d1-freeze" class="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 sm:p-8 shadow-sm space-y-6 scroll-mt-24">
+        <div class="border-b border-slate-200 dark:border-slate-800 pb-4">
+          <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">Chuyên mục 1.2</span>
+          <h3 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white mt-1">
+            Đóng Băng Tiêu Đề (Freeze Panes) & Cài Đặt Trang In (Print Titles)
+          </h3>
+        </div>
+
+        <div class="space-y-4 text-base sm:text-lg leading-relaxed text-slate-700 dark:text-slate-300">
+          <h4 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-snowflake text-emerald-600"></i> 1. Đóng băng hàng và cột (Freeze Panes)
+          </h4>
+          <p>
+            Vào thẻ <strong>View</strong> &rarr; nhóm <em>Window</em> &rarr; nhấp nút <strong>Freeze Panes</strong>:
+          </p>
+          <ul class="list-disc list-inside space-y-1.5 text-sm sm:text-base">
+            <li><strong>Freeze Top Row:</strong> Cố định duy nhất <em>hàng đầu tiên (Hàng 1)</em> của trang tính khi cuộn trang xuống dưới.</li>
+            <li><strong>Freeze First Column:</strong> Cố định duy nhất <em>cột đầu tiên (Cột A)</em> khi cuộn trang sang phải.</li>
+            <li><strong>Freeze Panes (Cố định cả hàng và cột tùy chọn):</strong> Đặt con trỏ chuột tại ô nằm <em>dưới hàng cần cố định</em> và <em>bên phải cột cần cố định</em> (ví dụ muốn cố định hàng 1, 2 và cột A &rarr; đặt con trỏ tại ô <code class="font-bold text-emerald-600">B3</code>) rồi bấm <strong>Freeze Panes</strong>.</li>
+          </ul>
+
+          <h4 id="d1-print" class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2 pt-2 scroll-mt-24">
+            <i class="fa-solid fa-print text-emerald-600"></i> 2. Tiêu đề in lặp lại (Print Titles) & Vừa trang in (Fit to Page)
+          </h4>
+          <div class="space-y-2 text-sm sm:text-base">
+            <p>
+              &bull; <strong>Lặp lại hàng tiêu đề khi in (Print Titles):</strong> Vào thẻ <strong>Page Layout</strong> &rarr; nhóm <em>Page Setup</em> &rarr; chọn <strong>Print Titles</strong> &rarr; tại ô <strong>Rows to repeat at top</strong>, nhấp chọn hàng tiêu đề (ví dụ <code class="font-mono text-emerald-600">$1:$1</code>) &rarr; bấm <em>OK</em>. Khi in ra giấy, mọi trang in đều có sẵn dòng tiêu đề này trên đầu.
+            </p>
+            <p>
+              &bull; <strong>Thu nhỏ vừa 1 trang giấy in (Fit to 1 Page):</strong> Vào thẻ <em>Page Layout</em> &rarr; nhóm <em>Scale to Fit</em> &rarr; chỉnh ô <strong>Width: 1 page</strong> và <strong>Height: 1 page</strong> (hoặc Automatic).
+            </p>
+            <p>
+              &bull; <strong>Hiển thị / In đường lưới (Gridlines & Headings):</strong> Thẻ <em>Page Layout</em> &rarr; nhóm <em>Sheet Options</em> &rarr; tích chọn ô <strong>Print</strong> dưới mục <em>Gridlines</em> (để in đường kẻ ô) hoặc dưới mục <em>Headings</em> (để in tên cột A, B, C và số hàng 1, 2, 3).
+            </p>
+          </div>
+        </div>
+      </article>
+
+      <!-- 3 CÂU HỎI TRẮC NGHIỆM DOMAIN 1 -->
+      <div id="quiz-d1" class="space-y-3 pt-2">
+        <div class="text-xs font-black uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+          <i class="fa-solid fa-list-check text-emerald-600"></i> Luyện tập trắc nghiệm — Domain 1 (Manage Worksheets and Workbooks)
+        </div>
+
+        
+    <div id="q_d1_1" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+      <div class="flex items-center justify-between text-xs font-bold text-slate-500 dark:text-slate-400">
+        <span><i class="fa-solid fa-circle-question text-emerald-600 me-1"></i> Câu hỏi trắc nghiệm mô phỏng MOS Excel</span>
+        <span class="text-[11px] bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 px-2 py-0.5 rounded-full font-bold">Tự động chấm</span>
+      </div>
+      <p class="text-base sm:text-lg leading-relaxed font-semibold text-slate-900 dark:text-white">
+        Người dùng muốn cố định toàn bộ nội dung của Hàng 1 và Hàng 2 để chúng luôn hiển thị ở đầu bảng khi cuộn trang xuống dưới. Vị trí ô nào sau đây cần được chọn trước khi nhấp lệnh "Freeze Panes"?
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+        
+          <button onclick="checkQuiz('q_d1_1', 0, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">A</span>
+            <span class="leading-relaxed">Ô A2</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_d1_1', 1, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">B</span>
+            <span class="leading-relaxed">Ô A3</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_d1_1', 2, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">C</span>
+            <span class="leading-relaxed">Ô B2</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_d1_1', 3, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">D</span>
+            <span class="leading-relaxed">Ô C1</span>
+          </button>
+        
+      </div>
+      <div class="quiz-feedback hidden"></div>
+      <div class="quiz-explanation-text hidden">Quy tắc Freeze Panes: Lệnh sẽ cố định các hàng nằm PHÍA TRÊN ô đang chọn. Do đó để cố định hàng 1 và hàng 2, ta phải đặt con trỏ tại hàng 3 (ô A3 hoặc B3 nếu không khóa cột).</div>
+    </div>
+  
+
+        
+    <div id="q_d1_2" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+      <div class="flex items-center justify-between text-xs font-bold text-slate-500 dark:text-slate-400">
+        <span><i class="fa-solid fa-circle-question text-emerald-600 me-1"></i> Câu hỏi trắc nghiệm mô phỏng MOS Excel</span>
+        <span class="text-[11px] bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 px-2 py-0.5 rounded-full font-bold">Tự động chấm</span>
+      </div>
+      <p class="text-base sm:text-lg leading-relaxed font-semibold text-slate-900 dark:text-white">
+        Để bảng tính khi in ra giấy tự động lặp lại hàng tiêu đề số 1 ở đầu tất cả các trang in, người dùng cấu hình thuộc tính nào trong thẻ Page Layout?
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+        
+          <button onclick="checkQuiz('q_d1_2', 0, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">A</span>
+            <span class="leading-relaxed">Freeze Panes trong thẻ View</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_d1_2', 1, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">B</span>
+            <span class="leading-relaxed">Rows to repeat at top trong hộp thoại Print Titles</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_d1_2', 2, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">C</span>
+            <span class="leading-relaxed">Header & Footer trong thẻ Insert</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_d1_2', 3, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">D</span>
+            <span class="leading-relaxed">Set Print Area</span>
+          </button>
+        
+      </div>
+      <div class="quiz-feedback hidden"></div>
+      <div class="quiz-explanation-text hidden">Tính năng Print Titles (thẻ Page Layout > Print Titles) chứa ô cấu hình "Rows to repeat at top", đảm bảo máy in tự động in lặp lại hàng tiêu đề trên mọi trang giấy.</div>
+    </div>
+  
+
+        
+    <div id="q_d1_3" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+      <div class="flex items-center justify-between text-xs font-bold text-slate-500 dark:text-slate-400">
+        <span><i class="fa-solid fa-circle-question text-emerald-600 me-1"></i> Câu hỏi trắc nghiệm mô phỏng MOS Excel</span>
+        <span class="text-[11px] bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 px-2 py-0.5 rounded-full font-bold">Tự động chấm</span>
+      </div>
+      <p class="text-base sm:text-lg leading-relaxed font-semibold text-slate-900 dark:text-white">
+        Để loại bỏ toàn bộ thông tin cá nhân và thuộc tính ẩn của người tạo (Personal Information & Document Properties) ra khỏi sổ tính Excel trước khi công khai, tính năng nào sau đây được sử dụng?
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+        
+          <button onclick="checkQuiz('q_d1_3', 0, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">A</span>
+            <span class="leading-relaxed">Clear All trong thẻ Home</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_d1_3', 1, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">B</span>
+            <span class="leading-relaxed">Inspect Document / Inspect Workbook trong File > Info</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_d1_3', 2, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">C</span>
+            <span class="leading-relaxed">Protect Workbook với mật khẩu</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_d1_3', 3, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">D</span>
+            <span class="leading-relaxed">Share Workbook</span>
+          </button>
+        
+      </div>
+      <div class="quiz-feedback hidden"></div>
+      <div class="quiz-explanation-text hidden">Vào File > Info > Check for Issues > Inspect Document (hoặc Inspect Workbook), bấm Inspect rồi bấm "Remove All" tại mục Document Properties and Personal Information.</div>
+    </div>
+  
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- DOMAIN 2: Ô & VÙNG DỮ LIỆU                 -->
+    <!-- ========================================== -->
+    <section id="domain-2" class="space-y-8 scroll-mt-24">
+      <div class="border-b-2 border-teal-500 pb-4 flex items-center justify-between">
+        <div>
+          <span class="text-xs font-black uppercase tracking-wider px-3 py-1 rounded-full bg-teal-100 dark:bg-teal-950 text-teal-700 dark:text-teal-300">
+            MOS Excel • Domain 2
+          </span>
+          <h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white mt-2">
+            2. QUẢN LÝ Ô DỮ LIỆU & VÙNG DỮ LIỆU (Data Cells & Ranges)
+          </h2>
+          <p class="text-sm sm:text-base text-slate-600 dark:text-slate-400 mt-1">
+            Dán đặc biệt Paste Special, tính năng Flash Fill thông minh, định dạng có điều kiện Conditional Formatting và đặt tên vùng ô Named Ranges.
+          </p>
+        </div>
+        <div class="hidden sm:flex items-center justify-center w-12 h-12 rounded-2xl bg-teal-600 text-white text-xl shadow-lg">
+          <i class="fa-solid fa-table-cells"></i>
+        </div>
+      </div>
+
+      <!-- PASTE SPECIAL & FLASH FILL -->
+      <article id="d2-paste" class="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 sm:p-8 shadow-sm space-y-6 scroll-mt-24">
+        <div class="border-b border-slate-200 dark:border-slate-800 pb-4">
+          <span class="text-xs font-bold text-teal-600 dark:text-teal-400 uppercase tracking-wider">Chuyên mục 2.1</span>
+          <h3 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white mt-1">
+            Dán Đặc Biệt (Paste Special) & Tính Năng Điền Nhanh (Flash Fill)
+          </h3>
+        </div>
+
+        <div class="space-y-4 text-base sm:text-lg leading-relaxed text-slate-700 dark:text-slate-300">
+          <h4 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-paste text-teal-600"></i> 1. Các tùy chọn Paste Special trọng tâm
+          </h4>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs sm:text-sm">
+            <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
+              <strong class="text-teal-600 dark:text-teal-400 block mb-1">Paste Values (Dán giá trị)</strong>
+              Chỉ dán giá trị kết quả cuối cùng dạng chữ/số thô, loại bỏ hoàn toàn công thức tính toán và định dạng màu mè ban đầu.
+            </div>
+            <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
+              <strong class="text-teal-600 dark:text-teal-400 block mb-1">Transpose (Hoán đổi dòng cột)</strong>
+              Chuyển đổi dữ liệu từ dạng hàng ngang thành cột dọc, hoặc ngược lại từ cột dọc xoay thành hàng ngang.
+            </div>
+            <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
+              <strong class="text-teal-600 dark:text-teal-400 block mb-1">Paste Formulas / Formats</strong>
+              Chỉ dán nguyên công thức toán học giữ nguyên logic, hoặc chỉ dán duy nhất định dạng ô (tương tự Format Painter).
+            </div>
+          </div>
+
+          <h4 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2 pt-2">
+            <i class="fa-solid fa-wand-magic-sparkles text-teal-600"></i> 2. Tính năng thông minh Flash Fill (Ctrl + E)
+          </h4>
+          <p class="text-sm sm:text-base">
+            <strong>Flash Fill</strong> tự động nhận dạng quy luật mẫu của người dùng để trích xuất hoặc kết hợp dữ liệu (ví dụ: tách Tên từ cột Họ và Tên đầy đủ, hoặc định dạng lại số điện thoại):
+            <br>&rarr; Gõ mẫu kết quả mong muốn ở ô đầu tiên &rarr; nhấn tổ hợp phím <kbd class="px-2 py-0.5 rounded bg-teal-100 dark:bg-teal-950 font-bold text-teal-800 dark:text-teal-300 font-mono">Ctrl + E</kbd> (hoặc vào thẻ <em>Data &gt; Flash Fill</em>), Excel sẽ tự động điền toàn bộ các dòng còn lại theo đúng quy luật mẫu.
+          </p>
+        </div>
+      </article>
+
+      <!-- CONDITIONAL FORMATTING & NAMED RANGES -->
+      <article id="d2-cond" class="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 sm:p-8 shadow-sm space-y-6 scroll-mt-24">
+        <div class="border-b border-slate-200 dark:border-slate-800 pb-4">
+          <span class="text-xs font-bold text-teal-600 dark:text-teal-400 uppercase tracking-wider">Chuyên mục 2.2</span>
+          <h3 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white mt-1">
+            Định Dạng Có Điều Kiện (Conditional Formatting) & Đặt Tên Vùng (Named Ranges)
+          </h3>
+        </div>
+
+        <div class="space-y-4 text-base sm:text-lg leading-relaxed text-slate-700 dark:text-slate-300">
+          <h4 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-highlighter text-teal-600"></i> 1. Định dạng có điều kiện (Conditional Formatting)
+          </h4>
+          <p>
+            Vào thẻ <strong>Home</strong> &rarr; nhóm <em>Styles</em> &rarr; <strong>Conditional Formatting</strong>:
+          </p>
+          <ul class="list-disc list-inside space-y-1.5 text-sm sm:text-base">
+            <li><strong>Highlight Cells Rules:</strong> Tô màu các ô thỏa mãn điều kiện số học: <em>Greater Than</em> (lớn hơn), <em>Less Than</em> (nhỏ hơn), <em>Between</em> (ở giữa), hoặc tìm giá trị trùng lặp <strong>Duplicate Values</strong>.</li>
+            <li><strong>Top/Bottom Rules:</strong> Tự động làm nổi bật <em>Top 10 Items</em> (10 giá trị cao nhất), <em>Top 10%</em>, hoặc <em>Above Average</em> (trên mức trung bình).</li>
+            <li><strong>Data Bars & Color Scales:</strong> Hiển thị thanh đo tiến độ trực quan trong ô hoặc dải phổ màu chuyển tiếp thể hiện độ lớn giá trị.</li>
+          </ul>
+
+          <h4 id="d2-name" class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2 pt-2 scroll-mt-24">
+            <i class="fa-solid fa-tag text-teal-600"></i> 2. Đặt tên vùng ô (Named Ranges)
+          </h4>
+          <p class="text-sm sm:text-base">
+            Đặt tên cho vùng ô giúp công thức trở nên tường minh, dễ đọc và đề thi MOS liên tục yêu cầu sử dụng tên vùng:
+          </p>
+          <ul class="list-disc list-inside space-y-1 text-sm sm:text-base">
+            <li><strong>Cách 1 (Nhanh nhất):</strong> Bôi đen vùng ô (ví dụ <code class="font-mono">B2:B50</code>) &rarr; nhấp vào <strong>Hộp Name Box</strong> (ở bên trái thanh công thức fx) &rarr; gõ tên vùng (ví dụ <code class="font-mono text-teal-600 font-bold">DonGia</code>) &rarr; nhấn <strong>Enter</strong>.</li>
+            <li><strong>Cách 2 (Quản lý chi tiết):</strong> Thẻ <strong>Formulas</strong> &rarr; nhóm <em>Defined Names</em> &rarr; chọn <strong>Name Manager</strong> (cho phép thêm mới, chỉnh sửa phạm vi vùng hoặc xóa tên vùng).</li>
+            <li><em>Quy tắc đặt tên vùng:</em> Phải bắt đầu bằng chữ cái hoặc dấu gạch dưới <code>_</code>, KHÔNG được chứa khoảng trắng và không được trùng với tọa độ ô (như <code>A1</code>, <code>B2</code>).</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- 3 CÂU HỎI TRẮC NGHIỆM DOMAIN 2 -->
+      <div id="quiz-d2" class="space-y-3 pt-2">
+        <div class="text-xs font-black uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+          <i class="fa-solid fa-list-check text-teal-600"></i> Luyện tập trắc nghiệm — Domain 2 (Manage Data Cells and Ranges)
+        </div>
+
+        
+    <div id="q_d2_1" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+      <div class="flex items-center justify-between text-xs font-bold text-slate-500 dark:text-slate-400">
+        <span><i class="fa-solid fa-circle-question text-emerald-600 me-1"></i> Câu hỏi trắc nghiệm mô phỏng MOS Excel</span>
+        <span class="text-[11px] bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 px-2 py-0.5 rounded-full font-bold">Tự động chấm</span>
+      </div>
+      <p class="text-base sm:text-lg leading-relaxed font-semibold text-slate-900 dark:text-white">
+        Một người dùng sao chép một bảng số liệu gồm 5 cột và 20 hàng. Khi dán sang vị trí mới, người dùng muốn hoán đổi bảng thành 20 cột và 5 hàng. Tùy chọn Paste Special nào sau đây đáp ứng yêu cầu này?
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+        
+          <button onclick="checkQuiz('q_d2_1', 0, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">A</span>
+            <span class="leading-relaxed">Paste Values</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_d2_1', 1, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">B</span>
+            <span class="leading-relaxed">Transpose</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_d2_1', 2, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">C</span>
+            <span class="leading-relaxed">Paste Link</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_d2_1', 3, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">D</span>
+            <span class="leading-relaxed">Formulas</span>
+          </button>
+        
+      </div>
+      <div class="quiz-feedback hidden"></div>
+      <div class="quiz-explanation-text hidden">Tùy chọn "Transpose" trong Paste Special hoán chuyển chiều của ma trận dữ liệu: các hàng ngang ban đầu sẽ biến thành các cột dọc và ngược lại.</div>
+    </div>
+  
+
+        
+    <div id="q_d2_2" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+      <div class="flex items-center justify-between text-xs font-bold text-slate-500 dark:text-slate-400">
+        <span><i class="fa-solid fa-circle-question text-emerald-600 me-1"></i> Câu hỏi trắc nghiệm mô phỏng MOS Excel</span>
+        <span class="text-[11px] bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 px-2 py-0.5 rounded-full font-bold">Tự động chấm</span>
+      </div>
+      <p class="text-base sm:text-lg leading-relaxed font-semibold text-slate-900 dark:text-white">
+        Quy tắc nào sau đây là bắt buộc phải tuân thủ khi đặt tên cho một vùng ô (Named Range) trong Microsoft Excel?
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+        
+          <button onclick="checkQuiz('q_d2_2', 0, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">A</span>
+            <span class="leading-relaxed">Tên vùng phải viết in hoa toàn bộ</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_d2_2', 1, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">B</span>
+            <span class="leading-relaxed">Tên vùng bắt đầu bằng chữ cái hoặc dấu gạch dưới và không được chứa dấu cách</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_d2_2', 2, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">C</span>
+            <span class="leading-relaxed">Tên vùng phải trùng với tọa độ của ô đầu tiên</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_d2_2', 3, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">D</span>
+            <span class="leading-relaxed">Tên vùng không được vượt quá 8 ký tự</span>
+          </button>
+        
+      </div>
+      <div class="quiz-feedback hidden"></div>
+      <div class="quiz-explanation-text hidden">Tên vùng trong Excel bắt buộc phải bắt đầu bằng một ký tự chữ cái hoặc dấu gạch dưới (_), không được chứa khoảng trắng và không được trùng với bất kỳ địa chỉ ô nào.</div>
+    </div>
+  
+
+        
+    <div id="q_d2_3" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+      <div class="flex items-center justify-between text-xs font-bold text-slate-500 dark:text-slate-400">
+        <span><i class="fa-solid fa-circle-question text-emerald-600 me-1"></i> Câu hỏi trắc nghiệm mô phỏng MOS Excel</span>
+        <span class="text-[11px] bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 px-2 py-0.5 rounded-full font-bold">Tự động chấm</span>
+      </div>
+      <p class="text-base sm:text-lg leading-relaxed font-semibold text-slate-900 dark:text-white">
+        Để tự động tô màu nền đỏ nhạt cho tất cả các ô có giá trị điểm số lớn hơn hoặc bằng 8.0 trong bảng điểm, tính năng nào sau đây là phù hợp nhất?
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+        
+          <button onclick="checkQuiz('q_d2_3', 0, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">A</span>
+            <span class="leading-relaxed">Format as Table</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_d2_3', 1, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">B</span>
+            <span class="leading-relaxed">Conditional Formatting > Highlight Cells Rules</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_d2_3', 2, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">C</span>
+            <span class="leading-relaxed">Flash Fill</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_d2_3', 3, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">D</span>
+            <span class="leading-relaxed">AutoFit</span>
+          </button>
+        
+      </div>
+      <div class="quiz-feedback hidden"></div>
+      <div class="quiz-explanation-text hidden">Conditional Formatting (thẻ Home > nhóm Styles) cho phép thiết lập quy tắc tự động đổi màu ô hoặc chữ khi thỏa mãn điều kiện logic xác định.</div>
+    </div>
+  
+      </div>
+    </section>
+  
+    <!-- ========================================== -->
+    <!-- DOMAIN 3: BẢNG TABLE & DỮ LIỆU BẢNG        -->
+    <!-- ========================================== -->
+    <section id="domain-3" class="space-y-8 scroll-mt-24">
+      <div class="border-b-2 border-green-500 pb-4 flex items-center justify-between">
+        <div>
+          <span class="text-xs font-black uppercase tracking-wider px-3 py-1 rounded-full bg-green-100 dark:bg-green-950 text-green-700 dark:text-green-300">
+            MOS Excel • Domain 3
+          </span>
+          <h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white mt-2">
+            3. QUẢN LÝ BẢNG & DỮ LIỆU BẢNG (Tables & Table Data)
+          </h2>
+          <p class="text-sm sm:text-base text-slate-600 dark:text-slate-400 mt-1">
+            Chuyển đổi bảng Format as Table, kích hoạt Total Row tính toán tự động, sắp xếp lọc đa cấp và loại bỏ trùng lặp Remove Duplicates.
+          </p>
+        </div>
+        <div class="hidden sm:flex items-center justify-center w-12 h-12 rounded-2xl bg-green-600 text-white text-xl shadow-lg">
+          <i class="fa-solid fa-table"></i>
+        </div>
+      </div>
+
+      <!-- TẠO & CẤU HÌNH TABLE -->
+      <article id="d3-table-style" class="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 sm:p-8 shadow-sm space-y-6 scroll-mt-24">
+        <div class="border-b border-slate-200 dark:border-slate-800 pb-4">
+          <span class="text-xs font-bold text-green-600 dark:text-green-400 uppercase tracking-wider">Chuyên mục 3.1</span>
+          <h3 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white mt-1">
+            Tạo Bảng (Format as Table) & Kích Hoạt Hàng Tổng (Total Row)
+          </h3>
+        </div>
+
+        <div class="space-y-4 text-base sm:text-lg leading-relaxed text-slate-700 dark:text-slate-300">
+          <h4 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-table-list text-green-600"></i> 1. Chuyển vùng dữ liệu thành bảng có cấu trúc
+          </h4>
+          <p>
+            Chọn bất kỳ ô nào trong vùng dữ liệu &rarr; nhấn phím tắt <kbd class="px-2 py-0.5 rounded bg-green-100 dark:bg-green-950 font-bold text-green-800 dark:text-green-300 font-mono">Ctrl + T</kbd> (hoặc thẻ <em>Home &gt; Format as Table</em>):
+          </p>
+          <ul class="list-disc list-inside space-y-1.5 text-sm sm:text-base">
+            <li>Tích chọn <strong>My table has headers</strong> nếu dòng đầu tiên là tiêu đề cột.</li>
+            <li><strong>Đặt tên bảng (Table Name):</strong> Vào thẻ ngữ cảnh <strong>Table Design</strong> &rarr; tại ô <strong>Table Name</strong> ở góc trái, nhập tên theo đề bài (ví dụ <code class="font-bold text-green-600 font-mono">DonHangTable</code>). Tên bảng không được chứa dấu cách.</li>
+            <li><strong>Chuyển về vùng thường (Convert to Range):</strong> Nếu đề yêu cầu gỡ bỏ tính năng bảng nhưng vẫn giữ nguyên màu sắc định dạng: vào thẻ <em>Table Design</em> &rarr; nhấp <strong>Convert to Range</strong> &rarr; bấm <em>Yes</em>.</li>
+          </ul>
+
+          <h4 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2 pt-2">
+            <i class="fa-solid fa-calculator text-green-600"></i> 2. Kích hoạt hàng tổng cộng tự động (Total Row)
+          </h4>
+          <p class="text-sm sm:text-base">
+            Trong thẻ <strong>Table Design</strong> &rarr; nhóm <em>Table Style Options</em> &rarr; tích chọn <strong>Total Row</strong>:
+            <br>&bull; Một hàng tổng cộng tự động xuất hiện ở đáy bảng.
+            <br>&bull; Nhấp vào ô bất kỳ tại hàng Total Row &rarr; nhấp mũi tên xổ xuống để chọn hàm thống kê: <strong>Average</strong> (trung bình), <strong>Count</strong> (đếm), <strong>Sum</strong> (tính tổng), <strong>Max/Min</strong> mà không cần viết công thức thủ công.
+          </p>
+        </div>
+      </article>
+
+      <!-- SẮP XẾP, LỌC & LỌC TRÙNG -->
+      <article id="d3-sort-filter" class="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 sm:p-8 shadow-sm space-y-6 scroll-mt-24">
+        <div class="border-b border-slate-200 dark:border-slate-800 pb-4">
+          <span class="text-xs font-bold text-green-600 dark:text-green-400 uppercase tracking-wider">Chuyên mục 3.2</span>
+          <h3 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white mt-1">
+            Sắp Xếp Đa Cấp (Multi-Level Sort) & Xóa Dữ Liệu Trùng (Remove Duplicates)
+          </h3>
+        </div>
+
+        <div class="space-y-4 text-base sm:text-lg leading-relaxed text-slate-700 dark:text-slate-300">
+          <h4 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-arrow-down-a-z text-green-600"></i> 1. Sắp xếp theo nhiều cấp độ (Custom Sort)
+          </h4>
+          <p class="text-sm sm:text-base">
+            Vào thẻ <strong>Data</strong> &rarr; chọn <strong>Sort</strong>:
+            <br>&bull; Cấp 1 (<em>Sort by</em>): Chọn cột thứ nhất và thứ tự (A to Z hoặc Smallest to Largest).
+            <br>&bull; Bấm nút <strong>Add Level</strong> &rarr; Cấp 2 (<em>Then by</em>): Chọn cột thứ hai để sắp xếp ưu tiên khi các giá trị ở cột thứ nhất bằng nhau.
+          </p>
+
+          <h4 id="d3-duplicates" class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2 pt-2 scroll-mt-24">
+            <i class="fa-solid fa-filter-circle-xmark text-green-600"></i> 2. Loại bỏ các dòng dữ liệu trùng lặp (Remove Duplicates)
+          </h4>
+          <p class="text-sm sm:text-base">
+            Chọn bảng dữ liệu &rarr; vào thẻ <strong>Data</strong> (hoặc thẻ <em>Table Design</em>) &rarr; chọn <strong>Remove Duplicates</strong> &rarr; chỉ tích chọn các cột cần đối chiếu trùng theo yêu cầu đề bài &rarr; bấm <em>OK</em> để Excel tự động xóa các dòng trùng lặp và giữ lại dòng duy nhất đầu tiên.
+          </p>
+        </div>
+      </article>
+
+      <!-- 3 CÂU HỎI TRẮC NGHIỆM DOMAIN 3 -->
+      <div id="quiz-d3" class="space-y-3 pt-2">
+        <div class="text-xs font-black uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+          <i class="fa-solid fa-list-check text-green-600"></i> Luyện tập trắc nghiệm — Domain 3 (Manage Tables and Table Data)
+        </div>
+
+        
+    <div id="q_d3_1" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+      <div class="flex items-center justify-between text-xs font-bold text-slate-500 dark:text-slate-400">
+        <span><i class="fa-solid fa-circle-question text-emerald-600 me-1"></i> Câu hỏi trắc nghiệm mô phỏng MOS Excel</span>
+        <span class="text-[11px] bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 px-2 py-0.5 rounded-full font-bold">Tự động chấm</span>
+      </div>
+      <p class="text-base sm:text-lg leading-relaxed font-semibold text-slate-900 dark:text-white">
+        Để chuyển đổi một bảng có cấu trúc (Excel Table) trở lại thành một vùng dữ liệu bình thường nhưng vẫn giữ nguyên màu sắc phông chữ và đường viền, người dùng chọn lệnh nào trong thẻ Table Design?
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+        
+          <button onclick="checkQuiz('q_d3_1', 0, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">A</span>
+            <span class="leading-relaxed">Clear All</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_d3_1', 1, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">B</span>
+            <span class="leading-relaxed">Convert to Range</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_d3_1', 2, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">C</span>
+            <span class="leading-relaxed">Delete Table</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_d3_1', 3, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">D</span>
+            <span class="leading-relaxed">Ungroup</span>
+          </button>
+        
+      </div>
+      <div class="quiz-feedback hidden"></div>
+      <div class="quiz-explanation-text hidden">Lệnh "Convert to Range" (thẻ Table Design) gỡ bỏ các tính năng nâng cao của Table (như nút lọc tự động, cấu trúc công thức bảng) nhưng bảo lưu 100% định dạng hiển thị của các ô.</div>
+    </div>
+  
+
+        
+    <div id="q_d3_2" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+      <div class="flex items-center justify-between text-xs font-bold text-slate-500 dark:text-slate-400">
+        <span><i class="fa-solid fa-circle-question text-emerald-600 me-1"></i> Câu hỏi trắc nghiệm mô phỏng MOS Excel</span>
+        <span class="text-[11px] bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 px-2 py-0.5 rounded-full font-bold">Tự động chấm</span>
+      </div>
+      <p class="text-base sm:text-lg leading-relaxed font-semibold text-slate-900 dark:text-white">
+        Khi kích hoạt tùy chọn "Total Row" trong một bảng Excel Table, người dùng có thể thực hiện thao tác tính toán nào trực tiếp tại các ô thuộc dòng này?
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+        
+          <button onclick="checkQuiz('q_d3_2', 0, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">A</span>
+            <span class="leading-relaxed">Bắt buộc phải tự gõ công thức =SUM() thủ công</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_d3_2', 1, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">B</span>
+            <span class="leading-relaxed">Nhấp chuột vào mũi tên xổ xuống tại ô để chọn hàm tính như Average, Count, Sum, Max</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_d3_2', 2, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">C</span>
+            <span class="leading-relaxed">Chỉ có thể hiển thị chữ "Total"</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_d3_2', 3, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">D</span>
+            <span class="leading-relaxed">Không thể thực hiện phép tính</span>
+          </button>
+        
+      </div>
+      <div class="quiz-feedback hidden"></div>
+      <div class="quiz-explanation-text hidden">Hàng Total Row tích hợp sẵn menu danh sách các hàm tổng hợp con SUBTOTAL. Người dùng chỉ cần nhấp vào ô và chọn hàm mong muốn từ danh sách xổ xuống.</div>
+    </div>
+  
+
+        
+    <div id="q_d3_3" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+      <div class="flex items-center justify-between text-xs font-bold text-slate-500 dark:text-slate-400">
+        <span><i class="fa-solid fa-circle-question text-emerald-600 me-1"></i> Câu hỏi trắc nghiệm mô phỏng MOS Excel</span>
+        <span class="text-[11px] bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 px-2 py-0.5 rounded-full font-bold">Tự động chấm</span>
+      </div>
+      <p class="text-base sm:text-lg leading-relaxed font-semibold text-slate-900 dark:text-white">
+        Tính năng "Remove Duplicates" trong thẻ Data của Excel hoạt động dựa trên nguyên tắc nào?
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+        
+          <button onclick="checkQuiz('q_d3_3', 0, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">A</span>
+            <span class="leading-relaxed">Tô màu đỏ cho các dòng bị trùng để người dùng tự xóa tay</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_d3_3', 1, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">B</span>
+            <span class="leading-relaxed">Tự động xóa các dòng có giá trị trùng lặp ở những cột được người dùng tích chọn và giữ lại bản ghi duy nhất đầu tiên</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_d3_3', 2, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">C</span>
+            <span class="leading-relaxed">Tự động di chuyển các dòng trùng sang trang tính mới</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_d3_3', 3, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">D</span>
+            <span class="leading-relaxed">Xóa toàn bộ các dòng nếu phát hiện có ô trùng</span>
+          </button>
+        
+      </div>
+      <div class="quiz-feedback hidden"></div>
+      <div class="quiz-explanation-text hidden">Remove Duplicates đối chiếu các cột được chọn, giữ lại bản ghi đầu tiên xuất hiện và xóa vĩnh viễn tất cả các bản ghi trùng lặp phía sau.</div>
+    </div>
+  
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- DOMAIN 4: CÔNG THỨC & HÀM TÍNH TOÁN        -->
+    <!-- ========================================== -->
+    <section id="domain-4" class="space-y-8 scroll-mt-24">
+      <div class="border-b-2 border-blue-500 pb-4 flex items-center justify-between">
+        <div>
+          <span class="text-xs font-black uppercase tracking-wider px-3 py-1 rounded-full bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-300">
+            MOS Excel • Domain 4
+          </span>
+          <h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white mt-2">
+            4. CÔNG THỨC & HÀM TÍNH TOÁN (Formulas & Functions)
+          </h2>
+          <p class="text-sm sm:text-base text-slate-600 dark:text-slate-400 mt-1">
+            Địa chỉ tuyệt đối $A$1, các hàm có điều kiện COUNTIF, SUMIF, AVERAGEIF, hàm logic IF và xử lý văn bản LEFT, RIGHT, TRIM, VLOOKUP.
+          </p>
+        </div>
+        <div class="hidden sm:flex items-center justify-center w-12 h-12 rounded-2xl bg-blue-600 text-white text-xl shadow-lg">
+          <i class="fa-solid fa-calculator"></i>
+        </div>
+      </div>
+
+      <!-- CÁC HÀM CÓ ĐIỀU KIỆN & LOGIC -->
+      <article id="d4-cond-func" class="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 sm:p-8 shadow-sm space-y-6 scroll-mt-24">
+        <div class="border-b border-slate-200 dark:border-slate-800 pb-4">
+          <span class="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider">Chuyên mục 4.1</span>
+          <h3 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white mt-1">
+            Các Hàm Thống Kê Có Điều Kiện (COUNTIF, SUMIF, AVERAGEIF) & Logic IF
+          </h3>
+        </div>
+
+        <div class="space-y-4 text-base sm:text-lg leading-relaxed text-slate-700 dark:text-slate-300">
+          <ul class="list-disc list-inside space-y-2 text-sm sm:text-base">
+            <li>
+              <code class="font-bold text-blue-600">=COUNTIF(range, criteria)</code>: Đếm số ô thỏa mãn tiêu chí.
+              <br><span class="text-slate-500 italic pl-5">Ví dụ: <code class="font-mono text-xs">=COUNTIF(B2:B50, "&gt;=500")</code> đếm các ô có giá trị từ 500 trở lên.</span>
+            </li>
+            <li>
+              <code class="font-bold text-blue-600">=SUMIF(range, criteria, [sum_range])</code>: Tính tổng các ô theo điều kiện.
+              <br><span class="text-slate-500 italic pl-5">Ví dụ: <code class="font-mono text-xs">=SUMIF(A2:A50, "Hà Nội", C2:C50)</code> tính tổng doanh thu ở cột C của các dòng có chi nhánh là "Hà Nội" ở cột A.</span>
+            </li>
+            <li>
+              <code class="font-bold text-blue-600">=AVERAGEIF(range, criteria, [average_range])</code>: Tính trung bình cộng theo điều kiện.
+              <br><span class="text-slate-500 italic pl-5">Ví dụ: <code class="font-mono text-xs">=AVERAGEIF(B2:B50, "Nam", D2:D50)</code> tính lương trung bình của nhân viên Nam.</span>
+            </li>
+            <li>
+              <code class="font-bold text-blue-600">=IF(điều_kiện, đúng, sai)</code>: Hàm rẽ nhánh điều kiện logic.
+              <br><span class="text-slate-500 italic pl-5">Ví dụ: <code class="font-mono text-xs">=IF(E2&gt;=5, "Đạt", "Chưa Đạt")</code>. Có thể kết hợp với <code class="font-mono text-xs">=AND(điều_kiện1, điều_kiện2)</code> hoặc <code class="font-mono text-xs">=OR()</code>.</span>
+            </li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- HÀM XỬ LÝ CHUỖI & TRA CỨU VLOOKUP -->
+      <article id="d4-text-lookup" class="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 sm:p-8 shadow-sm space-y-6 scroll-mt-24">
+        <div class="border-b border-slate-200 dark:border-slate-800 pb-4">
+          <span class="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider">Chuyên mục 4.2</span>
+          <h3 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white mt-1">
+            Hàm Xử Lý Chuỗi Văn Bản (Text) & Hàm Tra Cứu VLOOKUP
+          </h3>
+        </div>
+
+        <div class="space-y-4 text-base sm:text-lg leading-relaxed text-slate-700 dark:text-slate-300">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs sm:text-sm">
+            <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 space-y-1">
+              <strong class="text-blue-600 dark:text-blue-400 block font-mono">=LEFT, RIGHT, MID</strong>
+              &bull; <code class="font-mono text-blue-600">=LEFT(A2, 3)</code>: Lấy 3 ký tự đầu bên trái.
+              <br>&bull; <code class="font-mono text-blue-600">=RIGHT(A2, 4)</code>: Lấy 4 ký tự cuối bên phải.
+              <br>&bull; <code class="font-mono text-blue-600">=MID(A2, 2, 3)</code>: Lấy 3 ký tự từ vị trí thứ 2.
+            </div>
+            <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 space-y-1">
+              <strong class="text-blue-600 dark:text-blue-400 block font-mono">=UPPER, LOWER, PROPER, TRIM</strong>
+              &bull; <code class="font-mono text-blue-600">=UPPER(A2)</code>: Chuyển toàn bộ thành chữ in hoa.
+              <br>&bull; <code class="font-mono text-blue-600">=PROPER(A2)</code>: Viết hoa chữ cái đầu mỗi từ.
+              <br>&bull; <code class="font-mono text-blue-600">=TRIM(A2)</code>: Xóa toàn bộ khoảng trắng dư thừa.
+            </div>
+          </div>
+
+          <h4 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2 pt-2">
+            <i class="fa-solid fa-magnifying-glass-chart text-blue-600"></i> Cú pháp hàm dò tìm VLOOKUP
+          </h4>
+          <div class="p-3.5 bg-blue-50/70 dark:bg-slate-800 rounded-2xl border border-blue-200 dark:border-blue-900 text-xs sm:text-sm space-y-1 font-mono">
+            <div class="font-bold text-blue-900 dark:text-blue-300 text-sm">=VLOOKUP(lookup_value, table_array, col_index_num, [range_lookup])</div>
+            <p class="text-slate-600 dark:text-slate-300 font-sans">
+              &bull; <code class="font-mono text-blue-600">lookup_value</code>: Giá trị cần đem đi tìm kiếm (ví dụ ô mã hàng A2).
+              <br>&bull; <code class="font-mono text-blue-600">table_array</code>: Bảng tham chiếu dữ liệu (phải cố định bằng phím F4, ví dụ <code class="font-mono text-blue-600">$G$2:$I$20</code>).
+              <br>&bull; <code class="font-mono text-blue-600">col_index_num</code>: Số thứ tự cột muốn lấy kết quả về (1, 2, 3...).
+              <br>&bull; <code class="font-mono text-blue-600">range_lookup</code>: Luôn điền số <code class="font-mono text-blue-600 font-bold">0</code> (hoặc FALSE) để dò tìm chính xác tuyệt đối trong bài thi MOS.
+            </p>
+          </div>
+        </div>
+      </article>
+
+      <!-- 3 CÂU HỎI TRẮC NGHIỆM DOMAIN 4 -->
+      <div id="quiz-d4" class="space-y-3 pt-2">
+        <div class="text-xs font-black uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+          <i class="fa-solid fa-list-check text-blue-600"></i> Luyện tập trắc nghiệm — Domain 4 (Formulas and Functions)
+        </div>
+
+        
+    <div id="q_d4_1" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+      <div class="flex items-center justify-between text-xs font-bold text-slate-500 dark:text-slate-400">
+        <span><i class="fa-solid fa-circle-question text-emerald-600 me-1"></i> Câu hỏi trắc nghiệm mô phỏng MOS Excel</span>
+        <span class="text-[11px] bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 px-2 py-0.5 rounded-full font-bold">Tự động chấm</span>
+      </div>
+      <p class="text-base sm:text-lg leading-relaxed font-semibold text-slate-900 dark:text-white">
+        Công thức nào sau đây tính tổng số lượng tồn kho của tất cả các sản phẩm thuộc danh mục "Điện tử" trong bảng dữ liệu (vùng Danh mục là A2:A50, vùng Số lượng là D2:D50)?
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+        
+          <button onclick="checkQuiz('q_d4_1', 0, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">A</span>
+            <span class="leading-relaxed">=SUM(A2:A50, "Điện tử", D2:D50)</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_d4_1', 1, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">B</span>
+            <span class="leading-relaxed">=SUMIF(A2:A50, "Điện tử", D2:D50)</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_d4_1', 2, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">C</span>
+            <span class="leading-relaxed">=COUNTIF(A2:A50, "Điện tử")</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_d4_1', 3, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">D</span>
+            <span class="leading-relaxed">=SUMIF(D2:D50, "Điện tử", A2:A50)</span>
+          </button>
+        
+      </div>
+      <div class="quiz-feedback hidden"></div>
+      <div class="quiz-explanation-text hidden">Cú pháp chuẩn của hàm SUMIF là =SUMIF(vùng_điều_kiện, "tiêu_chí", vùng_cần_tính_tổng), do đó =SUMIF(A2:A50, "Điện tử", D2:D50) là đáp án chính xác.</div>
+    </div>
+  
+
+        
+    <div id="q_d4_2" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+      <div class="flex items-center justify-between text-xs font-bold text-slate-500 dark:text-slate-400">
+        <span><i class="fa-solid fa-circle-question text-emerald-600 me-1"></i> Câu hỏi trắc nghiệm mô phỏng MOS Excel</span>
+        <span class="text-[11px] bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 px-2 py-0.5 rounded-full font-bold">Tự động chấm</span>
+      </div>
+      <p class="text-base sm:text-lg leading-relaxed font-semibold text-slate-900 dark:text-white">
+        Khi sử dụng hàm VLOOKUP để tìm kiếm đơn giá sản phẩm trong một bảng chuẩn, tham số cuối cùng [range_lookup] cần mang giá trị nào để đảm bảo kết quả tìm kiếm chính xác 100%?
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+        
+          <button onclick="checkQuiz('q_d4_2', 0, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">A</span>
+            <span class="leading-relaxed">1 hoặc TRUE</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_d4_2', 1, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">B</span>
+            <span class="leading-relaxed">0 hoặc FALSE</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_d4_2', 2, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">C</span>
+            <span class="leading-relaxed">Bỏ trống không điền</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_d4_2', 3, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">D</span>
+            <span class="leading-relaxed">-1</span>
+          </button>
+        
+      </div>
+      <div class="quiz-feedback hidden"></div>
+      <div class="quiz-explanation-text hidden">Trong bài thi MOS Excel, tham số thứ tư của hàm VLOOKUP luôn được đặt là 0 hoặc FALSE để thực hiện tìm kiếm chính xác (Exact match), tránh lấy nhầm giá trị gần đúng.</div>
+    </div>
+  
+
+        
+    <div id="q_d4_3" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+      <div class="flex items-center justify-between text-xs font-bold text-slate-500 dark:text-slate-400">
+        <span><i class="fa-solid fa-circle-question text-emerald-600 me-1"></i> Câu hỏi trắc nghiệm mô phỏng MOS Excel</span>
+        <span class="text-[11px] bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 px-2 py-0.5 rounded-full font-bold">Tự động chấm</span>
+      </div>
+      <p class="text-base sm:text-lg leading-relaxed font-semibold text-slate-900 dark:text-white">
+        Hàm nào sau đây tự động loại bỏ tất cả các khoảng trắng (dấu cách) thừa ở đầu, cuối và giữa các từ trong một ô văn bản, chỉ để lại duy nhất một dấu cách chuẩn giữa hai từ?
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+        
+          <button onclick="checkQuiz('q_d4_3', 0, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">A</span>
+            <span class="leading-relaxed">=CLEAN()</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_d4_3', 1, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">B</span>
+            <span class="leading-relaxed">=TRIM()</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_d4_3', 2, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">C</span>
+            <span class="leading-relaxed">=DELETE()</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_d4_3', 3, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">D</span>
+            <span class="leading-relaxed">=PROPER()</span>
+          </button>
+        
+      </div>
+      <div class="quiz-feedback hidden"></div>
+      <div class="quiz-explanation-text hidden">Hàm =TRIM(text) loại bỏ các dấu cách thừa không cần thiết trong văn bản, chuẩn hóa lại khoảng cách giữa các từ đơn.</div>
+    </div>
+  
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- DOMAIN 5: BIỂU ĐỒ & SPARKLINES             -->
+    <!-- ========================================== -->
+    <section id="domain-5" class="space-y-8 scroll-mt-24">
+      <div class="border-b-2 border-amber-500 pb-4 flex items-center justify-between">
+        <div>
+          <span class="text-xs font-black uppercase tracking-wider px-3 py-1 rounded-full bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-300">
+            MOS Excel • Domain 5
+          </span>
+          <h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white mt-2">
+            5. QUẢN LÝ BIỂU ĐỒ & ĐỒ THỊ VI MÔ (Charts & Sparklines)
+          </h2>
+          <p class="text-sm sm:text-base text-slate-600 dark:text-slate-400 mt-1">
+            Tạo và cấu hình biểu đồ Clustered Column/Line/Pie, thêm thành phần Chart Elements, đồ thị vi mô Sparklines và chèn Alt Text.
+          </p>
+        </div>
+        <div class="hidden sm:flex items-center justify-center w-12 h-12 rounded-2xl bg-amber-600 text-white text-xl shadow-lg">
+          <i class="fa-solid fa-chart-pie"></i>
+        </div>
+      </div>
+
+      <!-- BIỂU ĐỒ & CHART ELEMENTS -->
+      <article id="d5-charts" class="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 sm:p-8 shadow-sm space-y-6 scroll-mt-24">
+        <div class="border-b border-slate-200 dark:border-slate-800 pb-4">
+          <span class="text-xs font-bold text-amber-600 dark:text-amber-400 uppercase tracking-wider">Chuyên mục 5.1</span>
+          <h3 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white mt-1">
+            Tùy Biến Thành Phần Biểu Đồ (Chart Elements) & Chuyển Trang (Move Chart)
+          </h3>
+        </div>
+
+        <div class="space-y-4 text-base sm:text-lg leading-relaxed text-slate-700 dark:text-slate-300">
+          <h4 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-chart-column text-amber-600"></i> 1. Các thành phần biểu đồ thường gặp trong đề thi
+          </h4>
+          <p class="text-sm sm:text-base">
+            Chọn biểu đồ &rarr; vào thẻ <strong>Chart Design</strong> &rarr; nhóm <em>Chart Layouts</em> &rarr; <strong>Add Chart Element</strong> (hoặc bấm dấu cộng xanh <kbd class="px-1.5 py-0.5 rounded bg-emerald-600 text-white font-bold text-xs">+</kbd> bên cạnh biểu đồ):
+          </p>
+          <ul class="list-disc list-inside space-y-1.5 text-sm sm:text-base">
+            <li><strong>Chart Title:</strong> Tiêu đề biểu đồ (chọn <em>Above Chart</em> - phía trên biểu đồ).</li>
+            <li><strong>Axis Titles:</strong> Tiêu đề trục (<em>Primary Horizontal</em> - trục hoành ngang X; <em>Primary Vertical</em> - trục tung dọc Y).</li>
+            <li><strong>Data Labels:</strong> Hiển thị nhãn giá trị trực tiếp trên các cột hoặc lát cắt tròn (vị trí: <em>Outside End, Center, Inside Base</em>).</li>
+            <li><strong>Legend (Chú giải):</strong> Vị trí đặt hộp chú giải màu sắc (<em>Top, Bottom, Left, Right</em>).</li>
+            <li><strong>Move Chart (Di chuyển biểu đồ):</strong> Thẻ <em>Chart Design</em> &rarr; nhấp nút <strong>Move Chart</strong> &rarr; chọn <strong>New sheet</strong> (chuyển biểu đồ sang một trang riêng biệt và đặt tên sheet) hoặc <strong>Object in</strong>.</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- ĐỒ THỊ VI MÔ SPARKLINES -->
+      <article id="d5-sparklines" class="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 sm:p-8 shadow-sm space-y-6 scroll-mt-24">
+        <div class="border-b border-slate-200 dark:border-slate-800 pb-4">
+          <span class="text-xs font-bold text-amber-600 dark:text-amber-400 uppercase tracking-wider">Chuyên mục 5.2</span>
+          <h3 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white mt-1">
+            Đồ Thị Vi Mô Trong Ô (Sparklines) & Văn Bản Thay Thế (Alt Text)
+          </h3>
+        </div>
+
+        <div class="space-y-4 text-base sm:text-lg leading-relaxed text-slate-700 dark:text-slate-300">
+          <h4 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-chart-line text-amber-600"></i> 1. Thao tác chèn Sparklines vào từng ô
+          </h4>
+          <p class="text-sm sm:text-base">
+            <strong>Sparkline</strong> là biểu đồ thu nhỏ nằm gọn gàng bên trong một ô duy nhất, giúp thể hiện xu hướng tăng giảm theo thời gian:
+          </p>
+          <ul class="list-disc list-inside space-y-1.5 text-sm sm:text-base">
+            <li>Chọn ô muốn hiển thị đồ thị vi mô (ví dụ ô <code class="font-mono">F2</code>).</li>
+            <li>Vào thẻ <strong>Insert</strong> &rarr; nhóm <em>Sparklines</em> &rarr; chọn kiểu đồ thị: <strong>Line</strong> (đường), <strong>Column</strong> (cột) hoặc <strong>Win/Loss</strong>.</li>
+            <li>Trong hộp thoại <em>Create Sparklines</em>: Ô <strong>Data Range</strong> bôi đen dãy số liệu (ví dụ <code class="font-mono">B2:E2</code>) &rarr; bấm <em>OK</em>.</li>
+            <li>Tùy biến hiển thị: Trong thẻ <strong>Sparkline</strong>, tích chọn <strong>High Point</strong> (làm nổi bật điểm cao nhất) và <strong>Low Point</strong> (điểm thấp nhất).</li>
+          </ul>
+
+          <h4 id="d5-alt-text" class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2 pt-2 scroll-mt-24">
+            <i class="fa-solid fa-universal-access text-amber-600"></i> 2. Chèn văn bản thay thế Alt Text cho biểu đồ
+          </h4>
+          <p class="text-sm sm:text-base">
+            Nhấp chuột phải vào khung viền biểu đồ &rarr; chọn <strong>Edit Alt Text...</strong> &rarr; nhập nội dung văn bản mô tả theo yêu cầu đề thi vào ô <em>Description</em> hoặc <em>Title</em> để phục vụ tiêu chuẩn tiếp cận tiếp thị số.
+          </p>
+        </div>
+      </article>
+
+      <!-- 3 CÂU HỎI TRẮC NGHIỆM DOMAIN 5 -->
+      <div id="quiz-d5" class="space-y-3 pt-2">
+        <div class="text-xs font-black uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+          <i class="fa-solid fa-list-check text-amber-600"></i> Luyện tập trắc nghiệm — Domain 5 (Manage Charts)
+        </div>
+
+        
+    <div id="q_d5_1" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+      <div class="flex items-center justify-between text-xs font-bold text-slate-500 dark:text-slate-400">
+        <span><i class="fa-solid fa-circle-question text-emerald-600 me-1"></i> Câu hỏi trắc nghiệm mô phỏng MOS Excel</span>
+        <span class="text-[11px] bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 px-2 py-0.5 rounded-full font-bold">Tự động chấm</span>
+      </div>
+      <p class="text-base sm:text-lg leading-relaxed font-semibold text-slate-900 dark:text-white">
+        Loại đối tượng đồ họa nào trong Microsoft Excel là một biểu đồ thu nhỏ nằm vừa vặn bên trong duy nhất một ô để thể hiện trực quan xu hướng biến động dữ liệu của một hàng?
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+        
+          <button onclick="checkQuiz('q_d5_1', 0, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">A</span>
+            <span class="leading-relaxed">PivotChart</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_d5_1', 1, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">B</span>
+            <span class="leading-relaxed">Sparklines</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_d5_1', 2, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">C</span>
+            <span class="leading-relaxed">SmartArt</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_d5_1', 3, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">D</span>
+            <span class="leading-relaxed">Icon Sets</span>
+          </button>
+        
+      </div>
+      <div class="quiz-feedback hidden"></div>
+      <div class="quiz-explanation-text hidden">Sparklines (thẻ Insert > nhóm Sparklines) là các đồ thị vi mô dạng Line, Column, Win/Loss hiển thị trực tiếp ngay trong lòng một ô dữ liệu.</div>
+    </div>
+  
+
+        
+    <div id="q_d5_2" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+      <div class="flex items-center justify-between text-xs font-bold text-slate-500 dark:text-slate-400">
+        <span><i class="fa-solid fa-circle-question text-emerald-600 me-1"></i> Câu hỏi trắc nghiệm mô phỏng MOS Excel</span>
+        <span class="text-[11px] bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 px-2 py-0.5 rounded-full font-bold">Tự động chấm</span>
+      </div>
+      <p class="text-base sm:text-lg leading-relaxed font-semibold text-slate-900 dark:text-white">
+        Để di chuyển một biểu đồ từ một đối tượng nằm trên trang tính hiện tại sang thành một trang biểu đồ độc lập hoàn toàn mới (Chart Sheet), người dùng chọn lệnh nào?
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+        
+          <button onclick="checkQuiz('q_d5_2', 0, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">A</span>
+            <span class="leading-relaxed">Cut và Paste sang sheet mới</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_d5_2', 1, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">B</span>
+            <span class="leading-relaxed">Move Chart trong thẻ Chart Design rồi chọn New sheet</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_d5_2', 2, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">C</span>
+            <span class="leading-relaxed">Export sang PDF</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_d5_2', 3, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">D</span>
+            <span class="leading-relaxed">Save As</span>
+          </button>
+        
+      </div>
+      <div class="quiz-feedback hidden"></div>
+      <div class="quiz-explanation-text hidden">Lệnh "Move Chart" (thẻ Chart Design) cho phép chọn tùy chọn "New sheet" để tách biểu đồ thành một trang chuyên dụng riêng biệt.</div>
+    </div>
+  
+
+        
+    <div id="q_d5_3" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+      <div class="flex items-center justify-between text-xs font-bold text-slate-500 dark:text-slate-400">
+        <span><i class="fa-solid fa-circle-question text-emerald-600 me-1"></i> Câu hỏi trắc nghiệm mô phỏng MOS Excel</span>
+        <span class="text-[11px] bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 px-2 py-0.5 rounded-full font-bold">Tự động chấm</span>
+      </div>
+      <p class="text-base sm:text-lg leading-relaxed font-semibold text-slate-900 dark:text-white">
+        Thành phần biểu đồ nào (Chart Element) hiển thị trực tiếp giá trị số cụ thể lên đỉnh của từng cột trong biểu đồ cột?
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+        
+          <button onclick="checkQuiz('q_d5_3', 0, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">A</span>
+            <span class="leading-relaxed">Chart Title</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_d5_3', 1, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">B</span>
+            <span class="leading-relaxed">Data Labels</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_d5_3', 2, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">C</span>
+            <span class="leading-relaxed">Legend</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_d5_3', 3, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">D</span>
+            <span class="leading-relaxed">Axis Titles</span>
+          </button>
+        
+      </div>
+      <div class="quiz-feedback hidden"></div>
+      <div class="quiz-explanation-text hidden">Data Labels (Nhãn dữ liệu) hiển thị giá trị số học chi tiết của từng điểm dữ liệu ngay trên thân hoặc đỉnh cột biểu đồ.</div>
+    </div>
+  
+      </div>
+    </section>
+  
+      <!-- ========================================== -->
+      <!-- PHẦN 6: TỪ ĐIỂN THUẬT NGỮ & TỰ KIỂM TRA     -->
+      <!-- ========================================== -->
+      <section id="thuat-ngu-kiem-tra" class="space-y-8 scroll-mt-24 pt-6 border-t-2 border-slate-200 dark:border-slate-800">
+        <div class="border-b border-slate-200 dark:border-slate-800 pb-4 flex items-center justify-between">
+          <div>
+            <span class="text-xs font-black uppercase tracking-wider px-3 py-1 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300">
+              Tra Cứu & Tự Đánh Giá
+            </span>
+            <h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white mt-2">
+              TỪ ĐIỂN THUẬT NGỮ TIẾNG ANH MOS EXCEL & CHECKLIST 5 DOMAIN
+            </h2>
+            <p class="text-sm sm:text-base text-slate-600 dark:text-slate-400 mt-1">
+              Bảng tra cứu thuật ngữ giao diện tiếng Anh Microsoft Excel chuẩn Certiport và bảng tự kiểm tra năng lực trước ngày thi.
+            </p>
+          </div>
+          <div class="hidden sm:flex items-center justify-center w-12 h-12 rounded-2xl bg-emerald-600 text-white text-xl shadow-lg">
+            <i class="fa-solid fa-spell-check"></i>
+          </div>
+        </div>
+
+        <!-- Interactive Checklist 5 Domains -->
+        <div class="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 sm:p-8 shadow-sm space-y-4">
+          <div class="flex items-center justify-between">
+            <h3 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+              <i class="fa-solid fa-clipboard-check text-emerald-600"></i> Checklist Đạt Chuẩn 5 Mục Tiêu Bài Thi MOS Excel
+            </h3>
+            <span id="checklistProgress" class="text-xs font-bold px-2.5 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400">
+              0 / 5 hoàn thành
+            </span>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
+            Tự kiểm tra các kỹ năng bạn đã thực hành thành thạo trên phần mềm Excel:
+          </p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 text-xs sm:text-sm">
+            <label class="flex items-start gap-3 p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-850 cursor-pointer transition">
+              <input type="checkbox" onchange="updateChecklistProgress()" class="chk-item mt-0.5 rounded text-emerald-600 focus:ring-emerald-500">
+              <span class="text-slate-700 dark:text-slate-300"><strong>Domain 1:</strong> Nhập dữ liệu CSV/TXT, đóng băng Freeze Panes, thiết lập Print Titles (lặp hàng tiêu đề khi in) và Inspect Workbook.</span>
+            </label>
+            <label class="flex items-start gap-3 p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-850 cursor-pointer transition">
+              <input type="checkbox" onchange="updateChecklistProgress()" class="chk-item mt-0.5 rounded text-emerald-600 focus:ring-emerald-500">
+              <span class="text-slate-700 dark:text-slate-300"><strong>Domain 2:</strong> Sử dụng Paste Special (Transpose, Values), phím tắt Flash Fill Ctrl+E, Conditional Formatting và đặt tên Named Ranges.</span>
+            </label>
+            <label class="flex items-start gap-3 p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-850 cursor-pointer transition">
+              <input type="checkbox" onchange="updateChecklistProgress()" class="chk-item mt-0.5 rounded text-emerald-600 focus:ring-emerald-500">
+              <span class="text-slate-700 dark:text-slate-300"><strong>Domain 3:</strong> Tạo Table (Ctrl+T), đặt tên Table Name, kích hoạt hàng tính tổng Total Row, sắp xếp lọc đa cấp và Remove Duplicates.</span>
+            </label>
+            <label class="flex items-start gap-3 p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-850 cursor-pointer transition">
+              <input type="checkbox" onchange="updateChecklistProgress()" class="chk-item mt-0.5 rounded text-emerald-600 focus:ring-emerald-500">
+              <span class="text-slate-700 dark:text-slate-300"><strong>Domain 4:</strong> Nắm vững địa chỉ tuyệt đối $A$1 (F4), các hàm COUNTIF, SUMIF, AVERAGEIF, hàm logic IF và xử lý văn bản TRIM, VLOOKUP.</span>
+            </label>
+            <label class="flex items-start gap-3 p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-850 cursor-pointer transition sm:col-span-2">
+              <input type="checkbox" onchange="updateChecklistProgress()" class="chk-item mt-0.5 rounded text-emerald-600 focus:ring-emerald-500">
+              <span class="text-slate-700 dark:text-slate-300"><strong>Domain 5:</strong> Tạo biểu đồ Clustered Column/Line/Pie, thêm Chart Elements, di chuyển biểu đồ Move Chart, chèn Sparklines và thêm Alt Text.</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Glossary with Live Search -->
+        <div class="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 sm:p-8 shadow-sm space-y-5">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <h3 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+              <i class="fa-solid fa-book-bookmark text-emerald-600"></i> Từ Điển Thuật Ngữ Tiếng Anh Lệnh MOS Excel
+            </h3>
+            <!-- Search Input -->
+            <div class="relative w-full sm:w-64">
+              <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+              <input id="glossarySearchInput" oninput="filterGlossary()" type="text" placeholder="Tìm thuật ngữ (e.g. Freeze, VLOOKUP)..." class="w-full pl-8 pr-3 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm text-slate-800 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+            </div>
+          </div>
+
+          <div id="glossaryGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 text-xs sm:text-sm">
+            <div class="glossary-card p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+              <span class="font-bold text-emerald-600 dark:text-emerald-400 block font-mono">Freeze Panes</span>
+              <p class="text-slate-600 dark:text-slate-300 text-xs mt-0.5">Đóng băng cố định hàng hoặc cột tiêu đề khi cuộn trang tính.</p>
+            </div>
+            <div class="glossary-card p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+              <span class="font-bold text-emerald-600 dark:text-emerald-400 block font-mono">Print Titles</span>
+              <p class="text-slate-600 dark:text-slate-300 text-xs mt-0.5">Tiêu đề in lặp lại hàng ở đầu mọi trang giấy khi in ấn (Rows to repeat at top).</p>
+            </div>
+            <div class="glossary-card p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+              <span class="font-bold text-emerald-600 dark:text-emerald-400 block font-mono">Paste Special (Transpose)</span>
+              <p class="text-slate-600 dark:text-slate-300 text-xs mt-0.5">Dán hoán đổi dòng thành cột và ngược lại từ cột thành dòng.</p>
+            </div>
+            <div class="glossary-card p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+              <span class="font-bold text-emerald-600 dark:text-emerald-400 block font-mono">Flash Fill (Ctrl + E)</span>
+              <p class="text-slate-600 dark:text-slate-300 text-xs mt-0.5">Điền tự động thông minh nhận diện quy luật mẫu để tách ghép chuỗi.</p>
+            </div>
+            <div class="glossary-card p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+              <span class="font-bold text-emerald-600 dark:text-emerald-400 block font-mono">Wrap Text</span>
+              <p class="text-slate-600 dark:text-slate-300 text-xs mt-0.5">Tự động ngắt dòng văn bản dài vừa vặn bên trong chiều rộng của một ô.</p>
+            </div>
+            <div class="glossary-card p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+              <span class="font-bold text-emerald-600 dark:text-emerald-400 block font-mono">Conditional Formatting</span>
+              <p class="text-slate-600 dark:text-slate-300 text-xs mt-0.5">Định dạng ô tự động theo điều kiện (tô màu lớn hơn, Top 10%, Data Bars).</p>
+            </div>
+            <div class="glossary-card p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+              <span class="font-bold text-emerald-600 dark:text-emerald-400 block font-mono">Named Range</span>
+              <p class="text-slate-600 dark:text-slate-300 text-xs mt-0.5">Đặt tên cho vùng ô qua Name Box hoặc Name Manager để sử dụng trong công thức.</p>
+            </div>
+            <div class="glossary-card p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+              <span class="font-bold text-emerald-600 dark:text-emerald-400 block font-mono">Format as Table</span>
+              <p class="text-slate-600 dark:text-slate-300 text-xs mt-0.5">Chuyển đổi vùng dữ liệu thành bảng có cấu trúc Table có nút lọc tự động.</p>
+            </div>
+            <div class="glossary-card p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+              <span class="font-bold text-emerald-600 dark:text-emerald-400 block font-mono">Total Row</span>
+              <p class="text-slate-600 dark:text-slate-300 text-xs mt-0.5">Hàng tổng cộng tự động ở đáy bảng Table với các hàm Sum, Average, Count.</p>
+            </div>
+            <div class="glossary-card p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+              <span class="font-bold text-emerald-600 dark:text-emerald-400 block font-mono">Remove Duplicates</span>
+              <p class="text-slate-600 dark:text-slate-300 text-xs mt-0.5">Công cụ tự động lọc và xóa các bản ghi trùng lặp trong các cột được chỉ định.</p>
+            </div>
+            <div class="glossary-card p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+              <span class="font-bold text-emerald-600 dark:text-emerald-400 block font-mono">Absolute Reference ($A$1)</span>
+              <p class="text-slate-600 dark:text-slate-300 text-xs mt-0.5">Địa chỉ tuyệt đối khóa cố định cột và dòng bằng phím F4 khi sao chép công thức.</p>
+            </div>
+            <div class="glossary-card p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+              <span class="font-bold text-emerald-600 dark:text-emerald-400 block font-mono">COUNTIF & SUMIF</span>
+              <p class="text-slate-600 dark:text-slate-300 text-xs mt-0.5">Các hàm đếm và tính tổng các phần tử trong phạm vi thỏa mãn tiêu chí điều kiện.</p>
+            </div>
+            <div class="glossary-card p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+              <span class="font-bold text-emerald-600 dark:text-emerald-400 block font-mono">VLOOKUP</span>
+              <p class="text-slate-600 dark:text-slate-300 text-xs mt-0.5">Hàm tra cứu dữ liệu theo cột dọc trong bảng tham chiếu, tham số cuối đặt 0 (chính xác).</p>
+            </div>
+            <div class="glossary-card p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+              <span class="font-bold text-emerald-600 dark:text-emerald-400 block font-mono">Sparklines</span>
+              <p class="text-slate-600 dark:text-slate-300 text-xs mt-0.5">Đồ thị vi mô mini (Line, Column) nằm gọn bên trong duy nhất một ô tính.</p>
+            </div>
+            <div class="glossary-card p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+              <span class="font-bold text-emerald-600 dark:text-emerald-400 block font-mono">Alt Text</span>
+              <p class="text-slate-600 dark:text-slate-300 text-xs mt-0.5">Văn bản thay thế mô tả nội dung biểu đồ cho thiết bị đọc màn hình người khiếm thị.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      </div> <!-- End col-span-9 -->
+    </div> <!-- End grid -->
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-8 px-4 sm:px-6 text-center text-xs text-slate-500 dark:text-slate-400 space-y-2">
+    <p>Chương trình luyện thi chứng chỉ quốc tế Microsoft Office Specialist (MOS) Excel &bull; Nền tảng học tập số CodeHub</p>
+    <p>Nội dung biên soạn bám sát 100% mục tiêu bài thi Certiport MOS Excel Associate.</p>
+  </footer>
+
+  <!-- Core Interactive Script -->
+  <script>
+    // Quiz Checking Logic
+    window.checkQuiz = function(cardId, selectedIdx, correctIdx) {
+      const card = document.getElementById(cardId);
+      if (!card) return;
+
+      const buttons = card.querySelectorAll('.quiz-btn');
+      const feedback = card.querySelector('.quiz-feedback');
+      const explanation = card.querySelector('.quiz-explanation-text');
+
+      buttons.forEach((btn, idx) => {
+        btn.classList.remove('quiz-selected', 'quiz-correct', 'quiz-incorrect');
+        btn.disabled = true; // Lock options once answered
+        if (idx === correctIdx) {
+          btn.classList.add('quiz-correct');
+        } else if (idx === selectedIdx) {
+          btn.classList.add('quiz-incorrect');
+        }
+      });
+
+      if (feedback) {
+        feedback.classList.remove('hidden', 'bg-emerald-100', 'text-emerald-800', 'bg-rose-100', 'text-rose-800', 'dark:bg-emerald-950/60', 'dark:text-emerald-200', 'dark:bg-rose-950/60', 'dark:text-rose-200');
+        if (selectedIdx === correctIdx) {
+          feedback.classList.add('bg-emerald-100', 'text-emerald-800', 'dark:bg-emerald-950/60', 'dark:text-emerald-200');
+          feedback.innerHTML = '<div class="p-3 rounded-xl font-bold flex items-center gap-2"><i class="fa-solid fa-circle-check text-emerald-600"></i> Chính xác! ' + (explanation ? explanation.innerHTML : '') + '</div>';
+        } else {
+          feedback.classList.add('bg-rose-100', 'text-rose-800', 'dark:bg-rose-950/60', 'dark:text-rose-200');
+          feedback.innerHTML = '<div class="p-3 rounded-xl font-bold flex items-center gap-2"><i class="fa-solid fa-circle-xmark text-rose-600"></i> Chưa đúng. ' + (explanation ? explanation.innerHTML : '') + '</div>';
+        }
+      }
+    };
+
+    // Font Scaling Controller
+    const fontLevels = [
+      { label: '85%', size: '14px' },
+      { label: '100%', size: '16px' },
+      { label: '115%', size: '18px' },
+      { label: '130%', size: '20px' },
+      { label: '145%', size: '22px' }
+    ];
+    let currentFontIdx = 1; // 100% default
+
+    function applyFontSize(idx) {
+      currentFontIdx = Math.max(0, Math.min(fontLevels.length - 1, idx));
+      const level = fontLevels[currentFontIdx];
+      document.documentElement.style.fontSize = level.size;
+      const display = document.getElementById('fontSizeDisplay');
+      if (display) display.innerText = level.label;
+      localStorage.setItem('user-font-size-idx', currentFontIdx);
+    }
+
+    window.changeFontSize = function(delta) {
+      applyFontSize(currentFontIdx + delta);
+    };
+
+    const savedFontIdx = localStorage.getItem('user-font-size-idx');
+    if (savedFontIdx !== null) {
+      applyFontSize(parseInt(savedFontIdx, 10));
+    }
+
+    // Theme Toggle
+    function toggleTheme() {
+      document.documentElement.classList.toggle('dark');
+      localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+    }
+    if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+
+    // Checklist Progress with LocalStorage
+    function updateChecklistProgress() {
+      const items = document.querySelectorAll('.chk-item');
+      let done = 0;
+      const state = [];
+      items.forEach((chk, i) => {
+        if (chk.checked) done++;
+        state.push(chk.checked);
+      });
+      const lbl = document.getElementById('checklistProgress');
+      if (lbl) {
+        lbl.innerText = done + ' / ' + items.length + ' hoàn thành';
+        if (done === items.length) {
+          lbl.className = 'text-xs font-bold px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300';
+        } else {
+          lbl.className = 'text-xs font-bold px-2.5 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400';
+        }
+      }
+      localStorage.setItem('mos-excel-checklist', JSON.stringify(state));
+    }
+
+    // Restore Checklist State
+    try {
+      const savedState = JSON.parse(localStorage.getItem('mos-excel-checklist') || '[]');
+      const items = document.querySelectorAll('.chk-item');
+      items.forEach((chk, i) => {
+        if (savedState[i]) chk.checked = true;
+      });
+      updateChecklistProgress();
+    } catch(e) {}
+
+    // Glossary Filter
+    window.filterGlossary = function() {
+      const q = (document.getElementById('glossarySearchInput')?.value || '').toLowerCase().trim();
+      const cards = document.querySelectorAll('.glossary-card');
+      cards.forEach(card => {
+        const txt = card.innerText.toLowerCase();
+        if (!q || txt.includes(q)) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    };
+  </script>
+</body>
+</html>

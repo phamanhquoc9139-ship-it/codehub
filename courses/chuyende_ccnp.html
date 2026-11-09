@@ -1,0 +1,2047 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Luyện Thi Chứng Chỉ Mạng Cao Cấp Cisco CCNP Enterprise (350-401 ENCOR) | CodeHub</title>
+  <meta name="description" content="Khóa luyện thi chứng chỉ mạng chuyên nghiệp quốc tế Cisco CCNP Enterprise (350-401 ENCOR v1.1): Toàn diện 6 Domain, BGP, Multi-area OSPF, EIGRP, SD-WAN, SD-Access, Automation & Python NetDevOps.">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+    if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  </script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            ccnp: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              200: '#c7d2fe',
+              300: '#a5b4fc',
+              400: '#818cf8',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+              800: '#3730a3',
+              900: '#312e81',
+              950: '#1e1b4b',
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <style>
+    html {
+      font-size: 16px;
+      transition: font-size 0.2s ease;
+    }
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.05);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(79, 70, 229, 0.4);
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(79, 70, 229, 0.7);
+    }
+    .custom-code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 min-h-screen flex flex-col font-sans transition-colors duration-200">
+
+  <!-- Top Sticky Navigation Bar -->
+  <header class="sticky top-0 z-40 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 transition-colors">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+      
+      <!-- Left: Logo & Back Link -->
+      <div class="flex items-center gap-3">
+        <a href="../index.html" class="flex items-center gap-2 text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 transition font-bold text-sm sm:text-base">
+          <i class="fa-solid fa-arrow-left"></i>
+          <span class="hidden sm:inline">Trang Chủ</span>
+        </a>
+        <span class="text-slate-300 dark:text-slate-700">|</span>
+        <div class="flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-indigo-600 text-white flex items-center justify-center font-black text-sm shadow-sm">
+            <i class="fa-solid fa-server"></i>
+          </span>
+          <span class="font-black text-base sm:text-lg tracking-tight text-slate-900 dark:text-white">
+            Cisco CCNP <span class="text-indigo-600 dark:text-indigo-400">ENCOR 350-401</span>
+          </span>
+        </div>
+      </div>
+
+      <!-- Center / Right: Font Scaler & Exam Modal Trigger -->
+      <div class="flex items-center gap-2 sm:gap-3">
+        
+        <!-- Font Scaler -->
+        <div class="inline-flex items-center bg-slate-100 dark:bg-slate-800 p-1 rounded-xl border border-slate-200 dark:border-slate-700 text-xs sm:text-sm">
+          <button onclick="changeFontSize(-1)" title="Thu nhỏ cỡ chữ" class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center font-bold text-slate-700 dark:text-slate-200 hover:bg-white dark:hover:bg-slate-700 transition">
+            A-
+          </button>
+          <span id="font-scale-display" class="px-2 font-mono font-bold text-indigo-600 dark:text-indigo-400 text-xs sm:text-sm min-w-[42px] text-center">
+            100%
+          </span>
+          <button onclick="changeFontSize(1)" title="Phóng to cỡ chữ" class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center font-bold text-slate-700 dark:text-slate-200 hover:bg-white dark:hover:bg-slate-700 transition">
+            A+
+          </button>
+          <button onclick="resetFontSize()" title="Cỡ chữ mặc định" class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition text-xs">
+            <i class="fa-solid fa-rotate-left"></i>
+          </button>
+        </div>
+
+                <!-- Theme Toggle (Dark / Light) -->
+        <button id="themeToggle" onclick="toggleTheme()" class="w-8 h-8 sm:w-9 sm:h-9 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition" title="Chuyển chế độ Sáng / Tối">
+          <i class="fa-solid fa-moon dark:hidden text-sm sm:text-base text-slate-700"></i>
+          <i class="fa-solid fa-sun hidden dark:inline text-sm sm:text-base text-amber-400"></i>
+        </button>
+
+        <!-- Practice Exam Launch Button -->
+        <button onclick="openCourseQuizModal()" class="inline-flex items-center gap-2 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white font-bold text-xs sm:text-sm shadow-md hover:shadow-lg transition transform active:scale-95">
+          <i class="fa-solid fa-graduation-cap"></i>
+          <span class="hidden md:inline">Thi Thử CCNP (1000đ)</span>
+          <span class="md:hidden">Thi Thử</span>
+        </button>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Header Banner -->
+  <section class="relative bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-900 text-white overflow-hidden py-10 sm:py-14 border-b border-indigo-900/50">
+    <!-- Decorative background patterns -->
+    <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#818cf8_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none"></div>
+    <div class="absolute -top-24 -right-24 w-96 h-96 bg-indigo-500/15 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-violet-500/15 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      
+      <!-- Breadcrumb -->
+      <nav class="flex items-center gap-2 text-xs sm:text-sm text-indigo-200/80 mb-4 flex-wrap">
+        <a href="../index.html" class="hover:text-white transition">Trang Chủ</a>
+        <i class="fa-solid fa-chevron-right text-[10px] text-indigo-400"></i>
+        <span>Tin Học & AI</span>
+        <i class="fa-solid fa-chevron-right text-[10px] text-indigo-400"></i>
+        <span>Chứng Chỉ Quốc Tế</span>
+        <i class="fa-solid fa-chevron-right text-[10px] text-indigo-400"></i>
+        <span class="text-indigo-300 font-bold">Cisco CCNP Enterprise (350-401 ENCOR v1.1)</span>
+      </nav>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        
+        <!-- Left: Title & Overview -->
+        <div class="lg:col-span-8 space-y-4">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+            <i class="fa-solid fa-medal"></i> Cisco Certified Network Professional
+            <span class="w-1.5 h-1.5 rounded-full bg-violet-400 animate-pulse"></span>
+            <span>Core Exam: 350-401 ENCOR (v1.1)</span>
+          </div>
+
+          <h1 class="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight">
+            Luyện Thi Chứng Chỉ Mạng Cao Cấp <span class="bg-gradient-to-r from-indigo-400 via-violet-300 to-pink-300 bg-clip-text text-transparent">Cisco CCNP Enterprise</span>
+          </h1>
+
+          <p class="text-indigo-100/90 text-sm sm:text-base lg:text-lg leading-relaxed max-w-3xl">
+            Chứng chỉ cấp độ Chuyên gia (Professional) khẳng định năng lực thiết kế, vận hành và tối ưu hạ tầng mạng lõi doanh nghiệp quy mô lớn. Khóa học bao quát trọn vẹn <strong>6 Domain thi ENCOR</strong>: Architecture (High Availability, SD-WAN, SD-Access), Virtualization (VRF, GRE, LISP, VXLAN), Infrastructure (BGP, Multi-area OSPF, EIGRP, MSTP), Network Assurance (DNA Center, NetFlow), Security (802.1X, CoPP, ZBPF) và Automation (RESTCONF, NETCONF, Python, Ansible).
+          </p>
+
+          <!-- Quick badges -->
+          <div class="flex flex-wrap items-center gap-3 pt-2 text-xs sm:text-sm font-semibold">
+            <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 backdrop-blur-xs border border-white/10">
+              <i class="fa-solid fa-clock text-indigo-400"></i> Thời lượng thi: 120 phút
+            </div>
+            <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 backdrop-blur-xs border border-white/10">
+              <i class="fa-solid fa-microchip text-violet-400"></i> ~100-105 câu (Trắc nghiệm, Simlet Lab IOS XE)
+            </div>
+            <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 backdrop-blur-xs border border-white/10">
+              <i class="fa-solid fa-bullseye text-emerald-400"></i> Điểm chuẩn đỗ: &ge; 825 / 1000
+            </div>
+            <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 backdrop-blur-xs border border-white/10">
+              <i class="fa-solid fa-award text-amber-400"></i> Điều kiện thi CCIE Enterprise Lab
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Certification Profile Card -->
+        <div class="lg:col-span-4">
+          <div class="p-5 sm:p-6 rounded-3xl bg-white/10 backdrop-blur-md border border-white/15 shadow-2xl space-y-4">
+            <div class="flex items-center justify-between border-b border-white/10 pb-3">
+              <span class="text-xs uppercase font-bold text-indigo-300 tracking-wider">Hồ Sơ Chứng Chỉ</span>
+              <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-indigo-500/30 text-indigo-200">Level: Professional</span>
+            </div>
+
+            <div class="space-y-2.5 text-xs sm:text-sm">
+              <div class="flex justify-between items-center">
+                <span class="text-indigo-200">Mã bài thi Core:</span>
+                <span class="font-bold text-white">350-401 ENCOR</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-indigo-200">Hệ điều hành:</span>
+                <span class="font-bold text-violet-300">Cisco IOS XE & Catalyst Center</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-indigo-200">Hiệu lực:</span>
+                <span class="font-bold text-white">3 năm (Cisco Recertification)</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-indigo-200">Bước tiếp theo:</span>
+                <span class="font-bold text-amber-300">CCIE Enterprise Lab Exam</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-indigo-200">Khảo thí:</span>
+                <span class="font-bold text-white">Pearson VUE Test Center / Online</span>
+              </div>
+            </div>
+
+            <div class="pt-2">
+              <button onclick="openCourseQuizModal()" class="w-full py-2.5 rounded-xl bg-indigo-500 hover:bg-indigo-400 text-white font-black text-center transition flex items-center justify-center gap-2 shadow-lg">
+                <i class="fa-solid fa-play"></i> Làm Đề Thi Thử ENCOR Ngay
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Main Container with Sticky TOC Sidebar -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 flex-1">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      
+      <!-- Sticky Sidebar TOC (Col 3) -->
+      <aside class="hidden lg:block lg:col-span-3 sticky top-24 space-y-4">
+        <div class="p-5 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+          <div class="flex items-center gap-2 pb-3 border-b border-slate-100 dark:border-slate-800 font-black text-slate-900 dark:text-white text-sm">
+            <i class="fa-solid fa-list-ul text-indigo-600"></i> Mục Lục Chuyên Đề
+          </div>
+
+          <nav class="space-y-1 text-xs">
+            <a href="#sec-overview" class="block px-3 py-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-indigo-50 dark:hover:bg-slate-800 hover:text-indigo-600 dark:hover:text-indigo-400 font-medium transition">
+              1. Tổng Quan CCNP ENCOR & Lộ Trình
+            </a>
+            
+            <a href="#sec-domains" class="block px-3 py-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-indigo-50 dark:hover:bg-slate-800 hover:text-indigo-600 dark:hover:text-indigo-400 font-bold transition">
+              2. Trọng Tâm 6 Domain ENCOR
+            </a>
+            <div class="pl-4 space-y-1 border-l-2 border-slate-100 dark:border-slate-800 ml-3">
+              <a href="#dom-1" class="block px-2 py-1 text-slate-500 dark:text-slate-400 hover:text-indigo-600 transition">
+                D1: Architecture & SD-WAN/SDA (15%)
+              </a>
+              <a href="#dom-2" class="block px-2 py-1 text-slate-500 dark:text-slate-400 hover:text-indigo-600 transition">
+                D2: Virtualization - VRF, VXLAN, LISP (10%)
+              </a>
+              <a href="#dom-3" class="block px-2 py-1 text-slate-500 dark:text-slate-400 hover:text-indigo-600 transition">
+                D3: Infrastructure - BGP, OSPF, EIGRP (30%)
+              </a>
+              <a href="#dom-4" class="block px-2 py-1 text-slate-500 dark:text-slate-400 hover:text-indigo-600 transition">
+                D4: Network Assurance & DNA Center (10%)
+              </a>
+              <a href="#dom-5" class="block px-2 py-1 text-slate-500 dark:text-slate-400 hover:text-indigo-600 transition">
+                D5: Security - 802.1X, CoPP, ZBPF (20%)
+              </a>
+              <a href="#dom-6" class="block px-2 py-1 text-slate-500 dark:text-slate-400 hover:text-indigo-600 transition">
+                D6: Automation - Python, RESTCONF (15%)
+              </a>
+              <a href="#cli-cheatsheet" class="block px-2 py-1 text-indigo-600 dark:text-indigo-400 font-bold hover:underline">
+                Bảng Lệnh Cisco IOS XE Chuyên Gia
+              </a>
+            </div>
+
+            <a href="#sec-quizzes" class="block px-3 py-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-indigo-50 dark:hover:bg-slate-800 hover:text-indigo-600 dark:hover:text-indigo-400 font-medium transition">
+              3. 15 Câu Trắc Nghiệm Mô Phỏng
+            </a>
+
+            <a href="#sec-summary" class="block px-3 py-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-indigo-50 dark:hover:bg-slate-800 hover:text-indigo-600 dark:hover:text-indigo-400 font-medium transition">
+              4. Thuật Ngữ, Checklist & Đề Thi Thử
+            </a>
+          </nav>
+        </div>
+
+        <!-- Senior Pro Advice Box -->
+        <div class="p-4 rounded-2xl bg-gradient-to-br from-indigo-500/10 to-violet-500/10 border border-indigo-500/20 text-xs space-y-2">
+          <div class="font-bold text-indigo-900 dark:text-indigo-200 flex items-center gap-1.5">
+            <i class="fa-solid fa-fire text-amber-500"></i> Chiến Thuật Phòng Thi ENCOR
+          </div>
+          <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
+            ENCOR tập trung rất nặng vào BGP Path Selection, Multi-Area OSPF LSA types, SD-WAN/SDA Fabric, và kịch bản Python/YANG. Nắm chắc thuật toán và cơ chế gói tin sẽ giúp bạn vượt qua điểm chuẩn 825+ dễ dàng!
+          </p>
+        </div>
+      </aside>
+
+      <!-- Main Course Body (Col 9) -->
+      <div class="lg:col-span-9 space-y-10">
+
+        <!-- ========================================== -->
+        <!-- PHẦN 1: TỔNG QUAN KỲ THI CISCO CCNP ENCOR -->
+        <!-- ========================================== -->
+        <section id="sec-overview" class="p-6 sm:p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-8">
+          
+          <div class="border-b border-slate-200 dark:border-slate-800 pb-5">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-indigo-100 text-indigo-800 dark:bg-indigo-950/60 dark:text-indigo-300 mb-3">
+              <i class="fa-solid fa-award"></i> Professional Core Certification
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
+              Phần 1: Tổng Quan Kỳ Thi Cisco CCNP Enterprise (350-401 ENCOR)
+            </h2>
+            <p class="text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">
+              <strong>CCNP Enterprise (Cisco Certified Network Professional)</strong> là chứng chỉ cấp độ chuyên gia hàng đầu toàn cầu về hạ tầng mạng doanh nghiệp lớn. Để đạt danh hiệu CCNP Enterprise, ứng viên cần thi đỗ bài thi lõi <strong>350-401 ENCOR</strong> (Implementing and Operating Cisco Enterprise Network Core Technologies) cùng 1 bài thi chuyên sâu tự chọn (Concentration Exam như ENARSI 300-410, ENSDWI 300-415, ENAUTO 300-435...).
+            </p>
+          </div>
+
+          <!-- 3 Highlight Boxes: Value, CCIE Gateway, Exam Format -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+            
+            <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-800 space-y-3">
+              <div class="w-10 h-10 rounded-xl bg-indigo-100 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 font-black flex items-center justify-center text-lg">
+                <i class="fa-solid fa-briefcase"></i>
+              </div>
+              <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white">Giá Trị Cấp Cao</h3>
+              <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                Chuẩn mực tuyển dụng cho các vị trí: Senior Network Engineer, Network Architect, Cloud Infrastructure Lead và Network Automation Specialist tại các tập đoàn viễn thông, ngân hàng và ISP.
+              </p>
+            </div>
+
+            <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-800 space-y-3">
+              <div class="w-10 h-10 rounded-xl bg-violet-100 dark:bg-violet-950 text-violet-600 dark:text-violet-400 font-black flex items-center justify-center text-lg">
+                <i class="fa-solid fa-key"></i>
+              </div>
+              <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white">Cánh Cửa Bước Vào CCIE</h3>
+              <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                Đặc biệt, đỗ bài thi <strong>350-401 ENCOR</strong> chính là điều kiện tiên quyết (Qualifying Exam) để ứng viên có quyền đăng ký thi kỳ thi thực hành khắc nghiệt 8 tiếng <strong>CCIE Enterprise Infrastructure Lab</strong>!
+              </p>
+            </div>
+
+            <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-800 space-y-3">
+              <div class="w-10 h-10 rounded-xl bg-amber-100 dark:bg-amber-950 text-amber-600 dark:text-amber-400 font-black flex items-center justify-center text-lg">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+              </div>
+              <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white">Thách Thức Phòng Thi</h3>
+              <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                120 phút cho ~100-105 câu: Trắc nghiệm chuyên sâu, kéo thả và các bài <strong>Simlet / Lab thực hành</strong> trực tiếp trên môi trường ảo hóa Cisco IOS XE. Điểm chuẩn đỗ: <strong>&ge; 825 / 1000 điểm</strong>.
+              </p>
+            </div>
+
+          </div>
+
+          <!-- 6 Domain Weights Progress Bar -->
+          <div class="space-y-4 pt-2">
+            <h3 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+              <i class="fa-solid fa-chart-pie text-indigo-600"></i>
+              Tỉ Trọng Phân Bổ 6 Domain Trong Đề Thi 350-401 ENCOR
+            </h3>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-xs sm:text-sm">
+              <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-1.5">
+                <div class="flex justify-between items-center font-bold">
+                  <span class="text-slate-900 dark:text-white">D1: Dual Stack Architecture</span>
+                  <span class="text-indigo-600 dark:text-indigo-400">15%</span>
+                </div>
+                <div class="w-full bg-slate-200 dark:bg-slate-700 h-2 rounded-full overflow-hidden">
+                  <div class="bg-indigo-500 h-full w-[15%]"></div>
+                </div>
+                <p class="text-[11px] text-slate-500">High Availability, CEF/TCAM, SD-WAN & SD-Access Fabric, WLAN</p>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-1.5">
+                <div class="flex justify-between items-center font-bold">
+                  <span class="text-slate-900 dark:text-white">D2: Virtualization</span>
+                  <span class="text-violet-600 dark:text-violet-400">10%</span>
+                </div>
+                <div class="w-full bg-slate-200 dark:bg-slate-700 h-2 rounded-full overflow-hidden">
+                  <div class="bg-violet-500 h-full w-[10%]"></div>
+                </div>
+                <p class="text-[11px] text-slate-500">Hypervisor, VRF-Lite, GRE & IPsec Tunnels, LISP & VXLAN</p>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-1.5 border-l-4 border-l-amber-500">
+                <div class="flex justify-between items-center font-bold">
+                  <span class="text-slate-900 dark:text-white">D3: Infrastructure (Nặng nhất!)</span>
+                  <span class="text-amber-600 dark:text-amber-400">30%</span>
+                </div>
+                <div class="w-full bg-slate-200 dark:bg-slate-700 h-2 rounded-full overflow-hidden">
+                  <div class="bg-amber-500 h-full w-[30%]"></div>
+                </div>
+                <p class="text-[11px] text-slate-500">BGP Path Selection, Multi-Area OSPF LSA, EIGRP DUAL, MSTP</p>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-700 space-y-1.5">
+                <div class="flex justify-between items-center font-bold">
+                  <span class="text-slate-900 dark:text-white">D4: Network Assurance</span>
+                  <span class="text-sky-600 dark:text-sky-400">10%</span>
+                </div>
+                <div class="w-full bg-slate-200 dark:bg-slate-700 h-2 rounded-full overflow-hidden">
+                  <div class="bg-sky-500 h-full w-[10%]"></div>
+                </div>
+                <p class="text-[11px] text-slate-500">Flexible NetFlow, SPAN/RSPAN/ERSPAN, IP SLA & Tracking, DNA Center</p>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-1.5">
+                <div class="flex justify-between items-center font-bold">
+                  <span class="text-slate-900 dark:text-white">D5: Security</span>
+                  <span class="text-rose-600 dark:text-rose-400">20%</span>
+                </div>
+                <div class="w-full bg-slate-200 dark:bg-slate-700 h-2 rounded-full overflow-hidden">
+                  <div class="bg-rose-500 h-full w-[20%]"></div>
+                </div>
+                <p class="text-[11px] text-slate-500">802.1X & Cisco ISE, CoPP, ZBPF, Private VLANs, TrustSec SGT</p>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-1.5">
+                <div class="flex justify-between items-center font-bold">
+                  <span class="text-slate-900 dark:text-white">D6: Automation & Programmability</span>
+                  <span class="text-emerald-600 dark:text-emerald-400">15%</span>
+                </div>
+                <div class="w-full bg-slate-200 dark:bg-slate-700 h-2 rounded-full overflow-hidden">
+                  <div class="bg-emerald-500 h-full w-[15%]"></div>
+                </div>
+                <p class="text-[11px] text-slate-500">YANG Modeling, NETCONF (XML) & RESTCONF (JSON), Python, Ansible</p>
+              </div>
+            </div>
+          </div>
+
+        </section>
+
+        <!-- ========================================== -->
+        <!-- PHẦN 2: TRỌNG TÂM 6 DOMAIN & CẤU HÌNH CLI -->
+        <!-- ========================================== -->
+        <section id="sec-domains" class="p-6 sm:p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-10">
+          
+          <div class="border-b border-slate-200 dark:border-slate-800 pb-5">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-indigo-100 text-indigo-800 dark:bg-indigo-950/60 dark:text-indigo-300 mb-3">
+              <i class="fa-solid fa-cubes-stacked"></i> 6 Trụ Cột Chuyên Gia
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
+              Phần 2: Kiến Thức Trọng Tâm 6 Domain CCNP ENCOR
+            </h2>
+            <p class="text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">
+              Phân tích cơ chế hoạt động tầng sâu, thuật toán định tuyến nâng cao và cú pháp cấu hình thực tế trên hệ điều hành Cisco IOS XE.
+            </p>
+          </div>
+
+          <!-- 2.1 DOMAIN 1: DUAL STACK ARCHITECTURE (15%) -->
+          <div id="dom-1" class="space-y-4">
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2.5">
+              <span class="w-8 h-8 rounded-xl bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-400 flex items-center justify-center text-sm font-black">D1</span>
+              Domain 1: Dual Stack Architecture (15% - HA, CEF/TCAM & SD-WAN/SDA)
+            </h3>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
+              
+              <!-- HA & CEF/TCAM -->
+              <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-750 space-y-2">
+                <strong class="text-indigo-600 dark:text-indigo-400 font-bold block text-sm">Tính Sẵn Sàng Cao (HA) & Chuyển Mạch Phần Cứng CEF/TCAM:</strong>
+                <ul class="list-disc list-inside space-y-1.5 text-slate-700 dark:text-slate-300">
+                  <li><strong>SSO (Stateful Switchover) & NSF:</strong> Đồng bộ trạng thái phiên giữa 2 Route Processor (Active/Standby). Khi Active lỗi, Standby tiếp quản ngay mà không làm sập quan hệ láng giềng định tuyến (Nonstop Forwarding).</li>
+                  <li><strong>StackWise Virtual (SVL):</strong> Hợp nhất 2 Catalyst Switch vật lý thành 1 Switch logic duy nhất, chia sẻ chung Control Plane và Management Plane qua đường truyền StackWise Virtual Link (SVL).</li>
+                  <li><strong>CEF (Cisco Express Forwarding):</strong> Cơ chế chuyển mạch gói tin tốc độ cao bằng phần cứng, gồm <strong>FIB (Forwarding Information Base)</strong> tra IP tối ưu và <strong>Adjacency Table</strong> lưu thông tin MAC Next-hop Layer 2.</li>
+                  <li><strong>TCAM (Ternary Content Addressable Memory):</strong> Bộ nhớ phần cứng chuyên dụng cho phép tra cứu song song 3 trạng thái (0, 1, Don't Care - X) với độ phức tạp <strong>O(1)</strong> siêu tốc, áp dụng xử lý hàng nghìn dòng ACL và chính sách QoS.</li>
+                </ul>
+              </div>
+
+              <!-- SD-WAN & SD-Access Fabric -->
+              <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-750 space-y-2">
+                <strong class="text-indigo-600 dark:text-indigo-400 font-bold block text-sm">Kiến Trúc Mạng Thế Hệ Mới Cisco SD-WAN & SD-Access:</strong>
+                <ul class="list-disc list-inside space-y-1.5 text-slate-700 dark:text-slate-300">
+                  <li><strong>Cisco SD-WAN 4 Planes:</strong>
+                    <br>&bull; <em>Management:</em> <strong>vManage</strong> (Giao diện đồ họa tập trung NMS).
+                    <br>&bull; <em>Control:</em> <strong>vSmart</strong> (Phân phát routing và chính sách bảo mật qua OMP).
+                    <br>&bull; <em>Orchestration:</em> <strong>vBond</strong> (Xác thực thiết bị, vượt NAT và Zero Touch Provisioning).
+                    <br>&bull; <em>Data:</em> <strong>vEdge / cEdge</strong> (Chuyển tiếp lưu lượng mã hóa IPsec).
+                  </li>
+                  <li><strong>Cisco SD-Access (SDA) Fabric:</strong>
+                    <br>&bull; <em>Underlay:</em> Hạ tầng mạng vật lý L3 chạy IS-IS hoặc OSPF.
+                    <br>&bull; <em>Overlay Control Plane:</em> Giao thức <strong>LISP</strong> (quản lý EID và RLOC).
+                    <br>&bull; <em>Overlay Data Plane:</em> Đóng gói <strong>VXLAN</strong> (chèn Group-Based Policy Tag).
+                  </li>
+                </ul>
+              </div>
+
+            </div>
+
+            <!-- WLAN Deployment Models -->
+            <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-750 space-y-2 text-xs sm:text-sm">
+              <strong class="text-indigo-600 dark:text-indigo-400 font-bold block text-sm">Mô Hình Triển Khai Mạng Không Dây Doanh Nghiệp (WLAN Deployment):</strong>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-slate-700 dark:text-slate-300">
+                <div class="p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-750">
+                  <span class="font-bold text-slate-900 dark:text-white block mb-1">Centralized (Local Mode)</span>
+                  Mọi lưu lượng dữ liệu và điều khiển từ AP đều được đóng gói CAPWAP gửi về WLC trung tâm để xử lý và định tuyến.
+                </div>
+                <div class="p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-750">
+                  <span class="font-bold text-slate-900 dark:text-white block mb-1">FlexConnect (Chi Nhánh Branch)</span>
+                  Hỗ trợ <strong>Local Switching</strong>: Lưu lượng client được chuyển mạch trực tiếp ra switch cục bộ. Nếu mất kết nối WAN tới WLC trung tâm, AP vẫn duy trì phát Wi-Fi cho người dùng.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2.2 DOMAIN 2: VIRTUALIZATION (10%) -->
+          <div id="dom-2" class="space-y-4 pt-4 border-t border-slate-200 dark:border-slate-800">
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2.5">
+              <span class="w-8 h-8 rounded-xl bg-violet-100 dark:bg-violet-950 text-violet-700 dark:text-violet-400 flex items-center justify-center text-sm font-black">D2</span>
+              Domain 2: Virtualization (10% - VRF, GRE, LISP & VXLAN)
+            </h3>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs sm:text-sm">
+              
+              <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-750 space-y-2">
+                <strong class="text-violet-600 dark:text-violet-400 font-bold block">VRF & VRF-Lite:</strong>
+                <p class="text-slate-700 dark:text-slate-300 leading-relaxed">
+                  <strong>Virtual Routing and Forwarding:</strong> Tạo nhiều bảng định tuyến độc lập trên cùng một Router/L3 Switch vật lý. Các VRF hoàn toàn tách biệt về mặt logic, cho phép trùng dải địa chỉ IP giữa các phân vùng (Multi-tenancy).
+                </p>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-750 space-y-2">
+                <strong class="text-violet-600 dark:text-violet-400 font-bold block">LISP Architecture:</strong>
+                <p class="text-slate-700 dark:text-slate-300 leading-relaxed">
+                  <strong>Locator/ID Separation Protocol:</strong> Tách biệt địa chỉ IP thành 2 thành phần: <strong>EID (Endpoint Identifier)</strong> định danh thiết bị và <strong>RLOC (Routing Locator)</strong> định vị vị trí kết nối mạng. Tra cứu qua Map-Server và Map-Resolver.
+                </p>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-750 space-y-2">
+                <strong class="text-violet-600 dark:text-violet-400 font-bold block">Đóng Gói VXLAN:</strong>
+                <p class="text-slate-700 dark:text-slate-300 leading-relaxed">
+                  <strong>Virtual Extensible LAN:</strong> Đóng gói khung tin L2 vào gói tin UDP (port 4789) truyền qua mạng L3 IP Underlay. Sử dụng <strong>VNI (VXLAN Network Identifier) 24-bit</strong> mở rộng tới 16 triệu phân đoạn mạng, giải quyết triệt để giới hạn 4096 VLAN.
+                </p>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- 2.3 DOMAIN 3: INFRASTRUCTURE (30%) -->
+          <div id="dom-3" class="space-y-4 pt-4 border-t border-slate-200 dark:border-slate-800">
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2.5">
+              <span class="w-8 h-8 rounded-xl bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-400 flex items-center justify-center text-sm font-black">D3</span>
+              Domain 3: Infrastructure (30% - BGP, Multi-Area OSPF, EIGRP & MSTP)
+            </h3>
+
+            <!-- BGP In-Depth -->
+            <div class="p-5 rounded-2xl bg-gradient-to-br from-amber-500/10 to-orange-500/10 border border-amber-500/30 space-y-3">
+              <div class="flex items-center justify-between">
+                <h4 class="font-bold text-amber-900 dark:text-amber-200 text-sm sm:text-base flex items-center gap-2">
+                  <i class="fa-solid fa-diagram-project text-amber-600"></i>
+                  Giao Thức BGP & Thuật Toán Chọn Đường BGP Path Selection (Quy Tắc: W L A O M N I)
+                </h4>
+                <span class="text-xs font-bold px-2 py-0.5 rounded bg-amber-500 text-slate-950">Trọng Tâm Đề Thi 100%</span>
+              </div>
+
+              <p class="text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+                Khi nhận nhiều tuyến đường tới cùng một Prefix đích, Router BGP sẽ so sánh tuần tự các thuộc tính (Path Attributes) theo đúng thứ tự ưu tiên sau cho đến khi tìm được tuyến thắng cuộc duy nhất:
+              </p>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 text-xs sm:text-sm">
+                <div class="p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-750">
+                  <strong class="text-amber-600 block">1. Weight (W)</strong>
+                  Độc quyền Cisco, có ý nghĩa cục bộ trên router. Tuyến có <strong>Weight cao nhất</strong> sẽ thắng (mặc định tuyến tự tạo = 32768, học từ router khác = 0).
+                </div>
+                <div class="p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-750">
+                  <strong class="text-amber-600 block">2. Local Preference (L)</strong>
+                  Chia sẻ trong toàn bộ AS nội bộ để điều khiển hướng lưu lượng đi ra ngoài (Outbound). Tuyến có <strong>Local Pref cao nhất</strong> sẽ thắng (mặc định 100).
+                </div>
+                <div class="p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-750">
+                  <strong class="text-amber-600 block">3. Locally Originated</strong>
+                  Tuyến tự phát sinh cục bộ (lệnh <code>network</code> hoặc <code>aggregate-address</code>) thắng tuyến học từ láng giềng.
+                </div>
+                <div class="p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-750">
+                  <strong class="text-amber-600 block">4. AS-Path (A)</strong>
+                  Tuyến có chuỗi số lượng <strong>AS-Path ngắn nhất</strong> sẽ thắng (được dùng để chống loop trong eBGP).
+                </div>
+                <div class="p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-750">
+                  <strong class="text-amber-600 block">5. Origin Code (O)</strong>
+                  Ưu tiên theo thứ tự: IGP (<code>i</code>) &gt; EGP (<code>e</code>) &gt; Incomplete (<code>?</code> từ lệnh redistribute).
+                </div>
+                <div class="p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-750">
+                  <strong class="text-amber-600 block">6. MED (M)</strong>
+                  Multi-Exit Discriminator gửi sang AS láng giềng để điều khiển hướng lưu lượng đi vào (Inbound). Tuyến có <strong>MED nhỏ nhất</strong> sẽ thắng.
+                </div>
+              </div>
+            </div>
+
+            <!-- OSPF Multi-Area & LSA Types -->
+            <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-750 space-y-3 text-xs sm:text-sm">
+              <strong class="text-amber-600 dark:text-amber-400 font-bold block text-sm">Multi-Area OSPF & Phân Loại LSA Cốt Lõi:</strong>
+              
+              <div class="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-700">
+                <table class="w-full text-left border-collapse text-[11px] sm:text-xs">
+                  <thead>
+                    <tr class="bg-slate-100 dark:bg-slate-750 font-bold text-slate-900 dark:text-white">
+                      <th class="p-2">Loại LSA</th>
+                      <th class="p-2">Tên gọi</th>
+                      <th class="p-2">Router sinh ra</th>
+                      <th class="p-2">Phạm vi phát tán & Chức năng</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-slate-200 dark:divide-slate-700 text-slate-700 dark:text-slate-300">
+                    <tr><td class="p-2 font-bold text-amber-600">LSA Type 1</td><td class="p-2">Router LSA</td><td class="p-2">Mọi Router</td><td class="p-2">Mô tả các liên kết của router, chỉ phát tán trong nội bộ Area (Intra-Area).</td></tr>
+                    <tr><td class="p-2 font-bold text-amber-600">LSA Type 2</td><td class="p-2">Network LSA</td><td class="p-2">Designated Router (DR)</td><td class="p-2">Mô tả các router kết nối vào mạng Multi-access, chỉ phát tán trong nội bộ Area.</td></tr>
+                    <tr><td class="p-2 font-bold text-amber-600">LSA Type 3</td><td class="p-2">Summary LSA</td><td class="p-2">ABR (Area Border Router)</td><td class="p-2">Quảng bá tuyến đường giữa các vùng khác nhau (Inter-Area).</td></tr>
+                    <tr><td class="p-2 font-bold text-amber-600">LSA Type 4</td><td class="p-2">ASBR Summary LSA</td><td class="p-2">ABR</td><td class="p-2">Chỉ đường tới vị trí của ASBR cho các vùng khác biết.</td></tr>
+                    <tr><td class="p-2 font-bold text-amber-600">LSA Type 5</td><td class="p-2">Autonomous System External</td><td class="p-2">ASBR</td><td class="p-2">Quảng bá các tuyến đường ngoại vi học từ EIGRP/BGP/Static vào OSPF toàn mạng.</td></tr>
+                    <tr><td class="p-2 font-bold text-amber-600">LSA Type 7</td><td class="p-2">NSSA External</td><td class="p-2">ASBR trong vùng NSSA</td><td class="p-2">Tuyến ngoại vi trong vùng Not-So-Stubby Area; ABR sẽ chuyển đổi thành LSA 5 khi ra Area 0.</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- EIGRP Advanced DUAL -->
+            <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-750 space-y-2 text-xs sm:text-sm">
+              <strong class="text-amber-600 dark:text-amber-400 font-bold block text-sm">Cơ Chế Thuật Toán EIGRP DUAL & Điều Kiện Khả Thi (Feasibility Condition):</strong>
+              <p class="text-slate-700 dark:text-slate-300 leading-relaxed">
+                Để một tuyến đường dự phòng trở thành <strong>Feasible Successor (FS)</strong> sẵn sàng thay thế ngay lập tức khi Successor gặp sự cố mà không bị loop, tuyến đó bắt buộc phải thỏa mãn điều kiện:
+                <code class="block my-1.5 p-2 bg-slate-100 dark:bg-slate-900 rounded text-amber-600 font-mono font-bold">Reported Distance (RD) &lt; Feasible Distance (FD) của tuyến Successor</code>
+                Nếu không thỏa mãn điều kiện trên, router sẽ chuyển trạng thái tuyến sang <strong>Active (A)</strong> và gửi gói tin Query hỏi láng giềng, làm tăng thời gian hội tụ mạng. Lệnh <code>variance [Multiplier]</code> cho phép cân bằng tải không đồng đều (Unequal-cost load balancing).
+              </p>
+            </div>
+          </div>
+
+          <!-- 2.4 DOMAIN 4: NETWORK ASSURANCE (10%) -->
+          <div id="dom-4" class="space-y-4 pt-4 border-t border-slate-200 dark:border-slate-800">
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2.5">
+              <span class="w-8 h-8 rounded-xl bg-sky-100 dark:bg-sky-950 text-sky-700 dark:text-sky-400 flex items-center justify-center text-sm font-black">D4</span>
+              Domain 4: Network Assurance (10% - NetFlow, SPAN, IP SLA & DNA Assurance)
+            </h3>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs sm:text-sm">
+              <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-750 space-y-2">
+                <strong class="text-sky-600 dark:text-sky-400 font-bold block">Flexible NetFlow (FNF):</strong>
+                <p class="text-slate-700 dark:text-slate-300 leading-relaxed">
+                  Giám sát thống kê lưu lượng IP chuyên sâu. Cấu hình 4 bước: <strong>Flow Record</strong> (định nghĩa key fields/non-key fields), <strong>Flow Exporter</strong> (địa chỉ NetFlow Collector UDP 2055), <strong>Flow Monitor</strong> (gắn Record + Exporter), áp dụng lên interface.
+                </p>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-750 space-y-2">
+                <strong class="text-sky-600 dark:text-sky-400 font-bold block">IP SLA & Object Tracking:</strong>
+                <p class="text-slate-700 dark:text-slate-300 leading-relaxed">
+                  Đo lường độ trễ (Latency), mất gói (Packet Loss) và Jitter dịch vụ VoIP. Kết hợp với <strong>Track</strong> để giám sát đường truyền WAN: nếu IP SLA thất bại, Route tự động bị xóa khỏi routing table để nhường đường cho Floating Static Route.
+                </p>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-750 space-y-2">
+                <strong class="text-sky-600 dark:text-sky-400 font-bold block">Catalyst Center Assurance:</strong>
+                <p class="text-slate-700 dark:text-slate-300 leading-relaxed">
+                  Cung cấp điểm số sức khỏe mạng (Health Score) theo thời gian thực từ 1 đến 10. Chế độ xem <strong>Client 360</strong>, <strong>Device 360</strong> và tính năng <strong>Network Time Travel</strong> tua lại chính xác trạng thái lỗi mạng trong quá khứ để phân tích nguyên nhân gốc.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2.5 DOMAIN 5: SECURITY (20%) -->
+          <div id="dom-5" class="space-y-4 pt-4 border-t border-slate-200 dark:border-slate-800">
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2.5">
+              <span class="w-8 h-8 rounded-xl bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-400 flex items-center justify-center text-sm font-black">D5</span>
+              Domain 5: Security (20% - 802.1X, Cisco ISE, CoPP, ZBPF & Private VLAN)
+            </h3>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
+              
+              <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-750 space-y-2">
+                <strong class="text-rose-600 dark:text-rose-400 font-bold block text-sm">Xác Thực Cổng IEEE 802.1X & Cisco ISE:</strong>
+                <ul class="list-disc list-inside space-y-1.5 text-slate-700 dark:text-slate-300">
+                  <li><strong>3 Thành phần 802.1X:</strong> Supplicant (máy trạm người dùng), Authenticator (Switch / WLC), Authentication Server (Cisco ISE / RADIUS Server).</li>
+                  <li><strong>EAP Methods:</strong> <strong>EAP-TLS</strong> (bảo mật cao nhất, xác thực chứng chỉ số x.509 hai chiều giữa Client và Server), PEAP-MSCHAPv2 (chỉ cần chứng chỉ trên Server, Client dùng User/Password).</li>
+                  <li><strong>MAB (MAC Authentication Bypass):</strong> Giải pháp dự phòng cho máy in, camera IoT không hỗ trợ phần mềm 802.1X supplicant bằng cách lấy địa chỉ MAC làm thông tin xác thực.</li>
+                </ul>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-750 space-y-2">
+                <strong class="text-rose-600 dark:text-rose-400 font-bold block text-sm">Bảo Vệ CPU Với CoPP & Tường Lửa ZBPF:</strong>
+                <ul class="list-disc list-inside space-y-1.5 text-slate-700 dark:text-slate-300">
+                  <li><strong>Control Plane Policing (CoPP):</strong> Áp dụng chính sách QoS MQC (Class-map / Policy-map) trực tiếp lên <code>control-plane</code> để giới hạn tốc độ (rate-limit) lưu lượng quản trị (SSH, SNMP, OSPF/BGP, ICMP), ngăn chặn triệt để tấn công DoS làm treo CPU thiết bị mạng.</li>
+                  <li><strong>Zone-Based Policy Firewall (ZBPF):</strong> Định nghĩa các vùng bảo mật (Security Zones). Lưu lượng giữa các interface trong cùng 1 vùng được phép đi tự do; lưu lượng giữa 2 vùng khác nhau bị chặn mặc định cho đến khi tạo <strong>Zone-Pair</strong> và gán chính sách kiểm soát trạng thái (Stateful Inspection).</li>
+                </ul>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- 2.6 DOMAIN 6: AUTOMATION & PROGRAMMABILITY (15%) -->
+          <div id="dom-6" class="space-y-4 pt-4 border-t border-slate-200 dark:border-slate-800">
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2.5">
+              <span class="w-8 h-8 rounded-xl bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-400 flex items-center justify-center text-sm font-black">D6</span>
+              Domain 6: Automation & Programmability (15% - YANG, NETCONF/RESTCONF, Python & Ansible)
+            </h3>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs sm:text-sm">
+              <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-750 space-y-2">
+                <strong class="text-emerald-600 dark:text-emerald-400 font-bold block">YANG Data Modeling:</strong>
+                <p class="text-slate-700 dark:text-slate-300 leading-relaxed">
+                  <strong>YANG (RFC 6020):</strong> Ngôn ngữ mô hình hóa dữ liệu chuẩn hóa cấu hình và trạng thái thiết bị mạng. Gồm các mô hình: IETF tiêu chuẩn, OpenConfig độc lập nhà cung cấp và Cisco Native tối ưu hóa tính năng IOS XE.
+                </p>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-750 space-y-2">
+                <strong class="text-emerald-600 dark:text-emerald-400 font-bold block">NETCONF vs RESTCONF:</strong>
+                <p class="text-slate-700 dark:text-slate-300 leading-relaxed">
+                  <strong>NETCONF:</strong> Chạy qua SSH port 830, định dạng dữ liệu XML, hỗ trợ giao dịch rollback nguyên khối.
+                  <br><strong>RESTCONF:</strong> Chạy qua HTTPS port 443, hỗ trợ định dạng JSON & XML, giao tiếp bằng các phương thức HTTP chuẩn (GET, POST, PUT, PATCH, DELETE).
+                </p>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-750 space-y-2">
+                <strong class="text-emerald-600 dark:text-emerald-400 font-bold block">Python & Netmiko Automation:</strong>
+                <p class="text-slate-700 dark:text-slate-300 leading-relaxed">
+                  Thư viện Python <strong>Netmiko</strong> mở rộng từ Paramiko, tối ưu hóa kết nối SSH tới hàng trăm Router/Switch Cisco IOS XE để tự động đẩy lệnh cấu hình hàng loạt và sao lưu backup configuration an toàn.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2.7 BẢNG LỆNH CISCO IOS XE CHUYÊN GIA -->
+          <div id="cli-cheatsheet" class="space-y-4 pt-4 border-t border-slate-200 dark:border-slate-800">
+            <div class="flex items-center justify-between">
+              <h3 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                <i class="fa-solid fa-terminal text-indigo-600"></i>
+                Bảng Lệnh Cisco IOS XE Chuyên Gia (ENCOR Simlet Cheatsheet)
+              </h3>
+              <span class="text-xs px-2.5 py-1 rounded-lg bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 font-bold">100% Xuất Hiện Trong Bài Thi ENCOR</span>
+            </div>
+
+            <div class="overflow-x-auto rounded-2xl border border-slate-200 dark:border-slate-800">
+              <table class="w-full text-left border-collapse text-xs sm:text-sm font-sans">
+                <thead>
+                  <tr class="bg-slate-100 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white font-bold">
+                    <th class="p-3 w-1/3">Cú Pháp Lệnh Cisco IOS XE</th>
+                    <th class="p-3 w-1/4">Phân Vùng / Giao Thức</th>
+                    <th class="p-3 w-5/12">Chức Năng Kỹ Thuật Chuyên Sâu</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-200 dark:divide-slate-800 text-slate-700 dark:text-slate-300 custom-code">
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-indigo-600 dark:text-indigo-400">show ip bgp summary</td>
+                    <td class="p-3 text-slate-500 font-sans">BGP v4</td>
+                    <td class="p-3 font-sans">Kiểm tra trạng thái láng giềng BGP (State: Established = số lượng prefix nhận về).</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-indigo-600 dark:text-indigo-400">show ip bgp</td>
+                    <td class="p-3 text-slate-500 font-sans">BGP Table</td>
+                    <td class="p-3 font-sans">Xem bảng BGP, ký hiệu <code>*&gt;</code> biểu thị tuyến hợp lệ và được chọn làm Best Path.</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-indigo-600 dark:text-indigo-400">clear ip bgp * soft</td>
+                    <td class="p-3 text-slate-500 font-sans">BGP Refresh</td>
+                    <td class="p-3 font-sans">Làm mới chính sách định tuyến Route-map mà không ngắt kết nối phiên BGP láng giềng.</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-indigo-600 dark:text-indigo-400">show ip ospf database</td>
+                    <td class="p-3 text-slate-500 font-sans">OSPF LSDB</td>
+                    <td class="p-3 font-sans">Xem cơ sở dữ liệu trạng thái liên kết OSPF chi tiết theo từng loại LSA (1, 2, 3, 4, 5, 7).</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-indigo-600 dark:text-indigo-400">show ip eigrp topology all-links</td>
+                    <td class="p-3 text-slate-500 font-sans">EIGRP DUAL</td>
+                    <td class="p-3 font-sans">Xem toàn bộ tuyến đường EIGRP bao gồm cả các tuyến không thỏa mãn Feasibility Condition.</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-indigo-600 dark:text-indigo-400">show ip vrf</td>
+                    <td class="p-3 text-slate-500 font-sans">VRF Virtualization</td>
+                    <td class="p-3 font-sans">Liệt kê tất cả bảng định tuyến ảo VRF cùng các Interface vật lý được gán vào.</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-indigo-600 dark:text-indigo-400">show dmvpn</td>
+                    <td class="p-3 text-slate-500 font-sans">VPN Multi-point</td>
+                    <td class="p-3 font-sans">Kiểm tra trạng thái đường hầm mGRE, phiên kết nối NHRP Hub-and-Spoke và Spoke-to-Spoke.</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-indigo-600 dark:text-indigo-400">show ip sla summary</td>
+                    <td class="p-3 text-slate-500 font-sans">Network Assurance</td>
+                    <td class="p-3 font-sans">Xem trạng thái đo kiểm độ trễ ICMP/UDP jitter (Return-Code: OK / Timeout / OverThreshold).</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-indigo-600 dark:text-indigo-400">show policy-map control-plane</td>
+                    <td class="p-3 text-slate-500 font-sans">CoPP Security</td>
+                    <td class="p-3 font-sans">Xem số lượng gói tin bảo vệ CPU được cho phép (conformed) hoặc bị hủy bỏ (dropped).</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-indigo-600 dark:text-indigo-400">show netconf-yang datastores</td>
+                    <td class="p-3 text-slate-500 font-sans">Programmability</td>
+                    <td class="p-3 font-sans">Kiểm tra cơ sở dữ liệu cấu hình NETCONF YANG đang hoạt động (Running, Candidate, Startup).</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </section>
+
+        <!-- ========================================== -->
+        <!-- PHẦN 3: 15 CÂU HỎI TRẮC NGHIỆM MÔ PHỎNG   -->
+        <!-- ========================================== -->
+        <section id="sec-quizzes" class="p-6 sm:p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-8">
+          
+          <div class="border-b border-slate-200 dark:border-slate-800 pb-5">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-indigo-100 text-indigo-800 dark:bg-indigo-950/60 dark:text-indigo-300 mb-3">
+              <i class="fa-solid fa-circle-question"></i> Luyện Thi Chuyên Sâu
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
+              Phần 3: Bộ 15 Câu Hỏi Trắc Nghiệm Mô Phỏng Kỳ Thi CCNP 350-401 ENCOR
+            </h2>
+            <p class="text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">
+              Các câu hỏi được thiết kế theo chuẩn đề thi quốc tế Cisco Professional: bẫy phân tích gói tin, thuộc tính BGP Path Selection, phân loại LSA OSPF, thuật toán DUAL EIGRP, kiến trúc SD-WAN/SDA và tự động hóa NETCONF/RESTCONF.
+            </p>
+          </div>
+
+          <!-- Q1 -->
+          <div id="q1" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+            <p class="font-semibold text-slate-900 dark:text-white">
+              Câu 1: (Domain 1) Trong kiến trúc phần cứng chuyển mạch Cisco Catalyst cao cấp, bộ nhớ TCAM (Ternary Content Addressable Memory) mang lại ưu thế vượt trội nào so với bộ nhớ CAM thông thường?
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm sm:text-base">
+              <button onclick="checkQuiz('q1', 0, 0)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-indigo-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">A</span>
+                <span>Hỗ trợ 3 trạng thái logic: 0, 1 và "Don't Care" (X), cho phép tra cứu song song các dải mạng Subnet Mask và chính sách ACL/QoS với độ phức tạp O(1)</span>
+              </button>
+              <button onclick="checkQuiz('q1', 1, 0)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-indigo-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">B</span>
+                <span>Tiêu thụ ít điện năng hơn bộ nhớ CAM cơ bản gấp 10 lần</span>
+              </button>
+              <button onclick="checkQuiz('q1', 2, 0)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-indigo-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">C</span>
+                <span>Chỉ được dùng để lưu trữ file cấu hình startup-config của router</span>
+              </button>
+              <button onclick="checkQuiz('q1', 3, 0)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-indigo-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">D</span>
+                <span>Chỉ hỗ trợ tìm kiếm chính xác nhị phân 0 và 1 cho bảng MAC address</span>
+              </button>
+            </div>
+            <div class="quiz-feedback hidden"></div>
+            <div class="quiz-explanation-text hidden">Chính xác! Bộ nhớ CAM chỉ nhận diện 0 và 1 (tra bảng MAC chính xác), trong khi TCAM (Ternary CAM) có thêm bit thứ 3 là "Don't care" (mặt nạ wildcard), giúp Switch L3 đối chiếu hàng nghìn dòng ACL và chính sách QoS song song chỉ trong một chu kỳ xung nhịp phần cứng.</div>
+          </div>
+
+          <!-- Q2 -->
+          <div id="q2" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+            <p class="font-semibold text-slate-900 dark:text-white">
+              Câu 2: (Domain 1) Trong mô hình kiến trúc Cisco SD-WAN, thành phần điều khiển (Control Plane) chịu trách nhiệm phân phát chính sách định tuyến và thông tin bảo mật khóa IPsec thông qua giao thức OMP (Overlay Management Protocol) là thành phần nào?
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm sm:text-base">
+              <button onclick="checkQuiz('q2', 0, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-indigo-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">A</span>
+                <span>vManage</span>
+              </button>
+              <button onclick="checkQuiz('q2', 1, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-indigo-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">B</span>
+                <span>vSmart Controller</span>
+              </button>
+              <button onclick="checkQuiz('q2', 2, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-indigo-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">C</span>
+                <span>vBond Orchestrator</span>
+              </button>
+              <button onclick="checkQuiz('q2', 3, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-indigo-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">D</span>
+                <span>vEdge Router</span>
+              </button>
+            </div>
+            <div class="quiz-feedback hidden"></div>
+            <div class="quiz-explanation-text hidden">Đúng! vSmart là "bộ não" Control Plane của Cisco SD-WAN. Nó thiết lập các phiên kết nối OMP an toàn với toàn bộ vEdge/cEdge để phân phát thông tin định tuyến, nhãn bảo mật và chính sách topology tập trung. (vManage là Management, vBond là Orchestration, vEdge là Data Plane).</div>
+          </div>
+
+          <!-- Q3 -->
+          <div id="q3" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+            <p class="font-semibold text-slate-900 dark:text-white">
+              Câu 3: (Domain 1) Trong kiến trúc mạng tự động hóa Cisco Software-Defined Access (SD-Access), hai giao thức cốt lõi được sử dụng tương ứng cho mặt phẳng điều khiển (Control Plane) và mặt phẳng dữ liệu (Data Plane) trong mạng Fabric Overlay là gì?
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm sm:text-base">
+              <button onclick="checkQuiz('q3', 0, 2)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-indigo-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">A</span>
+                <span>BGP (Control Plane) và MPLS (Data Plane)</span>
+              </button>
+              <button onclick="checkQuiz('q3', 1, 2)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-indigo-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">B</span>
+                <span>OSPF (Control Plane) và GRE (Data Plane)</span>
+              </button>
+              <button onclick="checkQuiz('q3', 2, 2)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-indigo-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">C</span>
+                <span>LISP (Control Plane) và VXLAN (Data Plane)</span>
+              </button>
+              <button onclick="checkQuiz('q3', 3, 2)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-indigo-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">D</span>
+                <span>IS-IS (Control Plane) và 802.1Q (Data Plane)</span>
+              </button>
+            </div>
+            <div class="quiz-feedback hidden"></div>
+            <div class="quiz-explanation-text hidden">Chính xác! Cisco SD-Access sử dụng <strong>LISP</strong> làm Control Plane Protocol (theo dõi vị trí Endpoint EID và RLOC) và sử dụng <strong>VXLAN</strong> làm Data Plane Encapsulation để vận chuyển gói tin kèm theo thẻ Security Group Tag (SGT) trong header.</div>
+          </div>
+
+          <!-- Q4 -->
+          <div id="q4" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+            <p class="font-semibold text-slate-900 dark:text-white">
+              Câu 4: (Domain 2) Giao thức ảo hóa mạng VXLAN (Virtual Extensible LAN) sử dụng trường định danh VNI (VXLAN Network Identifier) có độ dài bao nhiêu bit và giải quyết được hạn chế lớn nào của hạ tầng mạng VLAN truyền thống?
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm sm:text-base">
+              <button onclick="checkQuiz('q4', 0, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-indigo-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">A</span>
+                <span>12 bit - Giúp tăng gấp đôi số lượng cổng kết nối switch</span>
+              </button>
+              <button onclick="checkQuiz('q4', 1, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-indigo-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">B</span>
+                <span>24 bit - Mở rộng không gian phân đoạn mạng lên tới hơn 16 triệu phân vùng (thay vì tối đa 4096 VLAN của chuẩn 802.1Q)</span>
+              </button>
+              <button onclick="checkQuiz('q4', 2, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-indigo-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">C</span>
+                <span>32 bit - Thay thế hoàn toàn giao thức định tuyến BGP</span>
+              </button>
+              <button onclick="checkQuiz('q4', 3, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-indigo-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">D</span>
+                <span>16 bit - Cho phép mã hóa toàn bộ dữ liệu máy chủ đám mây</span>
+              </button>
+            </div>
+            <div class="quiz-feedback hidden"></div>
+            <div class="quiz-explanation-text hidden">Đúng! Thẻ VLAN 802.1Q truyền thống chỉ có 12 bit (tối đa 4096 VLAN), rất chật hẹp trong trung tâm dữ liệu Cloud lớn. VXLAN mở rộng trường VNI lên <strong>24 bit</strong> (2<sup>24</sup> = 16.777.216 phân đoạn mạng logic), giải quyết hoàn toàn bài toán mở rộng Multi-tenant Data Center.</div>
+          </div>
+
+          <!-- Q5 -->
+          <div id="q5" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+            <p class="font-semibold text-slate-900 dark:text-white">
+              Câu 5: (Domain 2) Tính năng VRF-Lite (Virtual Routing and Forwarding) trên Router Cisco cho phép người quản trị đạt được mục tiêu kiến trúc mạng nào sau đây?
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm sm:text-base">
+              <button onclick="checkQuiz('q5', 0, 0)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-indigo-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">A</span>
+                <span>Phân chia nhiều bảng định tuyến ảo độc lập trên cùng một thiết bị vật lý, cô lập lưu lượng các phân vùng mà không cần chạy hạ tầng MPLS phức tạp</span>
+              </button>
+              <button onclick="checkQuiz('q5', 1, 0)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-indigo-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">B</span>
+                <span>Tăng gấp đôi tốc độ xử lý gói tin của CPU router</span>
+              </button>
+              <button onclick="checkQuiz('q5', 2, 0)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-indigo-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">C</span>
+                <span>Tự động chuyển đổi cổng FastEthernet thành GigabitEthernet</span>
+              </button>
+              <button onclick="checkQuiz('q5', 3, 0)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-indigo-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">D</span>
+                <span>Thay thế hoàn toàn chức năng của tường lửa phần cứng</span>
+              </button>
+            </div>
+            <div class="quiz-feedback hidden"></div>
+            <div class="quiz-explanation-text hidden">Chính xác! VRF-Lite là công nghệ ảo hóa định tuyến tầng 3: mỗi VRF sở hữu một Routing Table riêng biệt. Các dải IP giữa các VRF có thể trùng nhau (overlapping) mà không xảy ra xung đột, mang lại khả năng phân đoạn an ninh tuyệt đối cho doanh nghiệp.</div>
+          </div>
+
+          <!-- Q6 -->
+          <div id="q6" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+            <p class="font-semibold text-slate-900 dark:text-white">
+              Câu 6: (Domain 3) Trong thuật toán chọn tuyến đường tối ưu BGP Path Selection của Cisco, thuộc tính đường đi (Path Attribute) nào sau đây luôn được so sánh đầu tiên để chọn Best Path?
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm sm:text-base">
+              <button onclick="checkQuiz('q6', 0, 3)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-indigo-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">A</span>
+                <span>Local Preference</span>
+              </button>
+              <button onclick="checkQuiz('q6', 1, 3)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-indigo-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">B</span>
+                <span>AS-Path length</span>
+              </button>
+              <button onclick="checkQuiz('q6', 2, 3)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-indigo-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">C</span>
+                <span>MED (Multi-Exit Discriminator)</span>
+              </button>
+              <button onclick="checkQuiz('q6', 3, 3)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-indigo-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">D</span>
+                <span>Weight (Thuộc tính cục bộ độc quyền Cisco, giá trị cao nhất sẽ thắng)</span>
+              </button>
+            </div>
+            <div class="quiz-feedback hidden"></div>
+            <div class="quiz-explanation-text hidden">Đúng! Quy tắc vàng ghi nhớ BGP Path Selection: <strong>W L A O M N I</strong>. Trong đó chữ <strong>W = Weight</strong> là thuộc tính đầu tiên được so sánh (giá trị cao nhất thắng; mặc định tuyến do router tự tạo có Weight = 32768, tuyến học từ router khác có Weight = 0).</div>
+          </div>
+
+          <!-- Q7 -->
+          <div id="q7" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+            <p class="font-semibold text-slate-900 dark:text-white">
+              Câu 7: (Domain 3) Khi cấu hình phiên láng giềng iBGP giữa Router biên và Router nội bộ trong cùng một Autonomous System, tại sao câu lệnh <code>neighbor [IP] next-hop-self</code> là bắt buộc phải có trên Router biên eBGP?
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm sm:text-base">
+              <button onclick="checkQuiz('q7', 0, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-indigo-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">A</span>
+                <span>Để router tự động tăng tốc độ xử lý cổng BGP</span>
+              </button>
+              <button onclick="checkQuiz('q7', 1, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-indigo-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">B</span>
+                <span>Vì mặc định khi iBGP quảng bá tuyến học từ eBGP vào trong AS, nó giữ nguyên Next-hop ngoài AS khiến các router nội bộ không tìm thấy đường đi tới Next-hop đó</span>
+              </button>
+              <button onclick="checkQuiz('q7', 2, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-indigo-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">C</span>
+                <span>Để mã hóa toàn bộ dữ liệu BGP bằng IPsec</span>
+              </button>
+              <button onclick="checkQuiz('q7', 3, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-indigo-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">D</span>
+                <span>Để đổi số hiệu Autonomous System về 0</span>
+              </button>
+            </div>
+            <div class="quiz-feedback hidden"></div>
+            <div class="quiz-explanation-text hidden">Chính xác! Theo chuẩn RFC BGP, khi router eBGP truyền tuyến vào láng giềng iBGP, nó không thay đổi địa chỉ Next-hop. Các router iBGP bên trong AS thường không chạy định tuyến tới dải IP liên kết ISP bên ngoài, dẫn tới tuyến BGP bị coi là Inaccessible (không hợp lệ). Lệnh <code>next-hop-self</code> giải quyết triệt để lỗi này.</div>
+          </div>
+
+          <!-- Q8 -->
+          <div id="q8" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+            <p class="font-semibold text-slate-900 dark:text-white">
+              Câu 8: (Domain 3) Trong mạng OSPF đa vùng (Multi-Area), loại LSA (Link-State Advertisement) nào do Area Border Router (ABR) sinh ra để quảng bá thông tin các tuyến đường liên vùng (Inter-Area routes) giữa các Area với nhau?
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm sm:text-base">
+              <button onclick="checkQuiz('q8', 0, 2)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-indigo-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">A</span>
+                <span>LSA Type 1 (Router LSA)</span>
+              </button>
+              <button onclick="checkQuiz('q8', 1, 2)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-indigo-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">B</span>
+                <span>LSA Type 2 (Network LSA)</span>
+              </button>
+              <button onclick="checkQuiz('q8', 2, 2)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-indigo-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">C</span>
+                <span>LSA Type 3 (Summary LSA)</span>
+              </button>
+              <button onclick="checkQuiz('q8', 3, 2)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-indigo-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">D</span>
+                <span>LSA Type 5 (AS External LSA)</span>
+              </button>
+            </div>
+            <div class="quiz-feedback hidden"></div>
+            <div class="quiz-explanation-text hidden">Đúng! LSA Type 1 và 2 chỉ phát tán trong nội bộ một Area. Khi đi qua ranh giới vùng, Router ABR sẽ tổng hợp và sinh ra <strong>LSA Type 3 (Summary LSA)</strong> để quảng bá tuyến đường sang Area 0 và các Area khác. Trong bảng định tuyến, tuyến này xuất hiện với ký hiệu <code>O IA</code>.</div>
+          </div>
+
+          <!-- Q9 -->
+          <div id="q9" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+            <p class="font-semibold text-slate-900 dark:text-white">
+              Câu 9: (Domain 3) Vùng OSPF đặc biệt nào sau đây chặn hoàn toàn các gói LSA Type 4 và LSA Type 5 từ bên ngoài, nhưng vẫn cho phép đặt một router ASBR nội bộ sinh ra LSA Type 7 để sau đó được ABR dịch sang LSA Type 5?
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm sm:text-base">
+              <button onclick="checkQuiz('q9', 0, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-indigo-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">A</span>
+                <span>Stubby Area</span>
+              </button>
+              <button onclick="checkQuiz('q9', 1, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-indigo-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">B</span>
+                <span>NSSA (Not-So-Stubby Area)</span>
+              </button>
+              <button onclick="checkQuiz('q9', 2, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-indigo-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">C</span>
+                <span>Totally Stubby Area</span>
+              </button>
+              <button onclick="checkQuiz('q9', 3, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-indigo-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">D</span>
+                <span>Backbone Area 0</span>
+              </button>
+            </div>
+            <div class="quiz-feedback hidden"></div>
+            <div class="quiz-explanation-text hidden">Chính xác! Stub Area thông thường nghiêm cấm đặt ASBR. Do đó Cisco và IETF đã phát triển <strong>NSSA (Not-So-Stubby Area)</strong>: cho phép ASBR đưa tuyến ngoại vi vào vùng dưới dạng LSA Type 7. Khi LSA 7 đi qua ABR của NSSA, ABR sẽ tự động chuyển đổi thành LSA Type 5 để truyền vào Backbone Area.</div>
+          </div>
+
+          <!-- Q10 -->
+          <div id="q10" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+            <p class="font-semibold text-slate-900 dark:text-white">
+              Câu 10: (Domain 3) Để một tuyến đường dự phòng được thuật toán EIGRP DUAL công nhận là Feasible Successor (FS) sẵn sàng thay thế ngay mà không bị loop mạng, tuyến đó bắt buộc phải thỏa mãn điều kiện khả thi (Feasibility Condition) nào?
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm sm:text-base">
+              <button onclick="checkQuiz('q10', 0, 0)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-indigo-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">A</span>
+                <span>Reported Distance (RD) của tuyến dự phòng &lt; Feasible Distance (FD) của Successor hiện tại</span>
+              </button>
+              <button onclick="checkQuiz('q10', 1, 0)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-indigo-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">B</span>
+                <span>Reported Distance (RD) của tuyến dự phòng &gt; Feasible Distance (FD) của Successor hiện tại</span>
+              </button>
+              <button onclick="checkQuiz('q10', 2, 0)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-indigo-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">C</span>
+                <span>Feasible Distance (FD) của tuyến dự phòng bắt buộc phải bằng 0</span>
+              </button>
+              <button onclick="checkQuiz('q10', 3, 0)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-indigo-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">D</span>
+                <span>Số lượng Hop count của tuyến dự phòng phải nhỏ hơn 5</span>
+              </button>
+            </div>
+            <div class="quiz-feedback hidden"></div>
+            <div class="quiz-explanation-text hidden">Đúng! Feasibility Condition (FC) quy định: <code>RD &lt; FD của Successor</code>. Điều này chứng minh toán học rằng router láng giềng đang ở gần đích hơn router hiện tại, đảm bảo tuyệt đối không bao giờ xảy ra vòng lặp định tuyến (Routing Loop).</div>
+          </div>
+
+          <!-- Q11 -->
+          <div id="q11" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+            <p class="font-semibold text-slate-900 dark:text-white">
+              Câu 11: (Domain 4) Trong cấu hình giám sát luồng lưu lượng Flexible NetFlow (FNF) trên Cisco IOS XE, thành phần nào đóng vai trò gắn kết Flow Record với Flow Exporter và sau đó được áp dụng trực tiếp lên cổng Interface?
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm sm:text-base">
+              <button onclick="checkQuiz('q11', 0, 2)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-indigo-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">A</span>
+                <span>Flow Sampler</span>
+              </button>
+              <button onclick="checkQuiz('q11', 1, 2)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-indigo-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">B</span>
+                <span>Flow Collector</span>
+              </button>
+              <button onclick="checkQuiz('q11', 2, 2)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-indigo-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">C</span>
+                <span>Flow Monitor</span>
+              </button>
+              <button onclick="checkQuiz('q11', 3, 2)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-indigo-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">D</span>
+                <span>Flow Template</span>
+              </button>
+            </div>
+            <div class="quiz-feedback hidden"></div>
+            <div class="quiz-explanation-text hidden">Chính xác! Kiến trúc FNF gồm: <strong>Flow Record</strong> (định nghĩa nội dung theo dõi), <strong>Flow Exporter</strong> (định nghĩa nơi nhận NetFlow) và <strong>Flow Monitor</strong> (kết hợp cả hai lại). Cuối cùng, kỹ sư vào Interface gõ <code>ip flow monitor [NAME] input</code> để kích hoạt.</div>
+          </div>
+
+          <!-- Q12 -->
+          <div id="q12" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+            <p class="font-semibold text-slate-900 dark:text-white">
+              Câu 12: (Domain 4) Sự kết hợp giữa tính năng Cisco IP SLA và Object Tracking thường được áp dụng thực tế trong kịch bản hạ tầng mạng nào sau đây?
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm sm:text-base">
+              <button onclick="checkQuiz('q12', 0, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-indigo-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">A</span>
+                <span>Tự động phát hiện virus Trojan trên cổng switch</span>
+              </button>
+              <button onclick="checkQuiz('q12', 1, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-indigo-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">B</span>
+                <span>Liên tục thăm dò kết nối Internet; nếu đường chính mất kết nối, Object Track chuyển sang Down và tự động gỡ tuyến Default Route chính để kích hoạt Floating Static Route dự phòng</span>
+              </button>
+              <button onclick="checkQuiz('q12', 2, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-indigo-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">C</span>
+                <span>Tự động cập nhật mật khẩu người dùng định kỳ 30 ngày</span>
+              </button>
+              <button onclick="checkQuiz('q12', 3, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-indigo-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">D</span>
+                <span>Tăng băng thông đường truyền vật lý từ 1Gbps lên 10Gbps</span>
+              </button>
+            </div>
+            <div class="quiz-feedback hidden"></div>
+            <div class="quiz-explanation-text hidden">Đúng! Đây là ứng dụng kinh điển trong các bài thi Lab ENCOR: Cấu hình IP SLA ping định kỳ tới DNS 8.8.8.8. Lệnh <code>track 1 ip sla 1 reachability</code> gắn vào tuyến <code>ip route 0.0.0.0 0.0.0.0 [ISP1] track 1</code>. Khi ISP1 bị rớt mạng quốc tế, tuyến tự biến mất và router chuyển sang ISP2 dự phòng.</div>
+          </div>
+
+          <!-- Q13 -->
+          <div id="q13" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+            <p class="font-semibold text-slate-900 dark:text-white">
+              Câu 13: (Domain 5) Khi triển khai xác thực kiểm soát truy cập cổng IEEE 802.1X cho các thiết bị IoT như máy in hoặc camera IP không có phần mềm 802.1X Supplicant, giải pháp xác thực nào được cấu hình trên Switch Cisco?
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm sm:text-base">
+              <button onclick="checkQuiz('q13', 0, 0)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-indigo-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">A</span>
+                <span>MAB (MAC Authentication Bypass)</span>
+              </button>
+              <button onclick="checkQuiz('q13', 1, 0)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-indigo-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">B</span>
+                <span>EAP-TLS</span>
+              </button>
+              <button onclick="checkQuiz('q13', 2, 0)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-indigo-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">C</span>
+                <span>TACACS+ Authorization</span>
+              </button>
+              <button onclick="checkQuiz('q13', 3, 0)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-indigo-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">D</span>
+                <span>DHCP Option 82</span>
+              </button>
+            </div>
+            <div class="quiz-feedback hidden"></div>
+            <div class="quiz-explanation-text hidden">Chính xác! MAB (MAC Authentication Bypass) được thiết kế làm phương án dự phòng (fallback): Khi cổng gửi EAP Request mà thiết bị không phản hồi trong khoảng timeout, Switch sẽ lấy địa chỉ Source MAC của thiết bị đóng gói thành Access-Request gửi lên RADIUS/ISE Server để xác thực.</div>
+          </div>
+
+          <!-- Q14 -->
+          <div id="q14" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+            <p class="font-semibold text-slate-900 dark:text-white">
+              Câu 14: (Domain 5) Tính năng CoPP (Control Plane Policing) trên thiết bị định tuyến Cisco được thiết kế nhằm mục đích bảo vệ an ninh mạng cốt lõi nào?
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm sm:text-base">
+              <button onclick="checkQuiz('q14', 0, 3)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-indigo-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">A</span>
+                <span>Chặn virus lây lan giữa các máy tính trong mạng nội bộ</span>
+              </button>
+              <button onclick="checkQuiz('q14', 1, 3)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-indigo-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">B</span>
+                <span>Tự động mã hóa email gửi ra ngoài Internet</span>
+              </button>
+              <button onclick="checkQuiz('q14', 2, 3)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-indigo-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">C</span>
+                <span>Chống nghe lén sóng vô tuyến Wi-Fi</span>
+              </button>
+              <button onclick="checkQuiz('q14', 3, 3)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-indigo-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">D</span>
+                <span>Bảo vệ CPU của thiết bị mạng khỏi các cuộc tấn công từ chối dịch vụ (DoS) hoặc bão lưu lượng bằng cách giới hạn tốc độ (rate-limit) lưu lượng gửi tới Control Plane</span>
+              </button>
+            </div>
+            <div class="quiz-feedback hidden"></div>
+            <div class="quiz-explanation-text hidden">Đúng! Control Plane Policing (CoPP) coi CPU của Router như một interface logic. Sử dụng khung MQC (Modular QoS CLI), CoPP áp đặt chính sách giới hạn băng thông cho các gói tin hướng CPU (như ICMP, ARP, OSPF/BGP, Telnet/SSH) để CPU không bao giờ bị quá tải 100%.</div>
+          </div>
+
+          <!-- Q15 -->
+          <div id="q15" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+            <p class="font-semibold text-slate-900 dark:text-white">
+              Câu 15: (Domain 6) Khi so sánh giữa hai giao thức quản trị cấu hình mạng tự động NETCONF và RESTCONF dựa trên mô hình dữ liệu YANG, điểm khác biệt chính xác về cổng dịch vụ và định dạng dữ liệu là gì?
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm sm:text-base">
+              <button onclick="checkQuiz('q15', 0, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-indigo-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">A</span>
+                <span>NETCONF chạy qua HTTP port 80; RESTCONF chạy qua Telnet port 23</span>
+              </button>
+              <button onclick="checkQuiz('q15', 1, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-indigo-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">B</span>
+                <span>NETCONF chạy qua giao thức SSH cổng 830 và sử dụng định dạng XML; trong khi RESTCONF chạy qua HTTPS cổng 443 và hỗ trợ cả JSON lẫn XML</span>
+              </button>
+              <button onclick="checkQuiz('q15', 2, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-indigo-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">C</span>
+                <span>NETCONF chỉ hỗ trợ Python; RESTCONF chỉ hỗ trợ Java</span>
+              </button>
+              <button onclick="checkQuiz('q15', 3, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-indigo-500 transition flex items-start gap-2">
+                <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">D</span>
+                <span>Cả hai đều chỉ chạy trên giao thức SNMP v3</span>
+              </button>
+            </div>
+            <div class="quiz-feedback hidden"></div>
+            <div class="quiz-explanation-text hidden">Chính xác! NETCONF (RFC 6241) dùng SSH port 830 với định dạng XML và các RPC chuyên sâu. RESTCONF (RFC 8040) là phiên bản nhẹ hơn dựa trên nền web HTTPS port 443, tương thích chuẩn RESTful API và đặc biệt hỗ trợ định dạng dữ liệu JSON hiện đại.</div>
+          </div>
+
+        </section>
+
+        <!-- ========================================== -->
+        <!-- PHẦN 4: THUẬT NGỮ, CHECKLIST & ĐỀ THI THỬ -->
+        <!-- ========================================== -->
+        <section id="sec-summary" class="p-6 sm:p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-10">
+          
+          <div class="border-b border-slate-200 dark:border-slate-800 pb-5">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-indigo-100 text-indigo-800 dark:bg-indigo-950/60 dark:text-indigo-300 mb-3">
+              <i class="fa-solid fa-flag-checkered"></i> Tổng Kết & Sẵn Sàng Đi Thi
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
+              Phần 4: Thuật Ngữ Mạng Cao Cấp, Checklist & Đề Thi Thử ENCOR
+            </h2>
+            <p class="text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">
+              Hệ thống hóa hơn 35 thuật ngữ chuyên gia viễn thông, tự đánh giá 18 kỹ năng hạ tầng mạng nâng cao và làm bài thi thử mô phỏng 1000 điểm chuẩn Cisco Pearson VUE.
+            </p>
+          </div>
+
+          <!-- 4.1 Bảng thuật ngữ 35+ terms -->
+          <div class="space-y-4">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+              <h3 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                <i class="fa-solid fa-book-bookmark text-indigo-600"></i>
+                Bảng 35+ Thuật Ngữ & Giao Thức Mạng Trọng Tâm CCNP ENCOR
+              </h3>
+              <div class="relative w-full sm:w-72">
+                <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                <input type="text" id="glossarySearch" oninput="filterGlossary()" placeholder="Tìm kiếm thuật ngữ hoặc giao thức..." class="w-full pl-9 pr-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500">
+              </div>
+            </div>
+
+            <div class="overflow-x-auto rounded-2xl border border-slate-200 dark:border-slate-800">
+              <table class="w-full text-left border-collapse text-xs sm:text-sm">
+                <thead>
+                  <tr class="bg-slate-100 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white font-bold">
+                    <th class="p-3 w-1/4">Thuật ngữ / Giao thức</th>
+                    <th class="p-3 w-1/4">Tên đầy đủ & Lĩnh vực</th>
+                    <th class="p-3 w-1/2">Định nghĩa kỹ thuật & Ứng dụng thi CCNP</th>
+                  </tr>
+                </thead>
+                <tbody id="glossaryTable" class="divide-y divide-slate-200 dark:divide-slate-800 text-slate-700 dark:text-slate-300">
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-indigo-600 dark:text-indigo-400">SSO</td>
+                    <td class="p-3">Stateful Switchover</td>
+                    <td class="p-3">Cơ chế đồng bộ liên tục trạng thái giữa Route Processor Active và Standby, cho phép chuyển đổi dự phòng tức thì khi gặp sự cố.</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-indigo-600 dark:text-indigo-400">CEF</td>
+                    <td class="p-3">Cisco Express Forwarding</td>
+                    <td class="p-3">Cơ chế chuyển mạch gói tin tốc độ cao bằng phần mềm/phần cứng độc quyền Cisco dựa trên bảng FIB và Adjacency Table.</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-indigo-600 dark:text-indigo-400">TCAM</td>
+                    <td class="p-3">Ternary Content Addressable Memory</td>
+                    <td class="p-3">Bộ nhớ phần cứng đặc biệt tra cứu song song 3 trạng thái (0, 1, Don't Care) với tốc độ O(1), dùng cho bảng tra ACL và QoS.</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-indigo-600 dark:text-indigo-400">vSmart</td>
+                    <td class="p-3">Cisco SD-WAN Controller</td>
+                    <td class="p-3">Bộ não điều khiển Control Plane của mạng SD-WAN, thực hiện phân phát bảng định tuyến và chính sách bảo mật qua OMP.</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-indigo-600 dark:text-indigo-400">vBond</td>
+                    <td class="p-3">SD-WAN Orchestrator</td>
+                    <td class="p-3">Thành phần điều phối xác thực các Edge router và vSmart controller, hỗ trợ NAT Traversal và Zero Touch Provisioning.</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-indigo-600 dark:text-indigo-400">LISP</td>
+                    <td class="p-3">Locator/ID Separation Protocol</td>
+                    <td class="p-3">Giao thức định tuyến phân tách địa chỉ IP thành EID (ai) và RLOC (ở đâu), làm Control Plane cho giải pháp Cisco SD-Access.</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-indigo-600 dark:text-indigo-400">VXLAN</td>
+                    <td class="p-3">Virtual Extensible LAN (UDP 4789)</td>
+                    <td class="p-3">Đóng gói khung Layer 2 trong gói tin UDP Layer 3, hỗ trợ trường VNI 24-bit mở rộng tới hơn 16 triệu phân đoạn mạng ảo.</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-indigo-600 dark:text-indigo-400">VRF-Lite</td>
+                    <td class="p-3">Virtual Routing and Forwarding</td>
+                    <td class="p-3">Ảo hóa bảng định tuyến tầng 3 độc lập trên cùng một thiết bị phần cứng vật lý mà không cần hạ tầng lõi MPLS.</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-indigo-600 dark:text-indigo-400">MSTP (802.1s)</td>
+                    <td class="p-3">Multiple Spanning Tree Protocol</td>
+                    <td class="p-3">Gộp nhiều VLAN vào trong các Instance Spanning Tree (MSTI) độc lập, giúp tiết kiệm tối đa CPU cho Core Switch.</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-indigo-600 dark:text-indigo-400">Feasible Successor (FS)</td>
+                    <td class="p-3">EIGRP DUAL Algorithm</td>
+                    <td class="p-3">Tuyến đường dự phòng sẵn sàng thay thế Successor ngay lập tức khi thỏa mãn điều kiện Feasibility Condition: RD &lt; FD.</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-indigo-600 dark:text-indigo-400">Reported Distance (RD)</td>
+                    <td class="p-3">EIGRP Metric</td>
+                    <td class="p-3">Chi phí định tuyến tính từ router láng giềng kế cận tới mạng đích (còn gọi là Advertised Distance - AD).</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-indigo-600 dark:text-indigo-400">Feasible Distance (FD)</td>
+                    <td class="p-3">EIGRP Metric</td>
+                    <td class="p-3">Tổng chi phí định tuyến tốt nhất tính từ router hiện tại tới mạng đích thông qua Successor.</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-indigo-600 dark:text-indigo-400">ABR & ASBR</td>
+                    <td class="p-3">OSPF Router Roles</td>
+                    <td class="p-3">ABR nối giữa Area 0 và các Area khác (sinh LSA 3); ASBR kết nối OSPF với các hệ thống mạng ngoài (sinh LSA 5 hoặc LSA 7).</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-indigo-600 dark:text-indigo-400">LSA Type 3</td>
+                    <td class="p-3">Summary LSA (OSPF)</td>
+                    <td class="p-3">Gói tin trạng thái liên kết do ABR sinh ra để quảng bá các dải mạng liên vùng (Inter-Area) giữa các OSPF Area.</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-indigo-600 dark:text-indigo-400">LSA Type 7</td>
+                    <td class="p-3">NSSA External LSA (OSPF)</td>
+                    <td class="p-3">Gói tin do ASBR bên trong vùng Not-So-Stubby Area sinh ra, sau đó được ABR chuyển đổi thành LSA Type 5 ra Area 0.</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-indigo-600 dark:text-indigo-400">BGP Weight</td>
+                    <td class="p-3">Cisco Proprietary (Local)</td>
+                    <td class="p-3">Thuộc tính BGP đầu tiên được xét chọn Best Path, chỉ có giá trị trên router cục bộ, giá trị càng cao càng ưu tiên.</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-indigo-600 dark:text-indigo-400">Local Preference</td>
+                    <td class="p-3">Well-Known Discretionary (AS-wide)</td>
+                    <td class="p-3">Thuộc tính BGP chia sẻ trong toàn bộ AS nội bộ để điều khiển hướng đi ra Internet (Outbound), mặc định là 100.</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-indigo-600 dark:text-indigo-400">AS-Path Prepending</td>
+                    <td class="p-3">BGP Traffic Engineering</td>
+                    <td class="p-3">Kỹ thuật chèn thêm nhiều lần số hiệu AS của mình vào thuộc tính AS-Path để làm đường truyền trông dài hơn, hướng lưu lượng vào cổng khác.</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-indigo-600 dark:text-indigo-400">MED</td>
+                    <td class="p-3">Multi-Exit Discriminator (Optional Non-transitive)</td>
+                    <td class="p-3">Thuộc tính gửi sang AS láng giềng để gợi ý router bên ngoài đi vào AS của mình qua cổng nào (Inbound), giá trị nhỏ hơn sẽ thắng.</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-indigo-600 dark:text-indigo-400">BGP Route Reflector</td>
+                    <td class="p-3">iBGP Scaling Solution</td>
+                    <td class="p-3">Giải pháp chuyển tiếp tuyến iBGP giúp loại bỏ yêu cầu Full-mesh iBGP phức tạp và phá vỡ giới hạn iBGP Split-Horizon.</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-indigo-600 dark:text-indigo-400">Flexible NetFlow (FNF)</td>
+                    <td class="p-3">Cisco Network Telemetry</td>
+                    <td class="p-3">Công nghệ giám sát luồng lưu lượng linh hoạt gồm Flow Record, Flow Exporter và Flow Monitor áp dụng trực tiếp lên Interface.</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-indigo-600 dark:text-indigo-400">ERSPAN</td>
+                    <td class="p-3">Encapsulated Remote SPAN</td>
+                    <td class="p-3">Tính năng nhân bản lưu lượng cổng mạng và đóng gói vào header GRE để truyền định tuyến qua mạng Layer 3 tới máy phân tích Wireshark.</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-indigo-600 dark:text-indigo-400">IP SLA Tracking</td>
+                    <td class="p-3">Performance Monitoring</td>
+                    <td class="p-3">Đo lường độ trễ và mất gói liên tục; kết hợp Object Tracking để tự động gỡ tuyến Default Route chính khi đường WAN đứt.</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-indigo-600 dark:text-indigo-400">Cisco ISE</td>
+                    <td class="p-3">Identity Services Engine</td>
+                    <td class="p-3">Hệ thống máy chủ quản trị bảo mật danh tính doanh nghiệp tập trung, hỗ trợ xác thực 802.1X, gán chính sách TrustSec SGT và phân quyền.</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-indigo-600 dark:text-indigo-400">802.1X EAP-TLS</td>
+                    <td class="p-3">Port-Based Authentication</td>
+                    <td class="p-3">Phương thức xác thực cổng an toàn nhất sử dụng chứng chỉ số x.509 hai chiều (Mutual Certificate) giữa Client Supplicant và Server RADIUS.</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-indigo-600 dark:text-indigo-400">MAB</td>
+                    <td class="p-3">MAC Authentication Bypass</td>
+                    <td class="p-3">Phương thức xác thực dự phòng cho máy in, camera IP không hỗ trợ phần mềm 802.1X bằng cách lấy địa chỉ MAC làm ID.</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-indigo-600 dark:text-indigo-400">CoPP</td>
+                    <td class="p-3">Control Plane Policing</td>
+                    <td class="p-3">Tính năng áp dụng chính sách QoS MQC lên CPU router, giới hạn tốc độ các gói tin hướng CPU để ngăn chặn tấn công từ chối dịch vụ DoS.</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-indigo-600 dark:text-indigo-400">ZBPF</td>
+                    <td class="p-3">Zone-Based Policy Firewall</td>
+                    <td class="p-3">Mô hình tường lửa dựa trên vùng logic (Security Zones) áp dụng chính sách kiểm soát trạng thái Stateful Inspection qua các Zone-Pairs.</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-indigo-600 dark:text-indigo-400">Private VLAN (PVLAN)</td>
+                    <td class="p-3">Layer 2 Isolation</td>
+                    <td class="p-3">Kỹ thuật cô lập cổng tầng 2 trong cùng 1 subnet: Cổng Isolated (cấm nói chuyện), Community (nói chuyện theo nhóm), Promiscuous (nối Gateway).</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-indigo-600 dark:text-indigo-400">YANG</td>
+                    <td class="p-3">Data Modeling Language (RFC 6020)</td>
+                    <td class="p-3">Ngôn ngữ mô hình hóa dữ liệu cấu hình và trạng thái thiết bị mạng, dùng làm cấu trúc nền tảng cho NETCONF và RESTCONF.</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-indigo-600 dark:text-indigo-400">NETCONF</td>
+                    <td class="p-3">Network Configuration Protocol (RFC 6241)</td>
+                    <td class="p-3">Giao thức cấu hình mạng chạy qua SSH port 830, sử dụng định dạng XML và các RPC chuyên sâu hỗ trợ giao dịch hai pha.</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-indigo-600 dark:text-indigo-400">RESTCONF</td>
+                    <td class="p-3">REST-like Network Protocol (RFC 8040)</td>
+                    <td class="p-3">Giao thức cấu hình mạng hiện đại chạy qua HTTPS port 443, ánh xạ mô hình YANG với CRUD và hỗ trợ định dạng JSON trực quan.</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-indigo-600 dark:text-indigo-400">Netmiko</td>
+                    <td class="p-3">Python Network Automation Library</td>
+                    <td class="p-3">Thư viện mã nguồn mở Python chuyên dụng giúp kỹ sư tự động kết nối SSH và đẩy lệnh cấu hình hàng loạt tới thiết bị Cisco.</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-indigo-600 dark:text-indigo-400">Catalyst Center</td>
+                    <td class="p-3">Cisco DNA Center Controller</td>
+                    <td class="p-3">Nền tảng quản trị và điều phối mạng doanh nghiệp tập trung hỗ trợ tự động hóa cấu hình, bảo mật và phân tích Assurance AI.</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="p-3 font-bold text-indigo-600 dark:text-indigo-400">TrustSec SGT</td>
+                    <td class="p-3">Security Group Tagging</td>
+                    <td class="p-3">Gán nhãn bảo mật 16-bit vào khung dữ liệu để áp dụng chính sách tường lửa dựa trên vai trò người dùng thay vì phụ thuộc IP.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- 4.2 Bảng kiểm 18 kỹ năng -->
+          <div class="space-y-4 pt-4 border-t border-slate-200 dark:border-slate-800">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+              <div>
+                <h3 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                  <i class="fa-solid fa-list-check text-indigo-600"></i>
+                  Bảng Kiểm 18 Kỹ Năng Thực Chiến Senior Network Engineer
+                </h3>
+                <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">Đánh dấu những kỹ năng nâng cao bạn đã nắm chắc để tự động tính tỷ lệ sẵn sàng thi đỗ CCNP 350-401 ENCOR.</p>
+              </div>
+              <div class="flex items-center gap-2 self-start sm:self-auto bg-slate-100 dark:bg-slate-800 px-3 py-1.5 rounded-xl text-xs font-bold text-indigo-600 dark:text-indigo-400 shrink-0">
+                <span>Tiến độ:</span>
+                <span id="checklistScore">0 / 18 (0%)</span>
+              </div>
+            </div>
+
+            <div class="w-full bg-slate-200 dark:bg-slate-800 h-2.5 rounded-full overflow-hidden">
+              <div id="checklistBar" class="bg-gradient-to-r from-indigo-500 to-violet-500 h-full w-0 transition-all duration-300"></div>
+            </div>
+
+            <div id="checklistContainer" class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs sm:text-sm">
+              <label class="p-3 rounded-xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-750 flex items-start gap-2.5 cursor-pointer hover:border-indigo-500 transition">
+                <input type="checkbox" onchange="updateChecklist()" class="mt-1 rounded text-indigo-600 focus:ring-indigo-500 shrink-0">
+                <span><strong>D1:</strong> Phân tích cơ chế chuyển mạch phần cứng CEF (FIB / Adjacency Table) và tra cứu bộ nhớ TCAM 3 trạng thái.</span>
+              </label>
+
+              <label class="p-3 rounded-xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-750 flex items-start gap-2.5 cursor-pointer hover:border-indigo-500 transition">
+                <input type="checkbox" onchange="updateChecklist()" class="mt-1 rounded text-indigo-600 focus:ring-indigo-500 shrink-0">
+                <span><strong>D1:</strong> Phân biệt 4 mặt phẳng kiến trúc Cisco SD-WAN (vManage, vSmart, vBond, vEdge) và giao thức OMP.</span>
+              </label>
+
+              <label class="p-3 rounded-xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-750 flex items-start gap-2.5 cursor-pointer hover:border-indigo-500 transition">
+                <input type="checkbox" onchange="updateChecklist()" class="mt-1 rounded text-indigo-600 focus:ring-indigo-500 shrink-0">
+                <span><strong>D1:</strong> Hiểu rõ giải pháp Cisco SD-Access: vai trò của LISP (Control Plane) và đóng gói VXLAN (Data Plane).</span>
+              </label>
+
+              <label class="p-3 rounded-xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-750 flex items-start gap-2.5 cursor-pointer hover:border-indigo-500 transition">
+                <input type="checkbox" onchange="updateChecklist()" class="mt-1 rounded text-indigo-600 focus:ring-indigo-500 shrink-0">
+                <span><strong>D2:</strong> Cấu hình VRF-Lite tạo các bảng định tuyến ảo độc lập trên Router Cisco để phân đoạn lưu lượng đa khách hàng.</span>
+              </label>
+
+              <label class="p-3 rounded-xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-750 flex items-start gap-2.5 cursor-pointer hover:border-indigo-500 transition">
+                <input type="checkbox" onchange="updateChecklist()" class="mt-1 rounded text-indigo-600 focus:ring-indigo-500 shrink-0">
+                <span><strong>D2:</strong> Nắm vững nguyên lý đóng gói VXLAN qua UDP port 4789 và không gian phân đoạn 24-bit VNI 16 triệu mạng ảo.</span>
+              </label>
+
+              <label class="p-3 rounded-xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-750 flex items-start gap-2.5 cursor-pointer hover:border-indigo-500 transition">
+                <input type="checkbox" onchange="updateChecklist()" class="mt-1 rounded text-indigo-600 focus:ring-indigo-500 shrink-0">
+                <span><strong>D3:</strong> Cấu hình quan hệ láng giềng eBGP và iBGP, nắm rõ lệnh <code>neighbor next-hop-self</code> và iBGP Full-mesh.</span>
+              </label>
+
+              <label class="p-3 rounded-xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-750 flex items-start gap-2.5 cursor-pointer hover:border-indigo-500 transition">
+                <input type="checkbox" onchange="updateChecklist()" class="mt-1 rounded text-indigo-600 focus:ring-indigo-500 shrink-0">
+                <span><strong>D3:</strong> Thuộc lòng thứ tự thuật toán chọn đường BGP Best Path Selection theo quy tắc <strong>W L A O M N I</strong>.</span>
+              </label>
+
+              <label class="p-3 rounded-xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-750 flex items-start gap-2.5 cursor-pointer hover:border-indigo-500 transition">
+                <input type="checkbox" onchange="updateChecklist()" class="mt-1 rounded text-indigo-600 focus:ring-indigo-500 shrink-0">
+                <span><strong>D3:</strong> Sử dụng Route-Map điều chỉnh Weight, Local Preference, AS-Path Prepend và MED để điều hướng lưu lượng BGP.</span>
+              </label>
+
+              <label class="p-3 rounded-xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-750 flex items-start gap-2.5 cursor-pointer hover:border-indigo-500 transition">
+                <input type="checkbox" onchange="updateChecklist()" class="mt-1 rounded text-indigo-600 focus:ring-indigo-500 shrink-0">
+                <span><strong>D3:</strong> Phân biệt 6 loại LSA OSPF cốt lõi (Type 1, 2, 3, 4, 5, 7) và cấu hình các vùng đặc biệt Stub / NSSA.</span>
+              </label>
+
+              <label class="p-3 rounded-xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-750 flex items-start gap-2.5 cursor-pointer hover:border-indigo-500 transition">
+                <input type="checkbox" onchange="updateChecklist()" class="mt-1 rounded text-indigo-600 focus:ring-indigo-500 shrink-0">
+                <span><strong>D3:</strong> Phân tích điều kiện Feasibility Condition EIGRP (RD &lt; FD) và cấu hình cân bằng tải không đồng đều với <code>variance</code>.</span>
+              </label>
+
+              <label class="p-3 rounded-xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-750 flex items-start gap-2.5 cursor-pointer hover:border-indigo-500 transition">
+                <input type="checkbox" onchange="updateChecklist()" class="mt-1 rounded text-indigo-600 focus:ring-indigo-500 shrink-0">
+                <span><strong>D4:</strong> Cấu hình Flexible NetFlow (FNF) hoàn chỉnh gồm Flow Record, Flow Exporter và Flow Monitor.</span>
+              </label>
+
+              <label class="p-3 rounded-xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-750 flex items-start gap-2.5 cursor-pointer hover:border-indigo-500 transition">
+                <input type="checkbox" onchange="updateChecklist()" class="mt-1 rounded text-indigo-600 focus:ring-indigo-500 shrink-0">
+                <span><strong>D4:</strong> Kết hợp Cisco IP SLA và Object Tracking để tự động kích hoạt tuyến Floating Static Route dự phòng.</span>
+              </label>
+
+              <label class="p-3 rounded-xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-750 flex items-start gap-2.5 cursor-pointer hover:border-indigo-500 transition">
+                <input type="checkbox" onchange="updateChecklist()" class="mt-1 rounded text-indigo-600 focus:ring-indigo-500 shrink-0">
+                <span><strong>D5:</strong> Cấu hình xác thực cổng 802.1X, giải pháp dự phòng MAB cho thiết bị IoT và cơ chế gán chính sách Cisco ISE.</span>
+              </label>
+
+              <label class="p-3 rounded-xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-750 flex items-start gap-2.5 cursor-pointer hover:border-indigo-500 transition">
+                <input type="checkbox" onchange="updateChecklist()" class="mt-1 rounded text-indigo-600 focus:ring-indigo-500 shrink-0">
+                <span><strong>D5:</strong> Triển khai Control Plane Policing (CoPP) bảo vệ CPU router khỏi bão lưu lượng và tấn công từ chối dịch vụ.</span>
+              </label>
+
+              <label class="p-3 rounded-xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-750 flex items-start gap-2.5 cursor-pointer hover:border-indigo-500 transition">
+                <input type="checkbox" onchange="updateChecklist()" class="mt-1 rounded text-indigo-600 focus:ring-indigo-500 shrink-0">
+                <span><strong>D5:</strong> Cấu hình Private VLAN (Primary VLAN, Isolated, Community, Promiscuous) phân đoạn mạng tầng 2.</span>
+              </label>
+
+              <label class="p-3 rounded-xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-750 flex items-start gap-2.5 cursor-pointer hover:border-indigo-500 transition">
+                <input type="checkbox" onchange="updateChecklist()" class="mt-1 rounded text-indigo-600 focus:ring-indigo-500 shrink-0">
+                <span><strong>D6:</strong> Đọc hiểu cây dữ liệu mô hình hóa YANG (IETF, OpenConfig, Cisco Native) và cấu trúc RPC XML.</span>
+              </label>
+
+              <label class="p-3 rounded-xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-750 flex items-start gap-2.5 cursor-pointer hover:border-indigo-500 transition">
+                <input type="checkbox" onchange="updateChecklist()" class="mt-1 rounded text-indigo-600 focus:ring-indigo-500 shrink-0">
+                <span><strong>D6:</strong> So sánh NETCONF (SSH 830, XML) và RESTCONF (HTTPS 443, JSON/XML, HTTP CRUD methods).</span>
+              </label>
+
+              <label class="p-3 rounded-xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-750 flex items-start gap-2.5 cursor-pointer hover:border-indigo-500 transition">
+                <input type="checkbox" onchange="updateChecklist()" class="mt-1 rounded text-indigo-600 focus:ring-indigo-500 shrink-0">
+                <span><strong>D6:</strong> Viết kịch bản Python sử dụng thư viện Netmiko kết nối SSH và Playbook Ansible quản trị cấu hình mạng tự động.</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- 4.3 Đề thi thử CCNP 350-401 ENCOR mô phỏng Pearson VUE -->
+          <div class="p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-900 text-white space-y-4 shadow-xl border border-indigo-800/40">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              <div class="space-y-2">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-black bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+                  <i class="fa-solid fa-trophy"></i> Thử Thách Cấp Độ Professional
+                </div>
+                <h3 class="text-2xl font-black">Luyện Đề Thi Thử CCNP 350-401 ENCOR (10 Câu - Thang Điểm 1000)</h3>
+                <p class="text-indigo-200/90 text-xs sm:text-sm max-w-xl leading-relaxed">
+                  Đề thi trắc nghiệm chuyên sâu bao quát trọn vẹn cả 6 Domain kiến thức cốt lõi. Điểm chuẩn Pearson VUE của Cisco để được cấp chứng chỉ CCNP ENCOR là từ <strong>825 / 1000 điểm</strong> trở lên.
+                </p>
+              </div>
+              <button onclick="openCourseQuizModal()" class="px-6 py-3.5 rounded-2xl bg-indigo-500 hover:bg-indigo-400 text-white font-black shadow-lg hover:shadow-xl transition transform active:scale-95 flex items-center justify-center gap-2 shrink-0">
+                <i class="fa-solid fa-play"></i>
+                <span>Bắt Đầu Làm Bài</span>
+              </button>
+            </div>
+          </div>
+
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Final Practice Exam Modal (10 Questions) -->
+  <div id="courseQuizModal" class="fixed inset-0 z-50 bg-black/75 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+    <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-slate-200 dark:border-slate-800 shadow-2xl p-6 sm:p-8 space-y-6">
+      
+      <div class="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800">
+        <div class="flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-indigo-600 text-white flex items-center justify-center text-sm font-black">
+            <i class="fa-solid fa-graduation-cap"></i>
+          </span>
+          <h3 class="text-lg font-black text-slate-900 dark:text-white">Đề Thi Thử Cisco CCNP 350-401 ENCOR (10 Câu)</h3>
+        </div>
+        <button onclick="closeCourseQuizModal()" class="w-8 h-8 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-500 hover:text-slate-900 dark:hover:text-white flex items-center justify-center">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <form id="courseExamForm" onsubmit="submitCourseExam(event)" class="space-y-6 text-sm sm:text-base">
+        
+        <!-- EQ1 -->
+        <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-800 space-y-3">
+          <p class="font-bold text-slate-900 dark:text-white">
+            1. (Domain 1) Tính năng nào của kiến trúc High Availability cho phép hai Catalyst Switch vật lý kết hợp lại tạo thành một thiết bị chuyển mạch logic duy nhất với chung một Control Plane duy nhất?
+          </p>
+          <div class="space-y-2">
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq1" value="A" required class="text-indigo-600 focus:ring-indigo-500">
+              <span>A. StackWise Virtual (SVL)</span>
+            </label>
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq1" value="B" class="text-indigo-600 focus:ring-indigo-500">
+              <span>B. HSRP (Hot Standby Router Protocol)</span>
+            </label>
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq1" value="C" class="text-indigo-600 focus:ring-indigo-500">
+              <span>C. VRRP (Virtual Router Redundancy Protocol)</span>
+            </label>
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq1" value="D" class="text-indigo-600 focus:ring-indigo-500">
+              <span>D. GLBP (Gateway Load Balancing Protocol)</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- EQ2 -->
+        <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-800 space-y-3">
+          <p class="font-bold text-slate-900 dark:text-white">
+            2. (Domain 1) Khi triển khai Access Point không dây của Cisco tại các chi nhánh văn phòng từ xa có đường truyền WAN hạn chế, chế độ AP nào cho phép thực hiện chuyển mạch cục bộ (Local Switching) mà không cần đẩy toàn bộ lưu lượng người dùng về WLC trung tâm?
+          </p>
+          <div class="space-y-2">
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq2" value="A" required class="text-indigo-600 focus:ring-indigo-500">
+              <span>A. FlexConnect mode</span>
+            </label>
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq2" value="B" class="text-indigo-600 focus:ring-indigo-500">
+              <span>B. Local mode</span>
+            </label>
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq2" value="C" class="text-indigo-600 focus:ring-indigo-500">
+              <span>C. Sniffer mode</span>
+            </label>
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq2" value="D" class="text-indigo-600 focus:ring-indigo-500">
+              <span>D. Rogue Detector mode</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- EQ3 -->
+        <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-800 space-y-3">
+          <p class="font-bold text-slate-900 dark:text-white">
+            3. (Domain 2) Trong giao thức LISP (Locator/ID Separation Protocol), thành phần hạ tầng nào đóng vai trò tiếp nhận các yêu cầu Map-Request từ ITR (Ingress Tunnel Router) và trả lời vị trí RLOC tương ứng của máy trạm đích EID?
+          </p>
+          <div class="space-y-2">
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq3" value="A" required class="text-indigo-600 focus:ring-indigo-500">
+              <span>A. Map-Resolver (MR)</span>
+            </label>
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq3" value="B" class="text-indigo-600 focus:ring-indigo-500">
+              <span>B. Ingress Tunnel Router (ITR)</span>
+            </label>
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq3" value="C" class="text-indigo-600 focus:ring-indigo-500">
+              <span>C. Egress Tunnel Router (ETR)</span>
+            </label>
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq3" value="D" class="text-indigo-600 focus:ring-indigo-500">
+              <span>D. Proxy ETR</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- EQ4 -->
+        <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-800 space-y-3">
+          <p class="font-bold text-slate-900 dark:text-white">
+            4. (Domain 3) Để điều khiển hướng lưu lượng đi ra ngoài (Outbound Traffic) từ Autonomous System nội bộ của doanh nghiệp ưu tiên đi qua một ISP cụ thể trong mạng BGP, thuộc tính đường đi BGP nào là lựa chọn tối ưu nhất và được chia sẻ tới tất cả router iBGP nội bộ?
+          </p>
+          <div class="space-y-2">
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq4" value="A" required class="text-indigo-600 focus:ring-indigo-500">
+              <span>A. Local Preference (giá trị cao hơn sẽ được ưu tiên)</span>
+            </label>
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq4" value="B" class="text-indigo-600 focus:ring-indigo-500">
+              <span>B. Weight (chỉ có ý nghĩa cục bộ trên 1 router duy nhất)</span>
+            </label>
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq4" value="C" class="text-indigo-600 focus:ring-indigo-500">
+              <span>C. MED (chỉ gửi cho AS láng giềng để điều khiển Inbound)</span>
+            </label>
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq4" value="D" class="text-indigo-600 focus:ring-indigo-500">
+              <span>D. Origin Code Incomplete</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- EQ5 -->
+        <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-800 space-y-3">
+          <p class="font-bold text-slate-900 dark:text-white">
+            5. (Domain 3) Trong bảng cơ sở dữ liệu OSPF LSDB, loại gói tin LSA Type 5 (AS External LSA) do loại Router nào sinh ra để quảng bá các tuyến đường học được từ bên ngoài (như BGP, EIGRP hoặc Static Route) vào trong hệ thống OSPF?
+          </p>
+          <div class="space-y-2">
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq5" value="A" required class="text-indigo-600 focus:ring-indigo-500">
+              <span>A. ASBR (Autonomous System Boundary Router)</span>
+            </label>
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq5" value="B" class="text-indigo-600 focus:ring-indigo-500">
+              <span>B. ABR (Area Border Router)</span>
+            </label>
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq5" value="C" class="text-indigo-600 focus:ring-indigo-500">
+              <span>C. DR (Designated Router)</span>
+            </label>
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq5" value="D" class="text-indigo-600 focus:ring-indigo-500">
+              <span>D. Internal Router trong Area 1</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- EQ6 -->
+        <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-800 space-y-3">
+          <p class="font-bold text-slate-900 dark:text-white">
+            6. (Domain 3) Router EIGRP có tuyến Successor tới mạng đích với FD = 2000. Một tuyến dự phòng qua cổng khác có RD = 1800 và FD = 2500. Tuyến dự phòng này có trở thành Feasible Successor (FS) hay không, và tại sao?
+          </p>
+          <div class="space-y-2">
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq6" value="A" required class="text-indigo-600 focus:ring-indigo-500">
+              <span>A. Có, vì thỏa mãn Feasibility Condition: RD (1800) &lt; FD của Successor (2000)</span>
+            </label>
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq6" value="B" class="text-indigo-600 focus:ring-indigo-500">
+              <span>B. Không, vì FD của tuyến dự phòng (2500) lớn hơn FD của Successor (2000)</span>
+            </label>
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq6" value="C" class="text-indigo-600 focus:ring-indigo-500">
+              <span>C. Không, vì EIGRP không hỗ trợ lưu tuyến dự phòng</span>
+            </label>
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq6" value="D" class="text-indigo-600 focus:ring-indigo-500">
+              <span>D. Có, nhưng router phải chuyển sang trạng thái Active để truy vấn láng giềng</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- EQ7 -->
+        <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-800 space-y-3">
+          <p class="font-bold text-slate-900 dark:text-white">
+            7. (Domain 4) Công nghệ giám sát nhân bản cổng mạng nào cho phép đóng gói khung Ethernet cần theo dõi vào trong gói tin GRE định tuyến qua mạng Layer 3 để gửi tới máy chủ phân tích gói Wireshark ở một chi nhánh khác?
+          </p>
+          <div class="space-y-2">
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq7" value="A" required class="text-indigo-600 focus:ring-indigo-500">
+              <span>A. ERSPAN (Encapsulated Remote SPAN)</span>
+            </label>
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq7" value="B" class="text-indigo-600 focus:ring-indigo-500">
+              <span>B. Local SPAN</span>
+            </label>
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq7" value="C" class="text-indigo-600 focus:ring-indigo-500">
+              <span>C. RSPAN (Remote SPAN)</span>
+            </label>
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq7" value="D" class="text-indigo-600 focus:ring-indigo-500">
+              <span>D. NetFlow v9</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- EQ8 -->
+        <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-800 space-y-3">
+          <p class="font-bold text-slate-900 dark:text-white">
+            8. (Domain 5) Trong tính năng Private VLAN (PVLAN) của Switch Cisco, loại cổng thứ cấp (Secondary Port) nào bị cách ly tuyệt đối, không thể giao tiếp với bất kỳ cổng thứ cấp nào khác trong cùng VLAN mà chỉ được phép gửi nhận dữ liệu với cổng Promiscuous?
+          </p>
+          <div class="space-y-2">
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq8" value="A" required class="text-indigo-600 focus:ring-indigo-500">
+              <span>A. Isolated Port</span>
+            </label>
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq8" value="B" class="text-indigo-600 focus:ring-indigo-500">
+              <span>B. Community Port</span>
+            </label>
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq8" value="C" class="text-indigo-600 focus:ring-indigo-500">
+              <span>C. Promiscuous Port</span>
+            </label>
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq8" value="D" class="text-indigo-600 focus:ring-indigo-500">
+              <span>D. Trunk Port</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- EQ9 -->
+        <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-800 space-y-3">
+          <p class="font-bold text-slate-900 dark:text-white">
+            9. (Domain 5) Trong mô hình tường lửa Zone-Based Policy Firewall (ZBPF) trên Cisco IOS XE, quy tắc xử lý mặc định đối với lưu lượng giữa hai Interface thuộc hai Security Zone khác nhau khi chưa có Zone-Pair và Policy được cấu hình là gì?
+          </p>
+          <div class="space-y-2">
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq9" value="A" required class="text-indigo-600 focus:ring-indigo-500">
+              <span>A. Bị chặn và hủy bỏ hoàn toàn (Implicit Drop)</span>
+            </label>
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq9" value="B" class="text-indigo-600 focus:ring-indigo-500">
+              <span>B. Được cho phép tự do đi qua</span>
+            </label>
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq9" value="C" class="text-indigo-600 focus:ring-indigo-500">
+              <span>C. Tự động chuyển hướng về cổng Loopback</span>
+            </label>
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq9" value="D" class="text-indigo-600 focus:ring-indigo-500">
+              <span>D. Chỉ cho phép các gói tin ICMP Ping</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- EQ10 -->
+        <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-800 space-y-3">
+          <p class="font-bold text-slate-900 dark:text-white">
+            10. (Domain 6) Khi sử dụng giao thức RESTCONF (RFC 8040) để cấu hình thiết bị mạng, phương thức HTTP nào tương ứng với thao tác tạo mới một tài nguyên (Create) và phương thức nào được dùng để cập nhật từng phần (Patch/Update)?
+          </p>
+          <div class="space-y-2">
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq10" value="A" required class="text-indigo-600 focus:ring-indigo-500">
+              <span>A. Tạo mới dùng POST; cập nhật từng phần dùng PATCH</span>
+            </label>
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq10" value="B" class="text-indigo-600 focus:ring-indigo-500">
+              <span>B. Tạo mới dùng GET; cập nhật dùng DELETE</span>
+            </label>
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq10" value="C" class="text-indigo-600 focus:ring-indigo-500">
+              <span>C. Tạo mới dùng PUT; cập nhật dùng GET</span>
+            </label>
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="radio" name="eq10" value="D" class="text-indigo-600 focus:ring-indigo-500">
+              <span>D. Tạo mới dùng OPTION; cập nhật dùng HEAD</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="pt-4 flex items-center justify-end gap-3">
+          <button type="button" onclick="closeCourseQuizModal()" class="px-5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 font-bold hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+            Hủy Bỏ
+          </button>
+          <button type="submit" class="px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-black shadow-md hover:shadow-lg transition">
+            Nộp Bài Chấm Điểm
+          </button>
+        </div>
+      </form>
+
+      <!-- Exam Result Panel -->
+      <div id="courseExamResult" class="hidden space-y-4 pt-4 border-t border-slate-200 dark:border-slate-800 text-center">
+        <div class="w-16 h-16 mx-auto rounded-full bg-indigo-100 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-2xl font-black">
+          <i class="fa-solid fa-award"></i>
+        </div>
+        <h4 id="examScoreTitle" class="text-xl font-black text-slate-900 dark:text-white"></h4>
+        <p id="examScoreDetail" class="text-sm text-slate-600 dark:text-slate-300 max-w-lg mx-auto leading-relaxed"></p>
+        <div class="pt-2 flex items-center justify-center gap-3">
+          <button onclick="restartCourseExam()" class="px-5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-bold hover:bg-slate-200 transition text-sm">
+            Làm Lại Bài Thi
+          </button>
+          <button onclick="closeCourseQuizModal()" class="px-5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold transition text-sm">
+            Đóng Lại
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Interactive JavaScript Engine -->
+  <script>
+        // Theme Controller (Sáng / Tối)
+    function toggleTheme() {
+      const isDark = document.documentElement.classList.toggle('dark');
+      try {
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      } catch(e) {}
+    }
+
+    function initTheme() {
+      try {
+        const saved = localStorage.getItem('theme');
+        if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+      } catch(e) {}
+    }
+    initTheme();
+
+    // Font Scaling Controller
+    let currentScale = 100;
+    const minScale = 75;
+    const maxScale = 150;
+
+    function updateFontDisplay() {
+      const el = document.getElementById('font-scale-display');
+      if (el) el.textContent = currentScale + '%';
+      document.documentElement.style.fontSize = (currentScale / 100 * 16) + 'px';
+    }
+
+    function changeFontSize(delta) {
+      currentScale = Math.min(maxScale, Math.max(minScale, currentScale + delta * 5));
+      updateFontDisplay();
+      try { localStorage.setItem('ccnp_font_scale', currentScale); } catch(e) {}
+    }
+
+    function resetFontSize() {
+      currentScale = 100;
+      updateFontDisplay();
+      try { localStorage.setItem('ccnp_font_scale', currentScale); } catch(e) {}
+    }
+
+    // Initialize Font Size from localStorage
+    try {
+      const savedScale = localStorage.getItem('ccnp_font_scale');
+      if (savedScale) {
+        currentScale = parseInt(savedScale, 10);
+        updateFontDisplay();
+      }
+    } catch(e) {}
+
+    // Checklist Controller
+    function updateChecklist() {
+      const boxes = document.querySelectorAll('#checklistContainer input[type="checkbox"]');
+      const total = boxes.length;
+      let checked = 0;
+      const states = [];
+      boxes.forEach(b => {
+        if (b.checked) checked++;
+        states.push(b.checked);
+      });
+      const pct = Math.round((checked / total) * 100);
+      const scoreEl = document.getElementById('checklistScore');
+      const barEl = document.getElementById('checklistBar');
+      if (scoreEl) scoreEl.textContent = checked + ' / ' + total + ' (' + pct + '%)';
+      if (barEl) barEl.style.width = pct + '%';
+
+      try {
+        localStorage.setItem('ccnp_checklist', JSON.stringify(states));
+      } catch(e) {}
+    }
+
+    // Restore Checklist State
+    try {
+      const savedStates = JSON.parse(localStorage.getItem('ccnp_checklist') || '[]');
+      const boxes = document.querySelectorAll('#checklistContainer input[type="checkbox"]');
+      boxes.forEach((b, idx) => {
+        if (savedStates[idx] !== undefined) b.checked = savedStates[idx];
+      });
+      updateChecklist();
+    } catch(e) {}
+
+    // Interactive Quiz Engine for In-Domain Questions
+    function checkQuiz(quizId, selectedIdx, correctIdx) {
+      const container = document.getElementById(quizId);
+      if (!container) return;
+      const buttons = container.querySelectorAll('.quiz-btn');
+      const feedback = container.querySelector('.quiz-feedback');
+      const explanation = container.querySelector('.quiz-explanation-text');
+
+      buttons.forEach((btn, idx) => {
+        btn.disabled = true;
+        btn.classList.remove('hover:border-indigo-500');
+        if (idx === correctIdx) {
+          btn.classList.add('border-emerald-500', 'bg-emerald-50', 'dark:bg-emerald-950/40', 'text-emerald-900', 'dark:text-emerald-200');
+        } else if (idx === selectedIdx && selectedIdx !== correctIdx) {
+          btn.classList.add('border-rose-500', 'bg-rose-50', 'dark:bg-rose-950/40', 'text-rose-900', 'dark:text-rose-200');
+        }
+      });
+
+      if (feedback) {
+        feedback.classList.remove('hidden');
+        if (selectedIdx === correctIdx) {
+          feedback.innerHTML = '<div class="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-xs sm:text-sm text-emerald-800 dark:text-emerald-200 font-bold flex items-center gap-2"><i class="fa-solid fa-circle-check text-emerald-600"></i> Chính xác! ' + (explanation ? explanation.innerHTML : '') + '</div>';
+        } else {
+          feedback.innerHTML = '<div class="p-3 rounded-xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800 text-xs sm:text-sm text-rose-800 dark:text-rose-200 font-bold flex items-center gap-2"><i class="fa-solid fa-circle-xmark text-rose-600"></i> Chưa chính xác. ' + (explanation ? explanation.innerHTML : '') + '</div>';
+        }
+      }
+    }
+
+    // Glossary Search Filter
+    function filterGlossary() {
+      const q = (document.getElementById('glossarySearch')?.value || '').toLowerCase().trim();
+      const rows = document.querySelectorAll('#glossaryTable tr');
+      rows.forEach(r => {
+        const text = r.textContent.toLowerCase();
+        r.style.display = text.includes(q) ? '' : 'none';
+      });
+    }
+
+    // Exam Modal Controllers
+    function openCourseQuizModal() {
+      document.getElementById('courseQuizModal')?.classList.remove('hidden');
+    }
+    function closeCourseQuizModal() {
+      document.getElementById('courseQuizModal')?.classList.add('hidden');
+    }
+
+    function restartCourseExam() {
+      const form = document.getElementById('courseExamForm');
+      const resultPanel = document.getElementById('courseExamResult');
+      if (form) {
+        form.reset();
+        form.classList.remove('hidden');
+      }
+      if (resultPanel) {
+        resultPanel.classList.add('hidden');
+      }
+    }
+
+    // Submit Final Practice Exam
+    function submitCourseExam(e) {
+      e.preventDefault();
+      const correctAnswers = {
+        eq1: 'A', eq2: 'A', eq3: 'A', eq4: 'A', eq5: 'A',
+        eq6: 'A', eq7: 'A', eq8: 'A', eq9: 'A', eq10: 'A'
+      };
+      let score = 0;
+      const form = document.getElementById('courseExamForm');
+      const formData = new FormData(form);
+
+      for (const [key, correctVal] of Object.entries(correctAnswers)) {
+        if (formData.get(key) === correctVal) {
+          score += 100; // 1000 max score
+        }
+      }
+
+      form.classList.add('hidden');
+      const resultPanel = document.getElementById('courseExamResult');
+      const title = document.getElementById('examScoreTitle');
+      const detail = document.getElementById('examScoreDetail');
+
+      if (resultPanel && title && detail) {
+        resultPanel.classList.remove('hidden');
+        if (score >= 825) {
+          title.textContent = '🎉 XUẤT SẮC! BẠN ĐÃ ĐẠT CHỨNG CHỈ CISCO CCNP ENCOR';
+          title.className = 'text-xl font-black text-emerald-600 dark:text-emerald-400';
+          detail.textContent = 'Điểm số: ' + score + '/1000 điểm (Yêu cầu Cisco: >= 825/1000). Trình độ chuyên môn của bạn hoàn toàn sẵn sàng cho kỳ thi quốc tế 350-401 ENCOR và bước tiếp vào CCIE Lab!';
+        } else {
+          title.textContent = 'CHƯA ĐẠT ĐIỂM CHUẨN CISCO CCNP (>= 825/1000)';
+          title.className = 'text-xl font-black text-amber-600 dark:text-amber-400';
+          detail.textContent = 'Điểm số: ' + score + '/1000 điểm. Kỳ thi CCNP ENCOR đòi hỏi kiến thức chuyên sâu về BGP Path Selection, Multi-Area OSPF và SD-WAN/SDA. Hãy ôn tập lại lý thuyết và làm lại bài thi thử!';
+        }
+      }
+    }
+  </script>
+</body>
+</html>

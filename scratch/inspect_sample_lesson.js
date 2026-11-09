@@ -1,9 +1,6 @@
 const fs = require('fs');
-const content = fs.readFileSync('C:/Users/ADMIN/.gemini/antigravity/scratch/cs-learning-platform/courses/tiengtrung_9.html', 'utf8');
+const path = require('path');
+const baseDir = 'C:/Users/ADMIN/.gemini/antigravity/scratch/cs-learning-platform';
 
-// Find a sample lesson card
-const matchLesson = content.match(/<article id="bai-1"[\s\S]*?<\/article>/);
-if (matchLesson) {
-  console.log('Sample lesson 1 snippet (first 1500 chars):');
-  console.log(matchLesson[0].slice(0, 1500));
-}
+const kinhte = fs.readFileSync(path.join(baseDir, 'scratch/ktpl12_data_kinhte.js'), 'utf8');
+console.log('ktpl12_data_kinhte preview:\n', kinhte.substring(0, 1500));

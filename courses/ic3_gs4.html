@@ -1,0 +1,1862 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Luyện Thi Chứng Chỉ Quốc Tế IC3 - GS4 (Internet & Computing Core Certification) | CodeHub</title>
+  <meta name="description" content="Chương trình luyện thi chứng chỉ tin học quốc tế Certiport IC3 GS4 (Global Standard 4) toàn diện: Đủ 3 Module (Máy tính căn bản CF, Các ứng dụng chủ chốt KA: Word, Excel, PowerPoint, Access, Cuộc sống trực tuyến LO), 15 câu trắc nghiệm mô phỏng và từ điển thuật ngữ IT chuẩn.">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            cert: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              200: '#c7d2fe',
+              300: '#a5b4fc',
+              400: '#818cf8',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+              800: '#3730a3',
+              900: '#312e81',
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    /* Default base font size with smooth scaling */
+    html {
+      font-size: 16px;
+      transition: font-size 0.2s ease;
+    }
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    .dark ::-webkit-scrollbar-track {
+      background: #0f172a;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #6366f1;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #4f46e5;
+    }
+    .quiz-selected {
+      border-color: #6366f1 !important;
+      background-color: rgba(99, 102, 241, 0.12) !important;
+    }
+    .quiz-correct {
+      border-color: #10b981 !important;
+      background-color: rgba(16, 185, 129, 0.15) !important;
+      color: #065f46 !important;
+    }
+    .dark .quiz-correct {
+      color: #6ee7b7 !important;
+    }
+    .quiz-incorrect {
+      border-color: #ef4444 !important;
+      background-color: rgba(239, 68, 68, 0.15) !important;
+      color: #991b1b !important;
+    }
+    .dark .quiz-incorrect {
+      color: #fca5a5 !important;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 min-h-screen flex flex-col font-sans transition-colors duration-200">
+
+  <!-- Top Navigation Bar -->
+  <header class="sticky top-0 z-50 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <a href="../index.html" class="flex items-center gap-2 text-indigo-600 dark:text-indigo-400 font-bold text-sm sm:text-base hover:opacity-80 transition">
+          <i class="fa-solid fa-arrow-left"></i>
+          <span>Trang chủ</span>
+        </a>
+        <span class="text-slate-300 dark:text-slate-700">|</span>
+        <div class="flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 text-white flex items-center justify-center font-black text-sm shadow">
+            GS4
+          </span>
+          <span class="font-extrabold text-sm sm:text-base tracking-tight text-slate-900 dark:text-white">
+            IC3 Global Standard 4
+          </span>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 sm:gap-3">
+        <!-- Font Size Controls (A- / A+) -->
+        <div class="flex items-center bg-slate-100 dark:bg-slate-800 p-1 rounded-xl border border-slate-200 dark:border-slate-700 shadow-inner">
+          <button onclick="changeFontSize(-1)" class="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-white dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-black text-xs transition" title="Giảm cỡ chữ">
+            A-
+          </button>
+          <span id="fontSizeDisplay" class="text-xs font-black px-1.5 text-indigo-600 dark:text-indigo-400 min-w-[42px] text-center select-none">100%</span>
+          <button onclick="changeFontSize(1)" class="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-white dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-black text-xs transition" title="Tăng cỡ chữ">
+            A+
+          </button>
+        </div>
+
+        <!-- Dark/Light Theme Toggle -->
+        <button id="themeToggleBtn" onclick="toggleTheme()" class="p-2 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition" title="Chuyển chế độ sáng/tối">
+          <i class="fa-solid fa-moon dark:hidden"></i>
+          <i class="fa-solid fa-sun hidden dark:block text-amber-400"></i>
+        </button>
+
+        <!-- Progress Indicator -->
+        <a href="#thuat-ngu-kiem-tra" class="hidden sm:flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-xl bg-indigo-50 dark:bg-indigo-950/80 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800 hover:bg-indigo-100 transition">
+          <i class="fa-solid fa-list-check"></i>
+          <span>Checklist & Từ điển</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Header -->
+  <section class="bg-gradient-to-br from-indigo-700 via-purple-700 to-indigo-900 text-white py-12 sm:py-16 px-4 sm:px-6 relative overflow-hidden">
+    <!-- Decorative background patterns -->
+    <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]"></div>
+    <div class="absolute -top-24 -right-24 w-96 h-96 bg-purple-500/30 rounded-full blur-3xl"></div>
+    <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-indigo-500/30 rounded-full blur-3xl"></div>
+
+    <div class="max-w-6xl mx-auto relative z-10 space-y-6">
+      <div class="flex flex-wrap items-center gap-2">
+        <span class="px-3 py-1 rounded-full text-xs font-extrabold uppercase tracking-wider bg-white/20 backdrop-blur-md text-white border border-white/30">
+          <i class="fa-solid fa-globe mr-1"></i> Chứng chỉ Quốc tế Certiport
+        </span>
+        <span class="px-3 py-1 rounded-full text-xs font-bold bg-amber-400 text-amber-950">
+          <i class="fa-solid fa-star mr-1"></i> Chuẩn Global Standard 4 (GS4)
+        </span>
+        <span class="px-3 py-1 rounded-full text-xs font-bold bg-emerald-500 text-white">
+          <i class="fa-solid fa-shield-halved mr-1"></i> Thời hạn Vĩnh viễn
+        </span>
+      </div>
+
+      <div class="space-y-3">
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight leading-tight">
+          Luyện Thi Chứng Chỉ Quốc Tế IC3 - GS4
+        </h1>
+        <p class="text-indigo-100 text-base sm:text-lg md:text-xl max-w-3xl leading-relaxed">
+          Hệ thống hóa toàn bộ kiến thức chuẩn hóa <strong>Internet and Computing Core Certification (GS4)</strong>. Bao gồm 3 bài thi độc lập: <em>Máy tính căn bản (CF)</em>, <em>Các ứng dụng chủ chốt (KA)</em> và <em>Cuộc sống trực tuyến (LO)</em> kèm hệ thống câu hỏi mô phỏng đề thi thực tế và từ điển thuật ngữ IT.
+        </p>
+      </div>
+
+      <!-- Quick Metrics Cards -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 pt-2">
+        <div class="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/15">
+          <div class="text-xs text-indigo-200 font-semibold uppercase">3 Module Thi</div>
+          <div class="text-xl sm:text-2xl font-black mt-1">CF • KA • LO</div>
+          <div class="text-[11px] text-indigo-200/80 mt-0.5">3 chứng chỉ thành phần</div>
+        </div>
+        <div class="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/15">
+          <div class="text-xs text-indigo-200 font-semibold uppercase">Điểm Đạt Chuẩn</div>
+          <div class="text-xl sm:text-2xl font-black mt-1">≥ 650–700</div>
+          <div class="text-[11px] text-indigo-200/80 mt-0.5">Thang điểm 1.000</div>
+        </div>
+        <div class="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/15">
+          <div class="text-xs text-indigo-200 font-semibold uppercase">Thời Gian Thi</div>
+          <div class="text-xl sm:text-2xl font-black mt-1">45–50 Phút</div>
+          <div class="text-[11px] text-indigo-200/80 mt-0.5">Mỗi module 40–45 câu</div>
+        </div>
+        <div class="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/15">
+          <div class="text-xs text-indigo-200 font-semibold uppercase">Ngân Hàng Ôn Tập</div>
+          <div class="text-xl sm:text-2xl font-black mt-1">15 Câu Mock</div>
+          <div class="text-[11px] text-indigo-200/80 mt-0.5">Tự chấm điểm tức thì</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Container with Sticky Sidebar -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 flex-1 w-full">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+      <!-- Sticky Table of Contents Sidebar -->
+      <aside class="lg:col-span-3 sticky top-24 space-y-4 order-2 lg:order-1">
+        <div class="bg-white dark:bg-slate-900 rounded-2xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+          <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
+            <span class="font-bold text-slate-900 dark:text-white text-sm flex items-center gap-2">
+              <i class="fa-solid fa-compass text-indigo-600"></i> Mục lục ôn thi GS4
+            </span>
+            <span class="text-[11px] font-black px-2 py-0.5 rounded-full bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300">
+              3 Module
+            </span>
+          </div>
+
+          <nav class="space-y-1 text-xs sm:text-sm font-medium">
+            <!-- Module 1 -->
+            <a href="#module-1" class="flex items-center justify-between p-2 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-indigo-50 dark:hover:bg-slate-800 hover:text-indigo-600 transition">
+              <span class="flex items-center gap-2">
+                <i class="fa-solid fa-microchip text-indigo-500 text-xs"></i>
+                <span class="font-bold">M1. Máy Tính Căn Bản (CF)</span>
+              </span>
+            </a>
+            <div class="pl-6 pr-2 py-1 space-y-1 text-xs text-slate-500 dark:text-slate-400">
+              <a href="#bai-1" class="block hover:text-indigo-600 dark:hover:text-indigo-400 py-0.5">Bài 1. Phần cứng & Di động</a>
+              <a href="#bai-2" class="block hover:text-indigo-600 dark:hover:text-indigo-400 py-0.5">Bài 2. Phần mềm & Giấy phép</a>
+              <a href="#bai-3" class="block hover:text-indigo-600 dark:hover:text-indigo-400 py-0.5">Bài 3. Quản lý File & Bảo trì</a>
+              <a href="#quiz-m1" class="block text-indigo-600 dark:text-indigo-400 font-bold py-0.5"><i class="fa-solid fa-circle-question mr-1"></i>Trắc nghiệm Module 1</a>
+            </div>
+
+            <!-- Module 2 -->
+            <a href="#module-2" class="flex items-center justify-between p-2 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-indigo-50 dark:hover:bg-slate-800 hover:text-indigo-600 transition">
+              <span class="flex items-center gap-2">
+                <i class="fa-solid fa-window-restore text-purple-500 text-xs"></i>
+                <span class="font-bold">M2. Các Ứng Dụng (KA)</span>
+              </span>
+            </a>
+            <div class="pl-6 pr-2 py-1 space-y-1 text-xs text-slate-500 dark:text-slate-400">
+              <a href="#bai-4" class="block hover:text-indigo-600 dark:hover:text-indigo-400 py-0.5">Bài 4. Giao diện & Chức năng chung</a>
+              <a href="#bai-5" class="block hover:text-indigo-600 dark:hover:text-indigo-400 py-0.5">Bài 5. Xử lý văn bản (Word)</a>
+              <a href="#bai-6" class="block hover:text-indigo-600 dark:hover:text-indigo-400 py-0.5">Bài 6. Bảng tính (Excel)</a>
+              <a href="#bai-7" class="block hover:text-indigo-600 dark:hover:text-indigo-400 py-0.5">Bài 7. Trình chiếu (PowerPoint)</a>
+              <a href="#bai-8" class="block hover:text-indigo-600 dark:hover:text-indigo-400 py-0.5">Bài 8. Cơ sở dữ liệu (Access)</a>
+              <a href="#quiz-m2" class="block text-purple-600 dark:text-purple-400 font-bold py-0.5"><i class="fa-solid fa-circle-question mr-1"></i>Trắc nghiệm Module 2</a>
+            </div>
+
+            <!-- Module 3 -->
+            <a href="#module-3" class="flex items-center justify-between p-2 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-indigo-50 dark:hover:bg-slate-800 hover:text-indigo-600 transition">
+              <span class="flex items-center gap-2">
+                <i class="fa-solid fa-globe text-emerald-500 text-xs"></i>
+                <span class="font-bold">M3. Cuộc Sống Trực Tuyến</span>
+              </span>
+            </a>
+            <div class="pl-6 pr-2 py-1 space-y-1 text-xs text-slate-500 dark:text-slate-400">
+              <a href="#bai-9" class="block hover:text-indigo-600 dark:hover:text-indigo-400 py-0.5">Bài 9. Mạng máy tính & Internet</a>
+              <a href="#bai-10" class="block hover:text-indigo-600 dark:hover:text-indigo-400 py-0.5">Bài 10. Truyền thông & Netiquette</a>
+              <a href="#bai-11" class="block hover:text-indigo-600 dark:hover:text-indigo-400 py-0.5">Bài 11. An toàn, Pháp luật & CVS</a>
+              <a href="#quiz-m3" class="block text-emerald-600 dark:text-emerald-400 font-bold py-0.5"><i class="fa-solid fa-circle-question mr-1"></i>Trắc nghiệm Module 3</a>
+            </div>
+
+            <!-- Glossary & Checklist -->
+            <a href="#thuat-ngu-kiem-tra" class="flex items-center justify-between p-2 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-indigo-50 dark:hover:bg-slate-800 hover:text-indigo-600 transition">
+              <span class="flex items-center gap-2">
+                <i class="fa-solid fa-spell-check text-amber-500 text-xs"></i>
+                <span class="font-bold">Từ Điển IT & Tự Kiểm</span>
+              </span>
+            </a>
+          </nav>
+        </div>
+
+        <!-- Tip Box -->
+        <div class="bg-indigo-50/80 dark:bg-slate-900 rounded-2xl p-4 border border-indigo-200 dark:border-indigo-900 text-xs text-indigo-950 dark:text-indigo-200 space-y-2">
+          <div class="font-bold flex items-center gap-1.5 text-indigo-800 dark:text-indigo-300">
+            <i class="fa-solid fa-lightbulb"></i> Mẹo làm bài thi GS4:
+          </div>
+          <p class="leading-relaxed">
+            Chứng chỉ IC3 GS4 sử dụng hệ thống câu hỏi tương tác trực tiếp (In-application) và mô phỏng. Khi làm phần mềm văn phòng, hãy luôn ưu tiên sử dụng <strong>phím tắt</strong> và các nút lệnh trên thanh <strong>Ribbon</strong>.
+          </p>
+        </div>
+      </aside>
+
+      <!-- Main Content Column -->
+      <div class="lg:col-span-9 space-y-12 order-1 lg:order-2">
+
+    <!-- ========================================== -->
+    <!-- MODULE 1: COMPUTING FUNDAMENTALS (CF)      -->
+    <!-- ========================================== -->
+    <section id="module-1" class="space-y-8 scroll-mt-24">
+      <div class="border-b-2 border-indigo-500 pb-4 flex items-center justify-between">
+        <div>
+          <span class="text-xs font-black uppercase tracking-wider px-3 py-1 rounded-full bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300">
+            IC3 GS4 • Module 1
+          </span>
+          <h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white mt-2">
+            MÁY TÍNH CĂN BẢN (Computing Fundamentals - CF)
+          </h2>
+          <p class="text-sm sm:text-base text-slate-600 dark:text-slate-400 mt-1">
+            Nắm vững cấu trúc phần cứng, thiết bị di động thông minh, hệ điều hành, bản quyền phần mềm, quản lý tệp tin, lưu trữ đám mây và kỹ năng bảo trì, xử lý sự cố.
+          </p>
+        </div>
+        <div class="hidden sm:flex items-center justify-center w-12 h-12 rounded-2xl bg-indigo-600 text-white text-xl shadow-lg">
+          <i class="fa-solid fa-microchip"></i>
+        </div>
+      </div>
+
+      <!-- BÀI 1 -->
+      <article id="bai-1" class="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 sm:p-8 shadow-sm space-y-6 scroll-mt-24">
+        <div class="border-b border-slate-200 dark:border-slate-800 pb-4">
+          <span class="text-xs font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider">Bài 1</span>
+          <h3 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white mt-1">
+            Phần Cứng Máy Tính, Thiết Bị Di Động & Cổng Kết Nối
+          </h3>
+        </div>
+
+        <div class="space-y-4 text-base sm:text-lg leading-relaxed text-slate-700 dark:text-slate-300">
+          <h4 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-server text-indigo-600"></i> 1. Các loại thiết bị tính toán hiện đại
+          </h4>
+          <p>
+            Trong chuẩn IC3 GS4, hệ thống máy tính được mở rộng từ máy tính truyền thống sang các thiết bị số thông minh cầm tay:
+          </p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm sm:text-base">
+            <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/70 space-y-2">
+              <span class="font-bold text-indigo-600 dark:text-indigo-400 flex items-center gap-1.5">
+                <i class="fa-solid fa-desktop"></i> Máy tính để bàn (Desktop PC) & All-in-One
+              </span>
+              <p class="text-slate-600 dark:text-slate-300">
+                Hiệu năng mạnh, khả năng nâng cấp linh kiện linh hoạt, sử dụng nguồn điện cố định. Dòng All-in-One tích hợp toàn bộ thùng máy vào mặt sau của màn hình, tiết kiệm diện tích bàn làm việc.
+              </p>
+            </div>
+            <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/70 space-y-2">
+              <span class="font-bold text-purple-600 dark:text-purple-400 flex items-center gap-1.5">
+                <i class="fa-solid fa-laptop"></i> Máy tính xách tay (Laptop & Ultrabook)
+              </span>
+              <p class="text-slate-600 dark:text-slate-300">
+                Thiết kế tất cả trong một (màn hình, bàn phím, touchpad, pin sạc), tính di động cao. Dòng Ultrabook mỏng nhẹ, sử dụng ổ thể rắn SSD và chip tiết kiệm điện.
+              </p>
+            </div>
+            <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/70 space-y-2">
+              <span class="font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5">
+                <i class="fa-solid fa-tablet-screen-button"></i> Máy tính bảng (Tablet)
+              </span>
+              <p class="text-slate-600 dark:text-slate-300">
+                Màn hình cảm ứng đa điểm (Touchscreen), không có bàn phím vật lý cố định (dùng bàn phím ảo trên màn hình hoặc kết nối Bluetooth), thời lượng pin dài, phù hợp đọc tài liệu và giải trí.
+              </p>
+            </div>
+            <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/70 space-y-2">
+              <span class="font-bold text-amber-600 dark:text-amber-400 flex items-center gap-1.5">
+                <i class="fa-solid fa-mobile-screen"></i> Điện thoại thông minh (Smartphone)
+              </span>
+              <p class="text-slate-600 dark:text-slate-300">
+                Kết hợp chức năng đàm thoại di động với khả năng xử lý máy tính: định vị GPS, camera chất lượng cao, kết nối 3G/4G/Wi-Fi và kho ứng dụng phong phú (App Store, Google Play).
+              </p>
+            </div>
+          </div>
+
+          <h4 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2 pt-2">
+            <i class="fa-solid fa-memory text-indigo-600"></i> 2. Các thành phần phần cứng cốt lõi & Đơn vị đo lường
+          </h4>
+          <ul class="list-disc list-inside space-y-2">
+            <li>
+              <strong>Bộ vi xử lý trung tâm (CPU - Central Processing Unit):</strong> Được ví như "bộ não" điều phối và xử lý toàn bộ phép tính logic và số học (ALU) và điều khiển luồng lệnh (CU). Tốc độ CPU đo bằng <strong>Gigahertz (GHz)</strong> - số tỉ chu kỳ xử lý mỗi giây; CPU hiện đại tích hợp đa nhân (Multi-core: Dual-core, Quad-core, Octa-core).
+            </li>
+            <li>
+              <strong>Bộ nhớ truy cập ngẫu nhiên (RAM - Random Access Memory):</strong> Bộ nhớ tạm thời (Volatile Memory), lưu trữ các chương trình và dữ liệu đang chạy để CPU truy xuất cực nhanh. <em>Toàn bộ dữ liệu trong RAM sẽ bị mất khi máy tính bị mất điện hoặc tắt máy.</em>
+            </li>
+            <li>
+              <strong>Bộ nhớ chỉ đọc (ROM - Read-Only Memory):</strong> Bộ nhớ cố định (Non-volatile Memory), lưu trữ phần mềm cơ sở firmware (BIOS/UEFI) và chương trình tự kiểm tra khi bật máy (POST - Power-On Self-Test). Dữ liệu trong ROM không bị mất khi mất điện.
+            </li>
+            <li>
+              <strong>Ổ đĩa cứng HDD vs Ổ thể rắn SSD:</strong>
+              <div class="overflow-x-auto mt-2">
+                <table class="w-full text-left text-xs sm:text-sm border-collapse border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden">
+                  <thead class="bg-indigo-50 dark:bg-slate-800 text-indigo-900 dark:text-indigo-200">
+                    <tr>
+                      <th class="p-2.5 border border-slate-200 dark:border-slate-700">Tiêu chí so sánh</th>
+                      <th class="p-2.5 border border-slate-200 dark:border-slate-700">Ổ cứng từ tính HDD (Hard Disk Drive)</th>
+                      <th class="p-2.5 border border-slate-200 dark:border-slate-700">Ổ thể rắn SSD (Solid State Drive)</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="border-b border-slate-100 dark:border-slate-800">
+                      <td class="p-2.5 font-bold border border-slate-200 dark:border-slate-700">Công nghệ lưu trữ</td>
+                      <td class="p-2.5 border border-slate-200 dark:border-slate-700">Đĩa từ quay cơ học (5.400 / 7.200 vòng/phút) và đầu đọc</td>
+                      <td class="p-2.5 border border-slate-200 dark:border-slate-700">Chip nhớ bán dẫn Flash (không có bộ phận chuyển động)</td>
+                    </tr>
+                    <tr class="border-b border-slate-100 dark:border-slate-800">
+                      <td class="p-2.5 font-bold border border-slate-200 dark:border-slate-700">Tốc độ truy xuất</td>
+                      <td class="p-2.5 border border-slate-200 dark:border-slate-700">Trung bình (khoảng 80 - 150 MB/s)</td>
+                      <td class="p-2.5 border border-slate-200 dark:border-slate-700">Cực nhanh (500 MB/s đến trên 3.000 MB/s)</td>
+                    </tr>
+                    <tr>
+                      <td class="p-2.5 font-bold border border-slate-200 dark:border-slate-700">Độ bền & Chống sốc</td>
+                      <td class="p-2.5 border border-slate-200 dark:border-slate-700">Dễ hỏng đĩa và mất dữ liệu khi bị rơi rớt, va đập mạnh</td>
+                      <td class="p-2.5 border border-slate-200 dark:border-slate-700">Chống sốc tuyệt vời, êm ái, tiết kiệm điện năng</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </li>
+            <li>
+              <strong>Đơn vị đo lường dữ liệu số:</strong> Đơn vị nhỏ nhất là <strong>Bit</strong> (chỉ mang giá trị 0 hoặc 1). $1	ext{ Byte (B)} = 8	ext{ bits}$.
+              <div class="p-3 bg-slate-100 dark:bg-slate-800 rounded-xl text-xs sm:text-sm font-mono text-center text-indigo-700 dark:text-indigo-300 font-bold mt-1">
+                1 Byte = 8 bits &bull; 1 KB = 1.024 Bytes &bull; 1 MB = 1.024 KB &bull; 1 GB = 1.024 MB &bull; 1 TB = 1.024 GB &bull; 1 PB = 1.024 TB
+              </div>
+            </li>
+          </ul>
+
+          <h4 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2 pt-2">
+            <i class="fa-solid fa-plug text-indigo-600"></i> 3. Cổng kết nối ngoại vi chuẩn hóa
+          </h4>
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5 text-xs sm:text-sm pt-1">
+            <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+              <strong class="text-indigo-600 dark:text-indigo-400 block mb-1"><i class="fa-brands fa-usb"></i> USB 3.0 / 2.0</strong>
+              Cổng cắm vạn năng cho chuột, bàn phím, máy in, USB flash. Cổng USB 3.0 có màu xanh dương bên trong, tốc độ lên đến 5 Gbps (nhanh gấp 10 lần USB 2.0).
+            </div>
+            <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+              <strong class="text-indigo-600 dark:text-indigo-400 block mb-1"><i class="fa-solid fa-tv"></i> HDMI & DisplayPort</strong>
+              Truyền tải đồng thời tín hiệu hình ảnh kỹ thuật số độ nét cao (HD, 4K) và âm thanh đa kênh chỉ qua một sợi cáp duy nhất.
+            </div>
+            <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+              <strong class="text-indigo-600 dark:text-indigo-400 block mb-1"><i class="fa-solid fa-video"></i> VGA & DVI</strong>
+              Cổng xuất hình ảnh truyền thống. VGA truyền tín hiệu tương tự (Analog, đầu cắm 15 chân màu xanh lam); DVI truyền tín hiệu số (Digital).
+            </div>
+            <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+              <strong class="text-indigo-600 dark:text-indigo-400 block mb-1"><i class="fa-solid fa-network-wired"></i> Ethernet (RJ-45)</strong>
+              Cổng kết nối mạng LAN có dây, mang lại đường truyền Internet ổn định, tốc độ cao (Gigabit 1.000 Mbps) và độ trễ thấp.
+            </div>
+            <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+              <strong class="text-indigo-600 dark:text-indigo-400 block mb-1"><i class="fa-brands fa-bluetooth"></i> Bluetooth</strong>
+              Kết nối vô tuyến tầm ngắn (khoảng 10 mét) cho tai nghe, bàn phím, loa, chuột không dây và truyền tệp giữa điện thoại.
+            </div>
+            <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+              <strong class="text-indigo-600 dark:text-indigo-400 block mb-1"><i class="fa-solid fa-wifi"></i> Wi-Fi (WLAN)</strong>
+              Kết nối mạng cục bộ không dây dựa trên chuẩn IEEE 802.11, cho phép các thiết bị di động truy cập Internet tự do trong vùng phủ sóng.
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- BÀI 2 -->
+      <article id="bai-2" class="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 sm:p-8 shadow-sm space-y-6 scroll-mt-24">
+        <div class="border-b border-slate-200 dark:border-slate-800 pb-4">
+          <span class="text-xs font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider">Bài 2</span>
+          <h3 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white mt-1">
+            Phần Mềm, Hệ Điều Hành & Bản Quyền Phần Mềm (EULA)
+          </h3>
+        </div>
+
+        <div class="space-y-4 text-base sm:text-lg leading-relaxed text-slate-700 dark:text-slate-300">
+          <h4 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-window-maximize text-indigo-600"></i> 1. Vai trò và chức năng của Hệ Điều Hành (OS)
+          </h4>
+          <p>
+            <strong>Hệ điều hành (Operating System - OS)</strong> là phần mềm hệ thống quan trọng nhất, đóng vai trò là cầu nối trung gian giữa phần cứng máy tính và các chương trình ứng dụng của người dùng.
+          </p>
+          <ul class="list-disc list-inside space-y-1.5 text-sm sm:text-base">
+            <li><strong>Quản lý phần cứng:</strong> Điều phối CPU, phân bổ bộ nhớ RAM, quản lý ổ cứng và thiết bị ngoại vi (thông qua trình điều khiển thiết bị - Device Drivers).</li>
+            <li><strong>Giao diện người dùng:</strong> Cung cấp giao diện đồ họa GUI (Graphical User Interface: cửa sổ, biểu tượng icon, menu, con trỏ chuột) hoặc giao diện dòng lệnh CLI (Command Line Interface: Command Prompt, Terminal).</li>
+            <li><strong>Quản lý tệp tin và bảo mật:</strong> Tổ chức dữ liệu trên đĩa thành các thư mục hình cây và kiểm soát quyền truy cập của các tài khoản người dùng (User Accounts).</li>
+          </ul>
+
+          <h4 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2 pt-2">
+            <i class="fa-solid fa-certificate text-indigo-600"></i> 2. Các mô hình bản quyền phần mềm trong bài thi IC3
+          </h4>
+          <p>
+            Chứng chỉ IC3 GS4 kiểm tra rất kỹ sự hiểu biết về tính hợp pháp khi sử dụng phần mềm và các thỏa thuận cấp phép người dùng cuối (<strong>EULA - End User License Agreement</strong>):
+          </p>
+          <div class="space-y-2.5 text-xs sm:text-sm">
+            <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800 border-l-4 border-indigo-600 space-y-1">
+              <div class="font-bold text-indigo-700 dark:text-indigo-300 text-sm">Phần mềm thương mại có bản quyền (Commercial Software / Proprietary)</div>
+              <p class="text-slate-600 dark:text-slate-300">
+                Người dùng phải trả tiền mua giấy phép sử dụng (License). Mã nguồn phần mềm bị đóng kín (Closed source), nghiêm cấm sao chép, chỉnh sửa hoặc phân phối lại mà không được phép (Ví dụ: Microsoft Windows, Microsoft Office, Adobe Photoshop).
+              </p>
+            </div>
+
+            <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800 border-l-4 border-emerald-600 space-y-1">
+              <div class="font-bold text-emerald-700 dark:text-emerald-300 text-sm">Phần mềm mã nguồn mở (Open Source Software - OSS)</div>
+              <p class="text-slate-600 dark:text-slate-300">
+                Mã nguồn được công khai rộng rãi theo các giấy phép như GNU GPL, MIT. Bất kỳ ai cũng có quyền tự do sử dụng, nghiên cứu, sửa đổi mã và phân phối lại miễn phí (Ví dụ: Hệ điều hành Linux, Bộ văn phòng LibreOffice, Trình duyệt Mozilla Firefox, Phần mềm đồ họa GIMP).
+              </p>
+            </div>
+
+            <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800 border-l-4 border-amber-600 space-y-1">
+              <div class="font-bold text-amber-700 dark:text-amber-300 text-sm">Phần mềm dùng thử (Shareware / Trialware)</div>
+              <p class="text-slate-600 dark:text-slate-300">
+                Cho phép người dùng tải về và trải nghiệm đầy đủ hoặc một phần tính năng miễn phí trong một khoảng thời gian xác định (ví dụ 30 ngày). Sau thời hạn thử nghiệm, người dùng bắt buộc phải mua bản quyền hoặc gỡ bỏ phần mềm (Ví dụ: WinRAR, phần mềm diệt virus dùng thử).
+              </p>
+            </div>
+
+            <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800 border-l-4 border-sky-600 space-y-1">
+              <div class="font-bold text-sky-700 dark:text-sky-300 text-sm">Phần mềm miễn phí (Freeware)</div>
+              <p class="text-slate-600 dark:text-slate-300">
+                Được tác giả cung cấp miễn phí 100% để sử dụng, nhưng tác giả vẫn giữ bản quyền tác giả và không công khai mã nguồn (không được tự ý sửa mã hoặc đem bán lại, ví dụ: Adobe Acrobat Reader, Skype).
+              </p>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- BÀI 3 -->
+      <article id="bai-3" class="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 sm:p-8 shadow-sm space-y-6 scroll-mt-24">
+        <div class="border-b border-slate-200 dark:border-slate-800 pb-4">
+          <span class="text-xs font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider">Bài 3</span>
+          <h3 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white mt-1">
+            Quản Lý Tệp Tin, Lưu Trữ Đám Mây & Bảo Trì Hệ Thống
+          </h3>
+        </div>
+
+        <div class="space-y-4 text-base sm:text-lg leading-relaxed text-slate-700 dark:text-slate-300">
+          <h4 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-folder-tree text-indigo-600"></i> 1. Quy tắc quản lý tệp và thư mục trong Windows
+          </h4>
+          <ul class="list-disc list-inside space-y-2 text-sm sm:text-base">
+            <li>
+              <strong>Cấu trúc cây thư mục (Directory Tree):</strong> Bắt đầu từ ổ đĩa gốc (Root Directory, ví dụ <code class="bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded text-indigo-600">C:\</code>), chia nhánh thành các thư mục con và các tệp tin.
+            </li>
+            <li>
+              <strong>Đường dẫn (Path):</strong> Chỉ định vị trí chính xác của tệp. Ví dụ: <code class="bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded text-indigo-600">C:\Users\Student\Documents\BaiTap.docx</code>.
+            </li>
+            <li>
+              <strong>Các ký tự cấm đặt tên tệp trong Windows:</strong> Tuyệt đối không được chứa 9 ký tự đặc biệt: <code class="font-bold text-rose-600 bg-rose-50 dark:bg-rose-950/40 px-2 py-0.5 rounded">\ / : * ? &quot; &lt; &gt; |</code> (do hệ điều hành dùng làm ký tự phân cách đường dẫn, lệnh chuyển hướng và tìm kiếm).
+            </li>
+            <li>
+              <strong>Tìm kiếm nâng cao với ký tự đại diện (Wildcards):</strong>
+              <br>&bull; Dấu sao <code class="font-bold text-indigo-600">*</code>: Đại diện cho một chuỗi ký tự bất kỳ (kể cả rỗng). Ví dụ: <code class="font-mono text-xs sm:text-sm">*.docx</code> tìm tất cả văn bản Word; <code class="font-mono text-xs sm:text-sm">BaoCao*.*</code> tìm tất cả tệp có tên bắt đầu bằng "BaoCao".
+              <br>&bull; Dấu hỏi chấm <code class="font-bold text-indigo-600">?</code>: Đại diện cho đúng duy nhất 1 ký tự. Ví dụ: <code class="font-mono text-xs sm:text-sm">Bai?.xlsx</code> sẽ tìm thấy <code class="font-mono text-xs sm:text-sm">Bai1.xlsx</code>, <code class="font-mono text-xs sm:text-sm">BaiA.xlsx</code> nhưng không tìm thấy <code class="font-mono text-xs sm:text-sm">Bai10.xlsx</code>.
+            </li>
+            <li>
+              <strong>Nén tệp tin (Compress / ZIP):</strong> Giúp gom nhiều tệp thành 1 tệp duy nhất và giảm dung lượng lưu trữ, thuận tiện để chia sẻ qua email.
+            </li>
+          </ul>
+
+          <h4 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2 pt-2">
+            <i class="fa-solid fa-cloud text-indigo-600"></i> 2. Điện toán đám mây & Lưu trữ trực tuyến (Cloud Storage)
+          </h4>
+          <p>
+            Chuẩn GS4 nhấn mạnh vai trò của <strong>Lưu trữ đám mây</strong> (như Microsoft OneDrive, Google Drive, Dropbox, Apple iCloud):
+          </p>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs sm:text-sm">
+            <div class="p-3 bg-indigo-50/60 dark:bg-slate-800 rounded-xl border border-indigo-200 dark:border-indigo-900">
+              <div class="font-bold text-indigo-800 dark:text-indigo-300 mb-1"><i class="fa-solid fa-arrows-rotate"></i> Đồng bộ tự động</div>
+              Tệp tin trên máy tính tự động cập nhật lên đám mây và đồng bộ sang điện thoại, máy tính bảng theo thời gian thực.
+            </div>
+            <div class="p-3 bg-indigo-50/60 dark:bg-slate-800 rounded-xl border border-indigo-200 dark:border-indigo-900">
+              <div class="font-bold text-indigo-800 dark:text-indigo-300 mb-1"><i class="fa-solid fa-users"></i> Cộng tác trực tuyến</div>
+              Nhiều người dùng có thể cùng mở, chỉnh sửa đồng thời trên cùng một tài liệu Word, Excel trên trình duyệt web.
+            </div>
+            <div class="p-3 bg-indigo-50/60 dark:bg-slate-800 rounded-xl border border-indigo-200 dark:border-indigo-900">
+              <div class="font-bold text-indigo-800 dark:text-indigo-300 mb-1"><i class="fa-solid fa-shield-virus"></i> An toàn dữ liệu</div>
+              Nếu máy tính bị hỏng ổ cứng hoặc mất máy, dữ liệu quan trọng vẫn nguyên vẹn trên tài khoản đám mây.
+            </div>
+          </div>
+
+          <h4 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2 pt-2">
+            <i class="fa-solid fa-screwdriver-wrench text-indigo-600"></i> 3. Bảo trì hệ thống & Máy tính xanh (Green Computing)
+          </h4>
+          <ul class="list-disc list-inside space-y-1.5 text-sm sm:text-base">
+            <li><strong>Dọn dẹp đĩa (Disk Cleanup):</strong> Tiện ích tích hợp trong Windows để tìm và xoá tệp rác, tệp tạm thời (Temporary Files), thùng rác (Recycle Bin) để giải phóng dung lượng đĩa.</li>
+            <li><strong>Chống phân mảnh đĩa (Disk Defragmenter):</strong> Sắp xếp lại các khối dữ liệu bị phân tán trên đĩa từ HDD giúp đầu đọc truy xuất nhanh hơn. <em>Lưu ý: Không chống phân mảnh trên ổ SSD vì làm giảm tuổi thọ chip nhớ.</em></li>
+            <li><strong>Quản lý ứng dụng treo (Task Manager):</strong> Nhấn tổ hợp phím <kbd class="px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-700 text-xs font-mono font-bold">Ctrl + Shift + Esc</kbd> hoặc <kbd class="px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-700 text-xs font-mono font-bold">Ctrl + Alt + Delete</kbd> để kiểm tra tiến trình chiếm dụng tài nguyên và buộc dừng ứng dụng bị treo bằng lệnh <strong>End Task</strong>.</li>
+            <li><strong>Máy tính xanh (Green Computing):</strong> Bật chế độ tiết kiệm năng lượng (Sleep / Hibernate), tắt màn hình khi không sử dụng, sử dụng thiết bị đạt chuẩn <strong>Energy Star</strong> và đưa rác thải điện tử (e-waste: pin, bo mạch cũ) đến các trung tâm tái chế chuyên dụng thay vì vứt bừa bãi.</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- 5 CÂU HỎI TRẮC NGHIỆM MÔ PHỎNG ĐỀ THI MODULE 1 -->
+      <div id="quiz-m1" class="space-y-4 pt-4 scroll-mt-24">
+        <div class="flex items-center justify-between border-b border-indigo-200 dark:border-indigo-900 pb-2">
+          <h3 class="text-lg sm:text-xl font-black text-slate-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-list-check text-indigo-600"></i> 5 Câu Hỏi Trắc Nghiệm Mô Phỏng — Module 1 (CF)
+          </h3>
+          <span class="text-xs font-bold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950 px-2.5 py-1 rounded-full">
+            Chuẩn Đề Thi Certiport
+          </span>
+        </div>
+
+        
+    <div id="q_cf_1" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+      <div class="flex items-center justify-between text-xs font-bold text-slate-500 dark:text-slate-400">
+        <span><i class="fa-solid fa-circle-question text-indigo-600 me-1"></i> Câu hỏi luyện thi IC3 GS4</span>
+        <span class="text-[11px] bg-indigo-100 dark:bg-indigo-950/60 text-indigo-800 dark:text-indigo-300 px-2 py-0.5 rounded-full font-bold">Tự động chấm</span>
+      </div>
+      <p class="text-base sm:text-lg leading-relaxed font-semibold text-slate-900 dark:text-white">
+        Trong các thiết bị phần cứng sau, thiết bị nào lưu trữ dữ liệu tạm thời và sẽ bị mất toàn bộ nội dung khi tắt nguồn máy tính?
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+        
+          <button onclick="checkQuiz('q_cf_1', 0, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">A</span>
+            <span class="leading-relaxed">Ổ thể rắn SSD (Solid State Drive)</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_cf_1', 1, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">B</span>
+            <span class="leading-relaxed">Bộ nhớ truy cập ngẫu nhiên RAM</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_cf_1', 2, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">C</span>
+            <span class="leading-relaxed">Bộ nhớ chỉ đọc ROM</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_cf_1', 3, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">D</span>
+            <span class="leading-relaxed">Ổ đĩa cứng từ tính HDD</span>
+          </button>
+        
+      </div>
+      <div class="quiz-feedback hidden"></div>
+      <div class="quiz-explanation-text hidden">RAM là bộ nhớ khả biến (Volatile Memory), lưu trữ tạm thời các chương trình đang thực thi. Toàn bộ dữ liệu trong RAM sẽ bị xóa sạch khi ngắt nguồn điện.</div>
+    </div>
+  
+
+        
+    <div id="q_cf_2" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+      <div class="flex items-center justify-between text-xs font-bold text-slate-500 dark:text-slate-400">
+        <span><i class="fa-solid fa-circle-question text-indigo-600 me-1"></i> Câu hỏi luyện thi IC3 GS4</span>
+        <span class="text-[11px] bg-indigo-100 dark:bg-indigo-950/60 text-indigo-800 dark:text-indigo-300 px-2 py-0.5 rounded-full font-bold">Tự động chấm</span>
+      </div>
+      <p class="text-base sm:text-lg leading-relaxed font-semibold text-slate-900 dark:text-white">
+        Một người dùng muốn tìm kiếm tất cả các tệp bảng tính Excel có tên bắt đầu bằng từ "BaoCao" trong thư mục. Mẫu tìm kiếm nào sau đây là chính xác?
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+        
+          <button onclick="checkQuiz('q_cf_2', 0, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">A</span>
+            <span class="leading-relaxed">BaoCao?.xlsx</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_cf_2', 1, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">B</span>
+            <span class="leading-relaxed">BaoCao*.xlsx</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_cf_2', 2, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">C</span>
+            <span class="leading-relaxed">BaoCao#.xlsx</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_cf_2', 3, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">D</span>
+            <span class="leading-relaxed">BaoCao%.xlsx</span>
+          </button>
+        
+      </div>
+      <div class="quiz-feedback hidden"></div>
+      <div class="quiz-explanation-text hidden">Ký tự đại diện dấu sao (*) thay thế cho một chuỗi ký tự bất kỳ có độ dài tùy ý, do đó "BaoCao*.xlsx" sẽ tìm thấy "BaoCaoThang1.xlsx", "BaoCao_Quy1.xlsx", v.v.</div>
+    </div>
+  
+
+        
+    <div id="q_cf_3" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+      <div class="flex items-center justify-between text-xs font-bold text-slate-500 dark:text-slate-400">
+        <span><i class="fa-solid fa-circle-question text-indigo-600 me-1"></i> Câu hỏi luyện thi IC3 GS4</span>
+        <span class="text-[11px] bg-indigo-100 dark:bg-indigo-950/60 text-indigo-800 dark:text-indigo-300 px-2 py-0.5 rounded-full font-bold">Tự động chấm</span>
+      </div>
+      <p class="text-base sm:text-lg leading-relaxed font-semibold text-slate-900 dark:text-white">
+        Loại phần mềm nào cho phép người dùng tự do truy cập mã nguồn, chỉnh sửa và phân phối lại mà không phải trả tiền bản quyền?
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+        
+          <button onclick="checkQuiz('q_cf_3', 0, 2)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">A</span>
+            <span class="leading-relaxed">Phần mềm thương mại (Commercial Software)</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_cf_3', 1, 2)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">B</span>
+            <span class="leading-relaxed">Phần mềm chia sẻ (Shareware)</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_cf_3', 2, 2)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">C</span>
+            <span class="leading-relaxed">Phần mềm mã nguồn mở (Open Source Software)</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_cf_3', 3, 2)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">D</span>
+            <span class="leading-relaxed">Phần mềm dùng thử (Trialware)</span>
+          </button>
+        
+      </div>
+      <div class="quiz-feedback hidden"></div>
+      <div class="quiz-explanation-text hidden">Phần mềm mã nguồn mở (như Linux, LibreOffice) cung cấp mã nguồn công khai theo giấy phép như GNU GPL, cho phép cộng đồng tự do nghiên cứu, tùy biến và phân phối.</div>
+    </div>
+  
+
+        
+    <div id="q_cf_4" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+      <div class="flex items-center justify-between text-xs font-bold text-slate-500 dark:text-slate-400">
+        <span><i class="fa-solid fa-circle-question text-indigo-600 me-1"></i> Câu hỏi luyện thi IC3 GS4</span>
+        <span class="text-[11px] bg-indigo-100 dark:bg-indigo-950/60 text-indigo-800 dark:text-indigo-300 px-2 py-0.5 rounded-full font-bold">Tự động chấm</span>
+      </div>
+      <p class="text-base sm:text-lg leading-relaxed font-semibold text-slate-900 dark:text-white">
+        Tổ hợp phím tắt nhanh nào trên bàn phím Windows mở trực tiếp trình quản lý tác vụ Task Manager để đóng một ứng dụng đang bị treo (Not Responding)?
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+        
+          <button onclick="checkQuiz('q_cf_4', 0, 0)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">A</span>
+            <span class="leading-relaxed">Ctrl + Shift + Esc</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_cf_4', 1, 0)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">B</span>
+            <span class="leading-relaxed">Alt + F4</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_cf_4', 2, 0)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">C</span>
+            <span class="leading-relaxed">Windows + D</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_cf_4', 3, 0)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">D</span>
+            <span class="leading-relaxed">Ctrl + Shift + Delete</span>
+          </button>
+        
+      </div>
+      <div class="quiz-feedback hidden"></div>
+      <div class="quiz-explanation-text hidden">Tổ hợp phím Ctrl + Shift + Esc mở thẳng cửa sổ Windows Task Manager. Tại đây, người dùng chọn ứng dụng bị treo và bấm nút End Task để tắt cưỡng bức.</div>
+    </div>
+  
+
+        
+    <div id="q_cf_5" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+      <div class="flex items-center justify-between text-xs font-bold text-slate-500 dark:text-slate-400">
+        <span><i class="fa-solid fa-circle-question text-indigo-600 me-1"></i> Câu hỏi luyện thi IC3 GS4</span>
+        <span class="text-[11px] bg-indigo-100 dark:bg-indigo-950/60 text-indigo-800 dark:text-indigo-300 px-2 py-0.5 rounded-full font-bold">Tự động chấm</span>
+      </div>
+      <p class="text-base sm:text-lg leading-relaxed font-semibold text-slate-900 dark:text-white">
+        Hành vi nào sau đây đúng với nguyên tắc "Điện toán xanh" (Green Computing) nhằm bảo vệ môi trường?
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+        
+          <button onclick="checkQuiz('q_cf_5', 0, 2)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">A</span>
+            <span class="leading-relaxed">Bật máy tính liên tục 24/7 ở chế độ công suất tối đa</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_cf_5', 1, 2)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">B</span>
+            <span class="leading-relaxed">Vứt bỏ pin laptop cũ và màn hình vỡ vào thùng rác sinh hoạt thông thường</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_cf_5', 2, 2)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">C</span>
+            <span class="leading-relaxed">Kích hoạt chế độ Sleep (ngủ) hoặc tắt nguồn thiết bị khi không dùng và gửi pin cũ đến trung tâm tái chế</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_cf_5', 3, 2)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">D</span>
+            <span class="leading-relaxed">Chống phân mảnh ổ cứng SSD định kỳ mỗi ngày</span>
+          </button>
+        
+      </div>
+      <div class="quiz-feedback hidden"></div>
+      <div class="quiz-explanation-text hidden">Green Computing khuyến khích tiết kiệm năng lượng điện (sử dụng chế độ Sleep/Hibernate) và tái chế rác thải điện tử (e-waste) một cách an toàn, đúng quy chuẩn môi trường.</div>
+    </div>
+  
+      </div>
+    </section>
+  
+    <!-- ========================================== -->
+    <!-- MODULE 2: KEY APPLICATIONS (KA)            -->
+    <!-- ========================================== -->
+    <section id="module-2" class="space-y-8 scroll-mt-24">
+      <div class="border-b-2 border-purple-500 pb-4 flex items-center justify-between">
+        <div>
+          <span class="text-xs font-black uppercase tracking-wider px-3 py-1 rounded-full bg-purple-100 dark:bg-purple-950 text-purple-700 dark:text-purple-300">
+            IC3 GS4 • Module 2
+          </span>
+          <h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white mt-2">
+            CÁC ỨNG DỤNG CHỦ CHỐT (Key Applications - KA)
+          </h2>
+          <p class="text-sm sm:text-base text-slate-600 dark:text-slate-400 mt-1">
+            Làm chủ các tính năng phổ biến của phần mềm văn phòng: Soạn thảo văn bản Word, Xử lý bảng tính Excel, Trình chiếu PowerPoint và Quản trị cơ sở dữ liệu Access.
+          </p>
+        </div>
+        <div class="hidden sm:flex items-center justify-center w-12 h-12 rounded-2xl bg-purple-600 text-white text-xl shadow-lg">
+          <i class="fa-solid fa-window-restore"></i>
+        </div>
+      </div>
+
+      <!-- BÀI 4 -->
+      <article id="bai-4" class="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 sm:p-8 shadow-sm space-y-6 scroll-mt-24">
+        <div class="border-b border-slate-200 dark:border-slate-800 pb-4">
+          <span class="text-xs font-bold text-purple-600 dark:text-purple-400 uppercase tracking-wider">Bài 4</span>
+          <h3 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white mt-1">
+            Giao Diện Ribbon & Chức Năng Dùng Chung Của Ứng Dụng
+          </h3>
+        </div>
+
+        <div class="space-y-4 text-base sm:text-lg leading-relaxed text-slate-700 dark:text-slate-300">
+          <h4 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-table-columns text-purple-600"></i> 1. Cấu trúc thanh lệnh Ribbon & Quick Access Toolbar
+          </h4>
+          <p>
+            Mọi ứng dụng trong Microsoft Office (Word, Excel, PowerPoint, Access) đều chuẩn hóa giao diện thông qua <strong>Thanh Ribbon</strong>:
+          </p>
+          <ul class="list-disc list-inside space-y-1.5 text-sm sm:text-base">
+            <li><strong>Thẻ lệnh (Tabs):</strong> Các nhóm chức năng lớn như <em>File, Home, Insert, Page Layout, Review, View</em>. Khi chọn một đối tượng đặc biệt (bảng biểu, hình ảnh, biểu đồ), các thẻ ngữ cảnh bổ sung (Contextual Tabs) như <em>Format, Design</em> sẽ tự động xuất hiện.</li>
+            <li><strong>Nhóm lệnh (Groups):</strong> Chia nhỏ thẻ thành các nhóm logic (ví dụ: nhóm <em>Clipboard, Font, Paragraph</em> trong thẻ Home). Nút mũi tên nhỏ ở góc dưới bên phải nhóm lệnh gọi là <strong>Dialog Box Launcher</strong>, dùng để mở hộp thoại cấu hình chi tiết chuyên sâu.</li>
+            <li><strong>Thanh công cụ truy cập nhanh (Quick Access Toolbar):</strong> Nằm ở góc trên cùng bên trái, chứa các lệnh thường xuyên dùng nhất: <em>Save (Ctrl+S), Undo (Ctrl+Z), Redo (Ctrl+Y)</em> và có thể thêm/bớt nút lệnh tùy biến.</li>
+          </ul>
+
+          <h4 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2 pt-2">
+            <i class="fa-solid fa-keyboard text-purple-600"></i> 2. Các thao tác và phím tắt kinh điển
+          </h4>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs sm:text-sm">
+            <div class="p-2.5 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
+              <span class="font-mono font-bold text-purple-600 dark:text-purple-400">Ctrl + C / X / V</span>
+              <p class="text-slate-500 text-[11px] mt-0.5">Sao chép / Cắt / Dán dữ liệu</p>
+            </div>
+            <div class="p-2.5 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
+              <span class="font-mono font-bold text-purple-600 dark:text-purple-400">Ctrl + Z / Y</span>
+              <p class="text-slate-500 text-[11px] mt-0.5">Hoàn tác / Làm lại thao tác</p>
+            </div>
+            <div class="p-2.5 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
+              <span class="font-mono font-bold text-purple-600 dark:text-purple-400">Ctrl + F / H</span>
+              <p class="text-slate-500 text-[11px] mt-0.5">Tìm kiếm / Tìm & Thay thế</p>
+            </div>
+            <div class="p-2.5 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
+              <span class="font-mono font-bold text-purple-600 dark:text-purple-400">Ctrl + S / P</span>
+              <p class="text-slate-500 text-[11px] mt-0.5">Lưu tệp / Mở hộp thoại in ấn</p>
+            </div>
+          </div>
+          <p class="text-sm">
+            Công cụ <strong>Format Painter</strong> (biểu tượng cây chổi sơn trong nhóm Clipboard): Nhấp 1 lần để sao chép định dạng cho 1 vị trí; nhấp đúp (Double-click) để giữ chổi và quét định dạng liên tục cho nhiều vị trí khác nhau, nhấn phím <kbd class="px-1.5 py-0.5 bg-slate-200 dark:bg-slate-700 rounded text-xs font-mono">Esc</kbd> để tắt chổi.
+          </p>
+        </div>
+      </article>
+
+      <!-- BÀI 5 -->
+      <article id="bai-5" class="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 sm:p-8 shadow-sm space-y-6 scroll-mt-24">
+        <div class="border-b border-slate-200 dark:border-slate-800 pb-4">
+          <span class="text-xs font-bold text-purple-600 dark:text-purple-400 uppercase tracking-wider">Bài 5</span>
+          <h3 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white mt-1">
+            Soạn Thảo Văn Bản Chuẩn Với Microsoft Word
+          </h3>
+        </div>
+
+        <div class="space-y-4 text-base sm:text-lg leading-relaxed text-slate-700 dark:text-slate-300">
+          <h4 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-align-left text-purple-600"></i> 1. Định dạng đoạn văn (Paragraph Formatting)
+          </h4>
+          <ul class="list-disc list-inside space-y-1.5 text-sm sm:text-base">
+            <li><strong>Căn lề văn bản:</strong> Căn trái (<kbd class="px-1.5 py-0.5 bg-slate-100 dark:bg-slate-800 rounded text-xs font-mono">Ctrl + L</kbd>), Căn giữa (<kbd class="px-1.5 py-0.5 bg-slate-100 dark:bg-slate-800 rounded text-xs font-mono">Ctrl + E</kbd>), Căn phải (<kbd class="px-1.5 py-0.5 bg-slate-100 dark:bg-slate-800 rounded text-xs font-mono">Ctrl + R</kbd>), Căn đều 2 bên (<kbd class="px-1.5 py-0.5 bg-slate-100 dark:bg-slate-800 rounded text-xs font-mono">Ctrl + J</kbd>).</li>
+            <li><strong>Thụt lề đoạn văn (Indents):</strong> Thụt dòng đầu tiên (<em>First Line Indent</em>), thụt các dòng sau giữ nguyên dòng đầu (<em>Hanging Indent</em>), thụt toàn bộ đoạn văn so với lề trái/phải (<em>Left/Right Indent</em>).</li>
+            <li><strong>Khoảng cách dòng & đoạn:</strong> Giãn dòng <em>Line Spacing</em> (Single 1.0, 1.15, 1.5, Double 2.0 lines); khoảng cách trước và sau đoạn văn (<em>Before/After Paragraph Spacing</em>).</li>
+            <li><strong>Điểm dừng Tab (Tab Stops):</strong> Left Tab, Center Tab, Right Tab, Decimal Tab (căn thẳng hàng theo dấu thập phân). Thêm đường dẫn Tab (Tab Leader e.g. hàng dấu chấm <code class="text-purple-600 font-mono">......</code>) trong mục giấy mời hoặc mục lục.</li>
+          </ul>
+
+          <h4 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2 pt-2">
+            <i class="fa-solid fa-file-invoice text-purple-600"></i> 2. Thiết lập trang in, Ngắt trang & Bảng biểu
+          </h4>
+          <div class="space-y-2 text-sm sm:text-base">
+            <p>
+              &bull; <strong>Thiết lập trang (Page Setup):</strong> Chọn hướng trang <em>Orientation</em> (Portrait - dọc, Landscape - ngang); căn chỉnh lề giấy <em>Margins</em> (Normal, Narrow, Wide) và khổ giấy chuẩn <em>Size</em> (A4, Letter).
+            </p>
+            <p>
+              &bull; <strong>Ngắt trang thủ công (Page Break):</strong> Đặt con trỏ chuột tại vị trí muốn ngắt sang trang mới và nhấn tổ hợp phím <kbd class="px-2 py-0.5 rounded bg-purple-100 dark:bg-purple-950 font-bold text-purple-800 dark:text-purple-300 font-mono">Ctrl + Enter</kbd> (thay vì nhấn Enter liên tục nhiều lần làm lệch bố cục văn bản).
+            </p>
+            <p>
+              &bull; <strong>Trộn thư (Mail Merge):</strong> Tính năng tự động hóa trong thẻ <em>Mailings</em>, kết hợp một mẫu thư/văn bản chính (Main Document) với một danh sách nguồn người nhận (Data Source từ Excel hoặc danh bạ Access) để in hàng loạt giấy báo thi, giấy khen, hợp đồng có họ tên, địa chỉ từng cá nhân chính xác.
+            </p>
+          </div>
+        </div>
+      </article>
+
+      <!-- BÀI 6 -->
+      <article id="bai-6" class="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 sm:p-8 shadow-sm space-y-6 scroll-mt-24">
+        <div class="border-b border-slate-200 dark:border-slate-800 pb-4">
+          <span class="text-xs font-bold text-purple-600 dark:text-purple-400 uppercase tracking-wider">Bài 6</span>
+          <h3 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white mt-1">
+            Xử Lý Bảng Tính & Phân Tích Dữ Liệu Với Microsoft Excel
+          </h3>
+        </div>
+
+        <div class="space-y-4 text-base sm:text-lg leading-relaxed text-slate-700 dark:text-slate-300">
+          <h4 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-calculator text-purple-600"></i> 1. Cấu trúc địa chỉ ô trong Excel (Trọng tâm bài thi GS4)
+          </h4>
+          <p>
+            Trong đề thi IC3, các câu hỏi về sao chép công thức xuất hiện với tần suất rất cao:
+          </p>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs sm:text-sm">
+            <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
+              <strong class="text-purple-600 dark:text-purple-400 block mb-1">Địa chỉ tương đối (e.g. A1)</strong>
+              Khi sao chép công thức sang dòng hoặc cột khác, địa chỉ ô sẽ tự động tịnh tiến theo vị trí mới tương ứng.
+            </div>
+            <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
+              <strong class="text-purple-600 dark:text-purple-400 block mb-1">Địa chỉ tuyệt đối (e.g. $A$1)</strong>
+              Cố định vĩnh viễn cả cột và dòng. Khi sao chép công thức đi bất cứ đâu, tọa độ ô luôn giữ nguyên $A$1 (nhấn phím <kbd class="px-1.5 py-0.5 bg-slate-200 dark:bg-slate-700 rounded font-mono font-bold">F4</kbd> để khóa).
+            </div>
+            <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
+              <strong class="text-purple-600 dark:text-purple-400 block mb-1">Địa chỉ hỗn hợp ($A1 hoặc A$1)</strong>
+              Chỉ cố định một thành phần: <code class="font-mono text-purple-600">$A1</code> (cố định cột A, dòng tự do) hoặc <code class="font-mono text-purple-600">A$1</code> (cố định dòng 1, cột tự do).
+            </div>
+          </div>
+
+          <h4 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2 pt-2">
+            <i class="fa-solid fa-square-root-variable text-purple-600"></i> 2. Các hàm tính toán chuẩn trong bài thi IC3 GS4
+          </h4>
+          <ul class="list-disc list-inside space-y-1.5 text-sm sm:text-base">
+            <li><code class="font-bold text-purple-600">=SUM(A1:A10)</code>: Tính tổng các giá trị số trong vùng A1 đến A10.</li>
+            <li><code class="font-bold text-purple-600">=AVERAGE(A1:A10)</code>: Tính trung bình cộng của các ô chứa số.</li>
+            <li><code class="font-bold text-purple-600">=MIN(A1:A10)</code> và <code class="font-bold text-purple-600">=MAX(A1:A10)</code>: Trả về giá trị nhỏ nhất / lớn nhất.</li>
+            <li><code class="font-bold text-purple-600">=COUNT(A1:A10)</code>: Đếm số lượng ô có chứa dữ liệu số.</li>
+            <li><code class="font-bold text-purple-600">=COUNTA(A1:A10)</code>: Đếm số lượng ô không rỗng (chứa bất kỳ chữ, số, ký tự nào).</li>
+            <li><code class="font-bold text-purple-600">=COUNTIF(A1:A10, "&gt;=5")</code>: Đếm số lượng ô thoả mãn điều kiện (lớn hơn hoặc bằng 5).</li>
+            <li><code class="font-bold text-purple-600">=IF(điều_kiện, giá_trị_nếu_đúng, giá_trị_nếu_sai)</code>: Ví dụ: <code class="font-mono text-xs sm:text-sm">=IF(C2&gt;=5, "Đạt", "Thi lại")</code>.</li>
+            <li><code class="font-bold text-purple-600">=VLOOKUP(giá_trị_dò, bảng_dò, số_thứ_tự_cột, 0)</code>: Dò tìm kiếm theo cột dọc trong bảng.</li>
+          </ul>
+
+          <h4 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2 pt-2">
+            <i class="fa-solid fa-chart-pie text-purple-600"></i> 3. Biểu đồ dữ liệu & Mã lỗi thường gặp
+          </h4>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs sm:text-sm">
+            <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
+              <strong class="text-purple-600 dark:text-purple-400 block mb-1">Các loại biểu đồ Excel</strong>
+              &bull; <strong>Column / Bar Chart:</strong> So sánh các giá trị giữa các hạng mục.
+              <br>&bull; <strong>Line Chart:</strong> Hiển thị xu hướng biến động dữ liệu liên tục theo thời gian.
+              <br>&bull; <strong>Pie Chart:</strong> Thể hiện tỉ lệ đóng góp phần trăm của từng phần tử trong một tổng thể 100%.
+            </div>
+            <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
+              <strong class="text-purple-600 dark:text-purple-400 block mb-1">Các mã lỗi công thức phổ biến</strong>
+              &bull; <code class="font-mono text-rose-500 font-bold">#####</code>: Độ rộng cột quá hẹp, chỉ cần kéo rộng cột ra.
+              <br>&bull; <code class="font-mono text-rose-500 font-bold">#DIV/0!</code>: Phép toán chia cho số 0 hoặc chia cho ô rỗng.
+              <br>&bull; <code class="font-mono text-rose-500 font-bold">#VALUE!</code>: Công thức tính sai kiểu dữ liệu (ví dụ cộng chữ với số).
+              <br>&bull; <code class="font-mono text-rose-500 font-bold">#NAME?</code>: Viết sai tên hàm (ví dụ viết nhầm <code class="font-mono">=SUMM</code>).
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- BÀI 7 -->
+      <article id="bai-7" class="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 sm:p-8 shadow-sm space-y-6 scroll-mt-24">
+        <div class="border-b border-slate-200 dark:border-slate-800 pb-4">
+          <span class="text-xs font-bold text-purple-600 dark:text-purple-400 uppercase tracking-wider">Bài 7</span>
+          <h3 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white mt-1">
+            Trình Chiếu Chuyên Nghiệp Với Microsoft PowerPoint
+          </h3>
+        </div>
+
+        <div class="space-y-4 text-base sm:text-lg leading-relaxed text-slate-700 dark:text-slate-300">
+          <h4 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-wand-magic-sparkles text-purple-600"></i> 1. Phân biệt Slide Transition và Object Animation
+          </h4>
+          <p>
+            Đây là câu hỏi xuất hiện trong hầu hết các bài thi IC3:
+          </p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs sm:text-sm">
+            <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-purple-200 dark:border-purple-800 space-y-1">
+              <div class="font-bold text-purple-700 dark:text-purple-300 flex items-center gap-1.5 text-sm">
+                <i class="fa-solid fa-file-powerpoint"></i> Slide Transition (Chuyển tiếp Slide)
+              </div>
+              <p class="text-slate-600 dark:text-slate-300">
+                Hiệu ứng chuyển cảnh xuất hiện khi chuyển từ <strong>trang slide này sang trang slide kế tiếp</strong> trong lúc trình chiếu (ví dụ hiệu ứng: Push, Wipe, Fade, Split). Áp dụng ở thẻ <em>Transitions</em>.
+              </p>
+            </div>
+            <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-purple-200 dark:border-purple-800 space-y-1">
+              <div class="font-bold text-purple-700 dark:text-purple-300 flex items-center gap-1.5 text-sm">
+                <i class="fa-solid fa-film"></i> Object Animation (Hoạt hình đối tượng)
+              </div>
+              <p class="text-slate-600 dark:text-slate-300">
+                Hiệu ứng chuyển động áp dụng cho <strong>từng đối tượng riêng lẻ trên slide</strong> (khối văn bản, ảnh, hình khối, bảng) gồm 4 nhóm: <em>Entrance</em> (xuất hiện), <em>Emphasis</em> (nhấn mạnh), <em>Exit</em> (biến mất), <em>Motion Paths</em> (chuyển động theo đường dẫn). Áp dụng ở thẻ <em>Animations</em>.
+              </p>
+            </div>
+          </div>
+
+          <h4 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2 pt-2">
+            <i class="fa-solid fa-play text-purple-600"></i> 2. Phím tắt trình chiếu Slide Show & Presenter View
+          </h4>
+          <ul class="list-disc list-inside space-y-1 text-sm sm:text-base">
+            <li>Phím <kbd class="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 font-mono font-bold text-purple-600">F5</kbd>: Bắt đầu trình chiếu từ <strong>slide đầu tiên</strong> của tệp.</li>
+            <li>Phím <kbd class="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 font-mono font-bold text-purple-600">Shift + F5</kbd>: Bắt đầu trình chiếu ngay tại <strong>slide hiện tại đang chọn</strong>.</li>
+            <li>Phím <kbd class="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 font-mono font-bold text-purple-600">Esc</kbd>: Thoát khỏi chế độ trình chiếu trở về màn hình chỉnh sửa.</li>
+            <li><strong>Chế độ Presenter View:</strong> Khi máy tính kết nối máy chiếu (Projector), màn hình máy tính của diễn giả hiển thị slide hiện tại, slide kế tiếp, đồng hồ đếm giờ và ghi chú thuyết trình (Notes) mà khán giả trên màn chiếu không nhìn thấy.</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- BÀI 8 -->
+      <article id="bai-8" class="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 sm:p-8 shadow-sm space-y-6 scroll-mt-24">
+        <div class="border-b border-slate-200 dark:border-slate-800 pb-4">
+          <span class="text-xs font-bold text-purple-600 dark:text-purple-400 uppercase tracking-wider">Bài 8</span>
+          <h3 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white mt-1">
+            Khái Niệm Cơ Sở Dữ Liệu Với Microsoft Access
+          </h3>
+        </div>
+
+        <div class="space-y-4 text-base sm:text-lg leading-relaxed text-slate-700 dark:text-slate-300">
+          <h4 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-database text-purple-600"></i> 1. Hệ quản trị cơ sở dữ liệu quan hệ (RDBMS)
+          </h4>
+          <p>
+            Microsoft Access là phần mềm quản lý cơ sở dữ liệu quan hệ, cho phép liên kết dữ liệu giữa nhiều bảng để tránh trùng lặp dư thừa. Đuôi tệp Access chuẩn là <code class="font-mono text-purple-600">.accdb</code>.
+          </p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2.5 text-xs sm:text-sm">
+            <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
+              <strong class="text-purple-600 dark:text-purple-400 block mb-1"><i class="fa-solid fa-table"></i> Bảng (Table)</strong>
+              Chứa dữ liệu thực tế. Mỗi cột là một <strong>Trường (Field)</strong>, mỗi hàng là một <strong>Bản ghi (Record)</strong>.
+            </div>
+            <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
+              <strong class="text-purple-600 dark:text-purple-400 block mb-1"><i class="fa-solid fa-filter"></i> Truy vấn (Query)</strong>
+              Tìm kiếm, lọc, tính toán và rút trích dữ liệu thoả mãn điều kiện từ một hoặc nhiều bảng.
+            </div>
+            <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
+              <strong class="text-purple-600 dark:text-purple-400 block mb-1"><i class="fa-solid fa-table-list"></i> Biểu mẫu (Form)</strong>
+              Màn hình giao diện đồ họa thân thiện giúp người dùng dễ dàng xem, thêm và sửa đổi dữ liệu từng bản ghi.
+            </div>
+            <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
+              <strong class="text-purple-600 dark:text-purple-400 block mb-1"><i class="fa-solid fa-print"></i> Báo cáo (Report)</strong>
+              Định dạng, tổng hợp và phân nhóm dữ liệu chuyên nghiệp để in ra giấy hoặc xuất tệp PDF.
+            </div>
+          </div>
+
+          <h4 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2 pt-2">
+            <i class="fa-solid fa-key text-purple-600"></i> 2. Khóa chính (Primary Key)
+          </h4>
+          <p>
+            <strong>Khóa chính</strong> là một hoặc nhiều trường xác định <em>tính duy nhất</em> của mỗi bản ghi trong bảng. Giá trị của trường khóa chính tuyệt đối không được phép trùng lặp và không được phép để rỗng (Null). Ví dụ: Mã nhân viên, Mã sinh viên, Số căn cước công dân.
+          </p>
+        </div>
+      </article>
+
+      <!-- 5 CÂU HỎI TRẮC NGHIỆM MÔ PHỎNG ĐỀ THI MODULE 2 -->
+      <div id="quiz-m2" class="space-y-4 pt-4 scroll-mt-24">
+        <div class="flex items-center justify-between border-b border-purple-200 dark:border-purple-900 pb-2">
+          <h3 class="text-lg sm:text-xl font-black text-slate-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-list-check text-purple-600"></i> 5 Câu Hỏi Trắc Nghiệm Mô Phỏng — Module 2 (KA)
+          </h3>
+          <span class="text-xs font-bold text-purple-600 dark:text-purple-400 bg-purple-50 dark:bg-purple-950 px-2.5 py-1 rounded-full">
+            Chuẩn Đề Thi Certiport
+          </span>
+        </div>
+
+        
+    <div id="q_ka_1" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+      <div class="flex items-center justify-between text-xs font-bold text-slate-500 dark:text-slate-400">
+        <span><i class="fa-solid fa-circle-question text-indigo-600 me-1"></i> Câu hỏi luyện thi IC3 GS4</span>
+        <span class="text-[11px] bg-indigo-100 dark:bg-indigo-950/60 text-indigo-800 dark:text-indigo-300 px-2 py-0.5 rounded-full font-bold">Tự động chấm</span>
+      </div>
+      <p class="text-base sm:text-lg leading-relaxed font-semibold text-slate-900 dark:text-white">
+        Trong Microsoft Word, tổ hợp phím tắt nào được sử dụng để ngắt trang thủ công đưa con trỏ sang đầu trang văn bản tiếp theo?
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+        
+          <button onclick="checkQuiz('q_ka_1', 0, 0)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">A</span>
+            <span class="leading-relaxed">Ctrl + Enter</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_ka_1', 1, 0)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">B</span>
+            <span class="leading-relaxed">Shift + Enter</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_ka_1', 2, 0)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">C</span>
+            <span class="leading-relaxed">Alt + Enter</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_ka_1', 3, 0)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">D</span>
+            <span class="leading-relaxed">Ctrl + Shift + Enter</span>
+          </button>
+        
+      </div>
+      <div class="quiz-feedback hidden"></div>
+      <div class="quiz-explanation-text hidden">Tổ hợp phím Ctrl + Enter chèn ngắt trang Page Break thủ công, giúp văn bản phân trang chuẩn xác và không bị dồn hàng khi chỉnh sửa nội dung phía trước.</div>
+    </div>
+  
+
+        
+    <div id="q_ka_2" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+      <div class="flex items-center justify-between text-xs font-bold text-slate-500 dark:text-slate-400">
+        <span><i class="fa-solid fa-circle-question text-indigo-600 me-1"></i> Câu hỏi luyện thi IC3 GS4</span>
+        <span class="text-[11px] bg-indigo-100 dark:bg-indigo-950/60 text-indigo-800 dark:text-indigo-300 px-2 py-0.5 rounded-full font-bold">Tự động chấm</span>
+      </div>
+      <p class="text-base sm:text-lg leading-relaxed font-semibold text-slate-900 dark:text-white">
+        Tại ô C2 của bảng tính Excel có công thức "=A2*$B$1". Khi sao chép công thức từ ô C2 xuống ô C3, công thức tại ô C3 sẽ là gì?
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+        
+          <button onclick="checkQuiz('q_ka_2', 0, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">A</span>
+            <span class="leading-relaxed">=A3*$B$2</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_ka_2', 1, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">B</span>
+            <span class="leading-relaxed">=A3*$B$1</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_ka_2', 2, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">C</span>
+            <span class="leading-relaxed">=A2*$B$1</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_ka_2', 3, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">D</span>
+            <span class="leading-relaxed">=$A$3*$B$1</span>
+          </button>
+        
+      </div>
+      <div class="quiz-feedback hidden"></div>
+      <div class="quiz-explanation-text hidden">Địa chỉ A2 là tương đối nên khi kéo xuống dòng 3 sẽ tịnh tiến thành A3; còn $B$1 là địa chỉ tuyệt đối (có dấu $) nên được giữ cố định hoàn toàn thành $B$1.</div>
+    </div>
+  
+
+        
+    <div id="q_ka_3" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+      <div class="flex items-center justify-between text-xs font-bold text-slate-500 dark:text-slate-400">
+        <span><i class="fa-solid fa-circle-question text-indigo-600 me-1"></i> Câu hỏi luyện thi IC3 GS4</span>
+        <span class="text-[11px] bg-indigo-100 dark:bg-indigo-950/60 text-indigo-800 dark:text-indigo-300 px-2 py-0.5 rounded-full font-bold">Tự động chấm</span>
+      </div>
+      <p class="text-base sm:text-lg leading-relaxed font-semibold text-slate-900 dark:text-white">
+        Trong Microsoft Excel, hàm nào sau đây được dùng để đếm các ô có chứa dữ liệu văn bản (chữ) hoặc bất kỳ dữ liệu nào không rỗng trong một vùng chọn?
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+        
+          <button onclick="checkQuiz('q_ka_3', 0, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">A</span>
+            <span class="leading-relaxed">COUNT</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_ka_3', 1, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">B</span>
+            <span class="leading-relaxed">COUNTA</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_ka_3', 2, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">C</span>
+            <span class="leading-relaxed">COUNTBLANK</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_ka_3', 3, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">D</span>
+            <span class="leading-relaxed">COUNTIF</span>
+          </button>
+        
+      </div>
+      <div class="quiz-feedback hidden"></div>
+      <div class="quiz-explanation-text hidden">Hàm COUNT chỉ đếm các ô chứa dữ liệu số. Để đếm tất cả các ô có chứa dữ liệu (kể cả chữ, số, ký hiệu - ô không rỗng), ta sử dụng hàm COUNTA (Count All).</div>
+    </div>
+  
+
+        
+    <div id="q_ka_4" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+      <div class="flex items-center justify-between text-xs font-bold text-slate-500 dark:text-slate-400">
+        <span><i class="fa-solid fa-circle-question text-indigo-600 me-1"></i> Câu hỏi luyện thi IC3 GS4</span>
+        <span class="text-[11px] bg-indigo-100 dark:bg-indigo-950/60 text-indigo-800 dark:text-indigo-300 px-2 py-0.5 rounded-full font-bold">Tự động chấm</span>
+      </div>
+      <p class="text-base sm:text-lg leading-relaxed font-semibold text-slate-900 dark:text-white">
+        Sự khác biệt căn bản giữa tính năng Slide Transition và Object Animation trong Microsoft PowerPoint là gì?
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+        
+          <button onclick="checkQuiz('q_ka_4', 0, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">A</span>
+            <span class="leading-relaxed">Slide Transition áp dụng cho hình ảnh; Object Animation áp dụng cho bảng biểu</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_ka_4', 1, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">B</span>
+            <span class="leading-relaxed">Slide Transition là hiệu ứng chuyển cảnh giữa các slide; Object Animation là hiệu ứng chuyển động của từng đối tượng trên một slide</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_ka_4', 2, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">C</span>
+            <span class="leading-relaxed">Slide Transition dùng để in ấn; Object Animation dùng để trình chiếu</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_ka_4', 3, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">D</span>
+            <span class="leading-relaxed">Hai tính năng này hoàn toàn giống nhau, chỉ khác tên gọi</span>
+          </button>
+        
+      </div>
+      <div class="quiz-feedback hidden"></div>
+      <div class="quiz-explanation-text hidden">Slide Transition (thẻ Transitions) quy định cách thức một slide xuất hiện khi chuyển cảnh; còn Animation (thẻ Animations) quy định chuyển động của các đối tượng cụ thể (text, ảnh) bên trong slide đó.</div>
+    </div>
+  
+
+        
+    <div id="q_ka_5" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+      <div class="flex items-center justify-between text-xs font-bold text-slate-500 dark:text-slate-400">
+        <span><i class="fa-solid fa-circle-question text-indigo-600 me-1"></i> Câu hỏi luyện thi IC3 GS4</span>
+        <span class="text-[11px] bg-indigo-100 dark:bg-indigo-950/60 text-indigo-800 dark:text-indigo-300 px-2 py-0.5 rounded-full font-bold">Tự động chấm</span>
+      </div>
+      <p class="text-base sm:text-lg leading-relaxed font-semibold text-slate-900 dark:text-white">
+        Trong cơ sở dữ liệu Microsoft Access, đặc điểm quan trọng nhất của trường được chọn làm Khóa chính (Primary Key) là gì?
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+        
+          <button onclick="checkQuiz('q_ka_5', 0, 2)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">A</span>
+            <span class="leading-relaxed">Dữ liệu bắt buộc phải là kiểu số</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_ka_5', 1, 2)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">B</span>
+            <span class="leading-relaxed">Dữ liệu có thể chứa nhiều giá trị trùng lặp</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_ka_5', 2, 2)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">C</span>
+            <span class="leading-relaxed">Dữ liệu phải là duy nhất cho mỗi bản ghi và không được để trống (Null)</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_ka_5', 3, 2)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">D</span>
+            <span class="leading-relaxed">Bắt buộc phải có từ 2 trường trở lên</span>
+          </button>
+        
+      </div>
+      <div class="quiz-feedback hidden"></div>
+      <div class="quiz-explanation-text hidden">Khóa chính (Primary Key) định danh duy nhất cho mỗi dòng dữ liệu (bản ghi) trong bảng, đảm bảo tính toàn vẹn dữ liệu: không bao giờ được trùng và không được để trống.</div>
+    </div>
+  
+      </div>
+    </section>
+  
+    <!-- ========================================== -->
+    <!-- MODULE 3: LIVING ONLINE (LO)               -->
+    <!-- ========================================== -->
+    <section id="module-3" class="space-y-8 scroll-mt-24">
+      <div class="border-b-2 border-emerald-500 pb-4 flex items-center justify-between">
+        <div>
+          <span class="text-xs font-black uppercase tracking-wider px-3 py-1 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300">
+            IC3 GS4 • Module 3
+          </span>
+          <h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white mt-2">
+            CUỘC SỐNG TRỰC TUYẾN (Living Online - LO)
+          </h2>
+          <p class="text-sm sm:text-base text-slate-600 dark:text-slate-400 mt-1">
+            Hiểu rõ mạng máy tính & Internet, thành thạo tìm kiếm thông tin, chuẩn mực giao tiếp email, bảo mật an toàn số, sở hữu trí tuệ và công thái học bảo vệ sức khỏe.
+          </p>
+        </div>
+        <div class="hidden sm:flex items-center justify-center w-12 h-12 rounded-2xl bg-emerald-600 text-white text-xl shadow-lg">
+          <i class="fa-solid fa-globe"></i>
+        </div>
+      </div>
+
+      <!-- BÀI 9 -->
+      <article id="bai-9" class="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 sm:p-8 shadow-sm space-y-6 scroll-mt-24">
+        <div class="border-b border-slate-200 dark:border-slate-800 pb-4">
+          <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">Bài 9</span>
+          <h3 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white mt-1">
+            Mạng Máy Tính, Internet & Kỹ Thuật Tìm Kiếm Thông Tin Số
+          </h3>
+        </div>
+
+        <div class="space-y-4 text-base sm:text-lg leading-relaxed text-slate-700 dark:text-slate-300">
+          <h4 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-network-wired text-emerald-600"></i> 1. Phân loại mạng & Các khái niệm cốt lõi
+          </h4>
+          <ul class="list-disc list-inside space-y-2 text-sm sm:text-base">
+            <li>
+              <strong>Mạng cục bộ (LAN - Local Area Network):</strong> Kết nối các thiết bị trong phạm vi địa lý hẹp như phòng học, gia đình hoặc một tòa nhà văn phòng để chia sẻ tệp tin, máy in.
+            </li>
+            <li>
+              <strong>Mạng cục bộ không dây (WLAN - Wireless LAN):</strong> Sử dụng sóng vô tuyến Wi-Fi thay cho dây cáp mạng mạng Ethernet.
+            </li>
+            <li>
+              <strong>Mạng diện rộng (WAN - Wide Area Network):</strong> Kết nối các mạng LAN trên phạm vi địa lý rộng lớn (liên tỉnh, quốc gia, châu lục). Mạng <strong>Internet</strong> là mạng WAN lớn nhất hành tinh.
+            </li>
+            <li>
+              <strong>Băng thông (Bandwidth) vs Tốc độ:</strong> Băng thông là lượng dữ liệu tối đa có thể truyền qua đường truyền trong 1 giây, đo bằng <strong>Mbps (Megabits per second)</strong> hoặc <strong>Gbps</strong>. Lưu ý: 8 Mbps tải được tối đa 1 MB/s dữ liệu.
+            </li>
+            <li>
+              <strong>Địa chỉ IP (Internet Protocol Address):</strong> Số định danh duy nhất cho mỗi thiết bị tham gia vào mạng.
+              <br>&bull; <em>IPv4:</em> Sử dụng 32-bit gồm 4 số nguyên từ 0–255 cách nhau bởi dấu chấm (ví dụ: <code class="font-mono text-emerald-600">192.168.1.1</code>).
+              <br>&bull; <em>IPv6:</em> Nâng cấp lên 128-bit biểu diễn bằng 8 nhóm số thập lục phân cách nhau bởi dấu hai chấm (ví dụ: <code class="font-mono text-emerald-600">2001:0db8:85a3::8a2e:0370:7334</code>) giải quyết cạn kiệt địa chỉ IPv4.
+            </li>
+            <li>
+              <strong>Hệ thống tên miền (DNS - Domain Name System):</strong> Dịch vụ máy chủ "danh bạ Internet", tự động chuyển đổi tên miền dễ nhớ (như <code class="font-mono text-emerald-600">google.com</code>) thành địa chỉ IP số học để định tuyến gói tin.
+            </li>
+          </ul>
+
+          <h4 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2 pt-2">
+            <i class="fa-solid fa-magnifying-glass text-emerald-600"></i> 2. Trình duyệt Web & Kỹ năng tìm kiếm nâng cao
+          </h4>
+          <p>
+            Các toán tử tìm kiếm chuyên nghiệp thường xuất hiện trong câu hỏi thực hành GS4:
+          </p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs sm:text-sm">
+            <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
+              <strong class="text-emerald-600 dark:text-emerald-400 font-mono block mb-0.5">"từ khóa chính xác"</strong>
+              Tìm kiếm trang web chứa chính xác cụm từ nguyên văn theo đúng thứ tự các từ. Ví dụ: <code class="font-mono text-emerald-600">"chứng chỉ tin học IC3"</code>.
+            </div>
+            <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
+              <strong class="text-emerald-600 dark:text-emerald-400 font-mono block mb-0.5">site:tenmien</strong>
+              Chỉ tìm kiếm thông tin bên trong một website hoặc một phần mở rộng tên miền cụ thể. Ví dụ: <code class="font-mono text-emerald-600">tuyển sinh site:edu.vn</code>.
+            </div>
+            <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
+              <strong class="text-emerald-600 dark:text-emerald-400 font-mono block mb-0.5">filetype:pdf</strong>
+              Chỉ trả về các tệp tài liệu thuộc định dạng cụ thể (pdf, docx, pptx, xlsx). Ví dụ: <code class="font-mono text-emerald-600">đề thi mẫu filetype:pdf</code>.
+            </div>
+            <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
+              <strong class="text-emerald-600 dark:text-emerald-400 font-mono block mb-0.5">-từ_khóa (Dấu trừ)</strong>
+              Loại trừ các trang chứa từ khóa không mong muốn ra khỏi kết quả tìm kiếm. Ví dụ: <code class="font-mono text-emerald-600">báo cáo kinh tế -chứng khoán</code>.
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- BÀI 10 -->
+      <article id="bai-10" class="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 sm:p-8 shadow-sm space-y-6 scroll-mt-24">
+        <div class="border-b border-slate-200 dark:border-slate-800 pb-4">
+          <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">Bài 10</span>
+          <h3 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white mt-1">
+            Truyền Thông Số, Thư Điện Tử (Email) & Văn Hóa Mạng (Netiquette)
+          </h3>
+        </div>
+
+        <div class="space-y-4 text-base sm:text-lg leading-relaxed text-slate-700 dark:text-slate-300">
+          <h4 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-envelope text-emerald-600"></i> 1. Cấu trúc trường người nhận Email (Trọng tâm đề thi)
+          </h4>
+          <div class="space-y-2.5 text-xs sm:text-sm">
+            <div class="p-3.5 bg-slate-50 dark:bg-slate-800 rounded-2xl border-l-4 border-indigo-600">
+              <strong class="text-indigo-700 dark:text-indigo-300 text-sm block">Trường To (Người nhận chính):</strong>
+              Địa chỉ của người nhận thư trực tiếp có trách nhiệm đọc, xử lý và phản hồi nội dung email.
+            </div>
+            <div class="p-3.5 bg-slate-50 dark:bg-slate-800 rounded-2xl border-l-4 border-emerald-600">
+              <strong class="text-emerald-700 dark:text-emerald-300 text-sm block">Trường Cc (Carbon Copy - Bản sao đồng gửi):</strong>
+              Gửi kèm thông tin cho những người liên quan để nắm tiến độ công việc. <em>Mọi người trong danh sách To và Cc đều nhìn thấy địa chỉ email của nhau.</em>
+            </div>
+            <div class="p-3.5 bg-slate-50 dark:bg-slate-800 rounded-2xl border-l-4 border-amber-600">
+              <strong class="text-amber-700 dark:text-amber-300 text-sm block">Trường Bcc (Blind Carbon Copy - Bản sao ẩn danh):</strong>
+              Gửi bản sao bí mật để bảo vệ quyền riêng tư cá nhân. <em>Người nhận ở To và Cc hoàn toàn không biết có người nhận ở Bcc; và những người trong danh sách Bcc cũng không nhìn thấy địa chỉ của nhau.</em>
+            </div>
+          </div>
+
+          <h4 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2 pt-2">
+            <i class="fa-solid fa-handshake text-emerald-600"></i> 2. Quy tắc ứng xử văn minh trên mạng (Netiquette)
+          </h4>
+          <ul class="list-disc list-inside space-y-1.5 text-sm sm:text-base">
+            <li><strong>Không viết hoa toàn bộ ký tự (ALL CAPS):</strong> Trong văn hoá Internet, việc viết toàn bộ chữ in hoa (ví dụ: <code class="text-rose-600">XIN CHÀO MỌI NGƯỜI</code>) được coi là hành động khiếm nhã, tương đương với việc <em>la hét, quát mắng</em> vào mặt người đọc.</li>
+            <li><strong>Đặt tiêu đề thư (Subject) rõ ràng:</strong> Tiêu đề phải tóm tắt ngắn gọn mục đích email (ví dụ: <em>"Báo cáo tiến độ tuần 10 - Nguyễn Văn A"</em>), tránh để trống tiêu đề hoặc ghi mơ hồ <em>"Gấp", "Xem đi"</em>.</li>
+            <li><strong>Tôn trọng quyền riêng tư:</strong> Không tự ý chia sẻ địa chỉ email, số điện thoại hoặc hình ảnh cá nhân của người khác khi chưa có sự đồng ý. Khi gửi email thông báo cho hàng trăm người không quen biết, luôn đặt danh sách người nhận vào ô <strong>Bcc</strong> để tránh để lộ danh bạ.</li>
+            <li><strong>Cảnh giác trước tin giả & Thư rác (Spam):</strong> Không phát tán các thư mời chuỗi chuyển tiếp (Chain letters) hoặc tin đồn chưa kiểm chứng.</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- BÀI 11 -->
+      <article id="bai-11" class="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 sm:p-8 shadow-sm space-y-6 scroll-mt-24">
+        <div class="border-b border-slate-200 dark:border-slate-800 pb-4">
+          <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">Bài 11</span>
+          <h3 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white mt-1">
+            An Toàn Thông Tin, Sở Hữu Trí Tuệ & Công Thái Học (Ergonomics)
+          </h3>
+        </div>
+
+        <div class="space-y-4 text-base sm:text-lg leading-relaxed text-slate-700 dark:text-slate-300">
+          <h4 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-shield-halved text-emerald-600"></i> 1. Các mối đe dọa an ninh mạng & Biện pháp phòng chống
+          </h4>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs sm:text-sm">
+            <div class="p-3 bg-rose-50 dark:bg-rose-950/30 rounded-xl border border-rose-200 dark:border-rose-900 text-rose-950 dark:text-rose-200">
+              <strong class="block mb-1 text-rose-700 dark:text-rose-300"><i class="fa-solid fa-bug"></i> Phần mềm độc hại (Malware)</strong>
+              &bull; <strong>Virus:</strong> Gắn mã độc vào tệp tin khác để lây nhiễm khi tệp thực thi.
+              <br>&bull; <strong>Worm (Sâu mạng):</strong> Tự động quét và nhân bản qua mạng không cần tệp chủ.
+              <br>&bull; <strong>Trojan Horse:</strong> Ngụy trang phần mềm hữu ích để lừa người dùng cài đặt.
+              <br>&bull; <strong>Spyware (Gián điệp):</strong> Âm thầm theo dõi thao tác bàn phím, đánh cắp mật khẩu.
+              <br>&bull; <strong>Ransomware:</strong> Mã hóa tệp tin tống tiền đòi tiền chuộc.
+            </div>
+            <div class="p-3 bg-emerald-50 dark:bg-emerald-950/30 rounded-xl border border-emerald-200 dark:border-emerald-900 text-emerald-950 dark:text-emerald-200">
+              <strong class="block mb-1 text-emerald-700 dark:text-emerald-300"><i class="fa-solid fa-lock"></i> Biện pháp phòng thủ chủ động</strong>
+              &bull; <strong>Mật khẩu mạnh:</strong> Tối thiểu 8–12 ký tự, phối hợp chữ hoa, chữ thường, số và ký tự đặc biệt (<code class="font-mono">!@#$</code>), không dùng thông tin cá nhân.
+              <br>&bull; <strong>Xác thực 2 bước (2FA):</strong> Kết hợp mật khẩu với mã OTP điện thoại.
+              <br>&bull; <strong>Tường lửa (Firewall):</strong> Lọc và ngăn chặn các kết nối mạng trái phép.
+              <br>&bull; <strong>Phần mềm Antivirus:</strong> Cài đặt và tự động cập nhật cơ sở dữ liệu mẫu virus.
+            </div>
+          </div>
+
+          <h4 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2 pt-2">
+            <i class="fa-solid fa-chair text-emerald-600"></i> 2. Công thái học (Ergonomics) & Bảo vệ thị lực
+          </h4>
+          <p>
+            <strong>Công thái học (Ergonomics)</strong> nghiên cứu việc bố trí môi trường và thiết bị làm việc khoa học để nâng cao hiệu suất và bảo vệ sức khỏe người dùng máy tính:
+          </p>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs sm:text-sm">
+            <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
+              <strong class="text-emerald-600 dark:text-emerald-400 block mb-1"><i class="fa-solid fa-person"></i> Tư thế ngồi chuẩn</strong>
+              Lưng thẳng tựa vào ghế, đùi song song mặt sàn, góc khuỷu tay và đầu gối gập 90 độ, hai bàn chân đặt phẳng trên sàn.
+            </div>
+            <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
+              <strong class="text-emerald-600 dark:text-emerald-400 block mb-1"><i class="fa-solid fa-eye"></i> Khoảng cách màn hình</strong>
+              Màn hình cách mắt khoảng <strong>50 – 70 cm</strong> (bằng chiều dài một cánh tay); mép trên màn hình nằm ngang hoặc thấp hơn tầm mắt 1 chút.
+            </div>
+            <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
+              <strong class="text-emerald-600 dark:text-emerald-400 block mb-1"><i class="fa-solid fa-clock-rotate-left"></i> Quy tắc 20-20-20</strong>
+              Sau mỗi 20 phút nhìn màn hình máy tính, hãy nhìn vào một vật cách xa 20 feet (khoảng 6 mét) trong ít nhất 20 giây để giảm mỏi mắt (hội chứng CVS).
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 5 CÂU HỎI TRẮC NGHIỆM MÔ PHỎNG ĐỀ THI MODULE 3 -->
+      <div id="quiz-m3" class="space-y-4 pt-4 scroll-mt-24">
+        <div class="flex items-center justify-between border-b border-emerald-200 dark:border-emerald-900 pb-2">
+          <h3 class="text-lg sm:text-xl font-black text-slate-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-list-check text-emerald-600"></i> 5 Câu Hỏi Trắc Nghiệm Mô Phỏng — Module 3 (LO)
+          </h3>
+          <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950 px-2.5 py-1 rounded-full">
+            Chuẩn Đề Thi Certiport
+          </span>
+        </div>
+
+        
+    <div id="q_lo_1" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+      <div class="flex items-center justify-between text-xs font-bold text-slate-500 dark:text-slate-400">
+        <span><i class="fa-solid fa-circle-question text-indigo-600 me-1"></i> Câu hỏi luyện thi IC3 GS4</span>
+        <span class="text-[11px] bg-indigo-100 dark:bg-indigo-950/60 text-indigo-800 dark:text-indigo-300 px-2 py-0.5 rounded-full font-bold">Tự động chấm</span>
+      </div>
+      <p class="text-base sm:text-lg leading-relaxed font-semibold text-slate-900 dark:text-white">
+        Một giáo viên muốn gửi thông báo cho 50 phụ huynh học sinh qua email nhưng không muốn các phụ huynh nhìn thấy địa chỉ email của nhau để bảo vệ sự riêng tư. Giáo viên nên đặt địa chỉ email của phụ huynh vào trường nào?
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+        
+          <button onclick="checkQuiz('q_lo_1', 0, 2)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">A</span>
+            <span class="leading-relaxed">Trường To</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_lo_1', 1, 2)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">B</span>
+            <span class="leading-relaxed">Trường Cc</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_lo_1', 2, 2)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">C</span>
+            <span class="leading-relaxed">Trường Bcc</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_lo_1', 3, 2)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">D</span>
+            <span class="leading-relaxed">Trường Subject</span>
+          </button>
+        
+      </div>
+      <div class="quiz-feedback hidden"></div>
+      <div class="quiz-explanation-text hidden">Trường Bcc (Blind Carbon Copy) gửi bản sao ẩn danh, bảo đảm không một người nhận nào trong danh sách nhìn thấy địa chỉ email của những người khác.</div>
+    </div>
+  
+
+        
+    <div id="q_lo_2" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+      <div class="flex items-center justify-between text-xs font-bold text-slate-500 dark:text-slate-400">
+        <span><i class="fa-solid fa-circle-question text-indigo-600 me-1"></i> Câu hỏi luyện thi IC3 GS4</span>
+        <span class="text-[11px] bg-indigo-100 dark:bg-indigo-950/60 text-indigo-800 dark:text-indigo-300 px-2 py-0.5 rounded-full font-bold">Tự động chấm</span>
+      </div>
+      <p class="text-base sm:text-lg leading-relaxed font-semibold text-slate-900 dark:text-white">
+        Theo quy tắc ứng xử văn minh trên mạng (Netiquette), việc soạn thảo toàn bộ nội dung một email bằng chữ IN HOA (ALL CAPS) mang ý nghĩa gì?
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+        
+          <button onclick="checkQuiz('q_lo_2', 0, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">A</span>
+            <span class="leading-relaxed">Thể hiện sự trang trọng, lịch thiệp và tôn trọng đối phương</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_lo_2', 1, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">B</span>
+            <span class="leading-relaxed">Tương đương với việc đang la hét, quát mắng vào mặt người đọc</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_lo_2', 2, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">C</span>
+            <span class="leading-relaxed">Giúp hệ thống gửi thư nhanh hơn và tránh lỗi chính tả</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_lo_2', 3, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">D</span>
+            <span class="leading-relaxed">Không có ý nghĩa gì đặc biệt</span>
+          </button>
+        
+      </div>
+      <div class="quiz-feedback hidden"></div>
+      <div class="quiz-explanation-text hidden">Viết hoa toàn bộ văn bản trong giao tiếp mạng bị coi là thiếu lịch sự, có sắc thái gay gắt, giống như đang gào thét hoặc quát tháo vào người nhận.</div>
+    </div>
+  
+
+        
+    <div id="q_lo_3" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+      <div class="flex items-center justify-between text-xs font-bold text-slate-500 dark:text-slate-400">
+        <span><i class="fa-solid fa-circle-question text-indigo-600 me-1"></i> Câu hỏi luyện thi IC3 GS4</span>
+        <span class="text-[11px] bg-indigo-100 dark:bg-indigo-950/60 text-indigo-800 dark:text-indigo-300 px-2 py-0.5 rounded-full font-bold">Tự động chấm</span>
+      </div>
+      <p class="text-base sm:text-lg leading-relaxed font-semibold text-slate-900 dark:text-white">
+        Hình thức tấn công nào sử dụng email hoặc trang web giả mạo giao diện của các ngân hàng nổi tiếng để đánh cắp tên đăng nhập và mật khẩu thẻ của người dùng?
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+        
+          <button onclick="checkQuiz('q_lo_3', 0, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">A</span>
+            <span class="leading-relaxed">Tấn công từ chối dịch vụ (DoS)</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_lo_3', 1, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">B</span>
+            <span class="leading-relaxed">Tấn công lừa đảo giả mạo (Phishing)</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_lo_3', 2, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">C</span>
+            <span class="leading-relaxed">Sâu máy tính (Worm)</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_lo_3', 3, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">D</span>
+            <span class="leading-relaxed">Phần mềm tống tiền (Ransomware)</span>
+          </button>
+        
+      </div>
+      <div class="quiz-feedback hidden"></div>
+      <div class="quiz-explanation-text hidden">Phishing (lừa đảo giả mạo) là kỹ thuật đánh lừa tâm lý, giả danh các tổ chức uy tín để dụ người dùng cung cấp thông tin nhạy cảm như mật khẩu, mã OTP, số thẻ.</div>
+    </div>
+  
+
+        
+    <div id="q_lo_4" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+      <div class="flex items-center justify-between text-xs font-bold text-slate-500 dark:text-slate-400">
+        <span><i class="fa-solid fa-circle-question text-indigo-600 me-1"></i> Câu hỏi luyện thi IC3 GS4</span>
+        <span class="text-[11px] bg-indigo-100 dark:bg-indigo-950/60 text-indigo-800 dark:text-indigo-300 px-2 py-0.5 rounded-full font-bold">Tự động chấm</span>
+      </div>
+      <p class="text-base sm:text-lg leading-relaxed font-semibold text-slate-900 dark:text-white">
+        Để giảm thiểu tình trạng mỏi mắt và khô mắt do nhìn màn hình máy tính liên tục trong thời gian dài, chuyên gia y tế khuyên áp dụng quy tắc 20-20-20 như thế nào?
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+        
+          <button onclick="checkQuiz('q_lo_4', 0, 0)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">A</span>
+            <span class="leading-relaxed">Cứ 20 phút nhìn màn hình, hãy nghỉ ngơi nhìn vật cách xa 20 feet (6 mét) trong ít nhất 20 giây</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_lo_4', 1, 0)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">B</span>
+            <span class="leading-relaxed">Mỗi ngày chỉ nên sử dụng máy tính đúng 20 phút rồi tắt máy 20 giờ</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_lo_4', 2, 0)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">C</span>
+            <span class="leading-relaxed">Nhìn màn hình liên tục 20 giờ và ngủ bù 20 tiếng</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_lo_4', 3, 0)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">D</span>
+            <span class="leading-relaxed">Chớp mắt 20 lần trong 20 phút ở cự ly 20 cm</span>
+          </button>
+        
+      </div>
+      <div class="quiz-feedback hidden"></div>
+      <div class="quiz-explanation-text hidden">Quy tắc 20-20-20 khuyến cáo: Cứ sau 20 phút làm việc với màn hình số, hãy thư giãn mắt bằng cách nhìn vào một vật ở khoảng cách 20 feet (khoảng 6m) trong vòng 20 giây.</div>
+    </div>
+  
+
+        
+    <div id="q_lo_5" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+      <div class="flex items-center justify-between text-xs font-bold text-slate-500 dark:text-slate-400">
+        <span><i class="fa-solid fa-circle-question text-indigo-600 me-1"></i> Câu hỏi luyện thi IC3 GS4</span>
+        <span class="text-[11px] bg-indigo-100 dark:bg-indigo-950/60 text-indigo-800 dark:text-indigo-300 px-2 py-0.5 rounded-full font-bold">Tự động chấm</span>
+      </div>
+      <p class="text-base sm:text-lg leading-relaxed font-semibold text-slate-900 dark:text-white">
+        Khoảng cách công thái học (Ergonomics) chuẩn từ mắt đến màn hình máy tính để bảo vệ cột sống cổ và thị giác là bao nhiêu?
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+        
+          <button onclick="checkQuiz('q_lo_5', 0, 2)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">A</span>
+            <span class="leading-relaxed">10 – 20 cm</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_lo_5', 1, 2)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">B</span>
+            <span class="leading-relaxed">25 – 35 cm</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_lo_5', 2, 2)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">C</span>
+            <span class="leading-relaxed">50 – 70 cm (khoảng một sải tay)</span>
+          </button>
+        
+          <button onclick="checkQuiz('q_lo_5', 3, 2)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:border-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition flex items-start gap-2.5">
+            <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0 text-xs sm:text-sm">D</span>
+            <span class="leading-relaxed">100 – 150 cm</span>
+          </button>
+        
+      </div>
+      <div class="quiz-feedback hidden"></div>
+      <div class="quiz-explanation-text hidden">Khoảng cách lý tưởng từ mắt đến màn hình máy tính là 50 đến 70 cm (tương đương chiều dài cánh tay), đồng thời mép trên màn hình nằm ngang hoặc thấp hơn tầm mắt một chút.</div>
+    </div>
+  
+      </div>
+    </section>
+  
+      <!-- ========================================== -->
+      <!-- PHẦN 4: TỪ ĐIỂN THUẬT NGỮ & TỰ KIỂM TRA     -->
+      <!-- ========================================== -->
+      <section id="thuat-ngu-kiem-tra" class="space-y-8 scroll-mt-24 pt-6 border-t-2 border-slate-200 dark:border-slate-800">
+        <div class="border-b border-slate-200 dark:border-slate-800 pb-4 flex items-center justify-between">
+          <div>
+            <span class="text-xs font-black uppercase tracking-wider px-3 py-1 rounded-full bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300">
+              Tra Cứu & Tự Đánh Giá
+            </span>
+            <h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white mt-2">
+              TỪ ĐIỂN THUẬT NGỮ IT & CHECKLIST ÔN TẬP IC3 GS4
+            </h2>
+            <p class="text-sm sm:text-base text-slate-600 dark:text-slate-400 mt-1">
+              Bảng thuật ngữ viết tắt tiếng Anh chuẩn Certiport và bảng tự kiểm tra mức độ sẵn sàng trước khi bước vào phòng thi.
+            </p>
+          </div>
+          <div class="hidden sm:flex items-center justify-center w-12 h-12 rounded-2xl bg-amber-500 text-white text-xl shadow-lg">
+            <i class="fa-solid fa-spell-check"></i>
+          </div>
+        </div>
+
+        <!-- Interactive Checklist -->
+        <div class="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 sm:p-8 shadow-sm space-y-4">
+          <div class="flex items-center justify-between">
+            <h3 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+              <i class="fa-solid fa-clipboard-check text-indigo-600"></i> Checklist 6 Kỹ Năng Sẵn Sàng Đi Thi
+            </h3>
+            <span id="checklistProgress" class="text-xs font-bold px-2.5 py-1 rounded-full bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400">
+              0 / 6 hoàn thành
+            </span>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
+            Đánh dấu vào các kỹ năng bạn đã nắm vững để hệ thống tự động ghi nhớ tiến độ ôn tập của bạn:
+          </p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 text-xs sm:text-sm">
+            <label class="flex items-start gap-3 p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-850 cursor-pointer transition">
+              <input type="checkbox" onchange="updateChecklistProgress()" class="chk-item mt-0.5 rounded text-indigo-600 focus:ring-indigo-500">
+              <span class="text-slate-700 dark:text-slate-300"><strong>M1:</strong> Phân biệt rõ RAM vs ROM, HDD vs SSD, các đơn vị Bit/Byte và các cổng kết nối USB/HDMI/VGA.</span>
+            </label>
+            <label class="flex items-start gap-3 p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-850 cursor-pointer transition">
+              <input type="checkbox" onchange="updateChecklistProgress()" class="chk-item mt-0.5 rounded text-indigo-600 focus:ring-indigo-500">
+              <span class="text-slate-700 dark:text-slate-300"><strong>M1:</strong> Hiểu rõ các mô hình bản quyền phần mềm (EULA, Commercial, Open Source, Shareware, Freeware).</span>
+            </label>
+            <label class="flex items-start gap-3 p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-850 cursor-pointer transition">
+              <input type="checkbox" onchange="updateChecklistProgress()" class="chk-item mt-0.5 rounded text-indigo-600 focus:ring-indigo-500">
+              <span class="text-slate-700 dark:text-slate-300"><strong>M2:</strong> Thành thạo định dạng Word (Indent, Tab, Page Setup, Page Break Ctrl+Enter và Trộn thư Mail Merge).</span>
+            </label>
+            <label class="flex items-start gap-3 p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-850 cursor-pointer transition">
+              <input type="checkbox" onchange="updateChecklistProgress()" class="chk-item mt-0.5 rounded text-indigo-600 focus:ring-indigo-500">
+              <span class="text-slate-700 dark:text-slate-300"><strong>M2:</strong> Nắm vững địa chỉ tuyệt đối $A$1 trong Excel và các hàm tính toán SUM, AVERAGE, COUNT, COUNTA, IF.</span>
+            </label>
+            <label class="flex items-start gap-3 p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-850 cursor-pointer transition">
+              <input type="checkbox" onchange="updateChecklistProgress()" class="chk-item mt-0.5 rounded text-indigo-600 focus:ring-indigo-500">
+              <span class="text-slate-700 dark:text-slate-300"><strong>M2:</strong> Phân biệt rành mạch Slide Transition và Object Animation trong PowerPoint; nắm khái niệm Khóa chính Access.</span>
+            </label>
+            <label class="flex items-start gap-3 p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-850 cursor-pointer transition">
+              <input type="checkbox" onchange="updateChecklistProgress()" class="chk-item mt-0.5 rounded text-indigo-600 focus:ring-indigo-500">
+              <span class="text-slate-700 dark:text-slate-300"><strong>M3:</strong> Nắm vững trường To/Cc/Bcc, văn hóa Netiquette, các loại Malware (Phishing, Ransomware) và quy tắc 20-20-20.</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Glossary with Live Search -->
+        <div class="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 sm:p-8 shadow-sm space-y-5">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <h3 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+              <i class="fa-solid fa-book-bookmark text-amber-500"></i> Từ Điển Thuật Ngữ Viết Tắt Tiếng Anh IC3 GS4
+            </h3>
+            <!-- Search Input -->
+            <div class="relative w-full sm:w-64">
+              <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+              <input id="glossarySearchInput" oninput="filterGlossary()" type="text" placeholder="Tìm thuật ngữ (e.g. SSD, Bcc)..." class="w-full pl-8 pr-3 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm text-slate-800 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+            </div>
+          </div>
+
+          <div id="glossaryGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 text-xs sm:text-sm">
+            <div class="glossary-card p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+              <span class="font-bold text-indigo-600 dark:text-indigo-400 block font-mono">CPU (Central Processing Unit)</span>
+              <p class="text-slate-600 dark:text-slate-300 text-xs mt-0.5">Bộ xử lý trung tâm, điều hành và thực thi toàn bộ lệnh tính toán của máy tính.</p>
+            </div>
+            <div class="glossary-card p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+              <span class="font-bold text-indigo-600 dark:text-indigo-400 block font-mono">RAM (Random Access Memory)</span>
+              <p class="text-slate-600 dark:text-slate-300 text-xs mt-0.5">Bộ nhớ truy cập ngẫu nhiên khả biến, dữ liệu mất sạch khi ngắt nguồn điện.</p>
+            </div>
+            <div class="glossary-card p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+              <span class="font-bold text-indigo-600 dark:text-indigo-400 block font-mono">ROM (Read-Only Memory)</span>
+              <p class="text-slate-600 dark:text-slate-300 text-xs mt-0.5">Bộ nhớ chỉ đọc bất biến, lưu trữ firmware khởi động máy (BIOS/UEFI).</p>
+            </div>
+            <div class="glossary-card p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+              <span class="font-bold text-indigo-600 dark:text-indigo-400 block font-mono">SSD (Solid State Drive)</span>
+              <p class="text-slate-600 dark:text-slate-300 text-xs mt-0.5">Ổ thể rắn sử dụng chip nhớ Flash, tốc độ đọc ghi cực nhanh, chống sốc bền bỉ.</p>
+            </div>
+            <div class="glossary-card p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+              <span class="font-bold text-indigo-600 dark:text-indigo-400 block font-mono">EULA (End User License Agreement)</span>
+              <p class="text-slate-600 dark:text-slate-300 text-xs mt-0.5">Thỏa thuận cấp phép bản quyền phần mềm giữa nhà phát triển và người dùng cuối.</p>
+            </div>
+            <div class="glossary-card p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+              <span class="font-bold text-indigo-600 dark:text-indigo-400 block font-mono">OSS (Open Source Software)</span>
+              <p class="text-slate-600 dark:text-slate-300 text-xs mt-0.5">Phần mềm mã nguồn mở cho phép tự do sử dụng, chỉnh sửa và phân phối lại.</p>
+            </div>
+            <div class="glossary-card p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+              <span class="font-bold text-indigo-600 dark:text-indigo-400 block font-mono">LAN (Local Area Network)</span>
+              <p class="text-slate-600 dark:text-slate-300 text-xs mt-0.5">Mạng máy tính cục bộ trong phạm vi hẹp như văn phòng, trường học, gia đình.</p>
+            </div>
+            <div class="glossary-card p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+              <span class="font-bold text-indigo-600 dark:text-indigo-400 block font-mono">WAN (Wide Area Network)</span>
+              <p class="text-slate-600 dark:text-slate-300 text-xs mt-0.5">Mạng diện rộng kết nối nhiều mạng LAN qua khoảng cách địa lý lớn (quốc gia, toàn cầu).</p>
+            </div>
+            <div class="glossary-card p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+              <span class="font-bold text-indigo-600 dark:text-indigo-400 block font-mono">DNS (Domain Name System)</span>
+              <p class="text-slate-600 dark:text-slate-300 text-xs mt-0.5">Hệ thống phân giải tên miền thành địa chỉ IP số học để định tuyến dữ liệu mạng.</p>
+            </div>
+            <div class="glossary-card p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+              <span class="font-bold text-indigo-600 dark:text-indigo-400 block font-mono">HTTPS (Hypertext Transfer Protocol Secure)</span>
+              <p class="text-slate-600 dark:text-slate-300 text-xs mt-0.5">Giao thức truyền tải siêu văn bản an toàn có mã hóa chứng chỉ bảo mật SSL/TLS.</p>
+            </div>
+            <div class="glossary-card p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+              <span class="font-bold text-indigo-600 dark:text-indigo-400 block font-mono">Bcc (Blind Carbon Copy)</span>
+              <p class="text-slate-600 dark:text-slate-300 text-xs mt-0.5">Gửi bản sao email ẩn danh, bảo mật hoàn toàn danh sách người nhận với nhau.</p>
+            </div>
+            <div class="glossary-card p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+              <span class="font-bold text-indigo-600 dark:text-indigo-400 block font-mono">Phishing</span>
+              <p class="text-slate-600 dark:text-slate-300 text-xs mt-0.5">Kỹ thuật tấn công giả mạo email, website ngân hàng để đánh cắp mật khẩu và thông tin.</p>
+            </div>
+            <div class="glossary-card p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+              <span class="font-bold text-indigo-600 dark:text-indigo-400 block font-mono">Ransomware</span>
+              <p class="text-slate-600 dark:text-slate-300 text-xs mt-0.5">Mã độc mã hóa trái phép dữ liệu của nạn nhân và đòi tiền chuộc để giải mã.</p>
+            </div>
+            <div class="glossary-card p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+              <span class="font-bold text-indigo-600 dark:text-indigo-400 block font-mono">2FA (Two-Factor Authentication)</span>
+              <p class="text-slate-600 dark:text-slate-300 text-xs mt-0.5">Xác thực 2 yếu tố, kết hợp mật khẩu với mã bảo mật thứ cấp (OTP trên điện thoại).</p>
+            </div>
+            <div class="glossary-card p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+              <span class="font-bold text-indigo-600 dark:text-indigo-400 block font-mono">Ergonomics (Công thái học)</span>
+              <p class="text-slate-600 dark:text-slate-300 text-xs mt-0.5">Khoa học thiết kế nơi làm việc tối ưu sức khỏe, tư thế ngồi, cự ly mắt 50-70cm và quy tắc 20-20-20.</p>
+            </div>
+            <div class="glossary-card p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+              <span class="font-bold text-indigo-600 dark:text-indigo-400 block font-mono">Primary Key (Khóa chính)</span>
+              <p class="text-slate-600 dark:text-slate-300 text-xs mt-0.5">Trường định danh duy nhất cho mỗi bản ghi trong bảng Access, không trùng và không rỗng.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      </div> <!-- End col-span-9 -->
+    </div> <!-- End grid -->
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-8 px-4 sm:px-6 text-center text-xs text-slate-500 dark:text-slate-400 space-y-2">
+    <p>Chương trình luyện thi chứng chỉ quốc tế IC3 Global Standard 4 (GS4) &bull; Nền tảng học tập số CodeHub</p>
+    <p>Nội dung biên soạn bám sát chuẩn đánh giá kỹ năng số quốc tế Certiport.</p>
+  </footer>
+
+  <!-- Core Interactive Script -->
+  <script>
+    // Quiz Checking Logic
+    window.checkQuiz = function(cardId, selectedIdx, correctIdx) {
+      const card = document.getElementById(cardId);
+      if (!card) return;
+
+      const buttons = card.querySelectorAll('.quiz-btn');
+      const feedback = card.querySelector('.quiz-feedback');
+      const explanation = card.querySelector('.quiz-explanation-text');
+
+      buttons.forEach((btn, idx) => {
+        btn.classList.remove('quiz-selected', 'quiz-correct', 'quiz-incorrect');
+        btn.disabled = true; // Lock options once answered
+        if (idx === correctIdx) {
+          btn.classList.add('quiz-correct');
+        } else if (idx === selectedIdx) {
+          btn.classList.add('quiz-incorrect');
+        }
+      });
+
+      if (feedback) {
+        feedback.classList.remove('hidden', 'bg-emerald-100', 'text-emerald-800', 'bg-rose-100', 'text-rose-800', 'dark:bg-emerald-950/60', 'dark:text-emerald-200', 'dark:bg-rose-950/60', 'dark:text-rose-200');
+        if (selectedIdx === correctIdx) {
+          feedback.classList.add('bg-emerald-100', 'text-emerald-800', 'dark:bg-emerald-950/60', 'dark:text-emerald-200');
+          feedback.innerHTML = '<div class="p-3 rounded-xl font-bold flex items-center gap-2"><i class="fa-solid fa-circle-check text-emerald-600"></i> Chính xác! ' + (explanation ? explanation.innerHTML : '') + '</div>';
+        } else {
+          feedback.classList.add('bg-rose-100', 'text-rose-800', 'dark:bg-rose-950/60', 'dark:text-rose-200');
+          feedback.innerHTML = '<div class="p-3 rounded-xl font-bold flex items-center gap-2"><i class="fa-solid fa-circle-xmark text-rose-600"></i> Chưa đúng. ' + (explanation ? explanation.innerHTML : '') + '</div>';
+        }
+      }
+    };
+
+    // Font Scaling Controller
+    const fontLevels = [
+      { label: '85%', size: '14px' },
+      { label: '100%', size: '16px' },
+      { label: '115%', size: '18px' },
+      { label: '130%', size: '20px' },
+      { label: '145%', size: '22px' }
+    ];
+    let currentFontIdx = 1; // 100% default
+
+    function applyFontSize(idx) {
+      currentFontIdx = Math.max(0, Math.min(fontLevels.length - 1, idx));
+      const level = fontLevels[currentFontIdx];
+      document.documentElement.style.fontSize = level.size;
+      const display = document.getElementById('fontSizeDisplay');
+      if (display) display.innerText = level.label;
+      localStorage.setItem('user-font-size-idx', currentFontIdx);
+    }
+
+    window.changeFontSize = function(delta) {
+      applyFontSize(currentFontIdx + delta);
+    };
+
+    const savedFontIdx = localStorage.getItem('user-font-size-idx');
+    if (savedFontIdx !== null) {
+      applyFontSize(parseInt(savedFontIdx, 10));
+    }
+
+    // Theme Toggle
+    function toggleTheme() {
+      document.documentElement.classList.toggle('dark');
+      localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+    }
+    if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+
+    // Checklist Progress with LocalStorage
+    function updateChecklistProgress() {
+      const items = document.querySelectorAll('.chk-item');
+      let done = 0;
+      const state = [];
+      items.forEach((chk, i) => {
+        if (chk.checked) done++;
+        state.push(chk.checked);
+      });
+      const lbl = document.getElementById('checklistProgress');
+      if (lbl) {
+        lbl.innerText = done + ' / ' + items.length + ' hoàn thành';
+        if (done === items.length) {
+          lbl.className = 'text-xs font-bold px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300';
+        } else {
+          lbl.className = 'text-xs font-bold px-2.5 py-1 rounded-full bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400';
+        }
+      }
+      localStorage.setItem('ic3-gs4-checklist', JSON.stringify(state));
+    }
+
+    // Restore Checklist State
+    try {
+      const savedState = JSON.parse(localStorage.getItem('ic3-gs4-checklist') || '[]');
+      const items = document.querySelectorAll('.chk-item');
+      items.forEach((chk, i) => {
+        if (savedState[i]) chk.checked = true;
+      });
+      updateChecklistProgress();
+    } catch(e) {}
+
+    // Glossary Filter
+    window.filterGlossary = function() {
+      const q = (document.getElementById('glossarySearchInput')?.value || '').toLowerCase().trim();
+      const cards = document.querySelectorAll('.glossary-card');
+      cards.forEach(card => {
+        const txt = card.innerText.toLowerCase();
+        if (!q || txt.includes(q)) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    };
+  </script>
+</body>
+</html>

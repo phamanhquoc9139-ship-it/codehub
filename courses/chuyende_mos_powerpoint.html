@@ -1,0 +1,1916 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Luyện Thi Chứng Chỉ Quốc Tế MOS PowerPoint Associate | CodeHub</title>
+  <meta name="description" content="Khóa học luyện thi chứng chỉ quốc tế Microsoft Office Specialist (MOS) PowerPoint Associate 2016 / 2019 / Microsoft 365 Apps. Đầy đủ 5 Domain chuẩn Certiport, trắc nghiệm tương tác, thuật ngữ và bài tập thực hành Multi-Project.">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            ppt: {
+              50: '#fff7ed',
+              100: '#ffedd5',
+              200: '#fed7aa',
+              300: '#fdba74',
+              400: '#fb923c',
+              500: '#f97316',
+              600: '#ea580c',
+              700: '#c2410c',
+              800: '#9a3412',
+              900: '#7c2d12',
+              950: '#431407',
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <style>
+    /* Default base font size: 16px with smooth scaling */
+    html {
+      font-size: 16px;
+      transition: font-size 0.2s ease;
+    }
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.05);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(234, 88, 12, 0.35);
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(234, 88, 12, 0.65);
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 min-h-screen flex flex-col font-sans transition-colors duration-200 text-base sm:text-lg leading-relaxed">
+
+  <!-- Reading Progress Bar -->
+  <div id="progressBar" class="fixed top-0 left-0 h-1 bg-gradient-to-r from-orange-500 via-amber-500 to-red-500 z-50 transition-all duration-150" style="width: 0%;"></div>
+
+  <!-- Header Navigation -->
+  <header class="sticky top-0 z-40 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <a href="../index.html" class="flex items-center gap-2 text-slate-500 hover:text-orange-600 dark:text-slate-400 dark:hover:text-orange-400 text-sm font-medium transition" title="Trở về trang chủ">
+          <i class="fa-solid fa-arrow-left"></i>
+          <span class="hidden sm:inline">Trang chủ</span>
+        </a>
+        <span class="text-slate-300 dark:text-slate-700">|</span>
+        <div class="flex items-center gap-2 font-bold text-slate-900 dark:text-white">
+          <span class="w-8 h-8 rounded-lg bg-orange-600 text-white flex items-center justify-center text-sm shadow-sm">
+            <i class="fa-solid fa-file-powerpoint"></i>
+          </span>
+          <span class="text-base sm:text-lg tracking-tight">Code<span class="text-orange-600">Hub</span></span>
+        </div>
+        <span class="hidden md:inline px-2.5 py-0.5 text-xs font-semibold rounded-full bg-orange-100 text-orange-800 dark:bg-orange-950/60 dark:text-orange-300 border border-orange-200 dark:border-orange-800">
+          MOS PowerPoint Associate
+        </span>
+      </div>
+
+      <div class="flex items-center gap-2 sm:gap-3">
+        <!-- Font Size Adjuster Controls -->
+        <div class="flex items-center bg-slate-100 dark:bg-slate-800 rounded-lg p-0.5 border border-slate-200 dark:border-slate-700 text-xs font-bold">
+          <button id="btnFontDec" class="px-2 py-1 text-slate-600 dark:text-slate-300 hover:bg-white dark:hover:bg-slate-700 rounded transition" title="Giảm cỡ chữ (A-)">A-</button>
+          <span id="fontLabel" class="px-2 text-slate-500 dark:text-slate-400 text-[11px] select-none">100%</span>
+          <button id="btnFontInc" class="px-2 py-1 text-slate-600 dark:text-slate-300 hover:bg-white dark:hover:bg-slate-700 rounded transition" title="Tăng cỡ chữ (A+)">A+</button>
+        </div>
+
+        <button onclick="openCourseQuizModal()" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-orange-600 hover:bg-orange-700 text-white flex items-center gap-1.5 shadow-sm transition">
+          <i class="fa-solid fa-clipboard-check"></i>
+          <span>Thi thử (10 câu)</span>
+        </button>
+
+        <button id="themeToggle" class="w-9 h-9 rounded-lg border border-slate-200 dark:border-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition" title="Đổi giao diện Sáng/Tối">
+          <i class="fa-solid fa-moon dark:hidden"></i>
+          <i class="fa-solid fa-sun hidden dark:inline text-amber-400"></i>
+        </button>
+
+        <button id="mobileMenuBtn" class="lg:hidden w-9 h-9 rounded-lg border border-slate-200 dark:border-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition" title="Mục lục">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Banner -->
+  <div class="bg-gradient-to-r from-orange-700 via-red-700 to-amber-800 text-white py-12 px-4 sm:px-6 lg:px-8 shadow-md">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
+      <div class="space-y-4 max-w-3xl">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-white/15 backdrop-blur-md border border-white/20 text-orange-100">
+          <i class="fa-solid fa-award text-amber-300"></i> Chứng Chỉ Quốc Tế Certiport & Microsoft
+        </div>
+        <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black tracking-tight leading-tight">
+          LUYỆN THI CHỨNG CHỈ QUỐC TẾ<br/>
+          <span class="text-orange-200 font-extrabold text-xl sm:text-2xl md:text-3xl">MOS PowerPoint Associate (2016 / 2019 / 365)</span>
+        </h1>
+        <p class="text-base sm:text-lg text-orange-100/90 font-normal leading-relaxed">
+          Tài liệu luyện thi toàn diện bao phủ <strong>100% mục tiêu khảo thí 5 Domain chuẩn Certiport</strong>: Quản lý bài thuyết trình, Slide Master, phân đoạn Section, định dạng Shape & SmartArt, chèn media âm thanh/video nâng cao, thiết lập hiệu ứng Transitions & Animations chuyên nghiệp. Kèm bộ trắc nghiệm tương tác tự động chấm và thuật ngữ tiếng Anh chuyên ngành.
+        </p>
+        <div class="flex flex-wrap items-center gap-4 pt-2 text-sm sm:text-base text-orange-200">
+          <span class="flex items-center gap-1.5"><i class="fa-solid fa-layer-group text-amber-300"></i> 5 Domain Cốt Lõi</span>
+          <span class="flex items-center gap-1.5"><i class="fa-solid fa-clock text-amber-300"></i> 50 Phút Thi Thực Tế</span>
+          <span class="flex items-center gap-1.5"><i class="fa-solid fa-bullseye text-amber-300"></i> Điểm Đạt: 700/1000</span>
+          <span class="flex items-center gap-1.5"><i class="fa-solid fa-laptop-file text-amber-300"></i> 35 Thao Tác Multi-Project</span>
+        </div>
+      </div>
+
+      <!-- Quick Summary Card -->
+      <div class="w-full md:w-80 p-5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 text-white space-y-3 shrink-0">
+        <div class="text-xs font-bold uppercase tracking-wider text-orange-200 flex items-center justify-between">
+          <span>Cấu trúc bài thi MOS</span>
+          <span class="px-2 py-0.5 rounded bg-orange-500/40 text-[10px] font-bold">50 Phút</span>
+        </div>
+        <ul class="text-xs sm:text-sm space-y-2 text-orange-50">
+          <li class="flex items-center justify-between py-1 border-b border-white/10">
+            <span>D1: Quản lý thuyết trình</span>
+            <span class="font-bold text-amber-300">20–25%</span>
+          </li>
+          <li class="flex items-center justify-between py-1 border-b border-white/10">
+            <span>D2: Quản lý các Slide</span>
+            <span class="font-bold text-amber-300">15–20%</span>
+          </li>
+          <li class="flex items-center justify-between py-1 border-b border-white/10">
+            <span>D3: Văn bản, Shape & Ảnh</span>
+            <span class="font-bold text-amber-300">25–30%</span>
+          </li>
+          <li class="flex items-center justify-between py-1 border-b border-white/10">
+            <span>D4: Bảng, Chart, SmartArt, Media</span>
+            <span class="font-bold text-amber-300">20–25%</span>
+          </li>
+          <li class="flex items-center justify-between py-1 border-b border-white/10">
+            <span>D5: Chuyển tiếp & Hoạt hình</span>
+            <span class="font-bold text-amber-300">10–15%</span>
+          </li>
+          <li class="flex items-center justify-between py-1 text-emerald-300 font-bold">
+            <span>Thuật ngữ & Checklist</span>
+            <span>Mục 6</span>
+          </li>
+        </ul>
+        <div class="text-[11px] text-orange-100/70 italic pt-1 leading-relaxed">
+          * Định dạng bài thi: Multi-Project gồm 5–7 Project độc lập, mỗi Project chứa 4–7 Task tác vụ trực tiếp trên tệp PowerPoint mẫu.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content Layout -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      
+      <!-- Left Sidebar: Sticky Table of Contents -->
+      <aside class="hidden lg:block lg:col-span-3 sticky top-20 max-h-[calc(100vh-6rem)] overflow-y-auto pr-2 space-y-4">
+        
+        <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs space-y-3">
+          <div class="flex items-center justify-between pb-2 border-b border-slate-100 dark:border-slate-800">
+            <span class="text-xs font-black uppercase tracking-wider text-slate-400">Mục lục luyện thi</span>
+            <span class="text-[11px] font-bold text-orange-600 dark:text-orange-400">5 Domain</span>
+          </div>
+
+          <!-- Domain 1 -->
+          <div>
+            <a href="#domain-1" class="text-xs font-black uppercase text-orange-700 dark:text-orange-400 mb-1 flex items-center gap-1.5 hover:underline">
+              <i class="fa-solid fa-sliders"></i> D1: Quản lý bài thuyết trình
+            </a>
+            <ul class="space-y-1 text-xs">
+              <li><a href="#d1-1" class="block py-1 px-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition">1.1 Slide Master & Layouts</a></li>
+              <li><a href="#d1-2" class="block py-1 px-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition">1.2 Cài đặt trình chiếu & Slide Size</a></li>
+              <li><a href="#d1-3" class="block py-1 px-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition">1.3 In ấn Handouts & Notes</a></li>
+              <li><a href="#d1-4" class="block py-1 px-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition">1.4 Kiểm tra tệp & Bảo vệ</a></li>
+            </ul>
+          </div>
+
+          <!-- Domain 2 -->
+          <div>
+            <a href="#domain-2" class="text-xs font-black uppercase text-orange-700 dark:text-orange-400 mb-1 flex items-center gap-1.5 hover:underline">
+              <i class="fa-solid fa-copy"></i> D2: Quản lý các Slide
+            </a>
+            <ul class="space-y-1 text-xs">
+              <li><a href="#d2-1" class="block py-1 px-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition">2.1 Chèn, Duplicate & Reuse Slides</a></li>
+              <li><a href="#d2-2" class="block py-1 px-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition">2.2 Ẩn slide & Slide Layout</a></li>
+              <li><a href="#d2-3" class="block py-1 px-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition">2.3 Phân đoạn bài giảng (Sections)</a></li>
+            </ul>
+          </div>
+
+          <!-- Domain 3 -->
+          <div>
+            <a href="#domain-3" class="text-xs font-black uppercase text-orange-700 dark:text-orange-400 mb-1 flex items-center gap-1.5 hover:underline">
+              <i class="fa-solid fa-shapes"></i> D3: Text, Shape & Hình ảnh
+            </a>
+            <ul class="space-y-1 text-xs">
+              <li><a href="#d3-1" class="block py-1 px-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition">3.1 Text box, Cột văn bản & WordArt</a></li>
+              <li><a href="#d3-2" class="block py-1 px-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition">3.2 Vẽ, Định dạng & Nhóm Shape</a></li>
+              <li><a href="#d3-3" class="block py-1 px-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition">3.3 Chèn ảnh, Crop to Shape & Alt Text</a></li>
+            </ul>
+          </div>
+
+          <!-- Domain 4 -->
+          <div>
+            <a href="#domain-4" class="text-xs font-black uppercase text-orange-700 dark:text-orange-400 mb-1 flex items-center gap-1.5 hover:underline">
+              <i class="fa-solid fa-chart-pie"></i> D4: Table, Chart, SmartArt & Media
+            </a>
+            <ul class="space-y-1 text-xs">
+              <li><a href="#d4-1" class="block py-1 px-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition">4.1 Bảng (Table) & Table Styles</a></li>
+              <li><a href="#d4-2" class="block py-1 px-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition">4.2 Biểu đồ (Chart) & Legend/Labels</a></li>
+              <li><a href="#d4-3" class="block py-1 px-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition">4.3 Sơ đồ thông minh SmartArt</a></li>
+              <li><a href="#d4-4" class="block py-1 px-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition">4.4 Audio & Video nâng cao (Trim Video)</a></li>
+            </ul>
+          </div>
+
+          <!-- Domain 5 -->
+          <div>
+            <a href="#domain-5" class="text-xs font-black uppercase text-orange-700 dark:text-orange-400 mb-1 flex items-center gap-1.5 hover:underline">
+              <i class="fa-solid fa-wand-magic-sparkles"></i> D5: Chuyển tiếp & Hoạt hình
+            </a>
+            <ul class="space-y-1 text-xs">
+              <li><a href="#d5-1" class="block py-1 px-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition">5.1 Slide Transitions & Timing</a></li>
+              <li><a href="#d5-2" class="block py-1 px-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition">5.2 Object Animations (4 nhóm)</a></li>
+              <li><a href="#d5-3" class="block py-1 px-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition">5.3 Animation Pane, Triggers & Reorder</a></li>
+            </ul>
+          </div>
+
+          <!-- Part 6 -->
+          <div class="pt-2 border-t border-slate-100 dark:border-slate-800">
+            <a href="#domain-6" class="text-xs font-black uppercase text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5 hover:underline">
+              <i class="fa-solid fa-list-check"></i> Phần 6: Thuật ngữ & Checklist
+            </a>
+          </div>
+
+        </div>
+
+        <!-- Tip Box -->
+        <div class="p-3.5 rounded-xl bg-orange-50 dark:bg-orange-950/40 border border-orange-200 dark:border-orange-800/60 text-xs space-y-1.5">
+          <div class="font-bold text-orange-900 dark:text-orange-200 flex items-center gap-1.5">
+            <i class="fa-solid fa-lightbulb text-amber-500"></i> Mẹo thi MOS PowerPoint:
+          </div>
+          <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
+            Tuyệt đối không chèn thêm nội dung thừa hoặc định dạng ngoài yêu cầu của Task. Nhấn <strong>Restart Project</strong> nếu làm sai để khôi phục trạng thái ban đầu của bài thi.
+          </p>
+        </div>
+
+      </aside>
+
+      <!-- Main Content Area -->
+      <div class="lg:col-span-9 space-y-10">
+
+        <!-- ========================================== -->
+        <!-- DOMAIN 1: MANAGE PRESENTATIONS            -->
+        <!-- ========================================== -->
+        <section id="domain-1" class="p-6 sm:p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-8">
+          
+          <div class="border-b border-slate-200 dark:border-slate-800 pb-5">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-orange-100 text-orange-800 dark:bg-orange-950/60 dark:text-orange-300 mb-3">
+              <i class="fa-solid fa-sliders"></i> Domain 1 (Chiếm 20% – 25% đề thi)
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
+              Domain 1: Quản Lý Bài Thuyết Trình (Manage Presentations)
+            </h2>
+            <p class="text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">
+              Domain này đánh giá năng lực cấu hình tổng thể toàn bài thuyết trình: tùy biến Slide Master, đổi cỡ slide Standard/Widescreen, thiết lập tùy chọn trình chiếu lặp vô tận, in ấn tài liệu Handouts phát cho khán giả và kiểm tra thuộc tính tệp.
+            </p>
+          </div>
+
+          <!-- 1.1 Slide Master -->
+          <div id="d1-1" class="space-y-4">
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2.5">
+              <span class="w-8 h-8 rounded-xl bg-orange-100 dark:bg-orange-950/60 text-orange-700 dark:text-orange-400 flex items-center justify-center text-sm font-black">1.1</span>
+              Slide Master, Handout Master & Notes Master
+            </h3>
+            <p class="text-slate-700 dark:text-slate-300 leading-relaxed">
+              <strong>Slide Master</strong> là trang chiếu chủ quản lý giao diện, bố cục (layout), phông chữ, màu sắc và logo nền của toàn bộ bài thuyết trình. Bất kỳ thay đổi nào thực hiện trên Slide Master trên cùng (Parent Master) sẽ tự động áp dụng đồng bộ xuống tất cả các trang chiếu cấp dưới.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="p-4 rounded-2xl bg-orange-50/60 dark:bg-orange-950/20 border border-orange-200/80 dark:border-orange-800/40 space-y-2">
+                <h4 class="font-bold text-orange-900 dark:text-orange-300 text-base flex items-center gap-2">
+                  <i class="fa-solid fa-layer-group text-orange-600"></i> Các bước thao tác với Slide Master:
+                </h4>
+                <ol class="list-decimal list-inside space-y-1.5 text-sm sm:text-base text-slate-700 dark:text-slate-300">
+                  <li>Vào thẻ <strong>View</strong> &rarr; nhóm <em>Master Views</em> &rarr; chọn <strong>Slide Master</strong>.</li>
+                  <li><strong>Slide Master lớn nhất (Top Slide):</strong> Chèn hình ảnh, logo, đổi Theme Colors hoặc Fonts để tác động đến toàn bộ slide trong bài.</li>
+                  <li><strong>Slide Layouts con (Sub-layouts):</strong> Chọn layout cụ thể (vd: <em>Title and Content</em>, <em>Comparison</em>) để chèn thêm Placeholder (Title, Text, Picture, Chart, Table).</li>
+                  <li>Nhấn nút <strong>Close Master View</strong> trên thanh Ribbon trước khi chuyển sang Task tiếp theo.</li>
+                </ol>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-2">
+                <h4 class="font-bold text-slate-900 dark:text-white text-base flex items-center gap-2">
+                  <i class="fa-solid fa-file-lines text-amber-500"></i> Handout Master & Notes Master:
+                </h4>
+                <ul class="list-disc list-inside space-y-1.5 text-sm sm:text-base text-slate-700 dark:text-slate-300">
+                  <li><strong>Handout Master:</strong> Vào <em>View &rarr; Handout Master</em>. Cho phép cấu hình số trang hiển thị trên tài liệu in phát cho khán giả (Slides Per Page: 1, 2, 3, 4, 6, 9), căn chỉnh Header, Footer, Page Number, Date.</li>
+                  <li><strong>Notes Master:</strong> Định dạng trang in ghi chú dành cho diễn giả (Notes Page), chỉnh kích thước ô hiển thị slide thu nhỏ và khung ghi chú bên dưới.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 text-xs sm:text-sm text-amber-900 dark:text-amber-200">
+              <i class="fa-solid fa-triangle-exclamation text-amber-600 me-1.5"></i>
+              <strong>Lưu ý Certiport:</strong> Khi đề bài yêu cầu "Modify the Title and Content layout in Slide Master", bạn PHẢI cuộn thanh trượt bên trái, rê chuột vào từng layout con để tìm chính xác layout có tooltip tên <em>Title and Content Layout</em>, không được sửa nhầm vào Top Slide Master lớn nhất!
+            </div>
+          </div>
+
+          <!-- 1.2 Slide Size & Presentation Setup -->
+          <div id="d1-2" class="space-y-4">
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2.5">
+              <span class="w-8 h-8 rounded-xl bg-orange-100 dark:bg-orange-950/60 text-orange-700 dark:text-orange-400 flex items-center justify-center text-sm font-black">1.2</span>
+              Kích Thước Slide & Cài Đặt Trình Chiếu (Set Up Show)
+            </h3>
+
+            <div class="space-y-3">
+              <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-2">
+                <h4 class="font-bold text-slate-900 dark:text-white text-base flex items-center gap-2">
+                  <i class="fa-solid fa-expand text-orange-600"></i> 1. Đổi kích thước Slide (Slide Size):
+                </h4>
+                <p class="text-sm sm:text-base text-slate-700 dark:text-slate-300">
+                  Vào thẻ <strong>Design</strong> &rarr; nhóm <em>Customize</em> &rarr; nhấp <strong>Slide Size</strong>.
+                </p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+                  <div class="p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-750">
+                    <strong class="text-orange-600 font-bold block mb-1">Standard (4:3) vs Widescreen (16:9):</strong>
+                    Mặc định hiện nay là Widescreen (16:9). Khi chuyển sang Standard (4:3), PowerPoint sẽ hỏi hộp thoại chia độ co giãn:
+                    <ul class="list-disc list-inside mt-1 text-slate-600 dark:text-slate-400">
+                      <li><strong>Maximize:</strong> Phóng to hết mức (có thể bị xén bớt rìa hình ảnh).</li>
+                      <li><strong>Ensure Fit:</strong> Thu nhỏ nội dung để nằm trọn trong trang chiếu (chắc chắn vừa vặn, không bị cắt nội dung).</li>
+                    </ul>
+                  </div>
+                  <div class="p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-750">
+                    <strong class="text-orange-600 font-bold block mb-1">Custom Slide Size:</strong>
+                    Tùy chỉnh kích thước chính xác theo cm hoặc inch (Width, Height), hướng trang (Orientation: Portrait / Landscape cho Slides và Notes/Handouts), và số thứ tự bắt đầu (Number slides from: 1, 2,...).
+                  </div>
+                </div>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-2">
+                <h4 class="font-bold text-slate-900 dark:text-white text-base flex items-center gap-2">
+                  <i class="fa-solid fa-play text-orange-600"></i> 2. Cài đặt trình chiếu nâng cao (Set Up Slide Show):
+                </h4>
+                <p class="text-sm sm:text-base text-slate-700 dark:text-slate-300">
+                  Vào thẻ <strong>Slide Show</strong> &rarr; nhóm <em>Set Up</em> &rarr; chọn <strong>Set Up Slide Show</strong>. Các tùy chọn cốt lõi thường gặp trong đề thi:
+                </p>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs sm:text-sm">
+                  <div class="p-2.5 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-750">
+                    <strong>Loop continuously until 'Esc':</strong> Lặp lại bài thuyết trình vô tận cho đến khi nhấn phím Esc (thường dùng cho màn hình kiosk quảng cáo).
+                  </div>
+                  <div class="p-2.5 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-750">
+                    <strong>Show without narration / animation:</strong> Trình chiếu bỏ qua phần thu âm thuyết minh hoặc bỏ qua toàn bộ hiệu ứng hoạt hình.
+                  </div>
+                  <div class="p-2.5 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-750">
+                    <strong>Custom Show:</strong> Chỉ chiếu một danh sách slide con được chọn lọc thay vì chiếu toàn bộ file.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 1.3 In an Handouts -->
+          <div id="d1-3" class="space-y-4">
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2.5">
+              <span class="w-8 h-8 rounded-xl bg-orange-100 dark:bg-orange-950/60 text-orange-700 dark:text-orange-400 flex items-center justify-center text-sm font-black">1.3</span>
+              Tùy Chọn In Ấn (Print Handouts, Notes Pages & Grayscale)
+            </h3>
+            <p class="text-slate-700 dark:text-slate-300 leading-relaxed">
+              Vào <strong>File &rarr; Print</strong> (hoặc nhấn phím tắt <code>Ctrl + P</code>) để mở giao diện in ấn. Trong bài thi MOS, đề bài thường yêu cầu cấu hình chế độ in ấn mẫu mà không cần kết nối máy in thật:
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 text-xs sm:text-sm">
+              <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+                <span class="font-bold text-orange-600 block mb-1">Full Page Slides</span>
+                In mỗi trang chiếu chiếm trọn một trang giấy A4.
+              </div>
+              <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+                <span class="font-bold text-orange-600 block mb-1">Notes Pages</span>
+                In trang slide thu nhỏ ở nửa trên, nửa dưới là các dòng ghi chú dành cho người thuyết trình.
+              </div>
+              <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+                <span class="font-bold text-orange-600 block mb-1">Handouts (3/6/9 Slides)</span>
+                In tài liệu phát cho người nghe. Đặc biệt <em>3 Slides</em> sẽ kèm theo 3 dòng kẻ bên cạnh để khán giả ghi chép.
+              </div>
+              <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+                <span class="font-bold text-orange-600 block mb-1">Color / Grayscale</span>
+                Chuyển từ chế độ in màu (Color) sang thang độ xám (Grayscale) hoặc đen trắng thuần túy (Pure Black and White).
+              </div>
+            </div>
+          </div>
+
+          <!-- 1.4 Inspect Document -->
+          <div id="d1-4" class="space-y-4">
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2.5">
+              <span class="w-8 h-8 rounded-xl bg-orange-100 dark:bg-orange-950/60 text-orange-700 dark:text-orange-400 flex items-center justify-center text-sm font-black">1.4</span>
+              Kiểm Tra Tệp (Inspect Document) & Thuộc Tính Tệp (Properties)
+            </h3>
+            <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-3">
+              <p class="text-sm sm:text-base text-slate-700 dark:text-slate-300">
+                Vào <strong>File &rarr; Info</strong> để quản lý siêu dữ liệu (metadata) và bảo mật bài thuyết trình:
+              </p>
+              <ul class="list-disc list-inside space-y-2 text-sm sm:text-base text-slate-700 dark:text-slate-300">
+                <li><strong>Properties:</strong> Ở cột bên phải, nhấp <em>Show All Properties</em> để nhập thêm Title, Tags, Categories, Company, Author.</li>
+                <li><strong>Inspect Presentation &rarr; Inspect Document:</strong> Quét và xoá bỏ thông tin nhạy cảm (Document Properties and Personal Information, Comments, Off-slide Content). Nhấn <em>Remove All</em> vào mục được yêu cầu.</li>
+                <li><strong>Check Accessibility:</strong> Quét kiểm tra khả năng tiếp cận cho người khiếm thị (nhắc nhở chèn Missing Alt Text cho hình ảnh, đồ họa).</li>
+                <li><strong>Protect Presentation &rarr; Mark as Final:</strong> Đánh dấu tệp là bản phát hành cuối cùng, thông báo cho người xem tệp ở chế độ Read-Only để tránh chỉnh sửa vô ý.</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- 3 Interactive Mock Questions for Domain 1 -->
+          <div class="pt-6 border-t border-slate-200 dark:border-slate-800 space-y-4">
+            <div class="flex items-center justify-between">
+              <h4 class="font-bold text-base sm:text-lg text-slate-900 dark:text-white flex items-center gap-2">
+                <i class="fa-solid fa-circle-question text-orange-600"></i> Bài tập trắc nghiệm củng cố Domain 1
+              </h4>
+              <span class="text-xs bg-orange-100 dark:bg-orange-950 text-orange-800 dark:text-orange-300 px-2.5 py-1 rounded-full font-bold">3 Câu hỏi</span>
+            </div>
+
+            <!-- Q1.1 -->
+            <div id="q1_1" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+              <p class="font-semibold text-slate-900 dark:text-white">
+                Câu 1: Để chèn logo công ty hiển thị tự động ở góc trên bên phải của TẤT CẢ các slide trong bài thuyết trình, bạn cần thực hiện thao tác nào?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm sm:text-base">
+                <button onclick="checkQuiz('q1_1', 0, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-orange-500 transition flex items-start gap-2">
+                  <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">A</span>
+                  <span>Sao chép logo và dán thủ công vào từng trang chiếu từ slide đầu đến slide cuối</span>
+                </button>
+                <button onclick="checkQuiz('q1_1', 1, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-orange-500 transition flex items-start gap-2">
+                  <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">B</span>
+                  <span>Mở View &rarr; Slide Master, chọn Top Slide Master lớn nhất và chèn logo tại đó</span>
+                </button>
+                <button onclick="checkQuiz('q1_1', 2, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-orange-500 transition flex items-start gap-2">
+                  <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">C</span>
+                  <span>Vào Insert &rarr; Header & Footer &rarr; chọn trường Picture</span>
+                </button>
+                <button onclick="checkQuiz('q1_1', 3, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-orange-500 transition flex items-start gap-2">
+                  <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">D</span>
+                  <span>Chuyển sang chế độ Handout Master và chèn logo vào ô Header</span>
+                </button>
+              </div>
+              <div class="quiz-feedback hidden"></div>
+              <div class="quiz-explanation-text hidden">Chính xác! Top Slide Master trên cùng đóng vai trò là mẫu cha chi phối toàn bộ các layout con. Mọi đối tượng đồ họa đặt tại đây sẽ xuất hiện đồng bộ trên mọi trang chiếu.</div>
+            </div>
+
+            <!-- Q1.2 -->
+            <div id="q1_2" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+              <p class="font-semibold text-slate-900 dark:text-white">
+                Câu 2: Tùy chọn in ấn nào sau đây cho phép in 3 trang chiếu trên một mặt giấy A4 kèm theo các dòng kẻ ngang để người tham dự ghi chép?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm sm:text-base">
+                <button onclick="checkQuiz('q1_2', 0, 0)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-orange-500 transition flex items-start gap-2">
+                  <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">A</span>
+                  <span>Handouts (3 Slides)</span>
+                </button>
+                <button onclick="checkQuiz('q1_2', 1, 0)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-orange-500 transition flex items-start gap-2">
+                  <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">B</span>
+                  <span>Notes Pages</span>
+                </button>
+                <button onclick="checkQuiz('q1_2', 2, 0)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-orange-500 transition flex items-start gap-2">
+                  <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">C</span>
+                  <span>Handouts (6 Slides)</span>
+                </button>
+                <button onclick="checkQuiz('q1_2', 3, 0)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-orange-500 transition flex items-start gap-2">
+                  <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">D</span>
+                  <span>Outline View</span>
+                </button>
+              </div>
+              <div class="quiz-feedback hidden"></div>
+              <div class="quiz-explanation-text hidden">Đúng! Chế độ in Handouts 3 Slides là chế độ đặc biệt duy nhất tự động tạo 3 slide thu nhỏ bên trái và các dòng kẻ ghi chú bên phải cho khán giả.</div>
+            </div>
+
+            <!-- Q1.3 -->
+            <div id="q1_3" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+              <p class="font-semibold text-slate-900 dark:text-white">
+                Câu 3: Đâu là tính năng giúp loại bỏ thông tin tác giả, thuộc tính cá nhân và các ghi chú bí mật trước khi gửi bài thuyết trình ra bên ngoài?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm sm:text-base">
+                <button onclick="checkQuiz('q1_3', 0, 2)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-orange-500 transition flex items-start gap-2">
+                  <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">A</span>
+                  <span>Vào Design &rarr; Slide Size &rarr; Ensure Fit</span>
+                </button>
+                <button onclick="checkQuiz('q1_3', 1, 2)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-orange-500 transition flex items-start gap-2">
+                  <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">B</span>
+                  <span>Vào Review &rarr; Check Accessibility</span>
+                </button>
+                <button onclick="checkQuiz('q1_3', 2, 2)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-orange-500 transition flex items-start gap-2">
+                  <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">C</span>
+                  <span>File &rarr; Info &rarr; Check for Issues &rarr; Inspect Document &rarr; Remove All Document Properties</span>
+                </button>
+                <button onclick="checkQuiz('q1_3', 3, 2)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-orange-500 transition flex items-start gap-2">
+                  <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">D</span>
+                  <span>File &rarr; Save As &rarr; PowerPoint Picture Presentation (*.pptx)</span>
+                </button>
+              </div>
+              <div class="quiz-feedback hidden"></div>
+              <div class="quiz-explanation-text hidden">Chính xác! Công cụ Document Inspector (Inspect Document) dùng để rà soát và loại bỏ metadata riêng tư trước khi chia sẻ file công khai.</div>
+            </div>
+
+          </div>
+
+        </section>
+
+        <!-- ========================================== -->
+        <!-- DOMAIN 2: MANAGE SLIDES                   -->
+        <!-- ========================================== -->
+        <section id="domain-2" class="p-6 sm:p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-8">
+          
+          <div class="border-b border-slate-200 dark:border-slate-800 pb-5">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-orange-100 text-orange-800 dark:bg-orange-950/60 dark:text-orange-300 mb-3">
+              <i class="fa-solid fa-copy"></i> Domain 2 (Chiếm 15% – 20% đề thi)
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
+              Domain 2: Quản Lý Các Trang Slide (Manage Slides)
+            </h2>
+            <p class="text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">
+              Domain này tập trung vào các thao tác tổ chức slide: chèn slide từ file khác (Reuse Slides), nhập dàn ý Word (Slides from Outline), thay đổi Slide Layout, ẩn trang chiếu và phân chia nhóm nội dung bằng tính năng Section.
+            </p>
+          </div>
+
+          <!-- 2.1 Reuse Slides & Duplicate -->
+          <div id="d2-1" class="space-y-4">
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2.5">
+              <span class="w-8 h-8 rounded-xl bg-orange-100 dark:bg-orange-950/60 text-orange-700 dark:text-orange-400 flex items-center justify-center text-sm font-black">2.1</span>
+              Chèn, Nhân Bản (Duplicate) & Sử Dụng Lại Trang Chiếu (Reuse Slides)
+            </h3>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-750 space-y-2">
+                <h4 class="font-bold text-slate-900 dark:text-white text-base flex items-center gap-2">
+                  <i class="fa-solid fa-file-import text-orange-600"></i> Reuse Slides (Tái sử dụng slide):
+                </h4>
+                <p class="text-sm sm:text-base text-slate-700 dark:text-slate-300">
+                  Vào <strong>Home &rarr; New Slide &rarr; Reuse Slides</strong>. Cửa sổ bên phải xuất hiện:
+                </p>
+                <ul class="list-disc list-inside space-y-1.5 text-sm sm:text-base text-slate-700 dark:text-slate-300">
+                  <li>Nhấp <em>Browse</em> để tìm đến file PowerPoint nguồn cần trích xuất slide.</li>
+                  <li><strong>Keep Source Formatting:</strong> Nếu đề bài yêu cầu "giữ nguyên định dạng gốc của slide", bạn PHẢI tích chọn ô này trước khi nhấp chèn slide. Nếu không tích, slide chèn vào sẽ tự động thích ứng với Theme của file hiện tại.</li>
+                </ul>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-750 space-y-2">
+                <h4 class="font-bold text-slate-900 dark:text-white text-base flex items-center gap-2">
+                  <i class="fa-solid fa-clone text-orange-600"></i> Duplicate & Slides from Outline:
+                </h4>
+                <ul class="list-disc list-inside space-y-1.5 text-sm sm:text-base text-slate-700 dark:text-slate-300">
+                  <li><strong>Duplicate Selected Slides:</strong> Chọn slide cần sao chép &rarr; nhấn <code>Ctrl + D</code> hoặc nhấp chuột phải &rarr; chọn <em>Duplicate Slide</em>.</li>
+                  <li><strong>Slides from Outline:</strong> Chuyển văn bản Word (chứa Heading 1 làm tiêu đề slide, Heading 2/3 làm nội dung gạch đầu dòng) thành các slide tự động qua <em>Home &rarr; New Slide &rarr; Slides from Outline</em>.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2.2 Hide Slide & Layout -->
+          <div id="d2-2" class="space-y-4">
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2.5">
+              <span class="w-8 h-8 rounded-xl bg-orange-100 dark:bg-orange-950/60 text-orange-700 dark:text-orange-400 flex items-center justify-center text-sm font-black">2.2</span>
+              Bố Cục Trang (Slide Layout) & Ẩn Trang Chiếu (Hide Slide)
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-750 space-y-2">
+                <h4 class="font-bold text-slate-900 dark:text-white text-base flex items-center gap-2">
+                  <i class="fa-solid fa-table-cells-large text-orange-600"></i> Đổi Slide Layout:
+                </h4>
+                <p class="text-sm sm:text-base text-slate-700 dark:text-slate-300">
+                  Chọn slide muốn thay đổi bố cục &rarr; vào thẻ <strong>Home</strong> &rarr; nhóm <em>Slides</em> &rarr; nhấp <strong>Layout</strong> và chọn kiểu bố cục chỉ định:
+                </p>
+                <div class="flex flex-wrap gap-1.5 pt-1 text-xs">
+                  <span class="px-2 py-1 rounded bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 font-medium">Title Slide</span>
+                  <span class="px-2 py-1 rounded bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 font-medium">Title and Content</span>
+                  <span class="px-2 py-1 rounded bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 font-medium">Section Header</span>
+                  <span class="px-2 py-1 rounded bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 font-medium">Two Content</span>
+                  <span class="px-2 py-1 rounded bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 font-medium">Comparison</span>
+                  <span class="px-2 py-1 rounded bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 font-medium">Picture with Caption</span>
+                </div>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-750 space-y-2">
+                <h4 class="font-bold text-slate-900 dark:text-white text-base flex items-center gap-2">
+                  <i class="fa-solid fa-eye-slash text-orange-600"></i> Ẩn trang chiếu (Hide Slide):
+                </h4>
+                <p class="text-sm sm:text-base text-slate-700 dark:text-slate-300">
+                  Khi ẩn trang chiếu, slide vẫn tồn tại trong file biên tập nhưng sẽ tự động bị bỏ qua khi đang trình chiếu toàn màn hình:
+                </p>
+                <ul class="list-disc list-inside space-y-1 text-sm sm:text-base text-slate-700 dark:text-slate-300">
+                  <li>Chọn slide cần ẩn ở cột bên trái &rarr; nhấp chuột phải &rarr; chọn <strong>Hide Slide</strong> (hoặc vào thẻ <em>Slide Show &rarr; Hide Slide</em>).</li>
+                  <li>Số thứ tự của slide bị ẩn sẽ có dấu gạch chéo hiển thị trong ô số.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2.3 Sections -->
+          <div id="d2-3" class="space-y-4">
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2.5">
+              <span class="w-8 h-8 rounded-xl bg-orange-100 dark:bg-orange-950/60 text-orange-700 dark:text-orange-400 flex items-center justify-center text-sm font-black">2.3</span>
+              Phân Đoạn Bài Thuyết Trình (Sections)
+            </h3>
+            <p class="text-slate-700 dark:text-slate-300 leading-relaxed">
+              <strong>Section</strong> cho phép gom nhóm các trang chiếu thành từng phần logic (ví dụ: <em>Giới thiệu, Nội dung chính, Kết luận</em>), giúp dễ quản lý các bài trình chiếu dài và tạo hiệu ứng tương tác <strong>Zoom Summary</strong>.
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm">
+              <div class="p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-750">
+                <strong class="text-orange-600 block mb-1">Thêm Section (Add Section):</strong>
+                Nhấp chuột vào khoảng trống nằm giữa hai slide &rarr; nhấp chuột phải chọn <em>Add Section</em> (hoặc <em>Home &rarr; Section &rarr; Add Section</em>).
+              </div>
+              <div class="p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-750">
+                <strong class="text-orange-600 block mb-1">Đổi tên (Rename Section):</strong>
+                Nhấp chuột phải vào tên Section &rarr; chọn <em>Rename Section</em> &rarr; nhập chính xác tên đề bài yêu cầu.
+              </div>
+              <div class="p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-750">
+                <strong class="text-orange-600 block mb-1">Thu gọn & Xoá Section:</strong>
+                Chọn <em>Collapse All</em> (thu gọn) hoặc <em>Expand All</em>. Khi xoá: phân biệt giữa <em>Remove Section</em> (chỉ xoá phân đoạn, giữ lại slide) và <em>Remove Section & Slides</em>.
+              </div>
+            </div>
+          </div>
+
+          <!-- 3 Interactive Mock Questions for Domain 2 -->
+          <div class="pt-6 border-t border-slate-200 dark:border-slate-800 space-y-4">
+            <div class="flex items-center justify-between">
+              <h4 class="font-bold text-base sm:text-lg text-slate-900 dark:text-white flex items-center gap-2">
+                <i class="fa-solid fa-circle-question text-orange-600"></i> Bài tập trắc nghiệm củng cố Domain 2
+              </h4>
+              <span class="text-xs bg-orange-100 dark:bg-orange-950 text-orange-800 dark:text-orange-300 px-2.5 py-1 rounded-full font-bold">3 Câu hỏi</span>
+            </div>
+
+            <!-- Q2.1 -->
+            <div id="q2_1" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+              <p class="font-semibold text-slate-900 dark:text-white">
+                Câu 1: Khi dùng chức năng Reuse Slides để chèn slide từ file khác vào bài, tùy chọn nào giúp trang chiếu chèn vào KHÔNG bị đổi màu nền và phông chữ theo Theme hiện tại?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm sm:text-base">
+                <button onclick="checkQuiz('q2_1', 0, 0)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-orange-500 transition flex items-start gap-2">
+                  <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">A</span>
+                  <span>Tích chọn ô "Keep source formatting"</span>
+                </button>
+                <button onclick="checkQuiz('q2_1', 1, 0)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-orange-500 transition flex items-start gap-2">
+                  <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">B</span>
+                  <span>Nhấn nút Reset trên thẻ Home</span>
+                </button>
+                <button onclick="checkQuiz('q2_1', 2, 0)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-orange-500 transition flex items-start gap-2">
+                  <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">C</span>
+                  <span>Tích chọn "Match destination theme"</span>
+                </button>
+                <button onclick="checkQuiz('q2_1', 3, 0)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-orange-500 transition flex items-start gap-2">
+                  <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">D</span>
+                  <span>Chuyển sang chế độ Slide Master trước khi chèn</span>
+                </button>
+              </div>
+              <div class="quiz-feedback hidden"></div>
+              <div class="quiz-explanation-text hidden">Chính xác! "Keep source formatting" giúp bảo lưu 100% hình ảnh, màu nền, phông chữ nguyên bản của slide gốc từ file nguồn.</div>
+            </div>
+
+            <!-- Q2.2 -->
+            <div id="q2_2" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+              <p class="font-semibold text-slate-900 dark:text-white">
+                Câu 2: Bạn muốn slide số 5 không xuất hiện khi trình chiếu cho ban giám khảo nhưng không được xoá slide này khỏi tệp. Bạn cần làm gì?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm sm:text-base">
+                <button onclick="checkQuiz('q2_2', 0, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-orange-500 transition flex items-start gap-2">
+                  <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">A</span>
+                  <span>Xoá nội dung bên trong slide số 5 và để trống</span>
+                </button>
+                <button onclick="checkQuiz('q2_2', 1, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-orange-500 transition flex items-start gap-2">
+                  <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">B</span>
+                  <span>Nhấp chuột phải vào slide 5 và chọn "Hide Slide"</span>
+                </button>
+                <button onclick="checkQuiz('q2_2', 2, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-orange-500 transition flex items-start gap-2">
+                  <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">C</span>
+                  <span>Kéo slide số 5 xuống vị trí cuối cùng của bài</span>
+                </button>
+                <button onclick="checkQuiz('q2_2', 3, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-orange-500 transition flex items-start gap-2">
+                  <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">D</span>
+                  <span>Đặt hiệu ứng chuyển tiếp Transition là None với thời lượng 0s</span>
+                </button>
+              </div>
+              <div class="quiz-feedback hidden"></div>
+              <div class="quiz-explanation-text hidden">Đúng! Tính năng Hide Slide ẩn trang chiếu trong chế độ Slide Show nhưng vẫn lưu trữ đầy đủ trong file thiết kế.</div>
+            </div>
+
+            <!-- Q2.3 -->
+            <div id="q2_3" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+              <p class="font-semibold text-slate-900 dark:text-white">
+                Câu 3: Đâu là sự khác biệt cơ bản giữa lệnh "Remove Section" và lệnh "Remove Section & Slides"?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm sm:text-base">
+                <button onclick="checkQuiz('q2_3', 0, 3)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-orange-500 transition flex items-start gap-2">
+                  <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">A</span>
+                  <span>Cả hai lệnh đều có chức năng như nhau, chỉ khác phím tắt</span>
+                </button>
+                <button onclick="checkQuiz('q2_3', 1, 3)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-orange-500 transition flex items-start gap-2">
+                  <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">B</span>
+                  <span>Remove Section sẽ đưa các slide vào mục ẩn (Hide Slides)</span>
+                </button>
+                <button onclick="checkQuiz('q2_3', 2, 3)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-orange-500 transition flex items-start gap-2">
+                  <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">C</span>
+                  <span>Remove Section xoá file PowerPoint, còn Remove Section & Slides chỉ xoá slide</span>
+                </button>
+                <button onclick="checkQuiz('q2_3', 3, 3)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-orange-500 transition flex items-start gap-2">
+                  <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">D</span>
+                  <span>Remove Section chỉ xoá tiêu đề phân đoạn và giữ nguyên các slide, còn Remove Section & Slides xoá luôn cả phân đoạn lẫn toàn bộ slide nằm trong đó</span>
+                </button>
+              </div>
+              <div class="quiz-feedback hidden"></div>
+              <div class="quiz-explanation-text hidden">Chính xác! Hãy cực kỳ cẩn thận khi đọc đề thi MOS: nếu đề yêu cầu "Remove the section named...", chọn Remove Section chứ không được chọn nhầm Remove Section & Slides làm mất dữ liệu!</div>
+            </div>
+
+          </div>
+
+        </section>
+
+        <!-- ========================================== -->
+        <!-- DOMAIN 3: TEXT, SHAPES, AND IMAGES        -->
+        <!-- ========================================== -->
+        <section id="domain-3" class="p-6 sm:p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-8">
+          
+          <div class="border-b border-slate-200 dark:border-slate-800 pb-5">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-orange-100 text-orange-800 dark:bg-orange-950/60 dark:text-orange-300 mb-3">
+              <i class="fa-solid fa-shapes"></i> Domain 3 (Chiếm 25% – 30% đề thi)
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
+              Domain 3: Văn Bản, Hình Khối & Hình Ảnh (Text, Shapes & Images)
+            </h2>
+            <p class="text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">
+              Đây là domain chiếm tỉ trọng điểm số lớn nhất bài thi. Yêu cầu thành thạo: định dạng cột văn bản trong text box, WordArt, nhóm đối tượng (Group/Ungroup), căn gióng (Align), cắt ảnh theo hình dạng (Crop to Shape), chỉnh hiệu ứng nghệ thuật và bổ sung Alt Text.
+            </p>
+          </div>
+
+          <!-- 3.1 Text Box & WordArt -->
+          <div id="d3-1" class="space-y-4">
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2.5">
+              <span class="w-8 h-8 rounded-xl bg-orange-100 dark:bg-orange-950/60 text-orange-700 dark:text-orange-400 flex items-center justify-center text-sm font-black">3.1</span>
+              Text Box, Chia Cột Văn Bản, Text Direction & WordArt
+            </h3>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-2">
+                <h4 class="font-bold text-slate-900 dark:text-white text-base flex items-center gap-2">
+                  <i class="fa-solid fa-columns text-orange-600"></i> 1. Chia cột trong Text Box & Hướng chữ:
+                </h4>
+                <ul class="list-disc list-inside space-y-1.5 text-sm sm:text-base text-slate-700 dark:text-slate-300">
+                  <li><strong>Add Columns:</strong> Chọn Text Box &rarr; vào thẻ <em>Home &rarr; nhóm Paragraph &rarr; nhấp biểu tượng Add or Remove Columns &rarr; chọn Two Columns hoặc Three Columns</em> (tùy chỉnh khoảng cách Spacing qua More Columns).</li>
+                  <li><strong>Text Direction:</strong> Xoay chiều văn bản (<em>Home &rarr; Text Direction</em>: Horizontal, Rotate all text 90&deg;, Rotate all text 270&deg;, Stacked).</li>
+                  <li><strong>Align Text:</strong> Căn chỉnh lề dọc bên trong hộp (Top, Middle, Bottom).</li>
+                </ul>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-2">
+                <h4 class="font-bold text-slate-900 dark:text-white text-base flex items-center gap-2">
+                  <i class="fa-solid fa-font text-orange-600"></i> 2. WordArt & Chuyển đổi sang Bullet:
+                </h4>
+                <ul class="list-disc list-inside space-y-1.5 text-sm sm:text-base text-slate-700 dark:text-slate-300">
+                  <li><strong>WordArt Styles:</strong> Chọn văn bản &rarr; vào thẻ ngữ cảnh <em>Shape Format &rarr; nhóm WordArt Styles &rarr; chọn kiểu Quick Style chỉ định</em> (vd: Fill: Orange, Accent color 2; Outline: Accent color 2).</li>
+                  <li><strong>Text Effects:</strong> Thêm hiệu ứng Shadow (Đổ bóng), Reflection (Phản chiếu), Glow (Tỏa sáng), Transform (Uốn lượn Warp / Follow Path).</li>
+                  <li><strong>Bullets and Numbering:</strong> Tùy chỉnh biểu tượng đầu dòng qua <em>Home &rarr; Bullets &rarr; Bullets and Numbering</em> (chọn màu Color hoặc kích cỡ Size %).</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3.2 Shapes & Alignment -->
+          <div id="d3-2" class="space-y-4">
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2.5">
+              <span class="w-8 h-8 rounded-xl bg-orange-100 dark:bg-orange-950/60 text-orange-700 dark:text-orange-400 flex items-center justify-center text-sm font-black">3.2</span>
+              Vẽ, Định Dạng, Căn Gióng (Align) & Nhóm Hình Khối (Shapes)
+            </h3>
+            <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-3">
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs sm:text-sm">
+                <div class="p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-750">
+                  <strong class="text-orange-600 block mb-1">Chèn & Sửa Shapes:</strong>
+                  Vào <em>Insert &rarr; Shapes</em>. Đổi hình dạng qua <em>Shape Format &rarr; Edit Shape &rarr; Change Shape</em> mà không làm mất văn bản bên trong.
+                </div>
+                <div class="p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-750">
+                  <strong class="text-orange-600 block mb-1">Căn gióng (Align Objects):</strong>
+                  Giữ <code>Shift</code> chọn nhiều đối tượng &rarr; <em>Shape Format &rarr; Align &rarr; Align Middle / Align Center</em>; dàn đều khoảng cách qua <em>Distribute Horizontally / Distribute Vertically</em>.
+                </div>
+                <div class="p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-750">
+                  <strong class="text-orange-600 block mb-1">Nhóm & Thứ tự lớp (Order):</strong>
+                  Nhấn <code>Ctrl + G</code> để nhóm (Group) hoặc <code>Ctrl + Shift + G</code> để huỷ nhóm (Ungroup). Đổi lớp qua <em>Bring Forward / Send Backward / Bring to Front / Send to Back</em>.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3.3 Images & Crop to Shape -->
+          <div id="d3-3" class="space-y-4">
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2.5">
+              <span class="w-8 h-8 rounded-xl bg-orange-100 dark:bg-orange-950/60 text-orange-700 dark:text-orange-400 flex items-center justify-center text-sm font-black">3.3</span>
+              Hiệu Chỉnh Hình Ảnh (Picture Tools, Crop to Shape & Alt Text)
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-2">
+                <h4 class="font-bold text-slate-900 dark:text-white text-base flex items-center gap-2">
+                  <i class="fa-solid fa-crop-simple text-orange-600"></i> Cắt ảnh theo hình dạng (Crop to Shape):
+                </h4>
+                <ol class="list-decimal list-inside space-y-1.5 text-sm sm:text-base text-slate-700 dark:text-slate-300">
+                  <li>Chọn ảnh &rarr; trên thanh Ribbon xuất hiện thẻ ngữ cảnh <strong>Picture Format</strong>.</li>
+                  <li>Nhấp vào mũi tên bên dưới nút <strong>Crop</strong> &rarr; rê chuột vào <strong>Crop to Shape</strong>.</li>
+                  <li>Chọn hình dạng mong muốn (vd: <em>Oval, Rounded Rectangle, Hexagon, Teardrop</em>). Bức ảnh sẽ được cắt gọt tự động vừa vặn theo khung viền hình dạng đã chọn.</li>
+                  <li>Có thể đổi tỉ lệ khung hình qua <em>Crop &rarr; Aspect Ratio</em> (1:1 Square, 4:3, 16:9).</li>
+                </ol>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-2">
+                <h4 class="font-bold text-slate-900 dark:text-white text-base flex items-center gap-2">
+                  <i class="fa-solid fa-wand-magic text-orange-600"></i> Điều chỉnh nghệ thuật & Văn bản thay thế (Alt Text):
+                </h4>
+                <ul class="list-disc list-inside space-y-1.5 text-sm sm:text-base text-slate-700 dark:text-slate-300">
+                  <li><strong>Corrections:</strong> Tăng độ nét/mờ (Sharpen/Soften) hoặc đổi độ sáng/tương phản (Brightness/Contrast).</li>
+                  <li><strong>Color:</strong> Đổi độ bão hoà màu (Color Saturation), tông màu ấm/lạnh (Color Tone) hoặc đổi màu nghệ thuật (Recolor: Grayscale, Sepia, Washout).</li>
+                  <li><strong>Artistic Effects:</strong> Hiệu ứng vẽ tranh (Marker, Pencil Sketch, Watercolor Sponge, Film Grain).</li>
+                  <li><strong>Alt Text:</strong> Nhấp chuột phải vào ảnh/shape &rarr; chọn <em>View Alt Text</em> &rarr; nhập mô tả hình ảnh vào khung nhập liệu (rất hay gặp trong đề thi MOS).</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3 Interactive Mock Questions for Domain 3 -->
+          <div class="pt-6 border-t border-slate-200 dark:border-slate-800 space-y-4">
+            <div class="flex items-center justify-between">
+              <h4 class="font-bold text-base sm:text-lg text-slate-900 dark:text-white flex items-center gap-2">
+                <i class="fa-solid fa-circle-question text-orange-600"></i> Bài tập trắc nghiệm củng cố Domain 3
+              </h4>
+              <span class="text-xs bg-orange-100 dark:bg-orange-950 text-orange-800 dark:text-orange-300 px-2.5 py-1 rounded-full font-bold">3 Câu hỏi</span>
+            </div>
+
+            <!-- Q3.1 -->
+            <div id="q3_1" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+              <p class="font-semibold text-slate-900 dark:text-white">
+                Câu 1: Để cắt một bức ảnh chữ nhật trên slide thành hình khối Oval (bầu dục), bạn thực hiện thao tác nào?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm sm:text-base">
+                <button onclick="checkQuiz('q3_1', 0, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-orange-500 transition flex items-start gap-2">
+                  <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">A</span>
+                  <span>Vẽ hình Oval đè lên trên bức ảnh rồi nhóm lại</span>
+                </button>
+                <button onclick="checkQuiz('q3_1', 1, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-orange-500 transition flex items-start gap-2">
+                  <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">B</span>
+                  <span>Picture Format &rarr; nhấp mũi tên dưới Crop &rarr; Crop to Shape &rarr; chọn hình Oval</span>
+                </button>
+                <button onclick="checkQuiz('q3_1', 2, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-orange-500 transition flex items-start gap-2">
+                  <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">C</span>
+                  <span>Picture Format &rarr; Picture Effects &rarr; 3-D Rotation</span>
+                </button>
+                <button onclick="checkQuiz('q3_1', 3, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-orange-500 transition flex items-start gap-2">
+                  <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">D</span>
+                  <span>Vào Design &rarr; Format Background &rarr; Oval</span>
+                </button>
+              </div>
+              <div class="quiz-feedback hidden"></div>
+              <div class="quiz-explanation-text hidden">Chính xác! Lệnh Crop to Shape nằm dưới menu thả xuống của công cụ Crop trên thẻ Picture Format.</div>
+            </div>
+
+            <!-- Q3.2 -->
+            <div id="q3_2" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+              <p class="font-semibold text-slate-900 dark:text-white">
+                Câu 2: Thao tác nào giúp dàn đều khoảng cách theo chiều ngang giữa 4 hình chữ nhật đang nằm rải rác trên slide?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm sm:text-base">
+                <button onclick="checkQuiz('q3_2', 0, 0)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-orange-500 transition flex items-start gap-2">
+                  <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">A</span>
+                  <span>Chọn 4 hình &rarr; Shape Format &rarr; Align &rarr; Distribute Horizontally</span>
+                </button>
+                <button onclick="checkQuiz('q3_2', 1, 0)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-orange-500 transition flex items-start gap-2">
+                  <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">B</span>
+                  <span>Chọn 4 hình &rarr; Shape Format &rarr; Align &rarr; Distribute Vertically</span>
+                </button>
+                <button onclick="checkQuiz('q3_2', 2, 0)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-orange-500 transition flex items-start gap-2">
+                  <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">C</span>
+                  <span>Dùng phím mũi tên trên bàn phím để căn chỉnh thủ công bằng mắt</span>
+                </button>
+                <button onclick="checkQuiz('q3_2', 3, 0)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-orange-500 transition flex items-start gap-2">
+                  <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">D</span>
+                  <span>Nhóm 4 hình lại thành Group rồi phóng to</span>
+                </button>
+              </div>
+              <div class="quiz-feedback hidden"></div>
+              <div class="quiz-explanation-text hidden">Đúng! Distribute Horizontally sẽ tự động tính toán và chia đều khoảng trống theo chiều ngang giữa các đối tượng đã chọn.</div>
+            </div>
+
+            <!-- Q3.3 -->
+            <div id="q3_3" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+              <p class="font-semibold text-slate-900 dark:text-white">
+                Câu 3: Để chia đoạn văn bản bên trong một Text Box thành 2 cột đều nhau, bạn thực hiện qua menu nào?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm sm:text-base">
+                <button onclick="checkQuiz('q3_3', 0, 2)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-orange-500 transition flex items-start gap-2">
+                  <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">A</span>
+                  <span>Vào Layout &rarr; Columns &rarr; Two Columns</span>
+                </button>
+                <button onclick="checkQuiz('q3_3', 1, 2)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-orange-500 transition flex items-start gap-2">
+                  <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">B</span>
+                  <span>Tạo 2 Text Box riêng biệt và đặt cạnh nhau</span>
+                </button>
+                <button onclick="checkQuiz('q3_3', 2, 2)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-orange-500 transition flex items-start gap-2">
+                  <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">C</span>
+                  <span>Vào Home &rarr; nhóm Paragraph &rarr; Add or Remove Columns &rarr; Two Columns</span>
+                </button>
+                <button onclick="checkQuiz('q3_3', 3, 2)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-orange-500 transition flex items-start gap-2">
+                  <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">D</span>
+                  <span>Vào Insert &rarr; Table &rarr; 2x1</span>
+                </button>
+              </div>
+              <div class="quiz-feedback hidden"></div>
+              <div class="quiz-explanation-text hidden">Chính xác! Nút Add or Remove Columns nằm trong nhóm Paragraph trên thẻ Home, cho phép tạo cột văn bản mượt mà ngay trong một khung chữ duy nhất.</div>
+            </div>
+
+          </div>
+
+        </section>
+
+        <!-- ========================================== -->
+        <!-- DOMAIN 4: TABLES, CHARTS, SMARTART, MEDIA -->
+        <!-- ========================================== -->
+        <section id="domain-4" class="p-6 sm:p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-8">
+          
+          <div class="border-b border-slate-200 dark:border-slate-800 pb-5">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-orange-100 text-orange-800 dark:bg-orange-950/60 dark:text-orange-300 mb-3">
+              <i class="fa-solid fa-chart-pie"></i> Domain 4 (Chiếm 20% – 25% đề thi)
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
+              Domain 4: Bảng, Biểu Đồ, SmartArt & Đa Phương Tiện (Tables, Charts, SmartArt & Media)
+            </h2>
+            <p class="text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">
+              Trực quan hóa dữ liệu thuyết trình: tạo và định dạng bảng biểu Table, thiết lập biểu đồ Chart, chuyển đổi văn bản sang sơ đồ thông minh SmartArt, chèn và cắt video clip (Trim Video), cấu hình phát âm thanh/video tự động.
+            </p>
+          </div>
+
+          <!-- 4.1 Tables -->
+          <div id="d4-1" class="space-y-4">
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2.5">
+              <span class="w-8 h-8 rounded-xl bg-orange-100 dark:bg-orange-950/60 text-orange-700 dark:text-orange-400 flex items-center justify-center text-sm font-black">4.1</span>
+              Chèn & Định Dạng Bảng (Table Styles & Layout)
+            </h3>
+            <p class="text-slate-700 dark:text-slate-300 leading-relaxed">
+              Vào <strong>Insert &rarr; Table</strong> để chèn bảng với số cột và dòng yêu cầu. Khi chọn bảng, hai thẻ ngữ cảnh sẽ xuất hiện:
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm sm:text-base">
+              <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-2">
+                <strong class="text-orange-600 font-bold block">1. Thẻ Table Design:</strong>
+                <ul class="list-disc list-inside space-y-1 text-slate-700 dark:text-slate-300">
+                  <li><strong>Table Style Options:</strong> Tích hoặc bỏ tích các ô: <em>Header Row</em> (hàng tiêu đề nổi bật), <em>Total Row</em> (hàng tổng cộng), <em>Banded Rows</em> (tô màu xen kẽ các hàng), <em>First Column</em>, <em>Banded Columns</em>.</li>
+                  <li><strong>Table Styles:</strong> Chọn kiểu mẫu bảng màu theo tên chuẩn đề bài (vd: <em>Medium Style 2 - Accent 1</em>).</li>
+                </ul>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-2">
+                <strong class="text-orange-600 font-bold block">2. Thẻ Table Layout:</strong>
+                <ul class="list-disc list-inside space-y-1 text-slate-700 dark:text-slate-300">
+                  <li><strong>Chèn / Xoá:</strong> <em>Insert Above, Insert Below, Insert Left, Insert Right, Delete Rows, Delete Columns</em>.</li>
+                  <li><strong>Merge & Split:</strong> Gộp ô (Merge Cells) hoặc tách ô (Split Cells).</li>
+                  <li><strong>Cell Alignment:</strong> Căn chỉnh lề ngang và lề dọc (Top, Center Vertically, Bottom) bên trong từng ô.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4.2 Charts -->
+          <div id="d4-2" class="space-y-4">
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2.5">
+              <span class="w-8 h-8 rounded-xl bg-orange-100 dark:bg-orange-950/60 text-orange-700 dark:text-orange-400 flex items-center justify-center text-sm font-black">4.2</span>
+              Biểu Đồ Dữ Liệu (Charts, Chart Elements & Legend)
+            </h3>
+            <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-3">
+              <p class="text-sm sm:text-base text-slate-700 dark:text-slate-300">
+                Vào <strong>Insert &rarr; Chart</strong> để chèn biểu đồ (Clustered Column, Bar, Line, Pie,...). Cửa sổ Excel nhỏ sẽ mở ra để nhập số liệu.
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs sm:text-sm">
+                <div class="p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-750">
+                  <strong class="text-orange-600 block mb-1">Chart Elements:</strong>
+                  Nhấp vào biểu tượng dấu cộng <strong>[ + ]</strong> ở góc biểu đồ để bật/tắt: Chart Title, Data Labels, Data Table, Error Bars, Legend.
+                </div>
+                <div class="p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-750">
+                  <strong class="text-orange-600 block mb-1">Vị trí Legend (Chú giải):</strong>
+                  Đề thi thường yêu cầu "Position the legend at the Top / Bottom / Left / Right" qua <em>Chart Elements &rarr; Legend &rarr; chọn vị trí</em>.
+                </div>
+                <div class="p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-750">
+                  <strong class="text-orange-600 block mb-1">Quick Layout & Styles:</strong>
+                  Áp dụng mẫu bố cục nhanh (<em>Chart Design &rarr; Quick Layout</em>) hoặc đổi phong cách qua <em>Chart Styles</em>.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4.3 SmartArt -->
+          <div id="d4-3" class="space-y-4">
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2.5">
+              <span class="w-8 h-8 rounded-xl bg-orange-100 dark:bg-orange-950/60 text-orange-700 dark:text-orange-400 flex items-center justify-center text-sm font-black">4.3</span>
+              Sơ Đồ Thông Minh SmartArt (Hierarchy, Process & Convert to SmartArt)
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-2">
+                <h4 class="font-bold text-slate-900 dark:text-white text-base flex items-center gap-2">
+                  <i class="fa-solid fa-arrows-turn-to-dots text-orange-600"></i> Chuyển đổi văn bản sang SmartArt:
+                </h4>
+                <p class="text-sm sm:text-base text-slate-700 dark:text-slate-300">
+                  Chọn khung danh sách gạch đầu dòng &rarr; vào thẻ <strong>Home &rarr; nhóm Paragraph &rarr; chọn Convert to SmartArt</strong> &rarr; chọn kiểu sơ đồ (vd: <em>Vertical Bullet List, Basic Process, Continuous Cycle</em>).
+                </p>
+                <div class="text-xs text-orange-600 font-bold">Mẹo: Đây là dạng bài xuất hiện trên 80% đề thi MOS!</div>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-2">
+                <h4 class="font-bold text-slate-900 dark:text-white text-base flex items-center gap-2">
+                  <i class="fa-solid fa-sitemap text-orange-600"></i> Điều chỉnh sơ đồ tổ chức (Hierarchy):
+                </h4>
+                <ul class="list-disc list-inside space-y-1.5 text-sm sm:text-base text-slate-700 dark:text-slate-300">
+                  <li><strong>Add Shape:</strong> Thêm ô vào sơ đồ (Add Shape After, Before, Above, Below, Add Assistant).</li>
+                  <li><strong>Promote / Demote:</strong> Thăng cấp (Promote - dịch sang trái tăng cấp bậc) hoặc Giáng cấp (Demote - thụt dòng vào thành nhánh con).</li>
+                  <li><strong>Change Colors & Styles:</strong> Đổi bảng màu (Colorful Range) và phong cách 3-D (Polished, Brick, Inset).</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4.4 Audio & Video -->
+          <div id="d4-4" class="space-y-4">
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2.5">
+              <span class="w-8 h-8 rounded-xl bg-orange-100 dark:bg-orange-950/60 text-orange-700 dark:text-orange-400 flex items-center justify-center text-sm font-black">4.4</span>
+              Âm Thanh & Video Nâng Cao (Trim Video, Playback Options & Bookmarks)
+            </h3>
+            <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-3">
+              <p class="text-sm sm:text-base text-slate-700 dark:text-slate-300">
+                Vào <strong>Insert &rarr; Video &rarr; This Device</strong> (hoặc <em>Insert &rarr; Audio</em>). Khi chọn video, thẻ <strong>Playback</strong> cung cấp các tùy chọn cốt lõi:
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 text-xs sm:text-sm">
+                <div class="p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-750">
+                  <strong class="text-orange-600 block mb-1">Trim Video (Cắt video):</strong>
+                  Thiết lập thời điểm bắt đầu (Start Time) và kết thúc (End Time) chính xác đến từng mili-giây.
+                </div>
+                <div class="p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-750">
+                  <strong class="text-orange-600 block mb-1">Start Option:</strong>
+                  Chọn cách khởi phát video: <em>In Click Sequence</em> (theo thứ tự nhấp chuột), <em>Automatically</em> (tự động phát ngay khi mở slide), hoặc <em>When Clicked On</em>.
+                </div>
+                <div class="p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-750">
+                  <strong class="text-orange-600 block mb-1">Loop until Stopped:</strong>
+                  Lặp lại âm thanh hoặc video liên tục cho đến khi người dùng chuyển sang slide khác.
+                </div>
+                <div class="p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-750">
+                  <strong class="text-orange-600 block mb-1">Add Bookmark:</strong>
+                  Đánh dấu mốc thời gian trên thanh tiến trình video để dùng làm điều kiện kích hoạt hoạt hình (Trigger).
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3 Interactive Mock Questions for Domain 4 -->
+          <div class="pt-6 border-t border-slate-200 dark:border-slate-800 space-y-4">
+            <div class="flex items-center justify-between">
+              <h4 class="font-bold text-base sm:text-lg text-slate-900 dark:text-white flex items-center gap-2">
+                <i class="fa-solid fa-circle-question text-orange-600"></i> Bài tập trắc nghiệm củng cố Domain 4
+              </h4>
+              <span class="text-xs bg-orange-100 dark:bg-orange-950 text-orange-800 dark:text-orange-300 px-2.5 py-1 rounded-full font-bold">3 Câu hỏi</span>
+            </div>
+
+            <!-- Q4.1 -->
+            <div id="q4_1" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+              <p class="font-semibold text-slate-900 dark:text-white">
+                Câu 1: Để cắt bớt đoạn mở đầu của video trên slide 3 sao cho video chỉ bắt đầu phát từ giây thứ 00:05.000, bạn dùng công cụ nào?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm sm:text-base">
+                <button onclick="checkQuiz('q4_1', 0, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-orange-500 transition flex items-start gap-2">
+                  <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">A</span>
+                  <span>Video Format &rarr; Crop</span>
+                </button>
+                <button onclick="checkQuiz('q4_1', 1, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-orange-500 transition flex items-start gap-2">
+                  <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">B</span>
+                  <span>Chọn video &rarr; thẻ Playback &rarr; Trim Video &rarr; đặt Start Time là 00:05.000</span>
+                </button>
+                <button onclick="checkQuiz('q4_1', 2, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-orange-500 transition flex items-start gap-2">
+                  <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">C</span>
+                  <span>Thẻ Animations &rarr; Delay 5 giây</span>
+                </button>
+                <button onclick="checkQuiz('q4_1', 3, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-orange-500 transition flex items-start gap-2">
+                  <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">D</span>
+                  <span>Playback &rarr; Fade In 5 giây</span>
+                </button>
+              </div>
+              <div class="quiz-feedback hidden"></div>
+              <div class="quiz-explanation-text hidden">Chính xác! Lệnh Trim Video trên thẻ Playback mở hộp thoại cắt thời lượng với Start Time và End Time chuẩn xác.</div>
+            </div>
+
+            <!-- Q4.2 -->
+            <div id="q4_2" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+              <p class="font-semibold text-slate-900 dark:text-white">
+                Câu 2: Bạn có một danh sách 5 bước thực hiện quy trình dưới dạng gạch đầu dòng. Cách nhanh nhất để biến danh sách này thành sơ đồ quy trình SmartArt đẹp mắt là gì?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm sm:text-base">
+                <button onclick="checkQuiz('q4_2', 0, 0)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-orange-500 transition flex items-start gap-2">
+                  <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">A</span>
+                  <span>Chọn văn bản &rarr; Home &rarr; Convert to SmartArt &rarr; chọn kiểu Process mong muốn</span>
+                </button>
+                <button onclick="checkQuiz('q4_2', 1, 0)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-orange-500 transition flex items-start gap-2">
+                  <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">B</span>
+                  <span>Vẽ 5 hình mũi tên thủ công rồi gõ lại từng từ vào các ô</span>
+                </button>
+                <button onclick="checkQuiz('q4_2', 2, 0)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-orange-500 transition flex items-start gap-2">
+                  <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">C</span>
+                  <span>Chèn biểu đồ Chart dạng Bar</span>
+                </button>
+                <button onclick="checkQuiz('q4_2', 3, 0)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-orange-500 transition flex items-start gap-2">
+                  <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">D</span>
+                  <span>Insert &rarr; Icons &rarr; Process</span>
+                </button>
+              </div>
+              <div class="quiz-feedback hidden"></div>
+              <div class="quiz-explanation-text hidden">Đúng! Tính năng Convert to SmartArt trên thẻ Home chuyển đổi trực tiếp văn bản sẵn có thành sơ đồ đồ họa mà không cần sao chép dán thủ công.</div>
+            </div>
+
+            <!-- Q4.3 -->
+            <div id="q4_3" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+              <p class="font-semibold text-slate-900 dark:text-white">
+                Câu 3: Muốn các hàng trong bảng Table trên slide tự động hiển thị màu nền xen kẽ để người xem dễ theo dõi dữ liệu, bạn cần tích chọn tùy chọn nào?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm sm:text-base">
+                <button onclick="checkQuiz('q4_3', 0, 2)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-orange-500 transition flex items-start gap-2">
+                  <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">A</span>
+                  <span>Header Row</span>
+                </button>
+                <button onclick="checkQuiz('q4_3', 1, 2)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-orange-500 transition flex items-start gap-2">
+                  <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">B</span>
+                  <span>Banded Columns</span>
+                </button>
+                <button onclick="checkQuiz('q4_3', 2, 2)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-orange-500 transition flex items-start gap-2">
+                  <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">C</span>
+                  <span>Banded Rows</span>
+                </button>
+                <button onclick="checkQuiz('q4_3', 3, 2)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-orange-500 transition flex items-start gap-2">
+                  <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">D</span>
+                  <span>Total Row</span>
+                </button>
+              </div>
+              <div class="quiz-feedback hidden"></div>
+              <div class="quiz-explanation-text hidden">Chính xác! Banded Rows (Hàng sọc màu) tô màu nền đan xen giữa các dòng chẵn và dòng lẻ trong bảng.</div>
+            </div>
+
+          </div>
+
+        </section>
+
+        <!-- ========================================== -->
+        <!-- DOMAIN 5: TRANSITIONS AND ANIMATIONS      -->
+        <!-- ========================================== -->
+        <section id="domain-5" class="p-6 sm:p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-8">
+          
+          <div class="border-b border-slate-200 dark:border-slate-800 pb-5">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-orange-100 text-orange-800 dark:bg-orange-950/60 dark:text-orange-300 mb-3">
+              <i class="fa-solid fa-wand-magic-sparkles"></i> Domain 5 (Chiếm 10% – 15% đề thi)
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
+              Domain 5: Hiệu Ứng Chuyển Tiếp & Hoạt Hình (Transitions & Animations)
+            </h2>
+            <p class="text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">
+              Domain này đánh giá khả năng tạo hiệu ứng sống động và điều phối luồng trình chiếu: phân biệt rõ ràng giữa Transition (chuyển slide) và Animation (hoạt hình đối tượng), quản lý Animation Pane, thiết lập thứ tự Start With / After Previous và thời lượng Duration.
+            </p>
+          </div>
+
+          <!-- 5.1 Slide Transitions -->
+          <div id="d5-1" class="space-y-4">
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2.5">
+              <span class="w-8 h-8 rounded-xl bg-orange-100 dark:bg-orange-950/60 text-orange-700 dark:text-orange-400 flex items-center justify-center text-sm font-black">5.1</span>
+              Hiệu Ứng Chuyển Tiếp Slide (Slide Transitions & Timing)
+            </h3>
+            <p class="text-slate-700 dark:text-slate-300 leading-relaxed">
+              <strong>Transition</strong> là hiệu ứng diễn ra KHI CHUYỂN TỪ TRANG CHIẾU NÀY SANG TRANG CHIẾU KHÁC. Chọn slide cần tạo hiệu ứng &rarr; vào thẻ <strong>Transitions</strong>:
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 text-xs sm:text-sm">
+              <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+                <strong class="text-orange-600 block mb-1">Hiệu ứng chuyển slide:</strong>
+                Chọn hiệu ứng chỉ định: <em>Morph, Fade, Push, Wipe, Split, Reveal, Random Bars, Shape</em>.
+              </div>
+              <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+                <strong class="text-orange-600 block mb-1">Effect Options:</strong>
+                Tùy chỉnh hướng chuyển động (From Left, From Right, From Top, From Bottom) hoặc biến thể hiệu ứng.
+              </div>
+              <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+                <strong class="text-orange-600 block mb-1">Duration & Sound:</strong>
+                Đặt thời lượng chuyển tiếp (vd: 1.50 giây) và âm thanh phát kèm theo (Sound: Breeze, Chime...).
+              </div>
+              <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+                <strong class="text-orange-600 block mb-1">Advance Slide & Apply to All:</strong>
+                Chuyển slide khi nhấp chuột (<em>On Mouse Click</em>) hoặc tự động sau khoảng thời gian (<em>After 00:03.00</em>). Nhấp <strong>Apply to All</strong> để đồng bộ toàn bộ bài.
+              </div>
+            </div>
+          </div>
+
+          <!-- 5.2 Animations -->
+          <div id="d5-2" class="space-y-4">
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2.5">
+              <span class="w-8 h-8 rounded-xl bg-orange-100 dark:bg-orange-950/60 text-orange-700 dark:text-orange-400 flex items-center justify-center text-sm font-black">5.2</span>
+              Hoạt Hình Đối Tượng (Object Animations: 4 Nhóm Hiệu Ứng)
+            </h3>
+            <p class="text-slate-700 dark:text-slate-300 leading-relaxed">
+              <strong>Animation</strong> áp dụng cho TỪNG ĐỐI TƯỢNG CỤ THỂ bên trong slide (chữ, hình vẽ, ảnh, bảng, SmartArt). Thẻ <strong>Animations</strong> chia hiệu ứng làm 4 nhóm màu đặc trưng:
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 text-xs sm:text-sm">
+              <div class="p-3.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800">
+                <span class="font-bold text-emerald-700 dark:text-emerald-400 flex items-center gap-1.5 mb-1">
+                  <i class="fa-solid fa-circle-play"></i> 1. Entrance (Màu xanh lá)
+                </span>
+                Hiệu ứng xuất hiện đối tượng: <em>Appear, Fade, Fly In, Float In, Split, Wipe, Shape, Wheel, Zoom, Bounce</em>.
+              </div>
+              <div class="p-3.5 rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800">
+                <span class="font-bold text-amber-700 dark:text-amber-400 flex items-center gap-1.5 mb-1">
+                  <i class="fa-solid fa-star"></i> 2. Emphasis (Màu vàng)
+                </span>
+                Hiệu ứng nhấn mạnh đối tượng đang có mặt: <em>Pulse, Color Pulse, Spin, Grow/Shrink, Teeter, Wave</em>.
+              </div>
+              <div class="p-3.5 rounded-xl bg-rose-50 dark:bg-rose-950/30 border border-rose-200 dark:border-rose-800">
+                <span class="font-bold text-rose-700 dark:text-rose-400 flex items-center gap-1.5 mb-1">
+                  <i class="fa-solid fa-circle-stop"></i> 3. Exit (Màu đỏ)
+                </span>
+                Hiệu ứng biến mất khỏi slide: <em>Disappear, Fade, Fly Out, Float Out, Wipe, Zoom, Shrink & Turn</em>.
+              </div>
+              <div class="p-3.5 rounded-xl bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800">
+                <span class="font-bold text-blue-700 dark:text-blue-400 flex items-center gap-1.5 mb-1">
+                  <i class="fa-solid fa-route"></i> 4. Motion Paths (Đường dẫn)
+                </span>
+                Hiệu ứng di chuyển theo quỹ đạo: <em>Lines (Thẳng), Arcs (Vòng cung), Turns (Góc vuông), Loops, Custom Path</em>.
+              </div>
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 text-xs sm:text-sm text-amber-900 dark:text-amber-200">
+              <i class="fa-solid fa-lightbulb text-amber-600 me-1.5"></i>
+              <strong>Cực kỳ quan trọng:</strong> Để thêm hiệu ứng thứ hai cho cùng một đối tượng, bạn PHẢI nhấp vào nút <strong>Add Animation</strong> trên thanh Ribbon. Nếu bạn nhấp vào danh sách chọn hiệu ứng ở bên trái, hiệu ứng cũ sẽ bị ghi đè thay thế!
+            </div>
+          </div>
+
+          <!-- 5.3 Animation Pane & Reorder -->
+          <div id="d5-3" class="space-y-4">
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2.5">
+              <span class="w-8 h-8 rounded-xl bg-orange-100 dark:bg-orange-950/60 text-orange-700 dark:text-orange-400 flex items-center justify-center text-sm font-black">5.3</span>
+              Ngăn Điều Khiển Animation Pane, Start Options & Đổi Thứ Tự
+            </h3>
+            <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-750 space-y-3">
+              <p class="text-sm sm:text-base text-slate-700 dark:text-slate-300">
+                Nhấp nút <strong>Animation Pane</strong> trên thẻ <em>Animations</em> để mở bảng quản lý danh sách hiệu ứng ở mép phải màn hình:
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs sm:text-sm">
+                <div class="p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-750">
+                  <strong class="text-orange-600 block mb-1">Thời điểm khởi phát (Start):</strong>
+                  <ul class="list-disc list-inside text-slate-600 dark:text-slate-400 space-y-1">
+                    <li><strong>On Click:</strong> Chờ nhấp chuột mới chạy.</li>
+                    <li><strong>With Previous:</strong> Chạy đồng thời cùng lúc với hiệu ứng liền trước.</li>
+                    <li><strong>After Previous:</strong> Tự động chạy ngay khi hiệu ứng liền trước vừa hoàn thành.</li>
+                  </ul>
+                </div>
+                <div class="p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-750">
+                  <strong class="text-orange-600 block mb-1">Duration & Delay:</strong>
+                  <ul class="list-disc list-inside text-slate-600 dark:text-slate-400 space-y-1">
+                    <li><strong>Duration:</strong> Độ dài thời gian diễn ra hiệu ứng (vd: 01.00s).</li>
+                    <li><strong>Delay:</strong> Khoảng thời gian dừng chờ trước khi hiệu ứng bắt đầu khởi động.</li>
+                  </ul>
+                </div>
+                <div class="p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-750">
+                  <strong class="text-orange-600 block mb-1">Đổi thứ tự (Reorder):</strong>
+                  Nhấp chọn hiệu ứng trong Animation Pane &rarr; nhấp nút <strong>Move Earlier</strong> (chạy sớm hơn) hoặc <strong>Move Later</strong> (chạy muộn hơn), hoặc kéo thả trực tiếp lên/xuống.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3 Interactive Mock Questions for Domain 5 -->
+          <div class="pt-6 border-t border-slate-200 dark:border-slate-800 space-y-4">
+            <div class="flex items-center justify-between">
+              <h4 class="font-bold text-base sm:text-lg text-slate-900 dark:text-white flex items-center gap-2">
+                <i class="fa-solid fa-circle-question text-orange-600"></i> Bài tập trắc nghiệm củng cố Domain 5
+              </h4>
+              <span class="text-xs bg-orange-100 dark:bg-orange-950 text-orange-800 dark:text-orange-300 px-2.5 py-1 rounded-full font-bold">3 Câu hỏi</span>
+            </div>
+
+            <!-- Q5.1 -->
+            <div id="q5_1" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+              <p class="font-semibold text-slate-900 dark:text-white">
+                Câu 1: Hình ảnh trên slide đã có sẵn hiệu ứng Fly In. Bạn muốn chèn thêm hiệu ứng Spin (xoay tròn) cho chính bức ảnh này mà không làm mất hiệu ứng Fly In cũ, bạn phải làm thế nào?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm sm:text-base">
+                <button onclick="checkQuiz('q5_1', 0, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-orange-500 transition flex items-start gap-2">
+                  <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">A</span>
+                  <span>Nhấp vào biểu tượng Spin trong hộp Animation gallery</span>
+                </button>
+                <button onclick="checkQuiz('q5_1', 1, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-orange-500 transition flex items-start gap-2">
+                  <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">B</span>
+                  <span>Chọn ảnh &rarr; thẻ Animations &rarr; nhóm Advanced Animation &rarr; nhấp nút "Add Animation" &rarr; chọn Spin</span>
+                </button>
+                <button onclick="checkQuiz('q5_1', 2, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-orange-500 transition flex items-start gap-2">
+                  <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">C</span>
+                  <span>Sao chép nhân đôi bức ảnh thành 2 tấm chồng lên nhau rồi áp dụng hiệu ứng cho từng tấm</span>
+                </button>
+                <button onclick="checkQuiz('q5_1', 3, 1)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-orange-500 transition flex items-start gap-2">
+                  <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">D</span>
+                  <span>Chuyển sang thẻ Transitions để gán hiệu ứng Spin</span>
+                </button>
+              </div>
+              <div class="quiz-feedback hidden"></div>
+              <div class="quiz-explanation-text hidden">Chính xác! Nút Add Animation là cách duy nhất để gắn thêm hiệu ứng thứ hai, thứ ba cho một đối tượng mà không ghi đè hiệu ứng ban đầu.</div>
+            </div>
+
+            <!-- Q5.2 -->
+            <div id="q5_2" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+              <p class="font-semibold text-slate-900 dark:text-white">
+                Câu 2: Bạn muốn một dòng chữ tự động xuất hiện ngay lập tức sau khi một hình ảnh vừa hoàn tất hiệu ứng hiển thị, không cần người thuyết trình bấm chuột. Bạn chọn thiết lập Start nào?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm sm:text-base">
+                <button onclick="checkQuiz('q5_2', 0, 2)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-orange-500 transition flex items-start gap-2">
+                  <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">A</span>
+                  <span>Start: On Click</span>
+                </button>
+                <button onclick="checkQuiz('q5_2', 1, 2)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-orange-500 transition flex items-start gap-2">
+                  <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">B</span>
+                  <span>Start: With Previous</span>
+                </button>
+                <button onclick="checkQuiz('q5_2', 2, 2)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-orange-500 transition flex items-start gap-2">
+                  <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">C</span>
+                  <span>Start: After Previous</span>
+                </button>
+                <button onclick="checkQuiz('q5_2', 3, 2)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-orange-500 transition flex items-start gap-2">
+                  <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">D</span>
+                  <span>Start: On Bookmark</span>
+                </button>
+              </div>
+              <div class="quiz-feedback hidden"></div>
+              <div class="quiz-explanation-text hidden">Đúng! "After Previous" kích hoạt hoạt hình tự động chạy tiếp theo sau khi hoạt hình liền trước kết thúc.</div>
+            </div>
+
+            <!-- Q5.3 -->
+            <div id="q5_3" class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-3">
+              <p class="font-semibold text-slate-900 dark:text-white">
+                Câu 3: Đâu là thao tác áp dụng hiệu ứng chuyển slide Push với thời lượng 2.00 giây cho TẤT CẢ các trang trong bài thuyết trình?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm sm:text-base">
+                <button onclick="checkQuiz('q5_3', 0, 0)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-orange-500 transition flex items-start gap-2">
+                  <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">A</span>
+                  <span>Vào Transitions &rarr; chọn Push &rarr; đặt Duration là 2.00 &rarr; nhấp nút "Apply to All"</span>
+                </button>
+                <button onclick="checkQuiz('q5_3', 1, 0)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-orange-500 transition flex items-start gap-2">
+                  <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">B</span>
+                  <span>Chọn từng slide một và gõ lại hiệu ứng Push cùng số giây 2.00</span>
+                </button>
+                <button onclick="checkQuiz('q5_3', 2, 0)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-orange-500 transition flex items-start gap-2">
+                  <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">C</span>
+                  <span>Vào Slide Master &rarr; chọn Animations &rarr; Push &rarr; Apply to All</span>
+                </button>
+                <button onclick="checkQuiz('q5_3', 3, 0)" class="quiz-btn text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-orange-500 transition flex items-start gap-2">
+                  <span class="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold flex items-center justify-center shrink-0">D</span>
+                  <span>Đặt After 00:02.00 trên thẻ Transitions</span>
+                </button>
+              </div>
+              <div class="quiz-feedback hidden"></div>
+              <div class="quiz-explanation-text hidden">Chính xác! Nút Apply to All trên thẻ Transitions giúp nhân bản toàn bộ thiết lập kiểu hiệu ứng, thời lượng và âm thanh áp dụng cho mọi slide trong bài.</div>
+            </div>
+
+          </div>
+
+        </section>
+
+        <!-- ========================================== -->
+        <!-- PART 6: GLOSSARY, CHECKLIST & FINAL EXAM   -->
+        <!-- ========================================== -->
+        <section id="domain-6" class="p-6 sm:p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-8">
+          
+          <div class="border-b border-slate-200 dark:border-slate-800 pb-5">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300 mb-3">
+              <i class="fa-solid fa-graduation-cap"></i> Phần 6: Tra Cứu & Tự Kiểm
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
+              Bảng Thuật Ngữ MOS PowerPoint & Checklist Sẵn Sàng Đi Thi
+            </h2>
+            <p class="text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">
+              Hệ thống hóa hơn 30 thuật ngữ tiếng Anh cốt lõi thường gặp trong giao diện đề thi Certiport kèm hộp tìm kiếm nhanh theo thời gian thực và bảng tự đánh giá năng lực theo 5 Domain chuẩn quốc tế.
+            </p>
+          </div>
+
+          <!-- Realtime Search Glossary -->
+          <div class="space-y-4">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+              <h3 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                <i class="fa-solid fa-spell-check text-orange-600"></i> Tra cứu nhanh thuật ngữ tiếng Anh đề thi MOS
+              </h3>
+              <div class="relative w-full sm:w-72">
+                <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                <input type="text" id="glossarySearch" placeholder="Tìm thuật ngữ (vd: Master, Trim, Loop...)" oninput="filterGlossary()" class="w-full pl-9 pr-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs sm:text-sm text-slate-800 dark:text-slate-200 focus:outline-hidden focus:border-orange-500 transition">
+              </div>
+            </div>
+
+            <div class="overflow-x-auto rounded-2xl border border-slate-200 dark:border-slate-800">
+              <table class="w-full text-left text-xs sm:text-sm text-slate-700 dark:text-slate-300">
+                <thead class="bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white uppercase font-black text-[11px] tracking-wider">
+                  <tr>
+                    <th class="p-3 w-1/4">Thuật ngữ tiếng Anh</th>
+                    <th class="p-3 w-1/3">Ý nghĩa & Vị trí trong PowerPoint</th>
+                    <th class="p-3 w-5/12">Bối cảnh thường xuất hiện trong đề thi MOS</th>
+                  </tr>
+                </thead>
+                <tbody id="glossaryTable" class="divide-y divide-slate-100 dark:divide-slate-800 font-normal">
+                  <tr class="hover:bg-orange-50/40 dark:hover:bg-slate-800/40 transition">
+                    <td class="p-3 font-bold text-orange-700 dark:text-orange-400">Slide Master</td>
+                    <td class="p-3">Trang chiếu chủ (View &rarr; Slide Master)</td>
+                    <td class="p-3">Chèn logo, đổi Theme Colors/Fonts áp dụng đồng bộ toàn bộ slide hoặc layout chỉ định.</td>
+                  </tr>
+                  <tr class="hover:bg-orange-50/40 dark:hover:bg-slate-800/40 transition">
+                    <td class="p-3 font-bold text-orange-700 dark:text-orange-400">Reuse Slides</td>
+                    <td class="p-3">Sử dụng lại slide (Home &rarr; New Slide)</td>
+                    <td class="p-3">Chèn slide từ file khác; lưu ý tích chọn <em>Keep source formatting</em> nếu đề bài yêu cầu.</td>
+                  </tr>
+                  <tr class="hover:bg-orange-50/40 dark:hover:bg-slate-800/40 transition">
+                    <td class="p-3 font-bold text-orange-700 dark:text-orange-400">Section</td>
+                    <td class="p-3">Phân đoạn slide (Home &rarr; Section)</td>
+                    <td class="p-3">Add Section, Rename Section, Collapse All; phân biệt Remove Section vs Remove Section & Slides.</td>
+                  </tr>
+                  <tr class="hover:bg-orange-50/40 dark:hover:bg-slate-800/40 transition">
+                    <td class="p-3 font-bold text-orange-700 dark:text-orange-400">Slide Size</td>
+                    <td class="p-3">Cỡ trang chiếu (Design &rarr; Slide Size)</td>
+                    <td class="p-3">Standard (4:3) vs Widescreen (16:9); chọn Maximize hoặc Ensure Fit khi co giãn.</td>
+                  </tr>
+                  <tr class="hover:bg-orange-50/40 dark:hover:bg-slate-800/40 transition">
+                    <td class="p-3 font-bold text-orange-700 dark:text-orange-400">Handouts</td>
+                    <td class="p-3">Tài liệu phát người nghe (File &rarr; Print)</td>
+                    <td class="p-3">In 1, 2, 3, 4, 6, 9 slides trên 1 trang giấy; 3 slides có kèm dòng kẻ ghi chú.</td>
+                  </tr>
+                  <tr class="hover:bg-orange-50/40 dark:hover:bg-slate-800/40 transition">
+                    <td class="p-3 font-bold text-orange-700 dark:text-orange-400">Crop to Shape</td>
+                    <td class="p-3">Cắt ảnh theo hình (Picture Format &rarr; Crop)</td>
+                    <td class="p-3">Gọt bức ảnh theo khung khối hình học (Oval, Teardrop, Rounded Rectangle,...).</td>
+                  </tr>
+                  <tr class="hover:bg-orange-50/40 dark:hover:bg-slate-800/40 transition">
+                    <td class="p-3 font-bold text-orange-700 dark:text-orange-400">Distribute Horizontally</td>
+                    <td class="p-3">Dàn đều ngang (Shape Format &rarr; Align)</td>
+                    <td class="p-3">Chia đều khoảng cách trống theo chiều ngang giữa các hình khối hoặc ảnh đã chọn.</td>
+                  </tr>
+                  <tr class="hover:bg-orange-50/40 dark:hover:bg-slate-800/40 transition">
+                    <td class="p-3 font-bold text-orange-700 dark:text-orange-400">Alt Text</td>
+                    <td class="p-3">Văn bản thay thế (Chuột phải &rarr; View Alt Text)</td>
+                    <td class="p-3">Nhập mô tả hình ảnh cho người khiếm thị đọc qua phần mềm Screen Reader.</td>
+                  </tr>
+                  <tr class="hover:bg-orange-50/40 dark:hover:bg-slate-800/40 transition">
+                    <td class="p-3 font-bold text-orange-700 dark:text-orange-400">Convert to SmartArt</td>
+                    <td class="p-3">Chuyển chữ sang sơ đồ (Home &rarr; Paragraph)</td>
+                    <td class="p-3">Biến danh sách gạch đầu dòng bullet thành sơ đồ Process, Cycle, Hierarchy đẹp mắt.</td>
+                  </tr>
+                  <tr class="hover:bg-orange-50/40 dark:hover:bg-slate-800/40 transition">
+                    <td class="p-3 font-bold text-orange-700 dark:text-orange-400">Banded Rows</td>
+                    <td class="p-3">Hàng sọc màu xen kẽ (Table Design)</td>
+                    <td class="p-3">Tô màu đan xen giữa các hàng trong bảng dữ liệu để nâng cao độ tương phản.</td>
+                  </tr>
+                  <tr class="hover:bg-orange-50/40 dark:hover:bg-slate-800/40 transition">
+                    <td class="p-3 font-bold text-orange-700 dark:text-orange-400">Trim Video</td>
+                    <td class="p-3">Cắt video (Playback &rarr; Trim Video)</td>
+                    <td class="p-3">Cắt bỏ đoạn đầu và đoạn cuối video theo mốc thời gian Start Time và End Time.</td>
+                  </tr>
+                  <tr class="hover:bg-orange-50/40 dark:hover:bg-slate-800/40 transition">
+                    <td class="p-3 font-bold text-orange-700 dark:text-orange-400">Loop until Stopped</td>
+                    <td class="p-3">Lặp vô tận (Playback &rarr; Video/Audio Options)</td>
+                    <td class="p-3">Âm thanh hoặc video sẽ tự động phát lại từ đầu khi kết thúc cho đến khi chuyển slide.</td>
+                  </tr>
+                  <tr class="hover:bg-orange-50/40 dark:hover:bg-slate-800/40 transition">
+                    <td class="p-3 font-bold text-orange-700 dark:text-orange-400">Transition</td>
+                    <td class="p-3">Chuyển tiếp trang (Thẻ Transitions)</td>
+                    <td class="p-3">Hiệu ứng diễn ra KHI ĐỔI TỪ SLIDE NÀY SANG SLIDE KHÁC; nút <em>Apply to All</em> áp dụng toàn bài.</td>
+                  </tr>
+                  <tr class="hover:bg-orange-50/40 dark:hover:bg-slate-800/40 transition">
+                    <td class="p-3 font-bold text-orange-700 dark:text-orange-400">Animation</td>
+                    <td class="p-3">Hoạt hình đối tượng (Thẻ Animations)</td>
+                    <td class="p-3">Áp dụng cho TỪNG ĐỐI TƯỢNG CỤ THỂ bên trong slide (Entrance, Emphasis, Exit, Motion Paths).</td>
+                  </tr>
+                  <tr class="hover:bg-orange-50/40 dark:hover:bg-slate-800/40 transition">
+                    <td class="p-3 font-bold text-orange-700 dark:text-orange-400">Add Animation</td>
+                    <td class="p-3">Thêm hoạt hình (Advanced Animation)</td>
+                    <td class="p-3">Gắn thêm hiệu ứng thứ hai cho cùng một đối tượng mà không ghi đè hiệu ứng cũ.</td>
+                  </tr>
+                  <tr class="hover:bg-orange-50/40 dark:hover:bg-slate-800/40 transition">
+                    <td class="p-3 font-bold text-orange-700 dark:text-orange-400">Animation Pane</td>
+                    <td class="p-3">Ngăn quản lý hoạt hình (Thẻ Animations)</td>
+                    <td class="p-3">Xem danh sách, đổi thứ tự (Move Earlier / Later), chỉnh Start: On Click / With / After Previous.</td>
+                  </tr>
+                  <tr class="hover:bg-orange-50/40 dark:hover:bg-slate-800/40 transition">
+                    <td class="p-3 font-bold text-orange-700 dark:text-orange-400">Document Inspector</td>
+                    <td class="p-3">Kiểm tra thông tin ẩn (File &rarr; Info)</td>
+                    <td class="p-3">Loại bỏ Document Properties and Personal Information trước khi nộp bài hoặc chia sẻ.</td>
+                  </tr>
+                  <tr class="hover:bg-orange-50/40 dark:hover:bg-slate-800/40 transition">
+                    <td class="p-3 font-bold text-orange-700 dark:text-orange-400">Mark as Final</td>
+                    <td class="p-3">Đánh dấu bản hoàn tất (File &rarr; Info)</td>
+                    <td class="p-3">Khóa tệp sang trạng thái Read-Only cảnh báo không cho sửa đổi vô ý.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- 5-Domain Readiness Checklist -->
+          <div class="space-y-4 pt-4 border-t border-slate-200 dark:border-slate-800">
+            <div class="flex items-center justify-between">
+              <h3 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                <i class="fa-solid fa-list-check text-emerald-600"></i> Bảng tự kiểm tra kỹ năng thực hành (5 Domain)
+              </h3>
+              <span id="checklistProgress" class="text-xs font-bold px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">0/15 Kỹ năng</span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs sm:text-sm">
+              <label class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 flex items-start gap-2.5 cursor-pointer hover:border-orange-500 transition">
+                <input type="checkbox" onchange="updateChecklist()" class="mt-1 rounded text-orange-600 focus:ring-orange-500 shrink-0">
+                <span><strong>D1:</strong> Mở Slide Master, chèn logo vào Top Slide hoặc layout chỉ định rồi đóng View.</span>
+              </label>
+
+              <label class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 flex items-start gap-2.5 cursor-pointer hover:border-orange-500 transition">
+                <input type="checkbox" onchange="updateChecklist()" class="mt-1 rounded text-orange-600 focus:ring-orange-500 shrink-0">
+                <span><strong>D1:</strong> Cài đặt Slide Size (Standard 4:3 vs Widescreen 16:9, Ensure Fit).</span>
+              </label>
+
+              <label class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 flex items-start gap-2.5 cursor-pointer hover:border-orange-500 transition">
+                <input type="checkbox" onchange="updateChecklist()" class="mt-1 rounded text-orange-600 focus:ring-orange-500 shrink-0">
+                <span><strong>D1:</strong> Cấu hình Set Up Slide Show lặp vô tận (Loop continuously until 'Esc').</span>
+              </label>
+
+              <label class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 flex items-start gap-2.5 cursor-pointer hover:border-orange-500 transition">
+                <input type="checkbox" onchange="updateChecklist()" class="mt-1 rounded text-orange-600 focus:ring-orange-500 shrink-0">
+                <span><strong>D1:</strong> Chạy Document Inspector và xoá Document Properties & Personal Information.</span>
+              </label>
+
+              <label class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 flex items-start gap-2.5 cursor-pointer hover:border-orange-500 transition">
+                <input type="checkbox" onchange="updateChecklist()" class="mt-1 rounded text-orange-600 focus:ring-orange-500 shrink-0">
+                <span><strong>D2:</strong> Dùng Reuse Slides chèn trang từ file khác kèm tích chọn Keep Source Formatting.</span>
+              </label>
+
+              <label class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 flex items-start gap-2.5 cursor-pointer hover:border-orange-500 transition">
+                <input type="checkbox" onchange="updateChecklist()" class="mt-1 rounded text-orange-600 focus:ring-orange-500 shrink-0">
+                <span><strong>D2:</strong> Tạo Section mới (Add Section) và đổi tên (Rename Section) chính xác.</span>
+              </label>
+
+              <label class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 flex items-start gap-2.5 cursor-pointer hover:border-orange-500 transition">
+                <input type="checkbox" onchange="updateChecklist()" class="mt-1 rounded text-orange-600 focus:ring-orange-500 shrink-0">
+                <span><strong>D2:</strong> Ẩn slide (Hide Slide) và thay đổi bố cục Slide Layout cho trang chỉ định.</span>
+              </label>
+
+              <label class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 flex items-start gap-2.5 cursor-pointer hover:border-orange-500 transition">
+                <input type="checkbox" onchange="updateChecklist()" class="mt-1 rounded text-orange-600 focus:ring-orange-500 shrink-0">
+                <span><strong>D3:</strong> Chia 2 hoặc 3 cột văn bản (Columns) bên trong một Text Box.</span>
+              </label>
+
+              <label class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 flex items-start gap-2.5 cursor-pointer hover:border-orange-500 transition">
+                <input type="checkbox" onchange="updateChecklist()" class="mt-1 rounded text-orange-600 focus:ring-orange-500 shrink-0">
+                <span><strong>D3:</strong> Căn gióng nhiều Shape (Align) và dàn đều khoảng cách (Distribute Horizontally).</span>
+              </label>
+
+              <label class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 flex items-start gap-2.5 cursor-pointer hover:border-orange-500 transition">
+                <input type="checkbox" onchange="updateChecklist()" class="mt-1 rounded text-orange-600 focus:ring-orange-500 shrink-0">
+                <span><strong>D3:</strong> Cắt ảnh theo hình khối (Crop to Shape) và chèn Alt Text cho đồ họa.</span>
+              </label>
+
+              <label class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 flex items-start gap-2.5 cursor-pointer hover:border-orange-500 transition">
+                <input type="checkbox" onchange="updateChecklist()" class="mt-1 rounded text-orange-600 focus:ring-orange-500 shrink-0">
+                <span><strong>D4:</strong> Định dạng bảng Table (Header Row, Banded Rows, Table Style).</span>
+              </label>
+
+              <label class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 flex items-start gap-2.5 cursor-pointer hover:border-orange-500 transition">
+                <input type="checkbox" onchange="updateChecklist()" class="mt-1 rounded text-orange-600 focus:ring-orange-500 shrink-0">
+                <span><strong>D4:</strong> Chuyển văn bản bullet sang sơ đồ SmartArt (Convert to SmartArt).</span>
+              </label>
+
+              <label class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 flex items-start gap-2.5 cursor-pointer hover:border-orange-500 transition">
+                <input type="checkbox" onchange="updateChecklist()" class="mt-1 rounded text-orange-600 focus:ring-orange-500 shrink-0">
+                <span><strong>D4:</strong> Cắt video (Trim Video) và đặt tùy chọn phát Automatically hoặc Loop until Stopped.</span>
+              </label>
+
+              <label class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 flex items-start gap-2.5 cursor-pointer hover:border-orange-500 transition">
+                <input type="checkbox" onchange="updateChecklist()" class="mt-1 rounded text-orange-600 focus:ring-orange-500 shrink-0">
+                <span><strong>D5:</strong> Gán hiệu ứng chuyển slide Transitions kèm Duration và nhấn Apply to All.</span>
+              </label>
+
+              <label class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 flex items-start gap-2.5 cursor-pointer hover:border-orange-500 transition">
+                <input type="checkbox" onchange="updateChecklist()" class="mt-1 rounded text-orange-600 focus:ring-orange-500 shrink-0">
+                <span><strong>D5:</strong> Thêm hiệu ứng thứ 2 qua Add Animation và chỉnh thứ tự trong Animation Pane.</span>
+              </label>
+            </div>
+          </div>
+
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Final Practice Exam Modal (10 Questions) -->
+  <div id="courseQuizModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+    <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-slate-200 dark:border-slate-800 shadow-2xl p-6 sm:p-8 space-y-6">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800">
+        <div class="flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-orange-600 text-white flex items-center justify-center text-sm font-black">
+            <i class="fa-solid fa-graduation-cap"></i>
+          </span>
+          <h3 class="text-lg font-black text-slate-900 dark:text-white">Đề Thi Thử MOS PowerPoint Associate (10 Câu)</h3>
+        </div>
+        <button onclick="closeCourseQuizModal()" class="w-8 h-8 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-500 hover:text-slate-900 dark:hover:text-white flex items-center justify-center">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <form id="courseExamForm" onsubmit="submitCourseExam(event)" class="space-y-5 text-sm sm:text-base">
+        <!-- Q1 -->
+        <div class="space-y-2 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-800">
+          <p class="font-bold text-slate-900 dark:text-white">Câu 1: Muốn tất cả các slide trong bài thuyết trình đều hiển thị cùng một màu nền và logo ở góc chân trang, bạn phải sửa đổi ở đâu?</p>
+          <div class="space-y-1 text-slate-700 dark:text-slate-300">
+            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="eq1" value="A" required> A. Top Slide Master lớn nhất trong View &rarr; Slide Master</label>
+            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="eq1" value="B"> B. Sửa trên Slide số 1 rồi chọn Duplicate</label>
+            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="eq1" value="C"> C. Handout Master</label>
+            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="eq1" value="D"> D. Notes Master</label>
+          </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="space-y-2 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-800">
+          <p class="font-bold text-slate-900 dark:text-white">Câu 2: Khi chuyển Slide Size từ 16:9 sang 4:3, tùy chọn nào đảm bảo toàn bộ nội dung slide sẽ không bao giờ bị cắt xén ra ngoài mép màn hình?</p>
+          <div class="space-y-1 text-slate-700 dark:text-slate-300">
+            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="eq2" value="A" required> A. Ensure Fit</label>
+            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="eq2" value="B"> B. Maximize</label>
+            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="eq2" value="C"> C. Auto Stretch</label>
+            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="eq2" value="D"> D. Aspect Ratio Lock</label>
+          </div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="space-y-2 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-800">
+          <p class="font-bold text-slate-900 dark:text-white">Câu 3: Để chia bài thuyết trình dài 50 slide thành 4 nhóm nội dung riêng biệt kèm tiêu đề phân nhóm, bạn sử dụng tính năng nào?</p>
+          <div class="space-y-1 text-slate-700 dark:text-slate-300">
+            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="eq3" value="A" required> A. Section (Add Section / Rename Section)</label>
+            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="eq3" value="B"> B. Layout</label>
+            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="eq3" value="C"> C. Custom Shows</label>
+            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="eq3" value="D"> D. Hide Slides</label>
+          </div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="space-y-2 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-800">
+          <p class="font-bold text-slate-900 dark:text-white">Câu 4: Chức năng nào giúp nhập dàn bài phân cấp tiêu đề được soạn sẵn từ tài liệu Microsoft Word vào PowerPoint thành các slide tự động?</p>
+          <div class="space-y-1 text-slate-700 dark:text-slate-300">
+            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="eq4" value="A" required> A. Home &rarr; New Slide &rarr; Slides from Outline</label>
+            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="eq4" value="B"> B. Insert &rarr; Object &rarr; Word Document</label>
+            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="eq4" value="C"> C. Reuse Slides</label>
+            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="eq4" value="D"> D. Copy và Paste thủ công</label>
+          </div>
+        </div>
+
+        <!-- Q5 -->
+        <div class="space-y-2 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-800">
+          <p class="font-bold text-slate-900 dark:text-white">Câu 5: Để cắt một tấm ảnh hình chữ nhật thành hình giọt nước (Teardrop), bạn nhấp vào đâu?</p>
+          <div class="space-y-1 text-slate-700 dark:text-slate-300">
+            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="eq5" value="A" required> A. Picture Format &rarr; nhấp mũi tên dưới Crop &rarr; Crop to Shape &rarr; chọn Teardrop</label>
+            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="eq5" value="B"> B. Shape Format &rarr; Edit Points</label>
+            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="eq5" value="C"> C. Picture Effects &rarr; Soft Edges</label>
+            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="eq5" value="D"> D. Insert &rarr; Icons</label>
+          </div>
+        </div>
+
+        <!-- Q6 -->
+        <div class="space-y-2 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-800">
+          <p class="font-bold text-slate-900 dark:text-white">Câu 6: Phím tắt chuẩn để nhóm (Group) nhiều đối tượng hình khối đã chọn trên slide là:</p>
+          <div class="space-y-1 text-slate-700 dark:text-slate-300">
+            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="eq6" value="A" required> A. Ctrl + G</label>
+            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="eq6" value="B"> B. Ctrl + Shift + G</label>
+            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="eq6" value="C"> C. Ctrl + D</label>
+            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="eq6" value="D"> D. Alt + G</label>
+          </div>
+        </div>
+
+        <!-- Q7 -->
+        <div class="space-y-2 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-800">
+          <p class="font-bold text-slate-900 dark:text-white">Câu 7: Chuyển đổi một danh sách gồm 4 mục bullet thành sơ đồ SmartArt dạng Vertical Process được thực hiện qua đâu?</p>
+          <div class="space-y-1 text-slate-700 dark:text-slate-300">
+            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="eq7" value="A" required> A. Chọn khung chữ &rarr; thẻ Home &rarr; Convert to SmartArt</label>
+            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="eq7" value="B"> B. Insert &rarr; Chart</label>
+            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="eq7" value="C"> C. Review &rarr; Translate</label>
+            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="eq7" value="D"> D. Design &rarr; Variants</label>
+          </div>
+        </div>
+
+        <!-- Q8 -->
+        <div class="space-y-2 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-800">
+          <p class="font-bold text-slate-900 dark:text-white">Câu 8: Tùy chọn Playback nào khiến đoạn video trên slide tự động phát lại từ đầu liên tục cho đến khi người dùng chuyển sang slide khác?</p>
+          <div class="space-y-1 text-slate-700 dark:text-slate-300">
+            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="eq8" value="A" required> A. Loop until Stopped</label>
+            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="eq8" value="B"> B. Play Full Screen</label>
+            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="eq8" value="C"> C. Hide While Not Playing</label>
+            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="eq8" value="D"> D. Rewind after Playing</label>
+          </div>
+        </div>
+
+        <!-- Q9 -->
+        <div class="space-y-2 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-800">
+          <p class="font-bold text-slate-900 dark:text-white">Câu 9: Hiệu ứng chuyển động giữa hai slide (Slide Transitions) khác cơ bản với hiệu ứng hoạt hình đối tượng (Animations) ở điểm nào?</p>
+          <div class="space-y-1 text-slate-700 dark:text-slate-300">
+            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="eq9" value="A" required> A. Transition diễn ra khi chuyển trang chiếu, còn Animation áp dụng cho từng đối tượng bên trong trang chiếu</label>
+            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="eq9" value="B"> B. Transition chỉ có màu đen trắng, Animation có màu sắc</label>
+            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="eq9" value="C"> C. Transition không thể đặt thời lượng Duration</label>
+            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="eq9" value="D"> D. Animation chỉ áp dụng được cho video clip</label>
+          </div>
+        </div>
+
+        <!-- Q10 -->
+        <div class="space-y-2 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-800">
+          <p class="font-bold text-slate-900 dark:text-white">Câu 10: Nhóm hiệu ứng Animation nào mang màu biểu tượng XANH LÁ CÂY đại diện cho sự xuất hiện của đối tượng lên slide?</p>
+          <div class="space-y-1 text-slate-700 dark:text-slate-300">
+            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="eq10" value="A" required> A. Entrance Effects</label>
+            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="eq10" value="B"> B. Emphasis Effects</label>
+            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="eq10" value="C"> C. Exit Effects</label>
+            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="eq10" value="D"> D. Motion Paths</label>
+          </div>
+        </div>
+
+        <div class="pt-2 flex items-center justify-end gap-3">
+          <button type="button" onclick="closeCourseQuizModal()" class="px-4 py-2 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 font-bold transition">Đóng</button>
+          <button type="submit" class="px-5 py-2 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-bold shadow-md transition">Nộp bài thi</button>
+        </div>
+      </form>
+
+      <!-- Exam Result Panel -->
+      <div id="courseExamResult" class="hidden p-5 rounded-2xl bg-orange-50 dark:bg-orange-950/40 border border-orange-200 dark:border-orange-800 text-center space-y-3">
+        <h4 class="text-xl font-black text-slate-900 dark:text-white" id="examScoreTitle">Kết quả thi</h4>
+        <p class="text-base font-medium text-slate-700 dark:text-slate-300" id="examScoreDetail"></p>
+        <button onclick="closeCourseQuizModal()" class="px-6 py-2 bg-orange-600 hover:bg-orange-700 text-white rounded-xl font-bold shadow-sm transition">Đóng & Xem lại bài học</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="mt-16 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-8 text-center text-xs text-slate-500 dark:text-slate-400">
+    <div class="max-w-7xl mx-auto px-4 space-y-2">
+      <p>Chương trình luyện thi chứng chỉ quốc tế <strong>Microsoft Office Specialist (MOS) PowerPoint Associate</strong>.</p>
+      <p>Hệ thống tự học và luyện thi CNTT trực tuyến &copy; CodeHub Platform.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    // Font Scaling Controller
+    const fontLevels = [
+      { label: '85%', size: '14px' },
+      { label: '100%', size: '16px' },
+      { label: '115%', size: '18px' },
+      { label: '130%', size: '20px' }
+    ];
+    let currentFontIdx = 1;
+
+    function applyFontSize(idx) {
+      currentFontIdx = Math.max(0, Math.min(fontLevels.length - 1, idx));
+      document.documentElement.style.fontSize = fontLevels[currentFontIdx].size;
+      const lbl = document.getElementById('fontLabel');
+      if (lbl) lbl.textContent = fontLevels[currentFontIdx].label;
+      localStorage.setItem('mos_ppt_fontSizeIdx', currentFontIdx);
+    }
+
+    document.getElementById('btnFontDec')?.addEventListener('click', () => applyFontSize(currentFontIdx - 1));
+    document.getElementById('btnFontInc')?.addEventListener('click', () => applyFontSize(currentFontIdx + 1));
+
+    // Restore Font Size
+    const savedFont = localStorage.getItem('mos_ppt_fontSizeIdx');
+    if (savedFont !== null) {
+      applyFontSize(parseInt(savedFont, 10));
+    }
+
+    // Dark/Light Theme Switcher
+    const themeToggleBtn = document.getElementById('themeToggle');
+    if (themeToggleBtn) {
+      themeToggleBtn.addEventListener('click', () => {
+        document.documentElement.classList.toggle('dark');
+        localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+      });
+    }
+    if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+
+    // Reading Progress Bar
+    window.addEventListener('scroll', () => {
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      const bar = document.getElementById('progressBar');
+      if (bar) bar.style.width = scrolled + '%';
+    });
+
+    // Checkbox checklist persistence
+    function updateChecklist() {
+      const boxes = document.querySelectorAll('#domain-6 input[type="checkbox"]');
+      let checked = 0;
+      const states = [];
+      boxes.forEach(b => {
+        if (b.checked) checked++;
+        states.push(b.checked);
+      });
+      localStorage.setItem('mos_ppt_checklist', JSON.stringify(states));
+      const progressLbl = document.getElementById('checklistProgress');
+      if (progressLbl) {
+        progressLbl.textContent = checked + '/' + boxes.length + ' Kỹ năng';
+        if (checked === boxes.length) {
+          progressLbl.classList.remove('bg-emerald-100', 'text-emerald-800');
+          progressLbl.classList.add('bg-orange-500', 'text-white');
+        }
+      }
+    }
+
+    // Restore Checklist
+    try {
+      const savedStates = JSON.parse(localStorage.getItem('mos_ppt_checklist') || '[]');
+      const boxes = document.querySelectorAll('#domain-6 input[type="checkbox"]');
+      boxes.forEach((b, idx) => {
+        if (savedStates[idx] !== undefined) b.checked = savedStates[idx];
+      });
+      updateChecklist();
+    } catch(e) {}
+
+    // Interactive Quiz Engine for In-Domain Questions
+    function checkQuiz(quizId, selectedIdx, correctIdx) {
+      const container = document.getElementById(quizId);
+      if (!container) return;
+      const buttons = container.querySelectorAll('.quiz-btn');
+      const feedback = container.querySelector('.quiz-feedback');
+      const explanation = container.querySelector('.quiz-explanation-text');
+
+      buttons.forEach((btn, idx) => {
+        btn.disabled = true;
+        btn.classList.remove('hover:border-orange-500');
+        if (idx === correctIdx) {
+          btn.classList.add('border-emerald-500', 'bg-emerald-50', 'dark:bg-emerald-950/40', 'text-emerald-900', 'dark:text-emerald-200');
+        } else if (idx === selectedIdx && selectedIdx !== correctIdx) {
+          btn.classList.add('border-rose-500', 'bg-rose-50', 'dark:bg-rose-950/40', 'text-rose-900', 'dark:text-rose-200');
+        }
+      });
+
+      if (feedback) {
+        feedback.classList.remove('hidden');
+        if (selectedIdx === correctIdx) {
+          feedback.innerHTML = '<div class="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-xs sm:text-sm text-emerald-800 dark:text-emerald-200 font-bold flex items-center gap-2"><i class="fa-solid fa-circle-check text-emerald-600"></i> Chính xác! ' + (explanation ? explanation.innerHTML : '') + '</div>';
+        } else {
+          feedback.innerHTML = '<div class="p-3 rounded-xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800 text-xs sm:text-sm text-rose-800 dark:text-rose-200 font-bold flex items-center gap-2"><i class="fa-solid fa-circle-xmark text-rose-600"></i> Chưa đúng. ' + (explanation ? explanation.innerHTML : '') + '</div>';
+        }
+      }
+    }
+
+    // Glossary Realtime Search Filter
+    function filterGlossary() {
+      const q = (document.getElementById('glossarySearch')?.value || '').toLowerCase().trim();
+      const rows = document.querySelectorAll('#glossaryTable tr');
+      rows.forEach(r => {
+        const text = r.textContent.toLowerCase();
+        r.style.display = text.includes(q) ? '' : 'none';
+      });
+    }
+
+    // Modal Exam Controllers
+    function openCourseQuizModal() {
+      document.getElementById('courseQuizModal')?.classList.remove('hidden');
+    }
+    function closeCourseQuizModal() {
+      document.getElementById('courseQuizModal')?.classList.add('hidden');
+    }
+
+    // Submit Final Practice Exam
+    function submitCourseExam(e) {
+      e.preventDefault();
+      const correctAnswers = {
+        eq1: 'A', eq2: 'A', eq3: 'A', eq4: 'A', eq5: 'A',
+        eq6: 'A', eq7: 'A', eq8: 'A', eq9: 'A', eq10: 'A'
+      };
+      let score = 0;
+      const form = document.getElementById('courseExamForm');
+      const formData = new FormData(form);
+
+      for (const [key, correctVal] of Object.entries(correctAnswers)) {
+        if (formData.get(key) === correctVal) {
+          score += 100; // 1000 max score
+        }
+      }
+
+      form.classList.add('hidden');
+      const resultPanel = document.getElementById('courseExamResult');
+      const title = document.getElementById('examScoreTitle');
+      const detail = document.getElementById('examScoreDetail');
+
+      if (resultPanel && title && detail) {
+        resultPanel.classList.remove('hidden');
+        if (score >= 700) {
+          title.textContent = '🎉 XUẤT SẮC! BẠN ĐÃ ĐẠT CHỨNG CHỈ MOS';
+          title.className = 'text-xl font-black text-emerald-600 dark:text-emerald-400';
+          detail.textContent = 'Điểm số: ' + score + '/1000 điểm (Yêu cầu Certiport: >= 700/1000). Bạn đã nắm vững toàn diện 5 Domain MOS PowerPoint Associate!';
+        } else {
+          title.textContent = 'CHƯA ĐẠT ĐIỂM YÊU CẦU CERTIPORT';
+          title.className = 'text-xl font-black text-amber-600 dark:text-amber-400';
+          detail.textContent = 'Điểm số: ' + score + '/1000 điểm. Bạn cần đạt từ 700/1000 để pass bài thi quốc tế. Hãy ôn tập lại các mục lý thuyết và làm lại bài!';
+        }
+      }
+    }
+  </script>
+</body>
+</html>
