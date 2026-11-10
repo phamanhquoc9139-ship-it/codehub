@@ -6,28 +6,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
-            e.preventDefault();
             const targetId = this.getAttribute('href');
-            if (targetId === '#') return;
-
+            if (!targetId || targetId === '#') return;
             const targetElement = document.querySelector(targetId);
             if (targetElement) {
-                targetElement.scrollIntoView({
-                    behavior: 'smooth'
-                });
-            }
-        });
-    });
-
-    // Make course cards clickable
-    const courseCards = document.querySelectorAll('#courses .cursor-pointer');
-    courseCards.forEach(card => {
-        card.addEventListener('click', (e) => {
-            if (e.target.tagName !== 'A') {
-                const link = card.querySelector('a');
-                if (link) {
-                    window.location.href = link.href;
-                }
+                e.preventDefault();
+                targetElement.scrollIntoView({ behavior: 'smooth' });
             }
         });
     });
@@ -40,25 +24,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (tabPython && tabWeb && panePython && paneWeb) {
         tabPython.addEventListener('click', () => {
-            tabPython.classList.add('border-primary', 'text-primary');
-            tabPython.classList.remove('border-transparent', 'text-gray-500', 'dark:text-gray-400');
-            tabWeb.classList.remove('border-primary', 'text-primary');
-            tabWeb.classList.add('border-transparent', 'text-gray-500', 'dark:text-gray-400');
+            tabPython.classList.add('border-blue-700', 'text-blue-700', 'dark:text-blue-400');
+            tabPython.classList.remove('border-transparent', 'text-gray-600', 'dark:text-gray-400');
+            tabWeb.classList.remove('border-blue-700', 'text-blue-700', 'dark:text-blue-400');
+            tabWeb.classList.add('border-transparent', 'text-gray-600', 'dark:text-gray-400');
             panePython.classList.remove('hidden');
             paneWeb.classList.add('hidden');
         });
 
         tabWeb.addEventListener('click', () => {
-            tabWeb.classList.add('border-primary', 'text-primary');
-            tabWeb.classList.remove('border-transparent', 'text-gray-500', 'dark:text-gray-400');
-            tabPython.classList.remove('border-primary', 'text-primary');
-            tabPython.classList.add('border-transparent', 'text-gray-500', 'dark:text-gray-400');
+            tabWeb.classList.add('border-blue-700', 'text-blue-700', 'dark:text-blue-400');
+            tabWeb.classList.remove('border-transparent', 'text-gray-600', 'dark:text-gray-400');
+            tabPython.classList.remove('border-blue-700', 'text-blue-700', 'dark:text-blue-400');
+            tabPython.classList.add('border-transparent', 'text-gray-600', 'dark:text-gray-400');
             paneWeb.classList.remove('hidden');
             panePython.classList.add('hidden');
         });
     }
 
-    // Integrated Playground Control
+    // Integrated Playground Control (Lazy-load Pyodide ONLY on Python usage)
     const runButton = document.getElementById('run-button');
     const outputDiv = document.getElementById('code-output');
     const pythonEditor = document.getElementById('code-editor');
@@ -67,20 +51,49 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let pyodideReady = false;
     let pyodide = null;
+    let pyodidePromise = null;
 
-    async function initPyodide() {
-        if (typeof loadPyodide === 'undefined') return;
-        try {
-            pyodide = await loadPyodide();
+    function loadScriptOnce(src) {
+        return new Promise((resolve, reject) => {
+            if (typeof window.loadPyodide === 'function') return resolve();
+            const s = document.createElement('script');
+            s.src = src;
+            s.async = true;
+            s.onload = () => resolve();
+            s.onerror = () => reject(new Error('Không thể tải Pyodide CDN'));
+            document.head.appendChild(s);
+        });
+    }
+
+    async function ensurePyodide() {
+        if (pyodideReady && pyodide) return pyodide;
+        if (pyodidePromise) return pyodidePromise;
+
+        pyodidePromise = (async () => {
+            await loadScriptOnce('https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js');
+            if (typeof window.loadPyodide !== 'function') {
+                throw new Error('loadPyodide không khả dụng');
+            }
+            pyodide = await window.loadPyodide();
             pyodideReady = true;
-            console.log('Pyodide is ready');
+            return pyodide;
+        })();
+
+        try {
+            return await pyodidePromise;
         } catch (err) {
-            console.error('Failed to load Pyodide:', err);
+            pyodidePromise = null;
+            throw err;
         }
     }
 
     if (runButton) {
-        initPyodide();
+        // Warm up Pyodide only when user actually focuses/edits the Python editor
+        if (pythonEditor) {
+            pythonEditor.addEventListener('focus', () => {
+                ensurePyodide().catch(() => {});
+            }, { once: true });
+        }
 
         // Support Tab key in editors
         [pythonEditor, webEditor].forEach(ed => {
@@ -101,14 +114,23 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         runButton.addEventListener('click', async () => {
-            // Check which tab is active
             const isPythonActive = !panePython.classList.contains('hidden');
 
             if (isPythonActive) {
-                // RUN PYTHON
+                runButton.classList.add('opacity-75', 'cursor-not-allowed');
+                const originalText = runButton.innerText;
+                runButton.innerText = 'Đang chạy...';
+
                 if (!pyodideReady) {
-                    outputDiv.innerHTML = '<span class="text-yellow-400">Đang khởi tạo Python (vui lòng đợi vài giây)...</span>';
-                    return;
+                    outputDiv.innerHTML = '<span class="text-yellow-300">Đang tải môi trường Python (chỉ tải lần đầu)...</span>';
+                    try {
+                        await ensurePyodide();
+                    } catch (err) {
+                        outputDiv.innerHTML = `<span class="text-red-400">Không thể khởi tạo Python: ${err.message}</span>`;
+                        runButton.classList.remove('opacity-75', 'cursor-not-allowed');
+                        runButton.innerText = originalText;
+                        return;
+                    }
                 }
 
                 pyodide.setStdin({
@@ -116,11 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
 
                 let code = pythonEditor.innerText.replace(/\u00a0/g, ' ').trim();
-
-                runButton.classList.add('opacity-75', 'cursor-not-allowed');
-                const originalText = runButton.innerText;
-                runButton.innerText = 'Đang chạy...';
-                outputDiv.innerHTML = '<span class="text-blue-400">Đang thực thi...</span>';
+                outputDiv.innerHTML = '<span class="text-blue-300">Đang thực thi...</span>';
 
                 try {
                     let outputBuffer = "";
@@ -146,22 +164,19 @@ document.addEventListener('DOMContentLoaded', () => {
                     const executionTime = ((endTime - startTime) / 1000).toFixed(2);
 
                     if (errorBuffer) {
-                        outputDiv.innerHTML = `<span class="text-red-500">Lỗi Python:<br>${errorBuffer.replace(/\n/g, '<br>')}</span>`;
+                        outputDiv.innerHTML = `<span class="text-red-400">Lỗi Python:<br>${errorBuffer.replace(/\n/g, '<br>')}</span>`;
                     } else {
                         let output = outputBuffer.trim() || 'Chương trình đã chạy xong. (Không có output)';
-                        outputDiv.innerHTML = `> ${output.replace(/\n/g, '<br>> ')}<br><span class="text-gray-500 text-xs mt-2 block">Thực thi trong ${executionTime}s</span>`;
+                        outputDiv.innerHTML = `> ${output.replace(/\n/g, '<br>> ')}<br><span class="text-gray-400 text-xs mt-2 block">Thực thi trong ${executionTime}s</span>`;
                     }
                 } catch (err) {
-                    outputDiv.innerHTML = `<span class="text-red-500">Lỗi thực thi:<br>${err.message.replace(/\n/g, '<br>')}</span>`;
+                    outputDiv.innerHTML = `<span class="text-red-400">Lỗi thực thi:<br>${err.message.replace(/\n/g, '<br>')}</span>`;
                 } finally {
                     runButton.classList.remove('opacity-75', 'cursor-not-allowed');
                     runButton.innerText = originalText;
                 }
             } else {
-                // RUN WEB
                 const htmlCode = webEditor.innerText.replace(/\u00a0/g, ' ').trim();
-
-                // Content boiler plate
                 const fullCode = `
                     <!DOCTYPE html>
                     <html>
@@ -176,32 +191,26 @@ document.addEventListener('DOMContentLoaded', () => {
                     </body>
                     </html>
                 `;
-
                 webPreview.srcdoc = fullCode;
-
-                // Visual feedback
-                runButton.classList.add('bg-green-600');
-                setTimeout(() => runButton.classList.remove('bg-green-600'), 500);
+                runButton.classList.add('bg-green-700');
+                setTimeout(() => runButton.classList.remove('bg-green-700'), 500);
             }
         });
     }
 
     // Quiz Logic
-    // Scan for quiz radio buttons
     const quizGroups = document.querySelectorAll('input[type="radio"]');
     quizGroups.forEach(radio => {
         radio.addEventListener('change', (e) => {
             const parentDiv = e.target.closest('.rounded-lg');
-            const resultDivId = `result-${e.target.name}`;
-
-            // cleanup previous result if exists
+            if (!parentDiv) return;
             let existingResult = parentDiv.querySelector('.quiz-result');
             if (existingResult) existingResult.remove();
 
             const isCorrect = checkAnswer(e.target.name, e.target.nextElementSibling.innerText);
 
             const feedback = document.createElement('div');
-            feedback.className = `quiz-result mt-4 p-3 rounded text-sm font-medium ${isCorrect ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`;
+            feedback.className = `quiz-result mt-4 p-3 rounded text-sm font-medium ${isCorrect ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`;
             feedback.innerHTML = isCorrect ?
                 '🎉 Chính xác! Bạn đã nắm vững kiến thức.' :
                 '❌ Chưa đúng. Hãy thử lại nhé!';
@@ -211,13 +220,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function checkAnswer(quizName, answerText) {
-        // Hardcoded answers for demo
         const answers = {
-            'quiz1': 'def', // Python function keyword
-            'quiz_intro': 'Tập hợp các bước để giải quyết vấn đề' // Algorithm definition
+            'quiz1': 'def',
+            'quiz_intro': 'Tập hợp các bước để giải quyết vấn đề'
         };
-
         return answers[quizName] === answerText.trim();
     }
-
 });

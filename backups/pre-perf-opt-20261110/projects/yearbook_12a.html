@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kỷ Yếu Lớp 12A - Niên Khóa 2023-2026</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3b82f6',
+                        secondary: '#ec4899',
+                        accent: '#8b5cf6',
+                        dark: '#1f2937',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        cursive: ['Pacifico', 'cursive'],
+                    },
+                    animation: {
+                        'float': 'float 3s ease-in-out infinite',
+                        'fade-in': 'fadeIn 1s ease-out',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Pacifico&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .timeline-line::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 2px;
+            background-color: #e5e7eb;
+            transform: translateX(-50%);
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 text-gray-900 font-sans antialiased selection:bg-pink-200 selection:text-pink-900">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 transition-all duration-300 bg-white/80 backdrop-blur-md shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="../courses/web_dev.html" class="flex items-center text-gray-600 hover:text-primary transition">
+                    <i class="fas fa-arrow-left mr-2"></i> Quay lại khóa học
+                </a>
+                <div
+                    class="text-2xl font-bold font-cursive text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
+                    Lớp 12A3
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#hero" class="text-gray-600 hover:text-primary font-medium">Trang chủ</a>
+                    <a href="#gallery" class="text-gray-600 hover:text-primary font-medium">Thành viên</a>
+                    <a href="#timeline" class="text-gray-600 hover:text-primary font-medium">Kỷ niệm</a>
+                    <a href="#teachers" class="text-gray-600 hover:text-primary font-medium">Tri ân</a>
+                </div>
+                <!-- Mobile menu button would go here -->
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="relative min-h-screen flex items-center justify-center pt-16 overflow-hidden">
+        <!-- Background Elements -->
+        <div class="absolute inset-0 z-0">
+            <div
+                class="absolute top-20 left-10 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float">
+            </div>
+            <div class="absolute top-40 right-10 w-72 h-72 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float"
+                style="animation-delay: 2s"></div>
+            <div class="absolute -bottom-8 left-20 w-72 h-72 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float"
+                style="animation-delay: 4s"></div>
+        </div>
+
+        <div class="relative z-10 text-center px-4 animate-fade-in">
+            <h1 class="text-5xl md:text-7xl font-bold mb-6">
+                <span class="block text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">Thanh
+                    Xuân</span>
+                <span class="block text-gray-800 mt-2 font-cursive">Của Chúng Ta</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-gray-600 mb-8 max-w-2xl mx-auto">
+                "Năm tháng vội vã, nhưng kỷ niệm sẽ còn mãi. Cùng lưu giữ những khoảnh khắc đẹp nhất của tuổi học trò."
+            </p>
+            <a href="#gallery"
+                class="inline-block bg-gradient-to-r from-primary to-secondary text-white font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition duration-300">
+                Xem Kỷ Yếu <i class="fas fa-arrow-down ml-2"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Filterable Gallery -->
+    <section id="gallery" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Các Thành Viên Lớp 12A</h2>
+                <div class="flex justify-center space-x-4 flex-wrap gap-y-2">
+                    <button
+                        class="filter-btn active px-4 py-2 rounded-full bg-primary text-white font-medium shadow-sm hover:shadow-md transition"
+                        data-filter="all">Tất cả</button>
+                    <button
+                        class="filter-btn px-4 py-2 rounded-full bg-gray-100 text-gray-600 font-medium hover:bg-gray-200 transition"
+                        data-filter="nam">Nam thần</button>
+                    <button
+                        class="filter-btn px-4 py-2 rounded-full bg-gray-100 text-gray-600 font-medium hover:bg-gray-200 transition"
+                        data-filter="nu">Nữ tú</button>
+                    <button
+                        class="filter-btn px-4 py-2 rounded-full bg-gray-100 text-gray-600 font-medium hover:bg-gray-200 transition"
+                        data-filter="bcs">Ban Cán Sự</button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8" id="student-grid">
+                <!-- Students will be dynamically rendered here via JS if needed, but for now hardcode some for structure -->
+
+                <!-- Student 1 -->
+                <div class="student-card group relative bg-white rounded-2xl shadow-md overflow-hidden card-hover border border-gray-100"
+                    data-category="nam bcs">
+                    <div class="aspect-w-3 aspect-h-4 bg-gray-200 relative overflow-hidden">
+                        <!-- Placeholder Image -->
+                        <div
+                            class="absolute inset-0 bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center text-6xl">
+                            👨‍🎓</div>
+                        <div
+                            class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-4 translate-y-full group-hover:translate-y-0 transition duration-300">
+                            <p class="text-white text-sm italic">"Ước mơ trở thành lập trình viên Full-stack tại
+                                Google."</p>
+                        </div>
+                    </div>
+                    <div class="p-6 text-center">
+                        <h3 class="text-lg font-bold text-gray-900">Huỳnh Trúc Linh</h3>
+                        <p class="text-primary text-sm font-medium">Lớp Trưởng</p>
+                        <div class="mt-4 flex justify-center space-x-3 text-gray-400">
+                            <a href="#" class="hover:text-blue-600"><i class="fab fa-facebook"></i></a>
+                            <a href="#" class="hover:text-pink-600"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Student 2 -->
+                <div class="student-card group relative bg-white rounded-2xl shadow-md overflow-hidden card-hover border border-gray-100"
+                    data-category="nu bcs">
+                    <div class="aspect-w-3 aspect-h-4 bg-gray-200 relative overflow-hidden">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-br from-pink-100 to-pink-200 flex items-center justify-center text-6xl">
+                            👩‍🎓</div>
+                        <div
+                            class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-4 translate-y-full group-hover:translate-y-0 transition duration-300">
+                            <p class="text-white text-sm italic">"Thích hát, vẽ và đi du lịch khắp thế giới."</p>
+                        </div>
+                    </div>
+                    <div class="p-6 text-center">
+                        <h3 class="text-lg font-bold text-gray-900">Nguyễn Thị Xuân My</h3>
+                        <p class="text-secondary text-sm font-medium">Thủ Quĩ</p>
+                        <div class="mt-4 flex justify-center space-x-3 text-gray-400">
+                            <a href="#" class="hover:text-blue-600"><i class="fab fa-facebook"></i></a>
+                            <a href="#" class="hover:text-pink-600"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Student 3 -->
+                <div class="student-card group relative bg-white rounded-2xl shadow-md overflow-hidden card-hover border border-gray-100"
+                    data-category="nam">
+                    <div class="aspect-w-3 aspect-h-4 bg-gray-200 relative overflow-hidden">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-br from-green-100 to-green-200 flex items-center justify-center text-6xl">
+                            🏃‍♂️</div>
+                        <div
+                            class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-4 translate-y-full group-hover:translate-y-0 transition duration-300">
+                            <p class="text-white text-sm italic">"Thể thao là cuộc sống. Đá bóng số 1!"</p>
+                        </div>
+                    </div>
+                    <div class="p-6 text-center">
+                        <h3 class="text-lg font-bold text-gray-900">Nguyễn Ngọc Ánh</h3>
+                        <p class="text-gray-500 text-sm font-medium">Thành viên</p>
+                        <div class="mt-4 flex justify-center space-x-3 text-gray-400">
+                            <a href="#" class="hover:text-blue-600"><i class="fab fa-facebook"></i></a>
+                            <a href="#" class="hover:text-pink-600"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Student 4 -->
+                <div class="student-card group relative bg-white rounded-2xl shadow-md overflow-hidden card-hover border border-gray-100"
+                    data-category="nu">
+                    <div class="aspect-w-3 aspect-h-4 bg-gray-200 relative overflow-hidden">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-br from-purple-100 to-purple-200 flex items-center justify-center text-6xl">
+                            🎨</div>
+                        <div
+                            class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-4 translate-y-full group-hover:translate-y-0 transition duration-300">
+                            <p class="text-white text-sm italic">"Màu sắc làm nên cuộc sống."</p>
+                        </div>
+                    </div>
+                    <div class="p-6 text-center">
+                        <h3 class="text-lg font-bold text-gray-900">Nguyễn Thị Kim Thư</h3>
+                        <p class="text-gray-500 text-sm font-medium">Thành viên</p>
+                        <div class="mt-4 flex justify-center space-x-3 text-gray-400">
+                            <a href="#" class="hover:text-blue-600"><i class="fab fa-facebook"></i></a>
+                            <a href="#" class="hover:text-pink-600"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline / Memory Section -->
+    <section id="timeline" class="py-20 bg-gray-50 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">Hành Trình Của Chúng Ta</h2>
+
+            <div class="relative timeline-line">
+                <!-- Memory 1 -->
+                <div class="mb-8 flex justify-between items-center w-full right-timeline">
+                    <div class="order-1 w-5/12"></div>
+                    <div class="z-20 flex items-center order-1 bg-primary shadow-xl w-8 h-8 rounded-full">
+                        <h1 class="mx-auto font-semibold text-lg text-white">1</h1>
+                    </div>
+                    <div
+                        class="order-1 bg-white rounded-lg shadow-xl w-5/12 px-6 py-4 transform transition hover:scale-105 duration-300">
+                        <h3 class="mb-3 font-bold text-gray-800 text-xl">Tháng 9/2023</h3>
+                        <p class="text-sm leading-snug tracking-wide text-gray-900 text-opacity-100">Ngày đầu tiên nhập
+                            học. Những ánh mắt bỡ ngỡ, lạ lẫm. Chúng ta bắt đầu làm quen với ngôi trường mới, bạn bè
+                            mới.</p>
+                    </div>
+                </div>
+
+                <!-- Memory 2 -->
+                <div class="mb-8 flex justify-between flex-row-reverse items-center w-full left-timeline">
+                    <div class="order-1 w-5/12"></div>
+                    <div class="z-20 flex items-center order-1 bg-secondary shadow-xl w-8 h-8 rounded-full">
+                        <h1 class="mx-auto text-white font-semibold text-lg">2</h1>
+                    </div>
+                    <div
+                        class="order-1 bg-white rounded-lg shadow-xl w-5/12 px-6 py-4 transform transition hover:scale-105 duration-300">
+                        <h3 class="mb-3 font-bold text-gray-800 text-xl">Hội Trại 26/3</h3>
+                        <p class="text-sm leading-snug tracking-wide text-gray-900 text-opacity-100">Lần đầu tiên cả lớp
+                            cùng nhau dựng trại, tập văn nghệ. Mệt nhưng mà vui. Những nụ cười rạng rỡ nhất.</p>
+                    </div>
+                </div>
+
+                <!-- Memory 3 -->
+                <div class="mb-8 flex justify-between items-center w-full right-timeline">
+                    <div class="order-1 w-5/12"></div>
+                    <div class="z-20 flex items-center order-1 bg-accent shadow-xl w-8 h-8 rounded-full">
+                        <h1 class="mx-auto font-semibold text-lg text-white">3</h1>
+                    </div>
+                    <div
+                        class="order-1 bg-white rounded-lg shadow-xl w-5/12 px-6 py-4 transform transition hover:scale-105 duration-300">
+                        <h3 class="mb-3 font-bold text-gray-800 text-xl">Lễ Trưởng Thành</h3>
+                        <p class="text-sm leading-snug tracking-wide text-gray-900 text-opacity-100">Những giọt nước
+                            mắt, những cái ôm thật chặt. Chúc các bạn luôn vững bước trên con đường phía trước.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Teacher Appreciation -->
+    <section id="teachers" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">Lời Tri Ân thầy Cô</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Teacher 1 -->
+                <div
+                    class="flex flex-col md:flex-row bg-blue-50 rounded-2xl p-8 items-center md:items-start space-y-4 md:space-y-0 md:space-x-6 hover:shadow-lg transition">
+                    <div
+                        class="w-24 h-24 rounded-full bg-blue-200 flex items-center justify-center text-4xl flex-shrink-0">
+                        👩‍🏫
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900 text-center md:text-left">Cô Trần Nhật Nữ</h3>
+                        <p class="text-primary font-medium text-center md:text-left mb-2">Giáo viên Chủ Nhiệm</p>
+                        <p class="text-gray-600 italic text-center md:text-left">"Người mẹ thứ hai của lớp. Cảm ơn cô đã
+                            luôn kiên nhẫn, yêu thương và dìu dắt chúng em trong suốt 3 năm học qua."</p>
+                    </div>
+                </div>
+
+                <!-- Teacher 2 -->
+                <div
+                    class="flex flex-col md:flex-row bg-pink-50 rounded-2xl p-8 items-center md:items-start space-y-4 md:space-y-0 md:space-x-6 hover:shadow-lg transition">
+                    <div
+                        class="w-24 h-24 rounded-full bg-pink-200 flex items-center justify-center text-4xl flex-shrink-0">
+                        👨‍🏫
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900 text-center md:text-left">Thầy Phạm Anh Quốc</h3>
+                        <p class="text-secondary font-medium text-center md:text-left mb-2">Giáo viên Tin học</p>
+                        <p class="text-gray-600 italic text-center md:text-left">"Cảm ơn thầy đã giúp chúng em không còn
+                            sợ những con số. Sự nghiêm khắc của thầy giúp chúng em trưởng thành hơn."</p>
+                    </div>
+                </div>
+                <!-- Teacher 3 -->
+                <div
+                    class="flex flex-col md:flex-row bg-pink-50 rounded-2xl p-8 items-center md:items-start space-y-4 md:space-y-0 md:space-x-6 hover:shadow-lg transition">
+                    <div
+                        class="w-24 h-24 rounded-full bg-pink-200 flex items-center justify-center text-4xl flex-shrink-0">
+                        👨‍🏫
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900 text-center md:text-left">Cô Trần Thanh Ngân</h3>
+                        <p class="text-secondary font-medium text-center md:text-left mb-2">Giáo viên Sinh học</p>
+                        <p class="text-gray-600 italic text-center md:text-left">"Cảm ơn cô đã giúp chúng em không còn
+                            sợ những con số. Sự nghiêm khắc của thầy giúp chúng em trưởng thành hơn."</p>
+                    </div>
+                </div>
+                <!-- Teacher 4 -->
+                <div
+                    class="flex flex-col md:flex-row bg-pink-50 rounded-2xl p-8 items-center md:items-start space-y-4 md:space-y-0 md:space-x-6 hover:shadow-lg transition">
+                    <div
+                        class="w-24 h-24 rounded-full bg-pink-200 flex items-center justify-center text-4xl flex-shrink-0">
+                        👨‍🏫
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900 text-center md:text-left">Thầy Nguyễn Thanh Cần</h3>
+                        <p class="text-secondary font-medium text-center md:text-left mb-2">Giáo viên Lý</p>
+                        <p class="text-gray-600 italic text-center md:text-left">"Cảm ơn thầy đã giúp chúng em không còn
+                            sợ những con số. Sự nghiêm khắc của thầy giúp chúng em trưởng thành hơn."</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-8">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="font-cursive text-2xl mb-4">Lớp 12A3 - Mãi Mãi Một Tình Yêu</p>
+            <p class="text-gray-400 text-sm">&copy; 2024 Designed by 12A Coder Team.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Filter Logic
+        document.querySelectorAll('.filter-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons
+                document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active', 'bg-primary', 'text-white'));
+                document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.add('bg-gray-100', 'text-gray-600'));
+
+                // Add active class to clicked button
+                button.classList.add('active', 'bg-primary', 'text-white');
+                button.classList.remove('bg-gray-100', 'text-gray-600');
+
+                const filterValue = button.getAttribute('data-filter');
+                const cards = document.querySelectorAll('.student-card');
+
+                cards.forEach(card => {
+                    const categories = card.getAttribute('data-category');
+                    if (filterValue === 'all' || categories.includes(filterValue)) {
+                        card.style.display = 'block';
+                        // Add little animation
+                        card.classList.add('animate-fade-in');
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

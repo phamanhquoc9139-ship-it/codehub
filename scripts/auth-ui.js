@@ -7,20 +7,22 @@ document.addEventListener('DOMContentLoaded', async () => {
     .replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;')
     .replaceAll('"', '&quot;').replaceAll("'", '&#039;');
 
-  function showLoginButton() {
-    area.innerHTML = `<a href="login.html" class="bg-primary hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition duration-150 ease-in-out">Đăng Nhập</a>`;
+  function broadcastAuthState(state) {
+    window.__codehubAuthState = state;
+    window.dispatchEvent(new CustomEvent('codehub:auth', { detail: state }));
   }
 
-  async function showUser(user) {
+  function showLoginButton() {
+    area.innerHTML = `<a href="login.html" class="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 rounded-lg text-sm font-medium transition duration-150 ease-in-out">Đăng Nhập</a>`;
+    broadcastAuthState({ session: null, user: null, profile: null });
+  }
+
+  async function showUser(user, session) {
    const { data: profile, error } = await client
   .from('profiles')
   .select('id, full_name, student_code, class_name, role')
   .eq('id', user.id)
   .single();
-
-console.log('AUTH USER ID:', user.id);
-console.log('PROFILE:', profile);
-console.log('PROFILE ERROR:', error);
 
 if (error) {
   console.error('Không đọc được hồ sơ:', error);
@@ -37,7 +39,7 @@ const sub =
     area.innerHTML = `
       <div class="relative" id="codehub-user-menu">
         <button id="codehub-user-button" type="button"
-          class="flex items-center gap-2 bg-primary hover:bg-blue-600 text-white px-3 py-2 rounded-lg text-sm font-medium transition">
+          class="flex items-center gap-2 bg-blue-700 hover:bg-blue-800 text-white px-3 py-2 rounded-lg text-sm font-medium transition">
           <span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/20">👤</span>
           <span class="hidden sm:flex flex-col items-start leading-tight">
             <span class="max-w-40 truncate">${escapeHTML(name)}</span>
@@ -73,12 +75,13 @@ const sub =
       if (signOutError) return alert('Không thể đăng xuất: ' + signOutError.message);
       window.location.href = 'index.html';
     });
+    broadcastAuthState({ session: session || { user }, user, profile });
   }
 
   const { data: { session } } = await client.auth.getSession();
-  if (session?.user) await showUser(session.user); else showLoginButton();
+  if (session?.user) await showUser(session.user, session); else showLoginButton();
 
-  client.auth.onAuthStateChange((_event, session) => {
-    setTimeout(() => session?.user ? showUser(session.user) : showLoginButton(), 0);
+  client.auth.onAuthStateChange((_event, nextSession) => {
+    setTimeout(() => nextSession?.user ? showUser(nextSession.user, nextSession) : showLoginButton(), 0);
   });
 });
