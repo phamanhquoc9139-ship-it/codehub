@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phòng Thí Nghiệm Vật Lý Ảo Tương Tác THPT (10 - 11 - 12) | Học Viện CodeHub</title>
+  <meta name="description" content="Phòng thí nghiệm Vật lý ảo tương tác HTML5 Canvas & JavaScript dành cho học sinh THPT: Chuyển động tròn đều, Dao động điều hòa, Con lắc lò xo, Con lắc đơn phi tuyến RK4 và Sóng cơ. Tương thích máy tính, điện thoại và bảng tương tác thông minh.">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              800: '#1e40af',
+              900: '#1e3a8a',
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'Inter', 'system-ui', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace']
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- Google Fonts & Font Awesome -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- KaTeX Math Rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+
+  <style>
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.05);
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: rgba(59, 130, 246, 0.35);
+      border-radius: 9999px;
+    }
+    .dark .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: rgba(59, 130, 246, 0.5);
+    }
+    .tab-btn.active {
+      background-color: #2563eb !important;
+      color: #ffffff !important;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+    }
+    .dark .tab-btn.active {
+      background-color: #3b82f6 !important;
+      color: #ffffff !important;
+      box-shadow: 0 4px 14px rgba(59, 130, 246, 0.35);
+    }
+  </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 min-h-screen flex flex-col font-sans antialiased transition-colors duration-200">
+
+  <!-- Navigation Bar -->
+  <header class="sticky top-0 z-50 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-xs">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+      <!-- Brand Logo & Back to Home -->
+      <div class="flex items-center gap-3">
+        <a href="../index.html" class="flex items-center gap-2.5 group">
+          <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-cyan-500 flex items-center justify-center text-white shadow-sm shadow-blue-500/20 group-hover:scale-105 transition">
+            <i class="fa-solid fa-atom text-lg"></i>
+          </div>
+          <div>
+            <span class="font-extrabold text-base sm:text-lg tracking-tight text-slate-900 dark:text-white flex items-center gap-1.5">
+              Học Viện CodeHub
+              <span class="text-[10px] font-bold px-1.5 py-0.5 rounded-md bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-900">Lab Vật Lý</span>
+            </span>
+            <p class="text-[11px] text-slate-500 dark:text-slate-400 hidden sm:block">Phòng Thí Nghiệm Vật Lý Ảo Tương Tác THPT</p>
+          </div>
+        </a>
+      </div>
+
+      <!-- Quick Links to Courses -->
+      <nav class="hidden md:flex items-center gap-1 text-xs font-semibold text-slate-600 dark:text-slate-300">
+        <a href="vatly_10.html" class="px-3 py-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition flex items-center gap-1.5">
+          <i class="fa-solid fa-book text-blue-500"></i> Vật Lí 10
+        </a>
+        <a href="vatly_11.html" class="px-3 py-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition flex items-center gap-1.5">
+          <i class="fa-solid fa-book text-indigo-500"></i> Vật Lí 11
+        </a>
+        <a href="vatly_12.html" class="px-3 py-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition flex items-center gap-1.5">
+          <i class="fa-solid fa-book text-purple-500"></i> Vật Lí 12
+        </a>
+      </nav>
+
+      <!-- Action Utilities -->
+      <div class="flex items-center gap-2">
+        <!-- Smartboard Fullscreen Button -->
+        <button id="btn-fullscreen" class="px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-bold transition flex items-center gap-1.5" title="Toàn màn hình trình chiếu bảng tương tác">
+          <i class="fa-solid fa-expand"></i> <span class="hidden sm:inline">Toàn màn hình</span>
+        </button>
+
+        <!-- Dark / Light Mode Toggle -->
+        <button id="btn-theme" class="p-2 w-9 h-9 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition flex items-center justify-center" title="Chuyển chế độ sáng/tối">
+          <i class="fa-solid fa-moon dark:hidden"></i>
+          <i class="fa-solid fa-sun hidden dark:block text-amber-400"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Header -->
+  <section class="bg-gradient-to-b from-blue-50/80 via-white to-slate-50 dark:from-slate-900/90 dark:via-slate-950 dark:to-slate-950 border-b border-slate-200/80 dark:border-slate-800/80 py-8 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto text-center space-y-3">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-blue-100 dark:bg-blue-950/80 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-900 text-xs font-bold tracking-wide">
+        <i class="fa-solid fa-microscope text-blue-600"></i> GDPT 2018 • HTML5 Canvas & Khoa Học Tương Tác
+      </div>
+      <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+        Phòng Thí Nghiệm Vật Lý Ảo Tương Tác
+      </h1>
+      <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-3xl mx-auto leading-relaxed">
+        Hệ thống mô phỏng đồ họa vật lý thời gian thực phục vụ học sinh THPT Lớp 10, 11 và 12. Điều chỉnh thông số bằng thanh trượt, quan sát vectơ lực - vận tốc - gia tốc, đồ thị dao động và phân biệt chính xác giữa mô hình lý thuyết gần đúng và phương trình phi tuyến thực tế.
+      </p>
+
+      <!-- Simulation Tabs Navigation -->
+      <div class="pt-4 flex flex-wrap items-center justify-center gap-2 max-w-5xl mx-auto">
+        <button data-tab="circular" class="tab-btn active px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 hover:border-blue-500 transition flex items-center gap-2">
+          <i class="fa-solid fa-arrows-spin text-blue-500"></i>
+          <span>1. Chuyển Động Tròn Đều (Lớp 10)</span>
+        </button>
+
+        <button data-tab="shm" class="tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 hover:border-indigo-500 transition flex items-center gap-2">
+          <i class="fa-solid fa-wave-square text-indigo-500"></i>
+          <span>2. Dao Động Điều Hòa & VTLG (Lớp 11)</span>
+        </button>
+
+        <button data-tab="spring" class="tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 hover:border-emerald-500 transition flex items-center gap-2">
+          <i class="fa-solid fa-gem text-emerald-500"></i>
+          <span>3. Con Lắc Lò Xo & Cơ Năng (Lớp 11)</span>
+        </button>
+
+        <button data-tab="pendulum" class="tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 hover:border-rose-500 transition flex items-center gap-2">
+          <i class="fa-solid fa-clock text-rose-500"></i>
+          <span>4. Con Lắc Đơn Phi Tuyến (Lớp 11)</span>
+        </button>
+
+        <button data-tab="wave" class="tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 hover:border-sky-500 transition flex items-center gap-2">
+          <i class="fa-solid fa-water text-sky-500"></i>
+          <span>5. Sóng Cơ: Ngang & Dọc (Lớp 11/12)</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Simulation Containers Section -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8" id="lab-container">
+    <!-- Tab 1: Circular Motion -->
+    <div id="sim-panel-circular" class="sim-tab-panel"></div>
+
+    <!-- Tab 2: Simple Harmonic Motion -->
+    <div id="sim-panel-shm" class="sim-tab-panel hidden"></div>
+
+    <!-- Tab 3: Mass-Spring Oscillator -->
+    <div id="sim-panel-spring" class="sim-tab-panel hidden"></div>
+
+    <!-- Tab 4: Pendulum -->
+    <div id="sim-panel-pendulum" class="sim-tab-panel hidden"></div>
+
+    <!-- Tab 5: Waves -->
+    <div id="sim-panel-wave" class="sim-tab-panel hidden"></div>
+  </main>
+
+  <!-- Educational Guide & Teaching Notes -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+    <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 sm:p-8 space-y-6">
+      <div class="flex items-center gap-2.5 border-b border-slate-200 dark:border-slate-800 pb-4">
+        <span class="w-8 h-8 rounded-xl bg-blue-100 dark:bg-blue-950 text-blue-600 dark:text-blue-400 flex items-center justify-center font-black">
+          <i class="fa-solid fa-chalkboard-user"></i>
+        </span>
+        <h2 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">
+          Hướng Dẫn Giảng Dạy & Tương Tác Trên Lớp Học
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs sm:text-sm text-slate-600 dark:text-slate-300">
+        <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/80 dark:border-slate-800 space-y-2">
+          <h4 class="font-bold text-slate-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-laptop text-blue-500"></i> Tương thích thiết bị
+          </h4>
+          <p class="leading-relaxed">
+            Chạy trực tiếp trên trình duyệt mọi hệ điều hành (Windows, macOS, iOS, Android, Linux). Thao tác mượt mà bằng chuột, ngón tay cảm ứng trên iPad/máy tính bảng hoặc bút viết trên màn hình bảng tương tác thông minh (Smartboard / Promethean).
+          </p>
+        </div>
+
+        <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/80 dark:border-slate-800 space-y-2">
+          <h4 class="font-bold text-slate-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-sliders text-indigo-500"></i> Khám phá hiện tượng
+          </h4>
+          <p class="leading-relaxed">
+            Kéo các thanh trượt tham số (Biên độ, Tần số góc, Chiều dài, Gia tốc trọng trường) để học sinh trực tiếp nhìn thấy sự thay đổi tức thì của chu kỳ $T$, cơ năng $W$, lực căng dây $T_{cd}$ và dạng sóng sin tương ứng.
+          </p>
+        </div>
+
+        <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/80 dark:border-slate-800 space-y-2">
+          <h4 class="font-bold text-slate-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-square-root-variable text-rose-500"></i> Chuẩn mực vật lý
+          </h4>
+          <p class="leading-relaxed">
+            Mô phỏng sử dụng tích phân số bậc 4 Runge-Kutta (RK4) để giải phương trình phi tuyến thực tế, giúp học sinh nhận thức sâu sắc giới hạn của công thức gần đúng góc nhỏ $\sin\alpha \approx \alpha$ khi nâng góc lệch lên $30^\circ - 80^\circ$.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer (CodeHub Standard) -->
+  <footer class="bg-slate-900 text-white mt-auto border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8 text-xs sm:text-sm">
+        <!-- Col 1: Brand -->
+        <div class="space-y-3">
+          <div class="flex items-center gap-2">
+            <div class="w-8 h-8 rounded-xl bg-blue-600 flex items-center justify-center text-white font-bold">
+              <i class="fa-solid fa-code"></i>
+            </div>
+            <span class="font-extrabold text-base text-white tracking-tight">Học Viện CodeHub</span>
+          </div>
+          <p class="text-slate-400 leading-relaxed text-xs">
+            Nền tảng học tập số tích hợp AI dành cho học sinh từ lớp 1 đến lớp 12. Học tập – Luyện tập – Sáng tạo.
+          </p>
+          <div class="pt-1 text-slate-400 text-xs">
+            <span class="text-slate-300 font-semibold">Sáng lập và phát triển:</span> Phạm Anh Quốc<br>
+            <span class="text-slate-400 italic">Dự án giáo dục số cá nhân độc lập.</span>
+          </div>
+        </div>
+
+        <!-- Col 2: Khám phá -->
+        <div class="space-y-2">
+          <h4 class="text-white font-bold uppercase tracking-wider text-xs">Khám Phá Môn Học</h4>
+          <ul class="space-y-1.5 text-slate-400 text-xs">
+            <li><a href="vatly_10.html" class="hover:text-blue-400 transition">Vật Lí 10 (GDPT 2018)</a></li>
+            <li><a href="vatly_11.html" class="hover:text-blue-400 transition">Vật Lí 11 (Dao Động & Sóng)</a></li>
+            <li><a href="vatly_12.html" class="hover:text-blue-400 transition">Vật Lí 12 (Nhiệt & Từ Trường)</a></li>
+            <li><a href="chuyende_vatly_11.html" class="hover:text-blue-400 transition">Chuyên Đề Vật Lí 11</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Hỗ trợ -->
+        <div class="space-y-2">
+          <h4 class="text-white font-bold uppercase tracking-wider text-xs">Hỗ Trợ & Giới Thiệu</h4>
+          <ul class="space-y-1.5 text-slate-400 text-xs">
+            <li><a href="../about.html" class="hover:text-blue-400 transition">Giới Thiệu CodeHub</a></li>
+            <li><a href="../index.html#faq" class="hover:text-blue-400 transition">Hướng Dẫn Sử Dụng</a></li>
+            <li><a href="../privacy.html" class="hover:text-blue-400 transition">Chính Sách Bảo Mật</a></li>
+            <li><a href="../terms.html" class="hover:text-blue-400 transition">Điều Khoản Sử Dụng</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 4: Liên hệ -->
+        <div class="space-y-2">
+          <h4 class="text-white font-bold uppercase tracking-wider text-xs">Liên Hệ & Phản Hồi</h4>
+          <p class="text-slate-400 text-xs leading-relaxed">
+            Học sinh và thầy cô có thể gửi góp ý, báo lỗi thí nghiệm qua kênh phản hồi của nền tảng.
+          </p>
+          <div class="pt-2">
+            <a href="https://codehub.io.vn/" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-600/30 hover:bg-blue-600/50 text-blue-300 font-medium text-xs border border-blue-500/40 transition">
+              <i class="fa-solid fa-globe"></i> Website: codehub.io.vn
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="pt-6 border-t border-slate-800 flex flex-wrap items-center justify-between gap-4 text-xs text-slate-500">
+        <div>© 2026 Học Viện CodeHub. All rights reserved. Sáng lập và phát triển: Phạm Anh Quốc.</div>
+        <div>Hệ Thống Mô Phỏng Vật Lý HTML5 Canvas • Không dùng API trả phí • Tối ưu 60 FPS</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="../scripts/physics-simulations.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Dark mode toggle
+      const btnTheme = document.getElementById('btn-theme');
+      btnTheme.addEventListener('click', () => {
+        const isDark = document.documentElement.classList.toggle('dark');
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      });
+
+      // Fullscreen mode toggle
+      const btnFullscreen = document.getElementById('btn-fullscreen');
+      btnFullscreen.addEventListener('click', () => {
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen().catch(err => {
+            console.warn('Fullscreen request failed:', err);
+          });
+          btnFullscreen.innerHTML = '<i class="fa-solid fa-compress"></i> <span class="hidden sm:inline">Thu nhỏ</span>';
+        } else {
+          document.exitFullscreen();
+          btnFullscreen.innerHTML = '<i class="fa-solid fa-expand"></i> <span class="hidden sm:inline">Toàn màn hình</span>';
+        }
+      });
+
+      // Simulation instances cache
+      const simInstances = {
+        circular: null,
+        shm: null,
+        spring: null,
+        pendulum: null,
+        wave: null
+      };
+
+      function mountTab(tabName) {
+        // Hide all panels
+        document.querySelectorAll('.sim-tab-panel').forEach(p => p.classList.add('hidden'));
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+
+        const panel = document.getElementById(`sim-panel-${tabName}`);
+        const activeBtn = document.querySelector(`[data-tab="${tabName}"]`);
+        if (panel) panel.classList.remove('hidden');
+        if (activeBtn) activeBtn.classList.add('active');
+
+        // Lazy initialize simulation on first view
+        if (!simInstances[tabName] && window.CodeHubPhysics) {
+          simInstances[tabName] = window.CodeHubPhysics.create(tabName, `sim-panel-${tabName}`);
+        } else if (simInstances[tabName]) {
+          // Trigger render/resize
+          simInstances[tabName].renderAll();
+        }
+      }
+
+      // Tab switcher click handlers
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          mountTab(btn.dataset.tab);
+        });
+      });
+
+      // Mount default tab (circular)
+      mountTab('circular');
+
+      // Auto render KaTeX if loaded
+      if (typeof renderMathInElement === 'function') {
+        renderMathInElement(document.body, {
+          delimiters: [
+            { left: '$$', right: '$$', display: true },
+            { left: '$', right: '$', display: false }
+          ],
+          throwOnError: false
+        });
+      }
+    });
+  </script>
+</body>
+</html>
