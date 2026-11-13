@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phòng Thí Nghiệm Hóa Học Ảo Tương Tác THPT (10 - 11 - 12) | Học Viện CodeHub</title>
+  <meta name="description" content="Phòng thí nghiệm Hóa học ảo tương tác HTML5 Canvas 2D/3D dành cho học sinh THPT: Tổng hợp nước 2H₂ + O₂, Kim loại tác dụng với Axit, Phản ứng tạo kết tủa trao đổi ion, Mô hình phân tử 3D VSEPR và Luyện tập cân bằng phương trình hóa học.">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0fdfa',
+              100: '#ccfbf1',
+              500: '#14b8a6',
+              600: '#0d9488',
+              700: '#0f766e',
+              800: '#115e59',
+              900: '#134e4a',
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'Inter', 'system-ui', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace']
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- Google Fonts & Font Awesome -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- KaTeX Math Rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+
+  <style>
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.05);
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: rgba(13, 148, 136, 0.35);
+      border-radius: 9999px;
+    }
+    .dark .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: rgba(20, 184, 166, 0.5);
+    }
+    .tab-btn.active {
+      background-color: #0d9488 !important;
+      color: #ffffff !important;
+      box-shadow: 0 4px 12px rgba(13, 148, 136, 0.25);
+    }
+    .dark .tab-btn.active {
+      background-color: #14b8a6 !important;
+      color: #0f172a !important;
+      box-shadow: 0 4px 14px rgba(20, 184, 166, 0.35);
+    }
+  </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 min-h-screen flex flex-col font-sans antialiased transition-colors duration-200">
+
+  <!-- Navigation Bar -->
+  <header class="sticky top-0 z-50 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-xs">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+      <!-- Brand Logo & Back to Home -->
+      <div class="flex items-center gap-3">
+        <a href="../index.html" class="flex items-center gap-2.5 group">
+          <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-teal-600 via-emerald-600 to-cyan-500 flex items-center justify-center text-white shadow-sm shadow-teal-500/20 group-hover:scale-105 transition">
+            <i class="fa-solid fa-flask-vial text-lg"></i>
+          </div>
+          <div>
+            <span class="font-extrabold text-base sm:text-lg tracking-tight text-slate-900 dark:text-white flex items-center gap-1.5">
+              Học Viện CodeHub
+              <span class="text-[10px] font-bold px-1.5 py-0.5 rounded-md bg-teal-100 dark:bg-teal-950 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-900">Lab Hóa Học</span>
+            </span>
+            <p class="text-[11px] text-slate-500 dark:text-slate-400 hidden sm:block">Phòng Thí Nghiệm Hóa Học Ảo Tương Tác THPT</p>
+          </div>
+        </a>
+      </div>
+
+      <!-- Quick Links to Courses -->
+      <nav class="hidden md:flex items-center gap-1 text-xs font-semibold text-slate-600 dark:text-slate-300">
+        <a href="hoahoc_10.html" class="px-3 py-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition flex items-center gap-1.5">
+          <i class="fa-solid fa-book text-teal-500"></i> Hóa Học 10
+        </a>
+        <a href="hoahoc_11.html" class="px-3 py-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition flex items-center gap-1.5">
+          <i class="fa-solid fa-book text-emerald-500"></i> Hóa Học 11
+        </a>
+        <a href="hoahoc_12.html" class="px-3 py-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition flex items-center gap-1.5">
+          <i class="fa-solid fa-book text-cyan-500"></i> Hóa Học 12
+        </a>
+        <a href="physics_lab.html" class="px-3 py-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition flex items-center gap-1.5 text-blue-600 dark:text-blue-400">
+          <i class="fa-solid fa-atom"></i> Lab Vật Lý
+        </a>
+      </nav>
+
+      <!-- Action Utilities -->
+      <div class="flex items-center gap-2">
+        <!-- Smartboard Fullscreen Button -->
+        <button id="btn-fullscreen" class="px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-bold transition flex items-center gap-1.5 cursor-pointer" title="Toàn màn hình trình chiếu bảng tương tác">
+          <i class="fa-solid fa-expand"></i> <span class="hidden sm:inline">Toàn màn hình</span>
+        </button>
+
+        <!-- Dark / Light Mode Toggle -->
+        <button id="btn-theme" class="p-2 w-9 h-9 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition flex items-center justify-center cursor-pointer" title="Chuyển chế độ sáng/tối">
+          <i class="fa-solid fa-moon dark:hidden"></i>
+          <i class="fa-solid fa-sun hidden dark:block text-amber-400"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Header -->
+  <section class="bg-gradient-to-b from-teal-50/80 via-white to-slate-50 dark:from-slate-900/90 dark:via-slate-950 dark:to-slate-950 border-b border-slate-200/80 dark:border-slate-800/80 py-8 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto text-center space-y-3">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-teal-100 dark:bg-teal-950/80 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-900 text-xs font-bold tracking-wide">
+        <i class="fa-solid fa-flask text-teal-600"></i> GDPT 2018 • Mô Hình Phân Tử 3D & Hóa Học Thực Nghiệm Tương Tác
+      </div>
+      <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+        Phòng Thí Nghiệm Hóa Học Ảo Tương Tác
+      </h1>
+      <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-3xl mx-auto leading-relaxed">
+        Trực quan hóa cấu trúc phân tử 2D/3D, khảo sát định lượng chất hết – chất dư, biến thiên enthalpy $\Delta_r H^\circ_{298}$, dãy điện hóa kim loại và phản ứng trao đổi ion tạo kết tủa. Hoạt động 100% trên trình duyệt máy tính, điện thoại và bảng tương tác thông minh.
+      </p>
+
+      <!-- Simulation Tabs Navigation -->
+      <div class="pt-4 flex flex-wrap items-center justify-center gap-2 max-w-5xl mx-auto">
+        <button data-tab="water" class="tab-btn active px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 hover:border-teal-500 transition flex items-center gap-2 cursor-pointer">
+          <i class="fa-solid fa-fire-flame-simple text-teal-500"></i>
+          <span>1. Tổng Hợp Nước & Phân Tử 3D ($2\text{H}_2 + \text{O}_2$)</span>
+        </button>
+
+        <button data-tab="metal-acid" class="tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 hover:border-amber-500 transition flex items-center gap-2 cursor-pointer">
+          <i class="fa-solid fa-vial-circle-check text-amber-500"></i>
+          <span>2. Kim Loại Tác Dụng Với Axit ($\text{M} + \text{HCl}$)</span>
+        </button>
+
+        <button data-tab="precipitation" class="tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 hover:border-indigo-500 transition flex items-center gap-2 cursor-pointer">
+          <i class="fa-solid fa-droplet text-indigo-500"></i>
+          <span>3. Phản Ứng Tạo Kết Tủa ($\text{BaSO}_4, \text{AgCl}, \text{Cu(OH)}_2$)</span>
+        </button>
+
+        <button data-tab="explorer" class="tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 hover:border-purple-500 transition flex items-center gap-2 cursor-pointer">
+          <i class="fa-solid fa-cubes text-purple-500"></i>
+          <span>4. Khám Phá 8 Phân Tử 3D & Cân Bằng Phương Trình</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Simulation Containers Section -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8" id="chem-lab-container">
+    <!-- Tab 1: Water Synthesis & 2D/3D Molecule -->
+    <div id="chem-panel-water" class="chem-tab-panel"></div>
+
+    <!-- Tab 2: Metal + Acid Reaction -->
+    <div id="chem-panel-metal-acid" class="chem-tab-panel hidden"></div>
+
+    <!-- Tab 3: Precipitation Reaction -->
+    <div id="chem-panel-precipitation" class="chem-tab-panel hidden"></div>
+
+    <!-- Tab 4: 3D Molecular Explorer & Equation Balancer Arena -->
+    <div id="chem-panel-explorer" class="chem-tab-panel hidden"></div>
+  </main>
+
+  <!-- Scientific Methodology & Lab Safety Section -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+    <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 sm:p-8 space-y-6">
+      <div class="flex items-center gap-2.5 border-b border-slate-200 dark:border-slate-800 pb-4">
+        <span class="w-8 h-8 rounded-xl bg-teal-100 dark:bg-teal-950 text-teal-600 dark:text-teal-400 flex items-center justify-center font-black">
+          <i class="fa-solid fa-shield-heart"></i>
+        </span>
+        <h2 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">
+          Chuẩn Mực Khoa Học & An Toàn Phòng Thí Nghiệm (GDPT 2018)
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs sm:text-sm text-slate-600 dark:text-slate-300">
+        <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/80 dark:border-slate-800 space-y-2">
+          <h4 class="font-bold text-slate-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-scale-balanced text-teal-500"></i> Phân biệt Định tính & Định lượng
+          </h4>
+          <p class="leading-relaxed">
+            Hoạt ảnh chuyển động hạt vi mô mang tính <strong>trực quan định tính</strong> giúp học sinh hình dung va chạm phân tử. Các bảng số liệu số mol, chất giới hạn, thể tích khí $\text{H}_2$ ở điều kiện chuẩn ($25^\circ\text{C}, 1\text{ bar}: V = 24.79\text{ L/mol}$) và khối lượng kết tủa $m_\downarrow$ được tính toán <strong>định lượng chính xác</strong> theo định luật bảo toàn khối lượng.
+          </p>
+        </div>
+
+        <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/80 dark:border-slate-800 space-y-2">
+          <h4 class="font-bold text-slate-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-cubes-stacked text-indigo-500"></i> Hình học phân tử VSEPR 3D
+          </h4>
+          <p class="leading-relaxed">
+            Học sinh có thể dùng chuột hoặc ngón tay xoay 360°, phóng to/thu nhỏ và chuyển đổi giữa 3 chế độ: <strong>3D Cầu – Thanh (Ball & Stick)</strong>, <strong>3D Đặc (CPK Space-Filling)</strong> và <strong>Công thức Lewis 2D</strong> để quan sát góc liên kết ($\text{H}_2\text{O}: 104.5^\circ$, $\text{NH}_3: 107.3^\circ$, $\text{CH}_4: 109.5^\circ$).
+          </p>
+        </div>
+
+        <div class="p-4 rounded-xl bg-rose-50/60 dark:bg-rose-950/30 border border-rose-200/80 dark:border-rose-900/50 space-y-2">
+          <h4 class="font-bold text-rose-900 dark:text-rose-200 flex items-center gap-2">
+            <i class="fa-solid fa-triangle-exclamation text-rose-500"></i> Quy tắc An toàn Hóa chất
+          </h4>
+          <p class="leading-relaxed text-rose-800 dark:text-rose-300">
+            Khi thực hành thực tế trên lớp: <strong>(1)</strong> Phải thử độ tinh khiết của khí $\text{H}_2$ trước khi đốt để tránh hỗn hợp nổ $2\text{H}_2:\text{O}_2$; <strong>(2)</strong> Mang kính bảo hộ và găng tay khi tiếp xúc với dung dịch axit $\text{HCl}$ và kiềm $\text{NaOH}$; <strong>(3)</strong> Không đổ trực tiếp hóa chất thừa vào bồn rửa.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer (CodeHub Standard) -->
+  <footer class="bg-slate-900 text-white mt-auto border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8 text-xs sm:text-sm">
+        <!-- Col 1: Brand -->
+        <div class="space-y-3">
+          <div class="flex items-center gap-2">
+            <div class="w-8 h-8 rounded-xl bg-teal-600 flex items-center justify-center text-white font-bold">
+              <i class="fa-solid fa-code"></i>
+            </div>
+            <span class="font-extrabold text-base text-white tracking-tight">Học Viện CodeHub</span>
+          </div>
+          <p class="text-slate-400 leading-relaxed text-xs">
+            Nền tảng học tập số tích hợp AI dành cho học sinh từ lớp 1 đến lớp 12. Học tập – Luyện tập – Sáng tạo.
+          </p>
+          <div class="pt-1 text-slate-400 text-xs">
+            <span class="text-slate-300 font-semibold">Sáng lập và phát triển:</span> Phạm Anh Quốc<br>
+            <span class="text-slate-400 italic">Dự án giáo dục số cá nhân độc lập.</span>
+          </div>
+        </div>
+
+        <!-- Col 2: Khám phá -->
+        <div class="space-y-2">
+          <h4 class="text-white font-bold uppercase tracking-wider text-xs">Khám Phá Hóa Học</h4>
+          <ul class="space-y-1.5 text-slate-400 text-xs">
+            <li><a href="hoahoc_10.html" class="hover:text-teal-400 transition">Hóa Học 10 (Cấu Tạo & Liên Kết)</a></li>
+            <li><a href="hoahoc_11.html" class="hover:text-teal-400 transition">Hóa Học 11 (Cân Bằng & Hữu Cơ)</a></li>
+            <li><a href="hoahoc_12.html" class="hover:text-teal-400 transition">Hóa Học 12 (Ester, Polymer & Điện Hóa)</a></li>
+            <li><a href="physics_lab.html" class="hover:text-teal-400 transition">Phòng Thí Nghiệm Vật Lý Ảo</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Hỗ trợ -->
+        <div class="space-y-2">
+          <h4 class="text-white font-bold uppercase tracking-wider text-xs">Hỗ Trợ & Giới Thiệu</h4>
+          <ul class="space-y-1.5 text-slate-400 text-xs">
+            <li><a href="../about.html" class="hover:text-teal-400 transition">Giới Thiệu CodeHub</a></li>
+            <li><a href="../index.html#faq" class="hover:text-teal-400 transition">Hướng Dẫn Sử Dụng</a></li>
+            <li><a href="../privacy.html" class="hover:text-teal-400 transition">Chính Sách Bảo Mật</a></li>
+            <li><a href="../terms.html" class="hover:text-teal-400 transition">Điều Khoản Sử Dụng</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 4: Liên hệ -->
+        <div class="space-y-2">
+          <h4 class="text-white font-bold uppercase tracking-wider text-xs">Liên Hệ & Phản Hồi</h4>
+          <p class="text-slate-400 text-xs leading-relaxed">
+            Học sinh và thầy cô có thể gửi góp ý, báo lỗi thí nghiệm qua kênh phản hồi của nền tảng.
+          </p>
+          <div class="pt-2">
+            <a href="https://codehub.io.vn/" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-teal-600/30 hover:bg-teal-600/50 text-teal-300 font-medium text-xs border border-teal-500/40 transition">
+              <i class="fa-solid fa-globe"></i> Website: codehub.io.vn
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="pt-6 border-t border-slate-800 flex flex-wrap items-center justify-between gap-4 text-xs text-slate-500">
+        <div>© 2026 Học Viện CodeHub. All rights reserved. Sáng lập và phát triển: Phạm Anh Quốc.</div>
+        <div>Hệ Thống Phòng Thí Nghiệm Hóa Học Ảo 2D/3D • Không dùng API trả phí • Tối ưu 60 FPS</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="../scripts/chemistry-simulations.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Dark mode toggle
+      const btnTheme = document.getElementById('btn-theme');
+      btnTheme.addEventListener('click', () => {
+        const isDark = document.documentElement.classList.toggle('dark');
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      });
+
+      // Fullscreen mode toggle
+      const btnFullscreen = document.getElementById('btn-fullscreen');
+      btnFullscreen.addEventListener('click', () => {
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen().catch(err => {
+            console.warn('Fullscreen request failed:', err);
+          });
+          btnFullscreen.innerHTML = '<i class="fa-solid fa-compress"></i> <span class="hidden sm:inline">Thu nhỏ</span>';
+        } else {
+          document.exitFullscreen();
+          btnFullscreen.innerHTML = '<i class="fa-solid fa-expand"></i> <span class="hidden sm:inline">Toàn màn hình</span>';
+        }
+      });
+
+      const simInstances = {
+        water: null,
+        'metal-acid': null,
+        precipitation: null,
+        explorer: null
+      };
+
+      function mountTab(tabName) {
+        document.querySelectorAll('.chem-tab-panel').forEach(p => p.classList.add('hidden'));
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+
+        const panel = document.getElementById(`chem-panel-${tabName}`);
+        const activeBtn = document.querySelector(`[data-tab="${tabName}"]`);
+        if (panel) panel.classList.remove('hidden');
+        if (activeBtn) activeBtn.classList.add('active');
+
+        if (!simInstances[tabName] && window.CodeHubChemistry) {
+          simInstances[tabName] = window.CodeHubChemistry.create(tabName, `chem-panel-${tabName}`);
+        } else if (simInstances[tabName] && typeof simInstances[tabName].renderAll === 'function') {
+          simInstances[tabName].renderAll();
+        } else if (simInstances[tabName] && typeof simInstances[tabName].render3D === 'function') {
+          simInstances[tabName].render3D();
+        }
+      }
+
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          mountTab(btn.dataset.tab);
+        });
+      });
+
+      mountTab('water');
+
+      if (typeof renderMathInElement === 'function') {
+        renderMathInElement(document.body, {
+          delimiters: [
+            { left: '$$', right: '$$', display: true },
+            { left: '$', right: '$', display: false }
+          ],
+          throwOnError: false
+        });
+      }
+    });
+  </script>
+</body>
+</html>

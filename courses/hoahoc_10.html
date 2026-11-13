@@ -61,6 +61,11 @@
 
       <!-- Right: Action Buttons -->
       <div class="flex items-center gap-2 shrink-0">
+        <a href="chemistry_lab.html" class="px-3 py-1.5 rounded-xl bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-500 hover:to-cyan-500 text-white text-xs font-black shadow-sm transition flex items-center gap-1.5" title="Mở Phòng Thí Nghiệm Hóa Học Ảo 2D/3D">
+          <span>🧪</span>
+          <span class="hidden sm:inline">Lab Hóa Học Ảo</span>
+        </a>
+
         <button type="button" onclick="openModal('search-modal')" class="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-xs font-bold text-slate-700 dark:text-slate-200 flex items-center gap-2 border border-slate-200/80 dark:border-slate-700 transition">
           <span>🔍</span>
           <span class="hidden sm:inline">Tìm kiếm</span>
@@ -4881,6 +4886,11 @@
 
         <!-- Card Body -->
         <div class="p-5 md:p-6 space-y-6">
+          <!-- Interactive Chemistry Simulation 1: Water Synthesis & 2D/3D Covalent Molecule -->
+          <section id="b12-mo-phong-ao" class="scroll-mt-24">
+            <div id="chem-sim-water-b12"></div>
+          </section>
+
           <!-- A. Công thức & Quy tắc cốt lõi -->
           <section id="b12-cong-thuc" class="scroll-mt-24">
             <div class="flex items-center gap-2 mb-3">
@@ -5938,6 +5948,11 @@
 
         <!-- Card Body -->
         <div class="p-5 md:p-6 space-y-6">
+          <!-- Interactive Chemistry Simulation 2: Metal + Acid Redox & Kinetics -->
+          <section id="b15-mo-phong-ao" class="scroll-mt-24">
+            <div id="chem-sim-metal-acid-b15"></div>
+          </section>
+
           <!-- A. Công thức & Quy tắc cốt lõi -->
           <section id="b15-cong-thuc" class="scroll-mt-24">
             <div class="flex items-center gap-2 mb-3">
@@ -9918,7 +9933,16 @@
       initTheme();
       syncProgressUI();
       initScrollSpy();
+      if (window.CodeHubChemistry) {
+        if (document.getElementById('chem-sim-water-b12')) {
+          window.CodeHubChemistry.create('water', 'chem-sim-water-b12');
+        }
+        if (document.getElementById('chem-sim-metal-acid-b15')) {
+          window.CodeHubChemistry.create('metal-acid', 'chem-sim-metal-acid-b15');
+        }
+      }
     });
   </script>
+  <script src="../scripts/chemistry-simulations.js"></script>
 </body>
 </html>

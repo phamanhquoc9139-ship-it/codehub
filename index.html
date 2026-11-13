@@ -93,6 +93,7 @@
 <a class="border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium" href="about.html">Giới
                             Thiệu</a>
 <a class="border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium" href="courses/physics_lab.html">Lab Vật Lý</a>
+<a class="border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium" href="courses/chemistry_lab.html">Lab Hóa Học</a>
 <a class="border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium" href="#playground">Code
                             Playground</a>
 </div>
@@ -688,7 +689,7 @@
 <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script defer src="scripts/supabase-config.js"></script>
 <script defer src="scripts/auth-ui.js"></script>
-<script defer src="scripts/courses-data.js?v=1"></script>
+<script defer src="scripts/courses-data.js?v=3.7.1"></script>
 <!-- Theo doi luot truy cap: V3 -->
 <script defer="" src="scripts/activity-tracker.js?v=3.4"></script>
 <!-- CodeHub visit counter - Supabase -->
@@ -798,7 +799,7 @@
       });
     })();
     </script>
-<script defer src="scripts/app.js?v=8"></script>
+<script defer src="scripts/app.js?v=3.7.1"></script>
 <!-- Script: Bộ Lọc, Phân Trang & Tìm Kiếm Môn Học Nhanh -->
 <script>
       let currentFilterMode = 'all';
@@ -851,13 +852,16 @@
 
       function getIndexedCourses() {
         if (!window._CODEHUB_INDEX && Array.isArray(window.CODEHUB_COURSES)) {
-          window._CODEHUB_INDEX = window.CODEHUB_COURSES.map((c, idx) => ({
-            ...c,
-            idx,
-            nt: removeVietnameseTones(c.t),
-            nd: removeVietnameseTones(c.d),
-            nl: removeVietnameseTones(c.l)
-          }));
+          const hiddenLinks = new Set(['courses/gdqp_10.html', 'courses/gdqp_11.html', 'courses/gdqp_12.html']);
+          window._CODEHUB_INDEX = window.CODEHUB_COURSES
+            .filter(c => !hiddenLinks.has(c.l) && !c.t.includes('GD Quốc Phòng'))
+            .map((c, idx) => ({
+              ...c,
+              idx,
+              nt: removeVietnameseTones(c.t),
+              nd: removeVietnameseTones(c.d),
+              nl: removeVietnameseTones(c.l)
+            }));
         }
         return window._CODEHUB_INDEX || [];
       }
@@ -1279,8 +1283,8 @@
         put('btn-filter-tieuhoc', 'Tiểu học 1-5', 68);
         put('btn-filter-thcs', 'THCS 6-9', 62);
         put('btn-filter-10', 'Lớp 10', 38);
-        put('btn-filter-11', 'Lớp 11', 37);
-        put('btn-filter-12', 'Lớp 12', 36);
+        put('btn-filter-11', 'Lớp 11', 36);
+        put('btn-filter-12', 'Lớp 12', 35);
         const stat10 = document.getElementById('stat-grade-10');
         if (stat10 && stat10.textContent !== '38') stat10.textContent = '38';
         const levelStat = document.getElementById('stat-primary-secondary');

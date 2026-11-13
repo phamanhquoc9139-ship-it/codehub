@@ -95,6 +95,11 @@
 
       <!-- Right Controls -->
       <div class="flex items-center gap-2 sm:gap-3">
+        <a href="chemistry_lab.html" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-gradient-to-r from-indigo-600 to-teal-600 hover:from-indigo-500 hover:to-teal-500 text-white text-xs font-bold shadow-sm transition" title="Mở Phòng Thí Nghiệm Hóa Học Ảo 2D/3D">
+          <i class="fa-solid fa-flask-vial"></i>
+          <span class="hidden sm:inline">Lab Hóa Học Ảo</span>
+        </a>
+
         <!-- Progress Counter -->
         <div class="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-teal-50 dark:bg-slate-800 text-teal-700 dark:text-teal-300 text-xs font-bold border border-teal-200/60 dark:border-slate-700">
           <i class="fa-solid fa-book-open"></i>
@@ -1120,6 +1125,9 @@
             <i class="fa-solid fa-circle-check"></i> Chấm bài kiểm tra
           </button>
         </div>
+
+        <!-- Interactive Chemistry Simulation 3: Ion Exchange & Precipitation -->
+        <div id="chem-sim-precipitation-b2" class="scroll-mt-24"></div>
 
         <!-- Tóm tắt & Mục tiêu -->
         <div class="p-5 sm:p-6 rounded-2xl bg-teal-50/50 dark:bg-teal-950/20 border border-teal-100 dark:border-teal-900/40 space-y-3">
@@ -12057,8 +12065,14 @@ Bước 4: Sử dụng phân tử khối M xác định từ phổ MS để tìm
         });
       }
     }
-    document.addEventListener('DOMContentLoaded', renderMathSafely);
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.CodeHubChemistry && document.getElementById('chem-sim-precipitation-b2')) {
+        window.CodeHubChemistry.create('precipitation', 'chem-sim-precipitation-b2');
+      }
+      renderMathSafely();
+    });
     window.addEventListener('load', renderMathSafely);
   </script>
+  <script src="../scripts/chemistry-simulations.js"></script>
 </body>
 </html>
