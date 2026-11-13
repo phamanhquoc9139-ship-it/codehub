@@ -106,6 +106,12 @@
 
       <!-- Right Actions -->
       <div class="flex items-center gap-2">
+        <a href="math_lab.html"
+          class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white text-xs font-extrabold shadow-xs transition">
+          <i class="fas fa-compass-drafting"></i>
+          <span class="hidden sm:inline">Lab Toán Học</span>
+        </a>
+
         <button type="button" onclick="openSearchModal()"
           class="inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-bold border border-slate-200 dark:border-slate-700 transition cursor-pointer">
           <i class="fas fa-magnifying-glass text-indigo-600 dark:text-indigo-400"></i>
@@ -1169,6 +1175,9 @@
 
       <!-- Lesson Body -->
       <div class="p-5 sm:p-7 space-y-8">
+        <!-- Interactive Math Simulation 2: Unit Circle & Trig Functions -->
+        <div id="math-sim-trig-b1"></div>
+
         <!-- PHẦN A: KHÁI NIỆM, TÍNH CHẤT & ĐỊNH LÍ -->
         <section id="b1-khai-niem" class="scroll-mt-24 space-y-3.5">
           <div class="flex items-center gap-2.5 border-b border-slate-200 dark:border-slate-800 pb-2.5">
@@ -11646,6 +11655,9 @@
 
       <!-- Lesson Body -->
       <div class="p-5 sm:p-7 space-y-8">
+        <!-- Interactive Math Simulation 5: 3D Spatial Geometry & Volume -->
+        <div id="math-sim-spatial-b27"></div>
+
         <!-- PHẦN A: KHÁI NIỆM, TÍNH CHẤT & ĐỊNH LÍ -->
         <section id="b27-khai-niem" class="scroll-mt-24 space-y-3.5">
           <div class="flex items-center gap-2.5 border-b border-slate-200 dark:border-slate-800 pb-2.5">
@@ -13306,6 +13318,9 @@
 
       <!-- Lesson Body -->
       <div class="p-5 sm:p-7 space-y-8">
+        <!-- Interactive Math Simulation 4: Derivative, Secant Limit & Tangent -->
+        <div id="math-sim-calculus-b31"></div>
+
         <!-- PHẦN A: KHÁI NIỆM, TÍNH CHẤT & ĐỊNH LÍ -->
         <section id="b31-khai-niem" class="scroll-mt-24 space-y-3.5">
           <div class="flex items-center gap-2.5 border-b border-slate-200 dark:border-slate-800 pb-2.5">
@@ -15084,6 +15099,21 @@
       const subBtn = document.getElementById('arena-submit-btn');
       if (subBtn) subBtn.disabled = true;
     }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.CodeHubMath) {
+        if (document.getElementById('math-sim-trig-b1')) {
+          window.CodeHubMath.create('trig', 'math-sim-trig-b1');
+        }
+        if (document.getElementById('math-sim-spatial-b27')) {
+          window.CodeHubMath.create('spatial', 'math-sim-spatial-b27');
+        }
+        if (document.getElementById('math-sim-calculus-b31')) {
+          window.CodeHubMath.create('calculus', 'math-sim-calculus-b31');
+        }
+      }
+    });
   </script>
+  <script src="../scripts/math-simulations.js"></script>
 </body>
 </html>

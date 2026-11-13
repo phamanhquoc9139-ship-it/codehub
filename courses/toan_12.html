@@ -69,6 +69,11 @@
 
       <!-- Action Buttons -->
       <div class="flex items-center gap-2">
+        <a href="math_lab.html" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold text-xs shadow-sm transition-all">
+          <span>📐</span>
+          <span class="hidden sm:inline">Lab Toán Học</span>
+        </a>
+
         <!-- Mobile Menu Toggle Button -->
         <button onclick="toggleMobileMenu()" class="lg:hidden flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs shadow-sm transition-all">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
@@ -2219,6 +2224,9 @@
         </div>
       </div>
 
+      <!-- Interactive Math Simulation 4: Function Curve Sketching, Asymptotes, Tangent & Integral -->
+      <div id="math-sim-calculus-b4" class="mb-6"></div>
+
       <!-- Theory Sections -->
       <div class="space-y-6">
         
@@ -3376,6 +3384,9 @@
           <span>Nắm vững cấu trúc hệ trục tọa độ Oxyz; tọa độ của điểm và vectơ; các hình chiếu lên trục và mặt phẳng tọa độ; công thức trung điểm và trọng tâm; mở rộng tọa độ cầu.</span>
         </div>
       </div>
+
+      <!-- Interactive Math Simulation 5: 3D Spatial Geometry & Oxyz Coordinates -->
+      <div id="math-sim-spatial-b7" class="mb-6"></div>
 
       <!-- Theory Sections -->
       <div class="space-y-6">
@@ -10446,7 +10457,18 @@
         </a>
       `).join('');
     }
-  </script>
 
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.CodeHubMath) {
+        if (document.getElementById('math-sim-calculus-b4')) {
+          window.CodeHubMath.create('calculus', 'math-sim-calculus-b4');
+        }
+        if (document.getElementById('math-sim-spatial-b7')) {
+          window.CodeHubMath.create('spatial', 'math-sim-spatial-b7');
+        }
+      }
+    });
+  </script>
+  <script src="../scripts/math-simulations.js"></script>
 </body>
 </html>
