@@ -12538,22 +12538,18 @@
     }
   </script>
 
-  <!-- CodeHub Physics Simulations Script -->
+  <!-- CodeHub Physics Simulations & Practice Station Script -->
   <script src="../scripts/physics-simulations.js"></script>
+  <script src="../scripts/sim-practice-station.js"></script>
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      if (!window.CodeHubPhysics) return;
-      if (document.getElementById("sim-interactive-shm")) {
-        window.CodeHubPhysics.create("shm", "sim-interactive-shm");
-      }
-      if (document.getElementById("sim-interactive-spring")) {
-        window.CodeHubPhysics.create("spring", "sim-interactive-spring");
-      }
-      if (document.getElementById("sim-interactive-pendulum")) {
-        window.CodeHubPhysics.create("pendulum", "sim-interactive-pendulum");
-      }
-      if (document.getElementById("sim-interactive-wave")) {
-        window.CodeHubPhysics.create("wave", "sim-interactive-wave");
+      if (window.CodeHubPracticeStation) {
+        window.CodeHubPracticeStation.mountAll([
+          { containerId: "sim-interactive-shm", stationKey: "vatly11-b1" },
+          { containerId: "sim-interactive-spring", stationKey: "vatly11-b3" },
+          { containerId: "sim-interactive-pendulum", stationKey: "vatly11-b5" },
+          { containerId: "sim-interactive-wave", stationKey: "vatly11-b9" }
+        ]);
       }
     });
   </script>

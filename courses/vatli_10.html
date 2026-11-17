@@ -10031,6 +10031,9 @@ $$v = \frac{\Delta s}{\Delta t} = \frac{r \cdot \Delta\theta}{\Delta t} = \omega
   </svg>
       </div>
     </div>
+
+        <!-- CodeHub Physics Interactive Simulation: Centripetal Force (Bài 32) -->
+        <div id="phys-sim-circular-b32" class="my-6"></div>
   
 
         <!-- Lesson Body -->
@@ -12029,11 +12032,17 @@ $$F_A = \rho g V_{\text{chìm}}$$
   </script>
 
 
-  <!-- CodeHub Physics Simulations Script -->
+  <!-- CodeHub Physics Simulations & Practice Station Script -->
   <script src="../scripts/physics-simulations.js"></script>
+  <script src="../scripts/sim-practice-station.js"></script>
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      if (window.CodeHubPhysics && document.getElementById("sim-interactive-circular")) {
+      if (window.CodeHubPracticeStation) {
+        window.CodeHubPracticeStation.mountAll([
+          { containerId: "sim-interactive-circular", stationKey: "vatly10-b31" },
+          { containerId: "phys-sim-circular-b32", stationKey: "vatly10-b32" }
+        ]);
+      } else if (window.CodeHubPhysics && document.getElementById("sim-interactive-circular")) {
         window.CodeHubPhysics.create("circular", "sim-interactive-circular");
       }
     });
