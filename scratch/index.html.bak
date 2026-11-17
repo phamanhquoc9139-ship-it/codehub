@@ -1,0 +1,1299 @@
+<!DOCTYPE html>
+
+<!-- Redeploy CodeHub Pages 2026-10-19 -->
+<html lang="vi">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Học viện CodeHub — Học tập – Luyện tập – Sáng tạo</title>
+<meta name="description" content="Học viện CodeHub (https://codehub.io.vn/) - Nền tảng học tập số tích hợp AI dành cho học sinh từ lớp 1 đến lớp 12. Học tập – Luyện tập – Sáng tạo."/>
+<link rel="canonical" href="https://codehub.io.vn/"/>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232563eb' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4'/%3E%3C/svg%3E"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin=""/>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin=""/>
+<link rel="stylesheet" href="styles/home.min.css?v=1"/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" media="print" onload="this.media='all'"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'"/>
+<noscript>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+</noscript>
+<style>
+        .line-clamp-3 {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .line-clamp-4 {
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+/* CodeHub Neural 3D — independent visual; does not affect authentication or courses */
+.codehub-neural-panel{position:relative;min-height:370px;overflow:hidden;isolation:isolate;background:radial-gradient(ellipse at 50% 46%,#263b83 0%,#171b46 42%,#0a1027 100%);cursor:crosshair}
+.codehub-neural-panel:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 75% 22%,rgba(132,82,255,.24),transparent 40%),radial-gradient(circle at 22% 78%,rgba(25,212,242,.15),transparent 43%);pointer-events:none}
+#codehub-neural-canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.codehub-neural-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;pointer-events:none;text-align:center;text-shadow:0 0 25px #06122e;z-index:1}
+.codehub-neural-mark{font-weight:900;font-size:clamp(26px,3.5vw,47px);line-height:1;color:#b9f9ff;text-shadow:0 0 22px #11d6ee}
+.codehub-neural-name{font-size:clamp(20px,2.8vw,36px);letter-spacing:.18em;font-weight:900;color:white;text-shadow:0 0 22px #67d9ff,0 2px 6px #101637}
+.codehub-neural-sub{font-size:10px;letter-spacing:.24em;color:#b5c5f9;margin-top:6px}
+@media(min-width:1024px){.codehub-neural-panel{min-height:100%}}
+@media(prefers-reduced-motion:reduce){.codehub-neural-panel{cursor:default}}
+
+/* CodeHub hero v2 — unified, balanced responsive frame */
+.codehub-hero-section{background:linear-gradient(145deg,#f7faff 0%,#f1f5ff 55%,#f9f6ff 100%);padding-left:24px;padding-right:24px}
+.dark .codehub-hero-section{background:linear-gradient(145deg,#0b1223,#141b36)}
+.codehub-hero-shell{display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);align-items:stretch;min-height:520px;overflow:hidden;border-radius:28px;background:#fff;box-shadow:0 24px 70px rgba(30,49,103,.13);border:1px solid rgba(129,151,212,.18)}
+.dark .codehub-hero-shell{background:#111a30;border-color:rgba(154,175,244,.18)}
+.codehub-hero-copy{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding:clamp(28px,4.2vw,68px);min-width:0}
+.codehub-hero-eyebrow{display:inline-flex;align-items:center;gap:9px;padding:9px 13px;border-radius:999px;background:#edf4ff;color:#3769cf;font-size:11px;font-weight:800;letter-spacing:.09em;margin-bottom:26px}
+.dark .codehub-hero-eyebrow{background:#23375a;color:#a3c8ff}
+.codehub-status-dot{width:8px;height:8px;border-radius:50%;background:#21c9b7;box-shadow:0 0 0 4px rgba(33,201,183,.13)}
+.codehub-hero-title{font-size:clamp(34px,3.35vw,53px);line-height:1.13;letter-spacing:-.045em;font-weight:850;color:#14203a;max-width:590px}
+.dark .codehub-hero-title{color:#f8fbff}
+.codehub-hero-title span{display:block;background:linear-gradient(110deg,#347df6,#6457df,#20b9cc);-webkit-background-clip:text;background-clip:text;color:transparent}
+.codehub-hero-desc{margin-top:24px;color:#64748b;font-size:clamp(15px,1.15vw,18px);line-height:1.75;max-width:530px}
+.dark .codehub-hero-desc{color:#a9b9d1}
+.codehub-hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.codehub-hero-btn{display:inline-flex;align-items:center;justify-content:center;gap:11px;padding:15px 21px;border-radius:12px;font-size:15px;font-weight:750;text-decoration:none;transition:transform .2s,box-shadow .2s,background .2s}
+.codehub-hero-btn:hover{transform:translateY(-2px)}
+.codehub-hero-btn-primary{color:white;background:linear-gradient(110deg,#347df6,#6357df);box-shadow:0 10px 22px rgba(52,125,246,.24)}
+.codehub-hero-btn-secondary{color:#3266c6;background:#eaf1ff;border:1px solid #d6e4ff}
+.dark .codehub-hero-btn-secondary{color:#bbd6ff;background:#263655;border-color:#40557a}
+.codehub-hero-shell .codehub-neural-panel{min-height:520px;height:100%;border-radius:0;position:relative}
+.codehub-hero-shell .codehub-neural-center{width:90%}
+@media(max-width:1023px){.codehub-hero-shell{grid-template-columns:1fr}.codehub-hero-copy{padding:44px 40px}.codehub-hero-shell .codehub-neural-panel{height:420px;min-height:420px}.codehub-hero-title{max-width:740px}}
+@media(max-width:640px){.codehub-hero-section{padding-left:14px;padding-right:14px}.codehub-hero-shell{border-radius:20px}.codehub-hero-copy{padding:32px 24px}.codehub-hero-eyebrow{font-size:9px;letter-spacing:.05em;margin-bottom:19px}.codehub-hero-title{font-size:34px}.codehub-hero-desc{margin-top:18px}.codehub-hero-actions{width:100%}.codehub-hero-btn{flex:1;padding:13px 12px;font-size:13px}.codehub-hero-shell .codehub-neural-panel{height:340px;min-height:340px}}
+#courses,#playground,#presentation-studio{content-visibility:auto;contain-intrinsic-size:auto 750px}
+
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-100 font-sans antialiased">
+<!-- Navigation -->
+<nav class="bg-pink-400/20 dark:bg-pink-950/40 backdrop-blur-md border-b border-pink-300/30 dark:border-pink-800/30 shadow-sm fixed w-full z-50 transition-colors duration-200">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between h-16">
+<div class="flex items-center">
+<a class="flex-shrink-0 flex items-center" href="#">
+<svg class="h-8 w-8 text-primary" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="ml-2 text-lg sm:text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">Học viện CodeHub</span>
+</a>
+<div class="hidden sm:ml-6 sm:flex sm:space-x-6 lg:space-x-8">
+<a class="border-primary text-gray-900 dark:text-gray-100 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium" href="#">Trang
+                            Chủ</a>
+<a class="border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium" href="#courses">Khóa
+                            Học</a>
+<a class="border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium" href="about.html">Giới
+                            Thiệu</a>
+<a class="border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium" href="courses/math_lab.html">Lab Toán Học</a>
+<a class="border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium" href="courses/physics_lab.html">Lab Vật Lý</a>
+<a class="border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium" href="courses/chemistry_lab.html">Lab Hóa Học</a>
+<a class="border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium" href="#playground">Code
+                            Playground</a>
+</div>
+</div>
+<div class="hidden sm:flex items-center mr-3 px-3 py-2 rounded-lg bg-transparent text-gray-600 dark:text-gray-200 text-sm font-medium" id="visit-counter" title="Tổng số lượt truy cập">
+<svg aria-hidden="true" class="w-4 h-4 mr-1.5 text-primary" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+<path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="mr-1">Lượt truy cập:</span>
+<span class="font-bold text-primary" id="visit-count">...</span>
+</div>
+<div class="flex items-center" id="auth-area">
+<a class="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 rounded-lg text-sm font-medium transition duration-150 ease-in-out" href="login.html">Đăng
+                        Nhập</a>
+</div>
+</div>
+</div>
+</nav>
+<main id="main-content">
+<!-- Hero Section: balanced two-column layout -->
+<section class="codehub-hero-section pt-24 pb-10 sm:pt-28 sm:pb-14">
+<div class="codehub-hero-shell max-w-7xl mx-auto">
+<div class="codehub-hero-copy">
+<div class="codehub-hero-eyebrow"><span class="codehub-status-dot"></span> HỌC VIỆN CODEHUB · HỌC TẬP – LUYỆN TẬP – SÁNG TẠO</div>
+<h1 class="codehub-hero-title">Học Lập Trình <span>Dễ Dàng Hơn Bao Giờ Hết</span></h1>
+<p class="codehub-hero-desc">Khám phá thế giới công nghệ với các khóa học từ cơ bản đến nâng cao. Thực hành ngay trên trình duyệt và xây dựng dự án thực tế.</p>
+<div class="codehub-hero-actions">
+<a class="codehub-hero-btn codehub-hero-btn-primary" href="#courses">Bắt Đầu Ngay <i aria-hidden="true" class="fa-solid fa-arrow-right"></i></a>
+<a class="codehub-hero-btn codehub-hero-btn-secondary" href="#playground"><i aria-hidden="true" class="fa-solid fa-code"></i> Thử Viết Code</a>
+</div>
+</div>
+<div aria-hidden="true" class="codehub-neural-panel">
+<canvas aria-hidden="true" id="codehub-neural-canvas"></canvas>
+<div aria-hidden="true" class="codehub-neural-center"><span class="codehub-neural-mark">&lt;/&gt;</span><span class="codehub-neural-name">CODEHUB</span><span class="codehub-neural-sub">LEARN · CODE · CREATE</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Khung Thống Kê Tổng Số Môn Học -->
+<section class="py-10 bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-gray-800 border-b border-gray-200/80 dark:border-gray-800" id="course-stats">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 rounded-3xl p-6 sm:p-8 md:p-10 text-white shadow-xl relative overflow-visible">
+<!-- Background decorative shapes -->
+<div class="absolute -right-10 -bottom-10 w-64 h-64 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
+<div class="absolute left-1/3 -top-12 w-48 h-48 bg-white/10 rounded-full blur-xl pointer-events-none"></div>
+<div class="relative z-10">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-white/20">
+<div>
+<div class="inline-flex items-center gap-2 px-3.5 py-1 bg-white/20 backdrop-blur rounded-full text-xs sm:text-sm font-semibold mb-3">
+<i class="fa-solid fa-graduation-cap"></i> Chương Trình Giáo Dục Phổ Thông 2018
+                            </div>
+<h2 class="text-2xl sm:text-4xl font-extrabold tracking-tight">
+                                Tổng Số Môn Học &amp; Khóa Học
+                            </h2>
+<p class="mt-2 text-blue-100 text-sm sm:text-base max-w-2xl">
+                                Nền tảng học tập số hóa toàn diện từ Tiểu học, THCS đến THPT với hệ thống bài giảng tương tác, thực hành lập trình và ngân hàng trắc nghiệm tự chấm điểm.
+                            </p>
+</div>
+<!-- Tổng số nổi bật -->
+<div class="flex items-center gap-4 bg-white/15 backdrop-blur-md px-6 py-4 rounded-2xl border border-white/20 shrink-0 self-start md:self-auto shadow-inner">
+<div class="w-14 h-14 rounded-xl bg-white text-blue-600 flex items-center justify-center text-2xl font-black shadow-lg">
+<i class="fa-solid fa-book-open-reader"></i>
+</div>
+<div>
+<div class="text-3xl sm:text-5xl font-black tracking-tight" id="stat-total-courses">281</div>
+<div class="text-xs sm:text-sm font-semibold text-blue-100 uppercase tracking-wider">Tổng môn học</div>
+</div>
+</div>
+</div>
+<!-- Tìm kiếm môn học nổi bật -->
+<div class="mt-6 mb-2 relative z-30" id="course-search-area">
+<label class="block text-base sm:text-lg font-bold text-white text-center mb-3" for="courseSearchInput"><i class="fa-solid fa-magnifying-glass mr-2"></i>Tìm nhanh môn học của bạn</label>
+<!-- Search Box -->
+<div class="relative w-full max-w-3xl mx-auto">
+<i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+<input aria-controls="liveSearchResults" aria-label="Tìm kiếm môn học" autocomplete="off" class="w-full pl-10 pr-10 py-4 rounded-2xl text-base bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-500 shadow-inner" id="courseSearchInput" placeholder="Nhập môn học cần tìm, ví dụ: Tiếng Anh 10, Toán 12..." type="text"/>
+<button type="button" aria-label="Xóa từ khóa tìm kiếm" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white text-sm" id="clearSearchBtn">
+<i class="fa-solid fa-xmark"></i>
+</button>
+<!-- Live Search Dropdown Popup -->
+<div aria-label="Kết quả tìm kiếm môn học" class="hidden absolute left-0 right-0 top-full mt-2 bg-white dark:bg-gray-800 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 max-h-[min(420px,55vh)] overflow-y-auto z-50 p-2 space-y-1" id="liveSearchResults" role="listbox">
+</div>
+</div>
+<p class="text-center text-blue-100 text-xs sm:text-sm mt-3">Gõ tên môn hoặc lớp học để xem gợi ý và chọn vào học ngay.</p>
+</div>
+<!-- Thống kê 6 nhóm môn / khối lớp -->
+<div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4 mt-6">
+<!-- Khối 10 -->
+<div class="stat-card bg-white/10 hover:bg-white/20 backdrop-blur p-4 rounded-xl border border-white/15 transition cursor-pointer group" onclick="filterCoursesBy('grade-10')">
+<div class="flex items-center justify-between mb-1">
+<span class="text-xs font-semibold text-blue-200">Khối Lớp 10</span>
+<span class="text-[11px] bg-white/20 px-2 py-0.5 rounded-full font-bold">THPT</span>
+</div>
+<div class="text-2xl sm:text-3xl font-extrabold group-hover:scale-105 transition-transform" id="stat-grade-10">38</div>
+<div class="text-[11px] text-blue-100 mt-1">Môn học &amp; Chuyên đề</div>
+</div>
+<!-- Khối 11 -->
+<div class="stat-card bg-white/10 hover:bg-white/20 backdrop-blur p-4 rounded-xl border border-white/15 transition cursor-pointer group" onclick="filterCoursesBy('grade-11')">
+<div class="flex items-center justify-between mb-1">
+<span class="text-xs font-semibold text-blue-200">Khối Lớp 11</span>
+<span class="text-[11px] bg-white/20 px-2 py-0.5 rounded-full font-bold">THPT</span>
+</div>
+<div class="text-2xl sm:text-3xl font-extrabold group-hover:scale-105 transition-transform">37</div>
+<div class="text-[11px] text-blue-100 mt-1">Môn học &amp; Chuyên đề</div>
+</div>
+<!-- Khối 12 -->
+<div class="stat-card bg-white/10 hover:bg-white/20 backdrop-blur p-4 rounded-xl border border-white/15 transition cursor-pointer group" onclick="filterCoursesBy('grade-12')">
+<div class="flex items-center justify-between mb-1">
+<span class="text-xs font-semibold text-blue-200">Khối Lớp 12</span>
+<span class="text-[11px] bg-white/20 px-2 py-0.5 rounded-full font-bold">THPT</span>
+</div>
+<div class="text-2xl sm:text-3xl font-extrabold group-hover:scale-105 transition-transform">36</div>
+<div class="text-[11px] text-blue-100 mt-1">Môn học &amp; Chuyên đề</div>
+</div>
+<!-- Tiểu học & THCS -->
+<div class="stat-card bg-white/10 hover:bg-white/20 backdrop-blur p-4 rounded-xl border border-white/15 transition cursor-pointer group" onclick="filterCoursesBy('grade-thcs')">
+<div class="flex items-center justify-between mb-1">
+<span class="text-xs font-semibold text-blue-200">Tiểu học &amp; THCS</span>
+<span class="text-[11px] bg-white/20 px-2 py-0.5 rounded-full font-bold">Lớp 1-9</span>
+</div>
+<div class="text-2xl sm:text-3xl font-extrabold group-hover:scale-105 transition-transform">130</div>
+<div class="text-[11px] text-blue-100 mt-1">Tin học &amp; Âm nhạc</div>
+</div>
+<!-- Tin Học & AI -->
+<div class="stat-card bg-white/10 hover:bg-white/20 backdrop-blur p-4 rounded-xl border border-white/15 transition cursor-pointer group" onclick="filterCoursesBy('cat-tinhoc')">
+<div class="flex items-center justify-between mb-1">
+<span class="text-xs font-semibold text-blue-200">Tin Học &amp; AI</span>
+<i class="fa-solid fa-robot text-xs text-blue-300"></i>
+</div>
+<div class="text-2xl sm:text-3xl font-extrabold group-hover:scale-105 transition-transform" id="stat-cat-tinhoc">31</div>
+<div class="text-[11px] text-blue-100 mt-1">Lập trình, ICT &amp; AI</div>
+</div>
+<!-- Thể Chất & Mỹ Thuật -->
+<div class="stat-card bg-white/10 hover:bg-white/20 backdrop-blur p-4 rounded-xl border border-white/15 transition cursor-pointer group" onclick="filterCoursesBy('cat-art-sport')">
+<div class="flex items-center justify-between mb-1">
+<span class="text-xs font-semibold text-blue-200">Thể Chất &amp; Mỹ Thuật</span>
+<i class="fa-solid fa-palette text-xs text-blue-300"></i>
+</div>
+<div class="text-2xl sm:text-3xl font-extrabold group-hover:scale-105 transition-transform" id="stat-cat-art-sport">56</div>
+<div class="text-[11px] text-blue-100 mt-1">Thể thao &amp; Nghệ thuật</div>
+</div>
+</div>
+<!-- Thanh tìm kiếm & Bộ lọc nhanh -->
+<div class="mt-6 pt-5 border-t border-white/20 flex flex-col md:flex-row items-center gap-4 justify-between">
+<!-- Filter Chips & Counter -->
+<div class="flex items-center gap-2 flex-wrap w-full md:w-auto justify-start md:justify-end text-xs font-semibold">
+<button class="course-filter-btn px-3 py-1.5 rounded-lg bg-white text-blue-700 shadow-sm transition" id="btn-filter-all" onclick="filterCoursesBy('all')">Tất cả (281)</button>
+<button class="course-filter-btn px-3 py-1.5 rounded-lg bg-white/20 hover:bg-white/30 text-white transition" id="btn-filter-tieuhoc" onclick="filterCoursesBy('grade-tieuhoc')">Tiểu học 1-5 (68)</button>
+<button class="course-filter-btn px-3 py-1.5 rounded-lg bg-white/20 hover:bg-white/30 text-white transition" id="btn-filter-thcs" onclick="filterCoursesBy('grade-thcs')">THCS 6-9 (62)</button>
+<button class="course-filter-btn px-3 py-1.5 rounded-lg bg-white/20 hover:bg-white/30 text-white transition" id="btn-filter-10" onclick="filterCoursesBy('grade-10')">Lớp 10 (38)</button>
+<button class="course-filter-btn px-3 py-1.5 rounded-lg bg-white/20 hover:bg-white/30 text-white transition" id="btn-filter-11" onclick="filterCoursesBy('grade-11')">Lớp 11 (37)</button>
+<button class="course-filter-btn px-3 py-1.5 rounded-lg bg-white/20 hover:bg-white/30 text-white transition" id="btn-filter-12" onclick="filterCoursesBy('grade-12')">Lớp 12 (36)</button>
+<button class="course-filter-btn px-3 py-1.5 rounded-lg bg-white/20 hover:bg-white/30 text-white transition" id="btn-filter-olympic" onclick="filterCoursesBy('cat-olympic-hsg')">HSG &amp; Olympic (10)</button>
+<button class="course-filter-btn px-3 py-1.5 rounded-lg bg-white/20 hover:bg-white/30 text-white transition" id="btn-filter-tinhoc" onclick="filterCoursesBy('cat-tinhoc')">Tin &amp; AI (51)</button>
+<span class="px-2.5 py-1 rounded-lg bg-black/30 backdrop-blur text-blue-100 font-medium" id="filter-result-badge">281 / 281</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Features Section -->
+<div class="py-12 bg-gray-50 dark:bg-gray-800" id="courses">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="lg:text-center">
+<h2 class="text-base text-blue-700 dark:text-blue-400 font-semibold tracking-wide uppercase">Khóa Học Nổi Bật</h2>
+<p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
+                    Lộ Trình Học Tập Chuyên Nghiệp
+                </p>
+<p class="mt-4 max-w-2xl text-xl text-gray-500 dark:text-gray-400 lg:mx-auto">
+                    Chọn khóa học phù hợp với trình độ và mục tiêu của bạn.
+                </p>
+</div>
+<div class="mt-10">
+<div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3" id="courses-grid">
+<div class="bg-white dark:bg-gray-700 overflow-hidden shadow rounded-lg hover:shadow-lg transition duration-300 transform hover:-translate-y-1 cursor-pointer border-l-4 border-indigo-600 flex flex-col h-full"><div class="px-4 py-5 sm:p-6 flex flex-col justify-between h-full flex-1"><div class="flex items-center"><div class="flex-shrink-0 bg-gradient-to-br from-indigo-600 to-blue-700 rounded-md p-3 text-white text-xl flex items-center justify-center"><i class="fa-solid fa-award"></i></div><h3 class="ml-3 text-lg font-medium text-gray-900 dark:text-white">Luyện Thi IC3 - GS3</h3></div><div class="mt-4 flex-1 space-y-2"><p class="text-sm text-gray-600 dark:text-gray-300 line-clamp-3" title="Chứng chỉ tin học quốc tế Certiport IC3 GS3: Đủ 3 Module (Máy tính căn bản CF, Các ứng dụng chủ chốt KA, Cuộc sống trực tuyến LO). Tích hợp 15 câu hỏi trắc nghiệm đề thi chuẩn và từ điển thuật ngữ IT."> Chứng chỉ tin học quốc tế Certiport IC3 GS3: Đủ 3 Module (Máy tính căn bản CF, Các ứng dụng chủ chốt KA, Cuộc sống trực tuyến LO). Tích hợp 15 câu hỏi trắc nghiệm đề thi chuẩn và từ điển thuật ngữ IT. </p><div class="flex items-center gap-2"><span class="inline-flex items-center gap-1 text-[11px] font-semibold text-indigo-700 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/60 px-2 py-0.5 rounded-full"><i class="fa-solid fa-certificate"></i> Quốc tế Certiport </span><span class="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-800 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/60 px-2 py-0.5 rounded-full"><i class="fa-solid fa-clock"></i> 3 Module Chuẩn </span></div></div><div class="mt-4 pt-2"><a class="text-indigo-700 hover:text-indigo-800 font-medium flex items-center gap-1" href="courses/ic3_gs3.html">Vào luyện thi IC3 →</a></div></div></div>
+<div class="bg-white dark:bg-gray-700 overflow-hidden shadow rounded-lg hover:shadow-lg transition duration-300 transform hover:-translate-y-1 cursor-pointer border-l-4 border-purple-600 flex flex-col h-full"><div class="px-4 py-5 sm:p-6 flex flex-col justify-between h-full flex-1"><div class="flex items-center"><div class="flex-shrink-0 bg-gradient-to-br from-purple-600 to-indigo-700 rounded-md p-3 text-white text-xl flex items-center justify-center"><i class="fa-solid fa-award"></i></div><h3 class="ml-3 text-lg font-medium text-gray-900 dark:text-white">Luyện Thi IC3 - GS4</h3></div><div class="mt-4 flex-1 space-y-2"><p class="text-sm text-gray-600 dark:text-gray-300 line-clamp-3" title="Chứng chỉ tin học quốc tế Certiport IC3 GS4: Đầy đủ 3 Module (Máy tính căn bản CF, Các ứng dụng chủ chốt KA: Word, Excel, PowerPoint, Access, Cuộc sống trực tuyến LO). Tích hợp 15 câu trắc nghiệm mô phỏng đề thi và từ điển thuật ngữ IT."> Chứng chỉ tin học quốc tế Certiport IC3 GS4: Đầy đủ 3 Module (Máy tính căn bản CF, Các ứng dụng chủ chốt KA: Word, Excel, PowerPoint, Access, Cuộc sống trực tuyến LO). Tích hợp 15 câu trắc nghiệm mô phỏng đề thi và từ điển thuật ngữ IT. </p><div class="flex items-center gap-2"><span class="inline-flex items-center gap-1 text-[11px] font-semibold text-purple-700 dark:text-purple-400 bg-purple-50 dark:bg-purple-950/60 px-2 py-0.5 rounded-full"><i class="fa-solid fa-certificate"></i> Quốc tế Certiport </span><span class="inline-flex items-center gap-1 text-[11px] font-semibold text-amber-800 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/60 px-2 py-0.5 rounded-full"><i class="fa-solid fa-star"></i> Chuẩn GS4 Mới </span></div></div><div class="mt-4 pt-2"><a class="text-purple-700 hover:text-purple-800 font-medium flex items-center gap-1" href="courses/ic3_gs4.html">Vào luyện thi IC3 GS4 →</a></div></div></div>
+<div class="bg-white dark:bg-gray-700 overflow-hidden shadow rounded-lg hover:shadow-lg transition duration-300 transform hover:-translate-y-1 cursor-pointer border-l-4 border-teal-600 flex flex-col h-full"><div class="px-4 py-5 sm:p-6 flex flex-col justify-between h-full flex-1"><div class="flex items-center"><div class="flex-shrink-0 bg-gradient-to-br from-teal-600 to-cyan-700 rounded-md p-3 text-white text-xl flex items-center justify-center"><i class="fa-solid fa-network-wired"></i></div><h3 class="ml-3 text-lg font-medium text-gray-900 dark:text-white">Luyện Thi IC3 - GS5</h3></div><div class="mt-4 flex-1 space-y-2"><p class="text-sm text-gray-600 dark:text-gray-300 line-clamp-3" title="Chứng chỉ tin học quốc tế Certiport IC3 Global Standard 5 (GS5): Đủ 3 Module (Máy tính căn bản, Các ứng dụng chủ chốt, Cuộc sống trực tuyến). Cập nhật Điện toán đám mây, 2FA, Công dân số và thiết bị di động."> Chứng chỉ tin học quốc tế Certiport IC3 Global Standard 5 (GS5): Đủ 3 Module (Máy tính căn bản, Các ứng dụng chủ chốt, Cuộc sống trực tuyến). Cập nhật Điện toán đám mây, 2FA, Công dân số và thiết bị di động. </p><div class="flex items-center gap-2"><span class="inline-flex items-center gap-1 text-[11px] font-semibold text-teal-800 dark:text-teal-400 bg-teal-50 dark:bg-teal-950/60 px-2 py-0.5 rounded-full"><i class="fa-solid fa-certificate"></i> Quốc tế Certiport </span><span class="inline-flex items-center gap-1 text-[11px] font-semibold text-cyan-800 dark:text-cyan-400 bg-cyan-50 dark:bg-cyan-950/60 px-2 py-0.5 rounded-full"><i class="fa-solid fa-cloud"></i> Chuẩn GS5 Toàn Cầu </span></div></div><div class="mt-4 pt-2"><a class="text-teal-800 hover:text-teal-800 font-medium flex items-center gap-1" href="courses/ic3_gs5.html">Vào luyện thi IC3 GS5 →</a></div></div></div>
+<div class="bg-white dark:bg-gray-700 overflow-hidden shadow rounded-lg hover:shadow-lg transition duration-300 transform hover:-translate-y-1 cursor-pointer border-l-4 border-rose-600 flex flex-col h-full"><div class="px-4 py-5 sm:p-6 flex flex-col justify-between h-full flex-1"><div class="flex items-center"><div class="flex-shrink-0 bg-gradient-to-br from-rose-600 to-pink-700 rounded-md p-3 text-white text-xl flex items-center justify-center"><i class="fa-solid fa-laptop-code"></i></div><h3 class="ml-3 text-lg font-medium text-gray-900 dark:text-white">Luyện Thi IC3 - GS6</h3></div><div class="mt-4 flex-1 space-y-2"><p class="text-sm text-gray-600 dark:text-gray-300 line-clamp-3" title="Chứng chỉ tin học quốc tế thế hệ mới Certiport IC3 Global Standard 6 (GS6): 3 Cấp độ tích lũy (Level 1, 2, 3), 7 Domain năng lực số. Đạt danh hiệu danh giá IC3 Digital Literacy Master."> Chứng chỉ tin học quốc tế thế hệ mới Certiport IC3 Global Standard 6 (GS6): 3 Cấp độ tích lũy (Level 1, 2, 3), 7 Domain năng lực số. Đạt danh hiệu danh giá IC3 Digital Literacy Master. </p><div class="flex items-center gap-2"><span class="inline-flex items-center gap-1 text-[11px] font-semibold text-rose-700 dark:text-rose-400 bg-rose-50 dark:bg-rose-950/60 px-2 py-0.5 rounded-full"><i class="fa-solid fa-certificate"></i> Quốc tế Certiport </span><span class="inline-flex items-center gap-1 text-[11px] font-semibold text-pink-700 dark:text-pink-400 bg-pink-50 dark:bg-pink-950/60 px-2 py-0.5 rounded-full"><i class="fa-solid fa-layer-group"></i> Chuẩn GS6 Master </span></div></div><div class="mt-4 pt-2"><a class="text-rose-700 hover:text-rose-800 font-medium flex items-center gap-1" href="courses/ic3_gs6.html">Vào luyện thi IC3 GS6 →</a></div></div></div>
+<div class="bg-white dark:bg-gray-700 overflow-hidden shadow rounded-lg hover:shadow-lg transition duration-300 transform hover:-translate-y-1 cursor-pointer border-l-4 border-blue-600 flex flex-col h-full"><div class="px-4 py-5 sm:p-6 flex flex-col justify-between h-full flex-1"><div class="flex items-center"><div class="flex-shrink-0 bg-gradient-to-br from-blue-600 to-sky-700 rounded-md p-3 text-white text-xl flex items-center justify-center"><i class="fa-solid fa-file-word"></i></div><h3 class="ml-3 text-lg font-medium text-gray-900 dark:text-white">Luyện Thi MOS Word</h3></div><div class="mt-4 flex-1 space-y-2"><p class="text-sm text-gray-600 dark:text-gray-300 line-clamp-3" title="Chứng chỉ quốc tế Microsoft Office Specialist (MOS) Word: Đủ 5 Chuyên đề Domains (Quản lý tài liệu, Định dạng văn bản đoạn văn, Bảng biểu danh sách, Tài liệu tham khảo TOC, Đồ họa SmartArt). Tích hợp 15 câu trắc nghiệm mô phỏng đề thi và từ điển thuật ngữ."> Chứng chỉ quốc tế Microsoft Office Specialist (MOS) Word: Đủ 5 Chuyên đề Domains (Quản lý tài liệu, Định dạng văn bản đoạn văn, Bảng biểu danh sách, Tài liệu tham khảo TOC, Đồ họa SmartArt). Tích hợp 15 câu trắc nghiệm mô phỏng đề thi và từ điển thuật ngữ. </p><div class="flex items-center gap-2"><span class="inline-flex items-center gap-1 text-[11px] font-semibold text-blue-700 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/60 px-2 py-0.5 rounded-full"><i class="fa-brands fa-microsoft"></i> Chuẩn MOS Associate </span><span class="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-800 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/60 px-2 py-0.5 rounded-full"><i class="fa-solid fa-layer-group"></i> 5 Chuyên đề Domains </span></div></div><div class="mt-4 pt-2"><a class="text-blue-700 hover:text-blue-800 font-medium flex items-center gap-1" href="courses/mos_word.html">Vào luyện thi MOS Word →</a></div></div></div>
+<div class="bg-white dark:bg-gray-700 overflow-hidden shadow rounded-lg hover:shadow-lg transition duration-300 transform hover:-translate-y-1 cursor-pointer border-l-4 border-emerald-600 flex flex-col h-full"><div class="px-4 py-5 sm:p-6 flex flex-col justify-between h-full flex-1"><div class="flex items-center"><div class="flex-shrink-0 bg-gradient-to-br from-emerald-600 to-teal-700 rounded-md p-3 text-white text-xl flex items-center justify-center"><i class="fa-solid fa-file-excel"></i></div><h3 class="ml-3 text-lg font-medium text-gray-900 dark:text-white">Luyện Thi MOS Excel</h3></div><div class="mt-4 flex-1 space-y-2"><p class="text-sm text-gray-600 dark:text-gray-300 line-clamp-3" title="Chứng chỉ quốc tế Microsoft Office Specialist (MOS) Excel: Đủ 5 Chuyên đề Domains (Trang tính &amp; Sổ tính, Ô &amp; Vùng dữ liệu, Bảng Table, Hàm tính toán VLOOKUP/IF/SUMIF, Biểu đồ &amp; Sparklines). Tích hợp 15 câu trắc nghiệm mô phỏng đề thi và từ điển thuật ngữ."> Chứng chỉ quốc tế Microsoft Office Specialist (MOS) Excel: Đủ 5 Chuyên đề Domains (Trang tính &amp; Sổ tính, Ô &amp; Vùng dữ liệu, Bảng Table, Hàm tính toán VLOOKUP/IF/SUMIF, Biểu đồ &amp; Sparklines). Tích hợp 15 câu trắc nghiệm mô phỏng đề thi và từ điển thuật ngữ. </p><div class="flex items-center gap-2"><span class="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-800 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/60 px-2 py-0.5 rounded-full"><i class="fa-brands fa-microsoft"></i> Chuẩn MOS Associate </span><span class="inline-flex items-center gap-1 text-[11px] font-semibold text-teal-800 dark:text-teal-400 bg-teal-50 dark:bg-teal-950/60 px-2 py-0.5 rounded-full"><i class="fa-solid fa-calculator"></i> 5 Chuyên đề Domains </span></div></div><div class="mt-4 pt-2"><a class="text-emerald-800 hover:text-emerald-800 font-medium flex items-center gap-1" href="courses/mos_excel.html">Vào luyện thi MOS Excel →</a></div></div></div>
+<div class="bg-white dark:bg-gray-700 overflow-hidden shadow rounded-lg hover:shadow-lg transition duration-300 transform hover:-translate-y-1 cursor-pointer border-l-4 border-orange-600 flex flex-col h-full"><div class="px-4 py-5 sm:p-6 flex flex-col justify-between h-full flex-1"><div class="flex items-center"><div class="flex-shrink-0 bg-gradient-to-br from-orange-600 to-amber-700 rounded-md p-3 text-white text-xl flex items-center justify-center"><i class="fa-solid fa-file-powerpoint"></i></div><h3 class="ml-3 text-lg font-medium text-gray-900 dark:text-white">Luyện Thi MOS PowerPoint</h3></div><div class="mt-4 flex-1 space-y-2"><p class="text-sm text-gray-600 dark:text-gray-300 line-clamp-3" title="Chứng chỉ quốc tế Microsoft Office Specialist (MOS) PowerPoint: Đủ 5 Chuyên đề Domains (Quản lý thuyết trình, Slide Master, Section, Text &amp; Shapes, SmartArt, Audio/Video &amp; Hoạt hình Transitions/Animations). Tích hợp 15 câu trắc nghiệm mô phỏng và bảng tự kiểm tra."> Chứng chỉ quốc tế Microsoft Office Specialist (MOS) PowerPoint: Đủ 5 Chuyên đề Domains (Quản lý thuyết trình, Slide Master, Section, Text &amp; Shapes, SmartArt, Audio/Video &amp; Hoạt hình Transitions/Animations). Tích hợp 15 câu trắc nghiệm mô phỏng và bảng tự kiểm tra. </p><div class="flex items-center gap-2"><span class="inline-flex items-center gap-1 text-[11px] font-semibold text-orange-800 dark:text-orange-400 bg-orange-50 dark:bg-orange-950/60 px-2 py-0.5 rounded-full"><i class="fa-brands fa-microsoft"></i> Chuẩn MOS Associate </span><span class="inline-flex items-center gap-1 text-[11px] font-semibold text-amber-800 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/60 px-2 py-0.5 rounded-full"><i class="fa-solid fa-wand-magic-sparkles"></i> 5 Chuyên đề Domains </span></div></div><div class="mt-4 pt-2"><a class="text-orange-800 hover:text-orange-800 font-medium flex items-center gap-1" href="courses/mos_powerpoint.html">Vào luyện thi MOS PowerPoint →</a></div></div></div>
+<div class="bg-white dark:bg-gray-700 overflow-hidden shadow rounded-lg hover:shadow-lg transition duration-300 transform hover:-translate-y-1 cursor-pointer border-l-4 border-sky-600 flex flex-col h-full"><div class="px-4 py-5 sm:p-6 flex flex-col justify-between h-full flex-1"><div class="flex items-center"><div class="flex-shrink-0 bg-gradient-to-br from-sky-600 to-cyan-700 rounded-md p-3 text-white text-xl flex items-center justify-center"><i class="fa-solid fa-network-wired"></i></div><h3 class="ml-3 text-lg font-medium text-gray-900 dark:text-white">Luyện Thi Cisco CCNA (200-301)</h3></div><div class="mt-4 flex-1 space-y-2"><p class="text-sm text-gray-600 dark:text-gray-300 line-clamp-3" title="Chứng chỉ mạng quốc tế hàng đầu Cisco Certified Network Associate (CCNA 200-301 v1.1): Trọng tâm 6 Domain (Network Fundamentals, VLAN, STP, OSPF, NAT, ACL, SDN &amp; Automation), bảng lệnh IOS CLI và đề thi mô phỏng Pearson VUE."> Chứng chỉ mạng quốc tế hàng đầu Cisco Certified Network Associate (CCNA 200-301 v1.1): Trọng tâm 6 Domain (Network Fundamentals, VLAN, STP, OSPF, NAT, ACL, SDN &amp; Automation), bảng lệnh IOS CLI và đề thi mô phỏng Pearson VUE. </p><div class="flex items-center gap-2"><span class="inline-flex items-center gap-1 text-[11px] font-semibold text-sky-800 dark:text-sky-400 bg-sky-50 dark:bg-sky-950/60 px-2 py-0.5 rounded-full"><i class="fa-solid fa-certificate"></i> Quốc tế Cisco </span><span class="inline-flex items-center gap-1 text-[11px] font-semibold text-cyan-800 dark:text-cyan-400 bg-cyan-50 dark:bg-cyan-950/60 px-2 py-0.5 rounded-full"><i class="fa-solid fa-diagram-project"></i> Chuẩn CCNA v1.1 </span></div></div><div class="mt-4 pt-2"><a class="text-sky-800 hover:text-sky-800 font-medium flex items-center gap-1" href="courses/ccna.html">Vào luyện thi CCNA →</a></div></div></div>
+<div class="bg-white dark:bg-gray-700 overflow-hidden shadow rounded-lg hover:shadow-lg transition duration-300 transform hover:-translate-y-1 cursor-pointer border-l-4 border-indigo-600 flex flex-col h-full"><div class="px-4 py-5 sm:p-6 flex flex-col justify-between h-full flex-1"><div class="flex items-center"><div class="flex-shrink-0 bg-gradient-to-br from-indigo-600 to-violet-700 rounded-md p-3 text-white text-xl flex items-center justify-center"><i class="fa-solid fa-server"></i></div><h3 class="ml-3 text-lg font-medium text-gray-900 dark:text-white">Luyện Thi Cisco CCNP (350-401 ENCOR)</h3></div><div class="mt-4 flex-1 space-y-2"><p class="text-sm text-gray-600 dark:text-gray-300 line-clamp-3" title="Chứng chỉ mạng chuyên gia hàng đầu Cisco Certified Network Professional Enterprise (350-401 ENCOR v1.1): Toàn diện 6 Domain (Architecture, Virtualization, BGP, OSPF, EIGRP, DNA Center, 802.1X, CoPP, NETCONF/RESTCONF) và bài thi mô phỏng Pearson VUE."> Chứng chỉ mạng chuyên gia hàng đầu Cisco Certified Network Professional Enterprise (350-401 ENCOR v1.1): Toàn diện 6 Domain (Architecture, Virtualization, BGP, OSPF, EIGRP, DNA Center, 802.1X, CoPP, NETCONF/RESTCONF) và bài thi mô phỏng Pearson VUE. </p><div class="flex items-center gap-2"><span class="inline-flex items-center gap-1 text-[11px] font-semibold text-indigo-700 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/60 px-2 py-0.5 rounded-full"><i class="fa-solid fa-medal"></i> Chuyên gia Cisco </span><span class="inline-flex items-center gap-1 text-[11px] font-semibold text-violet-700 dark:text-violet-400 bg-violet-50 dark:bg-violet-950/60 px-2 py-0.5 rounded-full"><i class="fa-solid fa-key"></i> Chuẩn ENCOR v1.1 </span></div></div><div class="mt-4 pt-2"><a class="text-indigo-700 hover:text-indigo-800 font-medium flex items-center gap-1" href="courses/ccnp.html">Vào luyện thi CCNP →</a></div></div></div>
+<div class="bg-white dark:bg-gray-700 overflow-hidden shadow rounded-lg hover:shadow-lg transition duration-300 transform hover:-translate-y-1 cursor-pointer border-l-4 border-emerald-600 flex flex-col h-full"><div class="px-4 py-5 sm:p-6 flex flex-col justify-between h-full flex-1"><div class="flex items-center"><div class="flex-shrink-0 bg-gradient-to-br from-emerald-600 to-teal-700 rounded-md p-3 text-white text-xl flex items-center justify-center"><i class="fa-solid fa-cloud-bolt"></i></div><h3 class="ml-3 text-lg font-medium text-gray-900 dark:text-white">Quản Trị Dịch Vụ Mạng (Network Services)</h3></div><div class="mt-4 flex-1 space-y-2"><p class="text-sm text-gray-600 dark:text-gray-300 line-clamp-3" title="Môn học chuyên ngành Quản trị Hệ thống &amp; Mạng Máy Tính: Toàn diện 8 dịch vụ mạng cốt lõi (DNS BIND9, DHCP Kea, Web Nginx/Apache, Mail Postfix/Dovecot, Samba, NFS, Active Directory LDAP/Kerberos, WireGuard VPN &amp; Firewall) kèm 15 câu trắc nghiệm và đề thi mô phỏng 1000 điểm."> Môn học chuyên ngành Quản trị Hệ thống &amp; Mạng Máy Tính: Toàn diện 8 dịch vụ mạng cốt lõi (DNS BIND9, DHCP Kea, Web Nginx/Apache, Mail Postfix/Dovecot, Samba, NFS, Active Directory LDAP/Kerberos, WireGuard VPN &amp; Firewall) kèm 15 câu trắc nghiệm và đề thi mô phỏng 1000 điểm. </p><div class="flex items-center gap-2"><span class="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-800 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/60 px-2 py-0.5 rounded-full"><i class="fa-solid fa-server"></i> 8 Dịch Vụ Cốt Lõi </span><span class="inline-flex items-center gap-1 text-[11px] font-semibold text-teal-800 dark:text-teal-400 bg-teal-50 dark:bg-teal-950/60 px-2 py-0.5 rounded-full"><i class="fa-brands fa-linux"></i> Linux &amp; WinServer </span></div></div><div class="mt-4 pt-2"><a class="text-emerald-800 hover:text-emerald-800 font-medium flex items-center gap-1" href="courses/dich_vu_mang.html">Vào học Dịch Vụ Mạng →</a></div></div></div>
+<div class="bg-white dark:bg-gray-700 overflow-hidden shadow rounded-lg hover:shadow-lg transition duration-300 transform hover:-translate-y-1 cursor-pointer border-l-4 border-blue-600 flex flex-col h-full"><div class="px-4 py-5 sm:p-6 flex flex-col justify-between h-full flex-1"><div class="flex items-center"><div class="flex-shrink-0 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-md p-3 text-white text-xl flex items-center justify-center"><i class="fa-solid fa-laptop-code"></i></div><h3 class="ml-3 text-lg font-medium text-gray-900 dark:text-white">Tin Học 3</h3></div><div class="mt-4 flex-1 space-y-2"><p class="text-sm text-gray-600 dark:text-gray-300 line-clamp-3" title="Chương trình Tin Học Lớp 3 (GDPT 2018): 6 chủ đề lớn với 16 bài học SGK (Máy tính và em, Mạng Internet, Tổ chức lưu trữ sơ đồ cây, Đạo đức số, Phần mềm trình chiếu, Tư duy thuật toán NẾU-THÌ). Tích hợp phát âm bài học, trắc nghiệm tình huống và hội thi Trạng Nguyên Tin Học."> Chương trình Tin Học Lớp 3 (GDPT 2018): 6 chủ đề lớn với 16 bài học SGK (Máy tính và em, Mạng Internet, Tổ chức lưu trữ sơ đồ cây, Đạo đức số, Phần mềm trình chiếu, Tư duy thuật toán NẾU-THÌ). Tích hợp phát âm bài học, trắc nghiệm tình huống và hội thi Trạng Nguyên Tin Học. </p><div class="flex items-center gap-2"><span class="inline-flex items-center gap-1 text-[11px] font-semibold text-blue-700 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/60 px-2 py-0.5 rounded-full border border-blue-200 dark:border-blue-800"><i class="fa-solid fa-award"></i> Trạng Nguyên Tin Học 3 (60:00) </span></div></div><div class="mt-4 pt-2"><a class="text-blue-700 hover:text-blue-800 font-medium" href="courses/tinhoc_3.html">Xem chi tiết →</a></div></div></div>
+<div class="bg-white dark:bg-gray-700 overflow-hidden shadow rounded-lg hover:shadow-lg transition duration-300 transform hover:-translate-y-1 cursor-pointer border-l-4 border-blue-600 flex flex-col h-full"><div class="px-4 py-5 sm:p-6 flex flex-col justify-between h-full flex-1"><div class="flex items-center"><div class="flex-shrink-0 bg-gradient-to-br from-blue-600 via-indigo-600 to-cyan-500 rounded-md p-3 text-white text-xl flex items-center justify-center"><i class="fa-solid fa-laptop-code"></i></div><h3 class="ml-3 text-lg font-medium text-gray-900 dark:text-white">Tin Học 4</h3></div><div class="mt-4 flex-1 space-y-2"><p class="text-sm text-gray-600 dark:text-gray-300 line-clamp-3" title="Chương trình Tin học 4 (Kết Nối Tri Thức - GDPT 2018): 6 chủ đề, 16 bài học (Bài 12 gồm 12A và 12B) phương pháp trực quan số hóa chuẩn mực bản quyền, thực hành PowerPoint, Word, Kiran's Typing, lập trình trực quan Scratch và Hội thi Trạng nguyên Tin học 4 (60:00)."> Chương trình Tin học 4 (Kết Nối Tri Thức - GDPT 2018): 6 chủ đề, 16 bài học (Bài 12 gồm 12A và 12B) phương pháp trực quan số hóa chuẩn mực bản quyền, thực hành PowerPoint, Word, Kiran's Typing, lập trình trực quan Scratch và Hội thi Trạng nguyên Tin học 4 (60:00). </p><div class="flex items-center gap-2"><span class="inline-flex items-center gap-1 text-[11px] font-semibold text-blue-700 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/60 px-2 py-0.5 rounded-full border border-blue-200 dark:border-blue-800"><i class="fa-solid fa-award"></i> Trạng Nguyên Tin Học 4 (60:00) </span></div></div><div class="mt-4 pt-2"><a class="text-blue-700 hover:text-blue-800 font-medium" href="courses/tinhoc_4.html">Xem chi tiết →</a></div></div></div>
+</div>
+<div id="courses-pagination" class="mt-8 flex flex-wrap items-center justify-center gap-3"></div>
+<div class="hidden text-center py-16 px-4 bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 mt-6" id="no-courses-found">
+<div class="w-16 h-16 mx-auto mb-4 rounded-full bg-blue-100 dark:bg-gray-700 text-blue-600 dark:text-blue-400 flex items-center justify-center text-2xl">
+<i class="fa-solid fa-magnifying-glass"></i>
+</div>
+<h3 class="text-lg font-bold text-gray-900 dark:text-white mb-1">Không tìm thấy môn học phù hợp</h3>
+<p class="text-sm text-gray-500 dark:text-gray-400 mb-4" id="no-courses-desc">Không có kết quả nào khớp với từ khóa tìm kiếm.</p>
+<button type="button" class="px-5 py-2.5 bg-blue-700 hover:bg-blue-800 text-white rounded-xl text-sm font-semibold transition shadow-sm" onclick="filterCoursesBy('all')">
+<i class="fa-solid fa-rotate-left mr-1.5"></i> Xem tất cả 281 môn học
+                    </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Playground Section -->
+<div class="py-16 bg-white dark:bg-gray-900" id="playground">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="lg:text-center mb-10">
+<h2 class="text-base text-emerald-700 dark:text-emerald-400 font-semibold tracking-wide uppercase">Code Playground</h2>
+<p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
+                    Thử Nghiệm Code Ngay
+                </p>
+<p class="mt-4 max-w-2xl text-xl text-gray-500 dark:text-gray-400 lg:mx-auto">
+                    Viết, chạy và kiểm tra code trực tiếp trên trình duyệt.
+                </p>
+</div>
+<!-- Tab System -->
+<div class="mb-4 flex space-x-2 border-b border-gray-200 dark:border-gray-700">
+<button type="button" class="px-4 py-2 text-sm font-medium border-b-2 border-blue-700 text-blue-700 dark:text-blue-400 active-tab" id="tab-python">Python</button>
+<button type="button" class="px-4 py-2 text-sm font-medium border-b-2 border-transparent text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white" id="tab-web">Web
+                    (HTML/CSS/JS)</button>
+</div>
+<!-- Python Playground (Default) -->
+<div id="pane-python">
+<div class="bg-gray-800 rounded-lg shadow-2xl overflow-hidden border border-gray-700">
+<div class="flex items-center px-4 py-2 border-b border-gray-700 bg-gray-900">
+<div class="flex space-x-2">
+<div class="w-3 h-3 rounded-full bg-red-500"></div>
+<div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+<div class="w-3 h-3 rounded-full bg-green-500"></div>
+</div>
+<div class="ml-4 text-sm text-gray-400 font-mono">main.py</div>
+</div>
+<div class="flex flex-col md:flex-row h-96">
+<div class="w-full md:w-1/2 p-4 font-mono text-sm text-gray-300 bg-gray-800 focus:outline-none overflow-auto" contenteditable="true" id="code-editor" role="textbox" aria-multiline="true" aria-label="Trình soạn thảo mã Python">
+                            # Viết code Python của bạn ở đây<br/>
+                            def chao_mung(ten):<br/>
+                              return f"Xin chào, {ten}!"<br/>
+<br/>
+                            print(chao_mung("Học viên CodeHub"))
+                        </div>
+<div class="w-full md:w-1/2 bg-black p-4 border-l border-gray-700 text-green-400 font-mono text-sm overflow-auto">
+<div class="mb-2 text-gray-300 uppercase text-xs tracking-wider">Output</div>
+<div id="code-output">
+                                &gt; Xin chào, Học viên CodeHub
+                            </div>
+</div>
+</div>
+</div>
+</div>
+<!-- Web Playground (Hidden by default) -->
+<div class="hidden" id="pane-web">
+<div class="bg-gray-800 rounded-lg shadow-2xl overflow-hidden border border-gray-700">
+<div class="flex items-center px-4 py-2 border-b border-gray-700 bg-gray-900">
+<div class="flex space-x-2">
+<div class="w-3 h-3 rounded-full bg-red-500"></div>
+<div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+<div class="w-3 h-3 rounded-full bg-green-500"></div>
+</div>
+<div class="ml-4 text-sm text-gray-400 font-mono">index.html</div>
+</div>
+<div class="flex flex-col md:flex-row h-[500px]">
+<div class="w-full md:w-1/2 p-4 font-mono text-sm text-gray-300 bg-gray-800 focus:outline-none overflow-auto" contenteditable="true" id="web-editor" role="textbox" aria-multiline="true" aria-label="Trình soạn thảo mã HTML và CSS">
+                            &lt;h1&gt;Chào mừng đến với CodeHub!&lt;/h1&gt;<br/>
+                            &lt;p&gt;Hãy thử chỉnh sửa code này nhé.&lt;/p&gt;<br/>
+<br/>
+                            &lt;style&gt;<br/>
+                              body { font-family: sans-serif; text-align: center; padding-top: 50px; }<br/>
+                              h1 { color: #3b82f6; }<br/>
+                            &lt;/style&gt;<br/>
+<br/>
+                            &lt;script&gt;<br/>
+                              console.log("Web Playground Ready!");<br/>
+                            &lt;/script&gt;
+                        </div>
+<div class="w-full md:w-1/2 bg-white border-l border-gray-700 overflow-hidden">
+<div class="h-full w-full">
+<iframe class="w-full h-full border-none" id="web-preview" title="Web Preview"></iframe>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-6 text-center">
+<button type="button" class="bg-emerald-700 hover:bg-emerald-800 text-white px-6 py-2 rounded-lg font-medium shadow-md transition transform hover:scale-105" id="run-button">
+                    Chạy Code
+                </button>
+</div>
+</div>
+</div>
+<!-- Khung Trình Chiếu PowerPoint (Dành cho người đã đăng nhập) -->
+<section class="py-14 bg-gradient-to-b from-white to-slate-100 dark:from-gray-900 dark:to-gray-950 border-t border-gray-200 dark:border-gray-800" id="presentation-studio">
+<style>
+  #ppt-stage-wrapper:fullscreen {
+    width: 100vw !important;
+    height: 100vh !important;
+    max-width: none !important;
+    border-radius: 0 !important;
+    border: none !important;
+    background-color: #020617 !important;
+    padding: 0.75rem 1.25rem !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    overflow: hidden !important;
+  }
+  #ppt-stage-wrapper:fullscreen #ppt-pptx-viewer:not(.hidden) {
+    flex: 1 1 auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    min-height: 0 !important;
+    width: 100% !important;
+  }
+  #ppt-stage-wrapper:fullscreen #ppt-slide-stage {
+    flex: 1 1 auto !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 0 !important;
+    width: 100% !important;
+    padding: 0.5rem !important;
+  }
+  #ppt-stage-wrapper:fullscreen #ppt-slide-canvas {
+    width: min(94vw, calc((100vh - 165px) * var(--ppt-ratio, 1.777778)));
+    max-width: none !important;
+    margin: 0 auto !important;
+    flex-shrink: 0 !important;
+  }
+  #ppt-stage-wrapper:fullscreen #ppt-pdf-frame:not(.hidden) {
+    flex: 1 1 auto !important;
+    width: 100% !important;
+    height: calc(100vh - 85px) !important;
+  }
+</style>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="rounded-3xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-lg overflow-hidden">
+<!-- Header -->
+<div class="px-6 py-5 sm:px-8 bg-gradient-to-r from-orange-600 via-amber-600 to-rose-600 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+<div class="flex items-center gap-3.5">
+<div class="w-12 h-12 rounded-2xl bg-white/15 backdrop-blur-sm flex items-center justify-center text-2xl shrink-0">
+<i class="fa-solid fa-file-powerpoint"></i>
+</div>
+<div>
+<h2 class="text-lg sm:text-xl font-extrabold tracking-tight">Khung Trình Chiếu Thuyết Trình PowerPoint</h2>
+<p class="text-xs sm:text-sm text-orange-100">Tải lên và trình chiếu trực tiếp tệp <strong>.pptx</strong> / <strong>.pdf</strong> toàn màn hình khi thuyết trình trên lớp</p>
+</div>
+</div>
+<div class="text-xs px-3 py-1.5 rounded-xl bg-black/20 backdrop-blur-sm border border-white/15 inline-flex items-center gap-1.5 self-start sm:self-auto" id="ppt-user-badge">
+<i class="fa-solid fa-lock text-amber-200"></i> Chế độ kiểm tra đăng nhập
+      </div>
+</div>
+<!-- Body -->
+<div class="p-6 sm:p-8">
+<!-- State 1: Chưa đăng nhập -->
+<div class="py-8 px-4 rounded-2xl bg-slate-50 dark:bg-gray-900/60 border-2 border-dashed border-slate-200 dark:border-gray-700 text-center space-y-4" id="ppt-locked-view">
+<div class="w-16 h-16 mx-auto rounded-2xl bg-orange-100 dark:bg-orange-950/70 text-orange-600 dark:text-orange-400 flex items-center justify-center text-3xl shadow-xs">
+<i class="fa-solid fa-user-lock"></i>
+</div>
+<div class="max-w-md mx-auto space-y-1.5">
+<h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-white">Đăng nhập để mở khóa Trình Chiếu PowerPoint</h3>
+<p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
+            Tính năng bỏ file PowerPoint (.pptx / .pdf), lưu bài thuyết trình cá nhân và trình chiếu toàn màn hình chỉ khả dụng cho thành viên đã đăng nhập CodeHub.
+          </p>
+</div>
+<div>
+<a class="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-orange-700 hover:bg-orange-800 text-white font-bold text-sm shadow-md transition transform hover:-translate-y-0.5" href="login.html">
+<i class="fa-solid fa-right-to-bracket"></i> Đăng Nhập Ngay
+          </a>
+</div>
+</div>
+<!-- State 2: Đã đăng nhập -->
+<div class="hidden space-y-6" id="ppt-unlocked-view">
+<!-- Drag & Drop Zone -->
+<div class="cursor-pointer p-6 sm:p-8 rounded-2xl border-2 border-dashed border-orange-300 dark:border-orange-800/70 bg-orange-50/40 dark:bg-gray-900/50 hover:border-orange-500 hover:bg-orange-50/80 dark:hover:bg-orange-950/20 transition text-center space-y-2.5" id="ppt-dropzone">
+<input accept=".pptx,.pdf" class="hidden" id="ppt-file-input" multiple="" type="file"/>
+<div class="w-12 h-12 mx-auto rounded-xl bg-orange-100 dark:bg-orange-950 text-orange-600 dark:text-orange-400 flex items-center justify-center text-2xl">
+<i class="fa-solid fa-cloud-arrow-up"></i>
+</div>
+<div class="text-sm sm:text-base font-bold text-gray-800 dark:text-gray-100">
+            Kéo thả tệp PowerPoint (<span class="text-orange-600 dark:text-orange-400">.pptx</span>) hoặc <span class="text-rose-600 dark:text-rose-400">.pdf</span> vào đây, hoặc bấm để chọn file
+          </div>
+<p class="text-xs text-gray-500 dark:text-gray-400">
+            Xử lý trực tiếp trên trình duyệt — bảo mật tuyệt đối, hỗ trợ trình chiếu Toàn màn hình, Đèn Laser &amp; Ghi chú diễn giả.
+          </p>
+</div>
+<div class="hidden" id="ppt-status-msg"></div>
+<!-- Saved Decks Library -->
+<div class="space-y-3">
+<h3 class="text-sm font-bold text-gray-700 dark:text-gray-200 flex items-center gap-2">
+<i class="fa-solid fa-folder-open text-orange-500"></i> Thư Viện Bài Thuyết Trình Của Bạn
+          </h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-3" id="ppt-deck-list"></div>
+</div>
+<!-- Active Presentation Stage -->
+<div class="hidden rounded-2xl border border-gray-200 dark:border-gray-700 bg-slate-950 overflow-hidden shadow-2xl space-y-3 p-3 sm:p-4" id="ppt-stage-wrapper">
+<!-- Stage Toolbar -->
+<div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-slate-800 text-white">
+<div class="flex items-center gap-2 min-w-0">
+<span class="px-2 py-0.5 rounded bg-orange-600 text-[11px] font-bold uppercase shrink-0">Live</span>
+<span class="font-bold text-xs sm:text-sm truncate max-w-[180px] sm:max-w-xs" id="ppt-active-deck-title">Presentation</span>
+</div>
+<div class="flex flex-wrap items-center gap-1.5">
+<button class="px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-mono font-semibold transition flex items-center gap-1.5" id="ppt-timer-btn" onclick="window.pptToggleTimer()" title="Bấm giờ thuyết trình" type="button">
+<i class="fa-solid fa-play"></i> <span id="ppt-timer-display">00:00</span>
+</button>
+<button class="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white text-xs transition" onclick="window.pptResetTimer()" title="Đặt lại đồng hồ" type="button">
+<i class="fa-solid fa-rotate-left"></i>
+</button>
+<button class="px-2.5 py-1.5 rounded-lg bg-slate-800 text-slate-200 hover:bg-slate-700 text-xs font-semibold transition flex items-center gap-1.5" id="ppt-laser-btn" onclick="window.pptToggleLaser()" title="Bật/tắt đèn Laser (Phím L)" type="button">
+<i class="fa-solid fa-bullseye"></i> <span class="hidden sm:inline">Laser</span>
+</button>
+<button class="px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold transition flex items-center gap-1.5" onclick="window.pptToggleNotes()" title="Ghi chú diễn giả (Phím N)" type="button">
+<i class="fa-regular fa-note-sticky"></i> <span class="hidden sm:inline">Ghi chú</span>
+</button>
+<button class="px-3 py-1.5 rounded-lg bg-orange-600 hover:bg-orange-500 text-white text-xs font-bold transition flex items-center gap-1.5" onclick="window.pptToggleFullscreen()" title="Toàn màn hình (Phím F)" type="button">
+<i class="fa-solid fa-expand"></i> <span class="hidden sm:inline">Toàn Màn Hình</span>
+</button>
+<button class="px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-rose-600 text-slate-300 hover:text-white text-xs font-bold transition" onclick="window.pptCloseStage()" title="Đóng trình chiếu" type="button">
+<i class="fa-solid fa-xmark"></i>
+</button>
+</div>
+</div>
+<!-- PPTX Viewer -->
+<div class="space-y-3" id="ppt-pptx-viewer">
+<!-- Slide Canvas Stage -->
+<div class="relative w-full flex items-center justify-center bg-slate-900 rounded-xl p-2 sm:p-4 overflow-hidden select-none" id="ppt-slide-stage">
+<div class="relative w-full max-w-5xl rounded-lg shadow-2xl overflow-hidden bg-white" id="ppt-slide-canvas" style="aspect-ratio: 16 / 9; container-type: inline-size;"></div>
+<!-- Red Laser Pointer Dot -->
+<div class="hidden pointer-events-none absolute w-4 h-4 -ml-2 -mt-2 rounded-full bg-red-500 shadow-[0_0_12px_4px_rgba(239,68,68,0.85)] ring-2 ring-white/80 z-30" id="ppt-laser-dot"></div>
+</div>
+<!-- Navigation Bar -->
+<div class="flex flex-wrap items-center justify-between gap-2 text-white">
+<div class="flex items-center gap-2">
+<button class="px-3.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 disabled:opacity-40 text-xs font-bold transition flex items-center gap-1.5" id="ppt-prev-btn" onclick="window.pptPrevSlide()" type="button">
+<i class="fa-solid fa-chevron-left"></i> Slide Trước
+                </button>
+<span class="px-3 py-1 rounded-lg bg-slate-800/80 text-xs font-mono font-bold text-orange-300" id="ppt-slide-counter">Slide 1 / 1</span>
+<button class="px-3.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 disabled:opacity-40 text-xs font-bold transition flex items-center gap-1.5" id="ppt-next-btn" onclick="window.pptNextSlide()" type="button">
+                  Slide Sau <i class="fa-solid fa-chevron-right"></i>
+</button>
+</div>
+<div class="text-[11px] text-slate-400 hidden sm:block">
+                Phím tắt: <kbd class="px-1.5 py-0.5 rounded bg-slate-800 text-slate-200">←</kbd> <kbd class="px-1.5 py-0.5 rounded bg-slate-800 text-slate-200">→</kbd> chuyển slide · <kbd class="px-1.5 py-0.5 rounded bg-slate-800 text-slate-200">F</kbd> toàn màn hình · <kbd class="px-1.5 py-0.5 rounded bg-slate-800 text-slate-200">L</kbd> Laser
+              </div>
+</div>
+<!-- Speaker Notes Drawer -->
+<div class="hidden p-3.5 rounded-xl bg-slate-900 border border-slate-700 text-slate-200 text-xs sm:text-sm space-y-1" id="ppt-notes-panel">
+<div class="font-bold text-amber-400 flex items-center gap-1.5">
+<i class="fa-regular fa-note-sticky"></i> Ghi chú diễn giả (Speaker Notes):
+              </div>
+<p class="whitespace-pre-line text-slate-300 leading-relaxed" id="ppt-notes-content"></p>
+</div>
+<!-- Thumbnails Strip -->
+<div class="flex items-center gap-2 overflow-x-auto pb-1" id="ppt-thumbnails"></div>
+</div>
+<!-- PDF Viewer Fallback -->
+<iframe class="hidden w-full h-[560px] rounded-xl border border-slate-700 bg-white" id="ppt-pdf-frame" title="PDF Presentation Viewer"></iframe>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer aria-label="Thông tin chân trang CodeHub" class="bg-gradient-to-b from-[#0a1628] to-[#060e1d] text-slate-200 border-t border-cyan-500/25 pt-14 pb-8" role="contentinfo">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10">
+<!-- Cột 1: Học viện CodeHub -->
+<div class="space-y-3.5">
+<div class="flex items-center gap-2.5">
+<span class="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-cyan-500/15 border border-cyan-400/30 text-cyan-300 shadow-sm">
+<svg aria-hidden="true" class="h-5 w-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</span>
+<div>
+<span class="text-xl font-extrabold tracking-tight text-white block leading-tight">Học viện <span class="text-cyan-400">CodeHub</span></span>
+<span class="text-[11px] font-medium text-cyan-300">Học tập – Luyện tập – Sáng tạo</span>
+</div>
+</div>
+<p class="text-sm text-slate-300 leading-relaxed max-w-xs">
+                        Nền tảng học tập số tích hợp AI dành cho học sinh từ lớp 1 đến lớp 12.
+                    </p>
+<p class="text-xs text-slate-400 leading-relaxed">
+                        Dự án giáo dục số cá nhân độc lập.
+                    </p>
+</div>
+<!-- Cột 2: Khám phá -->
+<div>
+<h3 class="text-xs font-bold uppercase tracking-wider text-white flex items-center gap-2 pb-2 border-b border-cyan-400/20">
+<span aria-hidden="true" class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span> Khám phá
+                    </h3>
+<nav aria-label="Khám phá các cấp học" class="mt-4">
+<ul class="space-y-3 text-sm">
+<li>
+<a class="group inline-flex items-center gap-2 text-slate-200 hover:text-cyan-300 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-[#071124] rounded px-1 -mx-1" href="#courses" onclick="if (typeof filterCoursesBy === 'function') { filterCoursesBy('grade-tieuhoc'); } return false;">
+<i aria-hidden="true" class="fa-solid fa-chevron-right text-[10px] text-cyan-400/80 group-hover:translate-x-0.5 transition-transform"></i>
+<span>Tiểu học</span>
+</a>
+</li>
+<li>
+<a class="group inline-flex items-center gap-2 text-slate-200 hover:text-cyan-300 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-[#071124] rounded px-1 -mx-1" href="#courses" onclick="if (typeof filterCoursesBy === 'function') { filterCoursesBy('grade-thcs'); } return false;">
+<i aria-hidden="true" class="fa-solid fa-chevron-right text-[10px] text-cyan-400/80 group-hover:translate-x-0.5 transition-transform"></i>
+<span>THCS</span>
+</a>
+</li>
+<li>
+<a class="group inline-flex items-center gap-2 text-slate-200 hover:text-cyan-300 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-[#071124] rounded px-1 -mx-1" href="#course-stats" onclick="document.getElementById('course-stats')?.scrollIntoView({ behavior: 'smooth' }); return false;">
+<i aria-hidden="true" class="fa-solid fa-chevron-right text-[10px] text-cyan-400/80 group-hover:translate-x-0.5 transition-transform"></i>
+<span>THPT</span>
+</a>
+</li>
+<li>
+<a class="group inline-flex items-center gap-2 text-slate-200 hover:text-cyan-300 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-[#071124] rounded px-1 -mx-1" href="#courses" onclick="if (typeof filterCoursesBy === 'function') { filterCoursesBy('cat-tinhoc'); } return false;">
+<i aria-hidden="true" class="fa-solid fa-chevron-right text-[10px] text-cyan-400/80 group-hover:translate-x-0.5 transition-transform"></i>
+<span>Tin học &amp; AI</span>
+</a>
+</li>
+</ul>
+</nav>
+</div>
+<!-- Cột 3: Hỗ trợ -->
+<div>
+<h3 class="text-xs font-bold uppercase tracking-wider text-white flex items-center gap-2 pb-2 border-b border-cyan-400/20">
+<span aria-hidden="true" class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span> Hỗ trợ
+                    </h3>
+<nav aria-label="Thông tin hỗ trợ" class="mt-4">
+<ul class="space-y-3 text-sm">
+<li>
+<a class="group inline-flex items-center gap-2 text-slate-200 hover:text-cyan-300 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-[#071124] rounded px-1 -mx-1" href="about.html">
+<i aria-hidden="true" class="fa-solid fa-circle-info text-xs text-cyan-400/80"></i>
+<span>Giới thiệu CodeHub</span>
+</a>
+</li>
+<li class="text-sm"><a class="inline-flex items-center gap-2 text-slate-200 hover:text-cyan-300 focus-visible:ring-2 focus-visible:ring-cyan-400 rounded" href="guide.html"><i aria-hidden="true" class="fa-solid fa-book-open text-cyan-400"></i><span>Hướng dẫn sử dụng</span></a></li>
+<li class="flex items-center justify-between gap-2 text-slate-300"><span class="inline-flex items-center gap-2"><i aria-hidden="true" class="fa-solid fa-shield-halved text-xs text-cyan-400/60"></i><span>Chính sách bảo mật</span></span><span class="text-[11px] px-2 py-0.5 rounded-md bg-slate-800/90 text-slate-300 border border-slate-700/80 shrink-0">Đang cập nhật</span></li>
+<li class="flex items-center justify-between gap-2 text-slate-300"><span class="inline-flex items-center gap-2"><i aria-hidden="true" class="fa-solid fa-file-contract text-xs text-cyan-400/60"></i><span>Điều khoản sử dụng</span></span><span class="text-[11px] px-2 py-0.5 rounded-md bg-slate-800/90 text-slate-300 border border-slate-700/80 shrink-0">Đang cập nhật</span></li>
+</ul>
+</nav>
+</div>
+<!-- Cột 4: Liên hệ -->
+<div>
+<h3 class="text-xs font-bold uppercase tracking-wider text-white flex items-center gap-2 pb-2 border-b border-cyan-400/20">
+<span aria-hidden="true" class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span> Liên hệ
+                    </h3>
+<ul class="mt-4 space-y-3 text-sm">
+<li>
+<a class="group inline-flex items-center gap-2 text-slate-200 hover:text-cyan-300 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-[#071124] rounded px-1 -mx-1" href="https://codehub.io.vn/" rel="noopener noreferrer" target="_blank">
+<i aria-hidden="true" class="fa-solid fa-globe text-xs text-cyan-400/80"></i>
+<span>https://codehub.io.vn/</span>
+</a>
+</li>
+<li class="flex items-center justify-between gap-2 text-slate-300">
+<span class="inline-flex items-center gap-2">
+<i aria-hidden="true" class="fa-solid fa-envelope text-xs text-cyan-400/60"></i>
+<span>Email hỗ trợ</span>
+</span>
+<span class="text-[11px] px-2 py-0.5 rounded-md bg-slate-800/90 text-slate-300 border border-slate-700/80 shrink-0">Đang cập nhật</span>
+</li>
+<li class="flex items-center justify-between gap-2 text-slate-300">
+<span class="inline-flex items-center gap-2">
+<i aria-hidden="true" class="fa-solid fa-bug text-xs text-cyan-400/60"></i>
+<span>Gửi phản hồi và báo lỗi</span>
+</span>
+<span class="text-[11px] px-2 py-0.5 rounded-md bg-slate-800/90 text-slate-300 border border-slate-700/80 shrink-0">Đang cập nhật</span>
+</li>
+<li class="flex items-center justify-between gap-2 text-slate-300">
+<span class="inline-flex items-center gap-2">
+<i aria-hidden="true" class="fa-solid fa-users text-xs text-cyan-400/60"></i>
+<span>Cộng đồng</span>
+</span>
+<span class="text-[11px] px-2 py-0.5 rounded-md bg-slate-800/90 text-slate-300 border border-slate-700/80 shrink-0">Đang cập nhật</span>
+</li>
+</ul>
+</div>
+</div>
+<!-- Dòng bản quyền & Người sáng lập -->
+<div class="mt-10 pt-6 border-t border-slate-800/90 flex flex-col md:flex-row items-center justify-between gap-3 text-xs sm:text-sm text-slate-300 text-center md:text-left">
+<p>© <span id="footer-current-year">2026</span> Học viện CodeHub. All rights reserved.</p>
+<p class="text-slate-200 font-medium">Sáng lập và phát triển: <span class="text-cyan-300 font-semibold">Phạm Anh Quốc</span></p>
+</div>
+</div>
+<script>
+      (function () {
+        var yearEl = document.getElementById('footer-current-year');
+        if (yearEl) {
+          var currentYear = new Date().getFullYear();
+          yearEl.textContent = String(currentYear >= 2026 ? currentYear : 2026);
+        }
+      })();
+    </script>
+</footer>
+<script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script defer src="scripts/supabase-config.js"></script>
+<script defer src="scripts/auth-ui.js"></script>
+<script defer src="scripts/courses-data.js?v=3.7.1"></script>
+<!-- Theo doi luot truy cap: V3 -->
+<script defer="" src="scripts/activity-tracker.js?v=3.4"></script>
+<!-- CodeHub visit counter - Supabase -->
+<script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const countEl = document.getElementById('visit-count');
+      if (!countEl) return;
+
+      // Chờ scripts/supabase-config.js khởi tạo window.supabaseClient
+      let tries = 0;
+      while (!window.supabaseClient && tries < 40) {
+        await new Promise(r => setTimeout(r, 100));
+        tries++;
+      }
+
+      const client = window.supabaseClient;
+      if (!client) {
+        countEl.textContent = '!';
+        countEl.title = 'Chưa khởi tạo được Supabase';
+        return;
+      }
+
+      try {
+        // RPC tự tăng ở phía database => tránh xung đột khi nhiều người truy cập cùng lúc.
+        const { data, error } = await client.rpc('increment_site_visit', {
+          p_page: 'home'
+        });
+        if (error) throw error;
+
+        let value = data;
+        if (Array.isArray(data)) value = data[0]?.visit_count ?? data[0]?.count ?? data[0];
+        if (data && typeof data === 'object' && !Array.isArray(data)) {
+          value = data.visit_count ?? data.count ?? data.value;
+        }
+
+        const n = Number(value);
+        if (!Number.isFinite(n)) throw new Error('RPC không trả về số lượt hợp lệ');
+
+        countEl.textContent = n.toLocaleString('vi-VN');
+        countEl.title = 'Tổng số lượt truy cập trang chủ';
+      } catch (err) {
+        console.error('Supabase visit counter:', err);
+        countEl.textContent = '!';
+        countEl.title = 'Chưa tạo hàm increment_site_visit trong Supabase';
+      }
+    });
+    </script>
+<script>
+    // CodeHub role-aware navigation patch (consumes unified auth state from auth-ui.js)
+    (function () {
+      const esc = (v='') => String(v).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#039;');
+      function renderRoleMenu(detail) {
+        const client = window.supabaseClient;
+        const area = document.getElementById('auth-area');
+        if (!client || !area || !detail?.user || !detail?.profile) return;
+        const { user, profile } = detail;
+        const name = profile.full_name || user.email || 'Tài khoản';
+        const role = String(profile.role || '').trim().toLowerCase();
+        const roleName = role === 'admin' ? 'Quản trị viên' : role === 'teacher' ? 'Giáo viên' : (profile.class_name || 'Học sinh');
+
+        let links = '';
+        if (role === 'admin') {
+          links = `
+            <a href="teacher.html" class="block px-4 py-3 text-sm hover:bg-gray-50 dark:hover:bg-gray-700">⚙️ Quản trị</a>
+            <a href="admin-accounts.html" class="block px-4 py-3 text-sm hover:bg-gray-50 dark:hover:bg-gray-700">👥 Quản lý tài khoản</a>
+            <a href="courses.html" class="block px-4 py-3 text-sm hover:bg-gray-50 dark:hover:bg-gray-700">📚 Khóa học</a>
+            <a href="subjects.html" class="block px-4 py-3 text-sm hover:bg-gray-50 dark:hover:bg-gray-700">📘 Môn học</a>`;
+        } else if (role === 'teacher') {
+          links = `
+            <a href="teacher.html" class="block px-4 py-3 text-sm hover:bg-gray-50 dark:hover:bg-gray-700">👨‍🏫 Quản lý giảng dạy</a>
+            <a href="courses.html" class="block px-4 py-3 text-sm hover:bg-gray-50 dark:hover:bg-gray-700">📚 Khóa học</a>
+            <a href="subjects.html" class="block px-4 py-3 text-sm hover:bg-gray-50 dark:hover:bg-gray-700">📘 Môn học</a>`;
+        } else {
+          links = `<a href="student-dashboard.html" class="block px-4 py-3 text-sm hover:bg-gray-50 dark:hover:bg-gray-700">🎓 Khu vực học tập</a>`;
+        }
+
+        area.innerHTML = `
+          <div class="relative" id="codehub-role-menu">
+            <button id="codehub-role-button" type="button" class="flex items-center gap-2 bg-blue-700 hover:bg-blue-800 text-white px-3 py-2 rounded-lg text-sm font-medium transition">
+              <span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/20">👤</span>
+              <span class="hidden sm:flex flex-col items-start leading-tight">
+                <span class="max-w-40 truncate">${esc(name)}</span>
+                <span class="text-xs font-normal text-blue-100">${esc(roleName)}</span>
+              </span><span>▾</span>
+            </button>
+            <div id="codehub-role-dropdown" class="hidden absolute right-0 mt-2 w-60 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-xl overflow-hidden z-[100] text-gray-700 dark:text-gray-200">
+              <div class="px-4 py-3 border-b border-gray-100 dark:border-gray-700">
+                <div class="font-semibold text-gray-900 dark:text-white truncate">${esc(name)}</div>
+                <div class="text-xs text-gray-500 dark:text-gray-400 truncate">${esc(user.email || '')}</div>
+              </div>
+              ${links}
+              <button id="codehub-role-logout" type="button" class="w-full text-left px-4 py-3 text-sm border-t border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700">🚪 Đăng xuất</button>
+            </div>
+          </div>`;
+        const btn = document.getElementById('codehub-role-button');
+        const dd = document.getElementById('codehub-role-dropdown');
+        btn?.addEventListener('click', e => { e.stopPropagation(); dd?.classList.toggle('hidden'); });
+        document.addEventListener('click', () => dd?.classList.add('hidden'));
+        document.getElementById('codehub-role-logout')?.addEventListener('click', async () => {
+          await client.auth.signOut();
+          location.href = 'login.html';
+        });
+      }
+      window.addEventListener('codehub:auth', e => renderRoleMenu(e.detail));
+      document.addEventListener('DOMContentLoaded', () => {
+        if (window.__codehubAuthState) renderRoleMenu(window.__codehubAuthState);
+      });
+    })();
+    </script>
+<script defer src="scripts/app.js?v=3.7.1"></script>
+<!-- Script: Bộ Lọc, Phân Trang & Tìm Kiếm Môn Học Nhanh -->
+<script>
+      let currentFilterMode = 'all';
+      let currentPageLimit = 12;
+      const PAGE_STEP = 24;
+
+      function removeVietnameseTones(str) {
+        if (!str) return '';
+        return str
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '')
+          .replace(/[đĐ]/g, 'd')
+          .toLowerCase()
+          .trim();
+      }
+
+      const SEARCH_ALIASES = {
+        'nga': ['tieng nga', 'russian', 'tieng nga 6', 'nga 6'],
+        'tiengnga': ['tieng nga', 'russian', 'tieng nga 6', 'nga 6'],
+        'russian': ['tieng nga', 'russian', 'tieng nga 6'],
+        'duc': ['tieng duc', 'german', 'deutsch', 'tieng duc 6', 'duc 6', 'deutsch 6'],
+        'tiengduc': ['tieng duc', 'german', 'deutsch', 'tieng duc 6', 'duc 6'],
+        'german': ['tieng duc', 'german', 'deutsch', 'tieng duc 6'],
+        'deutsch': ['tieng duc', 'german', 'deutsch', 'tieng duc 6'],
+        'khtn': ['khoa hoc tu nhien', 'khtn'],
+        'lsdl': ['lich su va dia li', 'lich su dia li', 'lich su', 'dia li', 'lsdl'],
+        'gdcd': ['giao duc cong dan', 'gdcd'],
+        'gdtc': ['giao duc the chat', 'the chat', 'the duc', 'gdtc'],
+        'hdtn': ['hoat dong trai nghiem', 'hdtn'],
+        'tnxh': ['tu nhien va xa hoi', 'tu nhien xa hoi', 'tnxh'],
+        'hsg': ['hoc sinh gioi', 'olympic', 'hsg'],
+        'cntt': ['cong nghe thong tin', 'tin hoc', 'cntt'],
+        'tin': ['tin hoc', 'tin'],
+        'toan': ['toan', 'toan hoc', 'toan 6', 'toan6', 'math 6'],
+        'toan6': ['toan 6', 'toan6', 'toan', 'math 6'],
+        'math6': ['toan 6', 'math 6', 'toan'],
+        'van': ['ngu van', 'tieng viet', 'van', 'ngu van 6', 'van 6'],
+        'nguvan': ['ngu van', 'ngu van 6', 'van 6', 'nguvan'],
+        'anh': ['tieng anh', 'english', 'anh', 'tieng anh 6', 'english 6'],
+        'tienganh': ['tieng anh', 'english', 'tienganh 6', 'tieng anh 6', 'english 6'],
+        'english': ['tieng anh', 'english', 'tieng anh 6'],
+        'phap': ['tieng phap', 'french', 'tieng phap 6', 'phap 6'],
+        'tiengphap': ['tieng phap', 'french', 'tieng phap 6'],
+        'french': ['tieng phap', 'french', 'tieng phap 6'],
+        'trung': ['tieng trung', 'chinese', 'tieng trung 6', 'trung 6', 'han ngu 6'],
+        'tiengtrung': ['tieng trung', 'chinese', 'tieng trung 6', 'trung 6', 'han ngu 6'],
+        'chinese': ['tieng trung', 'chinese', 'tieng trung 6', 'trung 6', 'han ngu 6'],
+        'hanngu': ['tieng trung', 'chinese', 'tieng trung 6', 'han ngu 6']
+      };
+
+      function getIndexedCourses() {
+        if (!window._CODEHUB_INDEX && Array.isArray(window.CODEHUB_COURSES)) {
+          const hiddenLinks = new Set(['courses/gdqp_10.html', 'courses/gdqp_11.html', 'courses/gdqp_12.html']);
+          window._CODEHUB_INDEX = window.CODEHUB_COURSES
+            .filter(c => !hiddenLinks.has(c.l) && !c.t.includes('GD Quốc Phòng'))
+            .map((c, idx) => ({
+              ...c,
+              idx,
+              nt: removeVietnameseTones(c.t),
+              nd: removeVietnameseTones(c.d),
+              nl: removeVietnameseTones(c.l)
+            }));
+        }
+        return window._CODEHUB_INDEX || [];
+      }
+
+      function scoreCourseItem(course, query) {
+        const normQ = removeVietnameseTones(query);
+        if (!normQ) return { match: true, score: 0 };
+        const normTitle = course.nt;
+        const normDesc = course.nd;
+        const normLink = course.nl;
+
+        if (normTitle === normQ) return { match: true, score: 1000 };
+        if (normTitle.includes(normQ)) return { match: true, score: 900 };
+
+        for (const [abbr, phrases] of Object.entries(SEARCH_ALIASES)) {
+          if (normQ === abbr || normQ.startsWith(abbr + ' ') || normQ.endsWith(' ' + abbr) || normQ.includes(' ' + abbr + ' ')) {
+            for (const phrase of phrases) {
+              const expandedQ = normQ.replace(new RegExp('\\b' + abbr + '\\b', 'g'), phrase);
+              if (normTitle.includes(expandedQ)) return { match: true, score: 850 };
+            }
+          }
+        }
+
+        const tokens = normQ.split(/\s+/).filter(Boolean);
+        const gradeNumber = tokens.find(t => /^(?:[1-9]|1[0-2])$/.test(t));
+        if (gradeNumber) {
+          const titleHasGrade = new RegExp('\\b' + gradeNumber + '\\b').test(normTitle);
+          const linkHasGrade = normLink.includes('_' + gradeNumber) || normLink.includes('-' + gradeNumber);
+          if (!titleHasGrade && !linkHasGrade) return { match: false, score: 0 };
+        }
+
+        const allInTitle = tokens.every(tok => {
+          if (normTitle.includes(tok)) return true;
+          if (SEARCH_ALIASES[tok]) return SEARCH_ALIASES[tok].some(p => normTitle.includes(p));
+          return false;
+        });
+        if (allInTitle) return { match: true, score: 750 };
+
+        const fullText = normTitle + ' ' + normDesc + ' ' + normLink;
+        const allInFull = tokens.every(tok => {
+          if (fullText.includes(tok)) return true;
+          if (SEARCH_ALIASES[tok]) return SEARCH_ALIASES[tok].some(p => fullText.includes(p));
+          return false;
+        });
+
+        if (allInFull) {
+          const firstTok = tokens[0];
+          const isFirstInTitle = normTitle.includes(firstTok) || (SEARCH_ALIASES[firstTok] && SEARCH_ALIASES[firstTok].some(p => normTitle.includes(p)));
+          return { match: true, score: isFirstInTitle ? 550 : 350 };
+        }
+        return { match: false, score: 0 };
+      }
+
+      function matchesCategory(normTitle, mode) {
+        if (mode === 'all') return true;
+        if (mode === 'grade-10') return (normTitle.includes(' 10') || normTitle.includes('(10)')) && !normTitle.includes('tri tue nhan tao');
+        if (mode === 'grade-11') return normTitle.includes(' 11') || normTitle.includes('(11)');
+        if (mode === 'grade-12') return normTitle.includes(' 12') || normTitle.includes('(12)');
+        if (mode === 'grade-tieuhoc' || mode === 'grade-thcs') {
+          const normalized = normTitle.toLowerCase().trim();
+          const isSubject = /^(tin hoc|tri tue nhan tao|ai|toan|toan hoc|vat li|hoa hoc|tieng anh|tieng han|tieng nhat|tieng phap|tieng duc|tieng trung|tieng nga|tieng viet|ngu van|lich su|dia li|dia ly|dao duc|giao duc cong dan|giao duc kinh te|hoat dong trai nghiem|mi thuat|my thuat|giao duc the chat|am nhac|tu nhien va xa hoi|khoa hoc|cong nghe|sinh hoc|giao duc quoc phong)\s/.test(normalized);
+          const gradeMatch = normalized.match(/(?:^|\s)(1[0-2]|[1-9])(?=\s|\(|$)/);
+          const grade = gradeMatch ? Number(gradeMatch[1]) : 0;
+          return isSubject && (mode === 'grade-tieuhoc' ? grade >= 1 && grade <= 5 : grade >= 6 && grade <= 9);
+        }
+        if (mode === 'cat-olympic-hsg') return normTitle.includes('hsg') || normTitle.includes('olympic');
+        if (mode === 'cat-tinhoc') {
+          return normTitle.includes('tin hoc') || normTitle.includes('ai') || normTitle.includes('tri tue nhan tao') || normTitle.includes('lap trinh') || normTitle.includes('python') || normTitle.includes('flow') || normTitle.includes('notebook') || normTitle.includes('gemini') || normTitle.includes('aistudio') || normTitle.includes('ai studio') || normTitle.includes('chatgpt') || normTitle.includes('claude') || normTitle.includes('antigravity') || normTitle.includes('agy') || normTitle.includes('veo') || normTitle.includes('canva') || normTitle.includes('codex') || normTitle.includes('ic3') || normTitle.includes('mos') || normTitle.includes('ccna') || normTitle.includes('ccnp') || normTitle.includes('cisco') || normTitle.includes('dich vu mang') || normTitle.includes('network services');
+        }
+        return false;
+      }
+
+      function filterCoursesBy(mode, smoothScroll = true) {
+        currentFilterMode = mode;
+        currentPageLimit = mode === 'all' ? 12 : 24;
+        const searchInput = document.getElementById('courseSearchInput');
+        if (searchInput) searchInput.value = '';
+        const clearBtn = document.getElementById('clearSearchBtn');
+        if (clearBtn) clearBtn.classList.add('hidden');
+        hideLiveResults();
+        updateFilterButtonUI(mode);
+        applyFiltering();
+        if (smoothScroll && mode !== 'all') {
+          document.getElementById('courses')?.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+
+      function updateFilterButtonUI(mode) {
+        document.querySelectorAll('.course-filter-btn').forEach(btn => {
+          btn.className = 'course-filter-btn px-3 py-1.5 rounded-lg bg-white/20 hover:bg-white/30 text-white transition';
+        });
+        const activeBtn = document.getElementById(
+          mode === 'all' ? 'btn-filter-all' :
+          mode === 'grade-tieuhoc' ? 'btn-filter-tieuhoc' :
+          mode === 'grade-thcs' ? 'btn-filter-thcs' :
+          mode === 'grade-10' ? 'btn-filter-10' :
+          mode === 'grade-11' ? 'btn-filter-11' :
+          mode === 'grade-12' ? 'btn-filter-12' :
+          mode === 'cat-olympic-hsg' ? 'btn-filter-olympic' :
+          mode === 'cat-tinhoc' ? 'btn-filter-tinhoc' : ''
+        );
+        if (activeBtn) {
+          activeBtn.className = 'course-filter-btn px-3 py-1.5 rounded-lg bg-white text-blue-700 shadow-sm transition font-bold';
+        }
+      }
+
+      function loadMoreCourses(step) {
+        currentPageLimit += step;
+        applyFiltering();
+      }
+
+      function showAllFilteredCourses() {
+        currentPageLimit = 1000;
+        applyFiltering();
+      }
+
+      function renderPaginationControls(shown, totalMatches) {
+        const pager = document.getElementById('courses-pagination');
+        if (!pager) return;
+        if (totalMatches === 0 || shown >= totalMatches) {
+          pager.innerHTML = totalMatches > 12
+            ? '<span class="text-xs sm:text-sm text-gray-600 dark:text-gray-300 font-medium">Đang hiển thị toàn bộ ' + totalMatches + ' môn học</span>'
+            : '';
+          return;
+        }
+        const remaining = totalMatches - shown;
+        const nextStep = Math.min(PAGE_STEP, remaining);
+        pager.innerHTML =
+          '<span class="text-xs sm:text-sm text-gray-600 dark:text-gray-300 font-medium mr-2">Đang hiển thị ' + shown + ' / ' + totalMatches + ' môn học</span>' +
+          '<button type="button" onclick="loadMoreCourses(' + PAGE_STEP + ')" class="px-5 py-2.5 rounded-xl bg-blue-700 hover:bg-blue-800 text-white text-sm font-semibold shadow-sm transition">Xem thêm ' + nextStep + ' môn</button>' +
+          '<button type="button" onclick="showAllFilteredCourses()" class="px-4 py-2.5 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700 text-sm font-semibold transition">Xem tất cả (' + totalMatches + ')</button>';
+      }
+
+      function applyFiltering() {
+        const allCourses = getIndexedCourses();
+        const grid = document.getElementById('courses-grid');
+        if (!grid || !allCourses.length) return;
+
+        const query = (document.getElementById('courseSearchInput')?.value || '').trim();
+        const effectiveFilterMode = query ? 'all' : currentFilterMode;
+        if (query) updateFilterButtonUI('all');
+
+        let visibleItems = [];
+        for (let i = 0; i < allCourses.length; i++) {
+          const course = allCourses[i];
+          if (!matchesCategory(course.nt, effectiveFilterMode)) continue;
+          if (!query) {
+            visibleItems.push({ course, score: 0 });
+          } else {
+            const scoreRes = scoreCourseItem(course, query);
+            if (scoreRes.match && scoreRes.score > 0) {
+              visibleItems.push({ course, score: scoreRes.score });
+            }
+          }
+        }
+
+        if (query && visibleItems.length > 0) {
+          const maxScore = Math.max(...visibleItems.map(v => v.score));
+          if (maxScore >= 750) visibleItems = visibleItems.filter(v => v.score >= 500);
+          visibleItems.sort((a, b) => b.score - a.score);
+          renderLiveSearchResults(visibleItems.slice(0, 8), query, visibleItems.length);
+        } else {
+          hideLiveResults();
+        }
+
+        const sliceToShow = query ? visibleItems.slice(0, Math.max(24, currentPageLimit)) : visibleItems.slice(0, currentPageLimit);
+        grid.innerHTML = sliceToShow.map(item => window.renderCodeHubCard(item.course)).join('');
+
+        renderPaginationControls(sliceToShow.length, visibleItems.length);
+
+        const badge = document.getElementById('filter-result-badge');
+        if (badge) badge.innerText = visibleItems.length + ' / ' + allCourses.length;
+
+        const noFound = document.getElementById('no-courses-found');
+        if (noFound) {
+          if (visibleItems.length === 0) {
+            noFound.classList.remove('hidden');
+            const desc = document.getElementById('no-courses-desc');
+            if (desc) desc.innerText = query ? 'Không tìm thấy môn học nào khớp với từ khóa "' + query + '".' : 'Không có môn học nào thuộc nhóm đã chọn.';
+          } else {
+            noFound.classList.add('hidden');
+          }
+        }
+      }
+
+      function renderLiveSearchResults(topItems, query, totalCount) {
+        const drop = document.getElementById('liveSearchResults');
+        const input = document.getElementById('courseSearchInput');
+        if (!drop) return;
+
+        if (topItems.length === 0) {
+          drop.innerHTML = '<div role="option" class="p-3 text-center text-xs text-gray-600 dark:text-gray-300">Không tìm thấy môn học phù hợp.</div>';
+          drop.classList.remove('hidden');
+          if (input) input.setAttribute('aria-expanded', 'true');
+          return;
+        }
+
+        const escapeHTML = value => String(value).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+        let html = '';
+        topItems.forEach(item => {
+          const c = item.course;
+          html += `
+            <a role="option" href="${escapeHTML(c.l)}" class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-blue-50 dark:hover:bg-gray-700/60 transition group text-left">
+              <div class="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 flex items-center justify-center flex-shrink-0 text-sm">
+                <i class="${escapeHTML(c.i)}"></i>
+              </div>
+              <div class="flex-1 min-w-0">
+                <div class="text-sm font-bold text-gray-900 dark:text-gray-100 group-hover:text-blue-700 dark:group-hover:text-blue-400 truncate">
+                  ${escapeHTML(c.t)}
+                </div>
+                <div class="text-[11px] text-gray-600 dark:text-gray-400 line-clamp-1">
+                  ${escapeHTML(c.d)}
+                </div>
+              </div>
+              <i aria-hidden="true" class="fa-solid fa-chevron-right text-xs text-gray-500 group-hover:text-blue-700 group-hover:translate-x-0.5 transition-all"></i>
+            </a>
+          `;
+        });
+
+        html += `
+          <div class="pt-2 mt-1 border-t border-gray-100 dark:border-gray-700 flex items-center justify-between px-2 text-xs">
+            <span class="text-gray-600 dark:text-gray-400 font-medium">Tìm thấy <b class="text-blue-700 dark:text-blue-400">${totalCount}</b> kết quả</span>
+            <button type="button" onclick="scrollToCoursesList()" class="text-blue-700 dark:text-blue-400 hover:underline font-semibold flex items-center gap-1">
+              Xem tất cả ở dưới <i aria-hidden="true" class="fa-solid fa-arrow-down text-[10px]"></i>
+            </button>
+          </div>
+        `;
+
+        drop.innerHTML = html;
+        drop.classList.remove('hidden');
+        if (input) input.setAttribute('aria-expanded', 'true');
+      }
+
+      function hideLiveResults() {
+        const drop = document.getElementById('liveSearchResults');
+        const input = document.getElementById('courseSearchInput');
+        if (drop) drop.classList.add('hidden');
+        if (input) input.setAttribute('aria-expanded', 'false');
+      }
+
+      function scrollToCoursesList() {
+        hideLiveResults();
+        document.getElementById('courses')?.scrollIntoView({ behavior: 'smooth' });
+      }
+
+      function initCourseStats() {
+        const total = Array.isArray(window.CODEHUB_COURSES) ? window.CODEHUB_COURSES.length : document.querySelectorAll('#courses-grid > div').length;
+        if (!total) return;
+
+        const statTotal = document.getElementById('stat-total-courses');
+        if (statTotal && statTotal.textContent !== String(total)) statTotal.textContent = total;
+
+        const btnAll = document.getElementById('btn-filter-all');
+        const btnAllLabel = 'Tất cả (' + total + ')';
+        if (btnAll && btnAll.textContent !== btnAllLabel) btnAll.textContent = btnAllLabel;
+
+        const badge = document.getElementById('filter-result-badge');
+        const badgeLabel = total + ' / ' + total;
+        if (badge && currentFilterMode === 'all' && badge.textContent !== badgeLabel) {
+          badge.textContent = badgeLabel;
+        }
+
+        renderPaginationControls(Math.min(currentPageLimit, total), total);
+      }
+      document.addEventListener('DOMContentLoaded', initCourseStats);
+
+      const searchInputEl = document.getElementById('courseSearchInput');
+      const clearSearchBtnEl = document.getElementById('clearSearchBtn');
+
+      if (searchInputEl) {
+        let searchTimer = null;
+        searchInputEl.addEventListener('input', () => {
+          if (clearSearchBtnEl) {
+            clearSearchBtnEl.classList.toggle('hidden', !searchInputEl.value);
+          }
+          clearTimeout(searchTimer);
+          searchTimer = setTimeout(applyFiltering, 80);
+        });
+
+        searchInputEl.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            scrollToCoursesList();
+          } else if (e.key === 'Escape') {
+            hideLiveResults();
+          }
+        });
+
+        searchInputEl.addEventListener('focus', () => {
+          if (searchInputEl.value.trim()) applyFiltering();
+        });
+      }
+
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest('#courseSearchInput') && !e.target.closest('#liveSearchResults')) {
+          hideLiveResults();
+        }
+      });
+
+      if (clearSearchBtnEl) {
+        clearSearchBtnEl.addEventListener('click', () => {
+          if (searchInputEl) {
+            searchInputEl.value = '';
+            clearSearchBtnEl.classList.add('hidden');
+            hideLiveResults();
+            applyFiltering();
+            searchInputEl.focus();
+          }
+        });
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        const grid = document.getElementById('courses-grid');
+        if (!grid) return;
+        grid.addEventListener('click', (e) => {
+          if (e.target.closest('a') || e.target.closest('button') || e.target.closest('input')) return;
+          const card = e.target.closest('#courses-grid > div');
+          if (!card) return;
+          const link = card.querySelector('a[href]');
+          if (link && link.getAttribute('href')) {
+            window.location.href = link.getAttribute('href');
+          }
+        });
+      });
+    </script>
+<script>
+/* Optimized 3D neural canvas: 24/30fps cap, IntersectionObserver offscreen pause, batched draws, zero shadowBlur */
+(function(){
+  const canvas=document.getElementById('codehub-neural-canvas');
+  if(!canvas)return;
+  const ctx=canvas.getContext('2d');if(!ctx)return;
+  const panel=canvas.parentElement;
+  const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
+  const nodes=[]; const edges=[];
+  const layers=[[-1.25,5],[-.43,6],[.43,6],[1.25,5]];
+  layers.forEach(([x,n],li)=>{for(let i=0;i<n;i++){
+    const angle=i*Math.PI*2/n+(li%2)*.25;
+    nodes.push({x:x*.95,y:Math.cos(angle)*.98,z:Math.sin(angle)*.9,layer:li});
+  }});
+  nodes.forEach((a,i)=>nodes.forEach((b,j)=>{if(j>i&&b.layer===a.layer+1&&(i+j)%3!==0)edges.push([i,j]);}));
+  let w=0,h=0,dpr=1,mouseX=0,mouseY=0,raf=0,visible=true,inView=true,lastFrame=0,stars=[];
+  const isMobile=window.innerWidth<768;
+  const FRAME_INTERVAL=isMobile?42:33.3;
+
+  function resize(){
+    const r=panel.getBoundingClientRect();
+    w=r.width;h=r.height;
+    dpr=isMobile?1:Math.min(window.devicePixelRatio||1,1.5);
+    canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    stars=Array.from({length:24},(_,i)=>({x:((i*137.31)%101)/101*w,y:((i*79.71)%97)/97*h,r:i%5===0?1.3:.7}));
+  }
+
+  function draw(t){
+    if(!visible||!inView){raf=0;return;}
+    if(!reduced.matches && lastFrame && (t-lastFrame)<FRAME_INTERVAL){
+      raf=requestAnimationFrame(draw);
+      return;
+    }
+    lastFrame=t;
+    ctx.clearRect(0,0,w,h);
+    const time=reduced.matches?0:t*.00025;
+    const ay=time+mouseX*.36, ax=-.17+Math.sin(time*.65)*.18+mouseY*.28;
+    const scale=Math.min(w*.205,h*.31);
+    const projected=nodes.map(p=>{
+      let x=p.x*Math.cos(ay)-p.z*Math.sin(ay), z=p.x*Math.sin(ay)+p.z*Math.cos(ay);
+      let y=p.y*Math.cos(ax)-z*Math.sin(ax);z=p.y*Math.sin(ax)+z*Math.cos(ax);
+      const persp=3.8/(3.8+z*.30);
+      return {x:w*.5+x*scale*persp,y:h*.5+y*scale*persp,z,r:(4.5+(z+2)*1.2)*Math.max(.8,Math.min(1.2,persp))};
+    });
+    ctx.fillStyle='rgba(161,191,255,.28)';
+    ctx.beginPath();
+    for(let i=0;i<stars.length;i++){const s=stars[i];ctx.moveTo(s.x+s.r,s.y);ctx.arc(s.x,s.y,s.r,0,Math.PI*2);}
+    ctx.fill();
+    ctx.lineWidth=1.25;
+    edges.forEach(([a,b],idx)=>{const A=projected[a],B=projected[b];ctx.beginPath();ctx.moveTo(A.x,A.y);ctx.lineTo(B.x,B.y);ctx.strokeStyle=idx%3===0?'rgba(44,224,248,.31)':'rgba(166,121,255,.30)';ctx.stroke();});
+    if(!reduced.matches){
+      ctx.fillStyle='rgba(46,234,255,.28)';ctx.beginPath();
+      edges.forEach(([a,b],idx)=>{const A=projected[a],B=projected[b],f=(time*1.3+idx*.173)%1,x=A.x+(B.x-A.x)*f,y=A.y+(B.y-A.y)*f;ctx.moveTo(x+4,y);ctx.arc(x,y,4,0,Math.PI*2);});
+      ctx.fill();
+      ctx.fillStyle='#9afaff';ctx.beginPath();
+      edges.forEach(([a,b],idx)=>{const A=projected[a],B=projected[b],f=(time*1.3+idx*.173)%1,x=A.x+(B.x-A.x)*f,y=A.y+(B.y-A.y)*f;ctx.moveTo(x+1.7,y);ctx.arc(x,y,1.7,0,Math.PI*2);});
+      ctx.fill();
+    }
+    for(let g=0;g<2;g++){
+      ctx.fillStyle=g===0?'rgba(23,223,255,.20)':'rgba(141,85,255,.20)';ctx.beginPath();
+      projected.forEach((p,i)=>{if((i%4===0||i%4===3)===(g===0)){ctx.moveTo(p.x+p.r*1.85,p.y);ctx.arc(p.x,p.y,p.r*1.85,0,Math.PI*2);}});
+      ctx.fill();
+      ctx.fillStyle=g===0?'#50eaff':'#b18aff';ctx.beginPath();
+      projected.forEach((p,i)=>{if((i%4===0||i%4===3)===(g===0)){ctx.moveTo(p.x+p.r,p.y);ctx.arc(p.x,p.y,p.r,0,Math.PI*2);}});
+      ctx.fill();
+    }
+    ctx.fillStyle='rgba(255,255,255,.7)';ctx.beginPath();
+    projected.forEach(p=>{const hx=p.x-p.r*.2,hy=p.y-p.r*.2,hr=p.r*.33;ctx.moveTo(hx+hr,hy);ctx.arc(hx,hy,hr,0,Math.PI*2);});
+    ctx.fill();
+    if(!reduced.matches){raf=requestAnimationFrame(draw);}else{raf=0;}
+  }
+
+  function start(){cancelAnimationFrame(raf);lastFrame=0;resize();if(visible&&inView)raf=requestAnimationFrame(draw);}
+  panel.addEventListener('pointermove',e=>{const r=panel.getBoundingClientRect();mouseX=(e.clientX-r.left)/r.width-.5;mouseY=(e.clientY-r.top)/r.height-.5;},{passive:true});
+  panel.addEventListener('pointerleave',()=>{mouseX=0;mouseY=0;});
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(entries=>{inView=entries[0]?.isIntersecting!==false;if(inView&&visible&&!raf)start();else if(!inView){cancelAnimationFrame(raf);raf=0;}},{threshold:0.05}).observe(panel);
+  }
+  if('ResizeObserver'in window)new ResizeObserver(start).observe(panel);else window.addEventListener('resize',start);
+  document.addEventListener('visibilitychange',()=>{visible=!document.hidden;if(visible&&inView)start();else{cancelAnimationFrame(raf);raf=0;}});
+  reduced.addEventListener?.('change',start);
+  setTimeout(start, 240);
+})();
+</script>
+<script>
+      // CodeHub: thống kê chính xác theo tên môn và lớp, không nhầm Veo 3, HSG cấp 3.
+      function updateSchoolLevelCounts() {
+        const put = (id, label, value) => {
+          const el = document.getElementById(id);
+          const next = label + ' (' + value + ')';
+          if (el && el.textContent !== next) el.textContent = next;
+        };
+        put('btn-filter-tieuhoc', 'Tiểu học 1-5', 68);
+        put('btn-filter-thcs', 'THCS 6-9', 62);
+        put('btn-filter-10', 'Lớp 10', 38);
+        put('btn-filter-11', 'Lớp 11', 36);
+        put('btn-filter-12', 'Lớp 12', 35);
+        const stat10 = document.getElementById('stat-grade-10');
+        if (stat10 && stat10.textContent !== '38') stat10.textContent = '38';
+        const levelStat = document.getElementById('stat-primary-secondary');
+        if (levelStat && levelStat.textContent !== '130') levelStat.textContent = '130';
+      }
+      document.addEventListener('DOMContentLoaded', updateSchoolLevelCounts);
+</script>
+<!-- PowerPoint Presentation Studio -->
+<script defer src="scripts/pptx-presenter.js?v=2"></script>
+</body>
+</html>
