@@ -1684,7 +1684,7 @@
                   <h3 class="font-bold text-base sm:text-lg leading-tight">Mô Phỏng 3: Phản Ứng Tạo Kết Tủa Trong Dung Dịch Điện Li</h3>
                   <span class="px-2 py-0.5 rounded text-[10px] font-extrabold bg-white/20 text-white">Hóa 11 • Bài 2 & Bài 8</span>
                 </div>
-                <p class="text-xs text-blue-100/90 mt-0.5">Phản ứng trao đổi ion trong dung dịch, nhận biết các cation/anion và định lượng khối lượng kết tủa $m_{\\downarrow}$</p>
+                <p class="text-xs text-blue-100/90 mt-0.5">Phản ứng trao đổi ion trong dung dịch, nhận biết các cation/anion và định lượng khối lượng kết tủa <em>m</em><sub>↓</sub></p>
               </div>
             </div>
             <div class="flex items-center gap-1.5">
@@ -1750,7 +1750,7 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               <div class="space-y-1">
                 <div class="flex justify-between text-xs">
-                  <label class="font-semibold text-slate-700 dark:text-slate-300">Nồng độ dung dịch cốc ($C_1$)</label>
+                  <label class="font-semibold text-slate-700 dark:text-slate-300">Nồng độ dung dịch cốc (<em>C</em>₁)</label>
                   <span class="font-bold text-indigo-600 dark:text-indigo-400" data-disp="cA">${this.params.cA.toFixed(1)} M</span>
                 </div>
                 <input type="range" data-ctrl="cA" min="0.1" max="1.5" step="0.1" value="${this.params.cA}" class="w-full accent-indigo-600 cursor-pointer h-2 bg-slate-200 dark:bg-slate-700 rounded-lg">
@@ -1758,7 +1758,7 @@
 
               <div class="space-y-1">
                 <div class="flex justify-between text-xs">
-                  <label class="font-semibold text-slate-700 dark:text-slate-300">Thể tích dung dịch cốc ($V_1$)</label>
+                  <label class="font-semibold text-slate-700 dark:text-slate-300">Thể tích dung dịch cốc (<em>V</em>₁)</label>
                   <span class="font-bold text-indigo-600 dark:text-indigo-400" data-disp="vA">${this.params.vA} mL</span>
                 </div>
                 <input type="range" data-ctrl="vA" min="50" max="300" step="25" value="${this.params.vA}" class="w-full accent-indigo-600 cursor-pointer h-2 bg-slate-200 dark:bg-slate-700 rounded-lg">
@@ -1766,7 +1766,7 @@
 
               <div class="space-y-1">
                 <div class="flex justify-between text-xs">
-                  <label class="font-semibold text-slate-700 dark:text-slate-300">Nồng độ thuốc thử ($C_2$)</label>
+                  <label class="font-semibold text-slate-700 dark:text-slate-300">Nồng độ thuốc thử (<em>C</em>₂)</label>
                   <span class="font-bold text-emerald-600 dark:text-emerald-400" data-disp="cB">${this.params.cB.toFixed(1)} M</span>
                 </div>
                 <input type="range" data-ctrl="cB" min="0.1" max="1.5" step="0.1" value="${this.params.cB}" class="w-full accent-emerald-600 cursor-pointer h-2 bg-slate-200 dark:bg-slate-700 rounded-lg">
@@ -1774,7 +1774,7 @@
 
               <div class="space-y-1">
                 <div class="flex justify-between text-xs">
-                  <label class="font-semibold text-slate-700 dark:text-slate-300">Thể tích thuốc thử nhỏ vào ($V_2$)</label>
+                  <label class="font-semibold text-slate-700 dark:text-slate-300">Thể tích thuốc thử nhỏ vào (<em>V</em>₂)</label>
                   <span class="font-bold text-emerald-600 dark:text-emerald-400" data-disp="vB">${this.params.vB} mL</span>
                 </div>
                 <input type="range" data-ctrl="vB" min="25" max="400" step="25" value="${this.params.vB}" class="w-full accent-emerald-600 cursor-pointer h-2 bg-slate-200 dark:bg-slate-700 rounded-lg">
@@ -4637,9 +4637,9 @@
               <div class="p-3 bg-teal-50 dark:bg-teal-950/40 border border-teal-200 dark:border-teal-800 rounded-xl text-slate-700 dark:text-slate-300 text-[11px] leading-relaxed">
                 <strong class="text-teal-700 dark:text-teal-300">Nguyên lí chuyển dịch Le Chatelier:</strong>
                 <ul class="list-disc pl-4 space-y-1 mt-1">
-                  <li><strong>Tăng nhiệt độ:</strong> Cân bằng chuyển dịch theo chiều <em>thu nhiệt</em> (chiều nghịch $\to$ màu nâu đậm lên).</li>
-                  <li><strong>Hạ nhiệt độ:</strong> Cân bằng chuyển dịch theo chiều <em>tỏa nhiệt</em> (chiều thuận $\to$ màu nhạt dần).</li>
-                  <li><strong>Tăng áp suất:</strong> Cân bằng chuyển dịch về phía có <em>ít số mol khí hơn</em> (2 mol $NO_2 \to$ 1 mol $N_2O_4$).</li>
+                  <li><strong>Tăng nhiệt độ:</strong> Cân bằng chuyển dịch theo chiều <em>thu nhiệt</em> (chiều nghịch → màu nâu đậm lên).</li>
+                  <li><strong>Hạ nhiệt độ:</strong> Cân bằng chuyển dịch theo chiều <em>tỏa nhiệt</em> (chiều thuận → màu nhạt dần).</li>
+                  <li><strong>Tăng áp suất:</strong> Cân bằng chuyển dịch về phía có <em>ít số mol khí hơn</em> (2 mol NO₂ → 1 mol N₂O₄).</li>
                 </ul>
               </div>
             </div>
@@ -5236,10 +5236,10 @@
               <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-2">
                 <h5 class="font-extrabold text-indigo-700 dark:text-indigo-300 text-sm">2. Khối Phổ (MS - Mass Spectrometry)</h5>
                 <p class="text-slate-600 dark:text-slate-400 text-[11px] leading-relaxed">
-                  Dùng để xác định <strong>phân tử khối (M)</strong> của hợp chất hữu cơ thông qua peak ion phân tử $[M^+]$:
+                  Dùng để xác định <strong>phân tử khối (M)</strong> của hợp chất hữu cơ thông qua peak ion phân tử [M<sup>+</sup>]:
                 </p>
                 <div class="p-3 bg-indigo-50 dark:bg-indigo-950/40 rounded border border-indigo-200 dark:border-indigo-800 text-[11px] text-indigo-900 dark:text-indigo-200">
-                  Giá trị $m/z$ của peak ion phân tử $[M^+]$ có cường độ xuất hiện ở vùng khối lượng lớn nhất tương ứng với phân tử khối của chất.
+                  Giá trị <em>m/z</em> của peak ion phân tử [M<sup>+</sup>] có cường độ xuất hiện ở vùng khối lượng lớn nhất tương ứng với phân tử khối của chất.
                 </div>
               </div>
             </div>
@@ -5263,7 +5263,7 @@
               <div class="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 space-y-2">
                 <h5 class="font-bold text-teal-700 dark:text-teal-300 text-sm">2. Đồng Phân Hình Học (Cis – Trans)</h5>
                 <p class="text-slate-600 dark:text-slate-400 text-[11px] leading-relaxed">
-                  Xuất hiện khi có liên kết đôi $C=C$ và mỗi nguyên tử carbon mang 2 nhóm thế khác nhau ($R_1 \ne R_2$ và $R_3 \ne R_4$):
+                  Xuất hiện khi có liên kết đôi C=C và mỗi nguyên tử carbon mang 2 nhóm thế khác nhau (R₁ ≠ R₂ và R₃ ≠ R₄):
                 </p>
                 <div class="grid grid-cols-2 gap-2 text-center font-mono text-[11px]">
                   <div class="p-2 bg-slate-100 dark:bg-slate-800 rounded">
@@ -5427,7 +5427,7 @@
             <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-2">
               <h5 class="font-bold text-teal-700 dark:text-teal-300 text-sm">Quy Tắc Markovnikov Trong Phản Ứng Cộng Bất Đối Xứng</h5>
               <p class="text-slate-600 dark:text-slate-300 leading-relaxed text-[11px]">
-                Khi cộng một tác nhân bất đối xứng $H-X$ ($X$ là $OH, Cl, Br$) vào liên kết đôi của alkene bất đối xứng:
+                Khi cộng một tác nhân bất đối xứng H–X (với X là –OH, –Cl, –Br) vào liên kết đôi của alkene bất đối xứng:
               </p>
               <div class="p-3 bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 space-y-2 font-mono text-[11px]">
                 <div class="text-teal-700 dark:text-teal-300 font-bold">
@@ -5448,7 +5448,7 @@
               <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-2">
                 <h5 class="font-bold text-slate-800 dark:text-white text-sm">Cấu Trúc Hệ Thống Thơm Benzene</h5>
                 <p class="text-slate-600 dark:text-slate-300 leading-relaxed text-[11px]">
-                  Vòng 6 cạnh phẳng đều, 6 liên kết $C-C$ hoàn toàn tương đương nhau (độ dài 139 pm, nằm giữa liên kết đơn và đôi) do hệ liên hợp $\pi$ khép kín phân bố đồng đều trên cả 6 nguyên tử carbon.
+                  Vòng 6 cạnh phẳng đều, 6 liên kết C–C hoàn toàn tương đương nhau (độ dài 139 pm, nằm giữa liên kết đơn và đôi) do hệ liên hợp π khép kín phân bố đồng đều trên cả 6 nguyên tử carbon.
                 </p>
               </div>
 
@@ -5560,8 +5560,8 @@
               <div class="p-3.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/60 space-y-1.5">
                 <span class="font-bold text-amber-600 text-xs block">2. Tách nước (H₂SO₄ đặc)</span>
                 <div class="font-mono text-[10px] p-2 bg-white dark:bg-slate-900 rounded border border-slate-200 dark:border-slate-800 text-amber-700 dark:text-amber-300">
-                  C₂H₅OH xrightarrow{170°C} C₂H₄ + H₂O (tạo alkene)<br>
-                  2C₂H₅OH xrightarrow{140°C} (C₂H₅)₂O + H₂O (tạo ether)
+                  C₂H₅OH ──(170°C, H₂SO₄ đặc)──→ C₂H₄ + H₂O (tạo alkene)<br>
+                  2C₂H₅OH ──(140°C, H₂SO₄ đặc)──→ (C₂H₅)₂O + H₂O (tạo ether)
                 </div>
                 <p class="text-slate-500 text-[10px]">Nhiệt độ quyết định tạo alkene hay ether.</p>
               </div>
@@ -5570,7 +5570,7 @@
               <div class="p-3.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/60 space-y-1.5">
                 <span class="font-bold text-rose-600 text-xs block">3. Oxi hóa không hoàn toàn bằng CuO</span>
                 <div class="font-mono text-[10px] p-2 bg-white dark:bg-slate-900 rounded border border-slate-200 dark:border-slate-800 text-rose-700 dark:text-rose-300">
-                  R–CH₂OH + CuO (đen) xrightarrow{t°} R–CHO + Cu (đỏ) + H₂O
+                  R–CH₂OH + CuO (đen) ──(t°)──→ R–CHO + Cu (đỏ) + H₂O
                 </div>
                 <p class="text-slate-500 text-[10px]">Alcohol bậc I tạo aldehyde, bậc II tạo ketone, bậc III không bị oxi hóa.</p>
               </div>
@@ -5709,10 +5709,10 @@
             <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-2.5">
               <h5 class="font-extrabold text-slate-800 dark:text-white text-sm">Phản Ứng Tráng Bạc (Tollens Reagent)</h5>
               <p class="text-slate-600 dark:text-slate-300 leading-relaxed text-[11px]">
-                Aldehyde (–CHO) bị oxi hóa bởi phức chất $[Ag(NH_3)_2]OH$ trong môi trường kiềm ấm tạo thành kim loại Bạc bám sáng bóng như gương trên thành ống nghiệm:
+                Aldehyde (–CHO) bị oxi hóa bởi phức chất [Ag(NH₃)₂]OH trong môi trường kiềm ấm tạo thành kim loại Bạc bám sáng bóng như gương trên thành ống nghiệm:
               </p>
               <div class="font-mono text-[11px] p-2 bg-white dark:bg-slate-900 rounded border border-slate-200 dark:border-slate-800 text-teal-700 dark:text-teal-300 font-bold">
-                R–CHO + 2[Ag(NH₃)₂]OH xrightarrow{t°} R–COONH₄ + 2Ag↓ + 3NH₃ + H₂O
+                R–CHO + 2[Ag(NH₃)₂]OH ──(t°)──→ R–COONH₄ + 2Ag↓ + 3NH₃ + H₂O
               </div>
               <p class="text-slate-500 text-[10px]">
                 Riêng Formaldehyde (HCHO) phản ứng tráng bạc với tỉ lệ 1 mol HCHO sinh ra <strong>4 mol Ag</strong>. Ketone không có phản ứng này.
@@ -5738,7 +5738,7 @@
             <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-2">
               <h5 class="font-bold text-teal-700 dark:text-teal-300 text-sm">Phản Ứng Ester Hóa (Fischer Esterification)</h5>
               <p class="text-slate-600 dark:text-slate-300 leading-relaxed text-[11px]">
-                Phản ứng giữa Carboxylic acid và Alcohol dưới xúc tác của acid $H_2SO_4$ đặc khi đun nóng là phản ứng thuận nghịch:
+                Phản ứng giữa Carboxylic acid và Alcohol dưới xúc tác của acid H₂SO₄ đặc khi đun nóng là phản ứng thuận nghịch:
               </p>
               <div class="p-3 bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 font-mono text-center font-bold text-teal-800 dark:text-teal-300 text-sm">
                 CH₃COOH + C₂H₅OH ⇌ CH₃COOC₂H₅ (Ethyl acetate) + H₂O<br>
@@ -6282,7 +6282,7 @@
           <button type="button" id="btn-hydrolysis" class="w-full py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-bold transition flex items-center justify-center gap-1.5">
             <i class="fa-solid fa-scissors"></i> Thủy Phân Cắt Cầu Nối Glycosidic
           </button>
-          <p class="text-[11px] text-slate-500">Saccharose ($\alpha$-glucose + $\beta$-fructose) không tráng bạc; sau thủy phân tráng bạc được.</p>
+          <p class="text-[11px] text-slate-500">Saccharose (α-glucose + β-fructose) không tráng bạc; sau thủy phân tráng bạc được.</p>
         `;
         badge.innerHTML = `<i class="fa-solid fa-link-slash"></i> Cấu tạo Disaccharide & Phản ứng thủy phân`;
         eq.innerHTML = 'C₁₂H₂₂O₁₁ + H₂O \u2192 C₆H₁₂O₆ (Glucose) + C₆H₁₂O₆ (Fructose)<br><span class="text-[10px] text-slate-500">Xúc tác acid vô cơ hoặc enzyme sucrase đun nóng.</span>';
@@ -7421,7 +7421,7 @@
         eq.innerHTML = 'Electron tự do chuyển động hỗn loạn trong toàn bộ tinh thể giải thích tính dẫn điện, dẫn nhiệt, ánh kim và tính dẻo của kim loại.';
       } else if (this.mode === 'displacement-series') {
         panel.innerHTML = `
-          <p class="text-[11px] text-slate-500">Quy tắc $\alpha$: Chất oxi hóa mạnh hơn phản ứng với chất khử mạnh hơn tạo chất oxi hóa yếu hơn và chất khử yếu hơn.</p>
+          <p class="text-[11px] text-slate-500">Quy tắc α: Chất oxi hóa mạnh hơn phản ứng với chất khử mạnh hơn tạo chất oxi hóa yếu hơn và chất khử yếu hơn.</p>
           <div class="p-2 rounded bg-slate-900/40 border border-slate-700 space-y-1 font-mono text-[10px]">
             <p>Fe + CuSO₄ \u2192 FeSO₄ + Cu\u2193</p>
             <p>Cu + 2AgNO₃ \u2192 Cu(NO₃)₂ + 2Ag\u2193</p>
